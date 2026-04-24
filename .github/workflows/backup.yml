@@ -8,12 +8,43 @@ on:
 permissions:
   contents: write
 
+env:
+  HUB_SLUG: amber-kitten-4khe
+
 jobs:
   backup:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Sync slug list from hub
+        run: |
+          echo "Fetching hub..."
+          if curl -sSf --retry 10 --retry-delay 6 --retry-all-errors \
+              --max-time 30 -A "herenow-backup-bot/1.0" \
+              -o /tmp/hub.html "https://${HUB_SLUG}.here.now/"; then
+            echo "Hub fetched: $(wc -c < /tmp/hub.html) bytes"
+            python3 <<'PY'
+          import re, os, json
+          HUB = os.environ['HUB_SLUG']
+          with open('/tmp/hub.html') as f: html = f.read()
+          pat = r'<a[^>]+href="https?://([a-z0-9-]+)\.here\.now/?"[^>]*>\s*([^<]+?)\s*</a>'
+          pairs = re.findall(pat, html)
+          seen = {HUB: 'Hub — all sites index'}
+          for slug, title in pairs:
+              if slug == HUB or slug in seen: continue
+              seen[slug] = ' '.join(title.strip().split())
+          with open('slugs.txt', 'w') as f:
+              f.write('\n'.join(seen.keys()) + '\n')
+          with open('/tmp/hub_titles.json', 'w') as f:
+              json.dump(seen, f, ensure_ascii=False, indent=2)
+          print(f"Synced {len(seen)} slugs from hub")
+          PY
+          else
+            echo "::warning::Hub fetch failed — using existing slugs.txt as fallback"
+            echo '{}' > /tmp/hub_titles.json
+          fi
 
       - name: Backup all slugs
         run: |
@@ -33,10 +64,8 @@ jobs:
 
             if curl -sS -f \
                 --retry 5 --retry-delay 10 --retry-all-errors \
-                --max-time 60 \
-                -o "$TMP" \
-                -A "herenow-backup-bot/1.0" \
-                "https://$slug.here.now/"; then
+                --max-time 60 -A "herenow-backup-bot/1.0" \
+                -o "$TMP" "https://$slug.here.now/"; then
               mv "$TMP" "sites/$slug/index.html"
               SIZE=$(wc -c < "sites/$slug/index.html")
               echo "✓ $slug ($SIZE bytes)"
@@ -54,6 +83,38 @@ jobs:
           echo "OK:     $OK / $TOTAL"
           echo "Failed: ${#FAILED[@]} — ${FAILED[*]:-none}"
           date -u '+Last backup: %Y-%m-%d %H:%M UTC' > last-backup.txt
+
+      - name: Build titles.json
+        run: |
+          python3 <<'PY'
+          import os, re, json
+          with open('/tmp/hub_titles.json') as f:
+              hub = json.load(f)
+          with open('slugs.txt') as f:
+              slugs = [l.strip() for l in f if l.strip() and not l.startswith('#')]
+          out = {}
+          for slug in slugs:
+              entry = {'title': hub.get(slug, slug), 'ok': False}
+              p = f'sites/{slug}/index.html'
+              if os.path.exists(p) and os.path.getsize(p) > 0:
+                  entry['ok'] = True
+                  try:
+                      with open(p, errors='replace') as f:
+                          html = f.read(65536)
+                      m = re.search(r'<title[^>]*>(.*?)</title>', html, re.I | re.S)
+                      if m:
+                          t = ' '.join(m.group(1).strip().split())
+                          # Prefer HTML <title> over hub title if it's meaningful
+                          if t and t.lower() != slug.lower() and len(t) > 3:
+                              entry['title'] = t
+                  except Exception as e:
+                      print(f'  title extract failed for {slug}: {e}')
+              out[slug] = entry
+          with open('titles.json', 'w') as f:
+              json.dump(out, f, ensure_ascii=False, indent=2)
+          ok = sum(1 for v in out.values() if v['ok'])
+          print(f'Wrote titles.json: {ok}/{len(out)} entries with backups')
+          PY
 
       - name: Commit changes
         run: |
