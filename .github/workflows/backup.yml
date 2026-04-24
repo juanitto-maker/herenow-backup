@@ -1,0 +1,68 @@
+name: here.now backup
+
+on:
+  schedule:
+    - cron: '0 3 * * 0'   # Sundays 03:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Backup all slugs
+        run: |
+          mkdir -p sites
+          FAILED=()
+          OK=0
+          TOTAL=0
+          while IFS= read -r slug || [ -n "$slug" ]; do
+            slug=$(echo "$slug" | tr -d '[:space:]')
+            [ -z "$slug" ] && continue
+            [[ "$slug" =~ ^# ]] && continue
+            TOTAL=$((TOTAL+1))
+
+            echo "::group::$slug"
+            mkdir -p "sites/$slug"
+            TMP=$(mktemp)
+
+            if curl -sS -f \
+                --retry 5 --retry-delay 10 --retry-all-errors \
+                --max-time 60 \
+                -o "$TMP" \
+                -A "herenow-backup-bot/1.0" \
+                "https://$slug.here.now/"; then
+              mv "$TMP" "sites/$slug/index.html"
+              SIZE=$(wc -c < "sites/$slug/index.html")
+              echo "✓ $slug ($SIZE bytes)"
+              OK=$((OK+1))
+            else
+              rm -f "$TMP"
+              echo "✗ $slug — FAILED after retries (keeping previous backup if any)"
+              FAILED+=("$slug")
+            fi
+            echo "::endgroup::"
+          done < slugs.txt
+
+          echo ""
+          echo "=== Summary ==="
+          echo "OK:     $OK / $TOTAL"
+          echo "Failed: ${#FAILED[@]} — ${FAILED[*]:-none}"
+          date -u '+Last backup: %Y-%m-%d %H:%M UTC' > last-backup.txt
+
+      - name: Commit changes
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Backup $(date -u '+%Y-%m-%d')"
+            git push
+          fi
