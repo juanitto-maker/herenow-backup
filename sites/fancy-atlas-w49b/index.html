@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PearlShell — Rapid Insulated Shelter System</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@400;500;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--t:#b85c2a;--o:#6b8f3e;--sd:#e8d5b0;--mu:#8a7d6a}
+
+html,body{height:100%;overflow:hidden}
+body{font-family:'DM Sans',sans-serif;background:#2a2318;color:var(--sd)}
+
+/* ── progress + counter ── */
+#prog{position:fixed;top:0;left:0;right:0;height:3px;background:var(--t);z-index:300;transition:width .3s,background .3s;pointer-events:none}
+#ctr{position:fixed;top:10px;right:14px;font-size:12px;color:#6b5e4a;font-family:monospace;letter-spacing:.12em;z-index:300;pointer-events:none}
+
+/* ── SLIDE SYSTEM: fixed, full-height, scrollable ── */
+.slide{
+  display:none;
+  position:fixed;
+  top:0;left:0;right:0;bottom:60px;
+  overflow-y:auto;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  background:#2a2318;
+  transition:background .3s;
+}
+.slide.on{display:block}
+
+/* ── nav ── */
+#nav{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(26,21,16,.96);
+  backdrop-filter:blur(10px);
+  border-top:1px solid rgba(232,213,176,.07);
+  padding:9px 16px 13px;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  z-index:200;height:60px;
+}
+.nb{padding:8px 16px;border-radius:6px;border:1px solid rgba(232,213,176,.14);background:rgba(232,213,176,.06);color:#9e8f7a;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:.05em;transition:all .15s;white-space:nowrap}
+.nb:disabled{opacity:.22;cursor:default}
+.nb.fw{border-color:rgba(184,92,42,.4);background:rgba(184,92,42,.13);color:var(--t)}
+.dots{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;flex:1;overflow:hidden}
+.dot{width:5px;height:5px;border-radius:50%;background:rgba(232,232,232,.18);cursor:pointer;transition:all .2s;flex-shrink:0}
+.dot.on{width:14px;border-radius:3px;background:var(--t)}
+
+/* ── cover: fills full slide height ── */
+.cover-wrap{
+  min-height:calc(100dvh - 60px);
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.cover-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 55% at 70% 25%,rgba(107,143,62,.16) 0%,transparent 55%),radial-gradient(ellipse 60% 65% at 15% 80%,rgba(184,92,42,.2) 0%,transparent 55%),linear-gradient(150deg,#1e1a0f,#2a2318 55%,#1a1510)}
+.grain{position:absolute;inset:0;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.cover-inner{position:relative;z-index:1;padding:24px 1rem 24px;width:100%}
+.c-eye{font-size:12px;font-weight:700;letter-spacing:.22em;color:var(--t);text-transform:uppercase;margin-bottom:22px;opacity:.8}
+.c-title{font-family:'Cormorant Garamond',serif;font-size:58px;font-weight:700;line-height:.92;color:#fff;letter-spacing:-.02em;margin-bottom:8px}
+.c-title span{color:var(--t)}
+.c-it{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--sd);opacity:.52;margin-bottom:22px}
+.c-rule{width:42px;height:2px;background:var(--t);margin-bottom:18px;border-radius:2px}
+.c-tag{font-size:15px;color:var(--sd);opacity:.72;line-height:1.65;margin-bottom:28px}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{font-size:12px;font-weight:600;letter-spacing:.1em;color:var(--o);border:1px solid rgba(107,143,62,.3);border-radius:100px;padding:4px 13px}
+
+/* ── cta: same as cover ── */
+.cta-wrap{
+  min-height:calc(100dvh - 60px);
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 30% 30%,rgba(184,92,42,.18) 0%,transparent 55%),radial-gradient(ellipse 60% 60% at 80% 80%,rgba(107,143,62,.13) 0%,transparent 55%),linear-gradient(150deg,#1a1510,#2a2318)}
+.offer{background:rgba(184,92,42,.1);border:1px solid rgba(184,92,42,.28);border-radius:10px;padding:15px 17px;margin:18px 0 22px}
+.offer-h{font-size:12px;font-weight:800;letter-spacing:.18em;color:var(--t);text-transform:uppercase;margin-bottom:9px}
+.offer-i{font-size:14px;color:var(--sd);line-height:1.9;opacity:.85}
+
+/* ── content slides ── */
+.pad{padding:20px 1rem 16px;width:100%;min-height:calc(100dvh - 60px);display:flex;flex-direction:column;justify-content:center}
+.ey{font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--t);text-transform:uppercase;margin-bottom:8px}
+.ey.ol{color:var(--o)}
+.h2{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:#fff;line-height:1.1;margin-bottom:5px}
+.sub{font-size:14px;color:var(--mu);margin-bottom:14px}
+.rule{width:34px;height:2px;background:var(--t);margin-bottom:16px;border-radius:2px}
+.rule.ol{background:var(--o)}
+
+.card{background:rgba(232,213,176,.05);border:1px solid rgba(232,213,176,.1);border-radius:10px;padding:13px 15px;margin-bottom:9px}
+.c-ic{font-size:18px;margin-bottom:6px}
+.c-hd{font-size:14px;font-weight:700;color:var(--t);margin-bottom:4px}
+.c-bd{font-size:14px;color:#b0a090;line-height:1.55}
+.c-pr{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--t);margin-top:7px}
+
+.lyr{display:flex;gap:10px;align-items:stretch;margin-bottom:8px}
+.lbar{width:4px;border-radius:2px;flex-shrink:0;min-height:20px}
+.linfo{flex:1;background:rgba(232,213,176,.04);border-radius:8px;padding:9px 12px}
+.ltag{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin-bottom:3px}
+.lname{font-size:14px;font-weight:600;color:var(--sd);margin-bottom:2px}
+.ldet{font-size:13px;color:var(--mu)}
+
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:14px}
+.sp{background:rgba(232,213,176,.05);border-radius:7px;padding:9px 11px;border:1px solid rgba(232,213,176,.08)}
+.spk{font-size:12px;color:#6b5e4a;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.spv{font-size:14px;color:var(--sd);font-weight:600}
+
+.tl{display:flex;gap:12px;margin-bottom:14px}
+.tlc{flex:1}
+.tlh{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
+.tli{display:flex;gap:7px;margin-bottom:6px}
+.tlt{font-size:12px;color:#5e5245;min-width:30px;margin-top:1px;font-family:monospace}
+.tlk{font-size:14px;color:var(--sd)}
+.tld{font-size:12px;color:var(--mu)}
+.tldiv{width:1px;background:rgba(232,213,176,.07);flex-shrink:0}
+
+.cc{font-size:12px;font-weight:800;letter-spacing:.15em;color:#5e5245;text-transform:uppercase;margin:11px 0 5px}
+.cr{display:flex;justify-content:space-between;align-items:center;padding:7px 12px;background:rgba(232,213,176,.04);border-radius:6px;margin-bottom:3px;border:1px solid rgba(232,213,176,.06)}
+.cl{font-size:14px;color:#c0b09a}
+.cv{font-size:14px;font-weight:600;color:var(--sd)}
+.ctotal{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,rgba(184,92,42,.18),rgba(107,143,62,.1));border:1px solid rgba(184,92,42,.3);border-radius:9px;padding:12px 16px;margin-top:10px}
+.ctl{font-size:15px;font-weight:800;color:#fff}
+.ctv{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--t)}
+
+.mc{flex:1;background:rgba(232,213,176,.04);border:1px solid rgba(232,213,176,.09);border-radius:9px;padding:12px 13px}
+.mr{font-size:13px;font-weight:700;letter-spacing:.06em;margin-bottom:8px}
+.mt{font-size:13px;color:#a09080;line-height:1.6;padding-left:9px;border-left:2px solid rgba(107,143,62,.25);margin-bottom:4px}
+.er{display:grid;grid-template-columns:1.2fr 1fr 1.5fr;gap:8px;padding:9px 11px;border-top:1px solid rgba(232,213,176,.06);align-items:center}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.sc{background:rgba(232,213,176,.04);border:1px solid rgba(232,213,176,.08);border-radius:8px;padding:10px 12px}
+.su{font-size:12px;color:var(--mu);margin-bottom:3px}
+.sp2{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:700;color:var(--o)}
+
+.sk{font-size:12px;font-weight:700;letter-spacing:.1em;margin-bottom:6px;margin-top:12px}
+.sr{display:grid;grid-template-columns:1.8fr 1fr;gap:8px;background:rgba(232,213,176,.04);border-radius:7px;padding:8px 12px;border:1px solid rgba(232,213,176,.07);margin-bottom:5px;align-items:center}
+.sw{font-size:14px;color:var(--sd);font-weight:600}
+..wh{font-size:14px;color:var(--mu);margin-top:1px}
+.sp3{font-size:12px;font-weight:700;text-align:right}
+
+.wc{display:flex;gap:11px;align-items:flex-start;background:rgba(232,213,176,.04);border:1px solid rgba(232,213,176,.08);border-radius:9px;padding:11px 14px;margin-bottom:8px}
+.wic{font-size:18px;flex-shrink:0}
+.wh{font-size:14px;font-weight:700;color:var(--t);margin-bottom:3px}
+.wb{font-size:13px;color:#a09080;line-height:1.5}
+
+.al{border-radius:9px;padding:11px 14px;font-size:14px;line-height:1.6;margin-top:10px}
+.al-t{background:rgba(184,92,42,.1);border:1px solid rgba(184,92,42,.25);color:var(--sd)}
+.al-o{background:rgba(107,143,62,.1);border:1px solid rgba(107,143,62,.25);color:var(--sd)}
+
+.phook{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;line-height:1.25;color:#fff;margin-bottom:16px;border-left:3px solid var(--t);padding-left:14px}
+.plabel{font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--t);text-transform:uppercase;margin-bottom:5px}
+.plabel.ol{color:var(--o)}
+.ptext{font-size:14px;color:var(--sd);opacity:.85;line-height:1.65;margin-bottom:12px}
+.pcta{background:linear-gradient(135deg,rgba(184,92,42,.18),rgba(107,143,62,.1));border:1px solid rgba(184,92,42,.3);border-radius:9px;padding:14px 16px;font-size:14px;color:#fff;line-height:1.65}
+
+.tsec{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#5e5245;margin:12px 0 7px}
+.ph{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:var(--t)}
+.ph-sub{font-size:12px;color:var(--mu)}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+<div id="ctr"></div>
+
+<!-- S0 COVER -->
+<div class="slide on" id="s0">
+  <div class="cover-wrap">
+    <div class="cover-bg"></div><div class="grain"></div>
+    <div class="cover-inner">
+      <div class="c-eye">Shelter Innovation · Andalucía · 2025</div>
+      <div class="c-title">Pearl<span>Shell</span></div>
+      <div class="c-it">Rapid Insulated Shelter System</div>
+      <div class="c-rule"></div>
+      <div class="c-tag">A deployable, naturally insulated shelter that two people can erect in a single day — for under €400 in materials.</div>
+      <div class="pills">
+        <div class="pill">Off-grid ready</div>
+        <div class="pill">Biodegradable</div>
+        <div class="pill">Scalable</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S1 PITCH -->
+<div class="slide" id="s1">
+  <div class="pad">
+    <div class="ey">The Opportunity</div>
+    <div class="h2">The Pitch</div>
+    <div class="rule"></div>
+    <div class="phook">"Fast shelters have no insulation. Insulated shelters take weeks. PearlShell solves both."</div>
+    <div class="plabel">The Problem</div>
+    <div class="ptext">Emergency housing, glamping, farm worker accommodation and off-grid living all share the same frustration: speed and insulation have never coexisted in one affordable system.</div>
+    <div class="plabel">Our Solution</div>
+    <div class="ptext">PearlShell combines off-the-shelf galvanised steel tunnel frames with pre-filled volcanic perlite insulation bags — a fully weatherproof, insulated shelter in one working day, two people, no specialist skills.</div>
+    <div class="plabel">The Value</div>
+    <div class="ptext">€280–400 in materials. €1,200–1,600 installed price. A system any trained team can replicate, indefinitely.</div>
+    <div class="plabel ol">The Ask</div>
+    <div class="pcta">We are inviting a small group of early partners — glamping operators, rural developers, NGOs — to co-build the first PearlShell units in Andalucía and prove the model together.</div>
+  </div>
+</div>
+
+<!-- S2 FOUR COMPONENTS -->
+<div class="slide" id="s2">
+  <div class="pad">
+    <div class="ey">The System</div>
+    <div class="h2">Four components</div>
+    <div class="sub">Each chosen for speed, performance and local sourcing</div>
+    <div class="rule"></div>
+    <div class="card"><div class="c-ic">🏗️</div><div class="c-hd">Galvanised steel arch frame</div><div class="c-bd">Off-the-shelf 3×3×2m tunnel kit. Assembles in under one hour with a single spanner. Ground-staked, wind-braced, no concrete required.</div></div>
+    <div class="card"><div class="c-ic">🌿</div><div class="c-hd">Perlite-filled jute bags</div><div class="c-bd">90×60cm natural jute sacks filled with expanded volcanic perlite — the lightest mineral insulator available. Batch-prepared off-site, arrive ready to stack.</div></div>
+    <div class="card"><div class="c-ic">🎋</div><div class="c-hd">Bamboo spacer rail system</div><div class="c-bd">Horizontal bamboo poles lashed to the arch legs hold the outer tarp clear of the insulation — creating a ventilated drainage cavity that protects the bags long-term.</div></div>
+    <div class="card"><div class="c-ic">🏕️</div><div class="c-hd">Heavy-duty PVC tarp roof</div><div class="c-bd">650 g/m² truck-grade PVC over the arch profile. UV-resistant, fully waterproof. 10–15 year outdoor lifespan. Replaceable independently of the structure.</div></div>
+  </div>
+</div>
+
+<!-- S3 WALL ANATOMY -->
+<div class="slide" id="s3">
+  <div class="pad">
+    <div class="ey">Construction</div>
+    <div class="h2">Wall anatomy</div>
+    <div class="sub">Every layer has a purpose · Outside → Inside</div>
+    <div class="rule ol"></div>
+    <div class="lyr"><div class="lbar" style="background:#4a90d9"></div><div class="linfo"><div class="ltag" style="color:#4a90d9">Exterior skin</div><div class="lname">PVC tarp · 650 g/m²</div><div class="ldet">UV resistant · Fully waterproof · 10–15 year lifespan</div></div></div>
+    <div class="lyr"><div class="lbar" style="background:rgba(232,213,176,.3)"></div><div class="linfo"><div class="ltag" style="color:var(--sd)">Ventilated cavity</div><div class="lname">5–8 cm air gap</div><div class="ldet">Bamboo spacers · Moisture drains freely downward</div></div></div>
+    <div class="lyr"><div class="lbar" style="background:var(--t)"></div><div class="linfo"><div class="ltag" style="color:var(--t)">Insulation core</div><div class="lname">Perlite jute bags · ~30 cm thick</div><div class="ldet">Volcanic mineral · Permanent · Never compresses · Never rots</div></div></div>
+    <div class="lyr"><div class="lbar" style="background:#4a90d9"></div><div class="linfo"><div class="ltag" style="color:#4a90d9">Structure</div><div class="lname">Galvanised steel arch leg</div><div class="ldet">32 mm tube · Anti-corrosion · 15–20 year lifespan</div></div></div>
+    <div class="lyr"><div class="lbar" style="background:var(--o)"></div><div class="linfo"><div class="ltag" style="color:var(--o)">Interior</div><div class="lname">Habitable living space</div><div class="ldet">9 m² floor · 2 m peak height · Naturally regulated temperature</div></div></div>
+    <div class="al al-o">🌿 Perlite is 90% air by volume — outperforms straw bale per kilogram and never degrades.</div>
+  </div>
+</div>
+
+<!-- S4 THE FRAME -->
+<div class="slide" id="s4">
+  <div class="pad">
+    <div class="ey">Component One</div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">
+      <div class="h2" style="margin:0">The Frame</div>
+      <div style="text-align:right"><div class="ph">€91</div><div class="ph-sub">Aosom ES · En Stock</div></div>
+    </div>
+    <div class="rule"></div>
+    <div class="specs">
+      <div class="sp"><div class="spk">Footprint</div><div class="spv">3 × 3 m</div></div>
+      <div class="sp"><div class="spk">Peak height</div><div class="spv">2.0 m</div></div>
+      <div class="sp"><div class="spk">Material</div><div class="spv">Galvanised steel</div></div>
+      <div class="sp"><div class="spk">Door</div><div class="spv">Roll-up · 1×1.9 m</div></div>
+      <div class="sp"><div class="spk">Wind rating</div><div class="spv">Level 3</div></div>
+      <div class="sp"><div class="spk">Assembly</div><div class="spv">~45 min · 2 people</div></div>
+      <div class="sp"><div class="spk">Package</div><div class="spv">2 boxes · 25 kg</div></div>
+      <div class="sp"><div class="spk">Includes</div><div class="spv">PE cover + guy lines</div></div>
+    </div>
+    <div class="tsec">Also available — Aosom ES</div>
+    <div class="cr"><span class="cl">3.5×3×2m · ref 845-563</span><span class="cv">~€110</span></div>
+    <div class="cr"><span class="cl">3×2×2m compact · ref 845-148</span><span class="cv">~€75</span></div>
+    <div class="cr"><span class="cl">1.8×1.8×2m prototype · ref 845-775</span><span class="cv">€63</span></div>
+    <div class="al al-t">💡 Included PE cover works as day-one weatherproofing. Upgrade to truck-grade PVC tarp independently when ready.</div>
+  </div>
+</div>
+
+<!-- S5 BUILD DAY -->
+<div class="slide" id="s5">
+  <div class="pad">
+    <div class="ey">The Build</div>
+    <div class="h2">One shelter · one day</div>
+    <div class="sub">2-person crew · bags arrive pre-filled from off-site</div>
+    <div class="rule ol"></div>
+    <div class="tl">
+      <div class="tlc">
+        <div class="tlh" style="color:#c8883a">🌅 Morning</div>
+        <div class="tli"><div class="tlt">07:00</div><div><div class="tlk">Site marking</div><div class="tld">30 min</div></div></div>
+        <div class="tli"><div class="tlt">07:30</div><div><div class="tlk">Ground levelling</div><div class="tld">2.5 h</div></div></div>
+        <div class="tli"><div class="tlt">10:00</div><div><div class="tlk">Gravel base</div><div class="tld">1 h</div></div></div>
+        <div class="tli"><div class="tlt">11:00</div><div><div class="tlk">Break ☕</div><div class="tld">15 min</div></div></div>
+      </div>
+      <div class="tldiv"></div>
+      <div class="tlc">
+        <div class="tlh" style="color:var(--o)">☀️ Afternoon</div>
+        <div class="tli"><div class="tlt">11:15</div><div><div class="tlk">Erect arch frame</div><div class="tld">1 h</div></div></div>
+        <div class="tli"><div class="tlt">12:15</div><div><div class="tlk">Bamboo spacers</div><div class="tld">30 min</div></div></div>
+        <div class="tli"><div class="tlt">12:45</div><div><div class="tlk">Stack perlite bags</div><div class="tld">2 h</div></div></div>
+        <div class="tli"><div class="tlt">14:45</div><div><div class="tlk">Drape + tension tarp</div><div class="tld">30 min</div></div></div>
+        <div class="tli"><div class="tlt">15:15</div><div><div class="tlk">Guy lines + final check</div><div class="tld">30 min</div></div></div>
+      </div>
+    </div>
+    <div class="al al-o" style="text-align:center;font-weight:600;font-size:13px">🏠 Weatherproof insulated shelter — ready by 16:00</div>
+  </div>
+</div>
+
+<!-- S6 COSTS -->
+<div class="slide" id="s6">
+  <div class="pad">
+    <div class="ey">Economics</div>
+    <div class="h2">Cost per shelter</div>
+    <div class="sub">3×3×2 m · fully installed</div>
+    <div class="rule"></div>
+    <div class="cc">Frame + Cover</div>
+    <div class="cr"><span class="cl">Outsunny 3×3×2m arch kit</span><span class="cv">€91</span></div>
+    <div class="cc">Wall Insulation</div>
+    <div class="cr"><span class="cl">125 jute bags 90×60cm</span><span class="cv">€125</span></div>
+    <div class="cr"><span class="cl">375 kg expanded perlite (bulk)</span><span class="cv">€30</span></div>
+    <div class="cr"><span class="cl">Bag treatment — lime, linseed, borax</span><span class="cv">€13</span></div>
+    <div class="cc">Finishing</div>
+    <div class="cr"><span class="cl">Bamboo spacer poles ×10</span><span class="cv">€10</span></div>
+    <div class="cr"><span class="cl">Jute cord + paracord guy lines</span><span class="cv">€22</span></div>
+    <div class="cc">Optional Roof Upgrade</div>
+    <div class="cr"><span class="cl" style="color:#6b5e4a">PVC tarp 650 g/m² · 4×4m</span><span class="cv" style="color:#6b5e4a">+€90</span></div>
+    <div class="cc">Labour</div>
+    <div class="cr"><span class="cl">2 people × 1 day</span><span class="cv">€150</span></div>
+    <div class="ctotal">
+      <span class="ctl">Total installed</span>
+      <span class="ctv">€441 – €531</span>
+    </div>
+    <div class="al al-o">📈 At 20+ units, direct sourcing drops total cost below €320 per shelter.</div>
+  </div>
+</div>
+
+<!-- S7 PRICING -->
+<div class="slide" id="s7">
+  <div class="pad">
+    <div class="ey">Revenue</div>
+    <div class="h2">What to charge</div>
+    <div class="sub">3×3m · fully installed · no furniture</div>
+    <div class="rule"></div>
+    <div class="card">
+      <div class="c-ic">🏕️</div>
+      <div class="c-hd">Glamping operator</div>
+      <div class="c-bd">Recovers cost in 2–3 nights rental. High willingness to pay for ecological credentials and fast turnaround.</div>
+      <div class="c-pr">€1,500 – €2,000</div>
+    </div>
+    <div class="card">
+      <div class="c-ic">🌿</div>
+      <div class="c-hd">Private off-grid / eco client</div>
+      <div class="c-bd">Compares against wooden cabins (€3,000+) and geodesic domes (€2,500+). Natural materials command a premium.</div>
+      <div class="c-pr">€1,200 – €1,600</div>
+    </div>
+    <div class="card">
+      <div class="c-ic">🏡</div>
+      <div class="c-hd">Farm worker / rural housing</div>
+      <div class="c-bd">Volume deals, simpler finish. Strong repeat client potential once trust is established.</div>
+      <div class="c-pr">€900 – €1,200</div>
+    </div>
+    <div class="al al-t">⚡ Never go below €1,000. Labour alone is €150/day — below €1k you are not covering risk, transport and contingency.</div>
+  </div>
+</div>
+
+<!-- S8 SCALE -->
+<div class="slide" id="s8">
+  <div class="pad">
+    <div class="ey">Production Model</div>
+    <div class="h2">At scale</div>
+    <div class="rule ol"></div>
+    <div style="display:flex;gap:9px;margin-bottom:14px">
+      <div class="mc"><div class="mr" style="color:var(--t)">Prep (off-site)</div><div class="mt">Batch-fills bags daily</div><div class="mt">150 bags/day · solo</div><div class="mt">Stocks 3 shelters ahead</div><div class="mt">Day before site crew</div></div>
+      <div class="mc"><div class="mr" style="color:var(--o)">Assembly (on-site)</div><div class="mt">2-person crew</div><div class="mt">Pre-filled bags only</div><div class="mt">Frame + bags + tarp = ½ day</div><div class="mt">2 shelters/day possible</div></div>
+    </div>
+    <div class="tsec">Material Cost at Volume</div>
+    <div style="background:rgba(232,213,176,.04);border-radius:9px;overflow:hidden;border:1px solid rgba(232,213,176,.09);margin-bottom:14px">
+      <div class="er"><span style="font-size:14px;color:var(--sd);font-weight:600">1–5 units</span><span style="font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--t);font-weight:700">~€480</span><span style="font-size:12px;color:var(--mu)">Standard pricing</span></div>
+      <div class="er"><span style="font-size:14px;color:var(--sd);font-weight:600">6–20 units</span><span style="font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--t);font-weight:700">~€380</span><span style="font-size:12px;color:var(--mu)">Bulk materials</span></div>
+      <div class="er"><span style="font-size:14px;color:var(--sd);font-weight:600">20+ units</span><span style="font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--t);font-weight:700">~€300</span><span style="font-size:12px;color:var(--mu)">Direct sourcing</span></div>
+    </div>
+    <div class="tsec">Revenue Scenarios</div>
+    <div class="sg">
+      <div class="sc"><div class="su">Glamping unit</div><div class="sp2">€1,500–2,000</div></div>
+      <div class="sc"><div class="su">Off-grid / eco</div><div class="sp2">€1,200–1,600</div></div>
+      <div class="sc"><div class="su">Farm housing</div><div class="sp2">€900–1,200</div></div>
+      <div class="sc"><div class="su">Event rental/wk</div><div class="sp2">€150–300</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- S9 SOURCING -->
+<div class="slide" id="s9">
+  <div class="pad">
+    <div class="ey">Supply Chain</div>
+    <div class="h2">Spain sourcing</div>
+    <div class="sub">All components available locally</div>
+    <div class="rule"></div>
+    <div class="sk" style="color:var(--t)">🔩 Frame</div>
+    <div class="sr"><div><div class="sw">3×3×2m (ref 845-619)</div><div class="swh">Aosom ES / Amazon ES</div></div><div class="sp3" style="color:var(--t)">€91</div></div>
+    <div class="sr"><div><div class="sw">3.5×3×2m (ref 845-563)</div><div class="swh">Aosom ES</div></div><div class="sp3" style="color:var(--t)">~€110</div></div>
+    <div class="sr"><div><div class="sw">1.8×1.8×2m prototype (845-775)</div><div class="swh">Aosom ES</div></div><div class="sp3" style="color:var(--t)">€63</div></div>
+    <div class="sr"><div><div class="sw">Second-hand arches · Almería</div><div class="swh">Milanuncios · Wallapop</div></div><div class="sp3" style="color:var(--t)">€3–6/arch</div></div>
+    <div class="sk" style="color:#c8883a">🪨 Perlite</div>
+    <div class="sr"><div><div class="sw">Big bag 1 m³</div><div class="swh">Agroterra.com</div></div><div class="sp3" style="color:#c8883a">€78/m³</div></div>
+    <div class="sr"><div><div class="sw">Bulk trailer 50 m³+</div><div class="swh">Sumin. agrícolas Andalucía</div></div><div class="sp3" style="color:#c8883a">€22/m³</div></div>
+    <div class="sk" style="color:var(--sd)">🛍️ Jute bags</div>
+    <div class="sr"><div><div class="sw">90×60cm natural · retail</div><div class="swh">Amazon ES</div></div><div class="sp3" style="color:var(--sd)">€0.80–1.20</div></div>
+    <div class="sr"><div><div class="sw">Bulk 500+ units</div><div class="swh">Alibaba</div></div><div class="sp3" style="color:var(--sd)">€0.40–0.60</div></div>
+    <div class="sk" style="color:var(--o)">🏕️ PVC Tarp</div>
+    <div class="sr"><div><div class="sw">650 g/m² by the metre</div><div class="swh">Jardinday.es</div></div><div class="sp3" style="color:var(--o)">€5–8/m²</div></div>
+    <div class="sr"><div><div class="sw">Custom truck tarp</div><div class="swh">Beljemi.es</div></div><div class="sp3" style="color:var(--o)">from €82</div></div>
+  </div>
+</div>
+
+<!-- S10 WHY -->
+<div class="slide" id="s10">
+  <div class="pad">
+    <div class="ey">Summary</div>
+    <div class="h2">Why PearlShell</div>
+    <div class="rule"></div>
+    <div class="wc"><div class="wic">⚡</div><div><div class="wh">Speed</div><div class="wb">2 people, 1 day. No specialist skills, no machinery, no concrete. Repeatable from day one.</div></div></div>
+    <div class="wc"><div class="wic">🌿</div><div><div class="wh">Natural materials</div><div class="wb">Jute, volcanic perlite, bamboo, lime. Frame and tarp are the only industrial elements.</div></div></div>
+    <div class="wc"><div class="wic">🌡️</div><div><div class="wh">Genuine insulation</div><div class="wb">Perlite outperforms straw bale per kilogram, permanently and without degrading.</div></div></div>
+    <div class="wc"><div class="wic">📦</div><div><div class="wh">Standardised kit</div><div class="wb">Every build is identical. Any worker replicates it after a single training session.</div></div></div>
+    <div class="wc"><div class="wic">💶</div><div><div class="wh">Strong margins</div><div class="wb">€300–500 to build. €1,200–2,000 to sell. Margins that compound at volume.</div></div></div>
+    <div class="wc"><div class="wic">🔄</div><div><div class="wh">Upgradeable</div><div class="wb">Start simple. Add lime render, solar, plumbing — the structure supports all of it.</div></div></div>
+  </div>
+</div>
+
+<!-- S11 CTA -->
+<div class="slide" id="s11">
+  <div class="cta-wrap">
+    <div class="cta-bg"></div><div class="grain"></div>
+    <div class="cover-inner">
+      <div class="c-eye">Let's build together</div>
+      <div class="c-title" style="font-size:46px">Ready to<br><span>pilot?</span></div>
+      <div class="c-rule"></div>
+      <div class="c-tag">We are inviting early partners to co-build the first PearlShell units in Andalucía — glamping operators, rural developers, NGOs and off-grid communities.</div>
+      <div class="offer">
+        <div class="offer-h">What early partners receive</div>
+        <div class="offer-i">
+          ✦ First unit built at cost price on your land<br>
+          ✦ Full crew training included<br>
+          ✦ Custom dimensions — size, finish, use case<br>
+          ✦ Priority pricing as you scale
+        </div>
+      </div>
+      <div class="pills">
+        <div class="pill">digitalAIventures LLC</div>
+        <div class="pill">Alpujarras · Andalucía</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div id="nav">
+  <button class="nb" id="bp" onclick="go(-1)" disabled>← Back</button>
+  <div class="dots" id="dots"></div>
+  <button class="nb fw" id="bn" onclick="go(1)">Next →</button>
+</div>
+
+<script>
+const N=12;
+const ac=['#b85c2a','#b85c2a','#b85c2a','#6b8f3e','#4a7ab5','#6b8f3e','#c8883a','#b85c2a','#6b8f3e','#4a7ab5','#b85c2a','#b85c2a'];
+const bg=['#2a2318','#1e1a0f','#1e1a0f','#0e1408','#0a0e18','#0e1408','#18100a','#180c06','#0e1408','#080e18','#1a1510','#1a1510'];
+
+let cur=0;
+
+function buildDots(){
+  const d=document.getElementById('dots');
+  d.innerHTML='';
+  for(let i=0;i<N;i++){
+    const el=document.createElement('div');
+    el.className='dot'+(i===cur?' on':'');
+    el.onclick=()=>goTo(i);
+    d.appendChild(el);
+  }
+}
+
+function goTo(n){
+  const prev=document.getElementById('s'+cur);
+  prev.classList.remove('on');
+  cur=n;
+  const next=document.getElementById('s'+cur);
+  next.classList.add('on');
+  next.scrollTop=0; /* reset scroll within slide */
+  /* update background on slide element itself */
+  next.style.background=bg[cur];
+  document.body.style.background=bg[cur];
+  document.getElementById('prog').style.cssText='width:'+((cur+1)/N*100)+'%;background:'+ac[cur];
+  document.getElementById('ctr').textContent=String(cur+1).padStart(2,'0')+' / '+String(N).padStart(2,'0');
+  const bp=document.getElementById('bp'),bn=document.getElementById('bn');
+  bp.disabled=cur===0;
+  bn.disabled=cur===N-1;
+  bn.style.cssText=cur<N-1
+    ?'border-color:'+ac[cur]+'55;background:'+ac[cur]+'15;color:'+ac[cur]
+    :'opacity:.22;cursor:default';
+  document.getElementById('nav').style.background='rgba(26,21,16,.96)';
+  buildDots();
+}
+
+function go(d){goTo(Math.max(0,Math.min(N-1,cur+d)));}
+
+/* swipe */
+let tx=0;
+document.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
+document.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)>50)go(dx<0?1:-1);
+},{passive:true});
+
+/* init */
+buildDots();
+goTo(0);
+</script>
+</body>
+</html>

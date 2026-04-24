@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terra Bonbon — Teeth Health Chewing Candy</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Crimson+Pro:wght@300;400;600&family=Caveat:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cacao: #3d1f0e;
+    --panela: #c47a2b;
+    --cream: #f5ead8;
+    --sage: #7a8c6e;
+    --clove: #6b3a2a;
+    --gold: #d4a843;
+    --paper: #ede0c8;
+    --dark: #1e0f05;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    font-family: 'Crimson Pro', serif;
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* ── SLIDES ── */
+  .slide {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3rem 2rem;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .slide.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── SLIDE 1 — HERO ── */
+  .slide-hero {
+    background: radial-gradient(ellipse at 30% 50%, #5c2a10 0%, #1e0f05 70%);
+    text-align: center;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .slide-hero::after {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(196,122,43,0.15) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+  }
+
+  .hero-icon {
+    font-size: 4rem;
+    animation: float 3s ease-in-out infinite;
+    z-index: 1;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .hero-eyebrow {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    z-index: 1;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 8vw, 5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    z-index: 1;
+  }
+
+  .hero-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .hero-subtitle {
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: rgba(245,234,216,0.7);
+    max-width: 360px;
+    line-height: 1.7;
+    z-index: 1;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+    border: 1px solid rgba(212,168,67,0.3);
+    border-radius: 100px;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    color: var(--gold);
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    z-index: 1;
+  }
+
+  /* ── SLIDE 2 — PROBLEM ── */
+  .slide-problem {
+    background: linear-gradient(160deg, #2a1208 0%, #1a0e04 100%);
+  }
+
+  /* ── SLIDE 3 — CONCEPT ── */
+  .slide-concept {
+    background: linear-gradient(160deg, #1e1008 0%, #2d1a0a 60%, #1a0e04 100%);
+  }
+
+  /* ── SLIDE 4 — INGREDIENTS ── */
+  .slide-ingredients {
+    background: linear-gradient(180deg, #1a0e04 0%, #22160a 100%);
+  }
+
+  /* ── SLIDE 5 — RECIPE ── */
+  .slide-recipe {
+    background: linear-gradient(160deg, #0f1a0a 0%, #1a2210 60%, #0e1508 100%);
+  }
+
+  /* ── SLIDE 6 — TEXTURE ── */
+  .slide-texture {
+    background: linear-gradient(160deg, #1a0e04 0%, #251208 100%);
+  }
+
+  /* ── SLIDE 7 — BUSINESS ── */
+  .slide-business {
+    background: linear-gradient(160deg, #08100a 0%, #0f1a0e 100%);
+  }
+
+  /* ── SLIDE 8 — CTA ── */
+  .slide-cta {
+    background: radial-gradient(ellipse at center, #3d1f0e 0%, #1e0f05 100%);
+    text-align: center;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .slide-number {
+    font-family: 'Caveat', cursive;
+    font-size: 0.9rem;
+    color: var(--gold);
+    opacity: 0.5;
+    margin-bottom: 0.5rem;
+  }
+
+  .slide-label {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--sage);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    color: var(--cream);
+  }
+
+  h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--gold);
+  }
+
+  p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: rgba(245,234,216,0.8);
+    margin-bottom: 1rem;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── INGREDIENT PILLS ── */
+  .ingredients-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .ingredient-card {
+    background: rgba(245,234,216,0.05);
+    border: 1px solid rgba(212,168,67,0.15);
+    border-radius: 12px;
+    padding: 0.9rem 1.1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .ingredient-card:active {
+    background: rgba(212,168,67,0.1);
+    border-color: rgba(212,168,67,0.4);
+  }
+
+  .ing-icon {
+    font-size: 1.6rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .ing-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--cream);
+    margin-bottom: 0.15rem;
+  }
+
+  .ing-benefit {
+    font-size: 0.85rem;
+    color: rgba(245,234,216,0.55);
+    line-height: 1.5;
+  }
+
+  .ing-tag {
+    margin-left: auto;
+    flex-shrink: 0;
+    background: rgba(122,140,110,0.2);
+    border: 1px solid rgba(122,140,110,0.3);
+    border-radius: 20px;
+    padding: 0.1rem 0.6rem;
+    font-size: 0.7rem;
+    color: var(--sage);
+    font-family: 'Caveat', cursive;
+    font-size: 0.85rem;
+    align-self: center;
+  }
+
+  /* ── RECIPE BOX ── */
+  .recipe-box {
+    background: rgba(245,234,216,0.04);
+    border: 1px solid rgba(212,168,67,0.2);
+    border-radius: 16px;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .recipe-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(245,234,216,0.06);
+    font-size: 0.95rem;
+  }
+
+  .recipe-row:last-child { border-bottom: none; }
+
+  .recipe-ingredient { color: var(--cream); }
+  .recipe-amount {
+    font-family: 'Caveat', cursive;
+    font-size: 1.05rem;
+    color: var(--gold);
+  }
+
+  /* ── STEPS ── */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--panela);
+    color: var(--dark);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .step-text {
+    font-size: 0.95rem;
+    color: rgba(245,234,216,0.8);
+    line-height: 1.6;
+  }
+
+  /* ── TEXTURE CARDS ── */
+  .texture-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+
+  .texture-card {
+    background: rgba(245,234,216,0.04);
+    border: 1px solid rgba(212,168,67,0.12);
+    border-radius: 14px;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .texture-icon { font-size: 1.8rem; margin-bottom: 0.4rem; }
+  .texture-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    color: var(--cream);
+    margin-bottom: 0.25rem;
+  }
+  .texture-desc { font-size: 0.75rem; color: rgba(245,234,216,0.5); line-height: 1.4; }
+
+  /* ── COST BOX ── */
+  .cost-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .cost-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.6rem 0.8rem;
+    background: rgba(245,234,216,0.04);
+    border-radius: 8px;
+    font-size: 0.95rem;
+  }
+
+  .cost-label { color: rgba(245,234,216,0.7); }
+  .cost-value { color: var(--gold); font-family: 'Caveat', cursive; font-size: 1.1rem; }
+
+  .cost-total {
+    background: rgba(212,168,67,0.1);
+    border: 1px solid rgba(212,168,67,0.3);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .cost-total-label { font-size: 0.85rem; color: rgba(245,234,216,0.6); margin-bottom: 0.3rem; }
+  .cost-total-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--gold);
+  }
+
+  /* ── BIG QUOTE ── */
+  .big-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 4vw, 1.8rem);
+    line-height: 1.5;
+    font-style: italic;
+    color: var(--cream);
+    border-left: 3px solid var(--gold);
+    padding-left: 1.2rem;
+    margin: 1rem 0;
+  }
+
+  /* ── SCIENCE BADGE ── */
+  .science-badge {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    background: rgba(122,140,110,0.12);
+    border: 1px solid rgba(122,140,110,0.25);
+    border-radius: 12px;
+    padding: 0.9rem 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .science-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .science-text { font-size: 0.9rem; color: rgba(245,234,216,0.75); line-height: 1.5; }
+
+  /* ── CTA ── */
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    color: var(--cream);
+    line-height: 1.1;
+  }
+  .cta-title em { color: var(--gold); }
+
+  .cta-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    width: 100%;
+    max-width: 380px;
+  }
+
+  .cta-step {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    background: rgba(245,234,216,0.05);
+    border-radius: 10px;
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+    color: rgba(245,234,216,0.8);
+  }
+
+  .cta-emoji { font-size: 1.2rem; }
+
+  .brand-footer {
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    color: rgba(212,168,67,0.4);
+    margin-top: 2rem;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--panela));
+    z-index: 999;
+    transition: width 0.3s ease;
+  }
+
+  /* ── NAV DOTS ── */
+  .nav-dots {
+    position: fixed;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 998;
+  }
+
+  .nav-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(212,168,67,0.25);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .nav-dot.active {
+    background: var(--gold);
+    height: 18px;
+    border-radius: 3px;
+  }
+
+  /* ── SCROLL HINT ── */
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Caveat', cursive;
+    font-size: 0.9rem;
+    color: rgba(212,168,67,0.5);
+    animation: bounce 2s ease-in-out infinite;
+    z-index: 1;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="nav-dots" id="navDots"></div>
+
+<!-- ── SLIDE 1: HERO ── -->
+<section class="slide slide-hero" data-slide="0">
+  <div class="hero-icon">🍫</div>
+  <div class="hero-eyebrow">A concept by digitalAIventures</div>
+  <h1 class="hero-title">Chew Your Way to<br><em>Healthier Teeth</em></h1>
+  <p class="hero-subtitle">Artisan, eco-bio chewing bonbons crafted from ancient dental remedies — cacao, cloves, panela & spices.</p>
+  <div class="hero-tag">🌿 2 per day · 30-day supply · ~€6/month</div>
+  <div class="scroll-hint">scroll down ↓</div>
+</section>
+
+<!-- ── SLIDE 2: PROBLEM ── -->
+<section class="slide slide-problem" data-slide="1">
+  <div class="slide-number">01</div>
+  <div class="slide-label">The Problem</div>
+  <div class="divider"></div>
+  <h2>Oral care is either<br><em>toxic or tasteless</em></h2>
+  <p>Commercial chewing gums are packed with synthetic sweeteners, plasticizers, and zero functional ingredients. Herbal remedies work but feel medicinal and inaccessible.</p>
+  <div class="big-quote">"What if your daily treat was also your daily dental care?"</div>
+  <p>A delicious, affordable, genuinely functional candy — bridging ancient plant wisdom and modern oral health science.</p>
+</section>
+
+<!-- ── SLIDE 3: CONCEPT ── -->
+<section class="slide slide-concept" data-slide="2">
+  <div class="slide-number">02</div>
+  <div class="slide-label">The Concept</div>
+  <div class="divider"></div>
+  <h2>Prototype<br><em>Bonbons</em></h2>
+  <div class="science-badge">
+    <div class="science-icon">🔬</div>
+    <div class="science-text"><strong>Theobromine</strong> in cacao shows enamel-remineralizing properties comparable to fluoride in several studies.</div>
+  </div>
+  <div class="science-badge">
+    <div class="science-icon">🌱</div>
+    <div class="science-text"><strong>Eugenol</strong> in cloves is the active compound in most dental anesthetics — a proven antimicrobial & anti-inflammatory.</div>
+  </div>
+  <div class="science-badge">
+    <div class="science-icon">🍬</div>
+    <div class="science-text"><strong>Panela</strong> (raw cane) retains minerals Ca, Mg, K — far less harmful than refined sugar for dental enamel.</div>
+  </div>
+  <p>100% eco-bio · No synthetics · No plastics · Made by hand in small batches</p>
+</section>
+
+<!-- ── SLIDE 4: INGREDIENTS ── -->
+<section class="slide slide-ingredients" data-slide="3">
+  <div class="slide-number">03</div>
+  <div class="slide-label">Prototype Ingredients</div>
+  <div class="divider"></div>
+  <h2>Simple.<br><em>Powerful.</em></h2>
+  <div class="ingredients-grid">
+    <div class="ingredient-card">
+      <div class="ing-icon">🍫</div>
+      <div>
+        <div class="ing-name">Cacao Powder</div>
+        <div class="ing-benefit">Theobromine, antioxidants, enamel remineralization</div>
+      </div>
+      <div class="ing-tag">base</div>
+    </div>
+    <div class="ingredient-card">
+      <div class="ing-icon">🟤</div>
+      <div>
+        <div class="ing-name">Panela</div>
+        <div class="ing-benefit">Raw sweetener, mineral-rich, low-processed</div>
+      </div>
+      <div class="ing-tag">sweet</div>
+    </div>
+    <div class="ingredient-card">
+      <div class="ing-icon">🌿</div>
+      <div>
+        <div class="ing-name">Cloves Powder</div>
+        <div class="ing-benefit">Eugenol — antibacterial, analgesic, anti-inflammatory</div>
+      </div>
+      <div class="ing-tag">active</div>
+    </div>
+    <div class="ingredient-card">
+      <div class="ing-icon">🫒</div>
+      <div>
+        <div class="ing-name">Olive Oil</div>
+        <div class="ing-benefit">Polyphenols, binder, oleocanthal anti-inflammatory</div>
+      </div>
+      <div class="ing-tag">binder</div>
+    </div>
+    <div class="ingredient-card">
+      <div class="ing-icon">🐝</div>
+      <div>
+        <div class="ing-name">Beeswax</div>
+        <div class="ing-benefit">Texture firmness, natural preservative</div>
+      </div>
+      <div class="ing-tag">texture</div>
+    </div>
+    <div class="ingredient-card">
+      <div class="ing-icon">🌶️</div>
+      <div>
+        <div class="ing-name">Cinnamon + Pepper</div>
+        <div class="ing-benefit">Antibacterial + piperine boosts bioavailability</div>
+      </div>
+      <div class="ing-tag">active</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SLIDE 5: RECIPE ── -->
+<section class="slide slide-recipe" data-slide="4">
+  <div class="slide-number">04</div>
+  <div class="slide-label">Prototype Recipe</div>
+  <div class="divider"></div>
+  <h2>≈30 Bonbons<br><em>First Batch</em></h2>
+  <div class="recipe-box">
+    <div class="recipe-row"><span class="recipe-ingredient">Panela (powdered)</span><span class="recipe-amount">50g</span></div>
+    <div class="recipe-row"><span class="recipe-ingredient">Cacao powder</span><span class="recipe-amount">30g</span></div>
+    <div class="recipe-row"><span class="recipe-ingredient">Raw honey</span><span class="recipe-amount">40g</span></div>
+    <div class="recipe-row"><span class="recipe-ingredient">Beeswax (melted)</span><span class="recipe-amount">8g</span></div>
+    <div class="recipe-row"><span class="recipe-ingredient">Olive oil</span><span class="recipe-amount">15g</span></div>
+    <div class="recipe-row"><span class="recipe-ingredient">Clove powder</span><span class="recipe-amount">2g</span></div>
+    <div class="recipe-row"><span class="recipe-ingredient">Cinnamon</span><span class="recipe-amount">3g</span></div>
+    <div class="recipe-row"><span class="recipe-ingredient">Salt (fine)</span><span class="recipe-amount">0.5g</span></div>
+    <div class="recipe-row"><span class="recipe-ingredient">Black pepper</span><span class="recipe-amount">0.3g</span></div>
+  </div>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-text">Powder panela finely in mortar</div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-text">Melt beeswax + olive oil on lowest heat</div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-text">Off heat — add honey, panela, cacao, spices</div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-text">Mix into thick paste, roll marble-sized balls</div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-text">Refrigerate 1h · Store in glass jar · Lasts 3–4 weeks</div></div>
+  </div>
+</section>
+
+<!-- ── SLIDE 6: TEXTURE ── -->
+<section class="slide slide-texture" data-slide="5">
+  <div class="slide-number">05</div>
+  <div class="slide-label">Texture Options</div>
+  <div class="divider"></div>
+  <h2>Choose Your<br><em>Chew</em></h2>
+  <p style="margin-bottom:1.2rem">Chewiness can be tuned with natural additives:</p>
+  <div class="texture-grid">
+    <div class="texture-card">
+      <div class="texture-icon">🌾</div>
+      <div class="texture-name">Oat Flour</div>
+      <div class="texture-desc">Dense, bread-like chew. Grind rolled oats.</div>
+    </div>
+    <div class="texture-card">
+      <div class="texture-icon">🌿</div>
+      <div class="texture-name">Fig Paste</div>
+      <div class="texture-desc">Sticky taffy-like pull. 3-4 dried figs mashed.</div>
+    </div>
+    <div class="texture-card">
+      <div class="texture-icon">🫙</div>
+      <div class="texture-name">Agar Agar</div>
+      <div class="texture-desc">Jelly/Turkish delight style. V2 format.</div>
+    </div>
+    <div class="texture-card">
+      <div class="texture-icon">🌱</div>
+      <div class="texture-name">Psyllium Husk</div>
+      <div class="texture-desc">Doughy, elastic. Just 2–3g needed.</div>
+    </div>
+    <div class="texture-card">
+      <div class="texture-icon">🌰</div>
+      <div class="texture-name">Ground Almonds</div>
+      <div class="texture-desc">Crumbly-then-chewy. Local & abundant.</div>
+    </div>
+    <div class="texture-card">
+      <div class="texture-icon">🟫</div>
+      <div class="texture-name">Carob Powder</div>
+      <div class="texture-desc">Sticky, sweet, Mediterranean. Algarroba.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SLIDE 7: COST ── -->
+<section class="slide slide-business" data-slide="6">
+  <div class="slide-number">06</div>
+  <div class="slide-label">The Numbers</div>
+  <div class="divider"></div>
+  <h2>Affordable<br><em>by Design</em></h2>
+  <div class="cost-grid">
+    <div class="cost-row"><span class="cost-label">Cacao powder</span><span class="cost-value">~€1.20</span></div>
+    <div class="cost-row"><span class="cost-label">Panela + Honey</span><span class="cost-value">~€1.50</span></div>
+    <div class="cost-row"><span class="cost-label">Olive oil + Beeswax</span><span class="cost-value">~€1.00</span></div>
+    <div class="cost-row"><span class="cost-label">Spices (cloves, cinnamon...)</span><span class="cost-value">~€1.20</span></div>
+  </div>
+  <div class="cost-total">
+    <div class="cost-total-label">30-day supply · 60 bonbons · eco-bio</div>
+    <div class="cost-total-value">≈ €5–6 / month</div>
+  </div>
+  <p style="margin-top:1rem;font-size:0.9rem;color:rgba(245,234,216,0.5)">Future upgrade ingredients — xylitol, licorice root, cardamom — available at herbolarios & Naturitas.es</p>
+</section>
+
+<!-- ── SLIDE 8: CTA ── -->
+<section class="slide slide-cta" data-slide="7">
+  <div class="hero-icon">🦷</div>
+  <h2 class="cta-title">Ready to<br><em>make the first batch?</em></h2>
+  <div class="cta-steps">
+    <div class="cta-step"><div class="cta-emoji">🛒</div>Gather: cacao, panela, cloves, beeswax, cinnamon</div>
+    <div class="cta-step"><div class="cta-emoji">🍳</div>Melt · Mix · Roll · Refrigerate</div>
+    <div class="cta-step"><div class="cta-emoji">📝</div>Test texture — adjust beeswax & honey ratio</div>
+    <div class="cta-step"><div class="cta-emoji">🔬</div>Iterate with oat flour or fig paste for chewiness</div>
+    <div class="cta-step"><div class="cta-emoji">🌿</div>Level up with xylitol, licorice, cardamom</div>
+  </div>
+  <div class="brand-footer">Terra Bonbon · digitalAIventures · Andalucía 🇪🇸</div>
+</section>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const navDots = document.getElementById('navDots');
+  const progress = document.getElementById('progress');
+
+  // Create nav dots
+  slides.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'nav-dot';
+    dot.addEventListener('click', () => {
+      slides[i].scrollIntoView({ behavior: 'smooth' });
+    });
+    navDots.appendChild(dot);
+  });
+
+  const dots = document.querySelectorAll('.nav-dot');
+
+  // Intersection Observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  slides.forEach(s => observer.observe(s));
+
+  // Scroll progress + active dot
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.body.scrollHeight - window.innerHeight;
+    progress.style.width = (scrolled / total * 100) + '%';
+
+    let active = 0;
+    slides.forEach((s, i) => {
+      const rect = s.getBoundingClientRect();
+      if (rect.top <= window.innerHeight * 0.5) active = i;
+    });
+
+    dots.forEach((d, i) => d.classList.toggle('active', i === active));
+  });
+
+  // Init
+  window.dispatchEvent(new Event('scroll'));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gemma 4 Local AI — Why Your Community Needs Its Own AI Server</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,300&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0c;
+  --bg2: #111115;
+  --bg3: #1a1a22;
+  --text: #e8e8ed;
+  --text2: #9999a8;
+  --accent: #f97316;
+  --accent2: #fb923c;
+  --accent-glow: #f9731630;
+  --green: #22c55e;
+  --green-dim: #22c55e20;
+  --blue: #60a5fa;
+  --blue-dim: #60a5fa18;
+  --purple: #a78bfa;
+  --red: #f87171;
+  --card-border: #2a2a35;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+/* --- GRAIN OVERLAY --- */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* --- LAYOUT --- */
+.container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+
+section { padding: 5rem 0; }
+
+/* --- HERO --- */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -20%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: pulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.3; transform: scale(1); }
+  100% { opacity: 0.6; transform: scale(1.15); }
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-family: 'Space Mono', monospace;
+  font-size: .72rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-glow);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  padding: .35rem 1rem;
+  margin-bottom: 2rem;
+  animation: fadeUp .8s ease both;
+}
+
+.hero-badge::before { content: '●'; font-size: .5rem; animation: blink 2s infinite; }
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  animation: fadeUp .8s .15s ease both;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.hero-sub {
+  font-size: 1.15rem;
+  color: var(--text2);
+  max-width: 600px;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  animation: fadeUp .8s .3s ease both;
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  animation: fadeUp .8s .45s ease both;
+}
+
+.hero-stat {
+  background: var(--bg2);
+  border: 1px solid var(--card-border);
+  border-radius: .75rem;
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.hero-stat .num {
+  font-family: 'Space Mono', monospace;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--accent2);
+  display: block;
+}
+
+.hero-stat .label {
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text2);
+  margin-top: .3rem;
+  display: block;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- SECTION HEADERS --- */
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: .7rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: .75rem;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.section-desc {
+  color: var(--text2);
+  font-size: 1rem;
+  max-width: 640px;
+  margin-bottom: 2.5rem;
+}
+
+/* --- CARDS GRID --- */
+.cards {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.cards-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.cards-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--card-border);
+  border-radius: 1rem;
+  padding: 1.75rem;
+  transition: border-color .3s, transform .3s;
+}
+
+.card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+}
+
+.card-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: .5rem;
+}
+
+.card p {
+  font-size: .88rem;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+/* --- HARDWARE TIERS --- */
+.tier {
+  background: var(--bg2);
+  border: 1px solid var(--card-border);
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.tier.recommended {
+  border-color: var(--accent);
+  box-shadow: 0 0 40px var(--accent-glow);
+}
+
+.tier.recommended::after {
+  content: '★ BEST VALUE';
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-family: 'Space Mono', monospace;
+  font-size: .65rem;
+  letter-spacing: .1em;
+  color: var(--bg);
+  background: var(--accent);
+  padding: .25rem .75rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.tier-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.tier-icon { font-size: 2.2rem; }
+
+.tier-name {
+  font-family: 'Space Mono', monospace;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.tier-price {
+  font-family: 'Space Mono', monospace;
+  font-size: .85rem;
+  color: var(--accent2);
+}
+
+.tier-specs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: .75rem;
+  margin-bottom: 1.25rem;
+}
+
+.spec {
+  background: var(--bg);
+  border-radius: .5rem;
+  padding: .75rem 1rem;
+}
+
+.spec-label {
+  font-size: .65rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text2);
+  display: block;
+}
+
+.spec-val {
+  font-family: 'Space Mono', monospace;
+  font-size: .9rem;
+  color: #fff;
+  font-weight: 700;
+}
+
+.tier-models {
+  font-size: .85rem;
+  color: var(--text2);
+  line-height: 1.7;
+}
+
+.tier-models strong { color: var(--text); }
+
+/* --- BENCHMARK BAR --- */
+.bench-section { background: var(--bg2); border-radius: 1rem; padding: 2rem; margin-bottom: 1rem; border: 1px solid var(--card-border); }
+
+.bench-row {
+  margin-bottom: 1.5rem;
+}
+
+.bench-row:last-child { margin-bottom: 0; }
+
+.bench-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: .4rem;
+}
+
+.bench-name {
+  font-size: .82rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.bench-score {
+  font-family: 'Space Mono', monospace;
+  font-size: .82rem;
+  color: var(--accent2);
+  font-weight: 700;
+}
+
+.bench-track {
+  height: 8px;
+  background: var(--bg);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.bench-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transition: width 1.5s ease;
+}
+
+.bench-fill.alt { background: linear-gradient(90deg, #4b5563, #6b7280); }
+
+/* --- COMPARISON TABLE --- */
+.comp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  font-size: .82rem;
+}
+
+.comp-table thead th {
+  font-family: 'Space Mono', monospace;
+  font-size: .68rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text2);
+  padding: .75rem .5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.comp-table tbody td {
+  padding: .75rem .5rem;
+  border-bottom: 1px solid #1a1a22;
+  color: var(--text2);
+  vertical-align: top;
+}
+
+.comp-table tbody td:first-child { color: var(--text); font-weight: 500; }
+
+.comp-table .win { color: var(--green); font-weight: 700; }
+
+/* --- USE CASES --- */
+.use-case {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.use-case:last-child { border-bottom: none; }
+
+.use-case-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  opacity: .4;
+  line-height: 1;
+  min-width: 50px;
+}
+
+.use-case h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: .4rem;
+}
+
+.use-case p {
+  font-size: .85rem;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+.use-case .tag {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: .6rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: .15rem .5rem;
+  border-radius: 999px;
+  margin-top: .5rem;
+  margin-right: .3rem;
+}
+
+.tag-edge { color: var(--green); background: var(--green-dim); border: 1px solid #22c55e40; }
+.tag-mid { color: var(--blue); background: var(--blue-dim); border: 1px solid #60a5fa30; }
+.tag-top { color: var(--purple); background: #a78bfa18; border: 1px solid #a78bfa30; }
+
+/* --- COST SECTION --- */
+.cost-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.cost-col {
+  background: var(--bg2);
+  border: 1px solid var(--card-border);
+  border-radius: 1rem;
+  padding: 1.75rem;
+  text-align: center;
+}
+
+.cost-col.local { border-color: var(--green); }
+
+.cost-col h3 {
+  font-family: 'Space Mono', monospace;
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text2);
+  margin-bottom: 1rem;
+}
+
+.cost-price {
+  font-family: 'Space Mono', monospace;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.cost-col.local .cost-price { color: var(--green); }
+
+.cost-detail {
+  font-size: .78rem;
+  color: var(--text2);
+  margin-top: .5rem;
+  line-height: 1.6;
+}
+
+/* --- CTA --- */
+.cta {
+  text-align: center;
+  padding: 5rem 0;
+}
+
+.cta h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.cta p {
+  color: var(--text2);
+  font-size: 1rem;
+  max-width: 500px;
+  margin: 0 auto 2rem;
+}
+
+.cta-command {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 1rem;
+  color: var(--accent);
+  background: var(--bg2);
+  border: 1px solid var(--accent);
+  border-radius: .75rem;
+  padding: 1rem 2rem;
+  cursor: default;
+  letter-spacing: .02em;
+}
+
+.cta-command::before { content: '$ '; color: var(--text2); }
+
+/* --- FOOTER --- */
+footer {
+  text-align: center;
+  padding: 2rem 0 3rem;
+  font-size: .72rem;
+  color: #444;
+  border-top: 1px solid var(--card-border);
+}
+
+footer a { color: var(--accent); text-decoration: none; }
+
+/* --- NAV DOTS --- */
+.nav-dots {
+  position: fixed;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  z-index: 100;
+}
+
+.nav-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--card-border);
+  border: none;
+  cursor: pointer;
+  transition: background .3s, transform .3s;
+  padding: 0;
+}
+
+.nav-dot.active, .nav-dot:hover {
+  background: var(--accent);
+  transform: scale(1.4);
+}
+
+/* --- SCROLL ANIMATIONS --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 640px) {
+  section { padding: 3.5rem 0; }
+  .cost-compare { grid-template-columns: 1fr; }
+  .use-case { flex-direction: column; gap: .75rem; }
+  .use-case-num { min-width: auto; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  .tier.recommended::after { position: static; display: inline-block; margin-bottom: 1rem; }
+  .nav-dots { display: none; }
+  .comp-table { font-size: .72rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV DOTS -->
+<nav class="nav-dots">
+  <button class="nav-dot active" onclick="scrollToSection(0)" title="Home"></button>
+  <button class="nav-dot" onclick="scrollToSection(1)" title="The Family"></button>
+  <button class="nav-dot" onclick="scrollToSection(2)" title="Hardware"></button>
+  <button class="nav-dot" onclick="scrollToSection(3)" title="Benchmarks"></button>
+  <button class="nav-dot" onclick="scrollToSection(4)" title="Use Cases"></button>
+  <button class="nav-dot" onclick="scrollToSection(5)" title="Cost"></button>
+  <button class="nav-dot" onclick="scrollToSection(6)" title="Start"></button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="s0">
+  <div class="container">
+    <div class="hero-badge">Released April 2, 2026 — Apache 2.0</div>
+    <h1>Your Community Deserves<br>Its <em>Own AI</em></h1>
+    <p class="hero-sub">
+      Gemma 4 by Google DeepMind brings frontier-level intelligence to local hardware.
+      No subscriptions. No data leaving your network. No limits.
+      Build a shared AI workbench that serves everyone — privately, freely, forever.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="num">4</span><span class="label">Model Sizes</span></div>
+      <div class="hero-stat"><span class="num">140+</span><span class="label">Languages</span></div>
+      <div class="hero-stat"><span class="num">256K</span><span class="label">Context Window</span></div>
+      <div class="hero-stat"><span class="num">€0</span><span class="label">License Cost</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- THE FAMILY -->
+<section id="s1">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">01 — The Model Family</div>
+      <h2 class="section-title">Four Models, Every Scale</h2>
+      <p class="section-desc">From a phone in your pocket to a workstation under your desk — one family covers it all.</p>
+    </div>
+    <div class="cards cards-2 reveal">
+      <div class="card">
+        <span class="card-icon">📱</span>
+        <h3>E2B — Ultra Edge</h3>
+        <p>2.3B effective params. Runs on phones, Raspberry Pi, any 2GB+ device. <strong style="color:var(--green)">Text + Image + Audio.</strong> 128K context. The smallest model with native speech recognition.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">💻</span>
+        <h3>E4B — Edge Pro</h3>
+        <p>4.5B effective params. Laptops and tablets with 8GB RAM. <strong style="color:var(--green)">Text + Image + Audio.</strong> 128K context. Complex tasks without internet.</p>
+      </div>
+      <div class="card" style="border-color: var(--accent);">
+        <span class="card-icon">⚡</span>
+        <h3>26B A4B — The MoE Star</h3>
+        <p>26B total, <strong style="color:var(--accent)">only 3.8B active</strong> per token. Runs at 4B speed, thinks at 30B quality. 256K context. The efficiency breakthrough — best quality-per-watt in open AI.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🖥️</span>
+        <h3>31B Dense — Maximum</h3>
+        <p>31B params, full dense architecture. Top quality for demanding workloads. 256K context. #3 open model globally on LMArena.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HARDWARE TIERS -->
+<section id="s2" style="background: var(--bg2);">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">02 — Hardware Tiers</div>
+      <h2 class="section-title">What Does It Actually Cost to Build?</h2>
+      <p class="section-desc">Three practical build tiers — from a repurposed old PC to a dedicated AI workstation.</p>
+    </div>
+
+    <div class="reveal">
+      <div class="tier">
+        <div class="tier-header">
+          <span class="tier-icon">🟢</span>
+          <div>
+            <div class="tier-name">BASE — Entry Server</div>
+            <div class="tier-price">€200 – €500</div>
+          </div>
+        </div>
+        <div class="tier-specs">
+          <div class="spec"><span class="spec-label">GPU</span><span class="spec-val">GTX 1080 8GB (used)</span></div>
+          <div class="spec"><span class="spec-label">RAM</span><span class="spec-val">16–32 GB</span></div>
+          <div class="spec"><span class="spec-label">Model</span><span class="spec-val">E4B / 26B (Q2)</span></div>
+          <div class="spec"><span class="spec-label">Speed</span><span class="spec-val">~10–20 tok/s</span></div>
+        </div>
+        <p class="tier-models">Runs <strong>E4B at full speed</strong> or <strong>26B MoE at Q2 quantization</strong>. Good enough for a small team doing document analysis, translation, and basic coding help. Could be a repurposed gaming PC or office desktop with a used GPU added.</p>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="tier recommended">
+        <div class="tier-header">
+          <span class="tier-icon">🟡</span>
+          <div>
+            <div class="tier-name">MID — Community Workbench</div>
+            <div class="tier-price">€800 – €1,500</div>
+          </div>
+        </div>
+        <div class="tier-specs">
+          <div class="spec"><span class="spec-label">GPU</span><span class="spec-val">RTX 3090 24GB (used ~€400)</span></div>
+          <div class="spec"><span class="spec-label">RAM</span><span class="spec-val">32–64 GB</span></div>
+          <div class="spec"><span class="spec-label">Model</span><span class="spec-val">26B MoE (Q6)</span></div>
+          <div class="spec"><span class="spec-label">Speed</span><span class="spec-val">~40–60 tok/s</span></div>
+        </div>
+        <p class="tier-models">The sweet spot. <strong>26B MoE at Q6 quality</strong> — near-flagship performance at consumer cost. Serves 3–5 concurrent users comfortably. A used RTX 3090 (€400–600) is the best bang-for-buck GPU in the market for inference. Add a Xeon/Ryzen workstation (€300–600 used) and you have a community AI server that rivals cloud APIs.</p>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="tier">
+        <div class="tier-header">
+          <span class="tier-icon">🔴</span>
+          <div>
+            <div class="tier-name">TOP — AI Workstation</div>
+            <div class="tier-price">€2,500 – €5,000</div>
+          </div>
+        </div>
+        <div class="tier-specs">
+          <div class="spec"><span class="spec-label">GPU</span><span class="spec-val">RTX 5090 32GB / 2×3090</span></div>
+          <div class="spec"><span class="spec-label">RAM</span><span class="spec-val">64–128 GB</span></div>
+          <div class="spec"><span class="spec-label">Model</span><span class="spec-val">31B Dense (Q6–Q8)</span></div>
+          <div class="spec"><span class="spec-label">Speed</span><span class="spec-val">~50–85 tok/s</span></div>
+        </div>
+        <p class="tier-models">Maximum quality. <strong>31B Dense at high quantization</strong> with full 256K context. Serves 5–10 concurrent users. Professional-grade coding, research, document intelligence. Can fine-tune models on your own data. Multi-GPU for heavy workloads.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENCHMARKS -->
+<section id="s3">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">03 — Benchmarks</div>
+      <h2 class="section-title">Not Just Open — <em>Best-in-Class</em></h2>
+      <p class="section-desc">Gemma 4 doesn't just compete. It leads reasoning, math, and coding among all open models.</p>
+    </div>
+
+    <div class="bench-section reveal">
+      <h3 style="font-size:.85rem;color:#fff;margin-bottom:1.5rem;">Gemma 4 31B vs Gemma 3 27B — Generational Leap</h3>
+      <div class="bench-row">
+        <div class="bench-label"><span class="bench-name">MMLU Pro (knowledge)</span><span class="bench-score">85.2% vs 67.6%</span></div>
+        <div class="bench-track"><div class="bench-fill" style="width:85.2%"></div></div>
+        <div class="bench-track" style="margin-top:3px;"><div class="bench-fill alt" style="width:67.6%"></div></div>
+      </div>
+      <div class="bench-row">
+        <div class="bench-label"><span class="bench-name">AIME 2026 (math reasoning)</span><span class="bench-score">89.2% vs 20.8%</span></div>
+        <div class="bench-track"><div class="bench-fill" style="width:89.2%"></div></div>
+        <div class="bench-track" style="margin-top:3px;"><div class="bench-fill alt" style="width:20.8%"></div></div>
+      </div>
+      <div class="bench-row">
+        <div class="bench-label"><span class="bench-name">LiveCodeBench v6 (coding)</span><span class="bench-score">80% vs 29.1%</span></div>
+        <div class="bench-track"><div class="bench-fill" style="width:80%"></div></div>
+        <div class="bench-track" style="margin-top:3px;"><div class="bench-fill alt" style="width:29.1%"></div></div>
+      </div>
+      <div class="bench-row">
+        <div class="bench-label"><span class="bench-name">Codeforces ELO</span><span class="bench-score">2150 vs 110</span></div>
+        <div class="bench-track"><div class="bench-fill" style="width:95%"></div></div>
+        <div class="bench-track" style="margin-top:3px;"><div class="bench-fill alt" style="width:5%"></div></div>
+      </div>
+    </div>
+
+    <div class="reveal" style="overflow-x:auto;">
+      <h3 style="font-size:.85rem;color:#fff;margin-bottom:.75rem;">vs Competition (April 2026)</h3>
+      <table class="comp-table">
+        <thead>
+          <tr><th>Feature</th><th>Gemma 4 31B</th><th>Gemma 4 26B MoE</th><th>Qwen 3.5 27B</th><th>Llama 4 Scout</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>LMArena Score</td><td class="win">1452 (#3)</td><td>1441 (#6)</td><td>~1420</td><td>~1400</td></tr>
+          <tr><td>Active Params</td><td>31B</td><td class="win">3.8B</td><td>27B</td><td>17B</td></tr>
+          <tr><td>Context</td><td>256K</td><td>256K</td><td>256K</td><td class="win">10M</td></tr>
+          <tr><td>Languages</td><td>140+</td><td>140+</td><td class="win">201</td><td>~100</td></tr>
+          <tr><td>Edge Models</td><td class="win" colspan="2">✓ E2B/E4B with audio</td><td>✓ small variants</td><td>✗ min 109B</td></tr>
+          <tr><td>License</td><td class="win">Apache 2.0</td><td class="win">Apache 2.0</td><td class="win">Apache 2.0</td><td>Restricted</td></tr>
+          <tr><td>GPU Needed (Q4)</td><td>~20 GB</td><td class="win">~16 GB</td><td>~18 GB</td><td>~65 GB</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section id="s4" style="background: var(--bg2);">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">04 — Community Use Cases</div>
+      <h2 class="section-title">What Can a Shared AI Server Do?</h2>
+      <p class="section-desc">A local Gemma 4 workbench becomes infrastructure — like shared internet or a community library.</p>
+    </div>
+
+    <div class="reveal">
+      <div class="use-case">
+        <span class="use-case-num">01</span>
+        <div>
+          <h3>Multilingual Document Hub</h3>
+          <p>Translate contracts, forms, and official documents across 140+ languages instantly. No uploading sensitive personal data to cloud services. Ideal for immigrant support, rural offices, NGOs.</p>
+          <span class="tag tag-edge">E4B edge</span><span class="tag tag-mid">26B server</span>
+        </div>
+      </div>
+      <div class="use-case">
+        <span class="use-case-num">02</span>
+        <div>
+          <h3>Local Business Assistant</h3>
+          <p>Pricing research, inventory management, customer email drafting, invoice processing, social media content — in your language, with your context. Small shops and cooperatives get AI tools without monthly SaaS fees.</p>
+          <span class="tag tag-mid">26B server</span>
+        </div>
+      </div>
+      <div class="use-case">
+        <span class="use-case-num">03</span>
+        <div>
+          <h3>Education & Tutoring</h3>
+          <p>Personalized tutoring for students of all ages. Math reasoning (89% AIME), science explanations, language learning, homework help. Works offline — perfect for areas with limited internet.</p>
+          <span class="tag tag-edge">E4B tablet</span><span class="tag tag-mid">26B server</span>
+        </div>
+      </div>
+      <div class="use-case">
+        <span class="use-case-num">04</span>
+        <div>
+          <h3>Code Workshop & Maker Lab</h3>
+          <p>Codeforces ELO 2150 — competitive programmer level. Debug code, build apps, learn programming, automate workflows. Native tool calling enables agentic coding: the AI writes, tests, and fixes code autonomously.</p>
+          <span class="tag tag-mid">26B server</span><span class="tag tag-top">31B workstation</span>
+        </div>
+      </div>
+      <div class="use-case">
+        <span class="use-case-num">05</span>
+        <div>
+          <h3>Agricultural & Land Management</h3>
+          <p>Analyze soil reports, identify plants from photos, plan crop rotations, process drone imagery, interpret weather data. Vision capabilities handle charts, maps, and field photos natively.</p>
+          <span class="tag tag-edge">E4B phone</span><span class="tag tag-mid">26B server</span>
+        </div>
+      </div>
+      <div class="use-case">
+        <span class="use-case-num">06</span>
+        <div>
+          <h3>Health Information Access</h3>
+          <p>Understand medical reports, translate prescriptions, access health knowledge in native languages. Not a replacement for doctors — but a bridge for underserved communities to understand their own medical documents.</p>
+          <span class="tag tag-mid">26B server</span>
+        </div>
+      </div>
+      <div class="use-case">
+        <span class="use-case-num">07</span>
+        <div>
+          <h3>Creative & Cultural Projects</h3>
+          <p>Write stories, scripts, poetry in any language. Analyze historical documents. Transcribe oral histories via audio input. Generate educational materials for cultural preservation.</p>
+          <span class="tag tag-edge">E2B audio</span><span class="tag tag-mid">26B server</span>
+        </div>
+      </div>
+      <div class="use-case">
+        <span class="use-case-num">08</span>
+        <div>
+          <h3>Privacy-First Legal Aid</h3>
+          <p>Summarize legal documents, explain regulations, draft simple contracts. All data stays local — critical for sensitive legal matters. Supports 140+ languages for diverse communities.</p>
+          <span class="tag tag-mid">26B server</span><span class="tag tag-top">31B workstation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COST COMPARISON -->
+<section id="s5">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">05 — The Economics</div>
+      <h2 class="section-title">Cloud vs. Local — The Math</h2>
+      <p class="section-desc">A one-time hardware investment replaces perpetual subscription costs. For a team of 10 people.</p>
+    </div>
+
+    <div class="cost-compare reveal">
+      <div class="cost-col">
+        <h3>☁️ Cloud APIs</h3>
+        <div class="cost-price">€200+/mo</div>
+        <p class="cost-detail">
+          ChatGPT Team: €25/user × 10 = €250/mo<br>
+          Claude Pro: €20/user × 10 = €200/mo<br>
+          API usage: variable, can spike<br>
+          <strong style="color:var(--red)">= €2,400–3,000+/year</strong><br>
+          + your data leaves your network
+        </p>
+      </div>
+      <div class="cost-col local">
+        <h3>🏠 Local Gemma 4</h3>
+        <div class="cost-price">€0/mo</div>
+        <p class="cost-detail">
+          One-time hardware: €800–1,500<br>
+          Electricity: ~€10–20/mo<br>
+          Software: free (Ollama + open tools)<br>
+          <strong style="color:var(--green)">= €0 after month 5–7</strong><br>
+          + total data privacy & sovereignty
+        </p>
+      </div>
+    </div>
+
+    <div class="reveal" style="margin-top:2rem; text-align:center;">
+      <p style="font-size:1.1rem; color:var(--green); font-weight:700;">
+        Break-even in ~6 months. Free forever after.
+      </p>
+      <p style="font-size:.85rem; color:var(--text2); margin-top:.5rem;">
+        Every month after break-even, your community saves €200–300 that stays in the local economy.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="s6">
+  <div class="container reveal">
+    <div class="section-label" style="text-align:center;">06 — Get Started</div>
+    <h2>One Command. <em style="color:var(--accent);">Infinite Potential.</em></h2>
+    <p>Install Ollama on any Linux, Mac, or Windows machine. Download Gemma 4. Start serving your community today.</p>
+    <div class="cta-command">ollama run gemma4</div>
+    <p style="font-size:.78rem; color:var(--text2); margin-top:1.5rem;">
+      Apache 2.0 licensed — no restrictions, no user limits, no usage policies.<br>
+      Supported from day one by: Ollama, llama.cpp, LM Studio, vLLM, Hugging Face, MLX, NVIDIA NIM.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>Gemma 4 Local AI Analysis — <a href="https://blog.google/innovation-and-ai/technology/developers-tools/gemma-4/" target="_blank">Official Google Blog</a> — April 2026</p>
+    <p style="margin-top:.4rem;">Made with Claude · digitalAIventures LLC · <a href="https://amber-kitten-4khe.here.now/" target="_blank">more sites</a></p>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Nav dots
+const sections = document.querySelectorAll('section[id]');
+const dots = document.querySelectorAll('.nav-dot');
+function scrollToSection(i) { sections[i]?.scrollIntoView({ behavior: 'smooth' }); }
+const dotObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const idx = [...sections].indexOf(e.target);
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+  });
+}, { threshold: 0.4 });
+sections.forEach(s => dotObserver.observe(s));
+</script>
+
+</body>
+</html>

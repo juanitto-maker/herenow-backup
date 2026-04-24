@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌀 Spiral Electric Rail Farm — Pitch</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#030712;color:#f1f5f9;min-height:100vh}
+.header{background:linear-gradient(135deg,#14532d,#166534);padding:16px;text-align:center}
+.header h1{font-size:17px;font-weight:900;color:#fff}
+.header p{font-size:11px;color:#bbf7d0;margin-top:4px}
+.tabs{display:flex;background:#111827;border-bottom:1px solid #1f2937;overflow-x:auto}
+.tab{flex-shrink:0;padding:10px 14px;font-size:11px;font-weight:700;color:#6b7280;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap}
+.tab.active{color:#4ade80;border-bottom-color:#4ade80}
+.content{padding:12px;max-width:520px;margin:0 auto}
+.section{display:none}.section.active{display:block}
+.card{background:#1f2937;border-radius:14px;padding:12px;margin-bottom:10px}
+.card-green{background:#14532d}.card-red{background:#450a0a}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.stat-card{background:#1f2937;border-radius:12px;padding:12px;text-align:center}
+.stat-card .icon{font-size:22px;margin-bottom:4px}
+.stat-card .val{font-size:18px;font-weight:900;color:#4ade80}
+.stat-card .lbl{font-size:10px;color:#9ca3af}
+.row{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px}
+.row .icon{font-size:20px;flex-shrink:0;margin-top:2px}
+.row-title{font-size:12px;font-weight:700}
+.row-desc{font-size:11px;color:#9ca3af;margin-top:2px;line-height:1.4}
+.stitle{font-size:12px;font-weight:700;margin-bottom:8px}
+.green{color:#4ade80}.red{color:#f87171}.yellow{color:#fbbf24}.purple{color:#c084fc}
+.toggles{display:flex;gap:6px;margin-bottom:8px}
+.toggle{flex:1;padding:6px;border-radius:8px;font-size:11px;font-weight:700;border:none;cursor:pointer;background:#374151;color:#9ca3af}
+.toggle.on{background:#14532d;color:#4ade80}
+.type-btns{display:flex;gap:6px;margin-top:8px}
+.type-btn{flex:1;padding:8px;border-radius:10px;font-size:11px;font-weight:700;border:1px solid #374151;background:#111827;color:#6b7280;cursor:pointer}
+.type-btn.active{border-color:#4ade80;background:#1f2937;color:#4ade80}
+.info-box{background:#111;border-radius:8px;padding:8px;margin-top:8px;font-size:11px;line-height:1.5;min-height:44px;color:#d1d5db}
+.el-btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.el-btn{padding:5px 10px;border-radius:8px;font-size:11px;font-weight:600;border:1px solid #374151;background:#111827;color:#6b7280;cursor:pointer}
+input[type=range]{width:100%;-webkit-appearance:none;height:5px;border-radius:3px;background:#374151;outline:none;margin:6px 0}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#4ade80;cursor:pointer}
+.slider-row{margin-bottom:12px}
+.slabel{display:flex;justify-content:space-between;font-size:11px;margin-bottom:2px}
+.slabel span:first-child{color:#9ca3af}
+.slabel span:last-child{color:#4ade80;font-weight:700}
+.be-box{border-radius:16px;padding:16px;text-align:center;margin-bottom:10px}
+.be-box .yr{font-size:36px;font-weight:900;color:#fff}
+.be-box .sub{font-size:12px;color:#bbf7d0;margin-top:4px}
+.be-box .note{font-size:11px;color:#d1fae5;margin-top:6px}
+.table{width:100%;border-collapse:collapse;font-size:11px}
+.table th{text-align:left;padding:6px 8px;color:#6b7280;font-size:10px;text-transform:uppercase;border-bottom:1px solid #374151}
+.table td{padding:7px 8px;border-bottom:1px solid #1f2937;vertical-align:top}
+.table tr:nth-child(even) td{background:#111827}
+.chart-wrap{background:#111827;border-radius:12px;padding:10px;margin-bottom:10px}
+.chart-wrap p{font-size:10px;color:#6b7280;text-align:center;margin-bottom:6px}
+.cc-btn{padding:6px 14px;border-radius:99px;font-size:11px;font-weight:700;border:none;cursor:pointer}
+.cc-on{background:#16a34a;color:#fff}.cc-off{background:#374151;color:#9ca3af}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:8px}
+.mini-card{background:#1f2937;border-radius:10px;padding:8px;text-align:center}
+.mini-card .v{font-size:12px;font-weight:800;color:#4ade80}
+.mini-card .l{font-size:9px;color:#6b7280}
+.tagline{background:#14532d;border-radius:14px;padding:14px;text-align:center;font-size:13px;font-weight:700;color:#bbf7d0;font-style:italic;margin-top:10px}
+.badge{background:#1e1b4b;border:1px solid #7c3aed;border-radius:10px;padding:8px 12px;font-size:11px;color:#c084fc;margin-bottom:10px;text-align:center}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>🌀 SPIRAL ELECTRIC RAIL FARM</h1>
+  <p>Zero-emission · Continuous track · Self-harvesting to hub</p>
+</div>
+<div class="tabs">
+  <div class="tab active" onclick="showTab('vision',event)">🌍 Vision</div>
+  <div class="tab" onclick="showTab('grid',event)">🗺️ Grid</div>
+  <div class="tab" onclick="showTab('detail',event)">🔬 Detail</div>
+  <div class="tab" onclick="showTab('costs',event)">💰 Costs</div>
+  <div class="tab" onclick="showTab('roi',event)">📈 ROI</div>
+</div>
+<div class="content">
+
+<div id="vision" class="section active">
+  <div class="card card-green" style="text-align:center;padding:20px 12px;margin-bottom:10px">
+    <div style="font-size:36px;margin-bottom:8px">🌀⚡🌿</div>
+    <div style="font-size:15px;font-weight:900;color:#4ade80;margin-bottom:6px">One continuous track. Zero switching. Fully automatic.</div>
+    <div style="font-size:11px;color:#d1fae5;line-height:1.6">A single Archimedean spiral rail replaces diesel tractors. Machines follow the groove from outer edge to central hub — naturally, continuously, with no switching mechanism needed. Like a vinyl record, but for farming.</div>
+  </div>
+  <div class="badge">🌀 <strong>Spiral upgrade:</strong> no switching arms, no ring transfers, simpler chassis, harvest flows automatically inward to hub.</div>
+  <div class="grid2">
+    <div class="stat-card"><div class="icon">♻️</div><div class="val">~90%</div><div class="lbl">fuel reduction</div></div>
+    <div class="stat-card"><div class="icon">🌱</div><div class="val">~13%</div><div class="lbl">land as ecology</div></div>
+    <div class="stat-card"><div class="icon">🤖</div><div class="val">24/7</div><div class="lbl">continuous ops</div></div>
+    <div class="stat-card"><div class="icon">💰</div><div class="val">~13yr</div><div class="lbl">break-even</div></div>
+  </div>
+  <div class="stitle red">❌ The Problem</div>
+  <div class="card card-red row"><div class="icon">⛽</div><div><div class="row-title">Massive fuel burn</div><div class="row-desc">Industrial farm machinery is one of the largest non-transport fossil fuel consumers globally.</div></div></div>
+  <div class="card card-red row"><div class="icon">💨</div><div><div class="row-title">Hidden emissions</div><div class="row-desc">Agriculture accounts for ~10-12% of global GHG — machinery fuel rarely counted in food carbon footprint.</div></div></div>
+  <div class="card card-red row"><div class="icon">🏜️</div><div><div class="row-title">Ecological deserts</div><div class="row-desc">Monoculture at scale eliminates biodiversity, depletes soil, kills pollinators.</div></div></div>
+  <div class="card card-red row" style="margin-bottom:14px"><div class="icon">💸</div><div><div class="row-title">Rising fuel costs</div><div class="row-desc">Farm profitability is hostage to oil prices — a structural vulnerability every decade.</div></div></div>
+  <div class="stitle green">✅ The Spiral Solution</div>
+  <div class="card row"><div class="icon">🌀</div><div><div class="row-title" style="color:#4ade80">Archimedean spiral rail</div><div class="row-desc">One continuous groove from outer edge to hub. No switching needed. Machine follows it like a record needle — inward while working, outward to reset.</div></div></div>
+  <div class="card row"><div class="icon">🏗️</div><div><div class="row-title" style="color:#4ade80">Hub as harvest sink</div><div class="row-desc">Machine naturally arrives at the central hub silo at end of each pass. No perimeter harvest road — just one access road per unit to hub.</div></div></div>
+  <div class="card row"><div class="icon">☀️</div><div><div class="row-title" style="color:#4ade80">Solar outer channel</div><div class="row-desc">Outermost spiral turn is a solar-covered irrigation channel, generating electricity powering the whole unit.</div></div></div>
+  <div class="card row"><div class="icon">🌿</div><div><div class="row-title" style="color:#4ade80">Built-in ecology</div><div class="row-desc">Interstitial zones between tiled spiral units become ponds, microforests, beehives — biodiversity by geometric necessity.</div></div></div>
+  <div class="tagline">"One continuous groove.<br>From field edge to silo — uninterrupted."</div>
+</div>
+
+<div id="grid" class="section">
+  <p style="font-size:11px;color:#6b7280;text-align:center;margin-bottom:8px">7×7 spiral grid · ~616 ha · 49 units</p>
+  <div class="toggles">
+    <button class="toggle on" id="tg-eco" onclick="toggleLayer('eco')">🌿 Eco</button>
+    <button class="toggle on" id="tg-roads" onclick="toggleLayer('roads')">🛤️ Roads</button>
+    <button class="toggle on" id="tg-hubs" onclick="toggleLayer('hubs')">🏗️ Hubs</button>
+  </div>
+  <div style="background:#0d1a0d;border-radius:14px;padding:4px">
+    <svg id="grid-svg" viewBox="0 0 508 508" width="100%" style="display:block"></svg>
+  </div>
+  <div class="type-btns">
+    <button class="type-btn" id="btn-corner" onclick="selType('corner')">🌿 Corner</button>
+    <button class="type-btn" id="btn-edge" onclick="selType('edge')">🌾 Edge</button>
+    <button class="type-btn" id="btn-inner" onclick="selType('inner')">⚡ Inner</button>
+  </div>
+  <div class="info-box" id="grid-info">Tap a unit type to learn more.</div>
+  <div class="grid3">
+    <div class="mini-card"><div class="v">49</div><div class="l">Spiral units</div></div>
+    <div class="mini-card"><div class="v">~616 ha</div><div class="l">Total area</div></div>
+    <div class="mini-card"><div class="v">~80 ha</div><div class="l">Eco zones</div></div>
+  </div>
+</div>
+
+<div id="detail" class="section">
+  <p style="font-size:11px;color:#6b7280;text-align:center;margin-bottom:8px">2×2 spiral detail · Tap elements</p>
+  <div style="background:#0d1a0d;border-radius:14px;padding:4px">
+    <svg id="detail-svg" viewBox="0 0 340 340" width="100%" style="display:block"></svg>
+  </div>
+  <div class="el-btns" id="el-btns"></div>
+  <div class="info-box" id="detail-info">Tap any element above to see details.</div>
+</div>
+
+<div id="costs" class="section">
+  <div class="badge">🌀 Spiral eliminates switching arms → ~€500/ha saved vs concentric ring design.</div>
+  <div class="slider-row">
+    <div class="slabel"><span>Farm size</span><span id="ha-lbl">616 ha</span></div>
+    <input type="range" min="100" max="1200" step="50" value="616" oninput="updateCosts(this.value)">
+    <div style="display:flex;justify-content:space-between;font-size:9px;color:#4b5563"><span>100 ha</span><span>1200 ha</span></div>
+  </div>
+  <div class="grid2" id="cost-cards"></div>
+  <div class="card card-green" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+    <div><div style="font-size:12px;font-weight:700;color:#4ade80">🌿 Carbon Credits</div><div style="font-size:10px;color:#86efac">Forests + ponds sequestration</div></div>
+    <div style="font-size:16px;font-weight:900;color:#4ade80" id="carbon-lbl"></div>
+  </div>
+  <div class="chart-wrap"><p>Cost comparison (€K)</p><svg id="bar-chart" viewBox="0 0 300 160" width="100%" style="display:block"></svg></div>
+  <table class="table">
+    <thead><tr><th>Item</th><th class="red">Conv.</th><th class="green">Spiral</th></tr></thead>
+    <tbody>
+      <tr><td>Machinery<br><span style="color:#4b5563;font-size:9px">Simpler chassis</span></td><td class="red">€2,500/ha</td><td class="green">€7,000/ha</td></tr>
+      <tr><td>Spiral rail<br><span style="color:#4b5563;font-size:9px">One-time, 40yr</span></td><td class="red">—</td><td class="green">€6,500/ha</td></tr>
+      <tr><td>Solar channel<br><span style="color:#4b5563;font-size:9px">Outer spiral turn</span></td><td class="red">—</td><td class="green">€2,500/ha</td></tr>
+      <tr><td>Access road</td><td class="red">€800/ha</td><td class="green">€300/ha</td></tr>
+      <tr><td>Fuel/energy annual</td><td class="red">€400/ha/yr</td><td class="green">€50/ha/yr</td></tr>
+      <tr><td>Maintenance annual</td><td class="red">€300/ha/yr</td><td class="green">€70/ha/yr</td></tr>
+      <tr><td>Labor annual</td><td class="red">€300/ha/yr</td><td class="green">€90/ha/yr</td></tr>
+      <tr><td>CO₂ emissions</td><td class="red">~3t/ha/yr</td><td class="green">~0</td></tr>
+      <tr><td>Carbon credits</td><td class="red">€0</td><td class="green">+€50-150/ha/yr</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="roi" class="section">
+  <div class="be-box" id="be-box" style="background:#14532d">
+    <div class="yr" id="be-year">Year 13</div>
+    <div class="sub">Break-even point</div>
+    <div class="note">Spiral design ~1-2 years faster than concentric ring design</div>
+  </div>
+  <div class="card">
+    <div style="font-size:12px;font-weight:700;margin-bottom:10px;color:#d1d5db">🎛️ Adjust Parameters</div>
+    <div class="slider-row">
+      <div class="slabel"><span>Farm size</span><span id="roi-ha">616 ha</span></div>
+      <input type="range" min="100" max="1200" step="50" value="616" oninput="updateROI()">
+    </div>
+    <div class="slider-row">
+      <div class="slabel"><span>Energy price index</span><span id="roi-ep">1x</span></div>
+      <input type="range" min="0.5" max="3" step="0.1" value="1" oninput="updateROI()">
+      <div style="display:flex;justify-content:space-between;font-size:9px;color:#4b5563"><span>cheap</span><span>expensive</span></div>
+    </div>
+    <div class="slider-row">
+      <div class="slabel"><span>Yield bonus</span><span id="roi-yb">+5%</span></div>
+      <input type="range" min="0" max="0.25" step="0.01" value="0.05" oninput="updateROI()">
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:11px;color:#9ca3af">🌿 Carbon credits</span>
+      <button class="cc-btn cc-on" id="cc-btn" onclick="toggleCC()">ON</button>
+    </div>
+  </div>
+  <div class="chart-wrap"><p>Cumulative cost 30 years (€K)</p><svg id="line-chart" viewBox="0 0 300 160" width="100%" style="display:block"></svg></div>
+  <div class="chart-wrap"><p>Net savings vs conventional (€K)</p><svg id="area-chart" viewBox="0 0 300 130" width="100%" style="display:block"></svg></div>
+  <div class="card row"><div class="icon">🌀</div><div><div class="row-title">Spiral simplicity saves money</div><div class="row-desc">No switching arms, no ring transfer. Simpler chassis. Lower upfront infra cost per ha vs concentric design.</div></div></div>
+  <div class="card row"><div class="icon">⚡</div><div><div class="row-title">Energy advantage compounds</div><div class="row-desc">Electric running cost 80-90% lower than diesel. As oil rises, advantage grows every year.</div></div></div>
+  <div class="card row"><div class="icon">📈</div><div><div class="row-title">Scale accelerates ROI</div><div class="row-desc">600+ ha is sweet spot for sub-15yr break-even. Infrastructure cost per ha drops with scale.</div></div></div>
+  <div class="card row"><div class="icon">🌿</div><div><div class="row-title">Carbon credits wildcard</div><div class="row-desc">Forest + pond credits can shave 2-4 years off break-even and create permanent income stream.</div></div></div>
+</div>
+</div>
+
+<script>
+function spiralPath(cx,cy,rMin,rMax,spacing){
+  var turns=(rMax-rMin)/spacing;
+  var steps=Math.round(turns*64);
+  var d='';
+  for(var i=0;i<=steps;i++){
+    var t=i/steps;
+    var theta=t*turns*2*Math.PI;
+    var r=rMin+spacing*theta/(2*Math.PI);
+    var x=cx+Math.cos(theta-Math.PI/2)*r;
+    var y=cy+Math.sin(theta-Math.PI/2)*r;
+    d+=(i===0?'M':'L')+x.toFixed(1)+','+y.toFixed(1)+' ';
+  }
+  return d;
+}
+
+function showTab(id,e){
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById(id).classList.add('active');
+  if(e&&e.target)e.target.classList.add('active');
+  if(id==='grid')drawGrid();
+  if(id==='detail')drawDetail();
+  if(id==='costs')updateCosts(616);
+  if(id==='roi')updateROI();
+}
+
+var GN=7,GR=34,GP=16;
+function gc(c){return GP+c*GR*2+GR;}
+function gr2(r){return GP+r*GR*2+GR;}
+var layers={roads:true,eco:true,hubs:true};
+var selT=null;
+
+var TINFO={
+  corner:{color:'#a3e635',desc:'<strong style="color:#a3e635">🌿 Corner Unit</strong>Largest eco zones. Ponds, microforests, machine hangars. Perimeter access on 2 sides. Best carbon credit land.'},
+  edge:{color:'#60a5fa',desc:'<strong style="color:#60a5fa">🌾 Edge Unit</strong>Perimeter road on 1 side. Medium eco zones. Hub access road to farm perimeter. Beehives, nursery, bird runs.'},
+  inner:{color:'#fb923c',desc:'<strong style="color:#fb923c">⚡ Inner Unit</strong>Maximum farming area. Hub accessed via internal road. Highest crop productivity. Small eco zones between units.'}
+};
+
+function getType(r,c){
+  var isC=(r===0||r===GN-1)&&(c===0||c===GN-1);
+  var isE=!isC&&(r===0||r===GN-1||c===0||c===GN-1);
+  return isC?'corner':isE?'edge':'inner';
+}
+
+function toggleLayer(l){
+  layers[l]=!layers[l];
+  document.getElementById('tg-'+l).classList.toggle('on',layers[l]);
+  drawGrid();
+}
+
+function selType(t){
+  selT=selT===t?null:t;
+  ['corner','edge','inner'].forEach(function(k){document.getElementById('btn-'+k).classList.toggle('active',selT===k);});
+  document.getElementById('grid-info').innerHTML=selT?TINFO[selT].desc:'Tap a unit type to learn more.';
+  drawGrid();
+}
+
+function drawGrid(){
+  var W=GN*GR*2+GP*2;
+  var s='';
+  if(layers.roads){
+    s+='<rect x="'+(GP-4)+'" y="'+(GP-4)+'" width="'+(GN*GR*2+8)+'" height="'+(GN*GR*2+8)+'" fill="none" stroke="#6b7280" stroke-width="4" rx="4" opacity="0.8"/>';
+    s+='<line x1="'+gc(3)+'" y1="'+(GP-4)+'" x2="'+gc(3)+'" y2="'+(GP+GN*GR*2+4)+'" stroke="#6b7280" stroke-width="2" opacity="0.4" stroke-dasharray="4,3"/>';
+    s+='<line x1="'+(GP-4)+'" y1="'+gr2(3)+'" x2="'+(GP+GN*GR*2+4)+'" y2="'+gr2(3)+'" stroke="#6b7280" stroke-width="2" opacity="0.4" stroke-dasharray="4,3"/>';
+  }
+  for(var row=0;row<GN;row++){
+    for(var col=0;col<GN;col++){
+      var t=getType(row,col);
+      var x=gc(col),y=gr2(row);
+      var strk={corner:'#4ade80',edge:'#5c940d',inner:'#166534'};
+      var op=(selT&&selT!==t)?0.15:1;
+      s+='<g opacity="'+op+'">';
+      s+='<circle cx="'+x+'" cy="'+y+'" r="'+(GR-0.5)+'" fill="#0a160a" stroke="'+strk[t]+'" stroke-width="'+(selT===t?2.5:0.7)+'"/>';
+      var sp=spiralPath(x,y,GR*0.1,GR*0.88,GR*0.135);
+      s+='<path d="'+sp+'" fill="none" stroke="#4ade80" stroke-width="0.8" opacity="0.6"/>';
+      s+='<circle cx="'+x+'" cy="'+y+'" r="'+(GR*0.88)+'" fill="none" stroke="#1d4ed8" stroke-width="'+(GR*0.065)+'" opacity="0.5"/>';
+      if(layers.eco&&col<GN-1&&row<GN-1){
+        s+='<circle cx="'+(x+GR)+'" cy="'+(y+GR)+'" r="'+(GR*0.19)+'" fill="#1e1b4b" opacity="0.85" stroke="#7c3aed" stroke-width="0.4"/>';
+      }
+      if(layers.hubs){
+        s+='<circle cx="'+x+'" cy="'+y+'" r="'+(GR*0.09)+'" fill="#b45309" stroke="#f59e0b" stroke-width="0.8"/>';
+      }
+      if(layers.roads){
+        s+='<line x1="'+x+'" y1="'+y+'" x2="'+x+'" y2="'+(y-GR)+'" stroke="#78716c" stroke-width="0.7" opacity="0.55" stroke-dasharray="2,2"/>';
+      }
+      s+='</g>';
+    }
+  }
+  var ly=W-17;
+  s+='<rect x="2" y="'+ly+'" width="'+(W-4)+'" height="15" rx="3" fill="#0a0a0a" opacity="0.9"/>';
+  [[10,'#0a160a','#4ade80','Spiral','#a3e635'],[60,'#0a160a','#5c940d','Edge','#60a5fa'],[98,'#0a160a','#166534','Inner','#fb923c'],[136,'#1e1b4b','#7c3aed','Eco','#c084fc']].forEach(function(l){
+    s+='<circle cx="'+l[0]+'" cy="'+(ly+7)+'" r="4" fill="'+l[1]+'" stroke="'+l[2]+'" stroke-width="0.8"/>';
+    s+='<text x="'+(l[0]+6)+'" y="'+(ly+11)+'" font-size="6.5" fill="'+l[4]+'">'+l[3]+'</text>';
+  });
+  s+='<line x1="174" y1="'+(ly+7)+'" x2="184" y2="'+(ly+7)+'" stroke="#78716c" stroke-width="1.5" stroke-dasharray="2,2"/>';
+  s+='<text x="186" y="'+(ly+11)+'" font-size="6.5" fill="#78716c">Access</text>';
+  s+='<line x1="220" y1="'+(ly+7)+'" x2="230" y2="'+(ly+7)+'" stroke="#6b7280" stroke-width="2"/>';
+  s+='<text x="232" y="'+(ly+11)+'" font-size="6.5" fill="#6b7280">Road</text>';
+  document.getElementById('grid-svg').innerHTML=s;
+}
+
+var DETS={
+  spiral:{label:'🌀 Spiral Track',color:'#4ade80',desc:'<strong style="color:#4ade80">🌀 Archimedean Spiral Track</strong>Single continuous groove from outer edge to hub. ~10m spacing between arms. No switching mechanism — machine follows it like a vinyl record needle. Multiple machines possible with spacing logic.'},
+  hub:{label:'🏗️ Hub',color:'#f59e0b',desc:'<strong style="color:#f59e0b">🏗️ Central Hub</strong>Grain silo, battery bank, pump station, control room. Machine arrives here naturally at end of each inward pass and deposits harvest directly.'},
+  solar:{label:'☀️ Solar Ch.',color:'#3b82f6',desc:'<strong style="color:#3b82f6">☀️ Solar Outer Channel</strong>Outermost spiral turn is a solar-covered irrigation channel (~8m wide). Powers the whole unit. Machine cleans panels on each outer pass.'},
+  machine:{label:'🤖 Machine',color:'#a3e635',desc:'<strong style="color:#a3e635">🤖 Rail Machine</strong>Electric chassis following the spiral groove. Modular tool head: plough, seeder, harvester, sprayer. Spirals inward while working, outward to reset. No switching arm needed — ever.'},
+  eco:{label:'🌿 Eco Zone',color:'#c084fc',desc:'<strong style="color:#c084fc">🌿 Eco Zone</strong>Interstitial space where 4 spiral units touch. Pond, microforest, beehives, bird runs, compost. No infrastructure crosses it — purely ecological.'},
+  road:{label:'🚛 Access Road',color:'#9ca3af',desc:'<strong style="color:#9ca3af">🚛 Hub Access Road</strong>One road per unit from hub to perimeter. Truck collects harvest from hub silo. Much simpler road network than conventional farm.'}
+};
+var selEl=null;
+
+function selectEl(k){
+  selEl=selEl===k?null:k;
+  document.querySelectorAll('.el-btn').forEach(function(b){b.classList.remove('active');b.style.borderColor='#374151';b.style.color='#6b7280';});
+  if(selEl){
+    var btn=document.querySelector('[data-el="'+k+'"]');
+    if(btn){btn.classList.add('active');btn.style.borderColor=DETS[k].color;btn.style.color=DETS[k].color;}
+    document.getElementById('detail-info').innerHTML=DETS[k].desc;
+  } else {
+    document.getElementById('detail-info').innerHTML='Tap any element above to see details.';
+  }
+}
+
+function drawDetail(){
+  var W=340,H=340,R=72;
+  var cx=[W/2-R,W/2+R,W/2-R,W/2+R];
+  var cy=[H/2-R,H/2-R,H/2+R,H/2+R];
+  var cx0=W/2,cy0=H/2;
+  var s='<rect x="4" y="4" width="'+(W-8)+'" height="'+(H-8)+'" rx="6" fill="#0a160a" stroke="#374151" stroke-width="1"/>';
+  for(var i=0;i<4;i++){
+    var x=cx[i],y=cy[i];
+    s+='<circle cx="'+x+'" cy="'+y+'" r="'+(R-0.5)+'" fill="#08120a" stroke="#166534" stroke-width="0.8" onclick="selectEl(\'spiral\')" style="cursor:pointer"/>';
+    s+='<circle cx="'+x+'" cy="'+y+'" r="'+(R*0.9)+'" fill="none" stroke="#1d4ed8" stroke-width="'+(R*0.09)+'" opacity="0.85" onclick="selectEl(\'solar\')" style="cursor:pointer"/>';
+    var degs=[0,30,60,90,120,150,180,210,240,270,300,330];
+    for(var d=0;d<degs.length;d++){
+      var rad=degs[d]*Math.PI/180,r1=R*0.855,r2=R*0.945;
+      s+='<line x1="'+(x+Math.cos(rad)*r1)+'" y1="'+(y+Math.sin(rad)*r1)+'" x2="'+(x+Math.cos(rad)*r2)+'" y2="'+(y+Math.sin(rad)*r2)+'" stroke="#fbbf24" stroke-width="0.9" opacity="0.55"/>';
+    }
+    var sp=spiralPath(x,y,R*0.12,R*0.82,R*0.145);
+    s+='<path d="'+sp+'" fill="none" stroke="#4ade80" stroke-width="1.4" opacity="0.75" onclick="selectEl(\'spiral\')" style="cursor:pointer"/>';
+    s+='<circle cx="'+x+'" cy="'+y+'" r="'+(R*0.11)+'" fill="#7c3a00" stroke="#f59e0b" stroke-width="1.5" onclick="selectEl(\'hub\')" style="cursor:pointer"/>';
+    s+='<text x="'+x+'" y="'+(y+4)+'" text-anchor="middle" font-size="10" style="pointer-events:none">🏗️</text>';
+    var ty2=y<H/2?4:H-4;
+    s+='<line x1="'+x+'" y1="'+y+'" x2="'+x+'" y2="'+ty2+'" stroke="#78716c" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.7" onclick="selectEl(\'road\')" style="cursor:pointer"/>';
+  }
+  // Machine on TL unit
+  var mc={x:cx[0],y:cy[0]};
+  var mTheta=3.6*Math.PI;
+  var mR=R*0.12+R*0.145*mTheta/(2*Math.PI);
+  var mx2=mc.x+Math.cos(mTheta-Math.PI/2)*mR;
+  var my2=mc.y+Math.sin(mTheta-Math.PI/2)*mR;
+  for(var ti=1;ti<=4;ti++){
+    var tt=mTheta-ti*0.22;
+    var tr=R*0.12+R*0.145*tt/(2*Math.PI);
+    var tx2=mc.x+Math.cos(tt-Math.PI/2)*tr;
+    var ty3=mc.y+Math.sin(tt-Math.PI/2)*tr;
+    s+='<circle cx="'+tx2+'" cy="'+ty3+'" r="'+(2.2-ti*0.4)+'" fill="#a3e635" opacity="'+(0.55-ti*0.1)+'"/>';
+  }
+  s+='<g onclick="selectEl(\'machine\')" style="cursor:pointer"><circle cx="'+mx2+'" cy="'+my2+'" r="7" fill="#14532d" stroke="#a3e635" stroke-width="1.5"/><text x="'+mx2+'" y="'+(my2+4)+'" text-anchor="middle" font-size="9" style="pointer-events:none">🤖</text></g>';
+  s+='<polygon points="'+mc.x+','+(mc.y+14)+' '+(mc.x-5)+','+(mc.y+26)+' '+(mc.x+5)+','+(mc.y+26)+'" fill="#fbbf24" opacity="0.9"/>';
+  s+='<text x="'+(mc.x+9)+'" y="'+(mc.y+22)+'" font-size="7" fill="#fbbf24">harvest→hub</text>';
+  s+='<circle cx="'+cx0+'" cy="'+cy0+'" r="'+(R*0.25)+'" fill="#1e1b4b" stroke="#7c3aed" stroke-width="1.5" opacity="0.95" onclick="selectEl(\'eco\')" style="cursor:pointer"/>';
+  s+='<text x="'+cx0+'" y="'+(cy0-3)+'" text-anchor="middle" font-size="11" style="pointer-events:none">🌿</text>';
+  s+='<text x="'+cx0+'" y="'+(cy0+10)+'" text-anchor="middle" font-size="7" fill="#c084fc" style="pointer-events:none">ECO ZONE</text>';
+  [[16,16],[W-16,16],[16,H-16],[W-16,H-16]].forEach(function(p){
+    s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="12" fill="#1e1b4b" stroke="#7c3aed" stroke-width="1" opacity="0.85" onclick="selectEl(\'eco\')" style="cursor:pointer"/>';
+    s+='<text x="'+p[0]+'" y="'+(p[1]+4)+'" text-anchor="middle" font-size="10" style="pointer-events:none">🌲</text>';
+  });
+  s+='<line x1="6" y1="'+(H-6)+'" x2="'+(6+R)+'" y2="'+(H-6)+'" stroke="#9ca3af" stroke-width="1.5"/>';
+  s+='<text x="6" y="'+(H-1)+'" font-size="6" fill="#9ca3af">0</text>';
+  s+='<text x="'+(6+R-10)+'" y="'+(H-1)+'" font-size="6" fill="#9ca3af">200m</text>';
+  document.getElementById('detail-svg').innerHTML=s;
+  var wrap=document.getElementById('el-btns');
+  wrap.innerHTML='';
+  Object.keys(DETS).forEach(function(k){
+    var b=document.createElement('button');
+    b.className='el-btn';b.setAttribute('data-el',k);b.textContent=DETS[k].label;
+    b.onclick=function(){selectEl(k);};
+    wrap.appendChild(b);
+  });
+}
+
+function fmt(n){return n>=1e6?'€'+(n/1e6).toFixed(1)+'M':'€'+(n/1000).toFixed(0)+'K';}
+
+function updateCosts(ha){
+  ha=+ha;
+  document.getElementById('ha-lbl').textContent=ha+' ha';
+  var cC=ha*3000,rC=ha*19500,cO=ha*1000,rO=ha*180,cr=ha*100;
+  document.getElementById('carbon-lbl').textContent=fmt(cr)+'/yr';
+  document.getElementById('cost-cards').innerHTML=
+    '<div class="stat-card"><div class="lbl">Conv. Upfront</div><div class="val" style="color:#f87171">'+fmt(cC)+'</div><div class="lbl">machinery fleet</div></div>'+
+    '<div class="stat-card"><div class="lbl">Spiral Upfront</div><div class="val" style="color:#fb923c">'+fmt(rC)+'</div><div class="lbl">infra+machinery</div></div>'+
+    '<div class="stat-card"><div class="lbl">Conv. Annual</div><div class="val" style="color:#f87171">'+fmt(cO)+'</div><div class="lbl">fuel+labor+maint</div></div>'+
+    '<div class="stat-card"><div class="lbl">Spiral Annual</div><div class="val" style="color:#4ade80">'+fmt(rO)+'</div><div class="lbl">−82% vs conv.</div></div>';
+  var sc=[{n:'Upfront',c:Math.round(cC/1000),r:Math.round(rC/1000)},{n:'Annual',c:Math.round(cO/1000),r:Math.round(rO/1000)},{n:'10yr',c:Math.round((cC+cO*10)/1000),r:Math.round((rC+rO*10-cr*10)/1000)},{n:'20yr',c:Math.round((cC+cO*20)/1000),r:Math.round((rC+rO*20-cr*20)/1000)}];
+  var mx=Math.max.apply(null,sc.map(function(s){return Math.max(s.c,s.r);}));
+  var lP=38,bP=28,tP=10,rP=10,cW=300,cH=160,chartW=cW-lP-rP,chartH=cH-bP-tP;
+  var bW=chartW/sc.length/3,gap=bW*0.4,svg='';
+  [0,0.25,0.5,0.75,1].forEach(function(f){var y=tP+chartH*(1-f);svg+='<line x1="'+lP+'" y1="'+y+'" x2="'+(cW-rP)+'" y2="'+y+'" stroke="#1f2937" stroke-width="1"/><text x="'+(lP-3)+'" y="'+(y+3)+'" font-size="7" fill="#4b5563" text-anchor="end">'+Math.round(mx*f)+'</text>';});
+  sc.forEach(function(s,i){var gx=lP+i*(chartW/sc.length),cx2=gx+(chartW/sc.length)/2,ch=s.c/mx*chartH,rh=Math.max(0,s.r)/mx*chartH;svg+='<rect x="'+(cx2-bW-gap/2)+'" y="'+(tP+chartH-ch)+'" width="'+bW+'" height="'+ch+'" fill="#ef4444" opacity="0.8" rx="2"/><rect x="'+(cx2+gap/2)+'" y="'+(tP+chartH-rh)+'" width="'+bW+'" height="'+rh+'" fill="#22c55e" opacity="0.8" rx="2"/><text x="'+cx2+'" y="'+(cH-8)+'" font-size="8" fill="#9ca3af" text-anchor="middle">'+s.n+'</text>';});
+  svg+='<rect x="'+lP+'" y="'+tP+'" width="10" height="7" fill="#ef4444" rx="1"/><text x="'+(lP+13)+'" y="'+(tP+7)+'" font-size="8" fill="#9ca3af">Conventional</text><rect x="'+(lP+90)+'" y="'+tP+'" width="10" height="7" fill="#22c55e" rx="1"/><text x="'+(lP+103)+'" y="'+(tP+7)+'" font-size="8" fill="#9ca3af">Spiral Rail</text>';
+  document.getElementById('bar-chart').innerHTML=svg;
+}
+
+var roiCC=true;
+function toggleCC(){roiCC=!roiCC;var b=document.getElementById('cc-btn');b.className='cc-btn '+(roiCC?'cc-on':'cc-off');b.textContent=roiCC?'ON':'OFF';updateROI();}
+
+function updateROI(){
+  var sl=document.querySelectorAll('#roi input[type=range]');
+  var ha=+sl[0].value,ep=+sl[1].value,yb=+sl[2].value;
+  document.getElementById('roi-ha').textContent=ha+' ha';
+  document.getElementById('roi-ep').textContent=ep.toFixed(1)+'x';
+  document.getElementById('roi-yb').textContent='+'+(yb*100).toFixed(0)+'%';
+  var cU=ha*3000,rU=ha*19500,cA=ha*(1000+ep*80),rA=ha*(180+ep*9)-ha*yb*300-(roiCC?ha*0.15*50:0);
+  var data=[],ct=cU,rt=rU;
+  for(var y=0;y<=30;y++){if(y>0){ct+=cA;rt+=rA;}data.push({y:y,c:Math.round(ct/1000),r:Math.round(rt/1000),s:Math.round((ct-rt)/1000)});}
+  var be=null;for(var i=0;i<data.length;i++){if(data[i].s>0){be=data[i];break;}}
+  document.getElementById('be-year').textContent=be?'Year '+be.y:'>30 yrs';
+  document.getElementById('be-box').style.background=(!be||be.y>20)?'#7c2d12':'#14532d';
+  drawLine(data);drawArea(data);
+}
+
+function drawLine(data){
+  var cW=300,cH=160,lP=42,bP=20,tP=8,rP=8;
+  var vals=[];data.forEach(function(d){vals.push(d.c,d.r);});
+  var mx=Math.max.apply(null,vals),mn=Math.min.apply(null,vals.concat([0])),rng=mx-mn||1;
+  var chartW=cW-lP-rP,chartH=cH-bP-tP;
+  function px(i){return lP+i/30*chartW;}
+  function py(v){return tP+chartH*(1-(v-mn)/rng);}
+  var svg='';
+  [0,0.25,0.5,0.75,1].forEach(function(f){var v=mn+rng*f,y=py(v);svg+='<line x1="'+lP+'" y1="'+y+'" x2="'+(cW-rP)+'" y2="'+y+'" stroke="#1f2937" stroke-width="1"/><text x="'+(lP-3)+'" y="'+(y+3)+'" font-size="7" fill="#4b5563" text-anchor="end">'+Math.round(v)+'</text>';});
+  [0,5,10,15,20,25,30].forEach(function(i){svg+='<text x="'+px(i)+'" y="'+(cH-4)+'" font-size="7" fill="#4b5563" text-anchor="middle">'+i+'</text>';});
+  var cp='',rp='';data.forEach(function(d){cp+=(d.y===0?'M':'L')+px(d.y)+','+py(d.c)+' ';rp+=(d.y===0?'M':'L')+px(d.y)+','+py(d.r)+' ';});
+  svg+='<path d="'+cp+'" fill="none" stroke="#ef4444" stroke-width="2"/><path d="'+rp+'" fill="none" stroke="#22c55e" stroke-width="2"/>';
+  svg+='<rect x="'+lP+'" y="'+tP+'" width="10" height="6" fill="#ef4444" rx="1"/><text x="'+(lP+13)+'" y="'+(tP+6)+'" font-size="8" fill="#9ca3af">Conventional</text>';
+  svg+='<rect x="'+(lP+90)+'" y="'+tP+'" width="10" height="6" fill="#22c55e" rx="1"/><text x="'+(lP+103)+'" y="'+(tP+6)+'" font-size="8" fill="#9ca3af">Spiral Rail</text>';
+  svg+='<text x="150" y="'+(cH-2)+'" font-size="7" fill="#4b5563" text-anchor="middle">Year</text>';
+  document.getElementById('line-chart').innerHTML=svg;
+}
+
+function drawArea(data){
+  var cW=300,cH=130,lP=42,bP=20,tP=8,rP=8;
+  var mx=Math.max.apply(null,data.map(function(d){return d.s;}).concat([1]));
+  var chartW=cW-lP-rP,chartH=cH-bP-tP;
+  function px(i){return lP+i/30*chartW;}
+  function py(v){return tP+chartH*(1-Math.max(0,v)/mx);}
+  var svg='';
+  [0,0.25,0.5,0.75,1].forEach(function(f){var v=mx*f,y=py(v);svg+='<line x1="'+lP+'" y1="'+y+'" x2="'+(cW-rP)+'" y2="'+y+'" stroke="#1f2937" stroke-width="1"/><text x="'+(lP-3)+'" y="'+(y+3)+'" font-size="7" fill="#4b5563" text-anchor="end">'+Math.round(v)+'</text>';});
+  [0,5,10,15,20,25,30].forEach(function(i){svg+='<text x="'+px(i)+'" y="'+(cH-4)+'" font-size="7" fill="#4b5563" text-anchor="middle">'+i+'</text>';});
+  var area='M'+px(0)+','+py(0)+' ';data.forEach(function(d){area+='L'+px(d.y)+','+py(d.s)+' ';});area+='L'+px(30)+','+(tP+chartH)+' L'+px(0)+','+(tP+chartH)+' Z';
+  var line='M'+px(0)+','+py(0)+' ';data.forEach(function(d){line+='L'+px(d.y)+','+py(d.s)+' ';});
+  svg+='<path d="'+area+'" fill="#14532d" opacity="0.7"/><path d="'+line+'" fill="none" stroke="#22c55e" stroke-width="2"/>';
+  svg+='<text x="150" y="'+(cH-2)+'" font-size="7" fill="#4b5563" text-anchor="middle">Year</text>';
+  document.getElementById('area-chart').innerHTML=svg;
+}
+
+drawGrid();
+updateCosts(616);
+</script>
+</body>
+</html>

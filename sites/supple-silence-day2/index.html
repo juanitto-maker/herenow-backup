@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VacOil — Partner Pilot Programme</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--olive:#4a6741;--olive-light:#6b8f5e;--gold:#c9a84c;--gold-light:#e4c96a;--cream:#faf6ef;--dark:#1a1a18;--text:#3a3a36;--text-light:#6a6a62}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);line-height:1.65}
+
+.lang-bar{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--dark);display:flex;justify-content:center;gap:.5rem;padding:.5rem}
+.lang-btn{background:none;border:1px solid #444;color:#aaa;font:600 .72rem/1 'DM Sans',sans-serif;padding:.35rem .7rem;border-radius:999px;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;transition:all .2s}
+.lang-btn.active,.lang-btn:hover{background:var(--gold);color:var(--dark);border-color:var(--gold)}
+
+[data-lang]{display:none!important}
+[data-lang].v{display:block!important}
+span[data-lang].v{display:inline!important}
+a.hero-cta[data-lang].v{display:inline-block!important}
+li[data-lang].v{display:list-item!important}
+table[data-lang].v{display:table!important}
+
+/* Hero */
+.hero{padding:4.5rem 1.5rem 2.5rem;text-align:center;background:linear-gradient(170deg,var(--dark) 0%,#2a3328 50%,var(--olive) 100%);color:#fff;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 30% 40%,rgba(201,168,76,.12) 0%,transparent 60%)}
+.hero-badge{font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.25);border-radius:999px;padding:.3rem 1rem;margin-bottom:1.2rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5vw,3.2rem);font-weight:900;line-height:1.15;margin-bottom:.8rem;position:relative}
+.hero h1 em{font-style:normal;color:var(--gold-light)}
+.hero p{font-size:1rem;color:rgba(255,255,255,.75);max-width:600px;margin:0 auto 1.5rem;font-weight:300}
+.hero-cta{padding:.7rem 1.8rem;background:var(--gold);color:var(--dark);font-weight:600;text-decoration:none;border-radius:.4rem;font-size:.9rem;transition:all .25s;cursor:pointer}
+.hero-cta:hover{background:var(--gold-light);transform:translateY(-2px)}
+.hero-cta:active{transform:translateY(0)}
+
+/* Sections */
+section{padding:2rem 1.5rem;max-width:900px;margin:0 auto}
+.section-label{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--olive);margin-bottom:.5rem}
+section h2{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3.5vw,2rem);font-weight:700;color:var(--dark);margin-bottom:.75rem;line-height:1.25}
+section p{margin-bottom:.75rem}
+.sep{border:none;border-top:1px solid #e8e4dc;margin:.75rem auto;max-width:200px}
+
+/* Key stats — horizontal bar, NOT cards */
+.stats-bar{display:flex;gap:0;margin:1.25rem 0;border:1px solid #e8e4dc;border-radius:.75rem;overflow:hidden;background:#fff}
+.stat-cell{flex:1;padding:.75rem .5rem;text-align:center;border-right:1px solid #e8e4dc}
+.stat-cell:last-child{border-right:none}
+.stat-cell .st-icon{font-size:1.4rem;margin-bottom:.2rem}
+.stat-cell .st-val{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--dark);line-height:1.2}
+.stat-cell .st-desc{font-size:.7rem;color:var(--text-light);line-height:1.3;margin-top:.15rem}
+
+/* Facility specs — same horizontal bar */
+.specs-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:1.25rem 0;border:1px solid #e8e4dc;border-radius:.75rem;overflow:hidden;background:#fff}
+.spec-cell{padding:.75rem .4rem;text-align:center;border-right:1px solid #e8e4dc}
+.spec-cell:last-child{border-right:none}
+.spec-cell .sp-val{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--olive);line-height:1.2}
+.spec-cell .sp-val span{font-size:.75rem;font-weight:400;color:var(--text-light)}
+.spec-cell .sp-label{font-size:.68rem;color:var(--text);margin-top:.2rem;line-height:1.3}
+@media(max-width:500px){
+  .specs-bar{grid-template-columns:repeat(2,1fr)}
+  .spec-cell:nth-child(2){border-right:none}
+  .spec-cell:nth-child(1),.spec-cell:nth-child(2){border-bottom:1px solid #e8e4dc}
+}
+
+/* Timeline */
+.timeline{position:relative;padding-left:2.5rem}
+.timeline::before{content:'';position:absolute;left:.85rem;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--olive),var(--gold))}
+.tl-item{position:relative;margin-bottom:1.75rem}
+.tl-dot{position:absolute;left:-2.5rem;top:.25rem;width:1.1rem;height:1.1rem;border-radius:50%;border:3px solid var(--olive);background:var(--cream);z-index:1}
+.tl-item.active .tl-dot{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 4px rgba(201,168,76,.2)}
+.tl-date{font-size:.75rem;font-weight:700;color:var(--olive);letter-spacing:.05em;text-transform:uppercase;margin-bottom:.15rem}
+.tl-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;color:var(--dark);margin-bottom:.25rem}
+.tl-desc{font-size:.85rem;color:var(--text-light);line-height:1.55}
+
+/* Pricing table */
+.price-table{width:100%;border-collapse:collapse;margin:1rem 0;background:#fff;border-radius:.75rem;overflow:hidden;border:1px solid #e8e4dc}
+.price-table thead{background:var(--olive);color:#fff}
+.price-table th{padding:.6rem .75rem;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-align:left}
+.price-table td{padding:.55rem .75rem;font-size:.85rem;border-bottom:1px solid #f0ece4}
+.price-table tbody tr:last-child td{border-bottom:none}
+.price-table .total-row{background:rgba(201,168,76,.08)}
+.price-table .total-row td{color:var(--dark);font-weight:700}
+
+/* Partner offer box */
+.offer-box{background:linear-gradient(135deg,var(--dark) 0%,#2a3328 100%);color:#fff;border-radius:1rem;padding:1.5rem;margin:1rem 0;position:relative;overflow:hidden}
+.offer-box::after{content:'🫒';position:absolute;right:1rem;bottom:.75rem;font-size:3.5rem;opacity:.12}
+.offer-box h3{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--gold-light);margin-bottom:.75rem}
+.offer-box p{color:rgba(255,255,255,.8);margin-bottom:.5rem;font-size:.88rem}
+.offer-box ul{list-style:none;padding:0;margin:.75rem 0}
+.offer-box li{padding:.3rem 0;font-size:.85rem;color:rgba(255,255,255,.85)}
+.offer-box li::before{content:'✦ ';color:var(--gold)}
+
+/* Links */
+.ref-links{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin:1rem 0}
+.ref-link{display:block;background:#fff;border:1px solid #e8e4dc;border-radius:.75rem;padding:1.25rem;text-decoration:none;color:var(--text);transition:all .25s}
+.ref-link:hover{border-color:var(--gold);box-shadow:0 6px 20px rgba(0,0,0,.06);transform:translateY(-2px)}
+.ref-link .ref-tag{font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--olive);margin-bottom:.4rem}
+.ref-link h4{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:600;color:var(--dark);margin-bottom:.25rem}
+.ref-link p{font-size:.78rem;color:var(--text-light)}
+@media(max-width:500px){.ref-links{grid-template-columns:1fr}}
+
+/* Footer */
+footer{background:var(--dark);color:#888;text-align:center;padding:1.5rem;font-size:.8rem}
+footer a{color:var(--gold);text-decoration:none}
+.footer-contact{display:inline-block;cursor:pointer;background:var(--gold);color:var(--dark);font-weight:600;padding:.5rem 1.3rem;border-radius:.4rem;font-size:.85rem;border:none;margin-bottom:.5rem;transition:all .2s}
+.footer-contact:hover{background:var(--gold-light)}
+
+/* Contact dialog */
+.dialog-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center}
+.dialog-overlay.open{display:flex}
+.dialog-box{background:var(--cream);border-radius:1rem;padding:1.75rem;max-width:300px;width:90%;text-align:center}
+.dialog-box h4{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--dark);margin-bottom:1rem}
+.dialog-option{display:block;width:100%;padding:.65rem;margin-bottom:.6rem;border-radius:.5rem;text-decoration:none;font-weight:600;font-size:.9rem;transition:all .2s;text-align:center}
+.dialog-email{background:var(--olive);color:#fff}
+.dialog-email:hover{background:var(--olive-light)}
+.dialog-telegram{background:#0088cc;color:#fff}
+.dialog-telegram:hover{background:#00a0e4}
+.dialog-close{background:none;border:1px solid #ccc;color:var(--text-light);cursor:pointer;font:500 .82rem 'DM Sans',sans-serif;padding:.4rem 1.2rem;border-radius:.4rem;margin-top:.2rem}
+
+/* Accordion pricing */
+.acc-list{margin:1rem 0;border:1px solid #e8e4dc;border-radius:.75rem;overflow:hidden;background:#fff}
+.acc-item{border-bottom:1px solid #f0ece4}
+.acc-item:last-child{border-bottom:none}
+.acc-head{display:flex;justify-content:space-between;align-items:center;padding:.65rem .75rem;cursor:pointer;font-size:.85rem;transition:background .15s;-webkit-tap-highlight-color:transparent}
+.acc-head:hover{background:rgba(74,103,65,.04)}
+.acc-head .acc-name{flex:1;padding-right:.5rem}
+.acc-head .acc-cost{font-weight:600;color:var(--dark);white-space:nowrap}
+.acc-head .acc-arrow{color:var(--text-light);font-size:.7rem;margin-left:.5rem;transition:transform .2s}
+.acc-item.open .acc-arrow{transform:rotate(180deg)}
+.acc-detail{display:none;padding:0 .75rem .65rem;font-size:.78rem;color:var(--text-light);line-height:1.5}
+.acc-item.open .acc-detail{display:block}
+.acc-total{display:flex;justify-content:space-between;padding:.75rem;background:rgba(201,168,76,.08);font-weight:700;font-size:.9rem;color:var(--dark)}
+.sub-items{margin-top:.4rem;border-top:1px dashed #e0dcd4;padding-top:.4rem}
+.sub-row{display:flex;justify-content:space-between;padding:.18rem 0;font-size:.73rem}
+.sub-row span:last-child{white-space:nowrap;color:var(--olive);font-weight:600;margin-left:.5rem}
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" onclick="setLang('es')">ES</button>
+  <button class="lang-btn" onclick="setLang('de')">DE</button>
+  <button class="lang-btn" onclick="setLang('it')">IT</button>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge" data-lang="en">VacOil · Partner Pilot Programme 2025–2026</div>
+  <div class="hero-badge" data-lang="es">VacOil · Programa Piloto para Socios 2025–2026</div>
+  <div class="hero-badge" data-lang="de">VacOil · Partner-Pilotprogramm 2025–2026</div>
+  <div class="hero-badge" data-lang="it">VacOil · Programma Pilota Partner 2025–2026</div>
+
+  <h1 data-lang="en">Become the <em>First Partner</em> in Ultra-High-Phenolic Olive Oil</h1>
+  <h1 data-lang="es">Sea el <em>Primer Socio</em> del Aceite de Oliva Ultra-Alto en Polifenoles</h1>
+  <h1 data-lang="de">Werden Sie der <em>Erste Partner</em> für Ultra-Hochphenolisches Olivenöl</h1>
+  <h1 data-lang="it">Diventa il <em>Primo Partner</em> dell'Olio d'Oliva Ultra-Alto in Polifenoli</h1>
+
+  <p data-lang="en">A turnkey pilot project — from land to lab-certified production — with zero profit margin for the first installation. We build it together.</p>
+  <p data-lang="es">Un proyecto piloto llave en mano — del terreno a la producción certificada — sin margen de beneficio en la primera instalación. Lo construimos juntos.</p>
+  <p data-lang="de">Ein schlüsselfertiges Pilotprojekt — vom Grundstück bis zur laborzertifizierten Produktion — ohne Gewinnmarge bei der Erstinstallation. Wir bauen es gemeinsam.</p>
+  <p data-lang="it">Un progetto pilota chiavi in mano — dal terreno alla produzione certificata — senza margine di profitto sulla prima installazione. Lo costruiamo insieme.</p>
+
+</div>
+
+<!-- WHAT IS VACOIL -->
+<section>
+  <div class="section-label" data-lang="en">The Concept</div>
+  <div class="section-label" data-lang="es">El Concepto</div>
+  <div class="section-label" data-lang="de">Das Konzept</div>
+  <div class="section-label" data-lang="it">Il Concetto</div>
+
+  <h2 data-lang="en">What is VacOil?</h2>
+  <h2 data-lang="es">¿Qué es VacOil?</h2>
+  <h2 data-lang="de">Was ist VacOil?</h2>
+  <h2 data-lang="it">Cos'è VacOil?</h2>
+
+  <p data-lang="en">VacOil is a modular processing system that produces <strong>Ultra-High-Phenolic (UHP) olive oil</strong> using Vacuum Tray Drying technology. By processing Picual olives at 30–40°C under near-zero oxygen, we preserve 85–95% of polyphenols — achieving 800–1,200 mg/kg versus the 150 mg/kg found in supermarket oils. This oil commands <strong>€50–80 per litre</strong> in the premium health-food market.</p>
+  <p data-lang="en" style="margin-top:0"><a href="https://silken-jungle-kpeq.here.now/" target="_blank" style="color:var(--olive);font-weight:600">Read the full technical documentation →</a></p>
+  <p data-lang="es">VacOil es un sistema modular que produce <strong>aceite de oliva Ultra-Alto en Polifenoles (UHP)</strong> mediante Secado en Bandejas al Vacío. Al procesar aceitunas Picual a 30–40°C con oxígeno casi nulo, preservamos el 85–95% de los polifenoles — 800–1.200 mg/kg frente a 150 mg/kg del supermercado. Se vende a <strong>50–80 €/litro</strong>.</p>
+  <p data-lang="es" style="margin-top:0"><a href="https://silken-jungle-kpeq.here.now/" target="_blank" style="color:var(--olive);font-weight:600">Documentación técnica completa →</a></p>
+  <p data-lang="de">VacOil ist ein modulares System, das <strong>Ultra-Hochphenolisches (UHP) Olivenöl</strong> mittels Vakuum-Tablett-Trocknung produziert. Picual-Oliven bei 30–40°C unter nahezu sauerstofffreien Bedingungen — 85–95% Polyphenolerhalt — 800–1.200 mg/kg vs. 150 mg/kg. Preis: <strong>50–80 €/Liter</strong>.</p>
+  <p data-lang="de" style="margin-top:0"><a href="https://silken-jungle-kpeq.here.now/" target="_blank" style="color:var(--olive);font-weight:600">Vollständige Dokumentation →</a></p>
+  <p data-lang="it">VacOil è un sistema modulare che produce <strong>olio d'oliva Ultra-Alto in Polifenoli (UHP)</strong> con Essiccazione a Vassoi Sottovuoto. Olive Picual a 30–40°C, ossigeno quasi nullo, 85–95% di polifenoli preservati — 800–1.200 mg/kg vs 150 mg/kg. Prezzo: <strong>50–80 €/litro</strong>.</p>
+  <p data-lang="it" style="margin-top:0"><a href="https://silken-jungle-kpeq.here.now/" target="_blank" style="color:var(--olive);font-weight:600">Documentazione tecnica completa →</a></p>
+
+  <div class="stats-bar">
+    <div class="stat-cell">
+      <div class="st-icon">🌡️</div>
+      <div class="st-val">30–40°C</div>
+      <div class="st-desc" data-lang="en">Vacuum drying temp</div>
+      <div class="st-desc" data-lang="es">Temp. secado vacío</div>
+      <div class="st-desc" data-lang="de">Vakuumtrocknung</div>
+      <div class="st-desc" data-lang="it">Temp. sottovuoto</div>
+    </div>
+    <div class="stat-cell">
+      <div class="st-icon">🧪</div>
+      <div class="st-val">800–1,200</div>
+      <div class="st-desc" data-lang="en">mg/kg polyphenols</div>
+      <div class="st-desc" data-lang="es">mg/kg polifenoles</div>
+      <div class="st-desc" data-lang="de">mg/kg Polyphenole</div>
+      <div class="st-desc" data-lang="it">mg/kg polifenoli</div>
+    </div>
+    <div class="stat-cell">
+      <div class="st-icon">💰</div>
+      <div class="st-val">€50–80/L</div>
+      <div class="st-desc" data-lang="en">Retail price</div>
+      <div class="st-desc" data-lang="es">Precio venta</div>
+      <div class="st-desc" data-lang="de">Verkaufspreis</div>
+      <div class="st-desc" data-lang="it">Prezzo vendita</div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="section-label" data-lang="en">Implementation Roadmap</div>
+  <div class="section-label" data-lang="es">Hoja de Ruta</div>
+  <div class="section-label" data-lang="de">Umsetzungsplan</div>
+  <div class="section-label" data-lang="it">Roadmap</div>
+
+  <h2 data-lang="en">From Plan to First Harvest — 18 Months</h2>
+  <h2 data-lang="es">Del Plan a la Primera Cosecha — 18 Meses</h2>
+  <h2 data-lang="de">Vom Plan zur Ersten Ernte — 18 Monate</h2>
+  <h2 data-lang="it">Dal Piano al Primo Raccolto — 18 Mesi</h2>
+
+  <div class="timeline">
+    <div class="tl-item active">
+      <div class="tl-dot"></div>
+      <div class="tl-date" data-lang="en">Now → Summer 2025</div><div class="tl-date" data-lang="es">Ahora → Verano 2025</div><div class="tl-date" data-lang="de">Jetzt → Sommer 2025</div><div class="tl-date" data-lang="it">Adesso → Estate 2025</div>
+      <div class="tl-title" data-lang="en">Planning & Preparation</div><div class="tl-title" data-lang="es">Planificación y Preparación</div><div class="tl-title" data-lang="de">Planung & Vorbereitung</div><div class="tl-title" data-lang="it">Pianificazione e Preparazione</div>
+      <div class="tl-desc" data-lang="en">Equipment supplier sourcing in China (quotes, lead times, conditional pre-orders). Land search. Begin legal paperwork — licencia de actividad, sanitary registration, environmental assessment. Detailed equipment layout.</div>
+      <div class="tl-desc" data-lang="es">Búsqueda de proveedores en China. Búsqueda de terreno. Iniciar trámites legales — licencia de actividad, registro sanitario, evaluación ambiental. Planos de equipos.</div>
+      <div class="tl-desc" data-lang="de">Lieferantensuche in China. Grundstückssuche. Behördliche Genehmigungen starten. Detaillierter Anlagenplan.</div>
+      <div class="tl-desc" data-lang="it">Ricerca fornitori in Cina. Ricerca terreno. Avvio pratiche legali. Layout dettagliato impianti.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date" data-lang="en">October 2025</div><div class="tl-date" data-lang="es">Octubre 2025</div><div class="tl-date" data-lang="de">Oktober 2025</div><div class="tl-date" data-lang="it">Ottobre 2025</div>
+      <div class="tl-title" data-lang="en">Validation Test — The Critical Gate</div><div class="tl-title" data-lang="es">Test de Validación — La Puerta Crítica</div><div class="tl-title" data-lang="de">Validierung — Der Entscheidungspunkt</div><div class="tl-title" data-lang="it">Test di Validazione — Il Gate Critico</div>
+      <div class="tl-desc" data-lang="en">Process Picual olives with prototype VTD. Lab analysis for polyphenols (2–3 weeks). Target: 800+ mg/kg. If confirmed → proceed. If not → refine before committing capital.</div>
+      <div class="tl-desc" data-lang="es">Procesar Picual con prototipo VTD. Análisis de laboratorio (2–3 semanas). Objetivo: 800+ mg/kg. Si se confirma → avanzar.</div>
+      <div class="tl-desc" data-lang="de">Picual-Oliven mit VTD-Prototyp verarbeiten. Laboranalyse (2–3 Wochen). Ziel: 800+ mg/kg.</div>
+      <div class="tl-desc" data-lang="it">Lavorare Picual con prototipo VTD. Analisi laboratorio (2–3 settimane). Obiettivo: 800+ mg/kg.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date" data-lang="en">November 2025</div><div class="tl-date" data-lang="es">Noviembre 2025</div><div class="tl-date" data-lang="de">November 2025</div><div class="tl-date" data-lang="it">Novembre 2025</div>
+      <div class="tl-title" data-lang="en">Machine Orders & Land Acquisition</div><div class="tl-title" data-lang="es">Pedido de Máquinas y Terreno</div><div class="tl-title" data-lang="de">Maschinenbestellung & Grundstück</div><div class="tl-title" data-lang="it">Ordine Macchine & Terreno</div>
+      <div class="tl-desc" data-lang="en">Confirmed orders with Chinese manufacturers. Finalize land — suelo rústico, min. 500–800 m², vehicle access, water. Manufacturing + shipping: 4–6 months.</div>
+      <div class="tl-desc" data-lang="es">Pedidos confirmados. Cerrar terreno — suelo rústico, mín. 500–800 m². Fabricación + envío: 4–6 meses.</div>
+      <div class="tl-desc" data-lang="de">Bestellungen bestätigen. Grundstück abschließen — min. 500–800 m². Fertigung + Versand: 4–6 Monate.</div>
+      <div class="tl-desc" data-lang="it">Ordini confermati. Finalizzare terreno — min. 500–800 m². Produzione + spedizione: 4–6 mesi.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date" data-lang="en">Dec 2025 → Feb 2026</div><div class="tl-date" data-lang="es">Dic 2025 → Feb 2026</div><div class="tl-date" data-lang="de">Dez 2025 → Feb 2026</div><div class="tl-date" data-lang="it">Dic 2025 → Feb 2026</div>
+      <div class="tl-title" data-lang="en">Build the Facility (PearlShell)</div><div class="tl-title" data-lang="es">Construcción (PearlShell)</div><div class="tl-title" data-lang="de">Bau der Anlage (PearlShell)</div><div class="tl-title" data-lang="it">Costruzione (PearlShell)</div>
+      <div class="tl-desc" data-lang="en">Modular perlite-insulated units on steel arch frames. Processing area (40–50 m²), cold storage (15–20 m²), technician quarters + toilet (9 m²). Scalable 100 kg/day → 1 t/day.</div>
+      <div class="tl-desc" data-lang="es">Módulos aislados con perlita sobre arcos de acero. Área procesado (40–50 m²), almacén frío (15–20 m²), habitación técnico (9 m²). Escalable 100 kg/día → 1 t/día.</div>
+      <div class="tl-desc" data-lang="de">Perlitgedämmte Module auf Stahlbogen. Verarbeitung (40–50 m²), Kühlraum (15–20 m²), Quartier (9 m²). Skalierbar 100 kg/Tag → 1 t/Tag.</div>
+      <div class="tl-desc" data-lang="it">Moduli perlite su archi acciaio. Lavorazione (40–50 m²), cella frigorifera (15–20 m²), alloggio tecnico (9 m²). Scalabile 100 kg/g → 1 t/g.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date" data-lang="en">Mar → May 2026</div><div class="tl-date" data-lang="es">Mar → May 2026</div><div class="tl-date" data-lang="de">Mär → Mai 2026</div><div class="tl-date" data-lang="it">Mar → Mag 2026</div>
+      <div class="tl-title" data-lang="en">Equipment Arrival & Installation</div><div class="tl-title" data-lang="es">Llegada e Instalación</div><div class="tl-title" data-lang="de">Ankunft & Installation</div><div class="tl-title" data-lang="it">Arrivo e Installazione</div>
+      <div class="tl-desc" data-lang="en">Install VTD units, hammer mill, press, separator, CIP. Test runs with purchased olives. Calibrate vacuum, temperature, drying cycles.</div>
+      <div class="tl-desc" data-lang="es">Instalar VTD, molino, prensa, separador, CIP. Pruebas con aceitunas compradas. Calibrar vacío, temperatura, ciclos.</div>
+      <div class="tl-desc" data-lang="de">VTD, Mühle, Presse, Separator, CIP installieren. Testläufe. Kalibrierung.</div>
+      <div class="tl-desc" data-lang="it">Installare VTD, mulino, pressa, separatore, CIP. Test con olive acquistate. Calibrazione.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date" data-lang="en">Jun → Sep 2026</div><div class="tl-date" data-lang="es">Jun → Sep 2026</div><div class="tl-date" data-lang="de">Jun → Sep 2026</div><div class="tl-date" data-lang="it">Giu → Set 2026</div>
+      <div class="tl-title" data-lang="en">Certifications & Pre-Season</div><div class="tl-title" data-lang="es">Certificaciones y Pre-Temporada</div><div class="tl-title" data-lang="de">Zertifizierungen & Vorsaison</div><div class="tl-title" data-lang="it">Certificazioni & Pre-Stagione</div>
+      <div class="tl-desc" data-lang="en">Final inspections, partner onboarding, dry runs, branding, packaging, distribution prep.</div>
+      <div class="tl-desc" data-lang="es">Inspecciones finales, incorporación socio, ensayos, marca, envases, distribución.</div>
+      <div class="tl-desc" data-lang="de">Inspektionen, Partner-Onboarding, Trockenläufe, Marke, Verpackung, Vertrieb.</div>
+      <div class="tl-desc" data-lang="it">Ispezioni finali, onboarding partner, prove, branding, packaging, distribuzione.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date" data-lang="en">🫒 October 2026</div><div class="tl-date" data-lang="es">🫒 Octubre 2026</div><div class="tl-date" data-lang="de">🫒 Oktober 2026</div><div class="tl-date" data-lang="it">🫒 Ottobre 2026</div>
+      <div class="tl-title" data-lang="en">First Harvest — Production Begins</div><div class="tl-title" data-lang="es">Primera Cosecha — Producción</div><div class="tl-title" data-lang="de">Erste Ernte — Produktion</div><div class="tl-title" data-lang="it">Primo Raccolto — Produzione</div>
+      <div class="tl-desc" data-lang="en">Fresh Picual olives → lab-certified UHP oil. ~30 processing days, 100–500 kg/day. First commercial bottles.</div>
+      <div class="tl-desc" data-lang="es">Picual frescas → aceite UHP certificado. ~30 días, 100–500 kg/día. Primeras botellas.</div>
+      <div class="tl-desc" data-lang="de">Frische Picual → zertifiziertes UHP-Öl. ~30 Tage, 100–500 kg/Tag. Erste Flaschen.</div>
+      <div class="tl-desc" data-lang="it">Picual fresche → olio UHP certificato. ~30 giorni, 100–500 kg/giorno. Prime bottiglie.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- FACILITY -->
+<section>
+  <div class="section-label" data-lang="en">The Facility</div><div class="section-label" data-lang="es">La Planta</div><div class="section-label" data-lang="de">Die Anlage</div><div class="section-label" data-lang="it">L'Impianto</div>
+
+  <h2 data-lang="en">Built with PearlShell Technology</h2><h2 data-lang="es">Construida con Tecnología PearlShell</h2><h2 data-lang="de">Gebaut mit PearlShell-Technologie</h2><h2 data-lang="it">Costruito con Tecnologia PearlShell</h2>
+
+  <p data-lang="en">Volcanic perlite insulation in jute bags on galvanised steel arch frames. Built in days, not months. Naturally insulated. Modular — scales from 100 kg/day to 1 tonne/day. <a href="https://fancy-atlas-w49b.here.now/" target="_blank" style="color:var(--olive);font-weight:600">See the PearlShell system →</a></p>
+  <p data-lang="es">Aislamiento de perlita volcánica en sacos de yute sobre arcos de acero galvanizado. Se construye en días. Aislamiento natural. Modular — de 100 kg/día a 1 t/día. <a href="https://fancy-atlas-w49b.here.now/" target="_blank" style="color:var(--olive);font-weight:600">Ver sistema PearlShell →</a></p>
+  <p data-lang="de">Vulkanperlite in Jutesäcken auf verzinkten Stahlbogen. In Tagen gebaut. Natürlich isoliert. Modular — 100 kg/Tag bis 1 t/Tag. <a href="https://fancy-atlas-w49b.here.now/" target="_blank" style="color:var(--olive);font-weight:600">PearlShell-System ansehen →</a></p>
+  <p data-lang="it">Perlite vulcanica in sacchi di juta su archi acciaio zincato. Costruito in giorni. Isolamento naturale. Modulare — da 100 kg/g a 1 t/g. <a href="https://fancy-atlas-w49b.here.now/" target="_blank" style="color:var(--olive);font-weight:600">Vedi sistema PearlShell →</a></p>
+
+  <div class="specs-bar">
+    <div class="spec-cell">
+      <div class="sp-val">40–50 <span>m²</span></div>
+      <div class="sp-label" data-lang="en">Processing</div><div class="sp-label" data-lang="es">Procesado</div><div class="sp-label" data-lang="de">Verarbeitung</div><div class="sp-label" data-lang="it">Lavorazione</div>
+    </div>
+    <div class="spec-cell">
+      <div class="sp-val">15–20 <span>m²</span></div>
+      <div class="sp-label" data-lang="en">Cold Storage</div><div class="sp-label" data-lang="es">Almacén Frío</div><div class="sp-label" data-lang="de">Kühlraum</div><div class="sp-label" data-lang="it">Cella Frigo</div>
+    </div>
+    <div class="spec-cell">
+      <div class="sp-val">9+ <span>m²</span></div>
+      <div class="sp-label" data-lang="en">Quarters</div><div class="sp-label" data-lang="es">Técnico</div><div class="sp-label" data-lang="de">Quartier</div><div class="sp-label" data-lang="it">Alloggio</div>
+    </div>
+    <div class="spec-cell">
+      <div class="sp-val">500–800 <span>m²</span></div>
+      <div class="sp-label" data-lang="en">Total Land</div><div class="sp-label" data-lang="es">Terreno</div><div class="sp-label" data-lang="de">Grundstück</div><div class="sp-label" data-lang="it">Terreno</div>
+    </div>
+  </div>
+
+  <p data-lang="en" style="font-size:.82rem;color:var(--text-light)"><strong>Land type:</strong> Suelo rústico con uso agrícola. Vehicle access + water connection required.</p>
+  <p data-lang="es" style="font-size:.82rem;color:var(--text-light)"><strong>Terreno:</strong> Suelo rústico con uso agrícola. Acceso vehicular + agua necesarios.</p>
+  <p data-lang="de" style="font-size:.82rem;color:var(--text-light)"><strong>Grundstück:</strong> Landwirtschaftliche Nutzfläche. Fahrzeugzugang + Wasseranschluss nötig.</p>
+  <p data-lang="it" style="font-size:.82rem;color:var(--text-light)"><strong>Terreno:</strong> Suolo rustico uso agricolo. Accesso veicolare + acqua necessari.</p>
+</section>
+
+<hr class="sep">
+
+<!-- PRICING -->
+<section>
+  <div class="section-label" data-lang="en">Investment Estimate</div><div class="section-label" data-lang="es">Estimación de Inversión</div><div class="section-label" data-lang="de">Investitionsschätzung</div><div class="section-label" data-lang="it">Stima Investimento</div>
+
+  <h2 data-lang="en">Cost Breakdown — Zero Margin</h2><h2 data-lang="es">Desglose de Costes — Margen Cero</h2><h2 data-lang="de">Kostenaufstellung — Null Marge</h2><h2 data-lang="it">Dettaglio Costi — Margine Zero</h2>
+
+  <p data-lang="en">First partner pays only real costs. No markup, no consulting fees. Estimates based on Q2 2025 supplier quotes.</p>
+  <p data-lang="es">El primer socio paga solo costes reales. Sin recargo. Estimaciones basadas en presupuestos Q2 2025.</p>
+  <p data-lang="de">Erster Partner zahlt nur reale Kosten. Kein Aufschlag. Schätzungen basierend auf Q2 2025 Angeboten.</p>
+  <p data-lang="it">Il primo partner paga solo i costi reali. Nessun ricarico. Stime basate su preventivi Q2 2025.</p>
+
+  <h3 data-lang="en" style="font-family:'Playfair Display',serif;margin:1rem 0 .5rem;font-size:1.1rem">Option A — 100 kg/day (Recommended)</h3>
+  <h3 data-lang="es" style="font-family:'Playfair Display',serif;margin:1rem 0 .5rem;font-size:1.1rem">Opción A — 100 kg/día (Recomendado)</h3>
+  <h3 data-lang="de" style="font-family:'Playfair Display',serif;margin:1rem 0 .5rem;font-size:1.1rem">Option A — 100 kg/Tag (Empfohlen)</h3>
+  <h3 data-lang="it" style="font-family:'Playfair Display',serif;margin:1rem 0 .5rem;font-size:1.1rem">Opzione A — 100 kg/g (Consigliato)</h3>
+
+<!-- EN accordion -->
+  <div class="acc-list" data-lang="en">
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Processing equipment</span><span class="acc-cost">€22k – €28k</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Sourced from Alibaba / Made-in-China manufacturers. Path B (Hammer Mill) configuration.
+        <div class="sub-items">
+          <div class="sub-row"><span>Small hopper / manual feed station</span><span>€0.5k–€2k</span></div>
+          <div class="sub-row"><span>Air separator (leaf blower)</span><span>€1k–€2.5k</span></div>
+          <div class="sub-row"><span>Hammer mill (300–500 kg/h)</span><span>€2k–€5k</span></div>
+          <div class="sub-row"><span>1× VTD + cold trap + vacuum pump</span><span>€8k–€15k</span></div>
+          <div class="sub-row"><span>Small cold screw press</span><span>€3.5k–€8k</span></div>
+          <div class="sub-row"><span>Oil decanter / gravity separator</span><span>€1k–€5k</span></div>
+          <div class="sub-row"><span>Filtration unit (coarse)</span><span>€0.5k–€2k</span></div>
+          <div class="sub-row"><span>1× Storage tank 500 L (N₂ blanket)</span><span>€0.6k–€2k</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Sea freight + customs</span><span class="acc-cost">€3k – €5k</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">FCL container Guangzhou → Algeciras/Málaga port.
+        <div class="sub-items">
+          <div class="sub-row"><span>Ocean freight (FCL 20 ft)</span><span>€1.5k–€2.5k</span></div>
+          <div class="sub-row"><span>Customs clearance + import duties (~4.2%)</span><span>€0.8k–€1.5k</span></div>
+          <div class="sub-row"><span>Port handling + last-mile delivery</span><span>€0.7k–€1k</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">PearlShell facility</span><span class="acc-cost">€3.5k – €5.5k</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Modular perlite-insulated units on galvanised steel arch frames.
+        <div class="sub-items">
+          <div class="sub-row"><span>Processing hall (2–3 arches, ~45 m²)</span><span>€1.8k–€2.8k</span></div>
+          <div class="sub-row"><span>Cold storage module (~18 m²)</span><span>€0.8k–€1.3k</span></div>
+          <div class="sub-row"><span>Technician quarters + toilet (9 m²)</span><span>€0.5k–€0.8k</span></div>
+          <div class="sub-row"><span>Gravel base + site prep</span><span>€0.4k–€0.6k</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Electrical installation</span><span class="acc-cost">€1.5k – €3k</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Certified electrician required.
+        <div class="sub-items">
+          <div class="sub-row"><span>3-phase power connection</span><span>€0.5k–€1k</span></div>
+          <div class="sub-row"><span>Food-grade wiring + control panel</span><span>€0.5k–€1k</span></div>
+          <div class="sub-row"><span>Lighting + grounding + motor circuits</span><span>€0.5k–€1k</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Plumbing + CIP + waste</span><span class="acc-cost">€0.8k – €1.5k</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">No olive washing — dry cleaning via air separator preserves polyphenols. Water used only for CIP and sanitation.
+        <div class="sub-items">
+          <div class="sub-row"><span>Water supply connection or well</span><span>€0.3k–€0.5k</span></div>
+          <div class="sub-row"><span>Food-grade CIP plumbing</span><span>€0.3k–€0.5k</span></div>
+          <div class="sub-row"><span>Grease trap + alpechín collection tank</span><span>€0.2k–€0.5k</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Legal & authorizations</span><span class="acc-cost">€2k – €4k</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Spanish regulatory requirements for food processing.
+        <div class="sub-items">
+          <div class="sub-row"><span>Licencia de actividad</span><span>€0.5k–€1k</span></div>
+          <div class="sub-row"><span>Registro Sanitario (AESAN)</span><span>€0.3k–€0.5k</span></div>
+          <div class="sub-row"><span>Environmental assessment (simplified)</span><span>€0.5k–€1k</span></div>
+          <div class="sub-row"><span>Proyecto técnico (engineer)</span><span>€0.5k–€1k</span></div>
+          <div class="sub-row"><span>Municipal permits</span><span>€0.2k–€0.5k</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Lab testing & certification</span><span class="acc-cost">€0.5k – €1k</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Accredited laboratory analysis — multiple test batches during calibration.
+        <div class="sub-items">
+          <div class="sub-row"><span>Polyphenol panel (HPLC method)</span><span>€150–€300/test</span></div>
+          <div class="sub-row"><span>Acidity + peroxide + UV</span><span>€80–€150/test</span></div>
+          <div class="sub-row"><span>Organoleptic evaluation (panel)</span><span>€100–€200/test</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Contingency (~10%)</span><span class="acc-cost">€3k – €4.5k</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Buffer for unexpected costs: currency fluctuations, additional tooling, site preparation surprises, spare parts, additional testing rounds.</div>
+    </div>
+    <div class="acc-total"><span>TOTAL (excl. land)</span><span>€34k – €50k</span></div>
+  </div>
+
+  <!-- ES accordion -->
+  <div class="acc-list" data-lang="es">
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Equipos de procesado</span><span class="acc-cost">22k – 28k €</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Proveedores Alibaba / Made-in-China. Configuración Ruta B (Molino de Martillo).
+        <div class="sub-items">
+          <div class="sub-row"><span>Tolva / estación de alimentación</span><span>0,5k–2k €</span></div>
+          <div class="sub-row"><span>Separador de aire (soplador de hojas)</span><span>1k–2,5k €</span></div>
+          <div class="sub-row"><span>Molino de martillo (300–500 kg/h)</span><span>2k–5k €</span></div>
+          <div class="sub-row"><span>1× VTD + trampa fría + bomba vacío</span><span>8k–15k €</span></div>
+          <div class="sub-row"><span>Prensa de tornillo en frío</span><span>3,5k–8k €</span></div>
+          <div class="sub-row"><span>Decantador / separador por gravedad</span><span>1k–5k €</span></div>
+          <div class="sub-row"><span>Unidad de filtración</span><span>0,5k–2k €</span></div>
+          <div class="sub-row"><span>1× Depósito 500 L (manta N₂)</span><span>0,6k–2k €</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Flete marítimo + aduanas</span><span class="acc-cost">3k – 5k €</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Contenedor FCL Guangzhou → Algeciras/Málaga.
+        <div class="sub-items">
+          <div class="sub-row"><span>Flete oceánico (FCL 20 ft)</span><span>1,5k–2,5k €</span></div>
+          <div class="sub-row"><span>Despacho aduanero + aranceles (~4,2%)</span><span>0,8k–1,5k €</span></div>
+          <div class="sub-row"><span>Manipulación portuaria + última milla</span><span>0,7k–1k €</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Construcción PearlShell</span><span class="acc-cost">3,5k – 5,5k €</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Módulos aislados con perlita sobre arcos de acero galvanizado.
+        <div class="sub-items">
+          <div class="sub-row"><span>Nave procesado (2–3 arcos, ~45 m²)</span><span>1,8k–2,8k €</span></div>
+          <div class="sub-row"><span>Módulo almacén frío (~18 m²)</span><span>0,8k–1,3k €</span></div>
+          <div class="sub-row"><span>Habitación técnico + baño (9 m²)</span><span>0,5k–0,8k €</span></div>
+          <div class="sub-row"><span>Base de grava + preparación terreno</span><span>0,4k–0,6k €</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Instalación eléctrica</span><span class="acc-cost">1,5k – 3k €</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Electricista certificado requerido.
+        <div class="sub-items">
+          <div class="sub-row"><span>Conexión trifásica</span><span>0,5k–1k €</span></div>
+          <div class="sub-row"><span>Cableado alimentario + cuadro eléctrico</span><span>0,5k–1k €</span></div>
+          <div class="sub-row"><span>Iluminación + toma de tierra + circuitos motor</span><span>0,5k–1k €</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Fontanería + CIP + residuos</span><span class="acc-cost">0,8k – 1,5k €</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Sin lavado de aceitunas — limpieza en seco con soplador de aire para preservar polifenoles. Agua solo para CIP y saneamiento.
+        <div class="sub-items">
+          <div class="sub-row"><span>Acometida de agua o pozo</span><span>0,3k–0,5k €</span></div>
+          <div class="sub-row"><span>Fontanería alimentaria CIP</span><span>0,3k–0,5k €</span></div>
+          <div class="sub-row"><span>Trampa de grasas + depósito alpechín</span><span>0,2k–0,5k €</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Legal y autorizaciones</span><span class="acc-cost">2k – 4k €</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Requisitos regulatorios españoles para procesado alimentario.
+        <div class="sub-items">
+          <div class="sub-row"><span>Licencia de actividad</span><span>0,5k–1k €</span></div>
+          <div class="sub-row"><span>Registro Sanitario (AESAN)</span><span>0,3k–0,5k €</span></div>
+          <div class="sub-row"><span>Evaluación ambiental simplificada</span><span>0,5k–1k €</span></div>
+          <div class="sub-row"><span>Proyecto técnico (ingeniero)</span><span>0,5k–1k €</span></div>
+          <div class="sub-row"><span>Permisos municipales</span><span>0,2k–0,5k €</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Laboratorio y certificación</span><span class="acc-cost">0,5k – 1k €</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Análisis de laboratorio acreditado — múltiples lotes de prueba.
+        <div class="sub-items">
+          <div class="sub-row"><span>Panel polifenólico (HPLC)</span><span>150–300 €/test</span></div>
+          <div class="sub-row"><span>Acidez + peróxidos + UV</span><span>80–150 €/test</span></div>
+          <div class="sub-row"><span>Evaluación organoléptica (panel)</span><span>100–200 €/test</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Contingencia (~10%)</span><span class="acc-cost">3k – 4,5k €</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Colchón para imprevistos: fluctuaciones cambiarias, utillaje adicional, repuestos, rondas de test extra.</div>
+    </div>
+    <div class="acc-total"><span>TOTAL (sin terreno)</span><span>34k – 50k €</span></div>
+  </div>
+
+  <!-- DE accordion -->
+  <div class="acc-list" data-lang="de">
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Ausrüstung</span><span class="acc-cost">22k – 28k €</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Alibaba / Made-in-China Lieferanten. Pfad B (Hammermühle) Konfiguration.
+        <div class="sub-items">
+          <div class="sub-row"><span>Aufgabetrichter / Zuführstation</span><span>0,5k–2k €</span></div>
+          <div class="sub-row"><span>Luftabscheider (Laubgebläse)</span><span>1k–2,5k €</span></div>
+          <div class="sub-row"><span>Hammermühle (300–500 kg/h)</span><span>2k–5k €</span></div>
+          <div class="sub-row"><span>1× VTD + Kühlfalle + Vakuumpumpe</span><span>8k–15k €</span></div>
+          <div class="sub-row"><span>Kalt-Schneckenpresse</span><span>3,5k–8k €</span></div>
+          <div class="sub-row"><span>Dekanter / Schwerkraftabscheider</span><span>1k–5k €</span></div>
+          <div class="sub-row"><span>Filtrationseinheit</span><span>0,5k–2k €</span></div>
+          <div class="sub-row"><span>1× Lagertank 500 L (N₂-Decke)</span><span>0,6k–2k €</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Seefracht + Zoll</span><span class="acc-cost">3k – 5k €</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">FCL-Container Guangzhou → Algeciras/Málaga.
+        <div class="sub-items">
+          <div class="sub-row"><span>Seefracht (FCL 20 ft)</span><span>1,5k–2,5k €</span></div>
+          <div class="sub-row"><span>Zollabfertigung + Einfuhrzölle (~4,2%)</span><span>0,8k–1,5k €</span></div>
+          <div class="sub-row"><span>Hafengebühren + Letzte-Meile-Lieferung</span><span>0,7k–1k €</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">PearlShell-Bau</span><span class="acc-cost">3,5k – 5,5k €</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Perlitgedämmte Module auf verzinkten Stahlbogen.
+        <div class="sub-items">
+          <div class="sub-row"><span>Verarbeitungshalle (2–3 Bogen, ~45 m²)</span><span>1,8k–2,8k €</span></div>
+          <div class="sub-row"><span>Kühlraum (~18 m²)</span><span>0,8k–1,3k €</span></div>
+          <div class="sub-row"><span>Technikerquartier + WC (9 m²)</span><span>0,5k–0,8k €</span></div>
+          <div class="sub-row"><span>Schotterbasis + Geländevorbereitung</span><span>0,4k–0,6k €</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Elektroinstallation</span><span class="acc-cost">1,5k – 3k €</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Zertifizierter Elektriker erforderlich.
+        <div class="sub-items">
+          <div class="sub-row"><span>Dreiphasen-Anschluss</span><span>0,5k–1k €</span></div>
+          <div class="sub-row"><span>Lebensmittel-Verkabelung + Schaltschrank</span><span>0,5k–1k €</span></div>
+          <div class="sub-row"><span>Beleuchtung + Erdung + Motorkreise</span><span>0,5k–1k €</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Sanitär + CIP + Abwasser</span><span class="acc-cost">0,8k – 1,5k €</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Keine Olivenwäsche — Trockenreinigung per Luftabscheider schützt Polyphenole. Wasser nur für CIP und Hygiene.
+        <div class="sub-items">
+          <div class="sub-row"><span>Wasseranschluss oder Brunnen</span><span>0,3k–0,5k €</span></div>
+          <div class="sub-row"><span>Lebensmittel-CIP-Rohrleitungen</span><span>0,3k–0,5k €</span></div>
+          <div class="sub-row"><span>Fettabscheider + Abwassersammeltank</span><span>0,2k–0,5k €</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Genehmigungen</span><span class="acc-cost">2k – 4k €</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Spanische behördliche Anforderungen für Lebensmittelverarbeitung.
+        <div class="sub-items">
+          <div class="sub-row"><span>Betriebsgenehmigung</span><span>0,5k–1k €</span></div>
+          <div class="sub-row"><span>Hygieneregistrierung (AESAN)</span><span>0,3k–0,5k €</span></div>
+          <div class="sub-row"><span>Vereinfachte Umweltprüfung</span><span>0,5k–1k €</span></div>
+          <div class="sub-row"><span>Technisches Projekt (Ingenieur)</span><span>0,5k–1k €</span></div>
+          <div class="sub-row"><span>Gemeindegenehmigungen</span><span>0,2k–0,5k €</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Laboranalyse</span><span class="acc-cost">0,5k – 1k €</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Akkreditierte Laboranalyse — mehrere Testchargen.
+        <div class="sub-items">
+          <div class="sub-row"><span>Polyphenol-Panel (HPLC)</span><span>150–300 €/Test</span></div>
+          <div class="sub-row"><span>Säure + Peroxide + UV</span><span>80–150 €/Test</span></div>
+          <div class="sub-row"><span>Sensorische Prüfung (Panel)</span><span>100–200 €/Test</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Unvorhergesehenes</span><span class="acc-cost">3k – 4,5k €</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Puffer für Währungsschwankungen, zusätzliches Werkzeug, Ersatzteile, weitere Testrunden.</div>
+    </div>
+    <div class="acc-total"><span>GESAMT (ohne Grundstück)</span><span>34k – 50k €</span></div>
+  </div>
+
+  <!-- IT accordion -->
+  <div class="acc-list" data-lang="it">
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Attrezzature</span><span class="acc-cost">€22k – €28k</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Fornitori Alibaba / Made-in-China. Configurazione Percorso B (Mulino a Martelli).
+        <div class="sub-items">
+          <div class="sub-row"><span>Tramoggia / stazione alimentazione</span><span>€0,5k–€2k</span></div>
+          <div class="sub-row"><span>Separatore aria (soffiatore foglie)</span><span>€1k–€2,5k</span></div>
+          <div class="sub-row"><span>Mulino a martelli (300–500 kg/h)</span><span>€2k–€5k</span></div>
+          <div class="sub-row"><span>1× VTD + trappola fredda + pompa vuoto</span><span>€8k–€15k</span></div>
+          <div class="sub-row"><span>Pressa a vite a freddo</span><span>€3,5k–€8k</span></div>
+          <div class="sub-row"><span>Decantatore / separatore a gravità</span><span>€1k–€5k</span></div>
+          <div class="sub-row"><span>Unità di filtrazione</span><span>€0,5k–€2k</span></div>
+          <div class="sub-row"><span>1× Serbatoio 500 L (coperta N₂)</span><span>€0,6k–€2k</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Trasporto + dogana</span><span class="acc-cost">€3k – €5k</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Container FCL Guangzhou → Algeciras/Málaga.
+        <div class="sub-items">
+          <div class="sub-row"><span>Nolo marittimo (FCL 20 ft)</span><span>€1,5k–€2,5k</span></div>
+          <div class="sub-row"><span>Sdoganamento + dazi (~4,2%)</span><span>€0,8k–€1,5k</span></div>
+          <div class="sub-row"><span>Movimentazione portuale + consegna</span><span>€0,7k–€1k</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Costruzione PearlShell</span><span class="acc-cost">€3,5k – €5,5k</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Moduli isolati in perlite su archi acciaio zincato.
+        <div class="sub-items">
+          <div class="sub-row"><span>Capannone lavorazione (2–3 archi, ~45 m²)</span><span>€1,8k–€2,8k</span></div>
+          <div class="sub-row"><span>Cella frigorifera (~18 m²)</span><span>€0,8k–€1,3k</span></div>
+          <div class="sub-row"><span>Alloggio tecnico + bagno (9 m²)</span><span>€0,5k–€0,8k</span></div>
+          <div class="sub-row"><span>Base ghiaia + preparazione sito</span><span>€0,4k–€0,6k</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Impianto elettrico</span><span class="acc-cost">€1,5k – €3k</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Elettricista certificato richiesto.
+        <div class="sub-items">
+          <div class="sub-row"><span>Allacciamento trifase</span><span>€0,5k–€1k</span></div>
+          <div class="sub-row"><span>Cablaggio alimentare + quadro elettrico</span><span>€0,5k–€1k</span></div>
+          <div class="sub-row"><span>Illuminazione + messa a terra + circuiti motore</span><span>€0,5k–€1k</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Idraulica + CIP + scarichi</span><span class="acc-cost">€0,8k – €1,5k</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Nessun lavaggio olive — pulizia a secco con separatore ad aria per preservare i polifenoli. Acqua solo per CIP e igiene.
+        <div class="sub-items">
+          <div class="sub-row"><span>Allacciamento idrico o pozzo</span><span>€0,3k–€0,5k</span></div>
+          <div class="sub-row"><span>Tubazioni alimentari CIP</span><span>€0,3k–€0,5k</span></div>
+          <div class="sub-row"><span>Separatore grassi + vasca raccolta acque</span><span>€0,2k–€0,5k</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Legale e autorizzazioni</span><span class="acc-cost">€2k – €4k</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Requisiti normativi spagnoli per la trasformazione alimentare.
+        <div class="sub-items">
+          <div class="sub-row"><span>Licenza di attività</span><span>€0,5k–€1k</span></div>
+          <div class="sub-row"><span>Registrazione sanitaria (AESAN)</span><span>€0,3k–€0,5k</span></div>
+          <div class="sub-row"><span>Valutazione ambientale semplificata</span><span>€0,5k–€1k</span></div>
+          <div class="sub-row"><span>Progetto tecnico (ingegnere)</span><span>€0,5k–€1k</span></div>
+          <div class="sub-row"><span>Permessi comunali</span><span>€0,2k–€0,5k</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Laboratorio</span><span class="acc-cost">€0,5k – €1k</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Analisi di laboratorio accreditato — più lotti di prova.
+        <div class="sub-items">
+          <div class="sub-row"><span>Pannello polifenolico (HPLC)</span><span>€150–€300/test</span></div>
+          <div class="sub-row"><span>Acidità + perossidi + UV</span><span>€80–€150/test</span></div>
+          <div class="sub-row"><span>Valutazione organolettica (panel)</span><span>€100–€200/test</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head"><span class="acc-name">Imprevisti</span><span class="acc-cost">€3k – €4,5k</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-detail">Buffer per fluttuazioni valutarie, utensili aggiuntivi, ricambi, ulteriori test.</div>
+    </div>
+    <div class="acc-total"><span>TOTALE (escluso terreno)</span><span>€34k – €50k</span></div>
+  </div>
+
+  <p data-lang="en" style="font-size:.8rem;color:var(--text-light);margin-top:.5rem"><strong>Note:</strong> Land €5k–€30k separately (varies by location). Partner acquires independently.</p>
+  <p data-lang="es" style="font-size:.8rem;color:var(--text-light);margin-top:.5rem"><strong>Nota:</strong> Terreno 5k–30k € aparte (varía por ubicación).</p>
+  <p data-lang="de" style="font-size:.8rem;color:var(--text-light);margin-top:.5rem"><strong>Hinweis:</strong> Grundstück 5k–30k € separat (standortabhängig).</p>
+  <p data-lang="it" style="font-size:.8rem;color:var(--text-light);margin-top:.5rem"><strong>Nota:</strong> Terreno €5k–€30k separato (varia per località).</p>
+
+  <h3 data-lang="en" style="font-family:'Playfair Display',serif;margin:1.25rem 0 .5rem;font-size:1.1rem">Option B — Full 500 kg/day</h3>
+  <h3 data-lang="es" style="font-family:'Playfair Display',serif;margin:1.25rem 0 .5rem;font-size:1.1rem">Opción B — 500 kg/día completo</h3>
+  <h3 data-lang="de" style="font-family:'Playfair Display',serif;margin:1.25rem 0 .5rem;font-size:1.1rem">Option B — Volle 500 kg/Tag</h3>
+  <h3 data-lang="it" style="font-family:'Playfair Display',serif;margin:1.25rem 0 .5rem;font-size:1.1rem">Opzione B — 500 kg/g completo</h3>
+
+  <p data-lang="en">For established producers: <strong>€95k – €130k</strong> total (excl. land). 5× VTD, full automation. Payback under 2 years at €50/L.</p>
+  <p data-lang="es">Para productores establecidos: <strong>95k – 130k €</strong> (sin terreno). 5× VTD, automatización completa. Amortización &lt;2 años a 50 €/L.</p>
+  <p data-lang="de">Für etablierte Produzenten: <strong>95k – 130k €</strong> (ohne Grundstück). 5× VTD, Vollautomatisierung. Amortisation &lt;2 Jahre bei 50 €/L.</p>
+  <p data-lang="it">Per produttori consolidati: <strong>€95k – €130k</strong> (escluso terreno). 5× VTD, automazione completa. Rientro &lt;2 anni a €50/L.</p>
+</section>
+
+<hr class="sep">
+
+<!-- PARTNER OFFER -->
+<section>
+  <div class="section-label" data-lang="en">The Offer</div><div class="section-label" data-lang="es">La Oferta</div><div class="section-label" data-lang="de">Das Angebot</div><div class="section-label" data-lang="it">L'Offerta</div>
+
+  <h2 data-lang="en">What the First Partner Gets</h2><h2 data-lang="es">Qué Recibe el Primer Socio</h2><h2 data-lang="de">Was der Erste Partner Erhält</h2><h2 data-lang="it">Cosa Riceve il Primo Partner</h2>
+
+  <div class="offer-box">
+    <h3 data-lang="en">Zero-Margin Pilot + Partnership Invitation</h3><h3 data-lang="es">Piloto a Coste + Invitación a Sociedad</h3><h3 data-lang="de">Pilot zum Selbstkostenpreis + Partnerschaft</h3><h3 data-lang="it">Pilota al Costo + Invito Partnership</h3>
+
+    <p data-lang="en">First installation <strong>at cost</strong> — no markup, no fees. Prototype deployment — both sides share the learning.</p>
+    <p data-lang="es">Primera instalación <strong>a coste</strong> — sin recargo. Despliegue prototipo — ambas partes comparten el aprendizaje.</p>
+    <p data-lang="de">Erstinstallation <strong>zum Selbstkostenpreis</strong> — kein Aufschlag. Prototyp — beide Seiten lernen.</p>
+    <p data-lang="it">Prima installazione <strong>al costo</strong> — nessun ricarico. Prototipo — entrambi imparano.</p>
+
+    <ul>
+      <li data-lang="en">Full equipment sourcing, logistics & installation</li>
+      <li data-lang="en">PearlShell facility design & construction</li>
+      <li data-lang="en">Process calibration & production training</li>
+      <li data-lang="en">Lab coordination & quality certification</li>
+      <li data-lang="en">Equity partnership invitation (selling & distribution)</li>
+      <li data-lang="en">Priority access to future upgrades</li>
+      <li data-lang="es">Sourcing completo, logística e instalación</li>
+      <li data-lang="es">Diseño y construcción PearlShell</li>
+      <li data-lang="es">Calibración y formación en producción</li>
+      <li data-lang="es">Coordinación laboratorio y certificación</li>
+      <li data-lang="es">Invitación a participación accionarial</li>
+      <li data-lang="es">Acceso prioritario a mejoras futuras</li>
+      <li data-lang="de">Komplettes Sourcing, Logistik & Installation</li>
+      <li data-lang="de">PearlShell-Planung & Bau</li>
+      <li data-lang="de">Prozesskalibrierung & Schulung</li>
+      <li data-lang="de">Laborkoordination & Zertifizierung</li>
+      <li data-lang="de">Beteiligung am Vertriebsgeschäft</li>
+      <li data-lang="de">Bevorzugter Zugang zu Upgrades</li>
+      <li data-lang="it">Sourcing completo, logistica e installazione</li>
+      <li data-lang="it">Progettazione e costruzione PearlShell</li>
+      <li data-lang="it">Calibrazione e formazione produttiva</li>
+      <li data-lang="it">Coordinamento laboratorio e certificazione</li>
+      <li data-lang="it">Invito a partnership azionaria</li>
+      <li data-lang="it">Accesso prioritario a futuri upgrade</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- REFERENCE LINKS -->
+<section>
+  <div class="section-label" data-lang="en">Learn More</div><div class="section-label" data-lang="es">Más Info</div><div class="section-label" data-lang="de">Mehr</div><div class="section-label" data-lang="it">Approfondisci</div>
+
+  <h2 data-lang="en">Explore the Technology</h2><h2 data-lang="es">Explore la Tecnología</h2><h2 data-lang="de">Technologie entdecken</h2><h2 data-lang="it">Esplora la Tecnologia</h2>
+
+  <div class="ref-links">
+    <a href="https://silken-jungle-kpeq.here.now/" target="_blank" class="ref-link">
+      <div class="ref-tag">VacOil</div>
+      <h4 data-lang="en">UHP Olive Oil Plant</h4><h4 data-lang="es">Planta UHP</h4><h4 data-lang="de">UHP-Anlage</h4><h4 data-lang="it">Impianto UHP</h4>
+      <p data-lang="en">Full technical docs — CAPEX/OPEX, ROI, equipment specs, scaling roadmap.</p>
+      <p data-lang="es">Documentación técnica completa — CAPEX/OPEX, ROI, especificaciones.</p>
+      <p data-lang="de">Technische Dokumentation — CAPEX/OPEX, ROI, Spezifikationen.</p>
+      <p data-lang="it">Documentazione tecnica — CAPEX/OPEX, ROI, specifiche.</p>
+    </a>
+    <a href="https://fancy-atlas-w49b.here.now/" target="_blank" class="ref-link">
+      <div class="ref-tag">PearlShell</div>
+      <h4 data-lang="en">Rapid Insulated Shelter</h4><h4 data-lang="es">Refugio Aislado Rápido</h4><h4 data-lang="de">Schnellbau-Shelter</h4><h4 data-lang="it">Rifugio Isolato Rapido</h4>
+      <p data-lang="en">Building tech for the facility — perlite, steel frames, 1 day build.</p>
+      <p data-lang="es">Tecnología constructiva — perlita, arcos acero, 1 día.</p>
+      <p data-lang="de">Bautechnologie — Perlite, Stahlrahmen, 1 Tag Bau.</p>
+      <p data-lang="it">Tecnologia costruttiva — perlite, archi acciaio, 1 giorno.</p>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <button class="footer-contact" onclick="document.getElementById('contact-dialog').classList.add('open')">digitalAIventures LLC</button>
+  <p>Alpujarras · Andalucía · Spain</p>
+  <p style="margin-top:.4rem">
+    <span data-lang="en">Partner Pilot Programme · April 2025</span>
+    <span data-lang="es">Programa Piloto · Abril 2025</span>
+    <span data-lang="de">Partner-Pilot · April 2025</span>
+    <span data-lang="it">Programma Pilota · Aprile 2025</span>
+  </p>
+</footer>
+
+<div class="dialog-overlay" id="contact-dialog" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="dialog-box">
+    <h4 data-lang="en">Get in Touch</h4><h4 data-lang="es">Contacto</h4><h4 data-lang="de">Kontakt</h4><h4 data-lang="it">Contattaci</h4>
+    <a href="mailto:alexandru.nistoroiu@gmail.com" class="dialog-option dialog-email">✉ Email</a>
+    <a href="https://t.me/JuanittoCalvares" target="_blank" class="dialog-option dialog-telegram">✈ Telegram</a>
+    <button class="dialog-close" onclick="document.getElementById('contact-dialog').classList.remove('open')">Close</button>
+  </div>
+</div>
+
+<script>
+function setLang(l){
+  document.querySelectorAll('[data-lang]').forEach(e=>{
+    e.classList.toggle('v',e.getAttribute('data-lang')===l)
+  });
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    b.classList.toggle('active',b.textContent.trim().toLowerCase()===l)
+  });
+}
+setLang('en');
+</script>
+</body>
+</html>

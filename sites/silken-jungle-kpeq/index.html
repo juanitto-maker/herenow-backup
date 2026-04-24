@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VacOil — UHP Olive Oil Plant System — digitalAIventures</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1F5C2E;--green-light:#2C5F2E;--green-pale:#E8F2EA;
+  --gold:#C8A951;--gold-light:#FDF6E3;
+  --dark:#0d1a0f;--dark2:#121f14;--dark3:#1a2e1d;
+  --text:#f0ede6;--text-muted:#9db09e;
+  --card:#1a2e1d;--border:#2a4a2d;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--text);overflow-x:hidden}
+
+/* ── LANG SWITCHER ── */
+.lang-bar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:flex-end;padding:.5rem 1.5rem;background:rgba(13,26,15,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.lang-bar button{background:none;border:1px solid var(--border);color:var(--text-muted);padding:.25rem .65rem;border-radius:.35rem;font-size:.78rem;font-family:'Inter',sans-serif;cursor:pointer;margin-left:.35rem;transition:.2s}
+.lang-bar button.active{background:var(--gold);border-color:var(--gold);color:#000;font-weight:600}
+
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 1.5rem 3rem;position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,#1F5C2E44 0%,transparent 70%)}
+#hero::before{content:'🫒';position:absolute;font-size:40vw;opacity:.04;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;line-height:1}
+.hero-badge{display:inline-block;font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);border-radius:999px;padding:.3rem .9rem;margin-bottom:1.5rem}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,7vw,5.5rem);font-weight:900;line-height:1.05;color:#fff;margin-bottom:1rem;max-width:900px}
+.hero-title span{color:var(--gold)}
+.brand-mark{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:900;letter-spacing:.04em;margin-bottom:.5rem}
+.brand-mark .vac{color:#4ade80}
+.brand-mark .ol{color:var(--gold)}
+.brand-mark .tm{font-size:.35em;color:var(--text-muted);font-weight:400;vertical-align:super}
+.hero-sub{font-size:clamp(1rem,2.5vw,1.25rem);color:var(--text-muted);max-width:680px;line-height:1.7;margin-bottom:2.5rem}
+.pitch-box{background:var(--card);border:1px solid var(--border);border-radius:1rem;padding:1.5rem 2rem;max-width:720px;text-align:left;margin-bottom:2.5rem;border-left:4px solid var(--gold)}
+.pitch-label{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+.pitch-text{font-size:1rem;line-height:1.75;color:var(--text)}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.btn{display:inline-block;padding:.75rem 2rem;border-radius:.6rem;font-size:.95rem;font-weight:600;text-decoration:none;transition:.2s;cursor:pointer;border:none;font-family:'Inter',sans-serif}
+.btn-primary{background:var(--gold);color:#000}
+.btn-primary:hover{background:#d4b45a;transform:translateY(-2px)}
+.btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{border-color:var(--gold);color:var(--gold)}
+.scroll-hint{margin-top:3rem;color:var(--text-muted);font-size:.8rem;display:flex;flex-direction:column;align-items:center;gap:.4rem;animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* ── SECTIONS ── */
+section{padding:5rem 1.5rem;max-width:1200px;margin:0 auto}
+.section-full{max-width:100%;padding:5rem 1.5rem;background:var(--dark2)}
+.section-full .inner{max-width:1200px;margin:0 auto}
+.section-tag{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:700;color:#fff;line-height:1.15;margin-bottom:1rem}
+.section-sub{font-size:1rem;color:var(--text-muted);line-height:1.7;max-width:680px;margin-bottom:3rem}
+
+/* ── STAT ROW ── */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin:2rem 0}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:.75rem;padding:1.25rem 1rem;text-align:center}
+.stat-card .num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--gold);line-height:1}
+.stat-card .unit{font-size:.75rem;color:var(--gold);font-weight:600}
+.stat-card .label{font-size:.78rem;color:var(--text-muted);margin-top:.4rem;line-height:1.4}
+
+/* ── CARDS ── */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:2rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:1rem;padding:2rem 1.5rem;position:relative;overflow:hidden;transition:transform .2s,border-color .2s}
+.card:hover{transform:translateY(-4px);border-color:var(--gold)}
+.card-icon{font-size:2.5rem;margin-bottom:1rem;display:block}
+.card-tag{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+.card-title{font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:.6rem}
+.card-body{font-size:.88rem;color:var(--text-muted);line-height:1.65}
+.card-highlight{display:inline-block;margin-top:1rem;padding:.3rem .8rem;background:var(--gold-light);color:#5a4000;font-size:.78rem;font-weight:700;border-radius:.4rem}
+.card.featured{border-color:var(--gold);background:linear-gradient(135deg,var(--card),#1f3a22)}
+.card.featured::before{content:'★';position:absolute;top:1rem;right:1rem;color:var(--gold);font-size:1.1rem}
+
+/* ── PATH TABLE ── */
+.compare-table{width:100%;border-collapse:collapse;margin-top:1.5rem;font-size:.88rem}
+.compare-table th{background:var(--green);color:#fff;padding:.7rem 1rem;text-align:left;font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.compare-table td{padding:.65rem 1rem;border-bottom:1px solid var(--border);vertical-align:top}
+.compare-table tr:nth-child(even) td{background:#162319}
+.compare-table .winner{color:#4ade80;font-weight:700}
+.compare-table .loser{color:var(--text-muted)}
+.compare-table .center{text-align:center}
+.tag-rec{display:inline-block;background:var(--gold);color:#000;font-size:.65rem;font-weight:700;padding:.15rem .5rem;border-radius:.3rem;letter-spacing:.05em}
+
+/* ── SCALE STEPS ── */
+.scale-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin:2rem 0;counter-reset:step}
+.step{background:var(--card);border:1px solid var(--border);border-radius:.75rem;padding:1.25rem 1rem;text-align:center;counter-increment:step;position:relative}
+.step::before{content:counter(step);position:absolute;top:-1px;left:-1px;background:var(--border);color:var(--text-muted);font-size:.65rem;font-weight:700;width:1.4rem;height:1.4rem;border-radius:.35rem 0 .35rem 0;display:flex;align-items:center;justify-content:center}
+.step.active{border-color:var(--gold);background:linear-gradient(135deg,var(--card),#1f3a22)}
+.step.active::before{background:var(--gold);color:#000}
+.step .cap{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--gold)}
+.step .per-day{font-size:.7rem;color:var(--text-muted);margin-bottom:.5rem}
+.step .oil{font-size:.88rem;color:#fff;font-weight:600}
+.step .capex{font-size:.75rem;color:var(--text-muted);margin-top:.3rem}
+.step .profit{font-size:.82rem;color:#4ade80;font-weight:600;margin-top:.3rem}
+
+/* ── CHARTS ── */
+.chart-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:2rem;margin-top:2rem}
+.chart-box{background:var(--card);border:1px solid var(--border);border-radius:1rem;padding:1.5rem}
+.chart-box h3{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:1rem}
+.chart-box canvas{max-height:260px}
+
+/* ── USES GRID ── */
+.uses-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-top:2rem}
+.use-card{background:var(--card);border:1px solid var(--border);border-radius:.75rem;padding:1.25rem;display:flex;flex-direction:column;gap:.5rem}
+.use-icon{font-size:1.8rem}
+.use-name{font-size:.9rem;font-weight:600;color:#fff}
+.use-desc{font-size:.78rem;color:var(--text-muted);line-height:1.5}
+.use-yield{font-size:.72rem;color:var(--gold);font-weight:600}
+
+/* ── INVESTMENT TABLE ── */
+.inv-table{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:1.5rem}
+.inv-table th{background:var(--green);color:#fff;padding:.8rem 1rem;font-size:.75rem;text-transform:uppercase;letter-spacing:.06em}
+.inv-table td{padding:.7rem 1rem;border-bottom:1px solid var(--border)}
+.inv-table tr:nth-child(even) td{background:#162319}
+.inv-table .g{color:#4ade80;font-weight:700}
+.inv-table .highlight-row td{background:linear-gradient(90deg,#1f3a22,#162319);border-left:3px solid var(--gold)}
+
+/* ── CTA ── */
+.cta-section{background:linear-gradient(135deg,var(--dark3),var(--dark));border-top:1px solid var(--border);padding:5rem 1.5rem;text-align:center}
+.cta-section .inner{max-width:700px;margin:0 auto}
+.cta-section h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);color:#fff;margin-bottom:1rem}
+.cta-section p{color:var(--text-muted);line-height:1.7;margin-bottom:2rem}
+.contact-grid{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem}
+.contact-chip{display:flex;align-items:center;gap:.5rem;background:var(--card);border:1px solid var(--border);border-radius:.5rem;padding:.6rem 1.1rem;font-size:.85rem;color:var(--text)}
+
+/* ── FOOTER ── */
+footer{padding:2rem 1.5rem;text-align:center;color:var(--text-muted);font-size:.78rem;border-top:1px solid var(--border)}
+footer a{color:var(--gold);text-decoration:none}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0}
+
+/* ── POLYPHENOL BAR ── */
+.pheno-bars{margin:2rem 0;display:flex;flex-direction:column;gap:.75rem}
+.pheno-row{display:flex;align-items:center;gap:1rem}
+.pheno-label{width:200px;flex-shrink:0;font-size:.82rem;color:var(--text-muted);text-align:right}
+.pheno-track{flex:1;background:#1a2e1d;border-radius:999px;height:1.5rem;overflow:hidden;position:relative}
+.pheno-fill{height:100%;border-radius:999px;display:flex;align-items:center;padding-left:.6rem;font-size:.72rem;font-weight:700;color:#fff;transition:width 1s ease}
+.pheno-val{width:80px;font-size:.82rem;color:#fff;font-weight:600}
+
+/* ── PROCESS FLOW ── */
+.process-flow{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;margin:1.5rem 0}
+.pf-step{background:var(--card);border:1px solid var(--border);border-radius:.5rem;padding:.5rem 1rem;font-size:.8rem;color:var(--text);display:flex;align-items:center;gap:.4rem}
+.pf-step.highlight{border-color:var(--gold);background:#1f3a22;color:var(--gold);font-weight:600}
+.pf-arrow{color:var(--text-muted);font-size:1rem}
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px){
+  .pheno-label{width:120px;font-size:.72rem}
+  .hero-cta{flex-direction:column;align-items:center}
+  .btn{width:100%;text-align:center}
+}
+
+/* ── FADE IN ── */
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
+.fade-in.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<!-- LANGUAGE BAR -->
+<div class="lang-bar">
+  <button class="active" onclick="setLang('en')">EN</button>
+  <button onclick="setLang('es')">ES</button>
+  <button onclick="setLang('de')">DE</button>
+  <button onclick="setLang('it')">IT</button>
+</div>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-badge" data-i18n="hero-badge">VacOil · Ultra-High-Phenolic Production</div>
+  <div class="brand-mark"><span class="vac">Vac</span><span class="ol">Oil</span><span class="tm">™</span></div>
+  <h1 class="hero-title">
+    <span data-i18n="hero-title-1">The Future of</span><br>
+    <span data-i18n="hero-title-2">Olive Oil</span> <span data-i18n="hero-title-3">is Here.</span>
+  </h1>
+  <p class="hero-sub" data-i18n="hero-sub">From mobile lab to modular plant to full-scale facility — a complete system for producing ultra-high-phenolic olive oil at any investment level.</p>
+  <div class="pitch-box">
+    <div class="pitch-label" data-i18n="pitch-label">Elevator Pitch</div>
+    <p class="pitch-text" data-i18n="pitch-text">Most "premium" olive oil on the market destroys its own health potential before it reaches the bottle. Conventional mills use heat and oxygen — the two enemies of polyphenols. The result? Oil sold as premium with 150 mg/kg instead of the 1,000+ mg/kg that Picual olives actually produce. The <span style="color:#4ade80;font-weight:700">Vac</span><span style="color:#C8A951;font-weight:700">Oil</span> Vacuum Tray Drying plant system preserves 85–95% of polyphenols by processing at 30–40°C under near-zero oxygen. The result is olive oil that commands €50–80/litre, with ROI between 49% and 92% and payback under 2 years. Available in three configurations: a mobile lab for pioneers, a modular system starting at €32,000, and a full 500 kg/day facility at €140,000.</p>
+  </div>
+  <div class="hero-cta">
+    <a href="#concepts" class="btn btn-primary" data-i18n="cta-explore">Explore the Concepts</a>
+    <a href="#numbers" class="btn btn-secondary" data-i18n="cta-numbers">See the Numbers</a>
+  </div>
+  <div class="scroll-hint">
+    <span data-i18n="scroll">Scroll to discover</span>
+    <span style="font-size:1.2rem">↓</span>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- S1: THE REVOLUTION -->
+<section class="fade-in">
+  <div class="section-tag" data-i18n="s1-tag">The Science</div>
+  <h2 class="section-title" data-i18n="s1-title">What is Ultra-High-Phenolic Olive Oil?</h2>
+  <p class="section-sub" data-i18n="s1-sub">Polyphenols are the bioactive compounds that give real olive oil its anti-inflammatory, cardioprotective, and longevity-linked properties. The EU mandates a minimum of 5 mg of hydroxytyrosol per 20 ml serving to make a health claim — our system regularly produces 10–12 mg, 2–4× the threshold.</p>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="num">500<span class="unit">+</span></div>
+      <div class="label" data-i18n="stat1">mg/kg to qualify as UHP</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">1,200</div>
+      <div class="label" data-i18n="stat2">mg/kg achievable with our system (Path A)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">85<span class="unit">%</span></div>
+      <div class="label" data-i18n="stat3">polyphenol retention via Vacuum Tray Drying</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">8<span class="unit">×</span></div>
+      <div class="label" data-i18n="stat4">higher price than commodity EVOO</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">€80</div>
+      <div class="label" data-i18n="stat5">per litre — elite UHP retail price</div>
+    </div>
+  </div>
+
+  <h3 style="font-size:1rem;color:#fff;font-weight:600;margin:2rem 0 .5rem" data-i18n="pheno-compare">Polyphenol Content Comparison</h3>
+  <div class="pheno-bars" id="pheno-bars">
+    <div class="pheno-row">
+      <div class="pheno-label" data-i18n="pb1">Supermarket EVOO</div>
+      <div class="pheno-track"><div class="pheno-fill" style="width:12%;background:#555">150</div></div>
+      <div class="pheno-val">150 mg/kg</div>
+    </div>
+    <div class="pheno-row">
+      <div class="pheno-label" data-i18n="pb2">Quality EVOO</div>
+      <div class="pheno-track"><div class="pheno-fill" style="width:22%;background:#7a7a7a">280</div></div>
+      <div class="pheno-val">280 mg/kg</div>
+    </div>
+    <div class="pheno-row">
+      <div class="pheno-label" data-i18n="pb3">UHP Threshold (EU)</div>
+      <div class="pheno-track"><div class="pheno-fill" style="width:40%;background:var(--gold)">500</div></div>
+      <div class="pheno-val">500 mg/kg</div>
+    </div>
+    <div class="pheno-row">
+      <div class="pheno-label" data-i18n="pb4">Our System — Path B</div>
+      <div class="pheno-track"><div class="pheno-fill" style="width:82%;background:var(--green)">1,000+</div></div>
+      <div class="pheno-val">1,000+ mg/kg</div>
+    </div>
+    <div class="pheno-row">
+      <div class="pheno-label" data-i18n="pb5">Our System — Path A (peak)</div>
+      <div class="pheno-track"><div class="pheno-fill" style="width:100%;background:linear-gradient(90deg,var(--green),var(--gold))">1,200+</div></div>
+      <div class="pheno-val">1,200 mg/kg</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- S2: TECHNOLOGY -->
+<div class="section-full fade-in">
+<div class="inner">
+  <div class="section-tag" data-i18n="s2-tag">The Technology</div>
+  <h2 class="section-title" data-i18n="s2-title">Vacuum Tray Drying — The Core Innovation</h2>
+  <p class="section-sub" data-i18n="s2-sub">Conventional drying destroys polyphenols with heat and oxygen. Our Vacuum Tray Drying (VTD) system removes moisture at 30–40°C under near-zero atmospheric pressure, preserving the bioactive compounds that command premium prices.</p>
+
+  <div style="overflow-x:auto;margin-bottom:2rem">
+    <table class="compare-table" style="min-width:480px">
+      <thead>
+        <tr>
+          <th data-i18n="th-param">Parameter</th>
+          <th data-i18n="th-conv">Conventional Drying</th>
+          <th data-i18n="th-vtd">Vacuum Tray Drying (VTD) ✓</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td data-i18n="tb-temp">Temperature</td><td class="loser">60–80°C</td><td class="winner">30–40°C</td></tr>
+        <tr><td data-i18n="tb-oxy">Oxygen exposure</td><td class="loser" data-i18n="tb-high">High (open air)</td><td class="winner" data-i18n="tb-zero">Near-zero (vacuum)</td></tr>
+        <tr><td data-i18n="tb-time">Drying time</td><td class="loser">8–12 hours</td><td class="winner">4–6 hours</td></tr>
+        <tr><td data-i18n="tb-ret">Polyphenol retention</td><td class="loser">40–60%</td><td class="winner" style="font-weight:700">85–95%</td></tr>
+        <tr><td data-i18n="tb-micro">Microbial safety</td><td class="loser" data-i18n="tb-risk">Risk if under-dried</td><td class="winner" data-i18n="tb-vac">Vacuum inhibits growth</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="color:#fff;font-size:1.05rem;font-weight:600;margin-bottom:.75rem" data-i18n="path-title">Two Processing Paths</h3>
+  <div class="card-grid" style="grid-template-columns:1fr 1fr;gap:1.5rem">
+    <div class="card">
+      <span class="card-icon">🫒</span>
+      <div class="card-tag">Path A</div>
+      <div class="card-title" data-i18n="pathA-title">Centrifugal De-Pitter + VTD + Press</div>
+      <div class="card-body" data-i18n="pathA-body">Pit removed before drying → flesh-only paste → maximum polyphenol potential (900–1,200 mg/kg). Requires 2 de-pitter units at 500 kg/day and press aids. Higher CAPEX (€155k), slower press cycle.</div>
+      <span class="card-highlight" data-i18n="pathA-tag">Maximum Polyphenols</span>
+    </div>
+    <div class="card featured">
+      <span class="card-icon">🔨</span>
+      <div class="card-tag">Path B <span class="tag-rec" data-i18n="rec">RECOMMENDED</span></div>
+      <div class="card-title" data-i18n="pathB-title">Hammer Mill + VTD + Press</div>
+      <div class="card-body" data-i18n="pathB-body">Whole olive crushed (flesh + pit) → pit fragments = natural press aid → no bottleneck, faster cycle, lower cost (€140k). Polyphenols 5–10% lower but still 820–1,100 mg/kg — well above UHP threshold. Optional pit screen for premium batches.</div>
+      <span class="card-highlight" data-i18n="pathB-tag">★ Best ROI · No Bottleneck</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- S3: THREE CONCEPTS -->
+<section id="concepts" class="fade-in">
+  <div class="section-tag" data-i18n="s3-tag">Three Configurations</div>
+  <h2 class="section-title" data-i18n="s3-title">Choose Your Entry Point</h2>
+  <p class="section-sub" data-i18n="s3-sub">From a proof-of-concept mobile lab to a full-scale stationary facility, there is a configuration for every investment level and risk appetite.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-icon">🚚</span>
+      <div class="card-tag" data-i18n="c1-tag">Concept 1</div>
+      <div class="card-title" data-i18n="c1-title">Mobile Vacuum Olive Lab</div>
+      <div class="card-body" data-i18n="c1-body">A fully containerised mobile processing unit — VTD + cold press + separator — that can travel to olive groves at harvest time. Eliminates transport of fresh olives, maximises freshness, serves multiple locations. Perfect as a service model: process for local producers on a fee basis.</div>
+      <div style="margin-top:1rem;display:flex;flex-direction:column;gap:.3rem">
+        <div style="display:flex;justify-content:space-between;font-size:.8rem"><span style="color:var(--text-muted)" data-i18n="c1-cap">Capacity</span><span style="color:#fff">50–100 kg/day</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.8rem"><span style="color:var(--text-muted)">CAPEX</span><span style="color:var(--gold)">€40,000–80,000</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.8rem"><span style="color:var(--text-muted)" data-i18n="c1-model">Model</span><span style="color:#fff" data-i18n="c1-service">Service fee + own brand</span></div>
+      </div>
+      <span class="card-highlight" data-i18n="c1-tag2">Lowest CAPEX · Maximum Flexibility</span>
+    </div>
+
+    <div class="card featured">
+      <span class="card-icon">🏭</span>
+      <div class="card-tag" data-i18n="c2-tag">Concept 2 <span class="tag-rec" data-i18n="rec">RECOMMENDED</span></div>
+      <div class="card-title" data-i18n="c2-title">Modular Plant — 100→500 kg/day</div>
+      <div class="card-body" data-i18n="c2-body">Start with the minimum viable investment at 100 kg/day (€32,000–39,000 CAPEX), validate the market, then add one VTD unit per season as demand grows. Each step is self-funding from the previous season's profit. Reach full 500 kg/day capacity by Year 5 with ~€95,000 total — saving €50,000+ versus building full from day one.</div>
+      <div style="margin-top:1rem;display:flex;flex-direction:column;gap:.3rem">
+        <div style="display:flex;justify-content:space-between;font-size:.8rem"><span style="color:var(--text-muted)" data-i18n="c2-start">Start CAPEX</span><span style="color:var(--gold);font-weight:700">€32,000–39,000</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.8rem"><span style="color:var(--text-muted)" data-i18n="c2-full">Full build-out</span><span style="color:#fff">€95,000–103,000</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.8rem"><span style="color:var(--text-muted)" data-i18n="c2-pay">Payback (Step 1)</span><span style="color:#4ade80">~2.8 years</span></div>
+      </div>
+      <span class="card-highlight" data-i18n="c2-tag2">★ Lowest Risk · Market-Validated Growth</span>
+    </div>
+
+    <div class="card">
+      <span class="card-icon">⚙️</span>
+      <div class="card-tag" data-i18n="c3-tag">Concept 3</div>
+      <div class="card-title" data-i18n="c3-title">Full Stationary Plant — 500 kg/day</div>
+      <div class="card-body" data-i18n="c3-body">The full-scale facility designed for 500 kg/day from day one — 5× VTD units, full PLC/SCADA automation, complete CIP, 3-phase electrical, certified food-grade workspace. Produces 2,250 litres of premium UHP oil per season. Best for established producers with guaranteed supply and existing customer base.</div>
+      <div style="margin-top:1rem;display:flex;flex-direction:column;gap:.3rem">
+        <div style="display:flex;justify-content:space-between;font-size:.8rem"><span style="color:var(--text-muted)">CAPEX</span><span style="color:var(--gold)">€140,000–160,000</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.8rem"><span style="color:var(--text-muted)" data-i18n="c3-rev">Revenue/season</span><span style="color:#fff">€112,500+</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.8rem"><span style="color:var(--text-muted)" data-i18n="c3-pay">Payback</span><span style="color:#4ade80">~2.1 years</span></div>
+      </div>
+      <span class="card-highlight" data-i18n="c3-tag2">Maximum Output · Fastest Revenue</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- S4: SCALE JOURNEY -->
+<div class="section-full fade-in">
+<div class="inner">
+  <div class="section-tag" data-i18n="s4-tag">The Modular Journey</div>
+  <h2 class="section-title" data-i18n="s4-title">Grow at Your Own Pace</h2>
+  <p class="section-sub" data-i18n="s4-sub">Each step adds one VTD unit — the bottleneck component. Everything else (mill, washer, press) is sized from the start to scale up with minimal additional cost.</p>
+
+  <div class="scale-steps">
+    <div class="step active">
+      <div class="cap">100</div><div class="per-day" data-i18n="perday">kg/day</div>
+      <div class="oil">~450 L/season</div>
+      <div class="capex">CAPEX: €32–39k</div>
+      <div class="profit">+€13,900/yr</div>
+    </div>
+    <div class="step">
+      <div class="cap">200</div><div class="per-day" data-i18n="perday">kg/day</div>
+      <div class="oil">~900 L/season</div>
+      <div class="capex">+€16,000</div>
+      <div class="profit">+€30,500/yr</div>
+    </div>
+    <div class="step">
+      <div class="cap">300</div><div class="per-day" data-i18n="perday">kg/day</div>
+      <div class="oil">~1,350 L/season</div>
+      <div class="capex">+€15,000</div>
+      <div class="profit">+€46,500/yr</div>
+    </div>
+    <div class="step">
+      <div class="cap">400</div><div class="per-day" data-i18n="perday">kg/day</div>
+      <div class="oil">~1,800 L/season</div>
+      <div class="capex">+€14,000</div>
+      <div class="profit">+€58,000/yr</div>
+    </div>
+    <div class="step">
+      <div class="cap">500</div><div class="per-day" data-i18n="perday">kg/day</div>
+      <div class="oil">~2,250 L/season</div>
+      <div class="capex">+€13–21k</div>
+      <div class="profit">+€76,500/yr</div>
+    </div>
+  </div>
+
+  <div class="chart-grid" style="margin-top:2.5rem">
+    <div class="chart-box">
+      <h3 data-i18n="chart1-title">Cumulative Profit by Year (Path B · €50/L)</h3>
+      <canvas id="chartProfit"></canvas>
+    </div>
+    <div class="chart-box">
+      <h3 data-i18n="chart2-title">Net Profit per Scale Step</h3>
+      <canvas id="chartStep"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- S5: NUMBERS -->
+<section id="numbers" class="fade-in">
+  <div class="section-tag" data-i18n="s5-tag">The Numbers</div>
+  <h2 class="section-title" data-i18n="s5-title">CAPEX · OPEX · ROI</h2>
+  <p class="section-sub" data-i18n="s5-sub">Full stationary plant comparison — Path A versus Path B — mid scenario at 500 kg/day capacity, 30 processing days per season.</p>
+
+  <div class="chart-grid">
+    <div class="chart-box">
+      <h3 data-i18n="chart3-title">CAPEX Breakdown — Path B (Recommended)</h3>
+      <canvas id="chartCapex"></canvas>
+    </div>
+    <div class="chart-box">
+      <h3 data-i18n="chart4-title">Revenue vs OPEX vs Profit (Path B · mid)</h3>
+      <canvas id="chartROI"></canvas>
+    </div>
+  </div>
+
+  <div style="overflow-x:auto;margin-top:2rem">
+    <table class="inv-table" style="min-width:560px">
+      <thead>
+        <tr>
+          <th data-i18n="inv-metric">Metric</th>
+          <th data-i18n="inv-pathA">Path A — De-Pitter</th>
+          <th data-i18n="inv-pathB">Path B — Hammer Mill ★</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td data-i18n="inv1">CAPEX (mid)</td><td>€155,000</td><td class="g">€140,000</td></tr>
+        <tr><td data-i18n="inv2">OPEX / season</td><td>€35,000–44,000</td><td class="g">€30,500–41,500</td></tr>
+        <tr><td data-i18n="inv3">Oil produced</td><td>~2,100 L</td><td class="g">~2,250 L</td></tr>
+        <tr><td data-i18n="inv4">Polyphenols</td><td>900–1,200 mg/kg</td><td>820–1,100 mg/kg</td></tr>
+        <tr><td data-i18n="inv5">Sale price</td><td>€55/L</td><td>€50/L</td></tr>
+        <tr><td data-i18n="inv6">Gross revenue</td><td>€115,500</td><td>€112,500</td></tr>
+        <tr class="highlight-row"><td data-i18n="inv7">Net profit / yr</td><td>€75,000</td><td class="g" style="font-size:1.05rem">€76,500</td></tr>
+        <tr class="highlight-row"><td data-i18n="inv8">Payback</td><td>2.1 years</td><td class="g" style="font-size:1.05rem">1.8 years</td></tr>
+        <tr class="highlight-row"><td data-i18n="inv9">ROI (annual)</td><td>48%</td><td class="g" style="font-size:1.05rem">54%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Price sensitivity -->
+  <h3 style="color:#fff;font-weight:600;margin:2.5rem 0 .5rem;font-size:1.05rem" data-i18n="sensitivity-title">Price Sensitivity — Path B · 2,250 L/season</h3>
+  <div style="overflow-x:auto">
+    <table class="inv-table" style="min-width:480px">
+      <thead>
+        <tr>
+          <th data-i18n="ps-price">Sale Price</th>
+          <th data-i18n="ps-rev">Revenue</th>
+          <th data-i18n="ps-profit">Net Profit</th>
+          <th data-i18n="ps-pay">Payback</th>
+          <th data-i18n="ps-roi">ROI %</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>€35/L</td><td>€78,750</td><td>€42,750</td><td>3.3 yrs</td><td>27%</td></tr>
+        <tr class="highlight-row"><td style="font-weight:700">€50/L</td><td>€112,500</td><td class="g">€76,500</td><td class="g">1.8 yrs</td><td class="g">54%</td></tr>
+        <tr><td>€65/L</td><td>€146,250</td><td class="g">€110,250</td><td class="g">1.3 yrs</td><td class="g">79%</td></tr>
+        <tr><td style="color:var(--gold);font-weight:700">€80/L</td><td>€180,000</td><td class="g" style="font-size:1.05rem">€144,000</td><td class="g">1.0 yr</td><td class="g" style="font-size:1.05rem">103%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- S6: BEYOND OLIVES -->
+<div class="section-full fade-in">
+<div class="inner">
+  <div class="section-tag" data-i18n="s6-tag">Versatility</div>
+  <h2 class="section-title" data-i18n="s6-title">Beyond Olives</h2>
+  <p class="section-sub" data-i18n="s6-sub">The Vacuum Tray Drying system is not limited to olive oil. The same equipment generates additional revenue during the 10 off-season months, processing any crop where low-temperature drying adds value.</p>
+
+  <div class="uses-grid">
+    <div class="use-card">
+      <div class="use-icon">🫐</div>
+      <div class="use-name" data-i18n="u1-name">Berries (Polyphenol Extraction)</div>
+      <div class="use-desc" data-i18n="u1-desc">Blueberry, aronia, sea buckthorn — VTD preserves anthocyanins for nutraceutical applications.</div>
+      <div class="use-yield" data-i18n="u1-yield">Value: €30–80/kg dried</div>
+    </div>
+    <div class="use-card">
+      <div class="use-icon">🌿</div>
+      <div class="use-name" data-i18n="u2-name">Medicinal Herbs</div>
+      <div class="use-desc" data-i18n="u2-desc">Rosemary, thyme, lavender, sage — vacuum drying preserves essential oils and active compounds destroyed by hot air.</div>
+      <div class="use-yield" data-i18n="u2-yield">Revenue: €3,000–8,000/yr off-season</div>
+    </div>
+    <div class="use-card">
+      <div class="use-icon">🍅</div>
+      <div class="use-name" data-i18n="u3-name">Vegetables (Sun-Dried Style)</div>
+      <div class="use-desc" data-i18n="u3-desc">Tomatoes, peppers, artichokes — premium dried produce for gourmet food service and export.</div>
+      <div class="use-yield" data-i18n="u3-yield">Revenue: €5,000–15,000/yr</div>
+    </div>
+    <div class="use-card">
+      <div class="use-icon">🍄</div>
+      <div class="use-name" data-i18n="u4-name">Mushrooms</div>
+      <div class="use-desc" data-i18n="u4-desc">Porcini, shiitake, chanterelle — VTD preserves umami compounds and texture better than any other method.</div>
+      <div class="use-yield" data-i18n="u4-yield">Value: €60–300/kg dried</div>
+    </div>
+    <div class="use-card">
+      <div class="use-icon">🌸</div>
+      <div class="use-name" data-i18n="u5-name">Flowers (Cosmetics)</div>
+      <div class="use-desc" data-i18n="u5-desc">Rose petals, calendula, lavender — vacuum-dried for cosmetic ingredient extraction, aromatherapy, and luxury food.</div>
+      <div class="use-yield" data-i18n="u5-yield">Niche premium market</div>
+    </div>
+    <div class="use-card">
+      <div class="use-icon">🫚</div>
+      <div class="use-name" data-i18n="u6-name">Avocado Oil (UHP)</div>
+      <div class="use-desc" data-i18n="u6-desc">Same VTD + cold press process applied to avocado — emerging premium segment, similar health positioning to UHP olive oil.</div>
+      <div class="use-yield" data-i18n="u6-yield">€20–40/L premium avocado oil</div>
+    </div>
+    <div class="use-card">
+      <div class="use-icon">🌾</div>
+      <div class="use-name" data-i18n="u7-name">Carob & Locust Bean</div>
+      <div class="use-desc" data-i18n="u7-desc">Abundant in Andalucía — VTD-dried carob pods for gourmet flour and extract production. Low-cost raw material, growing demand.</div>
+      <div class="use-yield" data-i18n="u7-yield">Revenue: €2,000–6,000/yr</div>
+    </div>
+    <div class="use-card">
+      <div class="use-icon">🎓</div>
+      <div class="use-name" data-i18n="u8-name">R&D & Agrotourism</div>
+      <div class="use-desc" data-i18n="u8-desc">The facility can host visits, workshops, tasting experiences, and small-scale R&D batches for researchers and food companies testing new protocols.</div>
+      <div class="use-yield" data-i18n="u8-yield">Revenue: €2,000–6,000/yr</div>
+    </div>
+    <div class="use-card">
+      <div class="use-icon">🤝</div>
+      <div class="use-name" data-i18n="u9-name">Contract Processing</div>
+      <div class="use-desc" data-i18n="u9-desc">Process other producers' olives or crops on a fee-per-kg basis during off-season capacity. Turns idle equipment into income.</div>
+      <div class="use-yield" data-i18n="u9-yield">Revenue: €8,000–20,000/yr</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- S7: INVESTMENT SUMMARY -->
+<section class="fade-in">
+  <div class="section-tag" data-i18n="s7-tag">Investment Summary</div>
+  <h2 class="section-title" data-i18n="s7-title">Which Configuration is Right for You?</h2>
+  <p class="section-sub" data-i18n="s7-sub">Three entry points. Three risk profiles. One proven technology. All configurations use the same core VTD process and produce the same premium UHP olive oil.</p>
+
+  <div style="overflow-x:auto">
+    <table class="inv-table" style="min-width:600px">
+      <thead>
+        <tr>
+          <th data-i18n="is-profile">Profile</th>
+          <th data-i18n="is-config">Configuration</th>
+          <th data-i18n="is-capex">CAPEX</th>
+          <th data-i18n="is-profit">Net Profit/yr</th>
+          <th data-i18n="is-pay">Payback</th>
+          <th data-i18n="is-best">Best For</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-i18n="is1-prof">Pioneer / Proof of Concept</td>
+          <td data-i18n="is1-conf">Mobile Lab (50–100 kg/day)</td>
+          <td>€40,000–80,000</td>
+          <td>€8,000–15,000</td>
+          <td>3–5 yrs</td>
+          <td data-i18n="is1-best">Service model. Multi-location. Minimal risk.</td>
+        </tr>
+        <tr class="highlight-row">
+          <td style="font-weight:700" data-i18n="is2-prof">★ Entrepreneur / Smart Start</td>
+          <td data-i18n="is2-conf">Modular 100 kg/day → scale</td>
+          <td class="g" style="font-weight:700">€32,000–39,000</td>
+          <td class="g">€13,900 → €76,500</td>
+          <td class="g">2.8 yrs start</td>
+          <td data-i18n="is2-best">Best risk/reward. Self-funding growth.</td>
+        </tr>
+        <tr>
+          <td data-i18n="is3-prof">Established Producer</td>
+          <td data-i18n="is3-conf">Full Stationary (500 kg/day)</td>
+          <td>€140,000–160,000</td>
+          <td class="g">€76,500–90,000</td>
+          <td class="g">1.8–2.1 yrs</td>
+          <td data-i18n="is3-best">Existing supply + clients. Max output.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="stat-row" style="margin-top:2.5rem">
+    <div class="stat-card">
+      <div class="num">1.0</div>
+      <div class="label" data-i18n="sis1">year minimum payback (€80/L · full plant)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">103<span class="unit">%</span></div>
+      <div class="label" data-i18n="sis2">annual ROI at elite UHP pricing</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">€32k</div>
+      <div class="label" data-i18n="sis3">minimum starting investment (modular)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">4</div>
+      <div class="label" data-i18n="sis4">languages, 3 plant concepts, 1 proven technology</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<div class="cta-section fade-in">
+  <div class="inner">
+    <div class="hero-badge" data-i18n="cta-badge">Ready to Start?</div>
+    <h2 data-i18n="cta-title">The Revolution in Olive Oil Starts with One VTD Unit.</h2>
+    <p data-i18n="cta-sub">Whether you're processing 100 kg or 500 kg per day, the same science produces the same premium result. The modular approach means you can start today, validate the market, and scale on your own terms.</p>
+    <div style="display:inline-block;background:var(--card);border:1px solid var(--border);border-radius:.75rem;padding:1.5rem 2rem;text-align:left;max-width:500px;margin-bottom:2rem">
+      <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-weight:700;margin-bottom:.75rem" data-i18n="key-facts">Key Facts</div>
+      <div style="display:flex;flex-direction:column;gap:.4rem;font-size:.88rem">
+        <div>✅ <span data-i18n="fact1">Path B recommended — lower cost, same premium result</span></div>
+        <div>✅ <span data-i18n="fact2">100 kg/day start — €32,000–39,000 CAPEX</span></div>
+        <div>✅ <span data-i18n="fact3">Each upgrade step self-funded from previous season profit</span></div>
+        <div>✅ <span data-i18n="fact4">EU health claim compliant at 750+ mg/kg</span></div>
+        <div>✅ <span data-i18n="fact5">Off-season versatility — herbs, vegetables, mushrooms, R&D</span></div>
+        <div>✅ <span data-i18n="fact6">Picual variety, Andalucía — world's best polyphenol source</span></div>
+      </div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-chip">🏢 digitalAIventures LLC</div>
+      <div class="contact-chip">📍 Andalucía, Spain</div>
+      <div class="contact-chip">🌿 March 2026</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 <span style="color:#4ade80;font-weight:600">Vac</span><span style="color:#C8A951;font-weight:600">Oil</span> · digitalAIventures LLC — UHP Olive Oil Plant System &nbsp;·&nbsp; 
+  <a href="https://amber-kitten-4khe.here.now/" target="_blank">More Publications</a></p>
+</footer>
+
+<!-- CHARTS + TRANSLATIONS + INTERACTION -->
+<script>
+// ── TRANSLATIONS ──────────────────────────────────────────────────────────────
+const T = {
+  en: {
+    'hero-badge':'VacOil · Ultra-High-Phenolic Production',
+    'hero-title-1':'The Future of','hero-title-2':'Olive Oil','hero-title-3':'is Here.',
+    'hero-sub':'From mobile lab to modular plant to full-scale facility — a complete system for producing ultra-high-phenolic olive oil at any investment level.',
+    'pitch-label':'Elevator Pitch',
+    'pitch-text':'Most "premium" olive oil on the market destroys its own health potential before it reaches the bottle. Conventional mills use heat and oxygen — the two enemies of polyphenols. The result? Oil sold as premium with 150 mg/kg instead of the 1,000+ mg/kg that Picual olives actually produce. The <span style="color:#4ade80;font-weight:700">Vac</span><span style="color:#C8A951;font-weight:700">Oil</span> Vacuum Tray Drying plant system preserves 85–95% of polyphenols by processing at 30–40°C under near-zero oxygen. The result is olive oil that commands €50–80/litre, with ROI between 49% and 103% and payback under 2 years. Available in three configurations: a mobile lab for pioneers, a modular system starting at €32,000, and a full 500 kg/day facility at €140,000.',
+    'cta-explore':'Explore the Concepts','cta-numbers':'See the Numbers','scroll':'Scroll to discover',
+    's1-tag':'The Science','s1-title':'What is Ultra-High-Phenolic Olive Oil?',
+    's1-sub':'Polyphenols are the bioactive compounds that give real olive oil its anti-inflammatory, cardioprotective, and longevity-linked properties. The EU mandates a minimum of 5 mg of hydroxytyrosol per 20 ml serving to make a health claim — our system regularly produces 10–12 mg, 2–4× the threshold.',
+    'stat1':'mg/kg to qualify as UHP','stat2':'mg/kg achievable with our system (Path A)','stat3':'polyphenol retention via Vacuum Tray Drying','stat4':'higher price than commodity EVOO','stat5':'per litre — elite UHP retail price',
+    'pheno-compare':'Polyphenol Content Comparison',
+    'pb1':'Supermarket EVOO','pb2':'Quality EVOO','pb3':'UHP Threshold (EU)','pb4':'Our System — Path B','pb5':'Our System — Path A (peak)',
+    's2-tag':'The Technology','s2-title':'Vacuum Tray Drying — The Core Innovation',
+    's2-sub':'Conventional drying destroys polyphenols with heat and oxygen. Our Vacuum Tray Drying (VTD) system removes moisture at 30–40°C under near-zero atmospheric pressure, preserving the bioactive compounds that command premium prices.',
+    'th-param':'Parameter','th-conv':'Conventional Drying','th-vtd':'Vacuum Tray Drying (VTD) ✓',
+    'tb-temp':'Temperature','tb-oxy':'Oxygen exposure','tb-high':'High (open air)','tb-zero':'Near-zero (vacuum)','tb-time':'Drying time','tb-ret':'Polyphenol retention','tb-micro':'Microbial safety','tb-risk':'Risk if under-dried','tb-vac':'Vacuum inhibits growth',
+    'path-title':'Two Processing Paths','rec':'RECOMMENDED',
+    'pathA-title':'Centrifugal De-Pitter + VTD + Press','pathA-body':'Pit removed before drying → flesh-only paste → maximum polyphenol potential (900–1,200 mg/kg). Requires 2 de-pitter units at 500 kg/day and press aids. Higher CAPEX (€155k), slower press cycle.','pathA-tag':'Maximum Polyphenols',
+    'pathB-title':'Hammer Mill + VTD + Press','pathB-body':'Whole olive crushed (flesh + pit) → pit fragments = natural press aid → no bottleneck, faster cycle, lower cost (€140k). Polyphenols 5–10% lower but still 820–1,100 mg/kg — well above UHP threshold. Optional pit screen for premium batches.','pathB-tag':'★ Best ROI · No Bottleneck',
+    's3-tag':'Three Configurations','s3-title':'Choose Your Entry Point',
+    's3-sub':'From a proof-of-concept mobile lab to a full-scale stationary facility, there is a configuration for every investment level and risk appetite.',
+    'c1-tag':'Concept 1','c1-title':'Mobile Vacuum Olive Lab','c1-body':'A fully containerised mobile processing unit — VTD + cold press + separator — that can travel to olive groves at harvest time. Eliminates transport of fresh olives, maximises freshness, serves multiple locations. Perfect as a service model: process for local producers on a fee basis.','c1-cap':'Capacity','c1-model':'Model','c1-service':'Service fee + own brand','c1-tag2':'Lowest CAPEX · Maximum Flexibility',
+    'c2-tag':'Concept 2','c2-title':'Modular Plant — 100→500 kg/day','c2-body':'Start with the minimum viable investment at 100 kg/day (€32,000–39,000 CAPEX), validate the market, then add one VTD unit per season as demand grows. Each step is self-funding from the previous season\'s profit. Reach full 500 kg/day capacity by Year 5 with ~€95,000 total — saving €50,000+ versus building full from day one.','c2-start':'Start CAPEX','c2-full':'Full build-out','c2-pay':'Payback (Step 1)','c2-tag2':'★ Lowest Risk · Market-Validated Growth',
+    'c3-tag':'Concept 3','c3-title':'Full Stationary Plant — 500 kg/day','c3-body':'The full-scale facility designed for 500 kg/day from day one — 5× VTD units, full PLC/SCADA automation, complete CIP, 3-phase electrical, certified food-grade workspace. Produces 2,250 litres of premium UHP oil per season. Best for established producers with guaranteed supply and existing customer base.','c3-rev':'Revenue/season','c3-pay':'Payback','c3-tag2':'Maximum Output · Fastest Revenue',
+    's4-tag':'The Modular Journey','s4-title':'Grow at Your Own Pace',
+    's4-sub':'Each step adds one VTD unit — the bottleneck component. Everything else (mill, washer, press) is sized from the start to scale up with minimal additional cost.',
+    'perday':'kg/day',
+    'chart1-title':'Cumulative Profit by Year (Path B · €50/L)','chart2-title':'Net Profit per Scale Step','chart3-title':'CAPEX Breakdown — Path B (Recommended)','chart4-title':'Revenue vs OPEX vs Profit (Path B · mid)',
+    's5-tag':'The Numbers','s5-title':'CAPEX · OPEX · ROI',
+    's5-sub':'Full stationary plant comparison — Path A versus Path B — mid scenario at 500 kg/day capacity, 30 processing days per season.',
+    'inv-metric':'Metric','inv-pathA':'Path A — De-Pitter','inv-pathB':'Path B — Hammer Mill ★',
+    'inv1':'CAPEX (mid)','inv2':'OPEX / season','inv3':'Oil produced','inv4':'Polyphenols','inv5':'Sale price','inv6':'Gross revenue','inv7':'Net profit / yr','inv8':'Payback','inv9':'ROI (annual)',
+    'sensitivity-title':'Price Sensitivity — Path B · 2,250 L/season',
+    'ps-price':'Sale Price','ps-rev':'Revenue','ps-profit':'Net Profit','ps-pay':'Payback','ps-roi':'ROI %',
+    's6-tag':'Versatility','s6-title':'Beyond Olives',
+    's6-sub':'The Vacuum Tray Drying system is not limited to olive oil. The same equipment generates additional revenue during the 10 off-season months, processing any crop where low-temperature drying adds value.',
+    'u1-name':'Berries (Polyphenol Extraction)','u1-desc':'Blueberry, aronia, sea buckthorn — VTD preserves anthocyanins for nutraceutical applications.','u1-yield':'Value: €30–80/kg dried',
+    'u2-name':'Medicinal Herbs','u2-desc':'Rosemary, thyme, lavender, sage — vacuum drying preserves essential oils and active compounds destroyed by hot air.','u2-yield':'Revenue: €3,000–8,000/yr off-season',
+    'u3-name':'Vegetables (Sun-Dried Style)','u3-desc':'Tomatoes, peppers, artichokes — premium dried produce for gourmet food service and export.','u3-yield':'Revenue: €5,000–15,000/yr',
+    'u4-name':'Mushrooms','u4-desc':'Porcini, shiitake, chanterelle — VTD preserves umami compounds and texture better than any other method.','u4-yield':'Value: €60–300/kg dried',
+    'u5-name':'Flowers (Cosmetics)','u5-desc':'Rose petals, calendula, lavender — vacuum-dried for cosmetic ingredient extraction, aromatherapy, and luxury food.','u5-yield':'Niche premium market',
+    'u6-name':'Avocado Oil (UHP)','u6-desc':'Same VTD + cold press process applied to avocado — emerging premium segment, similar health positioning to UHP olive oil.','u6-yield':'€20–40/L premium avocado oil',
+    'u7-name':'Carob & Locust Bean','u7-desc':'Abundant in Andalucía — VTD-dried carob pods for gourmet flour and extract production. Low-cost raw material, growing demand.','u7-yield':'Revenue: €2,000–6,000/yr',
+    'u8-name':'R&D & Agrotourism','u8-desc':'The facility can host visits, workshops, tasting experiences, and small-scale R&D batches for researchers and food companies testing new protocols.','u8-yield':'Revenue: €2,000–6,000/yr',
+    'u9-name':'Contract Processing','u9-desc':'Process other producers\' olives or crops on a fee-per-kg basis during off-season capacity. Turns idle equipment into income.','u9-yield':'Revenue: €8,000–20,000/yr',
+    's7-tag':'Investment Summary','s7-title':'Which Configuration is Right for You?',
+    's7-sub':'Three entry points. Three risk profiles. One proven technology. All configurations use the same core VTD process and produce the same premium UHP olive oil.',
+    'is-profile':'Profile','is-config':'Configuration','is-capex':'CAPEX','is-profit':'Net Profit/yr','is-pay':'Payback','is-best':'Best For',
+    'is1-prof':'Pioneer / Proof of Concept','is1-conf':'Mobile Lab (50–100 kg/day)','is1-best':'Service model. Multi-location. Minimal risk.',
+    'is2-prof':'★ Entrepreneur / Smart Start','is2-conf':'Modular 100 kg/day → scale','is2-best':'Best risk/reward. Self-funding growth.',
+    'is3-prof':'Established Producer','is3-conf':'Full Stationary (500 kg/day)','is3-best':'Existing supply + clients. Max output.',
+    'sis1':'year minimum payback (€80/L · full plant)','sis2':'annual ROI at elite UHP pricing','sis3':'minimum starting investment (modular)','sis4':'languages, 3 plant concepts, 1 proven technology',
+    'cta-badge':'Ready to Start?','cta-title':'The Revolution in Olive Oil Starts with One VTD Unit.','cta-sub':'Whether you\'re processing 100 kg or 500 kg per day, the same science produces the same premium result. The modular approach means you can start today, validate the market, and scale on your own terms.',
+    'key-facts':'Key Facts',
+    'fact1':'Path B recommended — lower cost, same premium result','fact2':'100 kg/day start — €32,000–39,000 CAPEX','fact3':'Each upgrade step self-funded from previous season profit','fact4':'EU health claim compliant at 750+ mg/kg','fact5':'Off-season versatility — herbs, vegetables, mushrooms, R&D','fact6':'Picual variety, Andalucía — world\'s best polyphenol source',
+  },
+  es: {
+    'hero-badge':'VacOil · Producción Ultra-Alta en Polifenoles',
+    'hero-title-1':'El Futuro del','hero-title-2':'Aceite de Oliva','hero-title-3':'ya está aquí.',
+    'hero-sub':'Desde un laboratorio móvil hasta una planta modular o instalación a gran escala — un sistema completo para producir aceite de oliva ultra-rico en polifenoles a cualquier nivel de inversión.',
+    'pitch-label':'Presentación Express',
+    'pitch-text':'La mayoría del aceite de oliva "premium" destruye su propio potencial saludable antes de llegar a la botella. Los molinos convencionales usan calor y oxígeno — los dos enemigos de los polifenoles. El resultado: aceite vendido como premium con 150 mg/kg en lugar de los 1.000+ mg/kg que la variedad Picual realmente produce. El sistema <span style="color:#4ade80;font-weight:700">Vac</span><span style="color:#C8A951;font-weight:700">Oil</span> de Secado en Bandeja al Vacío (VTD) preserva el 85–95% de los polifenoles procesando a 30–40°C bajo vacío. El resultado es aceite de oliva que se vende a €50–80/litro, con un ROI de entre el 49% y el 103% y recuperación de inversión en menos de 2 años. Disponible en tres configuraciones: laboratorio móvil para pioneros, sistema modular desde €32.000 e instalación completa de 500 kg/día por €140.000.',
+    'cta-explore':'Explorar los Conceptos','cta-numbers':'Ver los Números','scroll':'Desliza para descubrir',
+    's1-tag':'La Ciencia','s1-title':'¿Qué es el Aceite de Oliva Ultra-Alto en Polifenoles?',
+    's1-sub':'Los polifenoles son los compuestos bioactivos que otorgan al aceite de oliva real sus propiedades antiinflamatorias, cardioprotectoras y vinculadas a la longevidad. La UE exige un mínimo de 5 mg de hidroxitirosol por 20 ml para hacer declaraciones de salud — nuestro sistema produce regularmente 10–12 mg, entre 2 y 4 veces el umbral.',
+    'stat1':'mg/kg para calificar como UHP','stat2':'mg/kg alcanzables con nuestro sistema (Ruta A)','stat3':'retención de polifenoles mediante Secado al Vacío','stat4':'precio más alto que el EVOO convencional','stat5':'por litro — precio retail UHP élite',
+    'pheno-compare':'Comparación de Contenido en Polifenoles',
+    'pb1':'EVOO de supermercado','pb2':'EVOO de calidad','pb3':'Umbral UHP (UE)','pb4':'Nuestro sistema — Ruta B','pb5':'Nuestro sistema — Ruta A (máx.)',
+    's2-tag':'La Tecnología','s2-title':'Secado en Bandeja al Vacío — La Innovación Clave',
+    's2-sub':'El secado convencional destruye los polifenoles con calor y oxígeno. Nuestro sistema VTD elimina la humedad a 30–40°C bajo presión atmosférica casi nula, preservando los compuestos bioactivos que generan precios premium.',
+    'th-param':'Parámetro','th-conv':'Secado Convencional','th-vtd':'Secado al Vacío (VTD) ✓',
+    'tb-temp':'Temperatura','tb-oxy':'Exposición al oxígeno','tb-high':'Alta (aire abierto)','tb-zero':'Casi nula (vacío)','tb-time':'Tiempo de secado','tb-ret':'Retención de polifenoles','tb-micro':'Seguridad microbiológica','tb-risk':'Riesgo si insuficiente','tb-vac':'El vacío inhibe el crecimiento',
+    'path-title':'Dos Rutas de Procesamiento','rec':'RECOMENDADO',
+    'pathA-title':'Deshuesadora Centrífuga + VTD + Prensa','pathA-body':'Hueso retirado antes del secado → pasta solo de pulpa → máximo potencial en polifenoles (900–1.200 mg/kg). Requiere 2 deshuesadoras a 500 kg/día y coadyuvantes de prensado. Mayor CAPEX (€155k), ciclo de prensa más lento.','pathA-tag':'Máximos Polifenoles',
+    'pathB-title':'Molino de Martillos + VTD + Prensa','pathB-body':'Aceituna entera triturada (pulpa + hueso) → fragmentos de hueso = coadyuvante natural → sin cuello de botella, ciclo más rápido, menor coste (€140k). Polifenoles 5–10% menores pero aún 820–1.100 mg/kg — muy por encima del umbral UHP.','pathB-tag':'★ Mejor ROI · Sin Cuello de Botella',
+    's3-tag':'Tres Configuraciones','s3-title':'Elige tu Punto de Entrada',
+    's3-sub':'Desde un laboratorio móvil de prueba de concepto hasta una instalación estacionaria a gran escala, hay una configuración para cada nivel de inversión y apetito de riesgo.',
+    'c1-tag':'Concepto 1','c1-title':'Laboratorio Móvil de Oliva al Vacío','c1-body':'Una unidad de procesamiento móvil totalmente contenida — VTD + prensa fría + separador — que puede desplazarse a los olivares en época de cosecha. Elimina el transporte de aceitunas frescas, maximiza la frescura y atiende múltiples ubicaciones. Ideal como modelo de servicio: procesar para productores locales a tarifa.','c1-cap':'Capacidad','c1-model':'Modelo','c1-service':'Tarifa de servicio + marca propia','c1-tag2':'Menor CAPEX · Máxima Flexibilidad',
+    'c2-tag':'Concepto 2','c2-title':'Planta Modular — 100→500 kg/día','c2-body':'Empieza con la inversión mínima viable a 100 kg/día (€32.000–39.000 CAPEX), valida el mercado y añade una unidad VTD cada temporada según crece la demanda. Cada paso se autofinancia con los beneficios de la temporada anterior. Alcanza 500 kg/día en el Año 5 con ~€95.000 en total.','c2-start':'CAPEX inicial','c2-full':'Instalación completa','c2-pay':'Recuperación (Paso 1)','c2-tag2':'★ Menor Riesgo · Crecimiento Validado por el Mercado',
+    'c3-tag':'Concepto 3','c3-title':'Planta Estacionaria Completa — 500 kg/día','c3-body':'La instalación a gran escala diseñada para 500 kg/día desde el primer día — 5× unidades VTD, automatización PLC/SCADA completa, CIP, eléctrica trifásica, espacio alimentario certificado. Produce 2.250 litros de aceite UHP premium por temporada.','c3-rev':'Ingresos/temporada','c3-pay':'Recuperación','c3-tag2':'Máxima Producción · Ingresos Más Rápidos',
+    's4-tag':'El Camino Modular','s4-title':'Crece a tu propio ritmo','s4-sub':'Cada paso añade una unidad VTD — el componente limitante. Todo lo demás (molino, lavadora, prensa) está dimensionado desde el inicio para escalar con coste adicional mínimo.',
+    'perday':'kg/día',
+    'chart1-title':'Beneficio Acumulado por Año (Ruta B · €50/L)','chart2-title':'Beneficio Neto por Paso de Escala','chart3-title':'Desglose CAPEX — Ruta B (Recomendada)','chart4-title':'Ingresos vs OPEX vs Beneficio (Ruta B · medio)',
+    's5-tag':'Los Números','s5-title':'CAPEX · OPEX · ROI','s5-sub':'Comparación planta estacionaria completa — Ruta A frente a Ruta B — escenario medio a 500 kg/día, 30 días de procesamiento por temporada.',
+    'inv-metric':'Métrica','inv-pathA':'Ruta A — Deshuesadora','inv-pathB':'Ruta B — Martillos ★',
+    'inv1':'CAPEX (medio)','inv2':'OPEX / temporada','inv3':'Aceite producido','inv4':'Polifenoles','inv5':'Precio de venta','inv6':'Ingresos brutos','inv7':'Beneficio neto / año','inv8':'Recuperación','inv9':'ROI (anual)',
+    'sensitivity-title':'Sensibilidad al Precio — Ruta B · 2.250 L/temporada',
+    'ps-price':'Precio de Venta','ps-rev':'Ingresos','ps-profit':'Beneficio Neto','ps-pay':'Recuperación','ps-roi':'ROI %',
+    's6-tag':'Versatilidad','s6-title':'Más allá de las Aceitunas','s6-sub':'El sistema VTD no se limita al aceite de oliva. El mismo equipo genera ingresos adicionales durante los 10 meses fuera de temporada, procesando cualquier cultivo donde el secado a baja temperatura aporte valor.',
+    'u1-name':'Bayas (Extracción de Polifenoles)','u1-desc':'Arándanos, aronia, espino amarillo — VTD preserva antocianinas para aplicaciones nutracéuticas.','u1-yield':'Valor: €30–80/kg seco',
+    'u2-name':'Hierbas Medicinales','u2-desc':'Romero, tomillo, lavanda, salvia — el secado al vacío preserva aceites esenciales y compuestos activos.','u2-yield':'Ingresos: €3.000–8.000/año fuera de temporada',
+    'u3-name':'Verduras (Estilo Secadas al Sol)','u3-desc':'Tomates, pimientos, alcachofas — producto seco premium para hostelería gourmet y exportación.','u3-yield':'Ingresos: €5.000–15.000/año',
+    'u4-name':'Setas','u4-desc':'Boletus, shiitake, rebozuelo — VTD preserva compuestos umami y textura mejor que cualquier otro método.','u4-yield':'Valor: €60–300/kg seco',
+    'u5-name':'Flores (Cosmética)','u5-desc':'Pétalos de rosa, caléndula, lavanda — secados al vacío para extracción de ingredientes cosméticos.','u5-yield':'Mercado nicho premium',
+    'u6-name':'Aceite de Aguacate (UHP)','u6-desc':'Mismo proceso VTD + prensa fría aplicado al aguacate — segmento premium emergente con posicionamiento similar al aceite UHP.','u6-yield':'€20–40/L aceite aguacate premium',
+    'u7-name':'Algarroba','u7-desc':'Abundante en Andalucía — vainas de algarroba secadas para harina gourmet y producción de extractos.','u7-yield':'Ingresos: €2.000–6.000/año',
+    'u8-name':'I+D y Agroturismo','u8-desc':'La instalación puede acoger visitas, talleres, catas y lotes de I+D a pequeña escala para investigadores y empresas alimentarias.','u8-yield':'Ingresos: €2.000–6.000/año',
+    'u9-name':'Procesamiento por Contrato','u9-desc':'Procesar aceitunas o cultivos de otros productores a tarifa por kg durante la capacidad fuera de temporada.','u9-yield':'Ingresos: €8.000–20.000/año',
+    's7-tag':'Resumen de Inversión','s7-title':'¿Qué Configuración es la Adecuada para ti?','s7-sub':'Tres puntos de entrada. Tres perfiles de riesgo. Una tecnología probada. Todas las configuraciones usan el mismo proceso VTD y producen el mismo aceite UHP premium.',
+    'is-profile':'Perfil','is-config':'Configuración','is-capex':'CAPEX','is-profit':'Beneficio Neto/año','is-pay':'Recuperación','is-best':'Ideal para',
+    'is1-prof':'Pionero / Prueba de Concepto','is1-conf':'Laboratorio Móvil (50–100 kg/día)','is1-best':'Modelo de servicio. Multi-ubicación. Riesgo mínimo.',
+    'is2-prof':'★ Emprendedor / Inicio Inteligente','is2-conf':'Modular 100 kg/día → escala','is2-best':'Mejor riesgo/recompensa. Crecimiento autofinanciado.',
+    'is3-prof':'Productor Establecido','is3-conf':'Estacionaria Completa (500 kg/día)','is3-best':'Suministro + clientes existentes. Máxima producción.',
+    'sis1':'año mínimo de recuperación (€80/L · planta completa)','sis2':'ROI anual con precio UHP élite','sis3':'inversión mínima de inicio (modular)','sis4':'idiomas, 3 conceptos de planta, 1 tecnología probada',
+    'cta-badge':'¿Listo para Empezar?','cta-title':'La Revolución del Aceite de Oliva Comienza con Una Unidad VTD.',
+    'cta-sub':'Tanto si procesas 100 kg como 500 kg al día, la misma ciencia produce el mismo resultado premium. El enfoque modular significa que puedes empezar hoy, validar el mercado y escalar en tus propios términos.',
+    'key-facts':'Datos Clave',
+    'fact1':'Ruta B recomendada — menor coste, mismo resultado premium','fact2':'Inicio a 100 kg/día — CAPEX €32.000–39.000','fact3':'Cada paso de mejora se autofinancia con los beneficios de la temporada anterior','fact4':'Conforme al claim de salud UE a 750+ mg/kg','fact5':'Versatilidad fuera de temporada — hierbas, verduras, setas, I+D','fact6':'Variedad Picual, Andalucía — la mejor fuente de polifenoles del mundo',
+  },
+  de: {
+    'hero-badge':'VacOil · Ultra-High-Phenolic Produktion',
+    'hero-title-1':'Die Zukunft des','hero-title-2':'Olivenöls','hero-title-3':'ist jetzt.',
+    'hero-sub':'Vom mobilen Labor über die modulare Anlage bis zur Großanlage — ein vollständiges System zur Herstellung von polyphenolreichem Olivenöl für jedes Investitionsniveau.',
+    'pitch-label':'Kurzpräsentation',
+    'pitch-text':'Das meiste "Premium"-Olivenöl auf dem Markt zerstört sein eigenes Gesundheitspotenzial, bevor es die Flasche erreicht. Konventionelle Mühlen verwenden Wärme und Sauerstoff — die beiden Feinde der Polyphenole. Das Ergebnis: Öl, das als Premium verkauft wird, mit 150 mg/kg statt der 1.000+ mg/kg, die Picual-Oliven tatsächlich erzeugen. Das <span style="color:#4ade80;font-weight:700">Vac</span><span style="color:#C8A951;font-weight:700">Oil</span> Vakuum-Tray-Trocknungssystem (VTD) bewahrt 85–95 % der Polyphenole durch Verarbeitung bei 30–40°C unter nahezu null Sauerstoff. Das Ergebnis ist Olivenöl, das €50–80/Liter erzielt, mit einem ROI von 49 % bis 103 % und einer Amortisationszeit unter 2 Jahren. In drei Konfigurationen erhältlich: mobiles Labor, modulares System ab €32.000 und vollständige 500-kg/Tag-Anlage für €140.000.',
+    'cta-explore':'Konzepte entdecken','cta-numbers':'Zahlen ansehen','scroll':'Scrollen um zu entdecken',
+    's1-tag':'Die Wissenschaft','s1-title':'Was ist Ultra-High-Phenolic Olivenöl?',
+    's1-sub':'Polyphenole sind die bioaktiven Verbindungen, die echtem Olivenöl seine entzündungshemmenden, herzschützenden und langlebigkeitsfördernden Eigenschaften verleihen. Die EU fordert mindestens 5 mg Hydroxytyrosol pro 20-ml-Portion für Gesundheitsansprüche — unser System produziert regelmäßig 10–12 mg, das 2–4-fache des Schwellenwertes.',
+    'stat1':'mg/kg um als UHP zu gelten','stat2':'mg/kg erreichbar mit unserem System (Pfad A)','stat3':'Polyphenolerhalt durch Vakuumtrocknung','stat4':'höherer Preis als handelsübliches EVOO','stat5':'pro Liter — Elite-UHP-Einzelhandelspreis',
+    'pheno-compare':'Vergleich des Polyphenolgehalts',
+    'pb1':'Supermarkt-EVOO','pb2':'Qualitäts-EVOO','pb3':'UHP-Schwellenwert (EU)','pb4':'Unser System — Pfad B','pb5':'Unser System — Pfad A (Spitze)',
+    's2-tag':'Die Technologie','s2-title':'Vakuum-Tray-Trocknung — Die Kerninnovation',
+    's2-sub':'Konventionelle Trocknung zerstört Polyphenole durch Wärme und Sauerstoff. Unser VTD-System entfernt Feuchtigkeit bei 30–40°C unter nahezu null Atmosphärendruck und bewahrt die bioaktiven Verbindungen.',
+    'th-param':'Parameter','th-conv':'Konventionelle Trocknung','th-vtd':'Vakuum-Trocknung (VTD) ✓',
+    'tb-temp':'Temperatur','tb-oxy':'Sauerstoffexposition','tb-high':'Hoch (offene Luft)','tb-zero':'Nahezu null (Vakuum)','tb-time':'Trocknungszeit','tb-ret':'Polyphenolerhalt','tb-micro':'Mikrobielle Sicherheit','tb-risk':'Risiko bei unzureichend','tb-vac':'Vakuum hemmt Wachstum',
+    'path-title':'Zwei Verarbeitungspfade','rec':'EMPFOHLEN',
+    'pathA-title':'Zentrifugal-Entsteiner + VTD + Presse','pathA-body':'Kern vor der Trocknung entfernt → nur Fruchtfleischpaste → maximales Polyphenolpotenzial (900–1.200 mg/kg). Erfordert 2 Entsteiner bei 500 kg/Tag und Presshilfsmittel. Höheres CAPEX (€155k), langsamerer Presszyklus.','pathA-tag':'Maximale Polyphenole',
+    'pathB-title':'Hammermühle + VTD + Presse','pathB-body':'Ganze Olive zermahlen (Fruchtfleisch + Kern) → Kernfragmente = natürliches Presshilfsmittel → kein Engpass, schnellerer Zyklus, niedrigere Kosten (€140k). Polyphenole 5–10 % niedriger, aber noch 820–1.100 mg/kg — weit über UHP-Schwellenwert.','pathB-tag':'★ Bester ROI · Kein Engpass',
+    's3-tag':'Drei Konfigurationen','s3-title':'Wählen Sie Ihren Einstiegspunkt',
+    's3-sub':'Vom Proof-of-Concept-Mobillabor bis zur Großanlage — eine Konfiguration für jedes Investitionsniveau und jede Risikobereitschaft.',
+    'c1-tag':'Konzept 1','c1-title':'Mobiles Vakuum-Olivenlabor','c1-body':'Eine vollständig containerisierte mobile Verarbeitungseinheit — VTD + Kaltpresse + Separator — die zur Erntezeit zu Olivenhainen fahren kann. Eliminiert den Transport frischer Oliven, maximiert Frische, bedient mehrere Standorte. Ideal als Servicemodell.','c1-cap':'Kapazität','c1-model':'Modell','c1-service':'Servicegebühr + Eigenmarke','c1-tag2':'Niedrigstes CAPEX · Maximale Flexibilität',
+    'c2-tag':'Konzept 2','c2-title':'Modulare Anlage — 100→500 kg/Tag','c2-body':'Beginnen Sie mit der minimalen Investition bei 100 kg/Tag (€32.000–39.000 CAPEX), validieren Sie den Markt und fügen Sie jede Saison eine VTD-Einheit hinzu. Jeder Schritt finanziert sich aus den Gewinnen der vorherigen Saison selbst. Erreichen Sie 500 kg/Tag im 5. Jahr mit ~€95.000 gesamt.','c2-start':'Start-CAPEX','c2-full':'Vollausbau','c2-pay':'Amortisation (Schritt 1)','c2-tag2':'★ Niedrigstes Risiko · Marktvalidiertes Wachstum',
+    'c3-tag':'Konzept 3','c3-title':'Vollständige Stationäranlage — 500 kg/Tag','c3-body':'Die Großanlage für 500 kg/Tag von Tag eins — 5× VTD-Einheiten, vollständige PLC/SCADA-Automatisierung, CIP, Drehstrom, zertifizierter Lebensmittelraum. Produziert 2.250 Liter Premium-UHP-Öl pro Saison.','c3-rev':'Umsatz/Saison','c3-pay':'Amortisation','c3-tag2':'Maximale Produktion · Schnellster Umsatz',
+    's4-tag':'Die Modulare Reise','s4-title':'Wachsen Sie in Ihrem eigenen Tempo','s4-sub':'Jeder Schritt fügt eine VTD-Einheit hinzu — die Engpasskomponente. Alles andere (Mühle, Waschmaschine, Presse) ist von Anfang an für die Skalierung ausgelegt.',
+    'perday':'kg/Tag',
+    'chart1-title':'Kumulierter Gewinn nach Jahr (Pfad B · €50/L)','chart2-title':'Nettogewinn pro Skalierschritt','chart3-title':'CAPEX-Aufschlüsselung — Pfad B (Empfohlen)','chart4-title':'Umsatz vs. OPEX vs. Gewinn (Pfad B · mittel)',
+    's5-tag':'Die Zahlen','s5-title':'CAPEX · OPEX · ROI','s5-sub':'Vergleich vollständige Stationäranlage — Pfad A vs. Pfad B — mittleres Szenario bei 500 kg/Tag Kapazität, 30 Verarbeitungstage pro Saison.',
+    'inv-metric':'Kennzahl','inv-pathA':'Pfad A — Entsteiner','inv-pathB':'Pfad B — Hammermühle ★',
+    'inv1':'CAPEX (mittel)','inv2':'OPEX / Saison','inv3':'Ölproduktion','inv4':'Polyphenole','inv5':'Verkaufspreis','inv6':'Bruttoumsatz','inv7':'Nettogewinn / Jahr','inv8':'Amortisation','inv9':'ROI (jährlich)',
+    'sensitivity-title':'Preissensitivität — Pfad B · 2.250 L/Saison',
+    'ps-price':'Verkaufspreis','ps-rev':'Umsatz','ps-profit':'Nettogewinn','ps-pay':'Amortisation','ps-roi':'ROI %',
+    's6-tag':'Vielseitigkeit','s6-title':'Über Oliven hinaus','s6-sub':'Das VTD-System ist nicht auf Olivenöl beschränkt. Dieselbe Ausrüstung erzeugt in den 10 Nebensaisonmonaten zusätzliche Einnahmen durch die Verarbeitung jeder Kultur, bei der Niedertemperaturtrocknung Wert schafft.',
+    'u1-name':'Beeren (Polyphenolextraktion)','u1-desc':'Heidelbeere, Aronia, Sanddorn — VTD bewahrt Anthocyane für nutraceutische Anwendungen.','u1-yield':'Wert: €30–80/kg getrocknet',
+    'u2-name':'Heilkräuter','u2-desc':'Rosmarin, Thymian, Lavendel, Salbei — Vakuumtrocknung bewahrt ätherische Öle und Wirkstoffe.','u2-yield':'Einnahmen: €3.000–8.000/Jahr Nebensaison',
+    'u3-name':'Gemüse (Sonnengetrockneter Stil)','u3-desc':'Tomaten, Paprika, Artischocken — Premium-Trockenprodukte für Gourmet-Gastronomie und Export.','u3-yield':'Einnahmen: €5.000–15.000/Jahr',
+    'u4-name':'Pilze','u4-desc':'Steinpilze, Shiitake, Pfifferlinge — VTD bewahrt Umami-Verbindungen und Textur besser als jede andere Methode.','u4-yield':'Wert: €60–300/kg getrocknet',
+    'u5-name':'Blüten (Kosmetik)','u5-desc':'Rosenblätter, Ringelblume, Lavendel — vakuumgetrocknet für kosmetische Inhaltsstoffextraktion.','u5-yield':'Nischen-Premium-Markt',
+    'u6-name':'Avocadoöl (UHP)','u6-desc':'Dasselbe VTD + Kaltpresse-Verfahren auf Avocado angewendet — aufkommendes Premium-Segment mit ähnlicher Gesundheitspositionierung.','u6-yield':'€20–40/L Premium-Avocadoöl',
+    'u7-name':'Johannisbrotbaum','u7-desc':'In Andalucía reichlich vorhanden — VTD-getrocknete Johannisbrotschoten für Gourmet-Mehl und Extrakte.','u7-yield':'Einnahmen: €2.000–6.000/Jahr',
+    'u8-name':'F&E & Agrotourismus','u8-desc':'Die Anlage kann Besuche, Workshops, Verkostungen und F&E-Kleinchargen für Forscher und Lebensmittelunternehmen beherbergen.','u8-yield':'Einnahmen: €2.000–6.000/Jahr',
+    'u9-name':'Auftragsverarbeitung','u9-desc':'Oliven oder Kulturen anderer Produzenten gegen Entgelt je kg in der Nebensaison verarbeiten.','u9-yield':'Einnahmen: €8.000–20.000/Jahr',
+    's7-tag':'Investitionsübersicht','s7-title':'Welche Konfiguration ist die richtige für Sie?','s7-sub':'Drei Einstiegspunkte. Drei Risikoprofile. Eine bewährte Technologie. Alle Konfigurationen nutzen denselben VTD-Kernprozess.',
+    'is-profile':'Profil','is-config':'Konfiguration','is-capex':'CAPEX','is-profit':'Nettogewinn/Jahr','is-pay':'Amortisation','is-best':'Am besten geeignet für',
+    'is1-prof':'Pionier / Proof of Concept','is1-conf':'Mobiles Labor (50–100 kg/Tag)','is1-best':'Servicemodell. Mehrstandorte. Minimales Risiko.',
+    'is2-prof':'★ Unternehmer / Smarter Start','is2-conf':'Modular 100 kg/Tag → Skalierung','is2-best':'Bestes Risiko/Ertragsverhältnis. Selbstfinanziertes Wachstum.',
+    'is3-prof':'Etablierter Produzent','is3-conf':'Vollständige Stationäranlage (500 kg/Tag)','is3-best':'Bestehende Lieferkette + Kunden. Maximale Produktion.',
+    'sis1':'Jahr Mindestamortisationszeit (€80/L · Vollanlage)','sis2':'Jährlicher ROI beim Elite-UHP-Preis','sis3':'Mindestanfangsinvestition (modular)','sis4':'Sprachen, 3 Anlagenkonzepte, 1 bewährte Technologie',
+    'cta-badge':'Bereit anzufangen?','cta-title':'Die Revolution im Olivenöl beginnt mit einer VTD-Einheit.',
+    'cta-sub':'Ob Sie 100 kg oder 500 kg pro Tag verarbeiten — dieselbe Wissenschaft liefert dasselbe Premium-Ergebnis. Der modulare Ansatz bedeutet, dass Sie heute beginnen, den Markt validieren und zu Ihren eigenen Bedingungen skalieren können.',
+    'key-facts':'Schlüsselfakten',
+    'fact1':'Pfad B empfohlen — niedrigere Kosten, gleiches Premium-Ergebnis','fact2':'Start bei 100 kg/Tag — CAPEX €32.000–39.000','fact3':'Jeder Upgrade-Schritt selbstfinanziert aus dem Gewinn der vorherigen Saison','fact4':'EU-Gesundheitsanspruch konform bei 750+ mg/kg','fact5':'Nebensaison-Vielseitigkeit — Kräuter, Gemüse, Pilze, F&E','fact6':'Picual-Sorte, Andalucía — weltbeste Polyphenolquelle',
+  },
+  it: {
+    'hero-badge':'VacOil · Produzione Ultra-High-Phenolic',
+    'hero-title-1':'Il Futuro dell\'','hero-title-2':'Olio d\'Oliva','hero-title-3':'è Arrivato.',
+    'hero-sub':'Dal laboratorio mobile all\'impianto modulare fino alla struttura su grande scala — un sistema completo per produrre olio d\'oliva ultra-ricco di polifenoli a qualsiasi livello di investimento.',
+    'pitch-label':'Presentazione Rapida',
+    'pitch-text':'La maggior parte dell\'olio d\'oliva "premium" sul mercato distrugge il proprio potenziale salutistico prima di arrivare in bottiglia. I frantoi convenzionali usano calore e ossigeno — i due nemici dei polifenoli. Il risultato: olio venduto come premium con 150 mg/kg invece dei 1.000+ mg/kg che la varietà Picual effettivamente produce. Il sistema <span style="color:#4ade80;font-weight:700">Vac</span><span style="color:#C8A951;font-weight:700">Oil</span> di Essiccazione su Vassoi sotto Vuoto (VTD) preserva l\'85–95% dei polifenoli processando a 30–40°C in assenza quasi totale di ossigeno. Il risultato è olio d\'oliva che vale €50–80/litro, con ROI tra il 49% e il 103% e recupero dell\'investimento in meno di 2 anni. Disponibile in tre configurazioni: laboratorio mobile per pionieri, sistema modulare da €32.000 e impianto completo da 500 kg/giorno per €140.000.',
+    'cta-explore':'Esplora i Concetti','cta-numbers':'Vedi i Numeri','scroll':'Scorri per scoprire',
+    's1-tag':'La Scienza','s1-title':'Che cos\'è l\'Olio d\'Oliva Ultra-High-Phenolic?',
+    's1-sub':'I polifenoli sono i composti bioattivi che conferiscono all\'olio d\'oliva vero le sue proprietà antinfiammatorie, cardioprotettive e legate alla longevità. L\'UE richiede un minimo di 5 mg di idrossitirosolo per 20 ml per fare dichiarazioni salutistiche — il nostro sistema produce regolarmente 10–12 mg, da 2 a 4 volte la soglia.',
+    'stat1':'mg/kg per qualificarsi come UHP','stat2':'mg/kg raggiungibili con il nostro sistema (Percorso A)','stat3':'ritenzione di polifenoli tramite Essiccazione sotto Vuoto','stat4':'prezzo più alto dell\'EVOO convenzionale','stat5':'al litro — prezzo retail UHP élite',
+    'pheno-compare':'Confronto del Contenuto in Polifenoli',
+    'pb1':'EVOO del supermercato','pb2':'EVOO di qualità','pb3':'Soglia UHP (UE)','pb4':'Nostro sistema — Percorso B','pb5':'Nostro sistema — Percorso A (picco)',
+    's2-tag':'La Tecnologia','s2-title':'Essiccazione su Vassoi sotto Vuoto — L\'Innovazione Chiave',
+    's2-sub':'L\'essiccazione convenzionale distrugge i polifenoli con calore e ossigeno. Il nostro sistema VTD rimuove l\'umidità a 30–40°C sotto pressione quasi nulla, preservando i composti bioattivi che comandano prezzi premium.',
+    'th-param':'Parametro','th-conv':'Essiccazione Convenzionale','th-vtd':'Essiccazione sotto Vuoto (VTD) ✓',
+    'tb-temp':'Temperatura','tb-oxy':'Esposizione all\'ossigeno','tb-high':'Alta (aria aperta)','tb-zero':'Quasi nulla (vuoto)','tb-time':'Tempo di essiccazione','tb-ret':'Ritenzione polifenoli','tb-micro':'Sicurezza microbiologica','tb-risk':'Rischio se insufficiente','tb-vac':'Il vuoto inibisce la crescita',
+    'path-title':'Due Percorsi di Lavorazione','rec':'CONSIGLIATO',
+    'pathA-title':'Denoccolatore Centrifugo + VTD + Pressa','pathA-body':'Nocciolo rimosso prima dell\'essiccazione → pasta solo di polpa → massimo potenziale in polifenoli (900–1.200 mg/kg). Richiede 2 denoccolatori a 500 kg/giorno e coadiuvanti. CAPEX maggiore (€155k), ciclo di pressatura più lento.','pathA-tag':'Massimi Polifenoli',
+    'pathB-title':'Frantoio a Martelli + VTD + Pressa','pathB-body':'Oliva intera macinata (polpa + nocciolo) → frammenti di nocciolo = coadiuvante naturale → nessun collo di bottiglia, ciclo più veloce, costo inferiore (€140k). Polifenoli 5–10% inferiori ma ancora 820–1.100 mg/kg — ben oltre la soglia UHP.','pathB-tag':'★ Miglior ROI · Nessun Collo di Bottiglia',
+    's3-tag':'Tre Configurazioni','s3-title':'Scegli il tuo Punto di Ingresso',
+    's3-sub':'Dal laboratorio mobile proof-of-concept all\'impianto stazionario su grande scala — una configurazione per ogni livello di investimento e propensione al rischio.',
+    'c1-tag':'Concetto 1','c1-title':'Laboratorio Mobile Olive sotto Vuoto','c1-body':'Un\'unità di lavorazione mobile completamente containerizzata — VTD + pressa a freddo + separatore — che può spostarsi negli oliveti al momento della raccolta. Elimina il trasporto di olive fresche, massimizza la freschezza e serve più siti. Perfetta come modello di servizio.','c1-cap':'Capacità','c1-model':'Modello','c1-service':'Tariffa di servizio + marchio proprio','c1-tag2':'Minor CAPEX · Massima Flessibilità',
+    'c2-tag':'Concetto 2','c2-title':'Impianto Modulare — 100→500 kg/giorno','c2-body':'Inizia con l\'investimento minimo vitale a 100 kg/giorno (€32.000–39.000 CAPEX), valida il mercato e aggiungi un\'unità VTD ogni stagione man mano che la domanda cresce. Ogni step si autofinanzia con i profitti della stagione precedente. Raggiungi 500 kg/giorno all\'Anno 5 con circa €95.000 in totale.','c2-start':'CAPEX iniziale','c2-full':'Costruzione completa','c2-pay':'Recupero (Step 1)','c2-tag2':'★ Minor Rischio · Crescita Validata dal Mercato',
+    'c3-tag':'Concetto 3','c3-title':'Impianto Stazionario Completo — 500 kg/giorno','c3-body':'La struttura su grande scala progettata per 500 kg/giorno dal primo giorno — 5× unità VTD, automazione PLC/SCADA completa, CIP, trifase, spazio alimentare certificato. Produce 2.250 litri di olio UHP premium a stagione.','c3-rev':'Ricavi/stagione','c3-pay':'Recupero','c3-tag2':'Massima Produzione · Ricavi Più Rapidi',
+    's4-tag':'Il Percorso Modulare','s4-title':'Cresci al Tuo Ritmo','s4-sub':'Ogni step aggiunge un\'unità VTD — il componente limitante. Tutto il resto (mulino, lavatrice, pressa) è dimensionato dall\'inizio per scalare con costo aggiuntivo minimo.',
+    'perday':'kg/giorno',
+    'chart1-title':'Profitto Cumulativo per Anno (Percorso B · €50/L)','chart2-title':'Utile Netto per Step di Scala','chart3-title':'Breakdown CAPEX — Percorso B (Consigliato)','chart4-title':'Ricavi vs OPEX vs Profitto (Percorso B · medio)',
+    's5-tag':'I Numeri','s5-title':'CAPEX · OPEX · ROI','s5-sub':'Confronto impianto stazionario completo — Percorso A vs Percorso B — scenario medio a 500 kg/giorno, 30 giorni di lavorazione a stagione.',
+    'inv-metric':'Metrica','inv-pathA':'Percorso A — Denoccolatore','inv-pathB':'Percorso B — Martelli ★',
+    'inv1':'CAPEX (medio)','inv2':'OPEX / stagione','inv3':'Olio prodotto','inv4':'Polifenoli','inv5':'Prezzo di vendita','inv6':'Ricavi lordi','inv7':'Utile netto / anno','inv8':'Recupero','inv9':'ROI (annuale)',
+    'sensitivity-title':'Sensibilità al Prezzo — Percorso B · 2.250 L/stagione',
+    'ps-price':'Prezzo di Vendita','ps-rev':'Ricavi','ps-profit':'Utile Netto','ps-pay':'Recupero','ps-roi':'ROI %',
+    's6-tag':'Versatilità','s6-title':'Oltre le Olive','s6-sub':'Il sistema VTD non è limitato all\'olio d\'oliva. La stessa attrezzatura genera ricavi aggiuntivi nei 10 mesi di bassa stagione, lavorando qualsiasi coltura dove l\'essiccazione a bassa temperatura aggiunge valore.',
+    'u1-name':'Bacche (Estrazione Polifenoli)','u1-desc':'Mirtilli, aronia, olivello spinoso — VTD preserva le antocianine per applicazioni nutraceutiche.','u1-yield':'Valore: €30–80/kg essiccato',
+    'u2-name':'Erbe Medicinali','u2-desc':'Rosmarino, timo, lavanda, salvia — l\'essiccazione sotto vuoto preserva oli essenziali e composti attivi.','u2-yield':'Ricavi: €3.000–8.000/anno bassa stagione',
+    'u3-name':'Verdure (Stile Essiccate al Sole)','u3-desc':'Pomodori, peperoni, carciofi — prodotti essiccati premium per ristorazione gourmet ed export.','u3-yield':'Ricavi: €5.000–15.000/anno',
+    'u4-name':'Funghi','u4-desc':'Porcini, shiitake, gallinacci — VTD preserva i composti umami e la texture meglio di qualsiasi altro metodo.','u4-yield':'Valore: €60–300/kg essiccato',
+    'u5-name':'Fiori (Cosmetica)','u5-desc':'Petali di rosa, calendula, lavanda — essiccati sotto vuoto per estrazione di ingredienti cosmetici.','u5-yield':'Mercato di nicchia premium',
+    'u6-name':'Olio di Avocado (UHP)','u6-desc':'Stesso processo VTD + pressa a freddo applicato all\'avocado — segmento premium emergente con posizionamento salutistico simile.','u6-yield':'€20–40/L olio avocado premium',
+    'u7-name':'Carruba','u7-desc':'Abbondante in Andalucía — carrube essiccate VTD per farina gourmet e produzione di estratti.','u7-yield':'Ricavi: €2.000–6.000/anno',
+    'u8-name':'R&D e Agriturismo','u8-desc':'La struttura può ospitare visite, workshop, esperienze di degustazione e lotti R&D in piccola scala per ricercatori e aziende alimentari.','u8-yield':'Ricavi: €2.000–6.000/anno',
+    'u9-name':'Lavorazione per Conto Terzi','u9-desc':'Lavorare le olive o colture di altri produttori a tariffa per kg durante la capacità di bassa stagione.','u9-yield':'Ricavi: €8.000–20.000/anno',
+    's7-tag':'Riepilogo dell\'Investimento','s7-title':'Quale Configurazione è Giusta per Te?','s7-sub':'Tre punti di ingresso. Tre profili di rischio. Una tecnologia comprovata. Tutte le configurazioni usano lo stesso processo VTD e producono lo stesso olio UHP premium.',
+    'is-profile':'Profilo','is-config':'Configurazione','is-capex':'CAPEX','is-profit':'Utile Netto/anno','is-pay':'Recupero','is-best':'Ideale per',
+    'is1-prof':'Pioniere / Proof of Concept','is1-conf':'Laboratorio Mobile (50–100 kg/giorno)','is1-best':'Modello di servizio. Multi-sito. Rischio minimo.',
+    'is2-prof':'★ Imprenditore / Inizio Intelligente','is2-conf':'Modulare 100 kg/giorno → scala','is2-best':'Miglior rischio/rendimento. Crescita autofinanziata.',
+    'is3-prof':'Produttore Affermato','is3-conf':'Stazionario Completo (500 kg/giorno)','is3-best':'Filiera + clienti esistenti. Massima produzione.',
+    'sis1':'anno minimo di recupero (€80/L · impianto completo)','sis2':'ROI annuale al prezzo UHP élite','sis3':'investimento minimo di avvio (modulare)','sis4':'lingue, 3 concetti di impianto, 1 tecnologia comprovata',
+    'cta-badge':'Pronto a Iniziare?','cta-title':'La Rivoluzione dell\'Olio d\'Oliva Inizia con Un\'Unità VTD.',
+    'cta-sub':'Che tu stia lavorando 100 kg o 500 kg al giorno, la stessa scienza produce lo stesso risultato premium. L\'approccio modulare significa che puoi iniziare oggi, validare il mercato e scalare alle tue condizioni.',
+    'key-facts':'Fatti Chiave',
+    'fact1':'Percorso B consigliato — costo inferiore, stesso risultato premium','fact2':'Inizio a 100 kg/giorno — CAPEX €32.000–39.000','fact3':'Ogni step di upgrade autofinanziato dai profitti della stagione precedente','fact4':'Conforme al claim salutistico UE a 750+ mg/kg','fact5':'Versatilità fuori stagione — erbe, verdure, funghi, R&D','fact6':'Varietà Picual, Andalucía — migliore fonte di polifenoli al mondo',
+  }
+};
+
+let currentLang = 'en';
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-bar button').forEach(b => b.classList.toggle('active', b.textContent===lang.toUpperCase()));
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (T[lang] && T[lang][key]) el.innerHTML = T[lang][key];
+  });
+  // Update html lang
+  document.documentElement.lang = lang;
+}
+
+// ── CHARTS ────────────────────────────────────────────────────────────────────
+Chart.defaults.color = '#9db09e';
+Chart.defaults.borderColor = '#2a4a2d';
+Chart.defaults.font.family = 'Inter';
+
+// Chart 1: Cumulative profit
+const ctx1 = document.getElementById('chartProfit').getContext('2d');
+new Chart(ctx1, {
+  type: 'line',
+  data: {
+    labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+    datasets: [{
+      label: 'Cumulative Profit (€)',
+      data: [13900, 26900, 58400, 102400, 165900],
+      borderColor: '#C8A951',
+      backgroundColor: 'rgba(200,169,81,0.1)',
+      fill: true,
+      tension: 0.4,
+      pointBackgroundColor: '#C8A951',
+      pointRadius: 5
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { ticks: { callback: v => '€'+v.toLocaleString() }, grid: { color: '#2a4a2d' } },
+      x: { grid: { color: '#2a4a2d' } }
+    }
+  }
+});
+
+// Chart 2: Net profit per step
+const ctx2 = document.getElementById('chartStep').getContext('2d');
+new Chart(ctx2, {
+  type: 'bar',
+  data: {
+    labels: ['100 kg/d', '200 kg/d', '300 kg/d', '400 kg/d', '500 kg/d'],
+    datasets: [{
+      label: 'Net Profit/yr (€)',
+      data: [13900, 30500, 46500, 58000, 76500],
+      backgroundColor: ['#2C5F2E','#2C5F2E','#2C5F2E','#2C5F2E','#C8A951'],
+      borderRadius: 6
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { ticks: { callback: v => '€'+v.toLocaleString() }, grid: { color: '#2a4a2d' } },
+      x: { grid: { color: '#2a4a2d' } }
+    }
+  }
+});
+
+// Chart 3: CAPEX breakdown
+const ctx3 = document.getElementById('chartCapex').getContext('2d');
+new Chart(ctx3, {
+  type: 'doughnut',
+  data: {
+    labels: ['5× VTD + Vacuum', 'Building/Civil', 'Electrical/PLC', 'Hammer Mill', 'Press', 'Decanter/Filter/Storage', 'Shared Equipment', 'Contingency'],
+    datasets: [{
+      data: [62500, 22000, 18000, 6000, 11000, 13000, 9000, 14300],
+      backgroundColor: ['#1F5C2E','#2C5F2E','#3a7a3d','#4a9a4e','#5aba5f','#C8A951','#d4b45a','#6b7280'],
+      borderWidth: 2,
+      borderColor: '#0d1a0f'
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 10 }, padding: 8 } },
+      tooltip: { callbacks: { label: ctx => ' €' + ctx.parsed.toLocaleString() } }
+    }
+  }
+});
+
+// Chart 4: Revenue vs OPEX vs Profit
+const ctx4 = document.getElementById('chartROI').getContext('2d');
+new Chart(ctx4, {
+  type: 'bar',
+  data: {
+    labels: ['€35/L', '€50/L', '€65/L', '€80/L'],
+    datasets: [
+      { label: 'Revenue', data: [78750, 112500, 146250, 180000], backgroundColor: '#3a7a3d', borderRadius: 4 },
+      { label: 'OPEX', data: [36000, 36000, 36000, 36000], backgroundColor: '#6b7280', borderRadius: 4 },
+      { label: 'Net Profit', data: [42750, 76500, 110250, 144000], backgroundColor: '#C8A951', borderRadius: 4 }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { position: 'bottom', labels: { font: { size: 10 }, padding: 8 } } },
+    scales: {
+      y: { ticks: { callback: v => '€'+v.toLocaleString() }, grid: { color: '#2a4a2d' } },
+      x: { grid: { color: '#2a4a2d' } }
+    }
+  }
+});
+
+// ── INTERSECTION OBSERVER (fade in) ──────────────────────────────────────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

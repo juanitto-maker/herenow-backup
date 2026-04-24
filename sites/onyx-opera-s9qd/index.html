@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>digitalAIventures — Software Product Delivery</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root,[data-theme="dark"]{
+  --bg:#0f0f11;--bg-card:#1a1a1f;
+  --bg-hero:linear-gradient(135deg,#1a1510 0%,#0f0f11 100%);
+  --text:#e2e2e7;--text-muted:#888;--text-heading:#fff;
+  --border:#2a2a35;--accent:#f97316;--accent-bg:#f9731618;
+  --link:#60a5fa;--link-hover:#93c5fd;
+  --overlay-bg:rgba(0,0,0,.6);--dialog-bg:#1a1a1f;
+  --code-bg:#16161a;--gold:#c9a84c;--gold-bg:rgba(201,168,76,.08)
+}
+[data-theme="light"]{
+  --bg:#faf6ef;--bg-card:#fff;
+  --bg-hero:linear-gradient(135deg,#f5f0e8 0%,#faf6ef 100%);
+  --text:#3a3a32;--text-muted:#6a6a62;--text-heading:#1a1a18;
+  --border:#e8e4dc;--accent:#c9a84c;--accent-bg:rgba(201,168,76,.08);
+  --link:#4a6741;--link-hover:#3a5231;
+  --overlay-bg:rgba(0,0,0,.4);--dialog-bg:#faf6ef;
+  --code-bg:#f0ece4;--gold:#b8943e;--gold-bg:rgba(201,168,76,.08)
+}
+
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);
+  line-height:1.65;-webkit-font-smoothing:antialiased}
+
+/* Lang bar */
+.lang-bar{position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:center;gap:.4rem;padding:.5rem;flex-wrap:wrap;
+  background:rgba(26,26,24,.92);backdrop-filter:blur(10px)}
+.lang-bar button{background:none;border:1px solid #444;color:#aaa;
+  font:600 .72rem/1 'DM Sans',sans-serif;padding:.35rem .7rem;
+  border-radius:999px;cursor:pointer;letter-spacing:.04em;
+  text-transform:uppercase;transition:all .2s}
+.lang-bar button.active,.lang-bar button:hover{background:var(--gold);
+  color:#1a1a18;border-color:var(--gold)}
+
+/* Theme toggle */
+.theme-toggle{position:fixed;top:3.5rem;right:.75rem;z-index:150;
+  background:var(--bg-card);border:1px solid var(--border);
+  width:2.4rem;height:2.4rem;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.2);transition:all .2s}
+.theme-toggle:hover{transform:scale(1.1)}
+.theme-icon{font-size:1.1rem;line-height:1}
+
+/* Hero */
+.hero{background:var(--bg-hero);padding:5rem 1.5rem 3rem;text-align:center}
+.hero-badge{display:inline-block;font-size:.7rem;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--accent);background:var(--accent-bg);
+  border:1px solid var(--accent);border-radius:999px;padding:.25rem .85rem;margin-bottom:1.2rem;opacity:.85}
+.hero h1{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;
+  color:var(--text-heading);margin-bottom:.8rem;line-height:1.2}
+.hero-sub{font-size:1rem;color:var(--text-muted);max-width:520px;margin:0 auto;line-height:1.6}
+
+/* Sections */
+section{padding:2rem 1.5rem;max-width:800px;margin:0 auto}
+h2{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;
+  color:var(--text-heading);margin-bottom:1rem}
+p{margin-bottom:1rem;font-size:.92rem}
+
+hr.sep{margin:.75rem auto;max-width:200px;border:none;border-top:1px solid var(--border)}
+
+/* Model box */
+.model-box{background:var(--bg-card);border:1px solid var(--border);border-radius:.75rem;
+  padding:1.25rem;margin:1rem 0}
+.model-box p{margin-bottom:.6rem;font-size:.88rem}
+.model-box strong{color:var(--text-heading)}
+
+/* Delivery list */
+.delivery-list{list-style:none;padding:0;margin:1rem 0}
+.delivery-list li{background:var(--bg-card);border:1px solid var(--border);
+  border-radius:.6rem;padding:.85rem 1rem;margin-bottom:.5rem;font-size:.88rem;
+  display:flex;align-items:flex-start;gap:.6rem}
+.delivery-list li::before{content:'';display:inline-block;width:8px;height:8px;
+  background:var(--accent);border-radius:50%;margin-top:.35rem;flex-shrink:0}
+
+/* Steps */
+.steps{counter-reset:step;margin:1rem 0}
+.step{background:var(--bg-card);border:1px solid var(--border);border-radius:.6rem;
+  padding:1rem;margin-bottom:.5rem;font-size:.88rem;display:flex;align-items:flex-start;gap:.75rem}
+.step::before{counter-increment:step;content:counter(step);
+  display:flex;align-items:center;justify-content:center;
+  width:1.8rem;height:1.8rem;border-radius:50%;flex-shrink:0;
+  background:var(--accent);color:#fff;font-weight:700;font-size:.82rem}
+
+/* Hosting options */
+.hosting-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:1rem 0}
+.hosting-opt{background:var(--bg-card);border:1px solid var(--border);border-radius:.5rem;
+  padding:.7rem .8rem;text-align:center;font-size:.82rem;font-weight:500;color:var(--text)}
+
+/* After box */
+.after-box{background:var(--gold-bg);border:1px solid var(--gold);border-radius:.75rem;
+  padding:1.25rem;margin:1rem 0}
+.after-box p{font-size:.88rem;margin-bottom:.5rem}
+.after-box p:last-child{margin-bottom:0}
+
+/* Addon note */
+.addon{background:var(--bg-card);border-left:3px solid var(--accent);
+  border-radius:0 .5rem .5rem 0;padding:1rem;margin:1rem 0;font-size:.85rem}
+
+/* Footer */
+footer{text-align:center;padding:2rem 1.5rem 3rem;font-size:.78rem;color:var(--text-muted)}
+footer a{color:var(--accent);text-decoration:none}
+.footer-contact{background:var(--accent);color:#fff;border:none;padding:.55rem 1.4rem;
+  border-radius:.5rem;font-size:.85rem;font-weight:600;cursor:pointer;margin-bottom:1rem}
+
+/* Contact dialog */
+.dialog-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+  background:var(--overlay-bg);z-index:200;align-items:center;justify-content:center}
+.dialog-overlay.open{display:flex}
+.dialog-box{background:var(--dialog-bg);border-radius:1rem;padding:1.75rem;max-width:300px;width:90%;text-align:center}
+.dialog-box h4{color:var(--text-heading);margin-bottom:1rem;font-size:1rem}
+.dialog-option{display:block;width:100%;padding:.65rem;margin-bottom:.6rem;border-radius:.5rem;
+  text-decoration:none;font-weight:600;font-size:.9rem;text-align:center}
+.dialog-email{background:#4a6741;color:#fff}
+.dialog-telegram{background:#0088cc;color:#fff}
+.dialog-close{background:none;border:1px solid var(--border);color:var(--text-muted);cursor:pointer;
+  font-size:.82rem;padding:.4rem 1.2rem;border-radius:.4rem;margin-top:.2rem}
+
+@media(min-width:600px){
+  .hero h1{font-size:2.6rem}
+  .hosting-grid{grid-template-columns:repeat(3,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- Lang bar -->
+<div class="lang-bar">
+  <button class="active" onclick="setLang('en')">EN</button>
+  <button onclick="setLang('es')">ES</button>
+  <button onclick="setLang('it')">IT</button>
+  <button onclick="setLang('de')">DE</button>
+  <button onclick="setLang('ru')">RU</button>
+  <button onclick="setLang('fr')">FR</button>
+  <button onclick="setLang('zh')">ZH</button>
+</div>
+
+<!-- Theme toggle -->
+<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <span class="theme-icon" id="themeIcon">☀️</span>
+</button>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-badge">digitalAIventures LLC</div>
+  <h1 data-i18n="hero_title">We Build It. You Run It. We Keep the Code.</h1>
+  <p class="hero-sub" data-i18n="hero_sub">Custom software products delivered as ready-to-deploy packages. Your infrastructure, your data, your independence — our source code, our craftsmanship.</p>
+</div>
+
+<!-- The Model -->
+<section>
+  <h2 data-i18n="model_title">The Model</h2>
+  <div class="model-box">
+    <p data-i18n="model_p1"><strong>You get:</strong> a fully working application deployed on your own infrastructure. You own your data, you pay your own hosting — you depend on nobody.</p>
+    <p data-i18n="model_p2"><strong>We keep:</strong> the source code. It's our intellectual property, refined across projects. This is how we deliver top-quality software at a fair fixed price.</p>
+    <p data-i18n="model_p3"><strong>Think of it like this:</strong> you buy the furniture, beautifully crafted and fully yours to use — not the woodworking plans.</p>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- Delivery Package -->
+<section>
+  <h2 data-i18n="delivery_title">What You Receive</h2>
+  <p data-i18n="delivery_intro">Every project is delivered as a complete, self-contained package:</p>
+  <ul class="delivery-list">
+    <li><span data-i18n="del_1"><strong>Application Files</strong> — Your app, compiled and optimized, ready to upload to any hosting provider.</span></li>
+    <li><span data-i18n="del_2"><strong>Setup Guide</strong> — Step-by-step instructions with screenshots. Covers database setup, hosting deployment, and configuration. Hosting-agnostic — works with any provider.</span></li>
+    <li><span data-i18n="del_3"><strong>Database Schema</strong> — A single SQL file you paste into your database dashboard. Creates all tables, security rules, and functions automatically.</span></li>
+    <li><span data-i18n="del_4"><strong>Configuration Template</strong> — A reference file showing exactly which values to fill in (database URL, API keys). No guesswork.</span></li>
+  </ul>
+</section>
+
+<hr class="sep">
+
+<!-- Your Infrastructure -->
+<section>
+  <h2 data-i18n="infra_title">Your Infrastructure</h2>
+  <p data-i18n="infra_desc">You create and pay for your own accounts. This means full independence — if we part ways, everything keeps running.</p>
+
+  <p data-i18n="infra_db" style="font-weight:600;margin-top:1rem"><strong>Database:</strong> Supabase (free tier available) or equivalent PostgreSQL provider.</p>
+
+  <p data-i18n="infra_hosting_label" style="font-weight:600;margin-top:.8rem"><strong>Hosting — your choice:</strong></p>
+  <div class="hosting-grid">
+    <div class="hosting-opt" data-i18n="host_1">Netlify<br><small>drag & drop</small></div>
+    <div class="hosting-opt" data-i18n="host_2">Cloudflare Pages<br><small>drag & drop</small></div>
+    <div class="hosting-opt" data-i18n="host_3">cPanel Hosting<br><small>file upload</small></div>
+    <div class="hosting-opt" data-i18n="host_4">VPS / Server<br><small>nginx / apache</small></div>
+    <div class="hosting-opt" data-i18n="host_5">AWS / Azure<br><small>S3, Static Apps</small></div>
+    <div class="hosting-opt" data-i18n="host_6">Any HTTP server<br><small>it's just files</small></div>
+  </div>
+  <p data-i18n="infra_domain"><strong>Domain:</strong> Your own domain, pointed to your hosting. You own it, you control it.</p>
+</section>
+
+<hr class="sep">
+
+<!-- How It Works -->
+<section>
+  <h2 data-i18n="process_title">How It Works</h2>
+  <div class="steps">
+    <div class="step"><span data-i18n="step_1"><strong>Brief</strong> — You describe what you need. We discuss scope, features, and timeline.</span></div>
+    <div class="step"><span data-i18n="step_2"><strong>Quote</strong> — You receive a fixed price. No hourly billing, no surprises.</span></div>
+    <div class="step"><span data-i18n="step_3"><strong>Build</strong> — We design and develop your product. You receive progress updates.</span></div>
+    <div class="step"><span data-i18n="step_4"><strong>Deliver</strong> — You receive the complete delivery package. Follow the guide or request setup assistance.</span></div>
+    <div class="step"><span data-i18n="step_5"><strong>30-Day Support</strong> — Included in the price. We fix bugs and answer questions. Not new features — that's a new project.</span></div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- After Delivery -->
+<section>
+  <h2 data-i18n="after_title">After Delivery</h2>
+  <div class="after-box">
+    <p data-i18n="after_p1"><strong>You are fully independent.</strong> Your app runs on your accounts, your database holds your data, your domain points to your hosting. Nothing depends on us.</p>
+    <p data-i18n="after_p2"><strong>Need changes or new features?</strong> Contact us anytime. New scope, new quote, new delivery. Simple and transparent.</p>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- Optional Add-on -->
+<section>
+  <h2 data-i18n="addon_title">Optional: Setup Assistance</h2>
+  <div class="addon">
+    <p data-i18n="addon_desc">Not comfortable setting up accounts and deploying? We can do it for you as a separate, fixed-price service. You just provide login credentials — we handle the rest and hand everything back configured and running.</p>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- Footer -->
+<footer>
+  <button class="footer-contact" onclick="document.getElementById('cd').classList.add('open')" data-i18n="footer_btn">Contact digitalAIventures</button>
+  <p data-i18n="footer_text">digitalAIventures LLC · Wyoming, USA</p>
+  <p style="margin-top:.4rem;font-size:.72rem;color:var(--text-muted)" data-i18n="footer_copy">All delivered products remain the intellectual property of digitalAIventures LLC. Clients receive a perpetual, non-exclusive license to use the delivered application. Source code is not included in the delivery.</p>
+</footer>
+
+<!-- Contact dialog -->
+<div class="dialog-overlay" id="cd" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="dialog-box">
+    <h4 data-i18n="dialog_title">Get in Touch</h4>
+    <a class="dialog-option dialog-email" href="mailto:hello@digitalaiventures.com">✉ Email</a>
+    <a class="dialog-option dialog-telegram" href="https://t.me/juanitto" target="_blank">✈ Telegram</a>
+    <button class="dialog-close" onclick="document.getElementById('cd').classList.remove('open')" data-i18n="dialog_close">Close</button>
+  </div>
+</div>
+
+<script>
+/* ---- Translations ---- */
+const T = {
+  en: {
+    hero_title: "We Build It. You Run It. We Keep the Code.",
+    hero_sub: "Custom software products delivered as ready-to-deploy packages. Your infrastructure, your data, your independence — our source code, our craftsmanship.",
+    model_title: "The Model",
+    model_p1: "<strong>You get:</strong> a fully working application deployed on your own infrastructure. You own your data, you pay your own hosting — you depend on nobody.",
+    model_p2: "<strong>We keep:</strong> the source code. It's our intellectual property, refined across projects. This is how we deliver top-quality software at a fair fixed price.",
+    model_p3: "<strong>Think of it like this:</strong> you buy the furniture, beautifully crafted and fully yours to use — not the woodworking plans.",
+    delivery_title: "What You Receive",
+    delivery_intro: "Every project is delivered as a complete, self-contained package:",
+    del_1: "<strong>Application Files</strong> — Your app, compiled and optimized, ready to upload to any hosting provider.",
+    del_2: "<strong>Setup Guide</strong> — Step-by-step instructions with screenshots. Covers database setup, hosting deployment, and configuration. Hosting-agnostic — works with any provider.",
+    del_3: "<strong>Database Schema</strong> — A single SQL file you paste into your database dashboard. Creates all tables, security rules, and functions automatically.",
+    del_4: "<strong>Configuration Template</strong> — A reference file showing exactly which values to fill in (database URL, API keys). No guesswork.",
+    infra_title: "Your Infrastructure",
+    infra_desc: "You create and pay for your own accounts. This means full independence — if we part ways, everything keeps running.",
+    infra_db: "<strong>Database:</strong> Supabase (free tier available) or equivalent PostgreSQL provider.",
+    infra_hosting_label: "<strong>Hosting — your choice:</strong>",
+    host_1: "Netlify<br><small>drag & drop</small>",
+    host_2: "Cloudflare Pages<br><small>drag & drop</small>",
+    host_3: "cPanel Hosting<br><small>file upload</small>",
+    host_4: "VPS / Server<br><small>nginx / apache</small>",
+    host_5: "AWS / Azure<br><small>S3, Static Apps</small>",
+    host_6: "Any HTTP server<br><small>it's just files</small>",
+    infra_domain: "<strong>Domain:</strong> Your own domain, pointed to your hosting. You own it, you control it.",
+    process_title: "How It Works",
+    step_1: "<strong>Brief</strong> — You describe what you need. We discuss scope, features, and timeline.",
+    step_2: "<strong>Quote</strong> — You receive a fixed price. No hourly billing, no surprises.",
+    step_3: "<strong>Build</strong> — We design and develop your product. You receive progress updates.",
+    step_4: "<strong>Deliver</strong> — You receive the complete delivery package. Follow the guide or request setup assistance.",
+    step_5: "<strong>30-Day Support</strong> — Included in the price. We fix bugs and answer questions. Not new features — that's a new project.",
+    after_title: "After Delivery",
+    after_p1: "<strong>You are fully independent.</strong> Your app runs on your accounts, your database holds your data, your domain points to your hosting. Nothing depends on us.",
+    after_p2: "<strong>Need changes or new features?</strong> Contact us anytime. New scope, new quote, new delivery. Simple and transparent.",
+    addon_title: "Optional: Setup Assistance",
+    addon_desc: "Not comfortable setting up accounts and deploying? We can do it for you as a separate, fixed-price service. You just provide login credentials — we handle the rest and hand everything back configured and running.",
+    footer_btn: "Contact digitalAIventures",
+    footer_text: "digitalAIventures LLC · Wyoming, USA",
+    footer_copy: "All delivered products remain the intellectual property of digitalAIventures LLC. Clients receive a perpetual, non-exclusive license to use the delivered application. Source code is not included in the delivery.",
+    dialog_title: "Get in Touch",
+    dialog_close: "Close"
+  },
+  es: {
+    hero_title: "Lo Construimos. Tú lo Usas. El Código es Nuestro.",
+    hero_sub: "Productos de software a medida, entregados listos para desplegar. Tu infraestructura, tus datos, tu independencia — nuestro código fuente, nuestra artesanía.",
+    model_title: "El Modelo",
+    model_p1: "<strong>Tú recibes:</strong> una aplicación completamente funcional desplegada en tu propia infraestructura. Tus datos son tuyos, pagas tu propio hosting — no dependes de nadie.",
+    model_p2: "<strong>Nosotros mantenemos:</strong> el código fuente. Es nuestra propiedad intelectual, perfeccionada a lo largo de los proyectos. Así entregamos software de primera calidad a un precio justo y fijo.",
+    model_p3: "<strong>Piénsalo así:</strong> compras el mueble, bellamente elaborado y completamente tuyo para usar — no los planos del carpintero.",
+    delivery_title: "Qué Recibes",
+    delivery_intro: "Cada proyecto se entrega como un paquete completo e independiente:",
+    del_1: "<strong>Archivos de la Aplicación</strong> — Tu app, compilada y optimizada, lista para subir a cualquier proveedor de hosting.",
+    del_2: "<strong>Guía de Instalación</strong> — Instrucciones paso a paso con capturas de pantalla. Cubre la configuración de la base de datos, el despliegue y la configuración. Funciona con cualquier proveedor.",
+    del_3: "<strong>Esquema de Base de Datos</strong> — Un único archivo SQL que pegas en el panel de tu base de datos. Crea todas las tablas, reglas de seguridad y funciones automáticamente.",
+    del_4: "<strong>Plantilla de Configuración</strong> — Un archivo de referencia que muestra exactamente qué valores completar (URL de la base de datos, claves API). Sin adivinanzas.",
+    infra_title: "Tu Infraestructura",
+    infra_desc: "Tú creas y pagas tus propias cuentas. Esto significa independencia total — si dejamos de trabajar juntos, todo sigue funcionando.",
+    infra_db: "<strong>Base de datos:</strong> Supabase (nivel gratuito disponible) o proveedor PostgreSQL equivalente.",
+    infra_hosting_label: "<strong>Hosting — tú eliges:</strong>",
+    host_1: "Netlify<br><small>arrastrar y soltar</small>",
+    host_2: "Cloudflare Pages<br><small>arrastrar y soltar</small>",
+    host_3: "Hosting cPanel<br><small>subir archivos</small>",
+    host_4: "VPS / Servidor<br><small>nginx / apache</small>",
+    host_5: "AWS / Azure<br><small>S3, Static Apps</small>",
+    host_6: "Cualquier servidor HTTP<br><small>son solo archivos</small>",
+    infra_domain: "<strong>Dominio:</strong> Tu propio dominio, apuntando a tu hosting. Tú lo posees, tú lo controlas.",
+    process_title: "Cómo Funciona",
+    step_1: "<strong>Briefing</strong> — Describes lo que necesitas. Discutimos alcance, funcionalidades y plazos.",
+    step_2: "<strong>Presupuesto</strong> — Recibes un precio fijo. Sin facturación por horas, sin sorpresas.",
+    step_3: "<strong>Desarrollo</strong> — Diseñamos y desarrollamos tu producto. Recibes actualizaciones de progreso.",
+    step_4: "<strong>Entrega</strong> — Recibes el paquete de entrega completo. Sigue la guía o solicita asistencia de configuración.",
+    step_5: "<strong>Soporte 30 Días</strong> — Incluido en el precio. Corregimos errores y respondemos preguntas. No funcionalidades nuevas — eso es un nuevo proyecto.",
+    after_title: "Después de la Entrega",
+    after_p1: "<strong>Eres completamente independiente.</strong> Tu app funciona en tus cuentas, tu base de datos contiene tus datos, tu dominio apunta a tu hosting. Nada depende de nosotros.",
+    after_p2: "<strong>¿Necesitas cambios o nuevas funcionalidades?</strong> Contáctanos cuando quieras. Nuevo alcance, nuevo presupuesto, nueva entrega. Simple y transparente.",
+    addon_title: "Opcional: Asistencia de Configuración",
+    addon_desc: "¿No te sientes cómodo configurando cuentas y desplegando? Podemos hacerlo por ti como un servicio separado a precio fijo. Solo proporcionas tus credenciales — nosotros nos encargamos del resto y te devolvemos todo configurado y funcionando.",
+    footer_btn: "Contactar digitalAIventures",
+    footer_text: "digitalAIventures LLC · Wyoming, EE.UU.",
+    footer_copy: "Todos los productos entregados son propiedad intelectual de digitalAIventures LLC. Los clientes reciben una licencia perpetua y no exclusiva para usar la aplicación entregada. El código fuente no está incluido en la entrega.",
+    dialog_title: "Contacto",
+    dialog_close: "Cerrar"
+  },
+  it: {
+    hero_title: "Lo Costruiamo Noi. Lo Usi Tu. Il Codice Resta Nostro.",
+    hero_sub: "Prodotti software su misura, consegnati pronti per il deploy. La tua infrastruttura, i tuoi dati, la tua indipendenza — il nostro codice sorgente, la nostra maestria.",
+    model_title: "Il Modello",
+    model_p1: "<strong>Tu ricevi:</strong> un'applicazione completamente funzionante, installata sulla tua infrastruttura. I tuoi dati sono tuoi, paghi il tuo hosting — non dipendi da nessuno.",
+    model_p2: "<strong>Noi manteniamo:</strong> il codice sorgente. È la nostra proprietà intellettuale, perfezionata progetto dopo progetto. Così garantiamo software di alta qualità a un prezzo fisso e onesto.",
+    model_p3: "<strong>Pensala così:</strong> compri il mobile, splendidamente realizzato e completamente tuo — non i progetti del falegname.",
+    delivery_title: "Cosa Ricevi",
+    delivery_intro: "Ogni progetto viene consegnato come un pacchetto completo e autonomo:",
+    del_1: "<strong>File dell'Applicazione</strong> — La tua app, compilata e ottimizzata, pronta per essere caricata su qualsiasi hosting.",
+    del_2: "<strong>Guida all'Installazione</strong> — Istruzioni passo dopo passo con screenshot. Copre la configurazione del database, il deploy e la configurazione. Funziona con qualsiasi provider.",
+    del_3: "<strong>Schema del Database</strong> — Un singolo file SQL da incollare nel pannello del tuo database. Crea automaticamente tutte le tabelle, le regole di sicurezza e le funzioni.",
+    del_4: "<strong>Template di Configurazione</strong> — Un file di riferimento che mostra esattamente quali valori inserire (URL del database, chiavi API). Nessuna approssimazione.",
+    infra_title: "La Tua Infrastruttura",
+    infra_desc: "Crei e paghi i tuoi account. Questo significa indipendenza totale — se le nostre strade si separano, tutto continua a funzionare.",
+    infra_db: "<strong>Database:</strong> Supabase (piano gratuito disponibile) o provider PostgreSQL equivalente.",
+    infra_hosting_label: "<strong>Hosting — a tua scelta:</strong>",
+    host_1: "Netlify<br><small>drag & drop</small>",
+    host_2: "Cloudflare Pages<br><small>drag & drop</small>",
+    host_3: "Hosting cPanel<br><small>upload file</small>",
+    host_4: "VPS / Server<br><small>nginx / apache</small>",
+    host_5: "AWS / Azure<br><small>S3, Static Apps</small>",
+    host_6: "Qualsiasi server HTTP<br><small>sono solo file</small>",
+    infra_domain: "<strong>Dominio:</strong> Il tuo dominio, puntato al tuo hosting. Lo possiedi tu, lo controlli tu.",
+    process_title: "Come Funziona",
+    step_1: "<strong>Brief</strong> — Descrivi ciò che ti serve. Discutiamo ambito, funzionalità e tempistiche.",
+    step_2: "<strong>Preventivo</strong> — Ricevi un prezzo fisso. Nessuna fatturazione oraria, nessuna sorpresa.",
+    step_3: "<strong>Sviluppo</strong> — Progettiamo e sviluppiamo il tuo prodotto. Ricevi aggiornamenti sui progressi.",
+    step_4: "<strong>Consegna</strong> — Ricevi il pacchetto di consegna completo. Segui la guida o richiedi assistenza alla configurazione.",
+    step_5: "<strong>Supporto 30 Giorni</strong> — Incluso nel prezzo. Correggiamo bug e rispondiamo alle domande. Non nuove funzionalità — quello è un nuovo progetto.",
+    after_title: "Dopo la Consegna",
+    after_p1: "<strong>Sei completamente indipendente.</strong> La tua app gira sui tuoi account, il tuo database contiene i tuoi dati, il tuo dominio punta al tuo hosting. Nulla dipende da noi.",
+    after_p2: "<strong>Servono modifiche o nuove funzionalità?</strong> Contattaci quando vuoi. Nuovo ambito, nuovo preventivo, nuova consegna. Semplice e trasparente.",
+    addon_title: "Opzionale: Assistenza alla Configurazione",
+    addon_desc: "Non ti senti a tuo agio con la configurazione degli account e il deploy? Possiamo farlo noi come servizio separato a prezzo fisso. Fornisci le credenziali — noi ci occupiamo del resto e ti restituiamo tutto configurato e funzionante.",
+    footer_btn: "Contatta digitalAIventures",
+    footer_text: "digitalAIventures LLC · Wyoming, USA",
+    footer_copy: "Tutti i prodotti consegnati restano proprietà intellettuale di digitalAIventures LLC. I clienti ricevono una licenza perpetua e non esclusiva per l'utilizzo dell'applicazione consegnata. Il codice sorgente non è incluso nella consegna.",
+    dialog_title: "Contattaci",
+    dialog_close: "Chiudi"
+  },
+  de: {
+    hero_title: "Wir Bauen Es. Sie Nutzen Es. Der Code Bleibt Bei Uns.",
+    hero_sub: "Maßgeschneiderte Softwareprodukte, lieferfertig verpackt. Ihre Infrastruktur, Ihre Daten, Ihre Unabhängigkeit — unser Quellcode, unsere Handwerkskunst.",
+    model_title: "Das Modell",
+    model_p1: "<strong>Sie erhalten:</strong> eine voll funktionsfähige Anwendung, die auf Ihrer eigenen Infrastruktur läuft. Ihre Daten gehören Ihnen, Sie bezahlen Ihr eigenes Hosting — Sie sind von niemandem abhängig.",
+    model_p2: "<strong>Wir behalten:</strong> den Quellcode. Er ist unser geistiges Eigentum, verfeinert über viele Projekte. So liefern wir erstklassige Software zu einem fairen Festpreis.",
+    model_p3: "<strong>Stellen Sie es sich so vor:</strong> Sie kaufen das Möbelstück, wunderschön gefertigt und ganz Ihres — nicht die Baupläne des Schreiners.",
+    delivery_title: "Was Sie Erhalten",
+    delivery_intro: "Jedes Projekt wird als vollständiges, eigenständiges Paket geliefert:",
+    del_1: "<strong>Anwendungsdateien</strong> — Ihre App, kompiliert und optimiert, bereit zum Hochladen auf jeden Hosting-Anbieter.",
+    del_2: "<strong>Einrichtungsanleitung</strong> — Schritt-für-Schritt-Anweisungen mit Screenshots. Deckt Datenbankeinrichtung, Hosting-Deployment und Konfiguration ab. Anbieterunabhängig.",
+    del_3: "<strong>Datenbankschema</strong> — Eine einzelne SQL-Datei, die Sie in Ihr Datenbank-Dashboard einfügen. Erstellt automatisch alle Tabellen, Sicherheitsregeln und Funktionen.",
+    del_4: "<strong>Konfigurationsvorlage</strong> — Eine Referenzdatei, die genau zeigt, welche Werte einzutragen sind (Datenbank-URL, API-Schlüssel). Kein Rätselraten.",
+    infra_title: "Ihre Infrastruktur",
+    infra_desc: "Sie erstellen und bezahlen Ihre eigenen Konten. Das bedeutet vollständige Unabhängigkeit — wenn wir getrennte Wege gehen, läuft alles weiter.",
+    infra_db: "<strong>Datenbank:</strong> Supabase (kostenlose Stufe verfügbar) oder gleichwertiger PostgreSQL-Anbieter.",
+    infra_hosting_label: "<strong>Hosting — Ihre Wahl:</strong>",
+    host_1: "Netlify<br><small>Drag & Drop</small>",
+    host_2: "Cloudflare Pages<br><small>Drag & Drop</small>",
+    host_3: "cPanel Hosting<br><small>Datei-Upload</small>",
+    host_4: "VPS / Server<br><small>nginx / apache</small>",
+    host_5: "AWS / Azure<br><small>S3, Static Apps</small>",
+    host_6: "Jeder HTTP-Server<br><small>es sind nur Dateien</small>",
+    infra_domain: "<strong>Domain:</strong> Ihre eigene Domain, auf Ihr Hosting verweisend. Sie besitzen sie, Sie kontrollieren sie.",
+    process_title: "Wie Es Funktioniert",
+    step_1: "<strong>Briefing</strong> — Sie beschreiben, was Sie brauchen. Wir besprechen Umfang, Funktionen und Zeitplan.",
+    step_2: "<strong>Angebot</strong> — Sie erhalten einen Festpreis. Keine Stundenabrechnung, keine Überraschungen.",
+    step_3: "<strong>Entwicklung</strong> — Wir entwerfen und entwickeln Ihr Produkt. Sie erhalten Fortschrittsberichte.",
+    step_4: "<strong>Lieferung</strong> — Sie erhalten das vollständige Lieferpaket. Folgen Sie der Anleitung oder fordern Sie Einrichtungshilfe an.",
+    step_5: "<strong>30 Tage Support</strong> — Im Preis enthalten. Wir beheben Fehler und beantworten Fragen. Keine neuen Funktionen — das ist ein neues Projekt.",
+    after_title: "Nach der Lieferung",
+    after_p1: "<strong>Sie sind vollständig unabhängig.</strong> Ihre App läuft auf Ihren Konten, Ihre Datenbank enthält Ihre Daten, Ihre Domain verweist auf Ihr Hosting. Nichts hängt von uns ab.",
+    after_p2: "<strong>Änderungen oder neue Funktionen nötig?</strong> Kontaktieren Sie uns jederzeit. Neuer Umfang, neues Angebot, neue Lieferung. Einfach und transparent.",
+    addon_title: "Optional: Einrichtungshilfe",
+    addon_desc: "Nicht wohl beim Einrichten von Konten und Deployment? Wir können das für Sie erledigen — als separater Service zum Festpreis. Sie geben uns die Zugangsdaten — wir kümmern uns um den Rest und übergeben alles konfiguriert und einsatzbereit.",
+    footer_btn: "digitalAIventures kontaktieren",
+    footer_text: "digitalAIventures LLC · Wyoming, USA",
+    footer_copy: "Alle gelieferten Produkte bleiben geistiges Eigentum der digitalAIventures LLC. Kunden erhalten eine unbefristete, nicht-exklusive Lizenz zur Nutzung der gelieferten Anwendung. Der Quellcode ist nicht in der Lieferung enthalten.",
+    dialog_title: "Kontakt",
+    dialog_close: "Schließen"
+  },
+  ru: {
+    hero_title: "Мы Создаём. Вы Используете. Код Остаётся У Нас.",
+    hero_sub: "Программные продукты на заказ, доставленные готовыми к развёртыванию. Ваша инфраструктура, ваши данные, ваша независимость — наш исходный код, наше мастерство.",
+    model_title: "Модель",
+    model_p1: "<strong>Вы получаете:</strong> полностью рабочее приложение, развёрнутое на вашей собственной инфраструктуре. Ваши данные — ваши, вы оплачиваете свой хостинг — вы ни от кого не зависите.",
+    model_p2: "<strong>Мы сохраняем:</strong> исходный код. Это наша интеллектуальная собственность, совершенствуемая от проекта к проекту. Так мы обеспечиваем высочайшее качество по справедливой фиксированной цене.",
+    model_p3: "<strong>Представьте так:</strong> вы покупаете мебель, прекрасно изготовленную и полностью вашу — но не чертежи столяра.",
+    delivery_title: "Что Вы Получаете",
+    delivery_intro: "Каждый проект поставляется как полный, самодостаточный пакет:",
+    del_1: "<strong>Файлы приложения</strong> — Ваше приложение, скомпилированное и оптимизированное, готовое для загрузки на любой хостинг.",
+    del_2: "<strong>Руководство по установке</strong> — Пошаговые инструкции со скриншотами. Охватывает настройку базы данных, развёртывание и конфигурацию. Работает с любым провайдером.",
+    del_3: "<strong>Схема базы данных</strong> — Единый SQL-файл, который вы вставляете в панель базы данных. Автоматически создаёт все таблицы, правила безопасности и функции.",
+    del_4: "<strong>Шаблон конфигурации</strong> — Справочный файл, показывающий, какие именно значения нужно заполнить (URL базы данных, ключи API). Никаких догадок.",
+    infra_title: "Ваша Инфраструктура",
+    infra_desc: "Вы создаёте и оплачиваете свои собственные аккаунты. Это означает полную независимость — если мы перестанем сотрудничать, всё продолжит работать.",
+    infra_db: "<strong>База данных:</strong> Supabase (бесплатный тариф доступен) или аналогичный PostgreSQL-провайдер.",
+    infra_hosting_label: "<strong>Хостинг — на ваш выбор:</strong>",
+    host_1: "Netlify<br><small>drag & drop</small>",
+    host_2: "Cloudflare Pages<br><small>drag & drop</small>",
+    host_3: "cPanel хостинг<br><small>загрузка файлов</small>",
+    host_4: "VPS / Сервер<br><small>nginx / apache</small>",
+    host_5: "AWS / Azure<br><small>S3, Static Apps</small>",
+    host_6: "Любой HTTP-сервер<br><small>это просто файлы</small>",
+    infra_domain: "<strong>Домен:</strong> Ваш собственный домен, направленный на ваш хостинг. Вы владеете им, вы управляете им.",
+    process_title: "Как Это Работает",
+    step_1: "<strong>Бриф</strong> — Вы описываете, что вам нужно. Мы обсуждаем объём, функции и сроки.",
+    step_2: "<strong>Предложение</strong> — Вы получаете фиксированную цену. Никакой почасовой оплаты, никаких сюрпризов.",
+    step_3: "<strong>Разработка</strong> — Мы проектируем и разрабатываем ваш продукт. Вы получаете отчёты о прогрессе.",
+    step_4: "<strong>Доставка</strong> — Вы получаете полный пакет поставки. Следуйте руководству или запросите помощь в настройке.",
+    step_5: "<strong>30 дней поддержки</strong> — Включено в цену. Мы исправляем ошибки и отвечаем на вопросы. Не новые функции — это новый проект.",
+    after_title: "После Доставки",
+    after_p1: "<strong>Вы полностью независимы.</strong> Ваше приложение работает на ваших аккаунтах, ваша база данных хранит ваши данные, ваш домен указывает на ваш хостинг. Ничто не зависит от нас.",
+    after_p2: "<strong>Нужны изменения или новые функции?</strong> Свяжитесь с нами в любое время. Новый объём, новое предложение, новая поставка. Просто и прозрачно.",
+    addon_title: "Опционально: Помощь в Настройке",
+    addon_desc: "Не уверены в настройке аккаунтов и развёртывании? Мы можем сделать это за вас как отдельную услугу с фиксированной ценой. Вы предоставляете учётные данные — мы берём на себя всё остальное и возвращаем всё настроенным и работающим.",
+    footer_btn: "Связаться с digitalAIventures",
+    footer_text: "digitalAIventures LLC · Вайоминг, США",
+    footer_copy: "Все доставленные продукты остаются интеллектуальной собственностью digitalAIventures LLC. Клиенты получают бессрочную, неисключительную лицензию на использование доставленного приложения. Исходный код не включён в поставку.",
+    dialog_title: "Связаться",
+    dialog_close: "Закрыть"
+  },
+  fr: {
+    hero_title: "Nous le Construisons. Vous l'Utilisez. Le Code Reste Chez Nous.",
+    hero_sub: "Des produits logiciels sur mesure, livrés prêts à déployer. Votre infrastructure, vos données, votre indépendance — notre code source, notre savoir-faire.",
+    model_title: "Le Modèle",
+    model_p1: "<strong>Vous recevez :</strong> une application entièrement fonctionnelle déployée sur votre propre infrastructure. Vos données vous appartiennent, vous payez votre hébergement — vous ne dépendez de personne.",
+    model_p2: "<strong>Nous gardons :</strong> le code source. C'est notre propriété intellectuelle, perfectionnée au fil des projets. C'est ainsi que nous livrons des logiciels de haute qualité à un prix fixe et juste.",
+    model_p3: "<strong>Imaginez ceci :</strong> vous achetez le meuble, magnifiquement fabriqué et entièrement vôtre — pas les plans de l'ébéniste.",
+    delivery_title: "Ce Que Vous Recevez",
+    delivery_intro: "Chaque projet est livré sous forme de package complet et autonome :",
+    del_1: "<strong>Fichiers de l'Application</strong> — Votre application, compilée et optimisée, prête à être téléchargée sur n'importe quel hébergeur.",
+    del_2: "<strong>Guide d'Installation</strong> — Instructions étape par étape avec captures d'écran. Couvre la configuration de la base de données, le déploiement et la configuration. Compatible avec tout fournisseur.",
+    del_3: "<strong>Schéma de Base de Données</strong> — Un fichier SQL unique à coller dans le tableau de bord de votre base de données. Crée automatiquement toutes les tables, règles de sécurité et fonctions.",
+    del_4: "<strong>Modèle de Configuration</strong> — Un fichier de référence indiquant exactement quelles valeurs renseigner (URL de la base de données, clés API). Aucune approximation.",
+    infra_title: "Votre Infrastructure",
+    infra_desc: "Vous créez et payez vos propres comptes. Cela signifie une indépendance totale — si nous cessons de collaborer, tout continue de fonctionner.",
+    infra_db: "<strong>Base de données :</strong> Supabase (offre gratuite disponible) ou fournisseur PostgreSQL équivalent.",
+    infra_hosting_label: "<strong>Hébergement — à vous de choisir :</strong>",
+    host_1: "Netlify<br><small>glisser-déposer</small>",
+    host_2: "Cloudflare Pages<br><small>glisser-déposer</small>",
+    host_3: "Hébergement cPanel<br><small>upload de fichiers</small>",
+    host_4: "VPS / Serveur<br><small>nginx / apache</small>",
+    host_5: "AWS / Azure<br><small>S3, Static Apps</small>",
+    host_6: "Tout serveur HTTP<br><small>ce sont juste des fichiers</small>",
+    infra_domain: "<strong>Domaine :</strong> Votre propre domaine, pointé vers votre hébergement. Vous le possédez, vous le contrôlez.",
+    process_title: "Comment Ça Marche",
+    step_1: "<strong>Brief</strong> — Vous décrivez vos besoins. Nous discutons du périmètre, des fonctionnalités et du calendrier.",
+    step_2: "<strong>Devis</strong> — Vous recevez un prix fixe. Pas de facturation horaire, pas de surprises.",
+    step_3: "<strong>Développement</strong> — Nous concevons et développons votre produit. Vous recevez des mises à jour sur l'avancement.",
+    step_4: "<strong>Livraison</strong> — Vous recevez le package de livraison complet. Suivez le guide ou demandez une assistance à la mise en place.",
+    step_5: "<strong>Support 30 Jours</strong> — Inclus dans le prix. Nous corrigeons les bugs et répondons aux questions. Pas de nouvelles fonctionnalités — c'est un nouveau projet.",
+    after_title: "Après la Livraison",
+    after_p1: "<strong>Vous êtes totalement indépendant.</strong> Votre application tourne sur vos comptes, votre base de données contient vos données, votre domaine pointe vers votre hébergement. Rien ne dépend de nous.",
+    after_p2: "<strong>Besoin de modifications ou de nouvelles fonctionnalités ?</strong> Contactez-nous à tout moment. Nouveau périmètre, nouveau devis, nouvelle livraison. Simple et transparent.",
+    addon_title: "Optionnel : Assistance à la Mise en Place",
+    addon_desc: "Pas à l'aise avec la création de comptes et le déploiement ? Nous pouvons le faire pour vous en tant que service séparé à prix fixe. Vous fournissez vos identifiants — nous nous occupons du reste et vous rendons tout configuré et opérationnel.",
+    footer_btn: "Contacter digitalAIventures",
+    footer_text: "digitalAIventures LLC · Wyoming, États-Unis",
+    footer_copy: "Tous les produits livrés restent la propriété intellectuelle de digitalAIventures LLC. Les clients reçoivent une licence perpétuelle et non exclusive d'utilisation de l'application livrée. Le code source n'est pas inclus dans la livraison.",
+    dialog_title: "Nous Contacter",
+    dialog_close: "Fermer"
+  },
+  zh: {
+    hero_title: "我们构建。您使用。代码归我们。",
+    hero_sub: "定制软件产品，交付即可部署。您的基础设施、您的数据、您的独立性——我们的源代码、我们的工艺。",
+    model_title: "模式",
+    model_p1: "<strong>您获得：</strong>一个完全可用的应用程序，部署在您自己的基础设施上。您拥有数据，您支付托管费用——您不依赖任何人。",
+    model_p2: "<strong>我们保留：</strong>源代码。这是我们的知识产权，在项目中不断完善。这就是我们以公平固定价格交付高质量软件的方式。",
+    model_p3: "<strong>这样理解：</strong>您购买的是精美制作的家具，完全归您使用——而不是木匠的图纸。",
+    delivery_title: "您收到什么",
+    delivery_intro: "每个项目都作为完整的独立包交付：",
+    del_1: "<strong>应用程序文件</strong>——您的应用，已编译和优化，可上传到任何托管提供商。",
+    del_2: "<strong>安装指南</strong>——带截图的分步说明。涵盖数据库设置、托管部署和配置。适用于任何提供商。",
+    del_3: "<strong>数据库架构</strong>——一个SQL文件，粘贴到数据库面板中。自动创建所有表、安全规则和函数。",
+    del_4: "<strong>配置模板</strong>——一个参考文件，准确显示需要填写的值（数据库URL、API密钥）。无需猜测。",
+    infra_title: "您的基础设施",
+    infra_desc: "您创建并支付自己的账户。这意味着完全独立——如果我们停止合作，一切照常运行。",
+    infra_db: "<strong>数据库：</strong>Supabase（提供免费层）或等效的PostgreSQL提供商。",
+    infra_hosting_label: "<strong>托管——您来选择：</strong>",
+    host_1: "Netlify<br><small>拖放上传</small>",
+    host_2: "Cloudflare Pages<br><small>拖放上传</small>",
+    host_3: "cPanel托管<br><small>文件上传</small>",
+    host_4: "VPS / 服务器<br><small>nginx / apache</small>",
+    host_5: "AWS / Azure<br><small>S3, Static Apps</small>",
+    host_6: "任何HTTP服务器<br><small>它们只是文件</small>",
+    infra_domain: "<strong>域名：</strong>您自己的域名，指向您的托管。您拥有它，您控制它。",
+    process_title: "如何运作",
+    step_1: "<strong>需求沟通</strong>——您描述您的需求。我们讨论范围、功能和时间表。",
+    step_2: "<strong>报价</strong>——您收到固定价格。没有按小时计费，没有意外。",
+    step_3: "<strong>开发</strong>——我们设计和开发您的产品。您收到进度更新。",
+    step_4: "<strong>交付</strong>——您收到完整的交付包。按照指南操作或请求安装协助。",
+    step_5: "<strong>30天支持</strong>——包含在价格中。我们修复错误并回答问题。不包括新功能——那是新项目。",
+    after_title: "交付之后",
+    after_p1: "<strong>您完全独立。</strong>您的应用在您的账户上运行，您的数据库存储您的数据，您的域名指向您的托管。一切不依赖我们。",
+    after_p2: "<strong>需要更改或新功能？</strong>随时联系我们。新范围、新报价、新交付。简单透明。",
+    addon_title: "可选：安装协助",
+    addon_desc: "不习惯设置账户和部署？我们可以作为单独的固定价格服务为您完成。您只需提供登录凭据——我们处理其余一切，将所有内容配置好并交还给您。",
+    footer_btn: "联系 digitalAIventures",
+    footer_text: "digitalAIventures LLC · 怀俄明州，美国",
+    footer_copy: "所有交付的产品仍为digitalAIventures LLC的知识产权。客户获得永久、非独占许可证以使用交付的应用程序。源代码不包含在交付中。",
+    dialog_title: "联系我们",
+    dialog_close: "关闭"
+  }
+};
+
+let currentLang='en';
+function setLang(lang){
+  currentLang=lang;
+  document.querySelectorAll('.lang-bar button').forEach(b=>
+    b.classList.toggle('active',b.textContent.trim().toLowerCase()===lang));
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.getAttribute('data-i18n');
+    if(T[lang]&&T[lang][key]) el.innerHTML=T[lang][key];
+  });
+  document.documentElement.lang=lang;
+}
+setLang('en');
+
+/* ---- Theme ---- */
+function toggleTheme(){
+  const html=document.documentElement;
+  const current=html.getAttribute('data-theme')||'dark';
+  const next=current==='dark'?'light':'dark';
+  html.setAttribute('data-theme',next);
+  document.getElementById('themeIcon').textContent=next==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',next)}catch(e){}
+}
+(function(){
+  function apply(t){
+    document.documentElement.setAttribute('data-theme',t);
+    document.addEventListener('DOMContentLoaded',()=>{
+      const icon=document.getElementById('themeIcon');
+      if(icon)icon.textContent=t==='dark'?'☀️':'🌙';
+    });
+  }
+  try{
+    const saved=localStorage.getItem('theme');
+    if(saved){apply(saved)}
+    else{const h=new Date().getHours();apply(h>=7&&h<19?'light':'dark')}
+  }catch(e){apply('dark')}
+})();
+</script>
+</body>
+</html>

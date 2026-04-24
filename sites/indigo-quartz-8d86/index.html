@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Al-Kahf Zawiya Alpujarra</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --stone:#2a2520;--stone-light:#3d3530;--cave:#1a1612;
+  --wood:#8b6f47;--wood-light:#a8895c;
+  --gold:#c9a84c;--gold-dim:#9e8338;
+  --sand:#e8dcc8;--sand-light:#f5efe3;
+  --text:#e8e0d4;--text-dim:#9a9080;
+  --green:#4a6741;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--cave);color:var(--text);line-height:1.7;overflow-x:hidden}
+
+/* Lang Bar */
+.lang-bar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:center;gap:.35rem;padding:.5rem .5rem;background:rgba(26,22,18,.94);backdrop-filter:blur(12px);flex-wrap:wrap}
+.lang-btn{background:none;border:1px solid #444;color:#aaa;font:600 .68rem/1 'DM Sans',sans-serif;padding:.3rem .55rem;border-radius:999px;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;transition:all .2s}
+.lang-btn.active,.lang-btn:hover{background:var(--gold);color:var(--cave);border-color:var(--gold)}
+
+/* Sections */
+section{padding:3rem 1.5rem;max-width:780px;margin:0 auto}
+.hero{padding-top:4.5rem;text-align:center;min-height:90vh;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.hero-badge{display:inline-block;font-size:.65rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-dim);border-radius:999px;padding:.3rem 1rem;margin-bottom:1.5rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:700;color:#fff;line-height:1.15;margin-bottom:.5rem}
+.hero .arabic-title{font-family:'Amiri',serif;font-size:2.2rem;color:var(--gold);margin-bottom:1rem;direction:rtl}
+.hero .tagline{font-size:1rem;color:var(--text-dim);max-width:400px;margin:0 auto 2rem}
+.hero .verse{font-family:'Amiri',serif;font-size:1.05rem;color:var(--gold-dim);font-style:italic;max-width:500px;margin:0 auto;line-height:1.6;padding:1.5rem;border-top:1px solid #333;border-bottom:1px solid #333}
+
+h2{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:600;color:#fff;margin-bottom:.3rem}
+h2 .ar-head{font-family:'Amiri',serif;color:var(--gold);font-size:1.1rem;display:block;direction:rtl;margin-bottom:.3rem}
+h3{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--sand);margin:1.5rem 0 .5rem}
+p{margin-bottom:1rem;font-size:.92rem;color:var(--text)}
+.section-intro{font-size:.95rem;color:var(--text-dim);margin-bottom:1.5rem;border-left:3px solid var(--gold-dim);padding-left:1rem}
+
+/* Divider */
+.divider{width:60px;height:2px;background:var(--gold-dim);margin:3rem auto;opacity:.5}
+
+/* Pillar Cards */
+.pillar{background:var(--stone);border:1px solid #3a3228;border-radius:.75rem;padding:1.2rem;margin-bottom:1rem}
+.pillar-head{display:flex;align-items:center;gap:.75rem;margin-bottom:.6rem}
+.pillar-icon{width:40px;height:40px;border-radius:50%;background:var(--gold-dim);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.pillar-name{font-family:'Playfair Display',serif;font-size:1.05rem;color:#fff}
+.pillar-arabic{font-family:'Amiri',serif;font-size:.85rem;color:var(--gold);direction:rtl}
+.pillar-space{font-size:.82rem;color:var(--gold);font-weight:600;margin-bottom:.3rem}
+.pillar-desc{font-size:.84rem;color:var(--text-dim);line-height:1.6}
+
+/* Zone Table as stacked cards */
+.zone-card{background:var(--stone);border:1px solid #3a3228;border-radius:.75rem;padding:1rem 1.2rem;margin-bottom:.75rem}
+.zone-name{font-family:'Playfair Display',serif;font-size:.95rem;color:#fff;margin-bottom:.2rem}
+.zone-func{font-size:.82rem;color:var(--gold);font-weight:500}
+.zone-sufi{font-size:.82rem;color:var(--text-dim);margin-top:.3rem}
+
+/* Materials */
+.mat-block{background:var(--stone);border-left:3px solid var(--wood);padding:1rem 1.2rem;border-radius:0 .75rem .75rem 0;margin-bottom:1rem}
+.mat-block h4{font-family:'Playfair Display',serif;color:var(--sand);font-size:.95rem;margin-bottom:.4rem}
+.mat-block p{font-size:.84rem;color:var(--text-dim);margin-bottom:0}
+
+/* Method steps */
+.method-step{display:flex;gap:1rem;margin-bottom:1.5rem;align-items:flex-start}
+.step-num{width:36px;height:36px;border-radius:50%;border:2px solid var(--gold-dim);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:.95rem;color:var(--gold);flex-shrink:0}
+.step-content h4{font-size:.95rem;color:#fff;margin-bottom:.3rem}
+.step-content p{font-size:.84rem;color:var(--text-dim);margin-bottom:0}
+
+/* CTA */
+.cta-section{text-align:center;padding:3rem 1.5rem 4rem;background:linear-gradient(to bottom,var(--cave),var(--stone))}
+.cta-section h2{margin-bottom:1rem}
+.cta-section p{color:var(--text-dim);max-width:500px;margin:0 auto 1.5rem}
+
+/* Contact Dialog */
+.footer-contact{background:var(--gold);color:var(--cave);border:none;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.9rem;padding:.7rem 2rem;border-radius:.5rem;cursor:pointer;transition:all .2s}
+.footer-contact:hover{background:var(--wood-light)}
+.dialog-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center}
+.dialog-overlay.open{display:flex}
+.dialog-box{background:var(--stone);border:1px solid #4a4035;border-radius:1rem;padding:1.75rem;max-width:300px;width:90%;text-align:center}
+.dialog-box h4{color:#fff;font-family:'Playfair Display',serif;margin-bottom:1rem}
+.dialog-option{display:block;width:100%;padding:.65rem;margin-bottom:.6rem;border-radius:.5rem;text-decoration:none;font-weight:600;font-size:.9rem;text-align:center}
+.dialog-email{background:var(--green);color:#fff}
+.dialog-telegram{background:#0088cc;color:#fff}
+.dialog-close{background:none;border:1px solid #555;color:#999;cursor:pointer;font-size:.82rem;padding:.4rem 1.2rem;border-radius:.4rem;margin-top:.2rem}
+
+footer{text-align:center;padding:1.5rem;font-size:.72rem;color:#444}
+footer a{color:var(--gold-dim);text-decoration:none}
+</style>
+</head>
+<body>
+
+<!-- LANG BAR -->
+<div class="lang-bar">
+<button class="lang-btn active" onclick="setLang('en')">EN</button>
+<button class="lang-btn" onclick="setLang('es')">ES</button>
+<button class="lang-btn" onclick="setLang('it')">IT</button>
+<button class="lang-btn" onclick="setLang('de')">DE</button>
+<button class="lang-btn" onclick="setLang('fr')">FR</button>
+<button class="lang-btn" onclick="setLang('ar')">عربي</button>
+<button class="lang-btn" onclick="setLang('dr')">دارجة</button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+<div class="hero-badge" data-i18n="badge">A Sufi Architectural Vision</div>
+<div class="arabic-title">الكهف زاوية</div>
+<h1>Al-Kahf Zawiya</h1>
+<p style="font-size:1.1rem;color:var(--wood-light);margin-bottom:.5rem">Alpujarra, Andalucía</p>
+<p class="tagline" data-i18n="tagline">Where the Cave meets the Garden. Where stone becomes prayer.</p>
+<div class="verse" data-i18n="verse">"We gave them shelter in the cave, and We turned them on their right side and on their left." — Surah Al-Kahf 18:17</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- QURANIC FOUNDATION -->
+<section>
+<h2><span class="ar-head">أساس قرآني</span><span data-i18n="s1_title">The Quranic Foundation</span></h2>
+<p class="section-intro" data-i18n="s1_intro">Surah Al-Kahf tells of seekers who withdrew to a cave seeking refuge in God. The cave became their sanctuary — a space stripped of worldly distraction where divine protection enveloped them. Al-Kahf Zawiya translates this revelation into architecture.</p>
+<p data-i18n="s1_p1">The Cave (Ghar) holds a sacred place in Islam. The Prophet Muhammad ﷺ received his first revelation in the Cave of Hira. The Companions sought refuge in the Cave of Thawr. In Sufi tradition, the cave represents Khalwa — the practice of spiritual seclusion where the soul meets its Creator in silence.</p>
+<p data-i18n="s1_p2">This project does not merely reference the cave — it becomes one. Built from rough local stone, carved into the landscape of the Alpujarras mountains, Al-Kahf Zawiya offers a space where every surface, every shadow, every silence serves the remembrance of Allah.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- FIVE PILLARS IN SPACE -->
+<section>
+<h2><span class="ar-head">أركان الإسلام في الفضاء</span><span data-i18n="s2_title">The Five Pillars Made Spatial</span></h2>
+<p class="section-intro" data-i18n="s2_intro">Each Pillar of Islam finds its architectural expression in Al-Kahf Zawiya. The building is not merely a container for worship — it is worship made visible, touchable, inhabitable.</p>
+
+<div class="pillar">
+<div class="pillar-head"><div class="pillar-icon">🚪</div><div><div class="pillar-name" data-i18n="p1_name">Shahada — The Entrance</div><div class="pillar-arabic">الشهادة</div></div></div>
+<div class="pillar-space" data-i18n="p1_space">→ The Threshold</div>
+<div class="pillar-desc" data-i18n="p1_desc">The entrance is a bent, labyrinthine passage — not a grand door but a deliberate transition. To cross it is to make a declaration: you are leaving the world behind. Like the Shahada itself, it is a conscious act of witness. The passage narrows and darkens before opening into light.</div>
+</div>
+
+<div class="pillar">
+<div class="pillar-head"><div class="pillar-icon">🕌</div><div><div class="pillar-name" data-i18n="p2_name">Salah — The Central Musalla</div><div class="pillar-arabic">الصلاة</div></div></div>
+<div class="pillar-space" data-i18n="p2_space">→ The Prayer Hall with Oculus</div>
+<div class="pillar-desc" data-i18n="p2_desc">The heart of the Zawiya. A free-standing octagonal or circular space oriented precisely toward the Qibla. A single oculus at the apex creates a pillar of light that moves across the rough stone floor throughout the day — marking Fajr, Dhuhr, Asr, Maghrib, Isha with sunlight itself. The rhythm of prayer becomes visible.</div>
+</div>
+
+<div class="pillar">
+<div class="pillar-head"><div class="pillar-icon">🤲</div><div><div class="pillar-name" data-i18n="p3_name">Zakat — The Community Kitchen</div><div class="pillar-arabic">الزكاة</div></div></div>
+<div class="pillar-space" data-i18n="p3_space">→ The Langar / Matbakh</div>
+<div class="pillar-desc" data-i18n="p3_desc">The west wing houses a community kitchen — a Langar — open to all, Muslim or not. Its food comes from the surrounding permaculture garden: olive trees, fruit orchards, vegetables. Zakat is not an abstraction here. It is soil, harvest, bread, and the act of feeding a stranger. Charity made daily and tangible.</div>
+</div>
+
+<div class="pillar">
+<div class="pillar-head"><div class="pillar-icon">🌙</div><div><div class="pillar-name" data-i18n="p4_name">Sawm — The Meditation Cells</div><div class="pillar-arabic">الصوم</div></div></div>
+<div class="pillar-space" data-i18n="p4_space">→ The Hujras (Seclusion Cells)</div>
+<div class="pillar-desc" data-i18n="p4_desc">The perimeter rooms are small, austere, cave-like cells for sleeping and meditation. They embody Sawm in its deepest sense — not just fasting from food, but fasting from everything that is not God. Stripped to rough stone walls, a prayer rug, and silence. The architecture of emptying.</div>
+</div>
+
+<div class="pillar">
+<div class="pillar-head"><div class="pillar-icon">🕋</div><div><div class="pillar-name" data-i18n="p5_name">Hajj — The Garden Path</div><div class="pillar-arabic">الحج</div></div></div>
+<div class="pillar-space" data-i18n="p5_space">→ The Circumambulation Garden</div>
+<div class="pillar-desc" data-i18n="p5_desc">The sheltered walkways (Riwaq) encircle the central mosque like pilgrims circling the Kaaba. Walking this path through fragrant gardens, past water channels and fruit trees, is the daily Hajj — the pilgrimage you do not need to travel for. The journey is here. Every step is remembrance.</div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SUFI ARCHITECTURE -->
+<section>
+<h2><span class="ar-head">العمارة كعبادة</span><span data-i18n="s3_title">Architecture as Worship</span></h2>
+<p class="section-intro" data-i18n="s3_intro">Beyond the Five Pillars, the Sufi path adds its own spatial dimensions. Each concept of the Tariqa — the inner way — becomes a room, a texture, a sound.</p>
+
+<div class="pillar">
+<div class="pillar-head"><div class="pillar-icon">🔊</div><div><div class="pillar-name" data-i18n="sf1_name">Dhikr — The Acoustics</div><div class="pillar-arabic">الذكر</div></div></div>
+<div class="pillar-desc" data-i18n="sf1_desc">The rough stone walls create a unique diffuse sound. During Dhikr (remembrance chanting), the uneven surfaces prevent harsh echoes — the sound seems to come from the walls themselves, as if the building is breathing the names of God alongside you.</div>
+</div>
+
+<div class="pillar">
+<div class="pillar-head"><div class="pillar-icon">🚶</div><div><div class="pillar-name" data-i18n="sf2_name">Tariqa — The Walkway</div><div class="pillar-arabic">الطريقة</div></div></div>
+<div class="pillar-desc" data-i18n="sf2_desc">The loggias — sheltered colonnaded walkways with heavy timber posts — embody the Tariqa, the spiritual Path. Not a straight line but a gradual, contemplative route from the outer world to the inner sanctum. The contrast between cold stone walls and warm wood columns mirrors the journey from hardship to grace.</div>
+</div>
+
+<div class="pillar">
+<div class="pillar-head"><div class="pillar-icon">💚</div><div><div class="pillar-name" data-i18n="sf3_name">Qalb — The Heart</div><div class="pillar-arabic">القلب</div></div></div>
+<div class="pillar-desc" data-i18n="sf3_desc">The central mosque is the Qalb — the spiritual heart. Placed at the center of the compound, free-standing, receiving light from all four cardinal directions. "God is the Light of the heavens and the earth." The Mihrab (prayer niche) draws the eye and the soul toward Mecca.</div>
+</div>
+
+<div class="pillar">
+<div class="pillar-head"><div class="pillar-icon">🌿</div><div><div class="pillar-name" data-i18n="sf4_name">Ihsan — The Garden</div><div class="pillar-arabic">الإحسان</div></div></div>
+<div class="pillar-desc" data-i18n="sf4_desc">The Rawda — the garden of fruit trees, herbs, and water channels — represents Divine Beauty (Ihsan). It is not decorative but productive: olives, almonds, figs. A permaculture system that feeds the community kitchen. Beauty and purpose are one. The garden is paradise made present.</div>
+</div>
+
+<div class="pillar">
+<div class="pillar-head"><div class="pillar-icon">🧘</div><div><div class="pillar-name" data-i18n="sf5_name">Khalwa — Seclusion</div><div class="pillar-arabic">الخلوة</div></div></div>
+<div class="pillar-desc" data-i18n="sf5_desc">The Hujras along the perimeter offer Khalwa — spiritual retreat. Small cave-like cells where a seeker can withdraw for days of prayer, fasting, and inner work under the guidance of a Sheykh. The rough stone absorbs sound and worldly thought alike.</div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SPATIAL PROGRAM -->
+<section>
+<h2><span class="ar-head">البرنامج المكاني</span><span data-i18n="s4_title">The Spatial Program</span></h2>
+<p class="section-intro" data-i18n="s4_intro">A complete living organism — not just a mosque, but a self-sustaining Zawiya where every zone serves both a practical function and a spiritual purpose.</p>
+
+<div class="zone-card">
+<div class="zone-name" data-i18n="z1_name">The Entrance — Bent Passage</div>
+<div class="zone-func" data-i18n="z1_func">Labyrinthine entry, transition space</div>
+<div class="zone-sufi" data-i18n="z1_sufi">To leave the world behind. The Shahada in stone.</div>
+</div>
+<div class="zone-card">
+<div class="zone-name" data-i18n="z2_name">Perimeter Rooms — Hujras</div>
+<div class="zone-func" data-i18n="z2_func">Sleeping and meditation cells</div>
+<div class="zone-sufi" data-i18n="z2_sufi">Khalwa — Seclusion. Sawm — Fasting from the world.</div>
+</div>
+<div class="zone-card">
+<div class="zone-name" data-i18n="z3_name">East Wing — Maktaba</div>
+<div class="zone-func" data-i18n="z3_func">Library and study rooms</div>
+<div class="zone-sufi" data-i18n="z3_sufi">The Pillar of Knowledge. Where Marifa (gnosis) begins.</div>
+</div>
+<div class="zone-card">
+<div class="zone-name" data-i18n="z4_name">West Wing — Matbakh</div>
+<div class="zone-func" data-i18n="z4_func">Community kitchen and soup kitchen</div>
+<div class="zone-sufi" data-i18n="z4_sufi">The Pillar of Charity. Zakat made tangible.</div>
+</div>
+<div class="zone-card">
+<div class="zone-name" data-i18n="z5_name">The Loggias — Riwaq</div>
+<div class="zone-func" data-i18n="z5_func">Sheltered walkways with timber columns</div>
+<div class="zone-sufi" data-i18n="z5_sufi">Tariqa — The Path. Hajj — The daily pilgrimage.</div>
+</div>
+<div class="zone-card">
+<div class="zone-name" data-i18n="z6_name">Central Structure — Musalla</div>
+<div class="zone-func" data-i18n="z6_func">Prayer hall and Sama Khane (music hall)</div>
+<div class="zone-sufi" data-i18n="z6_sufi">Qalb — The Heart. Salah — Prayer. Dhikr — Remembrance.</div>
+</div>
+<div class="zone-card">
+<div class="zone-name" data-i18n="z7_name">The Garden — Rawda</div>
+<div class="zone-func" data-i18n="z7_func">Fruit trees, water channels, permaculture</div>
+<div class="zone-sufi" data-i18n="z7_sufi">Ihsan — Divine Beauty. A living paradise.</div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MATERIALS -->
+<section>
+<h2><span class="ar-head">المواد والزهد</span><span data-i18n="s5_title">Materials & the Ascetic Path</span></h2>
+<p class="section-intro" data-i18n="s5_intro">By choosing rough stone and unrefined wood, we move away from the imperial Islamic style of marble and gold — toward the ascetic (Zuhd) roots of Sufism. The Cave of Hira had no ornament. Neither does this.</p>
+
+<div class="mat-block">
+<h4 data-i18n="m1_title">Rough Stone — The Earth</h4>
+<p data-i18n="m1_desc">Dry-stone or rough-cut local masonry. The building grows out of the earth. Cyclopean walls fitted without mortar in places — feeling ancient, as if it has been here since the beginning of time. Dark slate floors polished only by the feet of worshippers over the years: a patina of devotion. Traditional Spanish Tapia (rammed earth) and Calicanto (stone and lime mortar) techniques.</p>
+</div>
+<div class="mat-block">
+<h4 data-i18n="m2_title">Rough Wood — The Spirit</h4>
+<p data-i18n="m2_desc">Heavy rough-hewn timber for the roof canopy and loggia columns. Exposed reciprocal-frame beams. The smell of cedar or pine adds an olfactory dimension to prayer. Thin wooden slats over cave openings create Mashrabiya effects — light entering in shards, like sunbeams hitting the back of a cavern.</p>
+</div>
+<div class="mat-block">
+<h4 data-i18n="m3_title">Light — The Divine</h4>
+<p data-i18n="m3_desc">A single oculus at the apex of the central mosque creates a pillar of light that tracks across the stone floor. Small floor-level voids let garden reflections seep in. The cave breathes light. No large windows — only controlled apertures. The darkness is not absence but presence.</p>
+</div>
+<div class="mat-block">
+<h4 data-i18n="m4_title">Water — The Purification</h4>
+<p data-i18n="m4_desc">A small fountain at the entrance for wudu (ablution) and mental cleansing. Water channels from the garden thread into the building, providing cooling and a constant sacred soundscape. The sound of water is the white noise that prepares the mind for prayer.</p>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MASTER BUILDER -->
+<section>
+<h2><span class="ar-head">طريقة البناء</span><span data-i18n="s6_title">The Master Builder Method</span></h2>
+<p class="section-intro" data-i18n="s6_intro">The greatest Zawiyas and Tekkes in history were built through Baraka (blessing) and Khidma (selfless service). To a Sufi, building their own house of prayer is Dhikr in motion. Every stone laid is a prayer.</p>
+
+<div class="method-step">
+<div class="step-num">1</div>
+<div class="step-content">
+<h4 data-i18n="ms1_title">Live the Site — 2 Years</h4>
+<p data-i18n="ms1_desc">The architect moves to the land and lives there for two years before drawing a single line. Observing where the light falls at solstice, where silence lives, where the wind rests. The building is not designed — it is discovered.</p>
+</div></div>
+
+<div class="method-step">
+<div class="step-num">2</div>
+<div class="step-content">
+<h4 data-i18n="ms2_title">The Maestros — Murshids of Material</h4>
+<p data-i18n="ms2_desc">The finest stone-masons and wood-carpenters in Spain are hired — not the cheapest but the best. No economy. Their role is not just to build but to teach. They are the spiritual guides (Murshids) of the material world. Ihsan (excellence) is the standard.</p>
+</div></div>
+
+<div class="method-step">
+<div class="step-num">3</div>
+<div class="step-content">
+<h4 data-i18n="ms3_title">The Volunteers — Murids of Labour</h4>
+<p data-i18n="ms3_desc">The Sufi community builds with their own hands, under the guidance of the Maestros. Carrying heavy stones and sanding rough wood is a way to grind down the ego. The labour is alchemy. The building rises as the nafs descends.</p>
+</div></div>
+
+<div class="method-step">
+<div class="step-num">4</div>
+<div class="step-content">
+<h4 data-i18n="ms3b_title">The Blood Testimony — Your Verse in Stone</h4>
+<p data-i18n="ms3b_desc">Each volunteer who helps build Al-Kahf Zawiya will receive a patch of the exterior facade — their own stone canvas. There, they will carve Quranic verses of their choosing by their own hand, and paint them with their own blood mixed with natural iron-oxide fixatives to endure the centuries. It is a Shahada written not in ink but in life itself — a blood fingerprint, a testimony sealed into the body of the building. Every visitor, for a thousand years, will read their chosen words. Every builder enters history.</p>
+</div></div>
+
+<div class="method-step">
+<div class="step-num">5</div>
+<div class="step-content">
+<h4 data-i18n="ms4_title">The First Builders — Land and Legacy</h4>
+<p data-i18n="ms4_desc">The first volunteers who commit to the construction will each receive a plot of land within the property — enough to build a small, individual stone meditation structure by their own hands. These personal retreats double as family crypts: a place of prayer in life, a place of rest in death. Builder and building become inseparable. Your bones will lie in the stone you laid.</p>
+</div></div>
+
+<div class="method-step">
+<div class="step-num">6</div>
+<div class="step-content">
+<h4 data-i18n="ms5_title">The Waqf — An Eternal Endowment</h4>
+<p data-i18n="ms5_desc">The 2–3 hectare land becomes a Waqf — an Islamic endowment that can never be sold. With olive groves, orchards, and permaculture gardens, the Zawiya feeds itself and the surrounding community. The architecture and the agriculture are one system. Self-sustaining. Permanent.</p>
+</div></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- THE LAND -->
+<section>
+<h2><span class="ar-head">الأرض</span><span data-i18n="s7_title">The Land — 2-3 Hectares</span></h2>
+<p class="section-intro" data-i18n="s7_intro">Adjacent to a village in the Alpujarras mountains of Andalucía — the last stronghold of Al-Andalus. A land that still remembers.</p>
+<p data-i18n="s7_p1">The site allows for more than a building — it allows for a micro-cosmos. A buffer zone of olive or almond groves creates a forest transition: the walk from village to Zawiya is already a form of Khalwa. The stone for the cave could come from the land itself — making the building literally an extension of the local geology.</p>
+<p data-i18n="s7_p2">Permaculture integration provides food for the community kitchen (Langar), embodying Zakat through agriculture. Fruit trees, medicinal herbs, vegetable gardens — the land works. The Zawiya is not a monument placed on the landscape. It is the landscape, organized for worship.</p>
+<p data-i18n="s7_p3">The Alpujarras carry a unique historical weight. This is where Moorish culture held on the longest in Europe. The terraced hillsides, the acequia water channels, the white villages — they were built by Muslims. This project is not importing something foreign. It is remembering something that was always here.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<section class="cta-section">
+<h2><span class="ar-head">دعوة</span><span data-i18n="cta_title">An Invitation</span></h2>
+<p data-i18n="cta_desc">Al-Kahf Zawiya Alpujarra is looking for a Sufi community ready to adopt this vision. Not as clients — as co-creators. The land, the stone, the silence are waiting. The only thing missing is the community that will make it breathe.</p>
+<p data-i18n="cta_closing" style="font-family:'Amiri',serif;font-size:1.05rem;color:var(--gold)">"I am not just fasting from food; I am fasting from everything that isn't God."</p>
+<br>
+<button class="footer-contact" onclick="document.getElementById('cd').classList.add('open')" data-i18n="cta_btn">Get in Touch</button>
+</section>
+
+<!-- Contact Dialog -->
+<div class="dialog-overlay" id="cd" onclick="if(event.target===this)this.classList.remove('open')">
+<div class="dialog-box">
+<h4 data-i18n="contact_title">Contact</h4>
+<a class="dialog-option dialog-email" href="mailto:hello@digitalaiventures.com">✉ Email</a>
+<a class="dialog-option dialog-telegram" href="https://t.me/juanitto" target="_blank">✈ Telegram</a>
+<button class="dialog-close" onclick="document.getElementById('cd').classList.remove('open')">Close</button>
+</div>
+</div>
+
+<footer>
+<p>Al-Kahf Zawiya Alpujarra · <a href="https://digitalaiventures.com">digitalAIventures</a></p>
+</footer>
+
+<script>
+const T={
+en:{
+badge:"A Sufi Architectural Vision",
+tagline:"Where the Cave meets the Garden. Where stone becomes prayer.",
+verse:'"We gave them shelter in the cave, and We turned them on their right side and on their left." — Surah Al-Kahf 18:17',
+s1_title:"The Quranic Foundation",
+s1_intro:"Surah Al-Kahf tells of seekers who withdrew to a cave seeking refuge in God. The cave became their sanctuary — a space stripped of worldly distraction where divine protection enveloped them. Al-Kahf Zawiya translates this revelation into architecture.",
+s1_p1:"The Cave (Ghar) holds a sacred place in Islam. The Prophet Muhammad ﷺ received his first revelation in the Cave of Hira. The Companions sought refuge in the Cave of Thawr. In Sufi tradition, the cave represents Khalwa — the practice of spiritual seclusion where the soul meets its Creator in silence.",
+s1_p2:"This project does not merely reference the cave — it becomes one. Built from rough local stone, carved into the landscape of the Alpujarras mountains, Al-Kahf Zawiya offers a space where every surface, every shadow, every silence serves the remembrance of Allah.",
+s2_title:"The Five Pillars Made Spatial",
+s2_intro:"Each Pillar of Islam finds its architectural expression in Al-Kahf Zawiya. The building is not merely a container for worship — it is worship made visible, touchable, inhabitable.",
+p1_name:"Shahada — The Entrance",p1_space:"→ The Threshold",p1_desc:"The entrance is a bent, labyrinthine passage — not a grand door but a deliberate transition. To cross it is to make a declaration: you are leaving the world behind. Like the Shahada itself, it is a conscious act of witness. The passage narrows and darkens before opening into light.",
+p2_name:"Salah — The Central Musalla",p2_space:"→ The Prayer Hall with Oculus",p2_desc:"The heart of the Zawiya. A free-standing octagonal or circular space oriented precisely toward the Qibla. A single oculus at the apex creates a pillar of light that moves across the rough stone floor throughout the day — marking Fajr, Dhuhr, Asr, Maghrib, Isha with sunlight itself. The rhythm of prayer becomes visible.",
+p3_name:"Zakat — The Community Kitchen",p3_space:"→ The Langar / Matbakh",p3_desc:"The west wing houses a community kitchen — a Langar — open to all, Muslim or not. Its food comes from the surrounding permaculture garden: olive trees, fruit orchards, vegetables. Zakat is not an abstraction here. It is soil, harvest, bread, and the act of feeding a stranger. Charity made daily and tangible.",
+p4_name:"Sawm — The Meditation Cells",p4_space:"→ The Hujras (Seclusion Cells)",p4_desc:"The perimeter rooms are small, austere, cave-like cells for sleeping and meditation. They embody Sawm in its deepest sense — not just fasting from food, but fasting from everything that is not God. Stripped to rough stone walls, a prayer rug, and silence. The architecture of emptying.",
+p5_name:"Hajj — The Garden Path",p5_space:"→ The Circumambulation Garden",p5_desc:"The sheltered walkways (Riwaq) encircle the central mosque like pilgrims circling the Kaaba. Walking this path through fragrant gardens, past water channels and fruit trees, is the daily Hajj — the pilgrimage you do not need to travel for. The journey is here. Every step is remembrance.",
+s3_title:"Architecture as Worship",
+s3_intro:"Beyond the Five Pillars, the Sufi path adds its own spatial dimensions. Each concept of the Tariqa — the inner way — becomes a room, a texture, a sound.",
+sf1_name:"Dhikr — The Acoustics",sf1_desc:"The rough stone walls create a unique diffuse sound. During Dhikr (remembrance chanting), the uneven surfaces prevent harsh echoes — the sound seems to come from the walls themselves, as if the building is breathing the names of God alongside you.",
+sf2_name:"Tariqa — The Walkway",sf2_desc:"The loggias — sheltered colonnaded walkways with heavy timber posts — embody the Tariqa, the spiritual Path. Not a straight line but a gradual, contemplative route from the outer world to the inner sanctum. The contrast between cold stone walls and warm wood columns mirrors the journey from hardship to grace.",
+sf3_name:"Qalb — The Heart",sf3_desc:"The central mosque is the Qalb — the spiritual heart. Placed at the center of the compound, free-standing, receiving light from all four cardinal directions. \"God is the Light of the heavens and the earth.\" The Mihrab (prayer niche) draws the eye and the soul toward Mecca.",
+sf4_name:"Ihsan — The Garden",sf4_desc:"The Rawda — the garden of fruit trees, herbs, and water channels — represents Divine Beauty (Ihsan). It is not decorative but productive: olives, almonds, figs. A permaculture system that feeds the community kitchen. Beauty and purpose are one. The garden is paradise made present.",
+sf5_name:"Khalwa — Seclusion",sf5_desc:"The Hujras along the perimeter offer Khalwa — spiritual retreat. Small cave-like cells where a seeker can withdraw for days of prayer, fasting, and inner work under the guidance of a Sheykh. The rough stone absorbs sound and worldly thought alike.",
+s4_title:"The Spatial Program",
+s4_intro:"A complete living organism — not just a mosque, but a self-sustaining Zawiya where every zone serves both a practical function and a spiritual purpose.",
+z1_name:"The Entrance — Bent Passage",z1_func:"Labyrinthine entry, transition space",z1_sufi:"To leave the world behind. The Shahada in stone.",
+z2_name:"Perimeter Rooms — Hujras",z2_func:"Sleeping and meditation cells",z2_sufi:"Khalwa — Seclusion. Sawm — Fasting from the world.",
+z3_name:"East Wing — Maktaba",z3_func:"Library and study rooms",z3_sufi:"The Pillar of Knowledge. Where Marifa (gnosis) begins.",
+z4_name:"West Wing — Matbakh",z4_func:"Community kitchen and soup kitchen",z4_sufi:"The Pillar of Charity. Zakat made tangible.",
+z5_name:"The Loggias — Riwaq",z5_func:"Sheltered walkways with timber columns",z5_sufi:"Tariqa — The Path. Hajj — The daily pilgrimage.",
+z6_name:"Central Structure — Musalla",z6_func:"Prayer hall and Sama Khane (music hall)",z6_sufi:"Qalb — The Heart. Salah — Prayer. Dhikr — Remembrance.",
+z7_name:"The Garden — Rawda",z7_func:"Fruit trees, water channels, permaculture",z7_sufi:"Ihsan — Divine Beauty. A living paradise.",
+s5_title:"Materials & the Ascetic Path",
+s5_intro:"By choosing rough stone and unrefined wood, we move away from the imperial Islamic style of marble and gold — toward the ascetic (Zuhd) roots of Sufism. The Cave of Hira had no ornament. Neither does this.",
+m1_title:"Rough Stone — The Earth",m1_desc:"Emplecton construction — the Roman technique of two outer stone faces filled with rubble and lime mortar — creates walls over one meter thick. These are thousand-year walls. The building is designed not just to endure but to age with grace: even as a ruin, centuries from now, it will be beautiful. Cyclopean masonry fitted without mortar in places. Dark slate floors polished only by the feet of worshippers: a patina of devotion. Traditional Spanish Tapia and Calicanto techniques complete the palette.",
+m2_title:"Rough Wood — The Spirit",m2_desc:"Heavy rough-hewn timber for the roof canopy and loggia columns. Exposed reciprocal-frame beams. The smell of cedar or pine adds an olfactory dimension to prayer. Thin wooden slats over cave openings create Mashrabiya effects — light entering in shards, like sunbeams hitting the back of a cavern.",
+m3_title:"Light — The Divine",m3_desc:"A single oculus at the apex of the central mosque creates a pillar of light that tracks across the stone floor. Small floor-level voids let garden reflections seep in. The cave breathes light. No large windows — only controlled apertures. The darkness is not absence but presence.",
+m4_title:"Water — The Purification",m4_desc:"A small fountain at the entrance for wudu (ablution) and mental cleansing. Water channels from the garden thread into the building, providing cooling and a constant sacred soundscape. The sound of water is the white noise that prepares the mind for prayer.",
+s6_title:"The Master Builder Method",
+s6_intro:"The greatest Zawiyas and Tekkes in history were built through Baraka (blessing) and Khidma (selfless service). To a Sufi, building their own house of prayer is Dhikr in motion. Every stone laid is a prayer.",
+ms1_title:"Live the Site — 2 Years",ms1_desc:"The architect moves to the land and lives there for two years before drawing a single line. Observing where the light falls at solstice, where silence lives, where the wind rests. The building is not designed — it is discovered.",
+ms2_title:"The Maestros — Murshids of Material",ms2_desc:"The finest stone-masons and wood-carpenters in Spain are hired — not the cheapest but the best. No economy. Their role is not just to build but to teach. They are the spiritual guides (Murshids) of the material world. Ihsan (excellence) is the standard.",
+ms3_title:"The Volunteers — Murids of Labour",ms3_desc:"The Sufi community builds with their own hands, under the guidance of the Maestros. Carrying heavy stones and sanding rough wood is a way to grind down the ego. The labour is alchemy. The building rises as the nafs descends.",
+ms3b_title:"The Blood Testimony — Your Verse in Stone",
+ms3b_desc:"Each volunteer who helps build Al-Kahf Zawiya will receive a patch of the exterior facade — their own stone canvas. There, they will carve Quranic verses of their choosing by their own hand, and paint them with their own blood mixed with natural iron-oxide fixatives to endure the centuries. It is a Shahada written not in ink but in life itself — a blood fingerprint, a testimony sealed into the body of the building. Every visitor, for a thousand years, will read their chosen words. Every builder enters history.",
+ms4_title:"The First Builders — Land and Legacy",ms4_desc:"The first volunteers who commit to the construction will each receive a plot of land within the property — enough to build a small, individual stone meditation structure by their own hands. These personal retreats double as family crypts: a place of prayer in life, a place of rest in death. Builder and building become inseparable. Your bones will lie in the stone you laid.",
+ms5_title:"The Waqf — An Eternal Endowment",ms5_desc:"The 2–3 hectare land becomes a Waqf — an Islamic endowment that can never be sold. With olive groves, orchards, and permaculture gardens, the Zawiya feeds itself and the surrounding community. The architecture and the agriculture are one system. Self-sustaining. Permanent.",
+s7_title:"The Land — 2-3 Hectares",
+s7_intro:"Adjacent to a village in the Alpujarras mountains of Andalucía — the last stronghold of Al-Andalus. A land that still remembers.",
+s7_p1:"The site allows for more than a building — it allows for a micro-cosmos. Beyond the Zawiya walls, the entire property becomes a permaculture edible forest: olive and almond groves, fig and pomegranate trees, medicinal herbs, aromatic shrubs — layered in food-forest guilds that produce year-round. The walk from village to Zawiya passes through this living pantry, already a form of Khalwa. The stone for the cave could come from the land itself — the building is literally an extension of the local geology.",
+s7_p2:"Permaculture integration provides food for the community kitchen (Langar), embodying Zakat through agriculture. Fruit trees, medicinal herbs, vegetable gardens — the land works. The Zawiya is not a monument placed on the landscape. It is the landscape, organized for worship.",
+s7_p3:"The Alpujarras carry a unique historical weight. This is where Moorish culture held on the longest in Europe. The terraced hillsides, the acequia water channels, the white villages — they were built by Muslims. This project is not importing something foreign. It is remembering something that was always here.",
+cta_title:"An Invitation",
+cta_desc:"Al-Kahf Zawiya Alpujarra is looking for a Sufi community ready to adopt this vision. Not as clients — as co-creators. The land, the stone, the silence are waiting. The only thing missing is the community that will make it breathe.",
+cta_closing:'"I am not just fasting from food; I am fasting from everything that isn\'t God."',
+cta_btn:"Get in Touch",
+contact_title:"Contact"
+},
+es:{
+badge:"Una Visión Arquitectónica Sufí",
+tagline:"Donde la cueva se encuentra con el jardín. Donde la piedra se convierte en oración.",
+verse:'"Les dimos refugio en la cueva, y los girábamos a derecha e izquierda." — Sura Al-Kahf 18:17',
+s1_title:"El Fundamento Coránico",
+s1_intro:"La Sura Al-Kahf habla de buscadores que se retiraron a una cueva buscando refugio en Dios. La cueva se convirtió en su santuario — un espacio despojado de distracciones mundanas donde la protección divina los envolvió. Al-Kahf Zawiya traduce esta revelación en arquitectura.",
+s1_p1:"La Cueva (Ghar) ocupa un lugar sagrado en el Islam. El Profeta Muhammad ﷺ recibió su primera revelación en la Cueva de Hira. Los Compañeros buscaron refugio en la Cueva de Thawr. En la tradición sufí, la cueva representa Khalwa — la práctica de reclusión espiritual donde el alma encuentra a su Creador en silencio.",
+s1_p2:"Este proyecto no solo hace referencia a la cueva — se convierte en una. Construido con piedra local sin desbastar, tallado en el paisaje de las montañas de la Alpujarra, Al-Kahf Zawiya ofrece un espacio donde cada superficie, cada sombra, cada silencio sirve al recuerdo de Allah.",
+s2_title:"Los Cinco Pilares Hechos Espacio",
+s2_intro:"Cada Pilar del Islam encuentra su expresión arquitectónica en Al-Kahf Zawiya. El edificio no es un simple contenedor para el culto — es adoración hecha visible, tangible, habitable.",
+p1_name:"Shahada — La Entrada",p1_space:"→ El Umbral",p1_desc:"La entrada es un pasaje sinuoso y laberíntico — no una gran puerta sino una transición deliberada. Cruzarla es hacer una declaración: estás dejando el mundo atrás. Como la Shahada misma, es un acto consciente de testimonio. El pasaje se estrecha y oscurece antes de abrirse a la luz.",
+p2_name:"Salah — La Musalla Central",p2_space:"→ La Sala de Oración con Óculo",p2_desc:"El corazón de la Zawiya. Un espacio octagonal o circular independiente orientado precisamente hacia la Qibla. Un único óculo en el ápice crea un pilar de luz que se mueve por el suelo de piedra bruta durante el día — marcando Fajr, Dhuhr, Asr, Maghrib, Isha con la propia luz solar.",
+p3_name:"Zakat — La Cocina Comunitaria",p3_space:"→ El Langar / Matbakh",p3_desc:"El ala oeste alberga una cocina comunitaria — un Langar — abierta a todos, musulmanes o no. Su comida proviene del huerto de permacultura circundante: olivos, frutales, hortalizas. El Zakat no es una abstracción aquí. Es tierra, cosecha, pan y el acto de alimentar a un extraño.",
+p4_name:"Sawm — Las Celdas de Meditación",p4_space:"→ Las Hujras (Celdas de Reclusión)",p4_desc:"Las habitaciones perimetrales son pequeñas celdas austeras, cavernosas, para dormir y meditar. Encarnan el Sawm en su sentido más profundo — no solo ayunar de comida, sino ayunar de todo lo que no es Dios. Reducidas a paredes de piedra bruta, una alfombra de oración y silencio.",
+p5_name:"Hajj — El Sendero del Jardín",p5_space:"→ El Jardín de Circumambulación",p5_desc:"Los pasillos cubiertos (Riwaq) rodean la mezquita central como peregrinos circundando la Kaaba. Caminar este sendero entre jardines fragantes, canales de agua y frutales, es el Hajj diario — la peregrinación que no necesitas viajar para hacer.",
+s3_title:"Arquitectura como Adoración",
+s3_intro:"Más allá de los Cinco Pilares, el camino sufí añade sus propias dimensiones espaciales. Cada concepto de la Tariqa — el camino interior — se convierte en una habitación, una textura, un sonido.",
+sf1_name:"Dhikr — La Acústica",sf1_desc:"Las paredes de piedra bruta crean un sonido difuso único. Durante el Dhikr (canto de remembranza), las superficies irregulares evitan ecos duros — el sonido parece emanar de las propias paredes, como si el edificio respirara los nombres de Dios junto a ti.",
+sf2_name:"Tariqa — El Paseo",sf2_desc:"Las logias — pasillos columnados cubiertos con pesados postes de madera — encarnan la Tariqa, el Camino espiritual. No una línea recta sino una ruta gradual y contemplativa del mundo exterior al santuario interior.",
+sf3_name:"Qalb — El Corazón",sf3_desc:"La mezquita central es el Qalb — el corazón espiritual. Situada en el centro del recinto, independiente, recibiendo luz de los cuatro puntos cardinales. \"Dios es la Luz de los cielos y la tierra.\" El Mihrab dirige la mirada y el alma hacia La Meca.",
+sf4_name:"Ihsan — El Jardín",sf4_desc:"La Rawda — el jardín de frutales, hierbas y canales de agua — representa la Belleza Divina (Ihsan). No es decorativo sino productivo: olivos, almendros, higueras. Un sistema de permacultura que alimenta la cocina comunitaria. Belleza y propósito son uno.",
+sf5_name:"Khalwa — Reclusión",sf5_desc:"Las Hujras a lo largo del perímetro ofrecen Khalwa — retiro espiritual. Pequeñas celdas cavernosas donde un buscador puede retirarse durante días de oración, ayuno y trabajo interior bajo la guía de un Sheykh.",
+s4_title:"El Programa Espacial",
+s4_intro:"Un organismo vivo completo — no solo una mezquita, sino una Zawiya autosuficiente donde cada zona cumple tanto una función práctica como un propósito espiritual.",
+z1_name:"La Entrada — Pasaje Angulado",z1_func:"Entrada laberíntica, espacio de transición",z1_sufi:"Dejar el mundo atrás. La Shahada en piedra.",
+z2_name:"Habitaciones Perimetrales — Hujras",z2_func:"Celdas de descanso y meditación",z2_sufi:"Khalwa — Reclusión. Sawm — Ayuno del mundo.",
+z3_name:"Ala Este — Maktaba",z3_func:"Biblioteca y salas de estudio",z3_sufi:"El Pilar del Conocimiento. Donde comienza la Marifa.",
+z4_name:"Ala Oeste — Matbakh",z4_func:"Cocina comunitaria y comedor social",z4_sufi:"El Pilar de la Caridad. Zakat hecho tangible.",
+z5_name:"Las Logias — Riwaq",z5_func:"Pasillos cubiertos con columnas de madera",z5_sufi:"Tariqa — El Camino. Hajj — La peregrinación diaria.",
+z6_name:"Estructura Central — Musalla",z6_func:"Sala de oración y Sama Khane",z6_sufi:"Qalb — El Corazón. Salah — Oración. Dhikr — Remembranza.",
+z7_name:"El Jardín — Rawda",z7_func:"Frutales, canales de agua, permacultura",z7_sufi:"Ihsan — Belleza Divina. Un paraíso viviente.",
+s5_title:"Materiales y el Camino Ascético",
+s5_intro:"Al elegir piedra bruta y madera sin refinar, nos alejamos del estilo islámico imperial de mármol y oro — hacia las raíces ascéticas (Zuhd) del sufismo. La Cueva de Hira no tenía ornamento. Esta tampoco.",
+m1_title:"Piedra Bruta — La Tierra",m1_desc:"Construcción en emplecton — la técnica romana de dos caras exteriores de piedra rellenas de cascote y mortero de cal — crea muros de más de un metro de espesor. Son muros para mil años. El edificio está diseñado no solo para perdurar sino para envejecer con gracia: incluso como ruina, siglos después, será hermoso. Mampostería ciclópea. Suelos de pizarra oscura pulidos solo por los pies de los orantes. Técnicas tradicionales de Tapia y Calicanto.",
+m2_title:"Madera Bruta — El Espíritu",m2_desc:"Pesada madera desbastada para la cubierta y las columnas de las logias. Vigas de marco recíproco expuestas. El olor a cedro o pino añade una dimensión olfativa a la oración. Listones finos sobre las aberturas crean efectos de Mashrabiya.",
+m3_title:"Luz — Lo Divino",m3_desc:"Un único óculo en el ápice de la mezquita central crea un pilar de luz que recorre el suelo de piedra. Pequeños vacíos a nivel del suelo dejan entrar reflejos del jardín. La cueva respira luz. Sin ventanas grandes — solo aperturas controladas.",
+m4_title:"Agua — La Purificación",m4_desc:"Una pequeña fuente en la entrada para el wudu (ablución). Canales de agua del jardín se adentran en el edificio, proporcionando frescor y un paisaje sonoro sagrado constante.",
+s6_title:"El Método del Maestro Constructor",
+s6_intro:"Las grandes Zawiyas y Tekkes de la historia se construyeron con Baraka (bendición) y Khidma (servicio desinteresado). Para un sufí, construir su propia casa de oración es Dhikr en movimiento. Cada piedra colocada es una oración.",
+ms1_title:"Vivir el Lugar — 2 Años",ms1_desc:"El arquitecto se traslada al terreno y vive allí dos años antes de trazar una sola línea. Observando dónde cae la luz en el solsticio, dónde vive el silencio, dónde descansa el viento. El edificio no se diseña — se descubre.",
+ms2_title:"Los Maestros — Murshids del Material",ms2_desc:"Los mejores canteros y carpinteros de España — no los más baratos sino los mejores. Sin economía. Su papel no es solo construir sino enseñar. Son los guías espirituales (Murshids) del mundo material. Ihsan (excelencia) es el estándar.",
+ms3_title:"Los Voluntarios — Murids del Trabajo",ms3_desc:"La comunidad sufí construye con sus propias manos, bajo la guía de los Maestros. Cargar piedras pesadas y lijar madera bruta es una forma de pulir el ego. El trabajo es alquimia. El edificio se eleva mientras el nafs desciende.",
+ms3b_title:"El Testimonio de Sangre — Tu Versículo en Piedra",
+ms3b_desc:"Cada voluntario que ayude a construir Al-Kahf Zawiya recibirá un trozo de la fachada exterior — su propio lienzo de piedra. Allí tallará versículos coránicos de su elección con su propia mano, y los pintará con su propia sangre mezclada con fijadores naturales de óxido de hierro para resistir los siglos. Es una Shahada escrita no con tinta sino con la vida misma — una huella de sangre, un testimonio sellado en el cuerpo del edificio. Cada visitante, durante mil años, leerá sus palabras. Cada constructor entra en la historia.",
+ms4_title:"Los Primeros Constructores — Tierra y Legado",ms4_desc:"Los primeros voluntarios que se comprometan con la construcción recibirán cada uno una parcela de tierra dentro de la propiedad — suficiente para construir una pequeña estructura de meditación en piedra con sus propias manos. Estos retiros personales funcionan también como criptas familiares: un lugar de oración en vida, un lugar de descanso en la muerte. Constructor y edificio se vuelven inseparables.",
+ms5_title:"El Waqf — Una Dotación Eterna",ms5_desc:"Las 2-3 hectáreas de terreno se convierten en Waqf — una dotación islámica que nunca puede venderse. Con olivares, huertos y jardines de permacultura, la Zawiya se alimenta a sí misma y a la comunidad. Autosuficiente. Permanente.",
+s7_title:"La Tierra — 2-3 Hectáreas",
+s7_intro:"Junto a un pueblo en las montañas de la Alpujarra, Andalucía — el último bastión de Al-Ándalus. Una tierra que todavía recuerda.",
+s7_p1:"El terreno permite más que un edificio — permite un micro-cosmos. Más allá de los muros de la Zawiya, toda la propiedad se convierte en un bosque comestible de permacultura: olivos y almendros, higueras y granados, hierbas medicinales, arbustos aromáticos — organizados en gremios de bosque alimentario que producen todo el año. El camino del pueblo a la Zawiya atraviesa esta despensa viva. La piedra podría extraerse del propio terreno.",
+s7_p2:"La integración de permacultura proporciona alimento para la cocina comunitaria (Langar), encarnando el Zakat a través de la agricultura. Frutales, hierbas medicinales, huertos — la tierra trabaja. La Zawiya no es un monumento sobre el paisaje. Es el paisaje, organizado para la adoración.",
+s7_p3:"La Alpujarra tiene un peso histórico único. Aquí la cultura morisca resistió más tiempo en Europa. Las laderas aterrazadas, las acequias, los pueblos blancos — fueron construidos por musulmanes. Este proyecto no importa algo extraño. Recuerda algo que siempre estuvo aquí.",
+cta_title:"Una Invitación",
+cta_desc:"Al-Kahf Zawiya Alpujarra busca una comunidad sufí dispuesta a adoptar esta visión. No como clientes — como co-creadores. La tierra, la piedra, el silencio están esperando. Lo único que falta es la comunidad que lo hará respirar.",
+cta_closing:'"No solo ayuno de comida; ayuno de todo lo que no es Dios."',
+cta_btn:"Contactar",
+contact_title:"Contacto"
+},
+it:{
+badge:"Una Visione Architettonica Sufi",
+tagline:"Dove la grotta incontra il giardino. Dove la pietra diventa preghiera.",
+verse:'"Demmo loro rifugio nella grotta, e li giravamo sul fianco destro e sinistro." — Sura Al-Kahf 18:17',
+s1_title:"Il Fondamento Coranico",
+s1_intro:"La Sura Al-Kahf racconta di cercatori che si ritirarono in una grotta cercando rifugio in Dio. La grotta divenne il loro santuario — uno spazio spogliato di distrazioni mondane dove la protezione divina li avvolgeva. Al-Kahf Zawiya traduce questa rivelazione in architettura.",
+s1_p1:"La Grotta (Ghar) occupa un posto sacro nell'Islam. Il Profeta Muhammad ﷺ ricevette la sua prima rivelazione nella Grotta di Hira. I Compagni cercarono rifugio nella Grotta di Thawr. Nella tradizione sufi, la grotta rappresenta la Khalwa — la pratica di isolamento spirituale dove l'anima incontra il suo Creatore nel silenzio.",
+s1_p2:"Questo progetto non si limita a riferirsi alla grotta — lo diventa. Costruito con pietra locale grezza, scolpito nel paesaggio delle montagne dell'Alpujarra, Al-Kahf Zawiya offre uno spazio dove ogni superficie, ogni ombra, ogni silenzio serve il ricordo di Allah.",
+s2_title:"I Cinque Pilastri Resi Spazio",
+s2_intro:"Ogni Pilastro dell'Islam trova la sua espressione architettonica in Al-Kahf Zawiya. L'edificio non è un semplice contenitore per il culto — è adorazione resa visibile, toccabile, abitabile.",
+p1_name:"Shahada — L'Ingresso",p1_space:"→ La Soglia",p1_desc:"L'ingresso è un passaggio sinuoso e labirintico — non una grande porta ma una transizione deliberata. Attraversarlo è fare una dichiarazione: stai lasciando il mondo alle spalle. Come la Shahada stessa, è un atto consapevole di testimonianza.",
+p2_name:"Salah — La Musalla Centrale",p2_space:"→ La Sala di Preghiera con Oculo",p2_desc:"Il cuore della Zawiya. Uno spazio ottagonale o circolare autonomo orientato precisamente verso la Qibla. Un unico oculo all'apice crea un pilastro di luce che si muove sul pavimento di pietra grezza durante il giorno — segnando i cinque tempi della preghiera con la luce solare stessa.",
+p3_name:"Zakat — La Cucina Comunitaria",p3_space:"→ Il Langar / Matbakh",p3_desc:"L'ala ovest ospita una cucina comunitaria — un Langar — aperta a tutti. Il cibo proviene dall'orto di permacultura circostante: ulivi, alberi da frutto, ortaggi. Lo Zakat non è un'astrazione qui. È terra, raccolto, pane e l'atto di sfamare uno sconosciuto.",
+p4_name:"Sawm — Le Celle di Meditazione",p4_space:"→ Le Hujras (Celle di Isolamento)",p4_desc:"Le stanze perimetrali sono piccole celle austere, simili a grotte, per dormire e meditare. Incarnano il Sawm nel suo senso più profondo — non solo digiuno dal cibo, ma digiuno da tutto ciò che non è Dio.",
+p5_name:"Hajj — Il Sentiero del Giardino",p5_space:"→ Il Giardino di Circumambulazione",p5_desc:"I portici coperti (Riwaq) circondano la moschea centrale come pellegrini che girano intorno alla Kaaba. Percorrere questo sentiero tra giardini profumati e canali d'acqua è l'Hajj quotidiano — il pellegrinaggio che non richiede viaggio.",
+s3_title:"Architettura come Adorazione",
+s3_intro:"Oltre i Cinque Pilastri, il cammino sufi aggiunge le sue dimensioni spaziali. Ogni concetto della Tariqa — la via interiore — diventa una stanza, una texture, un suono.",
+sf1_name:"Dhikr — L'Acustica",sf1_desc:"Le pareti di pietra grezza creano un suono diffuso unico. Durante il Dhikr, le superfici irregolari prevengono echi duri — il suono sembra provenire dalle pareti stesse.",
+sf2_name:"Tariqa — Il Percorso",sf2_desc:"Le logge — portici colonnati coperti con pesanti pilastri di legno — incarnano la Tariqa, il Cammino spirituale. Non una linea retta ma un percorso graduale e contemplativo.",
+sf3_name:"Qalb — Il Cuore",sf3_desc:"La moschea centrale è il Qalb — il cuore spirituale. Posta al centro del complesso, autonoma, ricevendo luce dai quattro punti cardinali. Il Mihrab dirige lo sguardo e l'anima verso La Mecca.",
+sf4_name:"Ihsan — Il Giardino",sf4_desc:"La Rawda — il giardino di alberi da frutto, erbe e canali d'acqua — rappresenta la Bellezza Divina (Ihsan). Non è decorativo ma produttivo: ulivi, mandorli, fichi. Un sistema di permacultura che alimenta la cucina comunitaria.",
+sf5_name:"Khalwa — Isolamento",sf5_desc:"Le Hujras lungo il perimetro offrono Khalwa — ritiro spirituale. Piccole celle simili a grotte dove un cercatore può ritirarsi per giorni di preghiera e lavoro interiore.",
+s4_title:"Il Programma Spaziale",
+s4_intro:"Un organismo vivente completo — non solo una moschea, ma una Zawiya autosufficiente dove ogni zona serve sia una funzione pratica che uno scopo spirituale.",
+z1_name:"L'Ingresso — Passaggio Angolato",z1_func:"Entrata labirintica, spazio di transizione",z1_sufi:"Lasciare il mondo alle spalle. La Shahada in pietra.",
+z2_name:"Stanze Perimetrali — Hujras",z2_func:"Celle di riposo e meditazione",z2_sufi:"Khalwa — Isolamento. Sawm — Digiuno dal mondo.",
+z3_name:"Ala Est — Maktaba",z3_func:"Biblioteca e sale studio",z3_sufi:"Il Pilastro della Conoscenza. Dove inizia la Marifa.",
+z4_name:"Ala Ovest — Matbakh",z4_func:"Cucina comunitaria e mensa sociale",z4_sufi:"Il Pilastro della Carità. Zakat reso tangibile.",
+z5_name:"Le Logge — Riwaq",z5_func:"Portici coperti con colonne di legno",z5_sufi:"Tariqa — Il Cammino. Hajj — Il pellegrinaggio quotidiano.",
+z6_name:"Struttura Centrale — Musalla",z6_func:"Sala di preghiera e Sama Khane",z6_sufi:"Qalb — Il Cuore. Salah — Preghiera. Dhikr — Ricordo.",
+z7_name:"Il Giardino — Rawda",z7_func:"Alberi da frutto, canali d'acqua, permacultura",z7_sufi:"Ihsan — Bellezza Divina. Un paradiso vivente.",
+s5_title:"Materiali e il Cammino Ascetico",
+s5_intro:"Scegliendo pietra grezza e legno grezzo, ci allontaniamo dallo stile islamico imperiale — verso le radici ascetiche (Zuhd) del sufismo. La Grotta di Hira non aveva ornamenti. Nemmeno questa.",
+m1_title:"Pietra Grezza — La Terra",m1_desc:"Costruzione in emplecton — la tecnica romana di due paramenti esterni in pietra riempiti di calcestruzzo e malta — crea muri spessi oltre un metro. Muri per mille anni. L'edificio è progettato non solo per durare ma per invecchiare con grazia: anche come rovina, tra secoli, sarà bello. Muratura ciclopica. Pavimenti in ardesia scura levigati solo dai piedi degli oranti. Tecniche tradizionali di Tapia e Calicanto.",
+m2_title:"Legno Grezzo — Lo Spirito",m2_desc:"Pesante legname grezzo per la copertura e le colonne delle logge. Travi a telaio reciproco esposte. L'odore di cedro o pino aggiunge una dimensione olfattiva alla preghiera. Listelli sottili creano effetti Mashrabiya.",
+m3_title:"Luce — Il Divino",m3_desc:"Un unico oculo all'apice crea un pilastro di luce che percorre il pavimento di pietra. Piccoli vuoti a livello del suolo lasciano entrare i riflessi del giardino. La grotta respira luce.",
+m4_title:"Acqua — La Purificazione",m4_desc:"Una piccola fontana all'ingresso per il wudu. Canali d'acqua dal giardino si insinuano nell'edificio, fornendo freschezza e un paesaggio sonoro sacro costante.",
+s6_title:"Il Metodo del Maestro Costruttore",
+s6_intro:"Le grandi Zawiyas e Tekkes della storia furono costruite con Baraka (benedizione) e Khidma (servizio disinteressato). Per un sufi, costruire la propria casa di preghiera è Dhikr in movimento.",
+ms1_title:"Vivere il Luogo — 2 Anni",ms1_desc:"L'architetto si trasferisce sul terreno e vi abita per due anni prima di tracciare una sola linea. Osservando dove cade la luce al solstizio, dove vive il silenzio. L'edificio non si progetta — si scopre.",
+ms2_title:"I Maestri — Murshid del Materiale",ms2_desc:"I migliori scalpellini e carpentieri di Spagna — non i più economici ma i migliori. Il loro ruolo non è solo costruire ma insegnare. Ihsan (eccellenza) è lo standard.",
+ms3_title:"I Volontari — Murid del Lavoro",ms3_desc:"La comunità sufi costruisce con le proprie mani. Trasportare pietre pesanti e levigare legno grezzo è un modo per smussare l'ego. Il lavoro è alchimia.",
+ms3b_title:"La Testimonianza di Sangue — Il Tuo Versetto nella Pietra",
+ms3b_desc:"Ogni volontario che aiuta a costruire Al-Kahf Zawiya riceverà una porzione della facciata esterna — la propria tela di pietra. Lì scolpirà versetti coranici a sua scelta con la propria mano, e li dipingerà con il proprio sangue mescolato a fissativi naturali a base di ossido di ferro per resistere ai secoli. È una Shahada scritta non con inchiostro ma con la vita stessa — un'impronta di sangue, una testimonianza sigillata nel corpo dell'edificio. Ogni costruttore entra nella storia.",
+ms4_title:"I Primi Costruttori — Terra e Eredità",ms4_desc:"I primi volontari che si impegnano nella costruzione riceveranno ciascuno un appezzamento di terra all'interno della proprietà — sufficiente per costruire una piccola struttura di meditazione in pietra con le proprie mani. Questi rifugi personali funzionano anche come cripte familiari: un luogo di preghiera in vita, un luogo di riposo nella morte.",
+ms5_title:"Il Waqf — Una Dotazione Eterna",ms5_desc:"I 2-3 ettari diventano Waqf — una dotazione islamica che non può mai essere venduta. Con uliveti, frutteti e orti di permacultura, la Zawiya si alimenta da sola. Autosufficiente. Permanente.",
+s7_title:"La Terra — 2-3 Ettari",
+s7_intro:"Adiacente a un villaggio nelle montagne dell'Alpujarra, Andalusia — l'ultimo bastione di Al-Andalus. Una terra che ancora ricorda.",
+s7_p1:"Il sito permette più di un edificio — permette un micro-cosmo. Oltre le mura della Zawiya, l'intera proprietà diventa una foresta commestibile di permacultura: ulivi e mandorli, fichi e melograni, erbe medicinali, arbusti aromatici — organizzati in gilde di food-forest che producono tutto l'anno. La pietra potrebbe provenire dal terreno stesso.",
+s7_p2:"La permacultura fornisce cibo per la cucina comunitaria, incarnando lo Zakat attraverso l'agricoltura. La Zawiya non è un monumento sul paesaggio. È il paesaggio, organizzato per l'adorazione.",
+s7_p3:"L'Alpujarra porta un peso storico unico. Qui la cultura moresca resistette più a lungo in Europa. Le terrazze, le acequia, i villaggi bianchi — furono costruiti da musulmani. Questo progetto non importa qualcosa di estraneo. Ricorda qualcosa che è sempre stato qui.",
+cta_title:"Un Invito",
+cta_desc:"Al-Kahf Zawiya Alpujarra cerca una comunità sufi pronta ad adottare questa visione. Non come clienti — come co-creatori. La terra, la pietra, il silenzio aspettano.",
+cta_closing:'"Non digiuno solo dal cibo; digiuno da tutto ciò che non è Dio."',
+cta_btn:"Contattaci",
+contact_title:"Contatto"
+},
+de:{
+badge:"Eine Sufische Architekturvision",
+tagline:"Wo die Höhle auf den Garten trifft. Wo Stein zum Gebet wird.",
+verse:'"Wir gaben ihnen Zuflucht in der Höhle und wendeten sie nach rechts und links." — Sure Al-Kahf 18:17',
+s1_title:"Das Koranische Fundament",
+s1_intro:"Die Sure Al-Kahf erzählt von Suchenden, die sich in eine Höhle zurückzogen und Zuflucht bei Gott suchten. Die Höhle wurde ihr Heiligtum. Al-Kahf Zawiya übersetzt diese Offenbarung in Architektur.",
+s1_p1:"Die Höhle (Ghar) hat einen heiligen Platz im Islam. Der Prophet Muhammad ﷺ empfing seine erste Offenbarung in der Höhle von Hira. In der Sufi-Tradition steht die Höhle für Khalwa — die Praxis der geistigen Abgeschiedenheit, wo die Seele ihrem Schöpfer in Stille begegnet.",
+s1_p2:"Dieses Projekt verweist nicht nur auf die Höhle — es wird zu einer. Gebaut aus grobem lokalem Stein, in die Landschaft der Alpujarra-Berge eingeschnitten, bietet Al-Kahf Zawiya einen Raum, wo jede Oberfläche, jeder Schatten dem Gedenken an Allah dient.",
+s2_title:"Die Fünf Säulen als Raum",
+s2_intro:"Jede Säule des Islam findet ihren architektonischen Ausdruck in Al-Kahf Zawiya. Das Gebäude ist nicht bloß ein Behälter für den Gottesdienst — es ist Anbetung, sichtbar, berührbar, bewohnbar.",
+p1_name:"Shahada — Der Eingang",p1_space:"→ Die Schwelle",p1_desc:"Der Eingang ist ein gewundener, labyrinthischer Gang — kein großes Tor, sondern ein bewusster Übergang. Ihn zu überqueren ist ein Bekenntnis: Du lässt die Welt hinter dir. Wie die Shahada selbst ist es ein bewusster Akt des Zeugnisses.",
+p2_name:"Salah — Die Zentrale Musalla",p2_space:"→ Der Gebetssaal mit Okulus",p2_desc:"Das Herz der Zawiya. Ein freistehender achteckiger oder runder Raum, präzise zur Qibla ausgerichtet. Ein einzelner Okulus an der Spitze erzeugt eine Lichtsäule, die sich über den rauen Steinboden bewegt — die fünf Gebetszeiten mit Sonnenlicht markierend.",
+p3_name:"Zakat — Die Gemeinschaftsküche",p3_space:"→ Der Langar / Matbakh",p3_desc:"Der Westflügel beherbergt eine Gemeinschaftsküche — einen Langar — offen für alle. Das Essen kommt aus dem umgebenden Permakultur-Garten. Zakat ist hier keine Abstraktion. Es ist Erde, Ernte, Brot und die Tat, einen Fremden zu speisen.",
+p4_name:"Sawm — Die Meditationszellen",p4_space:"→ Die Hujras (Klausur-Zellen)",p4_desc:"Die Räume am Rand sind kleine, karge, höhlenartige Zellen. Sie verkörpern Sawm in seinem tiefsten Sinne — nicht nur Fasten von Nahrung, sondern Fasten von allem, was nicht Gott ist. Reduziert auf raue Steinwände, einen Gebetsteppich und Stille.",
+p5_name:"Hajj — Der Gartenpfad",p5_space:"→ Der Umrundungsgarten",p5_desc:"Die überdachten Wandelgänge (Riwaq) umkreisen die zentrale Moschee wie Pilger, die die Kaaba umrunden. Diesen Pfad durch duftende Gärten zu gehen ist der tägliche Hajj — die Pilgerreise, für die man nicht reisen muss.",
+s3_title:"Architektur als Anbetung",
+s3_intro:"Über die Fünf Säulen hinaus fügt der Sufi-Weg seine eigenen räumlichen Dimensionen hinzu. Jedes Konzept der Tariqa wird ein Raum, eine Textur, ein Klang.",
+sf1_name:"Dhikr — Die Akustik",sf1_desc:"Die rauen Steinwände erzeugen einen einzigartigen diffusen Klang. Beim Dhikr verhindern die unebenen Oberflächen harte Echos — der Klang scheint aus den Wänden selbst zu kommen.",
+sf2_name:"Tariqa — Der Wandelgang",sf2_desc:"Die Loggien — überdachte Säulengänge mit schweren Holzpfosten — verkörpern die Tariqa, den spirituellen Weg. Kein gerader Weg, sondern eine graduelle, kontemplative Route.",
+sf3_name:"Qalb — Das Herz",sf3_desc:"Die zentrale Moschee ist das Qalb — das spirituelle Herz. Im Zentrum des Komplexes, freistehend, Licht aus allen vier Himmelsrichtungen empfangend. Der Mihrab zieht Auge und Seele Richtung Mekka.",
+sf4_name:"Ihsan — Der Garten",sf4_desc:"Die Rawda — der Garten mit Obstbäumen, Kräutern und Wasserkanälen — repräsentiert göttliche Schönheit (Ihsan). Nicht dekorativ sondern produktiv. Permakultur, die die Gemeinschaftsküche speist.",
+sf5_name:"Khalwa — Abgeschiedenheit",sf5_desc:"Die Hujras am Rand bieten Khalwa — geistigen Rückzug. Kleine höhlenartige Zellen für Tage des Gebets und der inneren Arbeit unter Führung eines Sheykh.",
+s4_title:"Das Raumprogramm",
+s4_intro:"Ein vollständiger lebender Organismus — nicht nur eine Moschee, sondern eine selbstversorgende Zawiya, in der jede Zone sowohl einer praktischen Funktion als auch einem spirituellen Zweck dient.",
+z1_name:"Der Eingang — Gewinkelter Durchgang",z1_func:"Labyrinthischer Eintritt, Übergangsraum",z1_sufi:"Die Welt hinter sich lassen. Die Shahada in Stein.",
+z2_name:"Randräume — Hujras",z2_func:"Schlaf- und Meditationszellen",z2_sufi:"Khalwa — Abgeschiedenheit. Sawm — Fasten von der Welt.",
+z3_name:"Ostflügel — Maktaba",z3_func:"Bibliothek und Studienräume",z3_sufi:"Die Säule des Wissens. Wo Marifa (Gnosis) beginnt.",
+z4_name:"Westflügel — Matbakh",z4_func:"Gemeinschaftsküche und Suppenküche",z4_sufi:"Die Säule der Wohltätigkeit. Zakat greifbar gemacht.",
+z5_name:"Die Loggien — Riwaq",z5_func:"Überdachte Wandelgänge mit Holzsäulen",z5_sufi:"Tariqa — Der Weg. Hajj — Die tägliche Pilgerreise.",
+z6_name:"Zentralbau — Musalla",z6_func:"Gebetssaal und Sama Khane",z6_sufi:"Qalb — Das Herz. Salah — Gebet. Dhikr — Erinnerung.",
+z7_name:"Der Garten — Rawda",z7_func:"Obstbäume, Wasserkanäle, Permakultur",z7_sufi:"Ihsan — Göttliche Schönheit. Ein lebendiges Paradies.",
+s5_title:"Materialien & der Asketische Weg",
+s5_intro:"Mit rohem Stein und unbehandeltem Holz entfernen wir uns vom imperialen islamischen Stil — hin zu den asketischen (Zuhd) Wurzeln des Sufismus. Die Höhle von Hira hatte keinen Schmuck.",
+m1_title:"Roher Stein — Die Erde",m1_desc:"Emplecton-Bauweise — die römische Technik zweier äußerer Steinschalen, gefüllt mit Schutt und Kalkmörtel — erzeugt Wände über einen Meter dick. Tausend-Jahre-Mauern. Das Gebäude ist nicht nur zum Bestehen gedacht, sondern zum würdevollen Altern: selbst als Ruine, Jahrhunderte später, wird es schön sein. Zyklopische Wände. Dunkle Schieferböden. Tapia- und Calicanto-Techniken.",
+m2_title:"Rohes Holz — Der Geist",m2_desc:"Schweres grob behauenes Bauholz für Dach und Loggia-Säulen. Freiliegende Reziprok-Rahmen-Balken. Der Duft von Zeder oder Kiefer fügt dem Gebet eine olfaktorische Dimension hinzu.",
+m3_title:"Licht — Das Göttliche",m3_desc:"Ein einzelner Okulus erzeugt eine Lichtsäule über dem Steinboden. Kleine bodennahe Öffnungen lassen Gartenreflexionen eindringen. Die Höhle atmet Licht.",
+m4_title:"Wasser — Die Reinigung",m4_desc:"Ein kleiner Brunnen am Eingang für Wudu. Wasserkanäle aus dem Garten durchziehen das Gebäude — Kühlung und eine sakrale Klanglandschaft.",
+s6_title:"Die Meisterbauer-Methode",
+s6_intro:"Die größten Zawiyas wurden mit Baraka (Segen) und Khidma (selbstlosem Dienst) gebaut. Für einen Sufi ist das Bauen seines eigenen Gebetshauses Dhikr in Bewegung.",
+ms1_title:"Den Ort Leben — 2 Jahre",ms1_desc:"Der Architekt zieht auf das Grundstück und lebt dort zwei Jahre, bevor er eine einzige Linie zeichnet. Das Gebäude wird nicht entworfen — es wird entdeckt.",
+ms2_title:"Die Meister — Murshids des Materials",ms2_desc:"Die besten Steinmetze und Zimmerleute Spaniens. Nicht die billigsten — die besten. Ihre Rolle ist nicht nur zu bauen, sondern zu lehren. Ihsan (Exzellenz) ist der Standard.",
+ms3_title:"Die Freiwilligen — Murids der Arbeit",ms3_desc:"Die Sufi-Gemeinschaft baut mit eigenen Händen. Schwere Steine tragen und rohes Holz schleifen ist ein Weg, das Ego abzuschleifen. Die Arbeit ist Alchemie.",
+ms3b_title:"Das Blutzeugnis — Dein Vers in Stein",
+ms3b_desc:"Jeder Freiwillige, der beim Bau von Al-Kahf Zawiya hilft, erhält ein Stück der Außenfassade — seine eigene Steinleinwand. Dort wird er Koranverse seiner Wahl mit eigener Hand einmeißeln und mit seinem eigenen Blut bemalen, gemischt mit natürlichen Eisenoxid-Fixativen für die Jahrhunderte. Es ist eine Shahada, geschrieben nicht mit Tinte, sondern mit dem Leben selbst — ein Blutfingerabdruck, ein Zeugnis versiegelt im Körper des Gebäudes. Jeder Besucher wird tausend Jahre lang seine Worte lesen. Jeder Erbauer geht in die Geschichte ein.",
+ms4_title:"Die Ersten Erbauer — Land und Vermächtnis",ms4_desc:"Die ersten Freiwilligen, die sich dem Bau verpflichten, erhalten jeweils ein Stück Land innerhalb des Geländes — genug, um mit eigenen Händen eine kleine Meditationsstruktur aus Stein zu errichten. Diese persönlichen Rückzugsorte dienen zugleich als Familiengruft: ein Ort des Gebets im Leben, ein Ort der Ruhe im Tod.",
+ms5_title:"Der Waqf — Eine Ewige Stiftung",ms5_desc:"Die 2-3 Hektar werden zum Waqf — einer islamischen Stiftung, die niemals verkauft werden kann. Mit Olivenhainen, Obstgärten und Permakultur versorgt sich die Zawiya selbst. Selbstversorgend. Permanent.",
+s7_title:"Das Land — 2-3 Hektar",
+s7_intro:"Angrenzend an ein Dorf in den Alpujarra-Bergen, Andalusien — die letzte Bastion von Al-Andalus. Ein Land, das sich noch erinnert.",
+s7_p1:"Das Gelände ermöglicht mehr als ein Gebäude — es ermöglicht einen Mikrokosmos. Jenseits der Zawiya-Mauern wird das gesamte Grundstück zum essbaren Permakultur-Wald: Oliven und Mandeln, Feigen und Granatäpfel, Heilkräuter, aromatische Sträucher — in Waldgarten-Gilden geschichtet, die ganzjährig produzieren. Der Stein könnte vom Grundstück selbst kommen.",
+s7_p2:"Permakultur-Integration versorgt die Gemeinschaftsküche. Die Zawiya ist kein Monument auf der Landschaft. Sie ist die Landschaft, für die Anbetung organisiert.",
+s7_p3:"Die Alpujarra trägt ein einzigartiges historisches Gewicht. Hier hielt sich die maurische Kultur am längsten in Europa. Die terrassierten Hänge, die Acequia-Wasserkanäle, die weißen Dörfer — sie wurden von Muslimen gebaut. Dieses Projekt importiert nichts Fremdes. Es erinnert an etwas, das immer hier war.",
+cta_title:"Eine Einladung",
+cta_desc:"Al-Kahf Zawiya Alpujarra sucht eine Sufi-Gemeinschaft, die bereit ist, diese Vision anzunehmen. Nicht als Kunden — als Mitschöpfer. Das Land, der Stein, die Stille warten.",
+cta_closing:'"Ich faste nicht nur von Nahrung; ich faste von allem, was nicht Gott ist."',
+cta_btn:"Kontakt aufnehmen",
+contact_title:"Kontakt"
+},
+fr:{
+badge:"Une Vision Architecturale Soufie",
+tagline:"Là où la grotte rencontre le jardin. Là où la pierre devient prière.",
+verse:'"Nous leur donnâmes refuge dans la grotte et les retournions sur le côté droit et le gauche." — Sourate Al-Kahf 18:17',
+s1_title:"Le Fondement Coranique",
+s1_intro:"La Sourate Al-Kahf raconte des chercheurs qui se retirèrent dans une grotte cherchant refuge en Dieu. La grotte devint leur sanctuaire. Al-Kahf Zawiya traduit cette révélation en architecture.",
+s1_p1:"La Grotte (Ghar) occupe une place sacrée en Islam. Le Prophète Muhammad ﷺ reçut sa première révélation dans la Grotte de Hira. Dans la tradition soufie, la grotte représente la Khalwa — la pratique de réclusion spirituelle où l'âme rencontre son Créateur dans le silence.",
+s1_p2:"Ce projet ne se contente pas de faire référence à la grotte — il en devient une. Construit en pierre locale brute, sculpté dans le paysage des montagnes de l'Alpujarra, Al-Kahf Zawiya offre un espace où chaque surface, chaque ombre sert le souvenir d'Allah.",
+s2_title:"Les Cinq Piliers Faits Espace",
+s2_intro:"Chaque Pilier de l'Islam trouve son expression architecturale dans Al-Kahf Zawiya. Le bâtiment n'est pas un simple contenant pour le culte — c'est l'adoration rendue visible, touchable, habitable.",
+p1_name:"Shahada — L'Entrée",p1_space:"→ Le Seuil",p1_desc:"L'entrée est un passage sinueux et labyrinthique — pas une grande porte mais une transition délibérée. La traverser est faire une déclaration : vous laissez le monde derrière vous. Comme la Shahada elle-même, c'est un acte conscient de témoignage.",
+p2_name:"Salah — La Musalla Centrale",p2_space:"→ La Salle de Prière avec Oculus",p2_desc:"Le cœur de la Zawiya. Un espace octogonal ou circulaire autonome orienté vers la Qibla. Un unique oculus au sommet crée un pilier de lumière qui se déplace sur le sol de pierre brute — marquant les cinq temps de prière avec la lumière solaire.",
+p3_name:"Zakat — La Cuisine Communautaire",p3_space:"→ Le Langar / Matbakh",p3_desc:"L'aile ouest abrite une cuisine communautaire — un Langar — ouverte à tous. La nourriture provient du jardin de permaculture environnant. Le Zakat n'est pas une abstraction ici. C'est la terre, la récolte, le pain et l'acte de nourrir un étranger.",
+p4_name:"Sawm — Les Cellules de Méditation",p4_space:"→ Les Hujras (Cellules de Réclusion)",p4_desc:"Les pièces périmétriques sont de petites cellules austères, semblables à des grottes. Elles incarnent le Sawm dans son sens le plus profond — non seulement jeûner de nourriture, mais jeûner de tout ce qui n'est pas Dieu.",
+p5_name:"Hajj — Le Sentier du Jardin",p5_space:"→ Le Jardin de Circumambulation",p5_desc:"Les galeries couvertes (Riwaq) encerclent la mosquée centrale comme des pèlerins tournant autour de la Kaaba. Parcourir ce sentier à travers les jardins parfumés est le Hajj quotidien.",
+s3_title:"Architecture comme Adoration",
+s3_intro:"Au-delà des Cinq Piliers, le chemin soufi ajoute ses propres dimensions spatiales. Chaque concept de la Tariqa devient une pièce, une texture, un son.",
+sf1_name:"Dhikr — L'Acoustique",sf1_desc:"Les murs de pierre brute créent un son diffus unique. Pendant le Dhikr, les surfaces irrégulières empêchent les échos durs — le son semble venir des murs eux-mêmes.",
+sf2_name:"Tariqa — Le Promenoir",sf2_desc:"Les loggias — galeries couvertes à colonnes de bois massif — incarnent la Tariqa, le Chemin spirituel. Pas une ligne droite mais un parcours graduel et contemplatif.",
+sf3_name:"Qalb — Le Cœur",sf3_desc:"La mosquée centrale est le Qalb — le cœur spirituel. Placée au centre, autonome, recevant la lumière des quatre points cardinaux. Le Mihrab guide le regard et l'âme vers La Mecque.",
+sf4_name:"Ihsan — Le Jardin",sf4_desc:"La Rawda — le jardin de fruitiers, d'herbes et de canaux d'eau — représente la Beauté Divine (Ihsan). Pas décoratif mais productif. Un système de permaculture qui nourrit la cuisine communautaire.",
+sf5_name:"Khalwa — Réclusion",sf5_desc:"Les Hujras le long du périmètre offrent la Khalwa — retraite spirituelle. Petites cellules-grottes pour des jours de prière et de travail intérieur sous la guidance d'un Sheykh.",
+s4_title:"Le Programme Spatial",
+s4_intro:"Un organisme vivant complet — pas seulement une mosquée, mais une Zawiya autosuffisante où chaque zone sert à la fois une fonction pratique et un but spirituel.",
+z1_name:"L'Entrée — Passage Coudé",z1_func:"Entrée labyrinthique, espace de transition",z1_sufi:"Laisser le monde derrière soi. La Shahada en pierre.",
+z2_name:"Pièces Périmétriques — Hujras",z2_func:"Cellules de repos et méditation",z2_sufi:"Khalwa — Réclusion. Sawm — Jeûne du monde.",
+z3_name:"Aile Est — Maktaba",z3_func:"Bibliothèque et salles d'étude",z3_sufi:"Le Pilier de la Connaissance. Où commence la Marifa.",
+z4_name:"Aile Ouest — Matbakh",z4_func:"Cuisine communautaire et soupe populaire",z4_sufi:"Le Pilier de la Charité. Zakat rendu tangible.",
+z5_name:"Les Loggias — Riwaq",z5_func:"Galeries couvertes à colonnes de bois",z5_sufi:"Tariqa — Le Chemin. Hajj — Le pèlerinage quotidien.",
+z6_name:"Structure Centrale — Musalla",z6_func:"Salle de prière et Sama Khane",z6_sufi:"Qalb — Le Cœur. Salah — Prière. Dhikr — Souvenir.",
+z7_name:"Le Jardin — Rawda",z7_func:"Fruitiers, canaux d'eau, permaculture",z7_sufi:"Ihsan — Beauté Divine. Un paradis vivant.",
+s5_title:"Matériaux & le Chemin Ascétique",
+s5_intro:"En choisissant la pierre brute et le bois non raffiné, nous nous éloignons du style islamique impérial — vers les racines ascétiques (Zuhd) du soufisme.",
+m1_title:"Pierre Brute — La Terre",m1_desc:"Construction en emplecton — la technique romaine de deux parements extérieurs en pierre remplis de blocaille et mortier de chaux — crée des murs de plus d'un mètre d'épaisseur. Des murs pour mille ans. Le bâtiment est conçu non seulement pour durer mais pour vieillir avec grâce : même en ruine, des siècles plus tard, il sera beau. Murs cyclopéens. Sols d'ardoise sombre. Techniques de Tapia et Calicanto.",
+m2_title:"Bois Brut — L'Esprit",m2_desc:"Bois massif brut pour la toiture et les colonnes des loggias. Poutres à cadre réciproque exposées. L'odeur de cèdre ou de pin ajoute une dimension olfactive à la prière.",
+m3_title:"Lumière — Le Divin",m3_desc:"Un unique oculus crée un pilier de lumière sur le sol de pierre. La grotte respire la lumière. Pas de grandes fenêtres — uniquement des ouvertures contrôlées.",
+m4_title:"Eau — La Purification",m4_desc:"Une petite fontaine à l'entrée pour le wudu. Des canaux d'eau du jardin pénètrent le bâtiment, offrant fraîcheur et un paysage sonore sacré.",
+s6_title:"La Méthode du Maître Bâtisseur",
+s6_intro:"Les grandes Zawiyas furent construites avec Baraka (bénédiction) et Khidma (service désintéressé). Pour un soufi, construire sa propre maison de prière est Dhikr en mouvement.",
+ms1_title:"Vivre le Site — 2 Ans",ms1_desc:"L'architecte s'installe sur le terrain et y vit deux ans avant de tracer une seule ligne. Le bâtiment n'est pas conçu — il est découvert.",
+ms2_title:"Les Maîtres — Murshids du Matériau",ms2_desc:"Les meilleurs tailleurs de pierre et charpentiers d'Espagne. Pas les moins chers — les meilleurs. Leur rôle est d'enseigner. Ihsan (excellence) est la norme.",
+ms3_title:"Les Volontaires — Murids du Labeur",ms3_desc:"La communauté soufie construit de ses propres mains. Porter des pierres lourdes et poncer le bois brut est une façon de polir l'ego. Le travail est alchimie.",
+ms3b_title:"Le Témoignage de Sang — Ton Verset dans la Pierre",
+ms3b_desc:"Chaque volontaire qui aide à construire Al-Kahf Zawiya recevra un pan de la façade extérieure — sa propre toile de pierre. Là, il gravera des versets coraniques de son choix de sa propre main, et les peindra avec son propre sang mêlé à des fixatifs naturels à base d'oxyde de fer pour traverser les siècles. C'est une Shahada écrite non à l'encre mais à la vie même — une empreinte de sang, un témoignage scellé dans le corps du bâtiment. Chaque constructeur entre dans l'histoire.",
+ms4_title:"Les Premiers Bâtisseurs — Terre et Héritage",ms4_desc:"Les premiers volontaires qui s'engagent dans la construction recevront chacun une parcelle de terre au sein de la propriété — suffisante pour construire de leurs propres mains une petite structure de méditation en pierre. Ces retraites personnelles servent aussi de cryptes familiales : un lieu de prière dans la vie, un lieu de repos dans la mort.",
+ms5_title:"Le Waqf — Une Dotation Éternelle",ms5_desc:"Les 2-3 hectares deviennent Waqf — une dotation islamique inaliénable. Avec oliveraies, vergers et jardins de permaculture, la Zawiya se nourrit elle-même. Autosuffisante. Permanente.",
+s7_title:"La Terre — 2-3 Hectares",
+s7_intro:"Adjacente à un village dans les montagnes de l'Alpujarra, Andalousie — le dernier bastion d'Al-Andalus. Une terre qui se souvient encore.",
+s7_p1:"Le site permet plus qu'un bâtiment — il permet un micro-cosmos. Au-delà des murs de la Zawiya, toute la propriété devient une forêt comestible de permaculture : oliviers et amandiers, figuiers et grenadiers, herbes médicinales, arbustes aromatiques — organisés en guildes de forêt-jardin productives toute l'année. La pierre pourrait venir du terrain lui-même.",
+s7_p2:"La permaculture nourrit la cuisine communautaire, incarnant le Zakat par l'agriculture. La Zawiya n'est pas un monument sur le paysage. Elle est le paysage, organisé pour l'adoration.",
+s7_p3:"L'Alpujarra porte un poids historique unique. C'est ici que la culture maure a tenu le plus longtemps en Europe. Les terrasses, les acequias, les villages blancs — ils furent construits par des musulmans. Ce projet n'importe rien d'étranger. Il se souvient de ce qui a toujours été là.",
+cta_title:"Une Invitation",
+cta_desc:"Al-Kahf Zawiya Alpujarra cherche une communauté soufie prête à adopter cette vision. Pas comme clients — comme co-créateurs. La terre, la pierre, le silence attendent.",
+cta_closing:'"Je ne jeûne pas seulement de nourriture ; je jeûne de tout ce qui n\'est pas Dieu."',
+cta_btn:"Nous Contacter",
+contact_title:"Contact"
+},
+ar:{
+badge:"رؤية معمارية صوفية",
+tagline:"حيث يلتقي الكهف بالبستان. حيث يصبح الحجر صلاة.",
+verse:'"وَإِذِ اعْتَزَلْتُمُوهُمْ وَمَا يَعْبُدُونَ إِلَّا اللَّهَ فَأْوُوا إِلَى الْكَهْفِ يَنشُرْ لَكُمْ رَبُّكُم مِّن رَّحْمَتِهِ" — سورة الكهف ١٨:١٦',
+s1_title:"الأساس القرآني",
+s1_intro:"تروي سورة الكهف قصة باحثين لجأوا إلى كهف طلباً لحماية الله. أصبح الكهف ملاذهم — فضاء مجرد من مشتتات الدنيا حيث أحاطتهم الحماية الإلهية. زاوية الكهف تترجم هذا الوحي إلى عمارة.",
+s1_p1:"يحتل الكهف (الغار) مكانة مقدسة في الإسلام. تلقى النبي محمد ﷺ أول وحي في غار حراء. في التصوف، يمثل الكهف الخلوة — ممارسة العزلة الروحية حيث تلقى الروح خالقها في صمت.",
+s1_p2:"هذا المشروع لا يشير إلى الكهف فحسب — بل يصبح كهفاً. مبني من حجر محلي خام، منحوت في مشهد جبال البوخارّاس، يقدم فضاءً حيث كل سطح وكل ظل وكل صمت يخدم ذكر الله.",
+s2_title:"أركان الإسلام الخمسة كفضاء",
+s2_intro:"كل ركن من أركان الإسلام يجد تعبيره المعماري في زاوية الكهف. المبنى ليس مجرد وعاء للعبادة — إنه عبادة مرئية، ملموسة، قابلة للسكن.",
+p1_name:"الشهادة — المدخل",p1_space:"← العتبة",p1_desc:"المدخل ممر متعرج متاهي — ليس باباً عظيماً بل انتقال مقصود. عبوره إعلان: أنت تترك العالم وراءك. كالشهادة نفسها، هو فعل واعٍ من الشهادة.",
+p2_name:"الصلاة — المصلى المركزي",p2_space:"← قاعة الصلاة بالعين",p2_desc:"قلب الزاوية. فضاء ثماني أو دائري مستقل موجه بدقة نحو القبلة. عين واحدة في القمة تخلق عمود ضوء يتحرك عبر أرضية الحجر الخام — يعلم الفجر والظهر والعصر والمغرب والعشاء بنور الشمس ذاته.",
+p3_name:"الزكاة — المطبخ الجماعي",p3_space:"← اللنكار / المطبخ",p3_desc:"الجناح الغربي يضم مطبخاً جماعياً — لنكار — مفتوحاً للجميع. طعامه من حديقة الزراعة المستدامة المحيطة. الزكاة ليست مجرد مفهوم هنا. إنها تراب وحصاد وخبز وفعل إطعام غريب.",
+p4_name:"الصوم — خلايا التأمل",p4_space:"← الحجرات (خلايا العزلة)",p4_desc:"الغرف المحيطية خلايا صغيرة زاهدة تشبه الكهوف. تجسد الصوم بأعمق معانيه — ليس فقط الصوم عن الطعام بل الصوم عن كل ما ليس الله.",
+p5_name:"الحج — ممشى البستان",p5_space:"← بستان الطواف",p5_desc:"الأروقة المسقوفة (الرواق) تحيط بالمسجد المركزي كحجاج يطوفون حول الكعبة. السير في هذا الممشى عبر الحدائق العطرة هو الحج اليومي.",
+s3_title:"العمارة كعبادة",
+s3_intro:"ما وراء الأركان الخمسة، يضيف الطريق الصوفي أبعاده الفضائية الخاصة. كل مفهوم من الطريقة يصبح غرفة أو ملمساً أو صوتاً.",
+sf1_name:"الذكر — الصوتيات",sf1_desc:"جدران الحجر الخام تخلق صوتاً منتشراً فريداً. خلال الذكر، الأسطح غير المنتظمة تمنع الأصداء الحادة — يبدو الصوت وكأنه ينبعث من الجدران نفسها.",
+sf2_name:"الطريقة — الممشى",sf2_desc:"اللوجيات — أروقة مسقوفة بأعمدة خشبية ثقيلة — تجسد الطريقة، المسار الروحي. ليس خطاً مستقيماً بل مساراً تدريجياً تأملياً.",
+sf3_name:"القلب — المركز",sf3_desc:"المسجد المركزي هو القلب. في وسط المجمع، مستقل، يستقبل الضوء من الاتجاهات الأربعة. المحراب يوجه العين والروح نحو مكة.",
+sf4_name:"الإحسان — البستان",sf4_desc:"الروضة — بستان الأشجار المثمرة والأعشاب وقنوات الماء — تمثل الجمال الإلهي (الإحسان). ليست زينة بل إنتاج. نظام زراعة مستدامة يغذي المطبخ الجماعي.",
+sf5_name:"الخلوة — العزلة",sf5_desc:"الحجرات على المحيط توفر الخلوة — انسحاب روحي. خلايا صغيرة تشبه الكهوف لأيام من الصلاة والعمل الداخلي تحت إرشاد الشيخ.",
+s4_title:"البرنامج الفضائي",
+s4_intro:"كائن حي متكامل — ليس مجرد مسجد بل زاوية مكتفية ذاتياً حيث كل منطقة تخدم وظيفة عملية وغرضاً روحياً.",
+z1_name:"المدخل — الممر المنحني",z1_func:"مدخل متاهي، فضاء انتقالي",z1_sufi:"ترك العالم خلفك. الشهادة في حجر.",
+z2_name:"الغرف المحيطية — الحجرات",z2_func:"خلايا نوم وتأمل",z2_sufi:"الخلوة — العزلة. الصوم — الصوم عن الدنيا.",
+z3_name:"الجناح الشرقي — المكتبة",z3_func:"مكتبة وغرف دراسة",z3_sufi:"ركن المعرفة. حيث تبدأ المعرفة.",
+z4_name:"الجناح الغربي — المطبخ",z4_func:"مطبخ جماعي ومطعم خيري",z4_sufi:"ركن الصدقة. الزكاة ملموسة.",
+z5_name:"الأروقة — الرواق",z5_func:"ممرات مسقوفة بأعمدة خشبية",z5_sufi:"الطريقة — المسار. الحج — الحج اليومي.",
+z6_name:"البنية المركزية — المصلى",z6_func:"قاعة صلاة وسماع خانة",z6_sufi:"القلب. الصلاة. الذكر.",
+z7_name:"البستان — الروضة",z7_func:"أشجار مثمرة، قنوات ماء، زراعة مستدامة",z7_sufi:"الإحسان — الجمال الإلهي. فردوس حي.",
+s5_title:"المواد والمسار الزاهد",
+s5_intro:"باختيار الحجر الخام والخشب غير المصقول، نبتعد عن الأسلوب الإسلامي الإمبراطوري — نحو الجذور الزاهدة للتصوف. غار حراء لم يكن فيه زخرفة.",
+m1_title:"الحجر الخام — الأرض",m1_desc:"بناء بتقنية الإمبلكتون — التقنية الرومانية ذات الوجهين الحجريين الخارجيين المملوءين بالركام وملاط الجير — تخلق جداراً بسمك يتجاوز المتر. جدران لألف عام. المبنى مصمم ليس فقط ليدوم بل ليشيخ بأناقة: حتى كخرائب، بعد قرون، سيبقى جميلاً. جدران سيكلوبية. أرضيات أردوازية داكنة مصقولة بأقدام المصلين فقط. تقنيات التابيا والكاليكانتو.",
+m2_title:"الخشب الخام — الروح",m2_desc:"خشب ثقيل خام للسقف وأعمدة الأروقة. عوارض مكشوفة. رائحة الأرز أو الصنوبر تضيف بُعداً شمياً للصلاة.",
+m3_title:"النور — الإلهي",m3_desc:"عين واحدة في قمة المسجد تخلق عمود نور. فتحات صغيرة عند مستوى الأرض تدخل انعكاسات البستان. الكهف يتنفس نوراً.",
+m4_title:"الماء — التطهير",m4_desc:"نافورة صغيرة عند المدخل للوضوء. قنوات ماء من البستان تتخلل المبنى، توفر برودة ومشهداً صوتياً مقدساً.",
+s6_title:"طريقة البنّاء الأعظم",
+s6_intro:"أعظم الزوايا والتكايا في التاريخ بُنيت بالبركة والخدمة. للصوفي، بناء بيت صلاته هو ذكر في حركة.",
+ms1_title:"عِش الموقع — سنتان",ms1_desc:"ينتقل المعماري إلى الأرض ويعيش فيها سنتين قبل أن يرسم خطاً واحداً. المبنى لا يُصمم — يُكتشف.",
+ms2_title:"الأساتذة — مرشدو المادة",ms2_desc:"أفضل حجارين ونجارين في إسبانيا — ليس الأرخص بل الأفضل. دورهم ليس البناء فقط بل التعليم. الإحسان هو المعيار.",
+ms3_title:"المتطوعون — مريدو العمل",ms3_desc:"المجتمع الصوفي يبني بأيديه. حمل الحجارة الثقيلة وصقل الخشب الخام طريقة لصقل النفس. العمل كيمياء.",
+ms3b_title:"شهادة الدم — آيتك في الحجر",
+ms3b_desc:"كل متطوع يساعد في بناء زاوية الكهف سيحصل على رقعة من الواجهة الخارجية — لوحته الحجرية الخاصة. هناك، سينقش آيات قرآنية من اختياره بيده، ويرسمها بدمه ممزوجاً بمثبتات طبيعية من أكسيد الحديد لتصمد عبر القرون. إنها شهادة مكتوبة ليس بالحبر بل بالحياة ذاتها — بصمة دم، شهادة مختومة في جسد المبنى. كل زائر، لألف عام، سيقرأ كلماتهم. كل بانٍ يدخل التاريخ.",
+ms4_title:"البناؤون الأوائل — أرض وإرث",ms4_desc:"المتطوعون الأوائل الذين يلتزمون بالبناء سيحصل كل منهم على قطعة أرض داخل الملكية — تكفي لبناء هيكل تأمل حجري صغير بأيديهم. هذه الخلوات الشخصية تعمل أيضاً كأضرحة عائلية: مكان صلاة في الحياة، ومكان راحة في الممات.",
+ms5_title:"الوقف — هبة أبدية",ms5_desc:"الهكتاران أو الثلاثة تصبح وقفاً — هبة إسلامية لا تُباع أبداً. بأشجار الزيتون والبساتين والزراعة المستدامة، الزاوية تكفي نفسها. مستدامة. دائمة.",
+s7_title:"الأرض — ٢-٣ هكتارات",
+s7_intro:"مجاورة لقرية في جبال البوخارّاس، الأندلس — آخر معقل للأندلس. أرض لا تزال تتذكر.",
+s7_p1:"الموقع يتيح أكثر من مبنى — يتيح عالماً مصغراً. خارج أسوار الزاوية، كل الملكية تتحول إلى غابة صالحة للأكل بنظام الزراعة المستدامة: زيتون ولوز، تين ورمان، أعشاب طبية، شجيرات عطرية — مرتبة في نقابات غابة غذائية تنتج طوال العام. الحجر قد يأتي من الأرض نفسها.",
+s7_p2:"الزراعة المستدامة تغذي المطبخ الجماعي، مجسدة الزكاة بالزراعة. الزاوية ليست نصباً على المشهد. هي المشهد، منظماً للعبادة.",
+s7_p3:"البوخارّاس تحمل ثقلاً تاريخياً فريداً. هنا صمدت الثقافة المغربية أطول في أوروبا. المدرجات، القنوات، القرى البيضاء — بناها مسلمون. هذا المشروع لا يستورد شيئاً غريباً. يتذكر شيئاً كان دائماً هنا.",
+cta_title:"دعوة",
+cta_desc:"زاوية الكهف البوخارّاس تبحث عن مجتمع صوفي مستعد لتبني هذه الرؤية. ليس كعملاء — بل كشركاء في الخلق. الأرض والحجر والصمت في انتظاركم.",
+cta_closing:'"لست أصوم عن الطعام فحسب؛ أصوم عن كل ما ليس الله."',
+cta_btn:"تواصل معنا",
+contact_title:"اتصل بنا"
+},
+dr:{
+badge:"رؤية معمارية صوفية",
+tagline:"فين الغار كيلاقي الجنان. فين الحجر كيولي صلاة.",
+verse:'"عطيناهم المأوى فالغار وكنا كنقلبوهم على اليمين واليسار" — سورة الكهف ١٨:١٧',
+s1_title:"الأساس القرآني",
+s1_intro:"سورة الكهف كتحكي على ناس مشاو لواحد الغار باش يلجأو لله. الغار ولا الملجأ ديالهم — بلاصة خالية من شوشرة الدنيا فين الحماية الإلهية حاطاهم. زاوية الكهف كتترجم هاد الوحي للعمارة.",
+s1_p1:"الغار عندو بلاصة مقدسة فالإسلام. النبي محمد ﷺ تلقى أول وحي فغار حراء. فالتصوف، الغار كيمثل الخلوة — فين الروح كتلاقي الخالق ديالها فالسكوت.",
+s1_p2:"هاد المشروع ماشي غير كيتكلم على الغار — كيولي غار. مبني بالحجر المحلي الخام، محفور فمنظر جبال البوخارّاس، كيقدم فضاء فين كل سطح وكل ظل كيخدم ذكر الله.",
+s2_title:"أركان الإسلام الخمسة كفضاء",
+s2_intro:"كل ركن من أركان الإسلام كيلقى التعبير المعماري ديالو فزاوية الكهف. البناية ماشي غير وعاء للعبادة — هي العبادة مرئية وملموسة وساكنة.",
+p1_name:"الشهادة — المدخل",p1_space:"← العتبة",p1_desc:"المدخل ممر معوج كالمتاهة — ماشي باب كبير ولكن انتقال مقصود. تدوزو هو إعلان: نتا كتخلي الدنيا وراك.",
+p2_name:"الصلاة — المصلى المركزي",p2_space:"← قاعة الصلاة بالعين",p2_desc:"قلب الزاوية. فضاء ثماني ولا دائري مستقل موجه بالضبط نحو القبلة. عين وحدة فالقمة كتخلق عمود ضوء كيتحرك على أرضية الحجر الخام — كيعلم الفجر والظهر والعصر والمغرب والعشاء بنور الشمس.",
+p3_name:"الزكاة — المطبخ الجماعي",p3_space:"← اللنكار / المطبخ",p3_desc:"الجناح الغربي فيه مطبخ جماعي — لنكار — مفتوح للجميع. الماكلة من حديقة الزراعة المستدامة. الزكاة ماشي مفهوم مجرد هنا. هي التراب والحصاد والخبز وفعل إطعام واحد ما تعرفوش.",
+p4_name:"الصوم — خلايا التأمل",p4_space:"← الحجرات",p4_desc:"الغرف المحيطية خلايا صغيرة زاهدة بحال الغيران. كتجسد الصوم بأعمق معانيه — ماشي غير الصوم على الماكلة، ولكن الصوم على كلشي ما عدا الله.",
+p5_name:"الحج — ممشى البستان",p5_space:"← بستان الطواف",p5_desc:"الأروقة المسقوفة كتدور على المسجد المركزي بحال الحجاج كيطوفو بالكعبة. المشي فهاد الممشى وسط الجنان العاطرة هو الحج اليومي.",
+s3_title:"العمارة كعبادة",
+s3_intro:"ما وراء الأركان الخمسة، الطريق الصوفي كيزيد أبعاد فضائية خاصة. كل مفهوم من الطريقة كيولي غرفة ولا ملمس ولا صوت.",
+sf1_name:"الذكر — الصوتيات",sf1_desc:"حيوط الحجر الخام كتخلق صوت منتشر فريد. فوقت الذكر، الأسطح غير المنتظمة كتمنع الأصداء القاسية.",
+sf2_name:"الطريقة — الممشى",sf2_desc:"اللوجيات — أروقة مسقوفة بأعمدة الخشب الثقيلة — كتجسد الطريقة، المسار الروحي.",
+sf3_name:"القلب — المركز",sf3_desc:"المسجد المركزي هو القلب. فوسط المجمع، مستقل، كيستقبل الضوء من الجهات الأربعة.",
+sf4_name:"الإحسان — البستان",sf4_desc:"الروضة — بستان الشجر المثمر والأعشاب وقنوات الماء — كتمثل الجمال الإلهي. ماشي زينة بل إنتاج.",
+sf5_name:"الخلوة — العزلة",sf5_desc:"الحجرات على المحيط كتوفر الخلوة. خلايا صغيرة بحال الغيران لأيام من الصلاة والعمل الداخلي.",
+s4_title:"البرنامج الفضائي",
+s4_intro:"كائن حي متكامل — ماشي غير مسجد، ولكن زاوية مكتفية ذاتياً فين كل منطقة كتخدم وظيفة عملية وغرض روحي.",
+z1_name:"المدخل — الممر المنحني",z1_func:"مدخل متاهي، فضاء انتقالي",z1_sufi:"تخلي الدنيا وراك. الشهادة فالحجر.",
+z2_name:"الغرف المحيطية — الحجرات",z2_func:"خلايا نوم وتأمل",z2_sufi:"الخلوة. الصوم عن الدنيا.",
+z3_name:"الجناح الشرقي — المكتبة",z3_func:"مكتبة وغرف قراية",z3_sufi:"ركن المعرفة. فين كتبدا المعرفة.",
+z4_name:"الجناح الغربي — المطبخ",z4_func:"مطبخ جماعي ومطعم خيري",z4_sufi:"ركن الصدقة. الزكاة ملموسة.",
+z5_name:"الأروقة — الرواق",z5_func:"ممرات مسقوفة بأعمدة خشبية",z5_sufi:"الطريقة. الحج اليومي.",
+z6_name:"البنية المركزية — المصلى",z6_func:"قاعة صلاة وسماع خانة",z6_sufi:"القلب. الصلاة. الذكر.",
+z7_name:"البستان — الروضة",z7_func:"شجر مثمر، قنوات ماء، زراعة مستدامة",z7_sufi:"الإحسان. فردوس حي.",
+s5_title:"المواد والمسار الزاهد",
+s5_intro:"باختيار الحجر الخام والخشب غير المصقول، كنبتعدو عن الأسلوب الإسلامي الإمبراطوري — نحو جذور الزهد فالتصوف.",
+m1_title:"الحجر الخام — الأرض",m1_desc:"بناء بتقنية الإمبلكتون — الطريقة الرومانية ديال وجهين حجريين مملوئين بالركام والجير — كتخلق حيوط بسمك أكثر من متر. حيوط ديال ألف عام. البناية مصممة ماشي غير باش تبقى ولكن باش تشيخ بالزين: حتى كخرائب، بعد قرون، غادي تبقى زوينة. حيوط سيكلوبية. أرضيات أردوازية. تقنيات التابيا والكاليكانتو.",
+m2_title:"الخشب الخام — الروح",m2_desc:"خشب ثقيل خام للسقف والأعمدة. رائحة الأرز ولا الصنوبر كتزيد بُعد شمي للصلاة.",
+m3_title:"النور — الإلهي",m3_desc:"عين وحدة فالقمة كتخلق عمود نور. الغار كيتنفس نور.",
+m4_title:"الماء — التطهير",m4_desc:"نافورة صغيرة عند المدخل للوضوء. قنوات ماء من البستان كتدخل للبناية.",
+s6_title:"طريقة البنّاء الأعظم",
+s6_intro:"أعظم الزوايا والتكايا تبنات بالبركة والخدمة. للصوفي، بناء بيت صلاتو هو ذكر فالحركة.",
+ms1_title:"عيش الموقع — عامين",ms1_desc:"المعماري كينتقل للأرض ويعيش فيها عامين قبل ما يرسم خط وحد. البناية ما كتصممش — كتكتاشف.",
+ms2_title:"المعلمين — مرشدو المادة",ms2_desc:"أحسن حجارين ونجارين فإسبانيا — ماشي الرخاص ولكن الأفضل. الإحسان هو المعيار.",
+ms3_title:"المتطوعين — مريدو الخدمة",ms3_desc:"المجتمع الصوفي كيبني بيديه. حمل الحجر الثقيل وصقل الخشب طريقة لصقل النفس.",
+ms3b_title:"شهادة الدم — الآية ديالك فالحجر",
+ms3b_desc:"كل متطوع كيعاون فبناء زاوية الكهف غادي ياخد قطعة من الواجهة الخارجية — اللوحة الحجرية ديالو. تمّا، غادي ينقش آيات قرآنية من اختيارو بيدو، ويرسمها بالدم ديالو مخلوط بمثبتات طبيعية من أكسيد الحديد باش تصمد القرون. هي شهادة مكتوبة ماشي بالحبر ولكن بالحياة نفسها — بصمة دم، شهادة مختومة فجسد البناية. كل بنّاي كيدخل التاريخ.",
+ms4_title:"البنّايين الأوائل — أرض وإرث",ms4_desc:"المتطوعين الأوائل اللي كيلتازمو بالبناء، كل واحد غادي ياخد قطعة أرض داخل الملكية — كافية باش يبني هيكل تأمل حجري صغير بيديه. هاد الخلوات الشخصية كتخدم حتى كأضرحة عائلية: بلاصة صلاة فالحياة، وبلاصة راحة فالممات.",
+ms5_title:"الوقف — هبة أبدية",ms5_desc:"الأرض كتولي وقف — هبة إسلامية ما تتباعش أبداً. بالزيتون والبساتين والزراعة المستدامة، الزاوية كتكفي راسها.",
+s7_title:"الأرض — ٢-٣ هكتارات",
+s7_intro:"حدا واحد الدوار فجبال البوخارّاس، الأندلس — آخر معقل ديال الأندلس. أرض مازال كتتفكر.",
+s7_p1:"الموقع كيسمح بأكثر من بناية — كيسمح بعالم مصغر. برّا أسوار الزاوية، كل الملكية كتولي غابة ماكلة بالزراعة المستدامة: زيتون ولوز، تين ورمان، أعشاب طبية، شجيرات عطرية — كلشي كينتج طول العام. الحجر يقدر يجي من الأرض نفسها.",
+s7_p2:"الزراعة المستدامة كتغذي المطبخ الجماعي. الزاوية ماشي نصب على المنظر. هي المنظر، منظم للعبادة.",
+s7_p3:"البوخارّاس عندها ثقل تاريخي فريد. هنا الثقافة المغربية صمدات أكثر فأوروبا. المدرجات، السواقي، الدواوير البيض — بناوهم المسلمين. هاد المشروع ما كيستوردش شي حاجة غريبة. كيتفكر شي حاجة كانت دائماً هنا.",
+cta_title:"دعوة",
+cta_desc:"زاوية الكهف البوخارّاس كتقلب على مجتمع صوفي مستعد يتبنى هاد الرؤية. ماشي كعملاء — بل كشركاء فالخلق. الأرض والحجر والسكوت كيتسناوكم.",
+cta_closing:'"ماشي غير كنصوم على الماكلة؛ كنصوم على كلشي ما عدا الله."',
+cta_btn:"تواصل معانا",
+contact_title:"اتصل بنا"
+}
+};
+
+let currentLang='en';
+function setLang(lang){
+  currentLang=lang;
+  document.querySelectorAll('.lang-bar .lang-btn').forEach(b=>{
+    const bl=b.textContent.trim();
+    const match=(lang==='ar'&&bl==='عربي')||(lang==='dr'&&bl==='دارجة')||b.textContent.trim().toLowerCase()===lang;
+    b.classList.toggle('active',match);
+  });
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.getAttribute('data-i18n');
+    if(T[lang]&&T[lang][key]) el.innerHTML=T[lang][key];
+  });
+  const isRTL=lang==='ar'||lang==='dr';
+  document.documentElement.dir=isRTL?'rtl':'ltr';
+  document.documentElement.lang=lang==='dr'?'ar':lang;
+}
+setLang('en');
+</script>
+</body>
+</html>

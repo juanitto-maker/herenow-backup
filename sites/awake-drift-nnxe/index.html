@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeepCore Power — Modular Underwater Nuclear Power Plant</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --deep: #0a0e1a;
+  --abyss: #060911;
+  --surface: #0d1525;
+  --glow: #00d4ff;
+  --glow2: #0088cc;
+  --warm: #ff6b35;
+  --gold: #ffd700;
+  --text: #c8d6e5;
+  --text-bright: #e8f0f8;
+  --text-muted: #6b7fa3;
+  --green: #00e676;
+  --red: #ff5252;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--abyss);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+/* ── Animated underwater background ── */
+.bg-ocean {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(180deg, #020510 0%, #0a1628 30%, #0d1f3c 60%, #081020 100%);
+  z-index: -2;
+}
+.bg-particles {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  z-index: -1; opacity: 0.3;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(0,212,255,0.4), transparent),
+    radial-gradient(1px 1px at 30% 60%, rgba(0,212,255,0.3), transparent),
+    radial-gradient(1.5px 1.5px at 50% 15%, rgba(0,212,255,0.5), transparent),
+    radial-gradient(1px 1px at 70% 40%, rgba(0,136,204,0.4), transparent),
+    radial-gradient(1px 1px at 90% 70%, rgba(0,212,255,0.3), transparent),
+    radial-gradient(1px 1px at 20% 80%, rgba(0,136,204,0.3), transparent),
+    radial-gradient(1.5px 1.5px at 60% 90%, rgba(0,212,255,0.4), transparent),
+    radial-gradient(1px 1px at 80% 10%, rgba(0,212,255,0.3), transparent);
+  animation: drift 20s ease-in-out infinite alternate;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); }
+  100% { transform: translateY(-30px) translateX(15px); }
+}
+
+/* ── Navigation ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: rgba(6,9,17,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0,212,255,0.1);
+  z-index: 100;
+  padding: 0.6rem 2rem 0.7rem;
+  display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+}
+.nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; order: -1; }
+.nav-links a {
+  color: var(--text-muted); text-decoration: none;
+  font-size: 0.75rem; font-weight: 500;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--glow); }
+.nav-logo {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.2rem; font-weight: 700;
+  color: var(--glow);
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+.nav-logo span { color: var(--text-muted); font-weight: 400; }
+
+/* ── Hero ── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center;
+  padding: 6rem 2rem 4rem;
+  position: relative;
+}
+.hero-badge {
+  display: inline-block;
+  font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--glow);
+  background: rgba(0,212,255,0.08);
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 999px;
+  padding: 0.35rem 1.2rem;
+  margin-bottom: 1.5rem;
+  animation: fadeIn 1s ease;
+}
+.hero h1 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  color: white;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+  animation: fadeUp 1s ease 0.2s both;
+}
+.hero h1 .accent { color: var(--glow); }
+.hero .subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  color: var(--text-muted);
+  max-width: 700px;
+  margin-bottom: 2.5rem;
+  animation: fadeUp 1s ease 0.4s both;
+}
+.hero-stats {
+  display: flex; gap: 3rem; flex-wrap: wrap;
+  justify-content: center;
+  animation: fadeUp 1s ease 0.6s both;
+}
+.hero-stat { text-align: center; }
+.hero-stat .num {
+  font-size: 2.2rem; font-weight: 700;
+  color: var(--glow);
+  font-family: 'Libre Baskerville', serif;
+}
+.hero-stat .label {
+  font-size: 0.75rem; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── Sections ── */
+section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+}
+.section-label {
+  font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--warm);
+  margin-bottom: 0.8rem;
+}
+section h2 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  color: white; font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 1.5rem;
+}
+section p {
+  font-size: 1rem;
+  color: var(--text);
+  max-width: 780px;
+  margin-bottom: 1.2rem;
+}
+
+/* ── Cards ── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+.card {
+  background: rgba(13,21,37,0.7);
+  border: 1px solid rgba(0,212,255,0.1);
+  border-radius: 12px;
+  padding: 1.8rem;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0,212,255,0.3);
+}
+.card-icon {
+  font-size: 2rem;
+  margin-bottom: 0.8rem;
+}
+.card h3 {
+  font-size: 1.05rem; font-weight: 600;
+  color: var(--text-bright);
+  margin-bottom: 0.5rem;
+}
+.card p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+/* ── Comparison table ── */
+.table-wrap {
+  overflow-x: auto;
+  margin: 2rem 0;
+  border-radius: 12px;
+  border: 1px solid rgba(0,212,255,0.1);
+}
+table {
+  width: 100%; border-collapse: collapse;
+  font-size: 0.85rem;
+}
+thead th {
+  background: rgba(0,212,255,0.08);
+  color: var(--glow);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.9rem 1rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid rgba(0,212,255,0.15);
+  white-space: nowrap;
+}
+tbody td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--text);
+}
+tbody tr:hover { background: rgba(0,212,255,0.03); }
+tbody tr:last-child td { border-bottom: none; }
+.highlight-row { background: rgba(0,212,255,0.06); }
+.highlight-row td { color: var(--text-bright); font-weight: 500; }
+td .check { color: var(--green); font-weight: 700; }
+td .cross { color: var(--red); }
+td .partial { color: var(--gold); }
+
+/* ── Economics ── */
+.econ-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+.econ-box {
+  background: rgba(13,21,37,0.7);
+  border: 1px solid rgba(0,212,255,0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+}
+.econ-box .big {
+  font-size: 1.8rem; font-weight: 700;
+  color: var(--glow);
+  font-family: 'Libre Baskerville', serif;
+}
+.econ-box .unit {
+  font-size: 0.8rem; color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+.econ-box .desc {
+  font-size: 0.82rem; color: var(--text);
+  margin-top: 0.6rem;
+  line-height: 1.5;
+}
+
+/* ── Safety section ── */
+.safety-flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: 2rem 0;
+  align-items: stretch;
+}
+.safety-step {
+  flex: 1;
+  min-width: 200px;
+  padding: 1.5rem;
+  background: rgba(13,21,37,0.7);
+  border: 1px solid rgba(0,212,255,0.1);
+  position: relative;
+  text-align: center;
+}
+.safety-step:first-child { border-radius: 12px 0 0 12px; }
+.safety-step:last-child { border-radius: 0 12px 12px 0; }
+.safety-step .step-num {
+  font-size: 0.7rem; font-weight: 700;
+  color: var(--warm);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+.safety-step h4 {
+  font-size: 0.95rem; color: var(--text-bright);
+  margin-bottom: 0.4rem;
+}
+.safety-step p {
+  font-size: 0.8rem; color: var(--text-muted);
+  margin: 0;
+}
+
+/* ── CTA ── */
+.cta-section {
+  text-align: center;
+  padding: 5rem 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.cta-section h2 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 1rem;
+}
+.cta-section p {
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+.cta-btn {
+  display: inline-block;
+  padding: 0.85rem 2.5rem;
+  background: linear-gradient(135deg, var(--glow2), var(--glow));
+  color: var(--deep);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,212,255,0.25);
+}
+
+/* ── Footer ── */
+footer {
+  text-align: center;
+  padding: 3rem 2rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+footer a { color: var(--glow); text-decoration: none; }
+
+/* ── Divider ── */
+.divider {
+  width: 60px; height: 2px;
+  background: linear-gradient(90deg, var(--glow), transparent);
+  margin: 3rem auto;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  nav { padding: 0.5rem 0.8rem 0.6rem; }
+  .nav-links { gap: 0.6rem; }
+  .nav-links a { font-size: 0.65rem; }
+  .nav-logo { font-size: 1rem; }
+  .hero-stats { gap: 1.5rem; }
+  .safety-flow { flex-direction: column; }
+  .safety-step { border-radius: 0 !important; }
+  .safety-step:first-child { border-radius: 12px 12px 0 0 !important; }
+  .safety-step:last-child { border-radius: 0 0 12px 12px !important; }
+  section { padding: 3rem 1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-ocean"></div>
+<div class="bg-particles"></div>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="nav-links">
+    <a href="#concept">Concept</a>
+    <a href="#safety">Safety</a>
+    <a href="#compare">Compare</a>
+    <a href="#economics">Economics</a>
+    <a href="#applications">Applications</a>
+  </div>
+  <div class="nav-logo">DeepCore <span>Power</span></div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-badge">Open Architecture &middot; Defensive Publication &middot; 2026</div>
+  <h1>Nuclear Power,<br/><span class="accent">Invisible &amp; Indestructible</span></h1>
+  <p class="subtitle">A modular underwater reactor architecture with zero atmospheric contamination risk — even under meltdown, missile strike, or total system failure.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="num">50 MW</div>
+      <div class="label">Per Module</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">250 MW</div>
+      <div class="label">5-Module Cluster</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">0</div>
+      <div class="label">Atmospheric Release</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">100%</div>
+      <div class="label">Underground</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CONCEPT ══ -->
+<section id="concept">
+  <div class="section-label">Architecture</div>
+  <h2>Concentric Rings Beneath a Lake</h2>
+  <p>DeepCore places the entire nuclear island — reactor, steam generator, and condenser — in concentric toroidal rings excavated beneath an artificial lake. The surface shows nothing but water, floating solar panels, and a modest turbine building.</p>
+  <p>Each module is compact (20m outer diameter) and entirely self-contained. Steam rises to surface turbines through vertical shafts; condensate returns. The primary radioactive circuit never leaves the underground structure.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">&#9762;</div>
+      <h3>Ring 1 — Reactor Core</h3>
+      <p>Innermost ring (~3-4m diameter). Contains the reactor vessel, primary coolant loop, and control systems. Sealed beneath a reinforced containment dome.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">&#9832;</div>
+      <h3>Ring 2 — Steam Generator</h3>
+      <p>Middle ring (~10-12m diameter). Primary-to-secondary heat exchange. Radioactive water heats clean secondary water — no mixing, no contamination path.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">&#10052;</div>
+      <h3>Ring 3 — Condenser</h3>
+      <p>Outer ring (~18-20m diameter). Spent steam from turbines is cooled and condensed back to liquid water for recirculation. Enhanced mesh surfaces accelerate condensation.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">&#9211;</div>
+      <h3>Adaptive Cooling</h3>
+      <p>Site-selectable cooling: passive lake, underground air-cooled condensers, evaporative tunnels, or cogeneration heat extraction. Same reactor, any climate.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">&#9889;</div>
+      <h3>Reactor Agnostic</h3>
+      <p>Compatible with PWR, BWR, SMR, MSR, HTGR, and liquid-metal fast reactors. The architecture adapts — the physics stays proven.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">&#9851;</div>
+      <h3>Integrated Fuel Cycle</h3>
+      <p>Underground vaults for fresh fuel storage, spent fuel management, and optional pyrochemical recycling. No road transport of nuclear materials required.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ SAFETY ══ -->
+<section id="safety">
+  <div class="section-label">Passive Safety</div>
+  <h2>Designed to Fail Safely</h2>
+  <p>Every major nuclear incident in history was a failure to maintain cooling. DeepCore inverts the problem: the reactor sits <em>inside</em> the water supply. In an emergency, water doesn't need to reach the reactor — it's already there.</p>
+
+  <div class="safety-flow">
+    <div class="safety-step">
+      <div class="step-num">Normal Operation</div>
+      <h4>Sealed Underground</h4>
+      <p>Reactor operates in sealed toroidal rings beneath the lake. No atmospheric interface.</p>
+    </div>
+    <div class="safety-step">
+      <div class="step-num">Anomaly Detected</div>
+      <h4>Automated Response</h4>
+      <p>Redundant control systems detect temperature/pressure anomaly. Control rods insert automatically.</p>
+    </div>
+    <div class="safety-step">
+      <div class="step-num">Loss of Cooling</div>
+      <h4>Dome Breach Flooding</h4>
+      <p>Sacrificial valves open. Lake water floods reactor chamber by gravity. No pumps needed.</p>
+    </div>
+    <div class="safety-step">
+      <div class="step-num">Containment</div>
+      <h4>Underground Sarcophagus</h4>
+      <p>Contaminated water trapped in sealed toroidal rings. Zero atmospheric release. Self-entombing.</p>
+    </div>
+  </div>
+
+  <div class="card-grid" style="margin-top:2rem">
+    <div class="card">
+      <h3>vs. Fukushima</h3>
+      <p>Fukushima failed because pumps couldn't bring water to the reactor when power was lost. DeepCore's reactor is already submerged — flooding is gravity-driven, requiring zero power.</p>
+    </div>
+    <div class="card">
+      <h3>vs. Military Attack</h3>
+      <p>All critical components are buried under meters of earth, water, and reinforced concrete. Even a direct strike creates no atmospheric contamination — the lake absorbs and contains.</p>
+    </div>
+    <div class="card">
+      <h3>vs. Sabotage</h3>
+      <p>Physical access requires penetrating the lake, then sealed underground tunnels with restricted entry points. The architecture IS the security perimeter.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ COMPARISON ══ -->
+<section id="compare">
+  <div class="section-label">Competitive Analysis</div>
+  <h2>How DeepCore Compares</h2>
+  <p>Evaluated against leading nuclear technologies on the metrics that matter most: safety, visibility, resilience, and versatility.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>AP1000 (Conv.)</th>
+          <th>NuScale SMR</th>
+          <th>Rolls-Royce SMR</th>
+          <th>DeepCore Power</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Output per module</td><td>1,117 MW</td><td>77 MW</td><td>470 MW</td>
+          <td class="highlight-row">50 MW (scalable to 250)</td>
+        </tr>
+        <tr>
+          <td>Installation</td><td>Surface</td><td>Surface</td><td>Surface</td>
+          <td class="highlight-row"><span class="check">&#10003;</span> Fully underground</td>
+        </tr>
+        <tr>
+          <td>Visible footprint</td><td>Large</td><td>Medium</td><td>Medium</td>
+          <td class="highlight-row"><span class="check">&#10003;</span> Minimal (lake only)</td>
+        </tr>
+        <tr>
+          <td>Zero atm. release guaranteed</td>
+          <td><span class="cross">&#10007;</span></td>
+          <td><span class="partial">Partial</span></td>
+          <td><span class="cross">&#10007;</span></td>
+          <td><span class="check">&#10003; By design</span></td>
+        </tr>
+        <tr>
+          <td>Attack / missile resistance</td>
+          <td><span class="cross">Low</span></td>
+          <td><span class="cross">Low</span></td>
+          <td><span class="cross">Low</span></td>
+          <td><span class="check">&#10003; High</span></td>
+        </tr>
+        <tr>
+          <td>Passive meltdown containment</td>
+          <td>Containment bldg</td>
+          <td>Pool immersion</td>
+          <td>Containment bldg</td>
+          <td><span class="check">&#10003;</span> Flood-to-entomb</td>
+        </tr>
+        <tr>
+          <td>Reactor technology agnostic</td>
+          <td><span class="cross">PWR only</span></td>
+          <td><span class="cross">PWR only</span></td>
+          <td><span class="cross">PWR only</span></td>
+          <td><span class="check">&#10003; Any reactor</span></td>
+        </tr>
+        <tr>
+          <td>Integrated fuel cycle</td>
+          <td><span class="cross">External</span></td>
+          <td><span class="cross">External</span></td>
+          <td><span class="cross">External</span></td>
+          <td><span class="check">&#10003; On-site</span></td>
+        </tr>
+        <tr>
+          <td>Cogeneration ready</td>
+          <td><span class="partial">Limited</span></td>
+          <td><span class="partial">Limited</span></td>
+          <td><span class="partial">Limited</span></td>
+          <td><span class="check">&#10003; Integrated</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ COOLING ══ -->
+<section id="cooling">
+  <div class="section-label">Thermal Management</div>
+  <h2>Adaptive Cooling — One Architecture, Any Climate</h2>
+  <p>The cooling subsystem is the only component that changes between deployments. The reactor, rings, dome, and safety systems remain identical.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">&#127754;</div>
+      <h3>Option A — Passive Lake</h3>
+      <p>500-600m diameter lake with condenser spiral on bed. Evaporative surface cooling. Best for wet climates with reliable rainfall. Simplest and lowest cost.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">&#127744;</div>
+      <h3>Option B — Underground ACC</h3>
+      <p>Air-cooled condenser chambers with natural/forced draft ventilation. Zero water consumption. Surface vents disguised as terrain. Best for arid/desert sites.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">&#128167;</div>
+      <h3>Option C — Evaporative Tunnel</h3>
+      <p>TBM-bored spiral tunnel with spray nozzles and forced air. Compact footprint, lake as water reservoir. Best for coastal sites with seawater access.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">&#127981;</div>
+      <h3>Option D — Cogeneration</h3>
+      <p>Waste heat piped to district heating, desalination, greenhouses, aquaculture. Smallest lake needed. Best for urban/industrial deployments.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ ECONOMICS ══ -->
+<section id="economics">
+  <div class="section-label">Economics</div>
+  <h2>Investment Profile</h2>
+  <p>First-of-a-kind costs are at the high end of SMR projections. Series production with standardized modules would follow learning curves comparable to NuScale and Rolls-Royce SMR projections.</p>
+
+  <div class="econ-grid">
+    <div class="econ-box">
+      <div class="big">&euro;250-400M</div>
+      <div class="unit">CAPEX per 50 MW module</div>
+      <div class="desc">Including reactor, excavation, lake, turbines, cooling, fuel storage, and licensing</div>
+    </div>
+    <div class="econ-box">
+      <div class="big">&euro;11-19M</div>
+      <div class="unit">Annual OPEX</div>
+      <div class="desc">Fuel, staff (30-50 FTE), maintenance, insurance, decommissioning provision</div>
+    </div>
+    <div class="econ-box">
+      <div class="big">394 GWh</div>
+      <div class="unit">Annual generation</div>
+      <div class="desc">At 90% capacity factor. Revenue &euro;24-32M/yr at European wholesale prices</div>
+    </div>
+    <div class="econ-box">
+      <div class="big">40-60 yr</div>
+      <div class="unit">Design lifetime</div>
+      <div class="desc">Underground protection extends component longevity vs surface exposure</div>
+    </div>
+  </div>
+
+  <div class="table-wrap" style="margin-top:2rem">
+    <table>
+      <thead>
+        <tr><th>Technology</th><th>LCOE (&euro;/MWh)</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Conventional nuclear (new)</td><td>65 – 120</td><td>IEA/OECD 2024</td></tr>
+        <tr><td>NuScale SMR (projected)</td><td>70 – 100</td><td>Company estimates</td></tr>
+        <tr><td>Onshore wind</td><td>30 – 55</td><td>IRENA 2024 (variable)</td></tr>
+        <tr><td>Solar PV (utility)</td><td>25 – 50</td><td>IRENA 2024 (variable)</td></tr>
+        <tr><td>Natural gas CCGT</td><td>50 – 80</td><td>IEA 2024</td></tr>
+        <tr class="highlight-row"><td>DeepCore Power</td><td>75 – 130</td><td>FOAK estimate</td></tr>
+        <tr class="highlight-row"><td>DeepCore + cogeneration</td><td>55 – 90</td><td>With heat revenue offset</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="margin-top:1.5rem; font-size:0.88rem; color:var(--text-muted)">
+    <strong>ROI note:</strong> Simple payback 12-25 years (10-18 with cogeneration). The premium over conventional designs is justified by the unique safety and resilience profile — customers for whom invisible, hardened, zero-contamination-risk power is worth a premium are the primary market.
+  </p>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ APPLICATIONS ══ -->
+<section id="applications">
+  <div class="section-label">Target Markets</div>
+  <h2>Who Needs Invisible, Indestructible Power?</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">&#127987;</div>
+      <h3>Defense &amp; Military</h3>
+      <p>Hardened baseload for command centers, radar installations, and forward operating bases. The invisibility and attack resistance are primary differentiators no competitor offers.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">&#127965;</div>
+      <h3>Island Nations</h3>
+      <p>Energy independence for Singapore, Cyprus, Malta, Pacific islands. Combined with desalination for simultaneous water and power security. Compact footprint suits limited land.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">&#9874;</div>
+      <h3>Remote Industry</h3>
+      <p>Mining operations, Arctic stations, offshore platforms. Decades of autonomous operation with on-site fuel storage. No grid connection required.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">&#127961;</div>
+      <h3>Urban Cogeneration</h3>
+      <p>Electricity + district heating beneath cities with zero visible infrastructure beyond a park lake. Particularly compelling for cold-climate dense cities.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">&#128187;</div>
+      <h3>Data Center Campuses</h3>
+      <p>Guaranteed 24/7 baseload for hyperscale computing. 50-200 MW modules match data center power needs precisely. On-site generation eliminates grid dependency.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">&#9879;</div>
+      <h3>National Grid Backbone</h3>
+      <p>Dispatchable baseload complementing variable renewables. Clustered modules providing 100-250 MW with no public opposition from visual impact or safety fears.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ SCALABILITY ══ -->
+<section>
+  <div class="section-label">Modularity</div>
+  <h2>Scale to Match Demand</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Configuration</th><th>Modules</th><th>Output</th><th>Typical Application</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Single</td><td>1</td><td>50 MW</td><td>Military base, remote mine, small island</td></tr>
+        <tr><td>Dual</td><td>2</td><td>100 MW</td><td>Medium city district, industrial zone</td></tr>
+        <tr><td>Triple</td><td>3</td><td>150 MW</td><td>Large industrial complex, data center campus</td></tr>
+        <tr><td>Quad</td><td>4</td><td>200 MW</td><td>Regional power supply</td></tr>
+        <tr class="highlight-row"><td>Full Cluster</td><td>5</td><td>250 MW</td><td>Major city (e.g., Granada, Cyprus, Singapore)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ CTA ══ -->
+<div class="cta-section">
+  <div class="section-label">Open Architecture</div>
+  <h2>Built to Be Shared</h2>
+  <p>DeepCore Power is published as a defensive disclosure — free for any government, institution, or organization to implement. The full technical paper with thermal calculations, engineering specifications, and construction methodology is available on Zenodo.</p>
+  <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:2rem;">Inventor: Arch. Alexandru-Ioan Nistoroiu &middot; digitalAIventures LLC &middot; April 2026</p>
+  <a href="https://zenodo.org/records/19424080" target="_blank" class="cta-btn">Download Technical Paper (PDF) — Zenodo</a>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <p><strong>DeepCore Power</strong> &middot; Open Architecture &middot; Defensive Publication 2026</p>
+  <p style="margin-top:0.5rem">Concept &amp; Design: Arch. Alexandru-Ioan Nistoroiu &middot; <a href="mailto:alex@deepcorepower.com">digitalAIventures</a></p>
+  <p style="margin-top:0.5rem; font-size:0.72rem; color:#444">
+    This work is released as prior art under patent law doctrine. No exclusive intellectual property rights are claimed.<br/>
+    Attribution requested but not legally required.
+  </p>
+</footer>
+
+</body>
+</html>

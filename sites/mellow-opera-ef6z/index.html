@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALLVOLT — Universal Battery Backpack System</title>
+<meta name="description" content="One battery pack. Every tool. All day. Universal LiFePO4 battery system for agriculture, construction, and power tools.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --primary: #f97316;
+    --primary-dark: #ea580c;
+    --bg-dark: #0a0a0b;
+    --bg-card: #111113;
+    --bg-card-hover: #18181b;
+    --text-primary: #fafafa;
+    --text-secondary: #a1a1aa;
+    --border: #27272a;
+    --accent-green: #10b981;
+    --accent-blue: #3b82f6;
+    --accent-red: #ef4444;
+  }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: linear-gradient(135deg, #0a0a0b 0%, #1a0f0a 100%);
+    overflow: hidden;
+  }
+  
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle at 30% 50%, rgba(249, 115, 22, 0.15) 0%, transparent 50%);
+    animation: pulse 8s ease-in-out infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.5; }
+    50% { transform: scale(1.1) translate(20px, -20px); opacity: 0.8; }
+  }
+  
+  .hero-content {
+    max-width: 1200px;
+    padding: 4rem 2rem;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+  
+  .badge {
+    display: inline-block;
+    background: rgba(249, 115, 22, 0.1);
+    border: 1px solid rgba(249, 115, 22, 0.3);
+    color: var(--primary);
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  
+  .hero h1 {
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #fff 0%, #f97316 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .hero .subtitle {
+    font-size: clamp(1.25rem, 3vw, 2rem);
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    font-weight: 300;
+  }
+  
+  .hero .tagline {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 3rem;
+  }
+  
+  .cta-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+  
+  .btn {
+    padding: 1rem 2.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.125rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    display: inline-block;
+  }
+  
+  .btn-primary {
+    background: var(--primary);
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px rgba(249, 115, 22, 0.4);
+  }
+  
+  .btn-secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border: 2px solid var(--border);
+  }
+  
+  .btn-secondary:hover {
+    border-color: var(--primary);
+    background: rgba(249, 115, 22, 0.1);
+  }
+  
+  .section {
+    padding: 6rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  
+  .section-header h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  
+  .section-header p {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 4rem 0;
+  }
+  
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .stat-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--primary);
+    transform: translateY(-5px);
+  }
+  
+  .stat-value {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--primary);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .stat-label {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+  
+  .problem-solution {
+    background: var(--bg-card);
+    border-radius: 24px;
+    padding: 3rem;
+    border: 1px solid var(--border);
+    margin: 3rem 0;
+  }
+  
+  .ps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 2rem;
+  }
+  
+  @media (max-width: 768px) {
+    .ps-grid { grid-template-columns: 1fr; }
+  }
+  
+  .ps-column h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .ps-column ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .ps-column li {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .ps-column li:last-child {
+    border-bottom: none;
+  }
+  
+  .icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+  
+  .comparison-table {
+    background: var(--bg-card);
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    margin: 3rem 0;
+  }
+  
+  .comparison-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .comparison-table thead {
+    background: rgba(249, 115, 22, 0.1);
+  }
+  
+  .comparison-table th {
+    padding: 1.5rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    color: var(--primary);
+  }
+  
+  .comparison-table td {
+    padding: 1.5rem 1rem;
+    border-top: 1px solid var(--border);
+  }
+  
+  .comparison-table tbody tr:hover {
+    background: var(--bg-card-hover);
+  }
+  
+  .highlight {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--accent-green);
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+  
+  .highlight-red {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--accent-red);
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+  
+  .roi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+  }
+  
+  .roi-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+  }
+  
+  .roi-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-5px);
+  }
+  
+  .roi-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+  }
+  
+  .roi-metric {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .roi-metric:last-child {
+    border-bottom: none;
+    padding-top: 1.5rem;
+    margin-top: 0.5rem;
+    border-top: 2px solid var(--primary);
+  }
+  
+  .roi-metric label {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .roi-metric value {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--accent-green);
+  }
+  
+  .use-cases {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+  }
+  
+  .use-case {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+  }
+  
+  .use-case:hover {
+    border-color: var(--primary);
+    transform: translateY(-5px);
+  }
+  
+  .use-case-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+  
+  .use-case h4 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+  }
+  
+  .use-case ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .use-case li {
+    padding: 0.5rem 0;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .use-case li::before {
+    content: '✓';
+    color: var(--accent-green);
+    font-weight: bold;
+  }
+
+  .market-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+  }
+
+  .market-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .market-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-5px);
+  }
+
+  .market-card h3 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+  }
+
+  .market-size {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--accent-green);
+    margin: 1rem 0;
+  }
+
+  .market-growth {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer {
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+    text-align: center;
+    margin-top: 6rem;
+  }
+  
+  .footer p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer a {
+    color: var(--primary);
+    text-decoration: none;
+  }
+  
+  .footer a:hover {
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 768px) {
+    .section { padding: 3rem 1.5rem; }
+    .hero-content { padding: 2rem 1.5rem; }
+    .cta-buttons { flex-direction: column; }
+    .btn { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="badge">Universal Battery System · 2026</div>
+    <h1>ALLVOLT</h1>
+    <p class="subtitle">One Battery Pack. Every Tool. All Day.</p>
+    <p class="tagline">Stop buying batteries. Start finishing jobs.</p>
+    <div class="cta-buttons">
+      <a href="#product" class="btn btn-primary">See How It Works</a>
+      <a href="#roi" class="btn btn-secondary">ROI Calculator</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-value">6-8h</span>
+      <span class="stat-label">Runtime Per Charge</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value">100%</span>
+      <span class="stat-label">Tool Compatibility</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value">60-80%</span>
+      <span class="stat-label">Cost Savings</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value">18mo</span>
+      <span class="stat-label">Typical ROI</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="product">
+  <div class="section-header">
+    <h2>The Battery Problem is Costing You Thousands</h2>
+    <p>Professionals waste money, time, and productivity on incompatible battery ecosystems</p>
+  </div>
+  
+  <div class="problem-solution">
+    <div class="ps-grid">
+      <div class="ps-column">
+        <h3><span class="icon">❌</span> The Problem</h3>
+        <ul>
+          <li>
+            <span class="icon">💸</span>
+            <div>
+              <strong>Expensive Ecosystem Lock-in</strong><br>
+              <span style="color: var(--text-secondary);">Own 3 tool brands? That's $2,000+ in redundant batteries and chargers</span>
+            </div>
+          </li>
+          <li>
+            <span class="icon">⏱️</span>
+            <div>
+              <strong>Constant Charging Breaks</strong><br>
+              <span style="color: var(--text-secondary);">Professionals lose 2-3 hours daily managing dead batteries</span>
+            </div>
+          </li>
+          <li>
+            <span class="icon">🔌</span>
+            <div>
+              <strong>Limited Runtime</strong><br>
+              <span style="color: var(--text-secondary);">Standard 5Ah battery = 45min runtime on high-draw tools</span>
+            </div>
+          </li>
+          <li>
+            <span class="icon">🔋</span>
+            <div>
+              <strong>Battery Degradation</strong><br>
+              <span style="color: var(--text-secondary);">Replace expensive batteries every 2-3 years ($200-400 each)</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="ps-column">
+        <h3><span class="icon">✅</span> The Solution</h3>
+        <ul>
+          <li>
+            <span class="icon">🎯</span>
+            <div>
+              <strong>Universal Compatibility</strong><br>
+              <span style="color: var(--text-secondary);">One ALLVOLT powers DeWalt, Milwaukee, Makita, Ryobi, Bosch — any brand</span>
+            </div>
+          </li>
+          <li>
+            <span class="icon">⚡</span>
+            <div>
+              <strong>All-Day Runtime</strong><br>
+              <span style="color: var(--text-secondary);">100Ah capacity = 6-8 hours continuous work, no swapping</span>
+            </div>
+          </li>
+          <li>
+            <span class="icon">💰</span>
+            <div>
+              <strong>Pay Once, Power Everything</strong><br>
+              <span style="color: var(--text-secondary);">$850 one-time vs $2,000+ in brand-specific batteries</span>
+            </div>
+          </li>
+          <li>
+            <span class="icon">🔄</span>
+            <div>
+              <strong>5,000+ Charge Cycles</strong><br>
+              <span style="color: var(--text-secondary);">LiFePO4 chemistry lasts 10+ years vs 2-3 for Li-ion</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <h2>ALLVOLT vs Traditional Batteries</h2>
+    <p>See how one ALLVOLT replaces your entire battery collection</p>
+  </div>
+  
+  <div class="comparison-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Traditional Setup</th>
+          <th>ALLVOLT System</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Initial Investment</strong></td>
+          <td>$1,800-2,500<br><span style="color: var(--text-secondary); font-size: 0.875rem;">15-20 batteries + chargers</span></td>
+          <td><span class="highlight">$850</span><br><span style="color: var(--text-secondary); font-size: 0.875rem;">One-time purchase</span></td>
+        </tr>
+        <tr>
+          <td><strong>Runtime (High-Draw Tool)</strong></td>
+          <td><span class="highlight-red">45 min</span><br><span style="color: var(--text-secondary); font-size: 0.875rem;">5Ah battery on shaker/saw</span></td>
+          <td><span class="highlight">6-8 hours</span><br><span style="color: var(--text-secondary); font-size: 0.875rem;">100Ah continuous</span></td>
+        </tr>
+        <tr>
+          <td><strong>Tool Compatibility</strong></td>
+          <td><span class="highlight-red">Single Brand</span><br><span style="color: var(--text-secondary); font-size: 0.875rem;">Locked to manufacturer</span></td>
+          <td><span class="highlight">All Brands</span><br><span style="color: var(--text-secondary); font-size: 0.875rem;">DeWalt, Makita, Milwaukee, Ryobi, etc.</span></td>
+        </tr>
+        <tr>
+          <td><strong>Charge Cycles</strong></td>
+          <td><span class="highlight-red">500-1,000</span><br><span style="color: var(--text-secondary); font-size: 0.875rem;">2-3 year lifespan</span></td>
+          <td><span class="highlight">5,000+</span><br><span style="color: var(--text-secondary); font-size: 0.875rem;">10+ year lifespan</span></td>
+        </tr>
+        <tr>
+          <td><strong>Weight (Total Capacity)</strong></td>
+          <td><span class="highlight-red">12kg</span><br><span style="color: var(--text-secondary); font-size: 0.875rem;">20× 5Ah batteries</span></td>
+          <td><span class="highlight">15.5kg</span><br><span style="color: var(--text-secondary); font-size: 0.875rem;">Worn as backpack or rolled</span></td>
+        </tr>
+        <tr>
+          <td><strong>Replacement Cost (3 years)</strong></td>
+          <td><span class="highlight-red">$800-1,200</span><br><span style="color: var(--text-secondary); font-size: 0.875rem;">Batteries degrade, need replacing</span></td>
+          <td><span class="highlight">$0</span><br><span style="color: var(--text-secondary); font-size: 0.875rem;">Still at 90%+ capacity</span></td>
+        </tr>
+        <tr>
+          <td><strong>Daily Productivity Loss</strong></td>
+          <td><span class="highlight-red">2-3 hours</span><br><span style="color: var(--text-secondary); font-size: 0.875rem;">Swapping/charging batteries</span></td>
+          <td><span class="highlight">0 hours</span><br><span style="color: var(--text-secondary); font-size: 0.875rem;">Work continuously</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="section" id="roi">
+  <div class="section-header">
+    <h2>Return on Investment Analysis</h2>
+    <p>ALLVOLT pays for itself in 12-18 months through savings and increased productivity</p>
+  </div>
+  
+  <div class="roi-grid">
+    <div class="roi-card">
+      <h3>👨‍🌾 Professional User (Agriculture/Landscaping)</h3>
+      <div class="roi-metric">
+        <label>CapEx (Initial)</label>
+        <value>$850</value>
+      </div>
+      <div class="roi-metric">
+        <label>Avoided Battery Cost</label>
+        <value style="color: var(--accent-green);">-$1,500</value>
+      </div>
+      <div class="roi-metric">
+        <label>Productivity Gain (40%)</label>
+        <value style="color: var(--accent-green);">+$4,800/yr</value>
+      </div>
+      <div class="roi-metric">
+        <label>OpEx Savings (3yr)</label>
+        <value style="color: var(--accent-green);">-$1,200</value>
+      </div>
+      <div class="roi-metric">
+        <label><strong>Net Benefit (Year 1)</strong></label>
+        <value style="font-size: 1.5rem;">+$5,450</value>
+      </div>
+      <div class="roi-metric">
+        <label><strong>ROI Period</strong></label>
+        <value style="font-size: 1.5rem;">2 months</value>
+      </div>
+    </div>
+    
+    <div class="roi-card">
+      <h3>🔨 Contractor (Construction/Renovation)</h3>
+      <div class="roi-metric">
+        <label>CapEx (Initial)</label>
+        <value>$850</value>
+      </div>
+      <div class="roi-metric">
+        <label>Avoided Battery Cost</label>
+        <value style="color: var(--accent-green);">-$2,000</value>
+      </div>
+      <div class="roi-metric">
+        <label>Time Savings (2.5h/day @ $75/h)</label>
+        <value style="color: var(--accent-green);">+$48,750/yr</value>
+      </div>
+      <div class="roi-metric">
+        <label>No Battery Replacement (3yr)</label>
+        <value style="color: var(--accent-green);">-$1,200</value>
+      </div>
+      <div class="roi-metric">
+        <label><strong>Net Benefit (Year 1)</strong></label>
+        <value style="font-size: 1.5rem;">+$50,000</value>
+      </div>
+      <div class="roi-metric">
+        <label><strong>ROI Period</strong></label>
+        <value style="font-size: 1.5rem;">1 week</value>
+      </div>
+    </div>
+    
+    <div class="roi-card">
+      <h3>🏪 Equipment Rental Business</h3>
+      <div class="roi-metric">
+        <label>CapEx (Initial)</label>
+        <value>$850</value>
+      </div>
+      <div class="roi-metric">
+        <label>Rental Rate</label>
+        <value>$75/day</value>
+      </div>
+      <div class="roi-metric">
+        <label>Utilization (50%)</label>
+        <value>180 days/yr</value>
+      </div>
+      <div class="roi-metric">
+        <label>Annual Revenue</label>
+        <value style="color: var(--accent-green);">$13,500</value>
+      </div>
+      <div class="roi-metric">
+        <label>OpEx (Negligible)</label>
+        <value style="color: var(--accent-red);">-$50/yr</value>
+      </div>
+      <div class="roi-metric">
+        <label><strong>Net Profit (Year 1)</strong></label>
+        <value style="font-size: 1.5rem;">+$12,600</value>
+      </div>
+      <div class="roi-metric">
+        <label><strong>ROI Period</strong></label>
+        <value style="font-size: 1.5rem;">12 rentals</value>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <h2>Who Benefits from ALLVOLT?</h2>
+    <p>Universal power solution for agriculture, construction, landscaping, and more</p>
+  </div>
+  
+  <div class="use-cases">
+    <div class="use-case">
+      <span class="use-case-icon">🫒</span>
+      <h4>Agriculture</h4>
+      <ul>
+        <li>Olive/fruit harvesting</li>
+        <li>Vineyard maintenance</li>
+        <li>Pruning & trimming</li>
+        <li>Field equipment</li>
+        <li>Irrigation pump power</li>
+      </ul>
+    </div>
+    
+    <div class="use-case">
+      <span class="use-case-icon">🏗️</span>
+      <h4>Construction</h4>
+      <ul>
+        <li>All-day job sites</li>
+        <li>Mixed tool brands</li>
+        <li>Remote locations</li>
+        <li>High-draw tools (saws, drills)</li>
+        <li>Multi-trade crews</li>
+      </ul>
+    </div>
+    
+    <div class="use-case">
+      <span class="use-case-icon">🌳</span>
+      <h4>Landscaping</h4>
+      <ul>
+        <li>Multi-property routes</li>
+        <li>Hedge trimmers, blowers</li>
+        <li>Chain saws</li>
+        <li>No noise restrictions</li>
+        <li>Increase daily capacity</li>
+      </ul>
+    </div>
+    
+    <div class="use-case">
+      <span class="use-case-icon">🏪</span>
+      <h4>Equipment Rental</h4>
+      <ul>
+        <li>Premium rental addon</li>
+        <li>Universal tool compatibility</li>
+        <li>High rental margins</li>
+        <li>Fast ROI (12 rentals)</li>
+        <li>Customer differentiator</li>
+      </ul>
+    </div>
+    
+    <div class="use-case">
+      <span class="use-case-icon">🔧</span>
+      <h4>Maintenance & Repair</h4>
+      <ul>
+        <li>Facility maintenance</li>
+        <li>HVAC installation</li>
+        <li>Electrical work</li>
+        <li>Plumbing jobs</li>
+        <li>Mobile service vans</li>
+      </ul>
+    </div>
+    
+    <div class="use-case">
+      <span class="use-case-icon">🏡</span>
+      <h4>Serious DIYers</h4>
+      <ul>
+        <li>Home renovation projects</li>
+        <li>Multi-brand tools</li>
+        <li>Weekend warriors</li>
+        <li>Off-grid cabins</li>
+        <li>Emergency backup power</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <h2>Market Opportunity</h2>
+    <p>Massive addressable markets with proven demand and 12%+ annual growth</p>
+  </div>
+  
+  <div class="market-grid">
+    <div class="market-card">
+      <h3>🔋 Cordless Power Tools</h3>
+      <div class="market-size">$28B</div>
+      <p class="market-growth">12% CAGR · 300M+ existing batteries globally</p>
+      <ul style="list-style: none; padding: 0; margin-top: 1.5rem;">
+        <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Fragmented ecosystem (20+ brands)</li>
+        <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Battery incompatibility pain point</li>
+        <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Professionals own 3+ brands</li>
+        <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ $200-400 per battery replacement</li>
+      </ul>
+    </div>
+    
+    <div class="market-card">
+      <h3>🌾 Electric Agriculture Equipment</h3>
+      <div class="market-size">$2.3B</div>
+      <p class="market-growth">15% CAGR · Driven by sustainability regulations</p>
+      <ul style="list-style: none; padding: 0; margin-top: 1.5rem;">
+        <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Olive harvesting: $850M market</li>
+        <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Vineyard equipment growing rapidly</li>
+        <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ EU pushing electric mandates</li>
+        <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ 8-12 hour runtime requirement</li>
+      </ul>
+    </div>
+    
+    <div class="market-card">
+      <h3>🏗️ Equipment Rental</h3>
+      <div class="market-size">$65B</div>
+      <p class="market-growth">4% CAGR · High-margin accessories growing faster</p>
+      <ul style="list-style: none; padding: 0; margin-top: 1.5rem;">
+        <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ $75/day premium rental rate</li>
+        <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Complements all cordless tools</li>
+        <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ 12-15 rental payback period</li>
+        <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Differentiates rental shops</li>
+      </ul>
+    </div>
+  </div>
+  
+  <div style="margin-top: 3rem; text-align: center;">
+    <p style="font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 1rem;">
+      <strong style="color: var(--primary); font-size: 2rem;">$95B+</strong> Total Addressable Market
+    </p>
+    <p style="color: var(--text-secondary);">
+      Targeting professionals, rental businesses, and agricultural users with immediate pain points
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <h2>Technical Specifications</h2>
+    <p>Professional-grade LiFePO4 battery system with universal compatibility</p>
+  </div>
+  
+  <div class="roi-grid">
+    <div class="roi-card">
+      <h3>⚡ ALLVOLT 100 (Standard)</h3>
+      <div class="roi-metric">
+        <label>Configuration</label>
+        <value style="font-size: 1rem; color: var(--text-primary);">6S2P (80Ah)</value>
+      </div>
+      <div class="roi-metric">
+        <label>Voltage</label>
+        <value style="font-size: 1rem; color: var(--text-primary);">19.2V nominal</value>
+      </div>
+      <div class="roi-metric">
+        <label>Capacity</label>
+        <value style="font-size: 1rem; color: var(--text-primary);">1.54 kWh</value>
+      </div>
+      <div class="roi-metric">
+        <label>Runtime</label>
+        <value style="font-size: 1rem; color: var(--text-primary);">5-6 hours</value>
+      </div>
+      <div class="roi-metric">
+        <label>Weight</label>
+        <value style="font-size: 1rem; color: var(--text-primary);">15.5 kg</value>
+      </div>
+      <div class="roi-metric">
+        <label>Cycle Life</label>
+        <value style="font-size: 1rem; color: var(--text-primary);">5,000+</value>
+      </div>
+      <div class="roi-metric">
+        <label><strong>Price</strong></label>
+        <value style="font-size: 1.5rem;">$850</value>
+      </div>
+    </div>
+    
+    <div class="roi-card">
+      <h3>⚡⚡ ALLVOLT 200 (Pro)</h3>
+      <div class="roi-metric">
+        <label>Configuration</label>
+        <value style="font-size: 1rem; color: var(--text-primary);">6S2P (100Ah)</value>
+      </div>
+      <div class="roi-metric">
+        <label>Voltage</label>
+        <value style="font-size: 1rem; color: var(--text-primary);">19.2V nominal</value>
+      </div>
+      <div class="roi-metric">
+        <label>Capacity</label>
+        <value style="font-size: 1rem; color: var(--text-primary);">1.92 kWh</value>
+      </div>
+      <div class="roi-metric">
+        <label>Runtime</label>
+        <value style="font-size: 1rem; color: var(--text-primary);">6-8 hours</value>
+      </div>
+      <div class="roi-metric">
+        <label>Weight</label>
+        <value style="font-size: 1rem; color: var(--text-primary);">18.5 kg</value>
+      </div>
+      <div class="roi-metric">
+        <label>Cycle Life</label>
+        <value style="font-size: 1rem; color: var(--text-primary);">5,000+</value>
+      </div>
+      <div class="roi-metric">
+        <label><strong>Price</strong></label>
+        <value style="font-size: 1.5rem;">$1,050</value>
+      </div>
+    </div>
+    
+    <div class="roi-card">
+      <h3>🔌 Universal Features</h3>
+      <div class="roi-metric">
+        <label>Tool Compatibility</label>
+        <value style="font-size: 1rem; color: var(--text-primary);">18V/20V direct</value>
+      </div>
+      <div class="roi-metric">
+        <label>12V Output</label>
+        <value style="font-size: 1rem; color: var(--text-primary);">Via DC-DC converter</value>
+      </div>
+      <div class="roi-metric">
+        <label>Cable Length</label>
+        <value style="font-size: 1rem; color: var(--text-primary);">10 meters</value>
+      </div>
+      <div class="roi-metric">
+        <label>Waterproof Rating</label>
+        <value style="font-size: 1rem; color: var(--text-primary);">IP67</value>
+      </div>
+      <div class="roi-metric">
+        <label>Display</label>
+        <value style="font-size: 1rem; color: var(--text-primary);">V, A, %, Ah, Wh</value>
+      </div>
+      <div class="roi-metric">
+        <label>Portability</label>
+        <value style="font-size: 1rem; color: var(--text-primary);">Rolling case</value>
+      </div>
+      <div class="roi-metric">
+        <label><strong>Warranty</strong></label>
+        <value style="font-size: 1.5rem;">3 years</value>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background: var(--bg-card); border-radius: 24px; border: 1px solid var(--border); padding: 4rem 3rem;">
+  <div class="section-header">
+    <h2>Product Development Roadmap</h2>
+    <p>From prototype to market-ready product in 12 months</p>
+  </div>
+  
+  <div style="max-width: 800px; margin: 0 auto;">
+    <div style="display: grid; gap: 2rem; margin-top: 3rem;">
+      <div style="border-left: 3px solid var(--primary); padding-left: 2rem;">
+        <div style="color: var(--primary); font-weight: 700; margin-bottom: 0.5rem;">Q2 2026 — Prototype & Validation</div>
+        <ul style="list-style: none; padding: 0;">
+          <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Build 80Ah DIY prototype ($850)</li>
+          <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Field test: 100+ hours olive harvesting</li>
+          <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Validate 6-hour runtime claim</li>
+          <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Test universal adapter system</li>
+          <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Document user feedback</li>
+        </ul>
+      </div>
+      
+      <div style="border-left: 3px solid var(--accent-blue); padding-left: 2rem;">
+        <div style="color: var(--accent-blue); font-weight: 700; margin-bottom: 0.5rem;">Q3 2026 — Engineering & IP</div>
+        <ul style="list-style: none; padding: 0;">
+          <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ File provisional patents (adapter system)</li>
+          <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Design production enclosure (injection molded)</li>
+          <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Develop 10 adapter variants (top tool brands)</li>
+          <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Safety certifications (CE, UL planning)</li>
+          <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Source manufacturing partners (Asia + EU)</li>
+        </ul>
+      </div>
+      
+      <div style="border-left: 3px solid var(--accent-green); padding-left: 2rem;">
+        <div style="color: var(--accent-green); font-weight: 700; margin-bottom: 0.5rem;">Q4 2026 — Manufacturing & Launch</div>
+        <ul style="list-style: none; padding: 0;">
+          <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Manufacture 500 units (beta batch)</li>
+          <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Crowdfunding campaign (Kickstarter/Indiegogo)</li>
+          <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Target: $500K raised, 600 pre-orders</li>
+          <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Ship to early backers</li>
+          <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Collect testimonials & case studies</li>
+        </ul>
+      </div>
+      
+      <div style="border-left: 3px solid #8b5cf6; padding-left: 2rem;">
+        <div style="color: #8b5cf6; font-weight: 700; margin-bottom: 0.5rem;">Q1 2027 — Scale & Distribution</div>
+        <ul style="list-style: none; padding: 0;">
+          <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Partner with rental equipment chains</li>
+          <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Agricultural co-op distribution (Spain, Italy, Greece)</li>
+          <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ E-commerce direct-to-consumer</li>
+          <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Manufacture 5,000 units (full production)</li>
+          <li style="padding: 0.5rem 0; color: var(--text-secondary);">✓ Target: $4.2M revenue, 5,000 units sold</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <h2>Be Part of the Solution</h2>
+  </div>
+  
+  <div class="roi-grid">
+    <div class="roi-card" style="border: 2px solid var(--primary);">
+      <h3>💼 For Investors</h3>
+      <p style="color: var(--text-secondary); margin-bottom: 2rem;">Seeking $150K seed round to manufacture beta batch and launch crowdfunding</p>
+      <div class="roi-metric">
+        <label>Use of Funds</label>
+        <value style="font-size: 1rem; color: var(--text-primary);"></value>
+      </div>
+      <ul style="list-style: none; padding: 0; margin-bottom: 2rem;">
+        <li style="padding: 0.5rem 0; color: var(--text-secondary);">• $80K: Manufacturing (500 units)</li>
+        <li style="padding: 0.5rem 0; color: var(--text-secondary);">• $30K: Tooling & certifications</li>
+        <li style="padding: 0.5rem 0; color: var(--text-secondary);">• $20K: Marketing & crowdfunding</li>
+        <li style="padding: 0.5rem 0; color: var(--text-secondary);">• $20K: Working capital</li>
+      </ul>
+      <div class="roi-metric" style="border-top: 2px solid var(--primary); padding-top: 1.5rem;">
+        <label><strong>Target Return</strong></label>
+        <value style="font-size: 1.5rem;">10× in 3yrs</value>
+      </div>
+    </div>
+    
+    <div class="roi-card" style="border: 2px solid var(--accent-green);">
+      <h3>🛒 For Customers</h3>
+      <p style="color: var(--text-secondary); margin-bottom: 2rem;">Pre-order ALLVOLT and be among the first to eliminate battery hassles forever</p>
+      <div class="roi-metric">
+        <label>ALLVOLT 100 (Standard)</label>
+        <value style="font-size: 1.5rem; color: var(--accent-green);">$749</value>
+      </div>
+      <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 1rem;">Early bird pricing ($100 off retail)</p>
+      <div class="roi-metric">
+        <label>ALLVOLT 200 (Pro)</label>
+        <value style="font-size: 1.5rem; color: var(--accent-green);">$949</value>
+      </div>
+      <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 2rem;">Early bird pricing ($100 off retail)</p>
+      <div class="roi-metric" style="border-top: 2px solid var(--accent-green); padding-top: 1.5rem;">
+        <label><strong>Ships</strong></label>
+        <value style="font-size: 1.5rem;">Q4 2026</value>
+      </div>
+    </div>
+    
+    <div class="roi-card" style="border: 2px solid var(--accent-blue);">
+      <h3>🤝 For Partners</h3>
+      <p style="color: var(--text-secondary); margin-bottom: 2rem;">Rental shops, co-ops, and distributors: pilot program available now</p>
+      <div class="roi-metric">
+        <label>Pilot Program</label>
+        <value style="font-size: 1rem; color: var(--text-primary);">10 units</value>
+      </div>
+      <ul style="list-style: none; padding: 0; margin-bottom: 2rem;">
+        <li style="padding: 0.5rem 0; color: var(--text-secondary);">• 30% wholesale discount</li>
+        <li style="padding: 0.5rem 0; color: var(--text-secondary);">• Co-branded packaging</li>
+        <li style="padding: 0.5rem 0; color: var(--text-secondary);">• Marketing materials included</li>
+        <li style="padding: 0.5rem 0; color: var(--text-secondary);">• Revenue share model available</li>
+      </ul>
+      <div class="roi-metric" style="border-top: 2px solid var(--accent-blue); padding-top: 1.5rem;">
+        <label><strong>Your ROI</strong></label>
+        <value style="font-size: 1.5rem;">12 rentals</value>
+      </div>
+    </div>
+  </div>
+  
+  <div style="text-align: center; margin-top: 3rem;">
+    <a href="mailto:hello@allvolt.com" class="btn btn-primary">Get in Touch</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <p><strong>ALLVOLT</strong> — Universal Battery Backpack System</p>
+  <p>digitalAIventures LLC · Wyoming, USA</p>
+  <p style="margin-top: 1rem;">
+    <a href="mailto:hello@allvolt.com">hello@allvolt.com</a> · 
+    <a href="https://allvolt.com">allvolt.com</a>
+  </p>
+  <p style="margin-top: 2rem; font-size: 0.75rem; color: #555;">
+    © 2026 digitalAIventures LLC. All rights reserved. Patent pending.
+  </p>
+</footer>
+
+</body>
+</html>

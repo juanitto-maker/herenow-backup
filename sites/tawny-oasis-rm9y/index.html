@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECO PCM Insulation Panels — Modular DIY System</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --earth:#2c1810;--sand:#f4e8d4;--terracotta:#c4613a;--olive:#5a6e3a;--warm:#e8a94a;
+  --clay:#a0522d;--cream:#faf5ec;--stone:#8b7d6b;--dark:#1a120d;--moss:#3d5a28;
+  --card-bg:rgba(250,245,236,0.92);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--earth);color:var(--dark);line-height:1.6;overflow-x:hidden}
+
+/* HERO */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+  padding:2rem;position:relative;
+  background:linear-gradient(160deg,#2c1810 0%,#4a2a1a 30%,#5a6e3a 70%,#3d5a28 100%);
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-badge{
+  display:inline-block;font-size:.7rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--warm);border:1px solid rgba(232,169,74,0.4);border-radius:999px;padding:.4rem 1.2rem;
+  margin-bottom:1.5rem;backdrop-filter:blur(4px);background:rgba(232,169,74,0.08);
+  animation:fadeDown .8s ease both;position:relative;z-index:1;
+}
+.hero h1{
+  font-family:'DM Serif Display',serif;font-size:clamp(2.2rem,6vw,4.5rem);color:var(--sand);
+  line-height:1.1;margin-bottom:1rem;max-width:800px;
+  animation:fadeDown 1s ease .2s both;position:relative;z-index:1;
+}
+.hero h1 span{color:var(--warm)}
+.hero-sub{
+  font-size:clamp(1rem,2.5vw,1.3rem);color:rgba(244,232,212,0.7);max-width:600px;font-weight:300;
+  animation:fadeDown 1s ease .4s both;position:relative;z-index:1;
+}
+.hero-price{
+  display:inline-flex;align-items:baseline;gap:.4rem;margin-top:2rem;
+  background:rgba(196,97,58,0.2);border:1px solid rgba(196,97,58,0.3);border-radius:1rem;padding:.8rem 2rem;
+  animation:fadeDown 1s ease .6s both;position:relative;z-index:1;
+}
+.hero-price .num{font-family:'DM Serif Display',serif;font-size:2.5rem;color:var(--warm)}
+.hero-price .unit{font-size:1rem;color:rgba(244,232,212,0.6)}
+.scroll-hint{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  color:rgba(244,232,212,0.3);font-size:.8rem;letter-spacing:.1em;
+  animation:pulse 2s infinite;z-index:1;
+}
+
+/* SECTIONS */
+section{padding:clamp(3rem,8vw,6rem) clamp(1rem,4vw,3rem)}
+.section-cream{background:var(--cream)}
+.section-sand{background:var(--sand)}
+.section-earth{background:var(--earth);color:var(--sand)}
+.section-olive{background:linear-gradient(170deg,var(--moss),var(--olive));color:var(--sand)}
+.section-terra{background:linear-gradient(170deg,#4a2a1a,var(--clay));color:var(--sand)}
+.container{max-width:960px;margin:0 auto}
+.section-label{
+  font-size:.7rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--terracotta);margin-bottom:.5rem;
+}
+.section-earth .section-label,.section-olive .section-label,.section-terra .section-label{color:var(--warm)}
+.section-title{
+  font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);
+  margin-bottom:1.5rem;line-height:1.2;
+}
+.section-earth .section-title,.section-olive .section-title,.section-terra .section-title{color:#fff}
+
+/* HOW IT WORKS - LAYERS */
+.layers-stack{display:flex;flex-direction:column;gap:.6rem;max-width:600px;margin:2rem auto}
+.layer{
+  display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;border-radius:.75rem;
+  border-left:4px solid;transition:transform .2s;
+}
+.layer:hover{transform:translateX(6px)}
+.layer-num{
+  width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:.85rem;color:#fff;flex-shrink:0;
+}
+.layer-info h4{font-size:.95rem;font-weight:600;margin-bottom:.15rem}
+.layer-info p{font-size:.8rem;opacity:.7;line-height:1.4}
+.l1{border-color:#c4613a;background:rgba(196,97,58,0.08)}.l1 .layer-num{background:#c4613a}
+.l2{border-color:#5a6e3a;background:rgba(90,110,58,0.08)}.l2 .layer-num{background:#5a6e3a}
+.l3{border-color:#e8a94a;background:rgba(232,169,74,0.08)}.l3 .layer-num{background:#e8a94a}
+.l4{border-color:#a0522d;background:rgba(160,82,45,0.08)}.l4 .layer-num{background:#a0522d}
+.l5{border-color:#8b7d6b;background:rgba(139,125,107,0.08)}.l5 .layer-num{background:#8b7d6b}
+.layer-note{
+  text-align:center;margin-top:1.5rem;font-size:.85rem;color:var(--stone);
+  font-style:italic;padding:1rem;background:rgba(90,110,58,0.06);border-radius:.5rem;
+}
+
+/* VARIATION CARDS */
+.var-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem;margin-top:2rem}
+.var-card{
+  background:rgba(26,18,13,0.6);backdrop-filter:blur(8px);border:1px solid rgba(232,169,74,0.15);
+  border-radius:1rem;padding:1.5rem;transition:transform .2s,border-color .3s;
+}
+.var-card:hover{transform:translateY(-4px);border-color:var(--warm)}
+.var-icon{font-size:2.2rem;margin-bottom:.8rem;display:block}
+.var-tag{
+  display:inline-block;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:.2rem .6rem;border-radius:999px;margin-bottom:.6rem;
+}
+.tag-original{background:rgba(90,110,58,0.3);color:#a3c462}
+.tag-best{background:rgba(232,169,74,0.3);color:var(--warm)}
+.tag-eco{background:rgba(196,97,58,0.3);color:#e8845a}
+.tag-fire{background:rgba(160,82,45,0.3);color:#d4915a}
+.tag-free{background:rgba(61,90,40,0.3);color:#8abf5a}
+.var-card h3{font-family:'DM Serif Display',serif;font-size:1.2rem;color:#fff;margin-bottom:.5rem}
+.var-card p{font-size:.82rem;color:rgba(244,232,212,0.6);line-height:1.5;margin-bottom:.8rem}
+.var-detail{font-size:.75rem;color:rgba(244,232,212,0.4);border-top:1px solid rgba(255,255,255,0.06);padding-top:.6rem}
+.var-cost{
+  display:inline-block;font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--warm);
+  margin-top:.3rem;
+}
+
+/* FILL MATERIALS TABLE */
+.fill-table{width:100%;border-collapse:collapse;margin-top:1.5rem;font-size:.85rem}
+.fill-table thead th{
+  text-align:left;padding:.7rem .8rem;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--stone);border-bottom:2px solid rgba(139,125,107,0.2);
+}
+.fill-table tbody td{
+  padding:.65rem .8rem;border-bottom:1px solid rgba(139,125,107,0.1);vertical-align:top;
+}
+.fill-table tbody tr:hover{background:rgba(90,110,58,0.04)}
+.fill-icon{font-size:1.2rem;margin-right:.3rem;vertical-align:middle}
+.fill-free{color:var(--olive);font-weight:600;font-size:.75rem}
+.fill-cheap{color:var(--warm);font-weight:600;font-size:.75rem}
+.rating{color:var(--terracotta);letter-spacing:2px;font-size:.7rem}
+
+/* COST TABLE */
+.cost-wrap{overflow-x:auto;margin-top:1.5rem;-webkit-overflow-scrolling:touch}
+.cost-table{width:100%;border-collapse:collapse;min-width:600px;font-size:.82rem}
+.cost-table thead th{
+  padding:.8rem .6rem;text-align:center;font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;
+  color:rgba(244,232,212,0.4);border-bottom:1px solid rgba(232,169,74,0.2);
+}
+.cost-table thead th:first-child{text-align:left}
+.cost-table tbody td{
+  padding:.7rem .6rem;text-align:center;border-bottom:1px solid rgba(255,255,255,0.04);
+  color:rgba(244,232,212,0.7);
+}
+.cost-table tbody td:first-child{text-align:left;color:#fff;font-weight:500}
+.cost-total{
+  font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--warm)!important;font-weight:400!important;
+}
+.cost-table tfoot td{
+  padding:.8rem .6rem;text-align:center;border-top:2px solid rgba(232,169,74,0.3);
+  font-weight:700;color:var(--warm);font-size:.95rem;
+}
+.cost-table tfoot td:first-child{text-align:left;color:#fff}
+
+/* THERMAL PERFORMANCE */
+.thermal-compare{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:2rem}
+@media(max-width:600px){.thermal-compare{grid-template-columns:1fr}}
+.thermal-card{
+  padding:1.5rem;border-radius:1rem;text-align:center;
+}
+.thermal-bad{background:rgba(196,97,58,0.1);border:1px solid rgba(196,97,58,0.3)}
+.thermal-good{background:rgba(90,110,58,0.1);border:1px solid rgba(90,110,58,0.3)}
+.thermal-card h4{font-family:'DM Serif Display',serif;font-size:1.1rem;margin-bottom:1rem}
+.thermal-bad h4{color:var(--terracotta)}
+.thermal-good h4{color:#8abf5a}
+.temp-row{display:flex;justify-content:space-between;padding:.4rem 0;font-size:.85rem}
+.temp-row .time{color:var(--stone);font-size:.8rem}
+.swing{
+  display:inline-block;margin-top:1rem;padding:.4rem 1rem;border-radius:999px;
+  font-weight:700;font-size:1.1rem;
+}
+.swing-bad{background:rgba(196,97,58,0.2);color:#e8845a}
+.swing-good{background:rgba(90,110,58,0.2);color:#8abf5a}
+.rvalue-box{
+  margin-top:2rem;padding:1.2rem;background:rgba(232,169,74,0.06);border:1px solid rgba(232,169,74,0.15);
+  border-radius:.75rem;
+}
+.rvalue-box h4{font-family:'DM Serif Display',serif;color:var(--warm);margin-bottom:.8rem}
+.rvalue-row{display:flex;justify-content:space-between;align-items:center;padding:.3rem 0;font-size:.85rem}
+.rvalue-bar{height:8px;border-radius:4px;margin-left:1rem;flex:1;max-width:200px;position:relative}
+.rvalue-bar span{
+  position:absolute;right:-2.5rem;top:-3px;font-size:.75rem;font-weight:600;color:var(--warm);
+}
+
+/* GLUES */
+.glue-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1.5rem}
+.glue-card{
+  background:var(--card-bg);border:1px solid rgba(139,125,107,0.15);border-radius:.75rem;padding:1.2rem;
+}
+.glue-card h4{font-family:'DM Serif Display',serif;font-size:1rem;color:var(--earth);margin-bottom:.4rem}
+.glue-card .glue-ingr{font-size:.78rem;color:var(--stone);margin-bottom:.5rem;line-height:1.5}
+.glue-card .glue-use{
+  font-size:.72rem;font-weight:600;color:var(--olive);text-transform:uppercase;letter-spacing:.05em;
+  border-top:1px solid rgba(139,125,107,0.1);padding-top:.5rem;
+}
+
+/* BUSINESS */
+.biz-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:1.5rem}
+.biz-card{
+  background:rgba(26,18,13,0.5);border:1px solid rgba(232,169,74,0.12);border-radius:1rem;padding:1.5rem;
+  position:relative;overflow:hidden;
+}
+.biz-card.featured{border-color:var(--warm);background:rgba(232,169,74,0.08)}
+.biz-card.featured::before{
+  content:'BEST';position:absolute;top:12px;right:-28px;transform:rotate(45deg);
+  background:var(--warm);color:var(--earth);font-size:.55rem;font-weight:700;
+  padding:.15rem 2rem;letter-spacing:.1em;
+}
+.biz-card h4{font-family:'DM Serif Display',serif;color:#fff;font-size:1.1rem;margin-bottom:.3rem}
+.biz-price-tag{font-size:1.5rem;font-family:'DM Serif Display',serif;color:var(--warm);margin:.5rem 0}
+.biz-card ul{list-style:none;margin-top:.5rem}
+.biz-card li{font-size:.8rem;color:rgba(244,232,212,0.6);padding:.2rem 0;padding-left:1.2rem;position:relative}
+.biz-card li::before{content:'→';position:absolute;left:0;color:var(--warm)}
+
+/* FOOTER */
+.site-footer{
+  text-align:center;padding:3rem 1rem;background:var(--dark);color:rgba(244,232,212,0.3);font-size:.75rem;
+}
+.site-footer a{color:var(--warm);text-decoration:none}
+
+/* UTILS */
+.mt-1{margin-top:1rem}.mt-2{margin-top:2rem}
+.text-center{text-align:center}
+.highlight{color:var(--warm);font-weight:600}
+
+/* ANIMATIONS */
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:.6}}
+
+/* RESPONSIVE */
+@media(max-width:480px){
+  .var-grid{grid-template-columns:1fr}
+  .glue-grid{grid-template-columns:1fr}
+  .biz-cards{grid-template-columns:1fr}
+  .layer{padding:.8rem}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Eco DIY Insulation</div>
+  <h1>PCM Insulation <span>Modular Panels</span></h1>
+  <p class="hero-sub">A natural, low-cost, fully recyclable ceiling insulation system using recycled materials and phase-change thermal storage. Designed for warm climates.</p>
+  <div class="hero-price">
+    <span class="num">€5–8</span>
+    <span class="unit">/ m²</span>
+  </div>
+  <div class="scroll-hint">↓ scroll to explore</div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section-cream">
+  <div class="container">
+    <div class="section-label">System Architecture</div>
+    <div class="section-title">Universal 5-Layer Sandwich</div>
+    <p style="color:var(--stone);max-width:600px;font-size:.9rem">Every panel variant shares the same structural logic — a modular sandwich where each layer can be swapped independently. The core and fill materials are interchangeable, keeping the system adaptable to whatever recycled materials are locally available.</p>
+    
+    <div class="layers-stack">
+      <div class="layer l1">
+        <div class="layer-num">1</div>
+        <div class="layer-info">
+          <h4>Outer Shell (toward roof)</h4>
+          <p>Waterproof + reflective barrier. Double cardboard with aluminum foil, or Tetrapak panels overlapped like tiles. ~1.2 cm</p>
+        </div>
+      </div>
+      <div class="layer l2">
+        <div class="layer-num">2</div>
+        <div class="layer-info">
+          <h4>Insulation Core (interchangeable)</h4>
+          <p>The modular heart — egg cartons, Tetrapak cells, jute pouches, PET bottles, or tin cans. Filled with perlite, crushed cork, or other fill. 3–4 cm</p>
+        </div>
+      </div>
+      <div class="layer l3">
+        <div class="layer-num">3</div>
+        <div class="layer-info">
+          <h4>PCM Thermal Buffer (the magic)</h4>
+          <p>Vacuum-sealed bags of paraffin or beeswax (melting point 25–30°C). Absorbs heat by day, releases warmth at night. ~200 kJ/m²</p>
+        </div>
+      </div>
+      <div class="layer l4">
+        <div class="layer-num">4</div>
+        <div class="layer-info">
+          <h4>Inner Structural Layer</h4>
+          <p>Double-layered cardboard base forming the rigid sandwich bottom. ~1.2 cm</p>
+        </div>
+      </div>
+      <div class="layer l5">
+        <div class="layer-num">5</div>
+        <div class="layer-info">
+          <h4>Interior Finish (visible)</h4>
+          <p>Craft paper, jute fabric, linen, or limewash-painted cardboard. Rustic Andalusian aesthetic. Breathable.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="layer-note">
+      Each 1×1 m panel (~8 cm thick) rests on 3 parallel caña beams (30–35 mm ⌀), spaced ~40 cm apart.<br>
+      Supported by locally harvested reed — cost-free if foraged.
+    </div>
+  </div>
+</section>
+
+<!-- CORE VARIATIONS -->
+<section class="section-earth">
+  <div class="container">
+    <div class="section-label">Core Modules</div>
+    <div class="section-title">5 Interchangeable Core Variations</div>
+    <p style="color:rgba(244,232,212,0.6);max-width:550px;font-size:.9rem">The insulation core is the most adaptable layer. Use whichever recycled container is most abundant in your area.</p>
+    
+    <div class="var-grid">
+      
+      <div class="var-card">
+        <span class="var-icon">🥚</span>
+        <span class="var-tag tag-original">Original</span>
+        <h3>V1 — Egg Carton</h3>
+        <p>Classic approach. Egg carton cells filled with perlite. Each cup traps air + mineral insulation. Widely available but inconsistent sizing and moisture-vulnerable.</p>
+        <div class="var-detail">
+          <strong>Sourcing:</strong> Free from shops, restaurants<br>
+          <strong>Moisture resistance:</strong> Low — needs foil barrier<br>
+          <div class="var-cost">Core: ~€0 + fill</div>
+        </div>
+      </div>
+      
+      <div class="var-card">
+        <span class="var-icon">🧃</span>
+        <span class="var-tag tag-best">★ Best Option</span>
+        <h3>V2 — Tetrapak Pairs</h3>
+        <p>Cut one end off a Tetrapak box, fill with perlite, match open-to-open with another box. Creates a fully sealed, waterproof cell with built-in aluminum lining. Scalable into panel modules.</p>
+        <div class="var-detail">
+          <strong>Sourcing:</strong> Abundant — bars, schools, recycling points<br>
+          <strong>Moisture resistance:</strong> Excellent — PE + aluminum built-in<br>
+          <strong>Bonus:</strong> Internal radiant micro-barriers<br>
+          <div class="var-cost">Core: ~€0 + fill</div>
+        </div>
+      </div>
+      
+      <div class="var-card">
+        <span class="var-icon">🪢</span>
+        <span class="var-tag tag-eco">Eco-Premium</span>
+        <h3>V3 — Jute Bag Quilted</h3>
+        <p>Jute fabric stitched or tied into a waffle grid of pouches, each pocket filled with perlite or crushed cork. Breathable, fire-resistant when lime-treated, beautiful natural texture.</p>
+        <div class="var-detail">
+          <strong>Sourcing:</strong> Coffee sacks, agricultural supply<br>
+          <strong>Moisture resistance:</strong> Medium — breathable not waterproof<br>
+          <strong>Bonus:</strong> Doubles as interior finish layer<br>
+          <div class="var-cost">Core: ~€0.50/m² + fill</div>
+        </div>
+      </div>
+      
+      <div class="var-card">
+        <span class="var-icon">🍶</span>
+        <span class="var-tag tag-free">Free Material</span>
+        <h3>V4 — PET Bottles</h3>
+        <p>Plastic bottles cut to 4 cm height, filled with perlite, paired mouth-to-mouth like Tetrapak. Lightweight, waterproof, and practically infinite supply from any recycling bin.</p>
+        <div class="var-detail">
+          <strong>Sourcing:</strong> Everywhere — ultimate waste material<br>
+          <strong>Moisture resistance:</strong> Excellent — plastic shell<br>
+          <strong>Note:</strong> Irregular shapes = needs careful packing<br>
+          <div class="var-cost">Core: ~€0 + fill</div>
+        </div>
+      </div>
+      
+      <div class="var-card">
+        <span class="var-icon">🥫</span>
+        <span class="var-tag tag-fire">Fireproof</span>
+        <h3>V5 — Tin Cans</h3>
+        <p>Sardine, tuna, and food tins cleaned and filled with perlite. Completely fireproof, rigid, and durable. Heavier than other options but indestructible. Metal conducts, so needs air gaps.</p>
+        <div class="var-detail">
+          <strong>Sourcing:</strong> Free from restaurants, households<br>
+          <strong>Moisture resistance:</strong> Excellent (if no rust)<br>
+          <strong>Note:</strong> Heavier — may need extra caña support<br>
+          <div class="var-cost">Core: ~€0 + fill</div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- FILL MATERIALS -->
+<section class="section-sand">
+  <div class="container">
+    <div class="section-label">Fill Materials</div>
+    <div class="section-title">What Goes Inside the Core</div>
+    <p style="color:var(--stone);max-width:550px;font-size:.9rem">The fill material is also interchangeable. Mix and match based on local availability. All options are natural, non-toxic, and lightweight.</p>
+    
+    <table class="fill-table">
+      <thead>
+        <tr><th>Material</th><th>Cost / m²</th><th>Insulation</th><th>Moisture</th><th>Fire</th><th>Source</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="fill-icon">⚪</span> <strong>Expanded Perlite</strong></td>
+          <td><span class="fill-cheap">€2.00</span></td>
+          <td><span class="rating">★★★★★</span></td>
+          <td><span class="rating">★★★☆☆</span></td>
+          <td><span class="rating">★★★★★</span></td>
+          <td>Garden centers</td>
+        </tr>
+        <tr>
+          <td><span class="fill-icon">🟤</span> <strong>Crushed Wine Cork</strong></td>
+          <td><span class="fill-free">FREE</span></td>
+          <td><span class="rating">★★★★☆</span></td>
+          <td><span class="rating">★★★★★</span></td>
+          <td><span class="rating">★★★☆☆</span></td>
+          <td>Restaurants, bars</td>
+        </tr>
+        <tr>
+          <td><span class="fill-icon">☕</span> <strong>Coffee Chaff / Husks</strong></td>
+          <td><span class="fill-free">FREE</span></td>
+          <td><span class="rating">★★★☆☆</span></td>
+          <td><span class="rating">★★☆☆☆</span></td>
+          <td><span class="rating">★★☆☆☆</span></td>
+          <td>Coffee roasters</td>
+        </tr>
+        <tr>
+          <td><span class="fill-icon">👖</span> <strong>Shredded Denim</strong></td>
+          <td><span class="fill-free">FREE</span></td>
+          <td><span class="rating">★★★★☆</span></td>
+          <td><span class="rating">★★☆☆☆</span></td>
+          <td><span class="rating">★★☆☆☆</span></td>
+          <td>Textile recycling</td>
+        </tr>
+        <tr>
+          <td><span class="fill-icon">🌾</span> <strong>Dry Straw (chopped)</strong></td>
+          <td><span class="fill-free">FREE</span></td>
+          <td><span class="rating">★★★☆☆</span></td>
+          <td><span class="rating">★☆☆☆☆</span></td>
+          <td><span class="rating">★☆☆☆☆</span></td>
+          <td>Fields, farms</td>
+        </tr>
+        <tr>
+          <td><span class="fill-icon">🔶</span> <strong>Vermiculite</strong></td>
+          <td><span class="fill-cheap">€2.50</span></td>
+          <td><span class="rating">★★★★☆</span></td>
+          <td><span class="rating">★★★★☆</span></td>
+          <td><span class="rating">★★★★★</span></td>
+          <td>Garden centers</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- COST ESTIMATION -->
+<section class="section-terra">
+  <div class="container">
+    <div class="section-label">Cost Analysis</div>
+    <div class="section-title">Estimated Cost per m² by Variation</div>
+    <p style="color:rgba(244,232,212,0.55);max-width:550px;font-size:.9rem">All variations share the same PCM layer cost (~€5). The difference is in the core container and fill. Free recycled cores bring the total as low as €5/m².</p>
+    
+    <div class="cost-wrap">
+      <table class="cost-table">
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>V1 Egg Carton</th>
+            <th>V2 Tetrapak ★</th>
+            <th>V3 Jute</th>
+            <th>V4 PET</th>
+            <th>V5 Tin Can</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Core container</td>
+            <td>€0 (free)</td>
+            <td>€0 (free)</td>
+            <td>€0.50</td>
+            <td>€0 (free)</td>
+            <td>€0 (free)</td>
+          </tr>
+          <tr>
+            <td>Fill (perlite)</td>
+            <td>€2.00</td>
+            <td>€2.00</td>
+            <td>€2.00</td>
+            <td>€2.00</td>
+            <td>€2.00</td>
+          </tr>
+          <tr>
+            <td>PCM wax (2 kg)</td>
+            <td>€4.00</td>
+            <td>€4.00</td>
+            <td>€4.00</td>
+            <td>€4.00</td>
+            <td>€4.00</td>
+          </tr>
+          <tr>
+            <td>Vacuum bags</td>
+            <td>€1.00</td>
+            <td>€1.00</td>
+            <td>€1.00</td>
+            <td>€1.00</td>
+            <td>€1.00</td>
+          </tr>
+          <tr>
+            <td>Foil barrier</td>
+            <td>€0.50</td>
+            <td>€0 (built-in)</td>
+            <td>€0.50</td>
+            <td>€0.50</td>
+            <td>€0.50</td>
+          </tr>
+          <tr>
+            <td>Glue / bonding</td>
+            <td>€0.50</td>
+            <td>€0.30</td>
+            <td>€0.50</td>
+            <td>€0.50</td>
+            <td>€0.50</td>
+          </tr>
+          <tr>
+            <td>Outer cardboard</td>
+            <td>€0 (free)</td>
+            <td>€0 (free)</td>
+            <td>€0 (free)</td>
+            <td>€0 (free)</td>
+            <td>€0 (free)</td>
+          </tr>
+          <tr>
+            <td>Caña beams</td>
+            <td>€0 (free)</td>
+            <td>€0 (free)</td>
+            <td>€0 (free)</td>
+            <td>€0 (free)</td>
+            <td>€0 (free)</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>Total / m²</td>
+            <td class="cost-total">€8.00</td>
+            <td class="cost-total" style="font-size:1.2rem">€7.30 ★</td>
+            <td class="cost-total">€8.50</td>
+            <td class="cost-total">€8.00</td>
+            <td class="cost-total">€8.00</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    
+    <p style="text-align:center;margin-top:1.5rem;font-size:.8rem;color:rgba(244,232,212,0.4)">
+      With free fill (crushed cork instead of perlite): V2 Tetrapak drops to <strong style="color:var(--warm)">~€5.30/m²</strong><br>
+      One-time cost: vacuum sealer device ~€30
+    </p>
+  </div>
+</section>
+
+<!-- THERMAL PERFORMANCE -->
+<section class="section-cream">
+  <div class="container">
+    <div class="section-label">Thermal Performance</div>
+    <div class="section-title">Why PCM Changes Everything</div>
+    <p style="color:var(--stone);max-width:550px;font-size:.9rem">Standard insulation only slows heat transfer. PCM actively <em>stores and releases</em> energy, flattening temperature swings — exactly what Andalusian homes need.</p>
+    
+    <div class="thermal-compare">
+      <div class="thermal-card thermal-bad">
+        <h4>Without PCM Panels</h4>
+        <div class="temp-row"><span class="time">7:00 AM</span><span>22°C</span></div>
+        <div class="temp-row"><span class="time">12:00 PM</span><span>30°C</span></div>
+        <div class="temp-row"><span class="time">2:00 PM</span><span>35°C 🥵</span></div>
+        <div class="temp-row"><span class="time">6:00 PM</span><span>31°C</span></div>
+        <div class="temp-row"><span class="time">10:00 PM</span><span>25°C</span></div>
+        <div class="swing swing-bad">13°C swing</div>
+      </div>
+      <div class="thermal-card thermal-good">
+        <h4>With PCM Panels ✓</h4>
+        <div class="temp-row"><span class="time">7:00 AM</span><span>25°C</span></div>
+        <div class="temp-row"><span class="time">12:00 PM</span><span>27°C</span></div>
+        <div class="temp-row"><span class="time">2:00 PM</span><span>28°C 😊</span></div>
+        <div class="temp-row"><span class="time">6:00 PM</span><span>27°C</span></div>
+        <div class="temp-row"><span class="time">10:00 PM</span><span>26°C</span></div>
+        <div class="swing swing-good">Only 3°C swing!</div>
+      </div>
+    </div>
+    
+    <div class="rvalue-box">
+      <h4>R-Value Comparison (thermal resistance)</h4>
+      <div class="rvalue-row">
+        <span>Cork 3 cm</span>
+        <div class="rvalue-bar" style="background:linear-gradient(90deg,var(--stone) 84%,transparent 84%);"><span>4.72</span></div>
+      </div>
+      <div class="rvalue-row">
+        <span>XPS 2.5 cm</span>
+        <div class="rvalue-bar" style="background:linear-gradient(90deg,var(--stone) 88%,transparent 88%);"><span>4.92</span></div>
+      </div>
+      <div class="rvalue-row">
+        <span style="font-weight:700;color:var(--warm)">PCM Panel 8 cm ★</span>
+        <div class="rvalue-bar" style="background:linear-gradient(90deg,var(--warm) 100%,transparent 100%);"><span style="color:var(--warm)">5.56</span></div>
+      </div>
+      <div style="margin-top:.8rem;font-size:.8rem;color:var(--stone)">
+        <strong>Plus:</strong> ~200 kJ/m² latent heat storage • 4–8 hours thermal buffer • No energy input needed
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NATURAL GLUES -->
+<section class="section-sand">
+  <div class="container">
+    <div class="section-label">Bonding</div>
+    <div class="section-title">4 Natural Eco-Glues</div>
+    <p style="color:var(--stone);max-width:550px;font-size:.9rem">No PVA needed. Each joint type gets its own purpose-made natural adhesive — all from locally available ingredients.</p>
+    
+    <div class="glue-grid">
+      <div class="glue-card">
+        <h4>🧱 Lime–Casein</h4>
+        <div class="glue-ingr">1 part curdled milk + 2 parts hydrated lime + water. Hardens into calcium caseinate — like stone.</div>
+        <div class="glue-use">Best for → Cardboard lamination, structural seams</div>
+      </div>
+      <div class="glue-card">
+        <h4>🔥 Rosin–Wax–Shellac</h4>
+        <div class="glue-ingr">3 parts pine rosin + 1 part beeswax + ½ part shellac. Melt, brush on, press while warm. Waterproof when cool.</div>
+        <div class="glue-use">Best for → Foil seams, waterproof bonds</div>
+      </div>
+      <div class="glue-card">
+        <h4>🌳 Tannin–Lime</h4>
+        <div class="glue-ingr">1 part strong oak/tea tannin solution + 1 part lime putty. Forms calcium-tannate cement — waterproof & hard.</div>
+        <div class="glue-use">Best for → Caña joints, corner reinforcement</div>
+      </div>
+      <div class="glue-card">
+        <h4>🪴 Plant Resin + Oil</h4>
+        <div class="glue-ingr">2 parts pine resin + 1 part linseed oil + ¼ part wood ash. Cook slowly until honey-like. Flexible & durable.</div>
+        <div class="glue-use">Best for → Flexible bonds, edge sealing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUSINESS MODEL -->
+<section class="section-olive">
+  <div class="container">
+    <div class="section-label">Business Potential</div>
+    <div class="section-title">Three Routes to Market</div>
+    <p style="color:rgba(244,232,212,0.55);max-width:550px;font-size:.9rem">Whether as a side project or a scalable product — the hybrid model keeps risk low and margins healthy. Start with €500, break even in 3 months.</p>
+    
+    <div class="biz-cards">
+      <div class="biz-card">
+        <h4>DIY Kit</h4>
+        <div class="biz-price-tag">€9.80 /m²</div>
+        <p style="font-size:.82rem;color:rgba(244,232,212,0.5);margin-bottom:.5rem">Customer cost: ~€12/m² (adds own cardboard + caña)</p>
+        <ul>
+          <li>Pre-measured perlite, wax, bags, foil, glue</li>
+          <li>Illustrated instructions included</li>
+          <li>Your profit: €3/m²</li>
+          <li>Target: 80% of sales</li>
+        </ul>
+      </div>
+      <div class="biz-card featured">
+        <h4>Semi-Assembled</h4>
+        <div class="biz-price-tag">€22 /m²</div>
+        <p style="font-size:.82rem;color:rgba(244,232,212,0.5);margin-bottom:.5rem">Pre-built core + PCM, customer installs</p>
+        <ul>
+          <li>Panels ready to mount on caña</li>
+          <li>Your profit: €8/m²</li>
+          <li>Target: 15% of sales</li>
+          <li>Beats cork at €20 WITH PCM</li>
+        </ul>
+      </div>
+      <div class="biz-card">
+        <h4>Full Installation</h4>
+        <div class="biz-price-tag">€45 /m²</div>
+        <p style="font-size:.82rem;color:rgba(244,232,212,0.5);margin-bottom:.5rem">Turnkey — measured, built, installed</p>
+        <ul>
+          <li>Premium eco-lodges, casas rurales</li>
+          <li>Your profit: €15/m²</li>
+          <li>Target: 5% of sales</li>
+          <li>Monthly projection: ~€610 profit</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div style="text-align:center;margin-top:2rem;padding:1.2rem;background:rgba(0,0,0,0.2);border-radius:.75rem;font-size:.85rem;color:rgba(244,232,212,0.5)">
+      <strong style="color:var(--warm)">Unique Selling Point:</strong> The ONLY PCM insulation kit on the market in Spain.<br>
+      Better R-value than cork (5.6 vs 4.7) • Cheaper than cork (€12 vs €20) • Perfect for Andalusian climate.
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <p style="font-size:.9rem;color:rgba(244,232,212,0.5);margin-bottom:.5rem">ECO PCM Insulation — Modular DIY System</p>
+  <p>Designed for sustainable rural comfort • <a href="https://amber-kitten-4khe.here.now/">digitalAIventures</a></p>
+  <p style="margin-top:.3rem">2025 — Alpujarras, Andalucía</p>
+</footer>
+
+</body>
+</html>

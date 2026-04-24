@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuroSeed by Symbionic Corp — The Future of Brain Health</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: #0a0a0f;
+  color: #e8e8ed;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* Gradient backgrounds */
+.gradient-bg {
+  background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f0f1a 100%);
+}
+.gradient-accent {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Hero Section */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  position: relative;
+  background: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+              #0a0a0f;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 50px;
+  font-size: 0.85rem;
+  color: #a5b4fc;
+  margin-bottom: 2rem;
+  animation: fadeInUp 0.8s ease-out;
+}
+.hero-badge .dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+}
+.hero h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  animation: fadeInUp 0.8s ease-out 0.1s both;
+}
+.hero h1 span {
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero .tagline {
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  color: #94a3b8;
+  max-width: 700px;
+  margin-bottom: 2.5rem;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+.hero-cta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: fadeInUp 0.8s ease-out 0.3s both;
+}
+.btn {
+  padding: 0.9rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(99, 102, 241, 0.5);
+}
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e8e8ed;
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bounce 2s infinite;
+}
+.scroll-indicator svg {
+  width: 30px;
+  height: 30px;
+  stroke: #6366f1;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(10px); }
+}
+
+/* Sections */
+section {
+  padding: 5rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+.section-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #8b5cf6;
+  margin-bottom: 1rem;
+}
+.section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+.section-subtitle {
+  font-size: 1.1rem;
+  color: #94a3b8;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Problem Section */
+.problems-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.problem-card {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(239, 68, 68, 0.02) 100%);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  border-radius: 1rem;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+.problem-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+.problem-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+.problem-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fca5a5;
+  margin-bottom: 0.75rem;
+}
+.problem-card p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+.problem-stat {
+  display: inline-block;
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+/* Solution Section */
+.solution-section {
+  background: linear-gradient(180deg, #0a0a0f 0%, #0f1019 50%, #0a0a0f 100%);
+}
+.solution-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+@media (max-width: 900px) {
+  .solution-hero { grid-template-columns: 1fr; gap: 2rem; }
+}
+.solution-visual {
+  position: relative;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.neuron-graphic {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  animation: float 6s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(2deg); }
+}
+.solution-content h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+.solution-content p {
+  color: #94a3b8;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+.solution-features {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.solution-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.solution-feature .icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+.solution-feature-text h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.25rem;
+}
+.solution-feature-text p {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* How It Works */
+.how-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+}
+.how-steps::before {
+  content: '';
+  position: absolute;
+  left: 24px;
+  top: 50px;
+  bottom: 50px;
+  width: 2px;
+  background: linear-gradient(to bottom, #6366f1, #a855f7, #ec4899);
+  opacity: 0.3;
+}
+@media (max-width: 600px) {
+  .how-steps::before { left: 20px; }
+}
+.step {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  position: relative;
+}
+.step-number {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: white;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+.step-content {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  padding: 1.5rem 2rem;
+}
+.step-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+.step-content p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+/* Conditions Grid */
+.conditions-section {
+  background: radial-gradient(ellipse at 50% 100%, rgba(139, 92, 246, 0.08) 0%, transparent 60%),
+              #0a0a0f;
+}
+.conditions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+.condition-card {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.05) 0%, rgba(34, 197, 94, 0.02) 100%);
+  border: 1px solid rgba(34, 197, 94, 0.15);
+  border-radius: 1rem;
+  padding: 1.75rem;
+  transition: all 0.3s ease;
+}
+.condition-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(34, 197, 94, 0.3);
+  box-shadow: 0 10px 40px rgba(34, 197, 94, 0.1);
+}
+.condition-card.enhancement {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(99, 102, 241, 0.02) 100%);
+  border-color: rgba(99, 102, 241, 0.15);
+}
+.condition-card.enhancement:hover {
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 0 10px 40px rgba(99, 102, 241, 0.1);
+}
+.condition-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.condition-icon {
+  width: 50px;
+  height: 50px;
+  background: rgba(34, 197, 94, 0.15);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+.condition-card.enhancement .condition-icon {
+  background: rgba(99, 102, 241, 0.15);
+}
+.condition-header h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #fff;
+}
+.condition-card p {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+.condition-tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: rgba(34, 197, 94, 0.15);
+  color: #86efac;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.condition-card.enhancement .condition-tag {
+  background: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+}
+
+/* Tech Section */
+.tech-section {
+  background: #0f0f15;
+}
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+.tech-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+.tech-card:hover {
+  border-color: rgba(139, 92, 246, 0.3);
+  transform: translateY(-4px);
+}
+.tech-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.tech-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+.tech-card p {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+.tech-status {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.25rem 0.75rem;
+  background: rgba(34, 197, 94, 0.15);
+  color: #86efac;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.tech-status.research {
+  background: rgba(251, 191, 36, 0.15);
+  color: #fcd34d;
+}
+
+/* Safety Section */
+.safety-section {
+  background: linear-gradient(180deg, #0a0a0f 0%, #0a1010 100%);
+}
+.safety-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.safety-card {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.03) 0%, rgba(34, 197, 94, 0.01) 100%);
+  border: 1px solid rgba(34, 197, 94, 0.1);
+  border-radius: 1rem;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.safety-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, #22c55e, #10b981);
+}
+.safety-card h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #86efac;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.safety-card p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+/* Timeline */
+.timeline-section {
+  background: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 60%),
+              #0a0a0f;
+}
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+.timeline-item {
+  display: grid;
+  grid-template-columns: 120px 60px 1fr;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+@media (max-width: 600px) {
+  .timeline-item {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}
+.timeline-year {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #6366f1;
+}
+.timeline-dot {
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-radius: 50%;
+  margin: 0 auto;
+}
+.timeline-content h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.25rem;
+}
+.timeline-content p {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+/* Ethics Section */
+.ethics-section {
+  background: #0f0f15;
+}
+.ethics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+.ethics-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  padding: 2rem;
+}
+.ethics-card h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.ethics-card ul {
+  list-style: none;
+}
+.ethics-card li {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+.ethics-card li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #22c55e;
+  font-weight: bold;
+}
+
+/* CTA Section */
+.cta-section {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
+  text-align: center;
+  padding: 6rem 2rem;
+}
+.cta-section h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+.cta-section p {
+  font-size: 1.2rem;
+  color: #94a3b8;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Footer */
+footer {
+  background: #050508;
+  padding: 3rem 2rem;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+.footer-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+.footer-logo span {
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+footer p {
+  color: #64748b;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+footer a {
+  color: #6366f1;
+  text-decoration: none;
+}
+.disclaimer {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(251, 191, 36, 0.05);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  border-radius: 0.75rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.disclaimer p {
+  color: #fcd34d;
+  font-size: 0.8rem;
+}
+</style>
+</head>
+<body>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-badge">
+    <span class="dot"></span>
+    Conceptual Research Project
+  </div>
+  <h1><span>NeuroSeed</span><br>by Symbionic Corp</h1>
+  <p class="tagline">A vision for the future of brain health: living biological agents that work with your brain, not against it. Non-invasive. Reversible. Human-first.</p>
+  <div class="hero-cta">
+    <a href="#problems" class="btn btn-primary">Explore the Vision</a>
+    <a href="#technology" class="btn btn-secondary">How It Works</a>
+  </div>
+  <div class="scroll-indicator">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
+  </div>
+</section>
+
+<!-- Problems Section -->
+<section id="problems">
+  <div class="section-header">
+    <div class="section-label">The Challenge</div>
+    <h2 class="section-title">Brain Health Today: A Crisis</h2>
+    <p class="section-subtitle">Current treatments are either too invasive, too imprecise, or simply don't exist</p>
+  </div>
+  
+  <div class="problems-grid">
+    <div class="problem-card">
+      <div class="problem-icon">🧠</div>
+      <h3>Alzheimer's Disease</h3>
+      <p>No cure exists. Current drugs only slow progression marginally. By 2050, cases will triple worldwide.</p>
+      <span class="problem-stat">55 million affected globally</span>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">⚡</div>
+      <h3>Parkinson's Disease</h3>
+      <p>Dopamine-producing neurons die progressively. Medications lose effectiveness over time. Surgery is invasive.</p>
+      <span class="problem-stat">10 million living with PD</span>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">😔</div>
+      <h3>Treatment-Resistant Depression</h3>
+      <p>30% of patients don't respond to any medication. Systemic drugs cause widespread side effects.</p>
+      <span class="problem-stat">300+ million with depression</span>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">👁️</div>
+      <h3>Vision Loss</h3>
+      <p>Macular degeneration, glaucoma, and retinal diseases have limited treatment options. Blindness affects quality of life profoundly.</p>
+      <span class="problem-stat">2.2 billion with vision impairment</span>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">🔌</div>
+      <h3>Current "Solutions" Are Crude</h3>
+      <p>Brain implants require surgery. Systemic drugs affect the whole body. Deep brain stimulation is imprecise.</p>
+      <span class="problem-stat">High risk, limited benefit</span>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">💊</div>
+      <h3>Drug Delivery Barrier</h3>
+      <p>The blood-brain barrier blocks 98% of medications. Getting treatments to the right spot is nearly impossible.</p>
+      <span class="problem-stat">98% of drugs can't reach the brain</span>
+    </div>
+  </div>
+</section>
+
+<!-- Solution Section -->
+<section class="solution-section" id="solution">
+  <div class="solution-hero">
+    <div class="solution-visual">
+      <svg class="neuron-graphic" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#6366f1" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <circle cx="200" cy="200" r="150" fill="url(#glow2)"/>
+        <circle cx="200" cy="200" r="80" fill="url(#glow1)"/>
+        <!-- Neuron body -->
+        <ellipse cx="200" cy="200" rx="45" ry="40" fill="#1e1b4b" stroke="#6366f1" stroke-width="2"/>
+        <!-- Dendrites -->
+        <path d="M160 180 Q120 160 90 180 Q60 200 40 170" stroke="#6366f1" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M160 200 Q120 200 80 220 Q50 240 30 220" stroke="#6366f1" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M160 220 Q130 250 100 260 Q70 270 50 290" stroke="#6366f1" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M180 160 Q170 120 150 90 Q130 60 140 30" stroke="#6366f1" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M200 155 Q200 110 220 80 Q240 50 230 20" stroke="#6366f1" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- Axon -->
+        <path d="M245 200 Q280 200 320 190 Q360 180 380 200" stroke="#a855f7" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- NeuroSeed particles -->
+        <circle cx="100" cy="190" r="6" fill="#22c55e">
+          <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="140" cy="240" r="5" fill="#22c55e">
+          <animate attributeName="opacity" values="0.5;1;0.5" dur="2.5s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="170" cy="140" r="7" fill="#22c55e">
+          <animate attributeName="opacity" values="1;0.7;1" dur="1.8s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="280" cy="195" r="5" fill="#22c55e">
+          <animate attributeName="opacity" values="0.7;1;0.7" dur="2.2s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="350" cy="200" r="6" fill="#22c55e">
+          <animate attributeName="opacity" values="1;0.6;1" dur="1.9s" repeatCount="indefinite"/>
+        </circle>
+        <!-- Nucleus -->
+        <circle cx="200" cy="200" r="15" fill="#4c1d95" stroke="#8b5cf6" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="solution-content">
+      <h2>What if brain treatment worked <em>with</em> biology, not against it?</h2>
+      <p>NeuroSeed envisions microscopic biological agents—grown from your own cells—that can reach specific brain regions, perform targeted functions, and safely dissolve when no longer needed.</p>
+      <p>No surgery. No implants. No systemic drugs flooding your body.</p>
+      <div class="solution-features">
+        <div class="solution-feature">
+          <div class="icon">🧬</div>
+          <div class="solution-feature-text">
+            <h4>Biologically Native</h4>
+            <p>Made from biocompatible materials, working with your body's natural systems</p>
+          </div>
+        </div>
+        <div class="solution-feature">
+          <div class="icon">🎯</div>
+          <div class="solution-feature-text">
+            <h4>Precisely Targeted</h4>
+            <p>Reaches specific brain regions using the body's own chemical gradients</p>
+          </div>
+        </div>
+        <div class="solution-feature">
+          <div class="icon">🔄</div>
+          <div class="solution-feature-text">
+            <h4>Fully Reversible</h4>
+            <p>Safely dissolves and is absorbed by the body when treatment ends</p>
+          </div>
+        </div>
+        <div class="solution-feature">
+          <div class="icon">👃</div>
+          <div class="solution-feature-text">
+            <h4>Non-Invasive Delivery</h4>
+            <p>Administered via nasal spray—no needles, no surgery required</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section id="technology">
+  <div class="section-header">
+    <div class="section-label">The Approach</div>
+    <h2 class="section-title">How NeuroSeed Could Work</h2>
+    <p class="section-subtitle">A carefully designed biological system with multiple safety layers</p>
+  </div>
+  
+  <div class="how-steps">
+    <div class="step">
+      <div class="step-number">1</div>
+      <div class="step-content">
+        <h3>Nano-Scale Spore Delivery</h3>
+        <p>NeuroSeed agents start as tiny dormant "spores" (50-100 nanometers) packaged inside exosomes—natural cellular transport vesicles your body already uses. Administered via nasal spray, they travel along the olfactory pathway directly to the brain, bypassing the blood-brain barrier.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-number">2</div>
+      <div class="step-content">
+        <h3>Self-Guided Targeting</h3>
+        <p>Rather than requiring external "steering," NeuroSeed agents are programmed to follow natural brain chemical gradients (chemotaxis) and carry surface proteins that bind only in specific regions—like biological "zip codes." They find their destination automatically.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-number">3</div>
+      <div class="step-content">
+        <h3>Local Colony Formation</h3>
+        <p>Once at the target, spores activate and assemble into microscopic colonies (1-10 microns) that anchor to brain tissue. Population is strictly controlled through quorum sensing—when density gets too high, replication automatically stops.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-number">4</div>
+      <div class="step-content">
+        <h3>Paracrine Modulation</h3>
+        <p>Colonies work by releasing or absorbing signaling molecules locally—like gardeners tending the neural environment, not players changing the game. They modulate conditions without integrating into neural circuits or affecting identity.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-number">5</div>
+      <div class="step-content">
+        <h3>XenoVital Maintenance</h3>
+        <p>NeuroSeed requires a synthetic nutrient (XenoVital) that doesn't exist in nature. No XenoVital = colonies gently enter dormancy and dissolve over 90 days. This provides both safety control and ensures ongoing support for users.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Conditions Section -->
+<section class="conditions-section" id="conditions">
+  <div class="section-header">
+    <div class="section-label">Potential Applications</div>
+    <h2 class="section-title">What Could NeuroSeed Address?</h2>
+    <p class="section-subtitle">From medical restoration to cognitive enhancement—starting with those who need it most</p>
+  </div>
+  
+  <div class="conditions-grid">
+    <div class="condition-card">
+      <div class="condition-header">
+        <div class="condition-icon">🧠</div>
+        <h3>Alzheimer's Disease</h3>
+      </div>
+      <p>Clear amyloid plaques locally, release nerve growth factors, support synaptic maintenance in the hippocampus.</p>
+      <span class="condition-tag">Phase 1 Priority</span>
+    </div>
+    <div class="condition-card">
+      <div class="condition-header">
+        <div class="condition-icon">⚡</div>
+        <h3>Parkinson's Disease</h3>
+      </div>
+      <p>Support dopamine production in the substantia nigra, protect remaining neurons from degeneration.</p>
+      <span class="condition-tag">Phase 1 Priority</span>
+    </div>
+    <div class="condition-card">
+      <div class="condition-header">
+        <div class="condition-icon">👁️</div>
+        <h3>Vision Restoration</h3>
+      </div>
+      <p>Release growth factors in the retina, regenerate damaged photoreceptors, protect optic nerve.</p>
+      <span class="condition-tag">Phase 1 Priority</span>
+    </div>
+    <div class="condition-card">
+      <div class="condition-header">
+        <div class="condition-icon">😔</div>
+        <h3>Treatment-Resistant Depression</h3>
+      </div>
+      <p>Local serotonin/BDNF support in key mood circuits without systemic side effects.</p>
+      <span class="condition-tag">Phase 2</span>
+    </div>
+    <div class="condition-card">
+      <div class="condition-header">
+        <div class="condition-icon">🔥</div>
+        <h3>Stroke Recovery</h3>
+      </div>
+      <p>Clear debris, reduce inflammation, scaffold new neural connections in damaged areas.</p>
+      <span class="condition-tag">Phase 2</span>
+    </div>
+    <div class="condition-card">
+      <div class="condition-header">
+        <div class="condition-icon">🌀</div>
+        <h3>Epilepsy</h3>
+      </div>
+      <p>Detect abnormal electrical activity, release calming neurotransmitters locally to prevent seizures.</p>
+      <span class="condition-tag">Phase 2</span>
+    </div>
+    <div class="condition-card enhancement">
+      <div class="condition-header">
+        <div class="condition-icon">💡</div>
+        <h3>Memory Enhancement</h3>
+      </div>
+      <p>Strengthen synaptic connections in the hippocampus, support memory consolidation during sleep.</p>
+      <span class="condition-tag">Future Enhancement</span>
+    </div>
+    <div class="condition-card enhancement">
+      <div class="condition-header">
+        <div class="condition-icon">🎯</div>
+        <h3>Focus & Learning</h3>
+      </div>
+      <p>Optimize prefrontal cortex function, enhance plasticity during skill acquisition.</p>
+      <span class="condition-tag">Future Enhancement</span>
+    </div>
+  </div>
+</section>
+
+<!-- Technology Foundation -->
+<section class="tech-section">
+  <div class="section-header">
+    <div class="section-label">Scientific Foundation</div>
+    <h2 class="section-title">Built on Real Science</h2>
+    <p class="section-subtitle">Each component of NeuroSeed draws from validated research</p>
+  </div>
+  
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="tech-icon">🧫</div>
+      <h3>Xenobots</h3>
+      <p>Living robots from frog cells demonstrated self-assembly and kinematic replication (Tufts/Harvard, 2021)</p>
+      <span class="tech-status">Proven in Lab</span>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">👃</div>
+      <h3>Nose-to-Brain Delivery</h3>
+      <p>Nanoparticles crossing BBB via olfactory pathway, with drugs already in clinical trials</p>
+      <span class="tech-status">Clinical Trials</span>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">🔒</div>
+      <h3>Synthetic Auxotrophy</h3>
+      <p>Engineered organisms requiring synthetic nutrients, with escape rates below 10⁻¹² (Harvard/MIT)</p>
+      <span class="tech-status">Proven in Lab</span>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">📦</div>
+      <h3>Exosome Delivery</h3>
+      <p>Natural cellular vesicles already crossing BBB, being developed for drug delivery</p>
+      <span class="tech-status">Clinical Trials</span>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">📡</div>
+      <h3>Quorum Sensing</h3>
+      <p>Natural bacterial population control mechanism, well-understood for 30+ years</p>
+      <span class="tech-status">Proven in Lab</span>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">🧭</div>
+      <h3>Chemotaxis</h3>
+      <p>Cells following chemical gradients—ancient, proven biology used by bacteria and immune cells</p>
+      <span class="tech-status">Proven in Nature</span>
+    </div>
+  </div>
+</section>
+
+<!-- Safety Section -->
+<section class="safety-section" id="safety">
+  <div class="section-header">
+    <div class="section-label">Safety First</div>
+    <h2 class="section-title">Eight Layers of Protection</h2>
+    <p class="section-subtitle">Every component designed with safety as the primary constraint</p>
+  </div>
+  
+  <div class="safety-grid">
+    <div class="safety-card">
+      <h3>✓ Quorum-Limited Replication</h3>
+      <p>Population density automatically triggers reproduction stop. Too crowded = no more growth. Natural failsafe.</p>
+    </div>
+    <div class="safety-card">
+      <h3>✓ Replication Counter</h3>
+      <p>Maximum 10-20 divisions per lineage, like natural Hayflick limits. Prevents unlimited growth.</p>
+    </div>
+    <div class="safety-card">
+      <h3>✓ XenoVital Dependency</h3>
+      <p>Requires synthetic nutrient that doesn't exist in nature. Cannot scavenge from host tissue.</p>
+    </div>
+    <div class="safety-card">
+      <h3>✓ Orthogonal Metabolism</h3>
+      <p>Uses non-standard amino acids incompatible with natural biology. Proven escape rate &lt;10⁻¹².</p>
+    </div>
+    <div class="safety-card">
+      <h3>✓ Graceful Senescence</h3>
+      <p>Without XenoVital: dormancy (day 1-7) → self-digestion (day 7-30) → full absorption (day 30-90). No debris.</p>
+    </div>
+    <div class="safety-card">
+      <h3>✓ Paracrine-Only Function</h3>
+      <p>Modulates environment, never integrates into neural circuits. Brain remains the computer.</p>
+    </div>
+    <div class="safety-card">
+      <h3>✓ Bioelectric Telemetry</h3>
+      <p>External EEG can detect colony health status. Non-invasive monitoring of system function.</p>
+    </div>
+    <div class="safety-card">
+      <h3>✓ Personalized Cells</h3>
+      <p>Derived from user's own stem cells where possible. Minimizes immune rejection risk.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Timeline Section -->
+<section class="timeline-section" id="timeline">
+  <div class="section-header">
+    <div class="section-label">Development Path</div>
+    <h2 class="section-title">Realistic Timeline</h2>
+    <p class="section-subtitle">A long road with meaningful milestones along the way</p>
+  </div>
+  
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-year">2025-28</div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <h3>Foundation Research</h3>
+        <p>License xenobot technology, engineer synthetic auxotrophy, prove nasal delivery in animal models</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2028-32</div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <h3>Preclinical Validation</h3>
+        <p>Demonstrate therapeutic effect, prove long-term safety, establish regulatory pathway</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2032-35</div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <h3>First Human Trials</h3>
+        <p>Compassionate use in terminal patients, Phase I safety trials, early efficacy signals</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2035-40</div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <h3>Clinical Development</h3>
+        <p>Phase II/III trials for lead indications (Alzheimer's, vision restoration, Parkinson's)</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2040+</div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <h3>Broader Applications</h3>
+        <p>Expand to mental health, stroke recovery, and eventually cognitive enhancement</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ethics Section -->
+<section class="ethics-section" id="ethics">
+  <div class="section-header">
+    <div class="section-label">Ethics & Access</div>
+    <h2 class="section-title">Human-First Principles</h2>
+    <p class="section-subtitle">Technology must serve humanity, not the other way around</p>
+  </div>
+  
+  <div class="ethics-grid">
+    <div class="ethics-card">
+      <h3>🏥 Medical Before Enhancement</h3>
+      <ul>
+        <li>Treat suffering before augmenting the healthy</li>
+        <li>Alzheimer's patients before memory boosters</li>
+        <li>Blind before night vision seekers</li>
+        <li>Depressed before productivity optimizers</li>
+      </ul>
+    </div>
+    <div class="ethics-card">
+      <h3>🌍 Universal Access Framework</h3>
+      <ul>
+        <li>Medical restoration = essential medicine coverage</li>
+        <li>Public health programs in all nations</li>
+        <li>Compulsory licensing for developing countries</li>
+        <li>Generics after patent expiry (20 years)</li>
+      </ul>
+    </div>
+    <div class="ethics-card">
+      <h3>🛡️ No Harmful Lock-In</h3>
+      <ul>
+        <li>Graceful degradation, not sudden failure</li>
+        <li>Return to baseline, not below baseline</li>
+        <li>Months of transition time, not days</li>
+        <li>Like stopping vitamins, not life support</li>
+      </ul>
+    </div>
+    <div class="ethics-card">
+      <h3>📖 Open Science</h3>
+      <ul>
+        <li>Core technology published openly</li>
+        <li>Patent only the maintenance nutrient</li>
+        <li>Synthesis pathway in escrow</li>
+        <li>Research findings shared globally</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <h2>The Future of Brain Health Starts with Vision</h2>
+  <p>NeuroSeed is a conceptual framework—a north star for where neuroscience could go. We share it openly to inspire research, invite collaboration, and plant seeds for tomorrow.</p>
+  <a href="#solution" class="btn btn-primary">Explore the Concept</a>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">Neuro<span>Seed</span></div>
+  <p>A conceptual project by Symbionic Corp</p>
+  <p>digitalAIventures LLC · 2025</p>
+  <p style="margin-top: 1rem;"><a href="https://amber-kitten-4khe.here.now/" target="_blank">View All Projects</a></p>
+  
+  <div class="disclaimer">
+    <p><strong>⚠️ Important Disclaimer:</strong> NeuroSeed is a conceptual research framework and thought experiment, not a product or medical treatment. The technologies described are based on real scientific foundations but have not been combined or tested as described. This presentation is for educational and speculative purposes only. No medical claims are made. Consult healthcare professionals for any medical concerns.</p>
+  </div>
+</footer>
+
+</body>
+</html>

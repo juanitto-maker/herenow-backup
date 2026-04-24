@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VacOil — Partner Pilot Programme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="dark"]{
+  --bg:#0f0f11;--bg-card:#1a1a1f;--bg-hero:linear-gradient(135deg,#1a1510 0%,#0f0f11 100%);
+  --text:#e2e2e7;--text-muted:#888;--text-heading:#fff;--border:#2a2a35;
+  --accent:#c9a84c;--accent-bg:rgba(201,168,76,.12);--olive:#8fad6e;
+  --link:#c9a84c;--link-hover:#e8c96a;--overlay-bg:rgba(0,0,0,.65);
+  --dialog-bg:#1a1a1f;--shadow:0 4px 24px rgba(0,0,0,.4);
+  --mobile-accent:#5b9bd5;--mobile-bg:rgba(91,155,213,.1);
+}
+[data-theme="light"]{
+  --bg:#faf6ef;--bg-card:#fff;--bg-hero:linear-gradient(135deg,#f5f0e8 0%,#faf6ef 100%);
+  --text:#3a3a32;--text-muted:#6a6a62;--text-heading:#1a1a18;--border:#e8e4dc;
+  --accent:#c9a84c;--accent-bg:rgba(201,168,76,.1);--olive:#4a6741;
+  --link:#4a6741;--link-hover:#3a5231;--overlay-bg:rgba(0,0,0,.4);
+  --dialog-bg:#faf6ef;--shadow:0 4px 24px rgba(0,0,0,.08);
+  --mobile-accent:#2e6da4;--mobile-bg:rgba(46,109,164,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:background .3s,color .3s}
+
+/* THEME TOGGLE */
+.theme-toggle{position:fixed;top:3.6rem;right:.75rem;z-index:150;background:var(--bg-card);border:1px solid var(--border);width:2.4rem;height:2.4rem;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);transition:all .2s}
+.theme-toggle:hover{transform:scale(1.1)}
+.theme-icon{font-size:1.1rem;line-height:1}
+
+/* LANG BAR */
+.lang-bar{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--bg-card);border-bottom:1px solid var(--border);display:flex;justify-content:center;gap:.25rem;padding:.45rem .75rem;backdrop-filter:blur(10px)}
+.lang-btn{background:none;border:1px solid transparent;color:var(--text-muted);padding:.2rem .6rem;border-radius:.4rem;font-size:.78rem;font-weight:600;cursor:pointer;letter-spacing:.05em;transition:all .2s;font-family:'DM Sans',sans-serif}
+.lang-btn.active,.lang-btn:hover{color:var(--accent);border-color:var(--accent)}
+
+/* MULTILANG */
+[data-lang]{display:none}
+[data-lang].active{display:block}
+[data-lang-inline]{display:none}
+[data-lang-inline].active{display:inline}
+
+/* HERO */
+.hero{min-height:100vh;background:var(--bg-hero);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 1.5rem 4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(201,168,76,.06) 0%,transparent 70%)}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--accent-bg);border:1px solid rgba(201,168,76,.3);color:var(--accent);padding:.35rem 1rem;border-radius:2rem;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1.5rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,3.8rem);color:var(--text-heading);line-height:1.15;margin-bottom:1.2rem;max-width:820px}
+.hero h1 em{color:var(--accent);font-style:italic}
+.hero-sub{font-size:clamp(.9rem,2vw,1.1rem);color:var(--text-muted);max-width:580px;margin-bottom:3rem}
+.hero-tags{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center}
+.tag{background:var(--accent-bg);border:1px solid rgba(201,168,76,.25);color:var(--accent);padding:.3rem .8rem;border-radius:1rem;font-size:.75rem;font-weight:600}
+.tag.mobile{background:var(--mobile-bg);border-color:rgba(91,155,213,.3);color:var(--mobile-accent)}
+.scroll-hint{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);color:var(--text-muted);font-size:.75rem;display:flex;flex-direction:column;align-items:center;gap:.3rem;animation:bob 2s infinite}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+/* SECTIONS */
+section{padding:4rem 1.5rem;max-width:860px;margin:0 auto}
+.section-label{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem}
+.section-label.mobile-label{color:var(--mobile-accent)}
+h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.4rem);color:var(--text-heading);margin-bottom:1.4rem;line-height:1.2}
+h3{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--text-heading);margin-bottom:.7rem}
+p{color:var(--text);margin-bottom:.9rem;line-height:1.7}
+.divider{width:100%;height:1px;background:var(--border);max-width:860px;margin:0 auto}
+
+/* STAT GRID */
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2rem 0}
+.stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:1rem;padding:1.2rem;text-align:center}
+.stat-icon{font-size:1.6rem;margin-bottom:.4rem}
+.stat-value{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--accent);font-weight:700}
+.stat-value.mobile-stat{color:var(--mobile-accent)}
+.stat-label{font-size:.72rem;color:var(--text-muted);margin-top:.2rem;line-height:1.3}
+
+/* CONCEPT BOX */
+.concept-link{display:inline-flex;align-items:center;gap:.3rem;color:var(--link);font-weight:600;text-decoration:none;font-size:.9rem;margin-top:.5rem;transition:color .2s}
+.concept-link:hover{color:var(--link-hover)}
+
+/* TIMELINE */
+.timeline{position:relative;margin:2rem 0}
+.timeline::before{content:'';position:absolute;left:1.2rem;top:0;bottom:0;width:2px;background:var(--border)}
+.tl-item{display:flex;gap:1.2rem;margin-bottom:1.5rem;position:relative}
+.tl-dot{width:2.4rem;height:2.4rem;border-radius:50%;background:var(--bg-card);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:var(--accent);flex-shrink:0;margin-top:.1rem;z-index:1}
+.tl-dot.harvest{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tl-content{background:var(--bg-card);border:1px solid var(--border);border-radius:.85rem;padding:1rem 1.1rem;flex:1}
+.tl-date{font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.3rem}
+.tl-title{font-weight:600;color:var(--text-heading);margin-bottom:.4rem;font-size:.95rem}
+.tl-body{font-size:.83rem;color:var(--text-muted);line-height:1.6}
+
+/* SYSTEM COMPONENTS */
+.component-grid{display:grid;gap:1.2rem;margin:2rem 0}
+@media(min-width:600px){.component-grid{grid-template-columns:1fr 1fr}}
+.component-card{border-radius:1rem;padding:1.4rem;border:1px solid var(--border)}
+.component-card.fixed{background:var(--bg-card)}
+.component-card.mobile{background:var(--mobile-bg);border-color:rgba(91,155,213,.25)}
+.comp-badge{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .6rem;border-radius:.35rem;margin-bottom:.7rem}
+.comp-badge[data-lang-inline]{display:none}.comp-badge[data-lang-inline].active{display:inline-block}
+.comp-badge.fixed{background:var(--accent-bg);color:var(--accent);border:1px solid rgba(201,168,76,.3)}
+.comp-badge.mobile{background:var(--mobile-bg);color:var(--mobile-accent);border:1px solid rgba(91,155,213,.3)}
+.comp-badge[data-lang-inline]{display:none}
+.comp-badge[data-lang-inline].active{display:inline-block}
+.comp-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--text-heading);margin-bottom:.5rem}
+.comp-body{font-size:.83rem;color:var(--text-muted);line-height:1.6}
+
+/* MOBILE SYSTEM DETAIL */
+.mobile-detail{background:var(--mobile-bg);border:1px solid rgba(91,155,213,.25);border-radius:1rem;padding:1.4rem;margin:1.2rem 0}
+.mobile-detail h3{color:var(--mobile-accent)}
+.energy-grid{display:grid;gap:.8rem;margin:1rem 0}
+@media(min-width:600px){.energy-grid{grid-template-columns:1fr 1fr}}
+.energy-card{background:var(--bg-card);border:1px solid var(--border);border-radius:.75rem;padding:1rem}
+.energy-label{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem}
+.energy-label.gen{color:#e8834a}
+.energy-label.grid{color:#5b9bd5}
+.energy-body{font-size:.8rem;color:var(--text-muted);line-height:1.5}
+
+/* SPEC TABLE */
+.spec-grid{display:grid;gap:.5rem;margin:1rem 0}
+.spec-row{display:flex;justify-content:space-between;align-items:baseline;padding:.5rem .7rem;background:var(--bg-card);border:1px solid var(--border);border-radius:.5rem;font-size:.82rem}
+.spec-key{color:var(--text-muted);font-size:.78rem}
+.spec-val{color:var(--text-heading);font-weight:600;text-align:right;margin-left:1rem}
+
+/* VEHICLE CALLOUT */
+.vehicle-callout{background:var(--accent-bg);border:1px solid rgba(201,168,76,.25);border-radius:1rem;padding:1.2rem 1.4rem;margin:1.2rem 0;display:flex;gap:1rem;align-items:flex-start}
+.vehicle-callout.mobile-call{background:var(--mobile-bg);border-color:rgba(91,155,213,.3)}
+.callout-icon{font-size:1.8rem;flex-shrink:0}
+.callout-text{font-size:.83rem;color:var(--text);line-height:1.6}
+.callout-text strong{color:var(--text-heading)}
+
+/* ACCORDION */
+.acc-list{margin:1rem 0;border:1px solid var(--border);border-radius:.75rem;overflow:hidden;background:var(--bg-card)}
+.acc-item{border-bottom:1px solid var(--border)}
+.acc-item:last-child{border-bottom:none}
+.acc-head{display:flex;justify-content:space-between;align-items:center;padding:.7rem .9rem;cursor:pointer;font-size:.85rem;-webkit-tap-highlight-color:transparent;transition:background .2s}
+.acc-head:hover{background:var(--accent-bg)}
+.acc-head .acc-name{color:var(--text);font-weight:500;flex:1}
+.acc-head .acc-cost{color:var(--accent);font-weight:700;margin:0 .5rem;white-space:nowrap}
+.acc-head .acc-cost.mc{color:var(--mobile-accent)}
+.acc-head .acc-arrow{color:var(--text-muted);font-size:.7rem;transition:transform .2s;flex-shrink:0}
+.acc-item.open .acc-arrow{transform:rotate(180deg)}
+.acc-detail{display:none;padding:0 .9rem .7rem;font-size:.78rem;color:var(--text-muted);line-height:1.5}
+.acc-item.open .acc-detail{display:block}
+.acc-total{display:flex;justify-content:space-between;padding:.8rem .9rem;background:var(--accent-bg);font-weight:700;font-size:.9rem;color:var(--text-heading)}
+.acc-total.mc{background:var(--mobile-bg)}
+.acc-total .tot-cost{color:var(--accent)}
+.acc-total.mc .tot-cost{color:var(--mobile-accent)}
+
+/* OFFER CARDS */
+.offer-list{list-style:none;margin:1rem 0}
+.offer-list li{padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.88rem;color:var(--text);display:flex;gap:.6rem;align-items:flex-start}
+.offer-list li::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0;margin-top:.05rem}
+
+/* LINK CARDS */
+.link-grid{display:grid;gap:1rem;margin:2rem 0}
+@media(min-width:600px){.link-grid{grid-template-columns:1fr 1fr}}
+.link-card{background:var(--bg-card);border:1px solid var(--border);border-radius:1rem;padding:1.3rem;text-decoration:none;transition:all .25s;display:block}
+.link-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow)}
+.link-card-tag{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+.link-card h4{font-family:'Playfair Display',serif;color:var(--text-heading);margin-bottom:.4rem;font-size:1rem}
+.link-card p{font-size:.8rem;color:var(--text-muted);margin:0}
+
+/* FOOTER */
+footer{background:var(--bg-card);border-top:1px solid var(--border);padding:2.5rem 1.5rem;text-align:center}
+.footer-logo{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--text-heading);margin-bottom:.3rem}
+.footer-sub{font-size:.78rem;color:var(--text-muted);margin-bottom:1.2rem}
+.footer-contact{background:var(--accent);color:#fff;border:none;padding:.6rem 1.4rem;border-radius:2rem;font-size:.82rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:.05em;transition:opacity .2s}
+.footer-contact:hover{opacity:.85}
+
+/* DIALOG */
+.dialog-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--overlay-bg);z-index:200;align-items:center;justify-content:center}
+.dialog-overlay.open{display:flex}
+.dialog-box{background:var(--dialog-bg);border:1px solid var(--border);border-radius:1.2rem;padding:1.75rem;max-width:300px;width:90%;text-align:center;box-shadow:var(--shadow)}
+.dialog-box h4{font-family:'Playfair Display',serif;color:var(--text-heading);margin-bottom:1rem}
+.dialog-option{display:block;width:100%;padding:.65rem;margin-bottom:.6rem;border-radius:.6rem;text-decoration:none;font-weight:600;font-size:.9rem;text-align:center;transition:opacity .2s}
+.dialog-option:hover{opacity:.85}
+.dialog-email{background:#4a6741;color:#fff}
+.dialog-telegram{background:#0088cc;color:#fff}
+.dialog-close{background:none;border:1px solid var(--border);color:var(--text-muted);cursor:pointer;font-size:.82rem;padding:.4rem 1.2rem;border-radius:.4rem;margin-top:.2rem;font-family:'DM Sans',sans-serif}
+
+/* HIGHLIGHT BOX */
+.highlight-box{background:var(--accent-bg);border-left:3px solid var(--accent);border-radius:0 .75rem .75rem 0;padding:1rem 1.2rem;margin:1.2rem 0;font-size:.85rem;color:var(--text);line-height:1.7}
+.highlight-box.mobile-box{background:var(--mobile-bg);border-left-color:var(--mobile-accent)}
+
+@media(max-width:500px){
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+  .stat-grid .stat-card:last-child{grid-column:span 2}
+}
+</style>
+</head>
+<body>
+
+<!-- LANG BAR -->
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" onclick="setLang('es')">ES</button>
+  <button class="lang-btn" onclick="setLang('de')">DE</button>
+  <button class="lang-btn" onclick="setLang('it')">IT</button>
+</div>
+
+<!-- THEME TOGGLE -->
+<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <span class="theme-icon" id="themeIcon">☀️</span>
+</button>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">
+    <span data-lang-inline="en" class="active">VacOil · Partner Pilot Programme 2025–2026</span>
+    <span data-lang-inline="es">VacOil · Programa Piloto para Socios 2025–2026</span>
+    <span data-lang-inline="de">VacOil · Partner-Pilotprogramm 2025–2026</span>
+    <span data-lang-inline="it">VacOil · Programma Pilota Partner 2025–2026</span>
+  </div>
+
+  <h1 data-lang="en" class="active">Become the <em>First Partner</em> in Ultra-High-Phenolic Olive Oil</h1>
+  <h1 data-lang="es">Sea el <em>Primer Socio</em> del Aceite de Oliva Ultra-Alto en Polifenoles</h1>
+  <h1 data-lang="de">Werden Sie der <em>Erste Partner</em> für Ultra-Hochphenolisches Olivenöl</h1>
+  <h1 data-lang="it">Diventa il <em>Primo Partner</em> dell'Olio d'Oliva Ultra-Alto in Polifenoli</h1>
+
+  <p class="hero-sub" data-lang="en" class="active">A turnkey pilot project — from harvest to lab-certified production — with zero profit margin for the first installation. Fixed or mobile. We build it together.</p>
+  <p class="hero-sub" data-lang="es">Un proyecto piloto llave en mano — de la cosecha a la producción certificada — sin margen de beneficio. Instalación fija o móvil. Lo construimos juntos.</p>
+  <p class="hero-sub" data-lang="de">Ein schlüsselfertiges Pilotprojekt — von der Ernte bis zur zertifizierten Produktion — ohne Gewinnmarge. Fest oder mobil. Wir bauen es gemeinsam.</p>
+  <p class="hero-sub" data-lang="it">Un progetto pilota chiavi in mano — dal raccolto alla produzione certificata — senza margine di profitto. Fisso o mobile. Lo costruiamo insieme.</p>
+
+  <div class="hero-tags">
+    <span class="tag">🧪 800–1,200 mg/kg</span>
+    <span class="tag">🌡️ 30–40°C vacuum</span>
+    <span class="tag">💰 €50–80/L</span>
+    <span class="tag mobile">🚐 Mobile Unit</span>
+    <span class="tag mobile">⚡ Dual-mode energy</span>
+  </div>
+  <div class="scroll-hint">↓</div>
+</div>
+
+<!-- THE CONCEPT -->
+<div class="divider"></div>
+<section>
+  <p class="section-label" data-lang="en" class="active">The Concept</p>
+  <p class="section-label" data-lang="es">El Concepto</p>
+  <p class="section-label" data-lang="de">Das Konzept</p>
+  <p class="section-label" data-lang="it">Il Concetto</p>
+
+  <h2 data-lang="en" class="active">What is VacOil?</h2>
+  <h2 data-lang="es">¿Qué es VacOil?</h2>
+  <h2 data-lang="de">Was ist VacOil?</h2>
+  <h2 data-lang="it">Cos'è VacOil?</h2>
+
+  <p data-lang="en" class="active">VacOil is a modular processing system that produces <strong>Ultra-High-Phenolic (UHP) olive oil</strong> using Vacuum Tray Drying technology. By processing Picual olives at 30–40°C under near-zero oxygen, we preserve 85–95% of polyphenols — achieving 800–1,200 mg/kg versus the 150 mg/kg found in supermarket oils. This oil commands <strong>€50–80 per litre</strong> in the premium health-food market.</p>
+  <p data-lang="es">VacOil es un sistema modular que produce <strong>aceite de oliva Ultra-Alto en Polifenoles (UHP)</strong> mediante Secado en Bandejas al Vacío. Procesando aceitunas Picual a 30–40°C con oxígeno casi nulo, preservamos el 85–95% de los polifenoles — 800–1.200 mg/kg frente a 150 mg/kg del supermercado. Se vende a <strong>50–80 €/litro</strong>.</p>
+  <p data-lang="de">VacOil ist ein modulares System, das <strong>Ultra-Hochphenolisches (UHP) Olivenöl</strong> mittels Vakuum-Tablett-Trocknung produziert. Picual-Oliven bei 30–40°C unter nahezu sauerstofffreien Bedingungen — 85–95% Polyphenolerhalt — 800–1.200 mg/kg vs. 150 mg/kg. Preis: <strong>50–80 €/Liter</strong>.</p>
+  <p data-lang="it">VacOil è un sistema modulare che produce <strong>olio d'oliva Ultra-Alto in Polifenoli (UHP)</strong> con Essiccazione a Vassoi Sottovuoto. Olive Picual a 30–40°C, ossigeno quasi nullo, 85–95% di polifenoli preservati — 800–1.200 mg/kg vs 150 mg/kg. Prezzo: <strong>50–80 €/litro</strong>.</p>
+
+  <a class="concept-link" href="https://silken-jungle-kpeq.here.now/" target="_blank">
+    <span data-lang-inline="en" class="active">Read the full technical documentation →</span>
+    <span data-lang-inline="es">Documentación técnica completa →</span>
+    <span data-lang-inline="de">Vollständige Dokumentation →</span>
+    <span data-lang-inline="it">Documentazione tecnica completa →</span>
+  </a>
+
+  <div class="stat-grid" style="margin-top:2rem">
+    <div class="stat-card">
+      <div class="stat-icon">🌡️</div>
+      <div class="stat-value">30–40°C</div>
+      <div class="stat-label">
+        <span data-lang-inline="en" class="active">Vacuum drying temp</span>
+        <span data-lang-inline="es">Temp. secado vacío</span>
+        <span data-lang-inline="de">Vakuumtrocknung</span>
+        <span data-lang-inline="it">Temp. sottovuoto</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🧪</div>
+      <div class="stat-value">800–1,200</div>
+      <div class="stat-label">
+        <span data-lang-inline="en" class="active">mg/kg polyphenols</span>
+        <span data-lang-inline="es">mg/kg polifenoles</span>
+        <span data-lang-inline="de">mg/kg Polyphenole</span>
+        <span data-lang-inline="it">mg/kg polifenoli</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">💰</div>
+      <div class="stat-value">€50–80/L</div>
+      <div class="stat-label">
+        <span data-lang-inline="en" class="active">Retail price</span>
+        <span data-lang-inline="es">Precio venta</span>
+        <span data-lang-inline="de">Verkaufspreis</span>
+        <span data-lang-inline="it">Prezzo vendita</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TWO SYSTEM OPTIONS -->
+<div class="divider"></div>
+<section>
+  <p class="section-label" data-lang="en" class="active">Two Deployment Models</p>
+  <p class="section-label" data-lang="es">Dos Modelos de Despliegue</p>
+  <p class="section-label" data-lang="de">Zwei Einsatzmodelle</p>
+  <p class="section-label" data-lang="it">Due Modelli di Implementazione</p>
+
+  <h2 data-lang="en" class="active">Fixed Installation or Mobile Unit</h2>
+  <h2 data-lang="es">Instalación Fija o Unidad Móvil</h2>
+  <h2 data-lang="de">Feste Installation oder Mobile Einheit</h2>
+  <h2 data-lang="it">Installazione Fissa o Unità Mobile</h2>
+
+  <p data-lang="en" class="active">The VacOil system is available in two complementary deployment formats — a <strong>Fixed Installation</strong> on your land, or a <strong>Mobile Vacuum Laboratory</strong> that brings the full processing chain to each farm at harvest time. Both produce identically certified UHP oil.</p>
+  <p data-lang="es">El sistema VacOil está disponible en dos formatos complementarios — una <strong>Instalación Fija</strong> en su terreno, o un <strong>Laboratorio Móvil al Vacío</strong> que lleva la cadena completa de procesado a cada finca en el momento de la cosecha. Ambos producen aceite UHP certificado.</p>
+  <p data-lang="de">Das VacOil-System ist in zwei komplementären Formaten verfügbar — eine <strong>Feste Installation</strong> auf Ihrem Grundstück, oder ein <strong>Mobiles Vakuumlabor</strong>, das die vollständige Verarbeitungskette zur Ernte bringt. Beide produzieren zertifiziertes UHP-Öl.</p>
+  <p data-lang="it">Il sistema VacOil è disponibile in due formati complementari — un'<strong>Installazione Fissa</strong> sul terreno, o un <strong>Laboratorio Mobile del Vuoto</strong> che porta la catena di lavorazione completa in ogni azienda agricola al momento del raccolto. Entrambi producono olio UHP certificato.</p>
+
+  <div class="component-grid">
+    <div class="component-card fixed">
+      <div class="comp-badge fixed" data-lang="en" data-lang-inline="en">
+      </div>
+      <span class="comp-badge fixed" data-lang-inline="en" class="active">Fixed · Option A</span>
+      <span class="comp-badge fixed" data-lang-inline="es">Fijo · Opción A</span>
+      <span class="comp-badge fixed" data-lang-inline="de">Fest · Option A</span>
+      <span class="comp-badge fixed" data-lang-inline="it">Fisso · Opzione A</span>
+      <div class="comp-title">🏭
+        <span data-lang-inline="en" class="active"> Fixed Processing Facility</span>
+        <span data-lang-inline="es"> Instalación Fija</span>
+        <span data-lang-inline="de"> Feste Verarbeitungsanlage</span>
+        <span data-lang-inline="it"> Impianto Fisso</span>
+      </div>
+      <div class="comp-body">
+        <span data-lang-inline="en" class="active">Land-based modular installation. VTD unit, hammer mill, press, cold storage. Processes 100–500 kg/day. Permanent licence-ready facility on rústico land. Investment: <strong>€34k–€50k</strong> excl. land.</span>
+        <span data-lang-inline="es">Instalación modular en terreno. Unidad VTD, molino, prensa, almacén frío. 100–500 kg/día. Instalación permanente. Inversión: <strong>€34k–€50k</strong> sin terreno.</span>
+        <span data-lang-inline="de">Landbasierte modulare Anlage. VTD, Mühle, Presse, Kühlraum. 100–500 kg/Tag. Permanente Anlage. Investition: <strong>€34k–€50k</strong> ohne Grundstück.</span>
+        <span data-lang-inline="it">Installazione modulare su terreno. VTD, mulino, pressa, cella frigorifera. 100–500 kg/giorno. Impianto permanente. Investimento: <strong>€34k–€50k</strong> escluso terreno.</span>
+      </div>
+    </div>
+    <div class="component-card mobile">
+      <span class="comp-badge mobile" data-lang-inline="en" class="active">Mobile · Option B</span>
+      <span class="comp-badge mobile" data-lang-inline="es">Móvil · Opción B</span>
+      <span class="comp-badge mobile" data-lang-inline="de">Mobil · Option B</span>
+      <span class="comp-badge mobile" data-lang-inline="it">Mobile · Opzione B</span>
+      <div class="comp-title">🚐
+        <span data-lang-inline="en" class="active"> Mobile Vacuum Laboratory</span>
+        <span data-lang-inline="es"> Laboratorio Móvil al Vacío</span>
+        <span data-lang-inline="de"> Mobiles Vakuumlabor</span>
+        <span data-lang-inline="it"> Laboratorio Mobile del Vuoto</span>
+      </div>
+      <div class="comp-body">
+        <span data-lang-inline="en" class="active">Full UHP production in a food-grade insulated 5t truck. Goes to the farm. 100 kg/batch, 6–10 h cycle. Generator or grid power. Fixed Hub Station for final filtration & bottling. Investment: <strong>€88k–€168k</strong>.</span>
+        <span data-lang-inline="es">Producción UHP completa en camión 5t aislado. Va a la finca. 100 kg/batch, ciclo 6–10 h. Generador o red eléctrica. Estación Hub fija para filtración y embotellado. Inversión: <strong>€88k–€168k</strong>.</span>
+        <span data-lang-inline="de">Vollständige UHP-Produktion in einem 5t-Kühllastwagen. Fährt zum Hof. 100 kg/Charge, 6–10 h Zyklus. Generator oder Netz. Feste Hub-Station für Filtration & Abfüllung. Investition: <strong>€88k–€168k</strong>.</span>
+        <span data-lang-inline="it">Produzione UHP completa in camion coibentato 5t. Va all'azienda agricola. 100 kg/batch, ciclo 6–10 h. Generatore o corrente di rete. Stazione Hub fissa per filtrazione e imbottigliamento. Investimento: <strong>€88k–€168k</strong>.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOBILE UNIT DETAIL -->
+<div class="divider"></div>
+<section>
+  <p class="section-label mobile-label" data-lang="en" class="active">Mobile System — Deep Dive</p>
+  <p class="section-label mobile-label" data-lang="es">Sistema Móvil — En Detalle</p>
+  <p class="section-label mobile-label" data-lang="de">Mobiles System — Details</p>
+  <p class="section-label mobile-label" data-lang="it">Sistema Mobile — Approfondimento</p>
+
+  <h2 data-lang="en" class="active">The Mobile Vacuum Laboratory</h2>
+  <h2 data-lang="es">El Laboratorio Móvil al Vacío</h2>
+  <h2 data-lang="de">Das Mobile Vakuumlabor</h2>
+  <h2 data-lang="it">Il Laboratorio Mobile del Vuoto</h2>
+
+  <p data-lang="en" class="active">A fully self-contained two-component system that brings certified UHP oil production directly to the olive grove. No fixed processing plant required — the laboratory comes to the fruit.</p>
+  <p data-lang="es">Un sistema autónomo de dos componentes que lleva la producción de aceite UHP certificado directamente al olivar. No requiere instalación fija — el laboratorio va al fruto.</p>
+  <p data-lang="de">Ein vollständig autarkes Zweikomponentensystem, das die zertifizierte UHP-Ölproduktion direkt zum Olivenhain bringt. Keine feste Anlage erforderlich — das Labor kommt zur Frucht.</p>
+  <p data-lang="it">Un sistema a due componenti completamente autonomo che porta la produzione certificata di olio UHP direttamente all'uliveto. Nessun impianto fisso richiesto — il laboratorio va al frutto.</p>
+
+  <!-- Component 1 -->
+  <div class="mobile-detail">
+    <h3>🚐
+      <span data-lang-inline="en" class="active"> Component 1 — Mobile Processing Unit (MPU)</span>
+      <span data-lang-inline="es"> Componente 1 — Unidad de Elaboración Móvil (UEM)</span>
+      <span data-lang-inline="de"> Komponente 1 — Mobile Verarbeitungseinheit (MVE)</span>
+      <span data-lang-inline="it"> Componente 1 — Unità di Elaborazione Mobile (UEM)</span>
+    </h3>
+    <p data-lang="en" class="active" style="font-size:.85rem;color:var(--text-muted);margin-top:.5rem">The MPU travels to each farm and executes the complete extraction process on-site: olive pitting, vacuum tray drying, cold pressing, and oil transfer. All contact surfaces are food-grade stainless steel 316L.</p>
+    <p data-lang="es" style="font-size:.85rem;color:var(--text-muted);margin-top:.5rem">La UEM se desplaza a cada finca y ejecuta el proceso completo: deshuesado, secado al vacío en bandejas, prensado en frío y transferencia del aceite. Todas las superficies de contacto son acero inox 316L alimentario.</p>
+    <p data-lang="de" style="font-size:.85rem;color:var(--text-muted);margin-top:.5rem">Die MVE fährt zu jedem Hof und führt den vollständigen Extraktionsprozess durch: Entkernen, Vakuumtrocknung, Kaltpressung und Öltransfer. Alle Kontaktflächen sind Edelstahl 316L.</p>
+    <p data-lang="it" style="font-size:.85rem;color:var(--text-muted);margin-top:.5rem">L'UEM si sposta in ogni azienda agricola ed esegue l'intero processo di estrazione: snocciolatura, essiccazione sottovuoto, spremitura a freddo e trasferimento olio. Tutte le superfici a contatto sono acciaio inox 316L alimentare.</p>
+
+    <div class="vehicle-callout mobile-call">
+      <div class="callout-icon">🚛</div>
+      <div class="callout-text">
+        <strong data-lang="en" class="active">Vehicle: Iveco Daily 70C or Mercedes Sprinter 519 (5t)</strong>
+        <strong data-lang="es">Vehículo: Iveco Daily 70C o Mercedes Sprinter 519 (5t)</strong>
+        <strong data-lang="de">Fahrzeug: Iveco Daily 70C oder Mercedes Sprinter 519 (5t)</strong>
+        <strong data-lang="it">Veicolo: Iveco Daily 70C o Mercedes Sprinter 519 (5t)</strong>
+        <br>
+        <span data-lang-inline="en" class="active">Custom food-grade insulated bodywork · 3.8m L × 2.1m W × 2.1m H interior · Full-length gull-wing side doors · Roller shutter rear + fold-out ramp · 4-point hydraulic stabilisers with pendant remote</span>
+        <span data-lang-inline="es">Carrocería aislada a norma alimentaria · Interior 3,8m L × 2,1m A × 2,1m H · Puertas laterales tipo gull-wing · Saradinesca trasera + rampa · Estabilizadores hidráulicos 4 puntos</span>
+        <span data-lang-inline="de">Maßgefertigte Lebensmittel-Karosserie · Innen 3,8m L × 2,1m B × 2,1m H · Gull-Wing-Seitentüren · Rolltor hinten + Rampe · 4-Punkt-Hydraulikstützen mit Fernbedienung</span>
+        <span data-lang-inline="it">Carrozzeria coibentata su misura a norma alimentare · Interno 3,8m L × 2,1m L × 2,1m H · Porte laterali a gull-wing · Saracinesca posteriore + rampa · Stabilizzatori idraulici 4 punti con telecomando</span>
+      </div>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-row">
+        <span class="spec-key">
+          <span data-lang-inline="en" class="active">Batch capacity</span>
+          <span data-lang-inline="es">Capacidad batch</span>
+          <span data-lang-inline="de">Chargenkapazität</span>
+          <span data-lang-inline="it">Capacità batch</span>
+        </span>
+        <span class="spec-val">100 kg olives</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">
+          <span data-lang-inline="en" class="active">Oil yield / batch</span>
+          <span data-lang-inline="es">Rendimiento olio / batch</span>
+          <span data-lang-inline="de">Ölausbeute / Charge</span>
+          <span data-lang-inline="it">Resa olio / batch</span>
+        </span>
+        <span class="spec-val">~12–15 L</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">
+          <span data-lang-inline="en" class="active">Drying cycle</span>
+          <span data-lang-inline="es">Ciclo de secado</span>
+          <span data-lang-inline="de">Trocknungszyklus</span>
+          <span data-lang-inline="it">Ciclo di essiccazione</span>
+        </span>
+        <span class="spec-val">6–10 h</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">
+          <span data-lang-inline="en" class="active">Vehicle PTT</span>
+          <span data-lang-inline="es">PTT vehículo</span>
+          <span data-lang-inline="de">Fahrzeug-GVW</span>
+          <span data-lang-inline="it">PTT veicolo</span>
+        </span>
+        <span class="spec-val">5,000–7,500 kg</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">
+          <span data-lang-inline="en" class="active">Equipment payload</span>
+          <span data-lang-inline="es">Carga equipo</span>
+          <span data-lang-inline="de">Ausrüstungsnutzlast</span>
+          <span data-lang-inline="it">Carico attrezzature</span>
+        </span>
+        <span class="spec-val">~1,521 kg</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">
+          <span data-lang-inline="en" class="active">Target polyphenols</span>
+          <span data-lang-inline="es">Objetivo polifenoles</span>
+          <span data-lang-inline="de">Polyphenol-Zielwert</span>
+          <span data-lang-inline="it">Obiettivo polifenoli</span>
+        </span>
+        <span class="spec-val">600–1,200 mg/kg</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">
+          <span data-lang-inline="en" class="active">Target retail price</span>
+          <span data-lang-inline="es">Precio objetivo venta</span>
+          <span data-lang-inline="de">Zielverkaufspreis</span>
+          <span data-lang-inline="it">Prezzo target vendita</span>
+        </span>
+        <span class="spec-val">€80–150/L</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dual-mode energy -->
+  <h3 style="margin-top:1.8rem">⚡
+    <span data-lang-inline="en" class="active"> Dual-Mode Energy System</span>
+    <span data-lang-inline="es"> Sistema Energético de Doble Modalidad</span>
+    <span data-lang-inline="de"> Zweimodus-Energiesystem</span>
+    <span data-lang-inline="it"> Sistema Energetico a Doppia Modalità</span>
+  </h3>
+  <p style="font-size:.85rem;color:var(--text-muted)" data-lang="en" class="active">The MPU operates in two fully independent modes selected via the main control panel. The PLC automatically manages all downstream logic.</p>
+  <p style="font-size:.85rem;color:var(--text-muted)" data-lang="es">La UEM funciona en dos modos completamente independientes seleccionados desde el panel de control. El PLC gestiona automáticamente toda la lógica.</p>
+  <p style="font-size:.85rem;color:var(--text-muted)" data-lang="de">Die MVE arbeitet in zwei vollständig unabhängigen Modi, ausgewählt über das Hauptbedienfeld. Die SPS verwaltet automatisch alle nachgelagerten Abläufe.</p>
+  <p style="font-size:.85rem;color:var(--text-muted)" data-lang="it">L'UEM opera in due modalità completamente indipendenti selezionate tramite il pannello di controllo principale. Il PLC gestisce automaticamente tutta la logica a valle.</p>
+
+  <div class="energy-grid">
+    <div class="energy-card">
+      <div class="energy-label gen">🔥
+        <span data-lang-inline="en" class="active"> Mode A — Generator (Off-grid)</span>
+        <span data-lang-inline="es"> Modo A — Generador (Fuera de red)</span>
+        <span data-lang-inline="de"> Modus A — Generator (Netzunabhängig)</span>
+        <span data-lang-inline="it"> Modalità A — Generatore (Fuori rete)</span>
+      </div>
+      <div class="energy-body">
+        <strong>15 kW</strong>
+        <span data-lang-inline="en" class="active"> liquid-cooled diesel. CHP heat recovery from engine cooling circuit feeds the glycol heating loop — </span>
+        <span data-lang-inline="es"> diesel. Cogeneración: calor residuo del motor alimenta el circuito de glicol — </span>
+        <span data-lang-inline="de"> Flüssigkeitsgekühlt. BHKW-Wärmerückgewinnung speist den Glykolkreis — </span>
+        <span data-lang-inline="it"> diesel raffreddato a liquido. Recupero calore CHP dal circuito motore alimenta il glicole — </span>
+        <strong>12–18 kW</strong>
+        <span data-lang-inline="en" class="active"> thermal at no extra fuel cost. ~€35–50 diesel/batch.</span>
+        <span data-lang-inline="es"> térmicos sin coste adicional de combustible. ~€35–50 diesel/batch.</span>
+        <span data-lang-inline="de"> thermisch ohne Mehrverbrauch. ~€35–50 Diesel/Charge.</span>
+        <span data-lang-inline="it"> termici senza costi carburante aggiuntivi. ~€35–50 diesel/batch.</span>
+      </div>
+    </div>
+    <div class="energy-card">
+      <div class="energy-label grid">⚡
+        <span data-lang-inline="en" class="active"> Mode B — Grid Power (Farm connection)</span>
+        <span data-lang-inline="es"> Modo B — Corriente de Red (Conexión finca)</span>
+        <span data-lang-inline="de"> Modus B — Netzstrom (Hofanschluss)</span>
+        <span data-lang-inline="it"> Modalità B — Corrente di Rete (Connessione azienda)</span>
+      </div>
+      <div class="energy-body">
+        <span data-lang-inline="en" class="active">CEE 32A connection. Generator off — zero diesel, zero exhaust. Electric glycol heater (6–9 kW, SSR-controlled) replaces CHP heat. Same ±1°C process precision. ~€3–8 electricity/batch.</span>
+        <span data-lang-inline="es">Conexión CEE 32A. Generador apagado — cero diesel, cero emisiones. Calentador eléctrico de glicol (6–9 kW) sustituye el calor CHP. Misma precisión ±1°C. ~€3–8 electricidad/batch.</span>
+        <span data-lang-inline="de">CEE 32A Anschluss. Generator aus — kein Diesel, kein Abgas. Elektrischer Glykolheizer (6–9 kW) ersetzt BHKW-Wärme. Gleiche ±1°C Prozessgenauigkeit. ~€3–8 Strom/Charge.</span>
+        <span data-lang-inline="it">Connessione CEE 32A. Generatore spento — zero diesel, zero scarichi. Riscaldatore glicole elettrico (6–9 kW, SSR modulante) sostituisce il calore CHP. Stessa precisione ±1°C. ~€3–8 elettricità/batch.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Component 2 -->
+  <div class="mobile-detail" style="margin-top:1.5rem">
+    <h3>🏠
+      <span data-lang-inline="en" class="active"> Component 2 — Fixed Hub Station (FHS)</span>
+      <span data-lang-inline="es"> Componente 2 — Estación Hub Fija (EHF)</span>
+      <span data-lang-inline="de"> Komponente 2 — Feste Hub-Station (FHS)</span>
+      <span data-lang-inline="it"> Componente 2 — Stazione Hub Fissa (SHF)</span>
+    </h3>
+    <p data-lang="en" class="active" style="font-size:.85rem;color:var(--text-muted);margin-top:.5rem">The permanent base — adapted from an existing barn or warehouse. Receives bulk oil from the MPU and performs precision filtration, nitrogen-blanketed bottling, lab QC, branded product storage and DTC dispatch. Investment: <strong>€10k–€23k</strong>.</p>
+    <p data-lang="es" style="font-size:.85rem;color:var(--text-muted);margin-top:.5rem">La base permanente — adaptada de un almacén existente. Recibe aceite a granel de la UEM y realiza filtración de precisión, embotellado con nitrógeno, control de calidad, almacenamiento con marca y envío DTC. Inversión: <strong>€10k–€23k</strong>.</p>
+    <p data-lang="de" style="font-size:.85rem;color:var(--text-muted);margin-top:.5rem">Die permanente Basis — aus einer bestehenden Scheune oder einem Lager umgebaut. Empfängt Rohöl von der MVE und führt Präzisionsfiltration, Stickstoffabfüllung, Labor-QK, Markenproduktlagerung und DTC-Versand durch. Investition: <strong>€10k–€23k</strong>.</p>
+    <p data-lang="it" style="font-size:.85rem;color:var(--text-muted);margin-top:.5rem">La base permanente — ricavata da un capannone o magazzino esistente. Riceve olio sfuso dall'UEM ed esegue filtrazione di precisione, imbottigliamento con azoto, controllo qualità, stoccaggio prodotto brandizzato e spedizione DTC. Investimento: <strong>€10k–€23k</strong>.</p>
+
+    <div class="spec-grid" style="margin-top:1rem">
+      <div class="spec-row"><span class="spec-key"><span data-lang-inline="en" class="active">Stainless tanks</span><span data-lang-inline="es">Depósitos inox</span><span data-lang-inline="de">Edelstahltanks</span><span data-lang-inline="it">Serbatoi inox</span></span><span class="spec-val">2 × 50 L + N₂ blanket</span></div>
+      <div class="spec-row"><span class="spec-key"><span data-lang-inline="en" class="active">Filtration</span><span data-lang-inline="es">Filtración</span><span data-lang-inline="de">Filtration</span><span data-lang-inline="it">Filtrazione</span></span><span class="spec-val"><span data-lang-inline="en" class="active">Plate + polishing cartridge</span><span data-lang-inline="es">Placa + cartucho</span><span data-lang-inline="de">Platten + Patronen</span><span data-lang-inline="it">Piastre + cartuccia</span></span></div>
+      <div class="spec-row"><span class="spec-key"><span data-lang-inline="en" class="active">Bottling</span><span data-lang-inline="es">Embotellado</span><span data-lang-inline="de">Abfüllung</span><span data-lang-inline="it">Imbottigliamento</span></span><span class="spec-val"><span data-lang-inline="en" class="active">Semi-auto, drip-free</span><span data-lang-inline="es">Semi-auto, sin goteo</span><span data-lang-inline="de">Halbautomatisch</span><span data-lang-inline="it">Semi-auto, senza gocciolamento</span></span></div>
+      <div class="spec-row"><span class="spec-key"><span data-lang-inline="en" class="active">QC lab kit</span><span data-lang-inline="es">Kit lab. QC</span><span data-lang-inline="de">QK-Labor-Set</span><span data-lang-inline="it">Kit lab. QC</span></span><span class="spec-val"><span data-lang-inline="en" class="active">Refractometer, pH, polyphenol strips</span><span data-lang-inline="es">Refractómetro, pH, tiras polifenoles</span><span data-lang-inline="de">Refraktometer, pH, Polyphenol-Streifen</span><span data-lang-inline="it">Rifrattometro, pH, strisce polifenoli</span></span></div>
+    </div>
+  </div>
+
+  <!-- V0 Prototype callout -->
+  <div class="vehicle-callout" style="margin-top:1.5rem">
+    <div class="callout-icon">🧪</div>
+    <div class="callout-text">
+      <strong data-lang="en" class="active">V0 Prototype Option — Low-Cost Validation</strong>
+      <strong data-lang="es">Opción Prototipo V0 — Validación de Bajo Coste</strong>
+      <strong data-lang="de">V0-Prototyp — Kostengünstige Validierung</strong>
+      <strong data-lang="it">Opzione Prototipo V0 — Validazione a Basso Costo</strong>
+      <br>
+      <span data-lang-inline="en" class="active">A 50 kg/batch lite version on a standard Iveco Daily 50C (3.5t, ~€950 kg equipment) is viable as a low-investment V0 prototype. All process data, recipes and polyphenol results transfer directly to V1. A V0 validates the entire concept before committing full capital.</span>
+      <span data-lang-inline="es">Una versión lite de 50 kg/batch sobre un Iveco Daily 50C estándar (3,5t, ~€950 kg equipo) es viable como prototipo V0 de bajo coste. Todos los datos de proceso se transfieren directamente a V1.</span>
+      <span data-lang-inline="de">Eine 50-kg/Charge Lite-Version auf einem Standard Iveco Daily 50C (3,5t) ist als kostengünstiger V0-Prototyp möglich. Alle Prozessdaten übertragen sich direkt auf V1.</span>
+      <span data-lang-inline="it">Una versione lite da 50 kg/batch su un Iveco Daily 50C standard (3,5t, ~950 kg attrezzature) è fattibile come prototipo V0 a basso costo. Tutti i dati di processo si trasferiscono direttamente a V1.</span>
+    </div>
+  </div>
+
+  <!-- Multi-crop callout -->
+  <div class="highlight-box mobile-box" style="margin-top:1.2rem">
+    <strong>🌾
+      <span data-lang-inline="en" class="active"> Multi-Crop Strategy — Year-Round Revenue</span>
+      <span data-lang-inline="es"> Estrategia Multi-Cultivo — Ingresos Todo el Año</span>
+      <span data-lang-inline="de"> Multi-Ernte-Strategie — Ganzjährige Einnahmen</span>
+      <span data-lang-inline="it"> Strategia Multi-Coltura — Entrate Tutto l'Anno</span>
+    </strong><br>
+    <span data-lang-inline="en" class="active">The VTD and cold press are compatible with 20+ high-value crops. Olives (Oct–Dec) → carob (Sep–Nov) → almonds (Aug–Oct) → medicinal herbs (spring–summer) → specialty crops on demand. Same fixed vehicle cost, near-zero marginal cost per additional crop.</span>
+    <span data-lang-inline="es">El VTD y la prensa son compatibles con 20+ cultivos de alto valor. Aceitunas (oct–dic) → algarroba (sep–nov) → almendras (ago–oct) → hierbas medicinales (primavera–verano). Mismo coste fijo del vehículo, coste marginal casi nulo por cultivo adicional.</span>
+    <span data-lang-inline="de">VTD und Kaltpresse sind mit 20+ wertvollen Kulturen kompatibel. Oliven (Okt–Dez) → Johannisbrot (Sep–Nov) → Mandeln (Aug–Okt) → Heilkräuter (Frühjahr–Sommer). Gleiche Fixkosten, fast null Grenzkosten pro Ernte.</span>
+    <span data-lang-inline="it">Il VTD e la pressa a freddo sono compatibili con 20+ colture ad alto valore. Olive (ott–dic) → carruba (set–nov) → mandorle (ago–ott) → erbe medicinali (primavera–estate). Stesso costo fisso veicolo, costo marginale quasi zero per coltura aggiuntiva.</span>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<div class="divider"></div>
+<section>
+  <p class="section-label" data-lang="en" class="active">Implementation Roadmap</p>
+  <p class="section-label" data-lang="es">Hoja de Ruta</p>
+  <p class="section-label" data-lang="de">Umsetzungsplan</p>
+  <p class="section-label" data-lang="it">Roadmap</p>
+
+  <h2 data-lang="en" class="active">From Plan to First Harvest — 18 Months</h2>
+  <h2 data-lang="es">Del Plan a la Primera Cosecha — 18 Meses</h2>
+  <h2 data-lang="de">Vom Plan zur Ersten Ernte — 18 Monate</h2>
+  <h2 data-lang="it">Dal Piano al Primo Raccolto — 18 Mesi</h2>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot">1</div>
+      <div class="tl-content">
+        <div class="tl-date"><span data-lang-inline="en" class="active">Now → Summer 2025</span><span data-lang-inline="es">Ahora → Verano 2025</span><span data-lang-inline="de">Jetzt → Sommer 2025</span><span data-lang-inline="it">Adesso → Estate 2025</span></div>
+        <div class="tl-title"><span data-lang-inline="en" class="active">Planning & Preparation</span><span data-lang-inline="es">Planificación y Preparación</span><span data-lang-inline="de">Planung & Vorbereitung</span><span data-lang-inline="it">Pianificazione e Preparazione</span></div>
+        <div class="tl-body"><span data-lang-inline="en" class="active">Equipment supplier sourcing. Choose deployment model: fixed or mobile. Legal paperwork — licencia de actividad, sanitary registration, environmental assessment. Detailed equipment layout. For mobile: vehicle bodywork quotes.</span><span data-lang-inline="es">Búsqueda de proveedores. Elegir modelo: fijo o móvil. Trámites legales. Para móvil: presupuestos de carrocería de vehículo.</span><span data-lang-inline="de">Lieferantensuche. Einsatzmodell wählen: fest oder mobil. Behördliche Genehmigungen. Für Mobil: Karosserieofferten.</span><span data-lang-inline="it">Ricerca fornitori. Scegliere modello: fisso o mobile. Pratiche legali. Per mobile: preventivi carrozzeria veicolo.</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">2</div>
+      <div class="tl-content">
+        <div class="tl-date">October 2025 / Octubre / Oktober / Ottobre</div>
+        <div class="tl-title"><span data-lang-inline="en" class="active">Validation Test — The Critical Gate</span><span data-lang-inline="es">Test de Validación — La Puerta Crítica</span><span data-lang-inline="de">Validierung — Der Entscheidungspunkt</span><span data-lang-inline="it">Test di Validazione — Il Gate Critico</span></div>
+        <div class="tl-body"><span data-lang-inline="en" class="active">Process Picual olives with prototype VTD. Lab analysis (2–3 weeks). Target: 800+ mg/kg. If confirmed → proceed. If not → refine before committing capital.</span><span data-lang-inline="es">Procesar Picual con prototipo VTD. Análisis lab (2–3 sem). Objetivo: 800+ mg/kg.</span><span data-lang-inline="de">Picual mit VTD-Prototyp verarbeiten. Laboranalyse (2–3 Wochen). Ziel: 800+ mg/kg.</span><span data-lang-inline="it">Lavorare Picual con prototipo VTD. Analisi laboratorio (2–3 settimane). Obiettivo: 800+ mg/kg.</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">3</div>
+      <div class="tl-content">
+        <div class="tl-date">November 2025 / Noviembre / November / Novembre</div>
+        <div class="tl-title"><span data-lang-inline="en" class="active">Equipment Orders & Vehicle Commission</span><span data-lang-inline="es">Pedidos y Comisión de Vehículo</span><span data-lang-inline="de">Bestellungen & Fahrzeugauftrag</span><span data-lang-inline="it">Ordini Attrezzature & Commissione Veicolo</span></div>
+        <div class="tl-body"><span data-lang-inline="en" class="active">Confirmed orders with manufacturers. For fixed: close land deal (rústico, min. 500–800 m²). For mobile: place vehicle + custom bodywork order. Manufacturing + shipping: 4–6 months.</span><span data-lang-inline="es">Pedidos confirmados. Fijo: cerrar terreno. Móvil: encargar vehículo y carrocería. Fabricación + envío: 4–6 meses.</span><span data-lang-inline="de">Bestellungen bestätigen. Fest: Grundstück abschließen. Mobil: Fahrzeug + Karosserie bestellen. 4–6 Monate.</span><span data-lang-inline="it">Ordini confermati. Fisso: finalizzare terreno. Mobile: ordinare veicolo e carrozzeria. Produzione + spedizione: 4–6 mesi.</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">4</div>
+      <div class="tl-content">
+        <div class="tl-date">Dec 2025 → Feb 2026 / Dic–Feb / Dez–Feb / Dic–Feb</div>
+        <div class="tl-title"><span data-lang-inline="en" class="active">Build & Commission — Fixed or Mobile</span><span data-lang-inline="es">Construcción y Comisión — Fijo o Móvil</span><span data-lang-inline="de">Bau & Inbetriebnahme — Fest oder Mobil</span><span data-lang-inline="it">Costruzione e Allestimento — Fisso o Mobile</span></div>
+        <div class="tl-body"><span data-lang-inline="en" class="active"><strong>Fixed:</strong> Processing area (40–50 m²), cold storage (15–20 m²), tech quarters. Scalable 100 kg → 1 t/day. <strong>Mobile:</strong> Vehicle bodywork fabrication, skid assembly, PLC installation, food-grade fitting. Hub Station setup in existing building.</span><span data-lang-inline="es"><strong>Fijo:</strong> Procesado (40–50 m²), almacén frío (15–20 m²). <strong>Móvil:</strong> Fabricación carrocería, montaje skid, PLC, instalación alimentaria. Estación Hub en edificio existente.</span><span data-lang-inline="de"><strong>Fest:</strong> Verarbeitung (40–50 m²), Kühlraum (15–20 m²). <strong>Mobil:</strong> Karosseriefertigung, Skid-Montage, SPS-Installation. Hub-Station in vorhandenem Gebäude.</span><span data-lang-inline="it"><strong>Fisso:</strong> Lavorazione (40–50 m²), cella frigorifera (15–20 m²). <strong>Mobile:</strong> Fabbricazione carrozzeria, montaggio skid, PLC. Stazione Hub in edificio esistente.</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">5</div>
+      <div class="tl-content">
+        <div class="tl-date">Mar → May 2026 / Mar–May / Mär–Mai / Mar–Mag</div>
+        <div class="tl-title"><span data-lang-inline="en" class="active">Equipment Arrival & Installation</span><span data-lang-inline="es">Llegada e Instalación</span><span data-lang-inline="de">Ankunft & Installation</span><span data-lang-inline="it">Arrivo e Installazione</span></div>
+        <div class="tl-body"><span data-lang-inline="en" class="active">Install / fit-out VTD units, hammer mill, press, separator, CIP. Test runs with purchased olives. Calibrate vacuum, temperature, drying cycles.</span><span data-lang-inline="es">Instalar VTD, molino, prensa, separador, CIP. Pruebas. Calibrar vacío, temperatura, ciclos.</span><span data-lang-inline="de">VTD, Mühle, Presse, Separator, CIP installieren. Testläufe. Kalibrierung.</span><span data-lang-inline="it">Installare VTD, mulino, pressa, separatore, CIP. Test. Calibrazione.</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">6</div>
+      <div class="tl-content">
+        <div class="tl-date">Jun → Sep 2026 / Jun–Sep / Jun–Sep / Giu–Set</div>
+        <div class="tl-title"><span data-lang-inline="en" class="active">Certifications & Pre-Season</span><span data-lang-inline="es">Certificaciones y Pre-Temporada</span><span data-lang-inline="de">Zertifizierungen & Vorsaison</span><span data-lang-inline="it">Certificazioni & Pre-Stagione</span></div>
+        <div class="tl-body"><span data-lang-inline="en" class="active">Final inspections, partner onboarding, dry runs, branding, packaging, distribution prep.</span><span data-lang-inline="es">Inspecciones finales, incorporación socio, ensayos, marca, envases, distribución.</span><span data-lang-inline="de">Inspektionen, Partner-Onboarding, Trockenläufe, Marke, Verpackung, Vertrieb.</span><span data-lang-inline="it">Ispezioni finali, onboarding partner, prove, branding, packaging, distribuzione.</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot harvest">🫒</div>
+      <div class="tl-content">
+        <div class="tl-date">🫒 October 2026 / Octubre / Oktober / Ottobre</div>
+        <div class="tl-title"><span data-lang-inline="en" class="active">First Harvest — Production Begins</span><span data-lang-inline="es">Primera Cosecha — Producción</span><span data-lang-inline="de">Erste Ernte — Produktion</span><span data-lang-inline="it">Primo Raccolto — Produzione</span></div>
+        <div class="tl-body"><span data-lang-inline="en" class="active">Fresh Picual olives → lab-certified UHP oil. ~30 processing days, 100–500 kg/day (fixed) or 100 kg/batch (mobile). First commercial bottles.</span><span data-lang-inline="es">Picual frescas → aceite UHP certificado. ~30 días, 100–500 kg/día (fijo) o 100 kg/batch (móvil). Primeras botellas.</span><span data-lang-inline="de">Frische Picual → zertifiziertes UHP-Öl. ~30 Tage. Erste Flaschen.</span><span data-lang-inline="it">Picual fresche → olio UHP certificato. ~30 giorni. Prime bottiglie.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INVESTMENT -->
+<div class="divider"></div>
+<section>
+  <p class="section-label" data-lang="en" class="active">Investment Estimate</p>
+  <p class="section-label" data-lang="es">Estimación de Inversión</p>
+  <p class="section-label" data-lang="de">Investitionsschätzung</p>
+  <p class="section-label" data-lang="it">Stima Investimento</p>
+
+  <h2 data-lang="en" class="active">Cost Breakdown — Zero Margin</h2>
+  <h2 data-lang="es">Desglose de Costes — Margen Cero</h2>
+  <h2 data-lang="de">Kostenaufstellung — Null Marge</h2>
+  <h2 data-lang="it">Dettaglio Costi — Margine Zero</h2>
+
+  <p data-lang="en" class="active">First partner pays only real costs. No markup, no consulting fees.</p>
+  <p data-lang="es">El primer socio paga solo costes reales. Sin recargo.</p>
+  <p data-lang="de">Erster Partner zahlt nur reale Kosten. Kein Aufschlag.</p>
+  <p data-lang="it">Il primo partner paga solo i costi reali. Nessun ricarico.</p>
+
+  <h3 style="margin-top:1.5rem">
+    <span data-lang-inline="en" class="active">Option A — Fixed Installation, 100 kg/day</span>
+    <span data-lang-inline="es">Opción A — Instalación Fija, 100 kg/día</span>
+    <span data-lang-inline="de">Option A — Feste Anlage, 100 kg/Tag</span>
+    <span data-lang-inline="it">Opzione A — Installazione Fissa, 100 kg/g</span>
+  </h3>
+
+  <div class="acc-list" data-lang="en" class="active">
+    <div class="acc-item" onclick="this.classList.toggle('open')"><div class="acc-head"><span class="acc-name">Processing equipment</span><span class="acc-cost">€22k–€28k</span><span class="acc-arrow">▼</span></div><div class="acc-detail">Hammer Mill configuration from Alibaba / Made-in-China: air separator, 1× VTD + cold trap + vacuum pump, cold screw press, decanter, filtration, N₂ storage tank.</div></div>
+    <div class="acc-item" onclick="this.classList.toggle('open')"><div class="acc-head"><span class="acc-name">Sea freight + customs</span><span class="acc-cost">€3k–€5k</span><span class="acc-arrow">▼</span></div><div class="acc-detail">FCL 20ft container Guangzhou → Algeciras/Málaga. Customs clearance (~4.2% duties) + port handling.</div></div>
+    <div class="acc-item" onclick="this.classList.toggle('open')"><div class="acc-head"><span class="acc-name">Facility construction</span><span class="acc-cost">€3.5k–€5.5k</span><span class="acc-arrow">▼</span></div><div class="acc-detail">Processing hall (~45 m²), cold storage (~18 m²), technician quarters + toilet (9 m²), gravel base + site prep.</div></div>
+    <div class="acc-item" onclick="this.classList.toggle('open')"><div class="acc-head"><span class="acc-name">Electrical + plumbing</span><span class="acc-cost">€2.3k–€4.5k</span><span class="acc-arrow">▼</span></div><div class="acc-detail">3-phase connection, food-grade wiring, CIP plumbing, grease trap, alpechín tank. No olive washing — dry cleaning preserves polyphenols.</div></div>
+    <div class="acc-item" onclick="this.classList.toggle('open')"><div class="acc-head"><span class="acc-name">Legal & authorisations</span><span class="acc-cost">€2k–€4k</span><span class="acc-arrow">▼</span></div><div class="acc-detail">Licencia de actividad, Registro Sanitario (AESAN), environmental assessment, technical project engineer, municipal permits.</div></div>
+    <div class="acc-item" onclick="this.classList.toggle('open')"><div class="acc-head"><span class="acc-name">Lab testing & contingency</span><span class="acc-cost">€3.5k–€5.5k</span><span class="acc-arrow">▼</span></div><div class="acc-detail">HPLC polyphenol panels (€150–300/test), acidity + peroxide + UV, organoleptic evaluation + ~10% contingency buffer.</div></div>
+    <div class="acc-total"><span>TOTAL (excl. land)</span><span class="tot-cost">€34k–€50k</span></div>
+  </div>
+
+  <p style="font-size:.78rem;color:var(--text-muted);margin:.5rem 0 1.5rem" data-lang="en" class="active">Land €5k–€30k separately. Partner acquires independently. Option B (500 kg/day, 5× VTD): €95k–€130k.</p>
+  <p style="font-size:.78rem;color:var(--text-muted);margin:.5rem 0 1.5rem" data-lang="es">Terreno 5k–30k € aparte. Opción B (500 kg/día, 5× VTD): 95k–130k €.</p>
+  <p style="font-size:.78rem;color:var(--text-muted);margin:.5rem 0 1.5rem" data-lang="de">Grundstück 5k–30k € separat. Option B (500 kg/Tag): 95k–130k €.</p>
+  <p style="font-size:.78rem;color:var(--text-muted);margin:.5rem 0 1.5rem" data-lang="it">Terreno €5k–€30k separato. Opzione B (500 kg/g, 5× VTD): €95k–€130k.</p>
+
+  <h3 style="margin-top:.5rem;color:var(--mobile-accent)">🚐
+    <span data-lang-inline="en" class="active"> Option C — Mobile System V1 (100 kg/batch)</span>
+    <span data-lang-inline="es"> Opción C — Sistema Móvil V1 (100 kg/batch)</span>
+    <span data-lang-inline="de"> Option C — Mobiles System V1 (100 kg/Charge)</span>
+    <span data-lang-inline="it"> Opzione C — Sistema Mobile V1 (100 kg/batch)</span>
+  </h3>
+
+  <div class="acc-list" data-lang="en" class="active">
+    <div class="acc-item" onclick="this.classList.toggle('open')"><div class="acc-head"><span class="acc-name">Vehicle (5t, 2–5 years)</span><span class="acc-cost mc">€18k–€28k</span><span class="acc-arrow">▼</span></div><div class="acc-detail">Iveco Daily 70C or Mercedes Sprinter 519. 4×4 variant recommended for mountain terrain access.</div></div>
+    <div class="acc-item" onclick="this.classList.toggle('open')"><div class="acc-head"><span class="acc-name">Custom bodywork + gull-wing doors</span><span class="acc-cost mc">€8k–€15k</span><span class="acc-arrow">▼</span></div><div class="acc-detail">PIR panel food-grade bodywork (50mm). Full-length gull-wing side doors + roller rear + fold ramp. 4-point hydraulic stabilisers with pendant remote.</div></div>
+    <div class="acc-item" onclick="this.classList.toggle('open')"><div class="acc-head"><span class="acc-name">VTD + vacuum + cold trap</span><span class="acc-cost mc">€13k–€24k</span><span class="acc-arrow">▼</span></div><div class="acc-detail">Custom stainless 100 kg VTD (12 perforated trays, glycol rails). Primary oil + diaphragm backup vacuum pump. Cold trap condenser.</div></div>
+    <div class="acc-item" onclick="this.classList.toggle('open')"><div class="acc-head"><span class="acc-name">Processing machinery</span><span class="acc-cost mc">€7k–€14k</span><span class="acc-arrow">▼</span></div><div class="acc-detail">Centrifugal pitter 100 kg/hr (316L). Industrial cold screw press (water-cooled head, 2.2 kW). Coarse in-line colander (316L removable basket).</div></div>
+    <div class="acc-item" onclick="this.classList.toggle('open')"><div class="acc-head"><span class="acc-name">Dual-mode energy system</span><span class="acc-cost mc">€5.7k–€10.7k</span><span class="acc-arrow">▼</span></div><div class="acc-detail">15 kW liquid-cooled diesel generator with CHP heat exchanger. Electric glycol heater (6–9 kW, modulating SSR). Glycol circuit (pump, expansion, insulated piping). CEE 32A grid inlet + transfer switch.</div></div>
+    <div class="acc-item" onclick="this.classList.toggle('open')"><div class="acc-head"><span class="acc-name">PLC + electrical + plumbing</span><span class="acc-cost mc">€4.9k–€9.4k</span><span class="acc-arrow">▼</span></div><div class="acc-detail">Siemens LOGO! PLC + 7" HMI + mode selector. Full instrumentation (PT100 sensors, vacuum transducer). CIP pressurised tank (50L, 2 kW). Water tanks: 500L supply + 100L waste. Tri-Clamp fittings, EPDM hoses.</div></div>
+    <div class="acc-item" onclick="this.classList.toggle('open')"><div class="acc-head"><span class="acc-name">Stainless skid + fittings</span><span class="acc-cost mc">€4.5k–€9k</span><span class="acc-arrow">▼</span></div><div class="acc-detail">AISI 304 structural skid fabrication + welding. Oil transfer canisters (3× 20L N₂-rated). Platform scale 300 kg + portion scale. All piping & clamps.</div></div>
+    <div class="acc-item" onclick="this.classList.toggle('open')"><div class="acc-head"><span class="acc-name">Fixed Hub Station (Component 2)</span><span class="acc-cost mc">€10k–€23k</span><span class="acc-arrow">▼</span></div><div class="acc-detail">Barn/warehouse adaptation. 2× 50L stainless tanks + N₂ blanket. Plate + polishing filtration. Semi-auto bottling station. Lab QC kit. Label printer. Shipping station. Temperature control.</div></div>
+    <div class="acc-item" onclick="this.classList.toggle('open')"><div class="acc-head"><span class="acc-name">Compliance, brand & launch</span><span class="acc-cost mc">€3.8k–€9.7k</span><span class="acc-arrow">▼</span></div><div class="acc-detail">HACCP plan (food safety consultant), REGA + municipal registrations, first 10 polyphenol HPLC certs (establishes quality baseline), brand identity + DTC web store + bottle stock.</div></div>
+    <div class="acc-item" onclick="this.classList.toggle('open')"><div class="acc-head"><span class="acc-name">Contingency (~10%)</span><span class="acc-cost mc">€8k–€15.3k</span><span class="acc-arrow">▼</span></div><div class="acc-detail">Buffer for currency fluctuations, additional tooling, site surprises, spare parts, additional testing rounds.</div></div>
+    <div class="acc-total mc"><span>TOTAL System (V1)</span><span class="tot-cost">€88k–€168k</span></div>
+  </div>
+
+  <div class="highlight-box mobile-box" style="margin-top:1rem">
+    <strong>🧪 V0 Prototype (50 kg/batch):</strong>
+    <span data-lang-inline="en" class="active"> ~€40k–€70k. Validates polyphenol results and full process before committing to V1 capital. All learnings transfer directly.</span>
+    <span data-lang-inline="es"> ~€40k–€70k. Valida resultados antes de comprometer capital V1. Todo se transfiere.</span>
+    <span data-lang-inline="de"> ~€40k–€70k. Validiert Ergebnisse vor V1-Investition. Alle Erkenntnisse übertragen sich.</span>
+    <span data-lang-inline="it"> ~€40k–€70k. Valida risultati prima di impegnare capitale V1. Tutto si trasferisce.</span>
+  </div>
+</section>
+
+<!-- THE OFFER -->
+<div class="divider"></div>
+<section>
+  <p class="section-label" data-lang="en" class="active">The Offer</p>
+  <p class="section-label" data-lang="es">La Oferta</p>
+  <p class="section-label" data-lang="de">Das Angebot</p>
+  <p class="section-label" data-lang="it">L'Offerta</p>
+
+  <h2 data-lang="en" class="active">What the First Partner Gets</h2>
+  <h2 data-lang="es">Qué Recibe el Primer Socio</h2>
+  <h2 data-lang="de">Was der Erste Partner Erhält</h2>
+  <h2 data-lang="it">Cosa Riceve il Primo Partner</h2>
+
+  <p data-lang="en" class="active">First installation <strong>at cost</strong> — no markup, no fees. Prototype deployment — both sides share the learning. Choose fixed or mobile deployment.</p>
+  <p data-lang="es">Primera instalación <strong>a coste</strong> — sin recargo. Despliegue prototipo — ambas partes comparten el aprendizaje. Fijo o móvil.</p>
+  <p data-lang="de">Erstinstallation <strong>zum Selbstkostenpreis</strong> — kein Aufschlag. Prototyp — beide Seiten lernen. Fest oder mobil.</p>
+  <p data-lang="it">Prima installazione <strong>al costo</strong> — nessun ricarico. Prototipo — entrambi imparano. Fisso o mobile.</p>
+
+  <ul class="offer-list" data-lang="en" class="active">
+    <li>Full equipment sourcing, logistics & installation</li>
+    <li>Deployment model design & commissioning (fixed or mobile)</li>
+    <li>Process calibration & production training</li>
+    <li>Lab coordination & quality certification</li>
+    <li>Equity partnership invitation (selling & distribution)</li>
+    <li>Priority access to V1 → V2 upgrades</li>
+    <li>Multi-crop calendar planning (year-round revenue)</li>
+  </ul>
+  <ul class="offer-list" data-lang="es">
+    <li>Sourcing completo, logística e instalación</li>
+    <li>Diseño y comisionamiento del modelo elegido (fijo o móvil)</li>
+    <li>Calibración y formación en producción</li>
+    <li>Coordinación laboratorio y certificación</li>
+    <li>Invitación a participación accionarial</li>
+    <li>Acceso prioritario a actualizaciones V1 → V2</li>
+    <li>Planificación calendario multi-cultivo</li>
+  </ul>
+  <ul class="offer-list" data-lang="de">
+    <li>Komplettes Sourcing, Logistik & Installation</li>
+    <li>Modellplanung & Inbetriebnahme (fest oder mobil)</li>
+    <li>Prozesskalibrierung & Schulung</li>
+    <li>Laborkoordination & Zertifizierung</li>
+    <li>Beteiligung am Vertriebsgeschäft</li>
+    <li>Bevorzugter Zugang zu V1 → V2 Upgrades</li>
+    <li>Multi-Ernte-Kalenderplanung</li>
+  </ul>
+  <ul class="offer-list" data-lang="it">
+    <li>Sourcing completo, logistica e installazione</li>
+    <li>Progettazione e commissioning del modello scelto (fisso o mobile)</li>
+    <li>Calibrazione e formazione produttiva</li>
+    <li>Coordinamento laboratorio e certificazione</li>
+    <li>Invito a partnership azionaria</li>
+    <li>Accesso prioritario agli upgrade V1 → V2</li>
+    <li>Pianificazione calendario multi-coltura</li>
+  </ul>
+</section>
+
+<!-- LEARN MORE -->
+<div class="divider"></div>
+<section>
+  <p class="section-label" data-lang="en" class="active">Learn More</p>
+  <p class="section-label" data-lang="es">Más Info</p>
+  <p class="section-label" data-lang="de">Mehr erfahren</p>
+  <p class="section-label" data-lang="it">Approfondisci</p>
+
+  <h2 data-lang="en" class="active">Explore the Technology</h2>
+  <h2 data-lang="es">Explore la Tecnología</h2>
+  <h2 data-lang="de">Technologie entdecken</h2>
+  <h2 data-lang="it">Esplora la Tecnologia</h2>
+
+  <div class="link-grid">
+    <a class="link-card" href="https://silken-jungle-kpeq.here.now/" target="_blank">
+      <div class="link-card-tag">VacOil</div>
+      <h4><span data-lang-inline="en" class="active">UHP Olive Oil Plant</span><span data-lang-inline="es">Planta UHP</span><span data-lang-inline="de">UHP-Anlage</span><span data-lang-inline="it">Impianto UHP</span></h4>
+      <p><span data-lang-inline="en" class="active">Full technical docs — CAPEX/OPEX, ROI, equipment specs, scaling roadmap.</span><span data-lang-inline="es">Documentación técnica — CAPEX/OPEX, ROI, especificaciones.</span><span data-lang-inline="de">Technische Dokumentation — CAPEX/OPEX, ROI, Spezifikationen.</span><span data-lang-inline="it">Documentazione tecnica — CAPEX/OPEX, ROI, specifiche.</span></p>
+    </a>
+    <a class="link-card" href="#" onclick="document.getElementById('cd').classList.add('open');return false" style="border-color:var(--mobile-accent);opacity:.9">
+      <div class="link-card-tag" style="color:var(--mobile-accent)">Mobile Lab</div>
+      <h4><span data-lang-inline="en" class="active">Request Full RFQ Document</span><span data-lang-inline="es">Solicitar Documento RFQ Completo</span><span data-lang-inline="de">Vollständiges RFQ-Dokument anfordern</span><span data-lang-inline="it">Richiedi Documento RFQ Completo</span></h4>
+      <p><span data-lang-inline="en" class="active">Full specifications, equipment list, vehicle requirements, supplier contacts — contact us to receive the complete Mobile Lab RFQ package.</span><span data-lang-inline="es">Especificaciones completas, lista equipos, requisitos vehículo — contáctenos para el paquete RFQ completo.</span><span data-lang-inline="de">Vollständige Spezifikationen, Ausrüstungsliste, Fahrzeuganforderungen — kontaktieren Sie uns für das vollständige RFQ-Paket.</span><span data-lang-inline="it">Specifiche complete, lista attrezzature, requisiti veicolo — contattateci per il pacchetto RFQ completo.</span></p>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">digitalAIventures LLC</div>
+  <div class="footer-sub">
+    Alpujarras · Andalucía · Spain<br>
+    <span data-lang-inline="en" class="active">Partner Pilot Programme · 2025–2026</span>
+    <span data-lang-inline="es">Programa Piloto · 2025–2026</span>
+    <span data-lang-inline="de">Partner-Pilot · 2025–2026</span>
+    <span data-lang-inline="it">Programma Pilota · 2025–2026</span>
+  </div>
+  <button class="footer-contact" onclick="document.getElementById('cd').classList.add('open')">
+    <span data-lang-inline="en" class="active">Get in Touch</span>
+    <span data-lang-inline="es">Contacto</span>
+    <span data-lang-inline="de">Kontakt</span>
+    <span data-lang-inline="it">Contattaci</span>
+  </button>
+</footer>
+
+<!-- CONTACT DIALOG -->
+<div class="dialog-overlay" id="cd" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="dialog-box">
+    <h4><span data-lang-inline="en" class="active">Get in Touch</span><span data-lang-inline="es">Contacto</span><span data-lang-inline="de">Kontakt</span><span data-lang-inline="it">Contattaci</span></h4>
+    <a class="dialog-option dialog-email" href="mailto:alexandru.nistoroiu@gmail.com">✉ Email</a>
+    <a class="dialog-option dialog-telegram" href="https://t.me/JuanittoCalvares" target="_blank">✈ Telegram</a>
+    <button class="dialog-close" onclick="document.getElementById('cd').classList.remove('open')">
+      <span data-lang-inline="en" class="active">Close</span><span data-lang-inline="es">Cerrar</span><span data-lang-inline="de">Schließen</span><span data-lang-inline="it">Chiudi</span>
+    </button>
+  </div>
+</div>
+
+<script>
+// THEME
+function toggleTheme(){
+  const html=document.documentElement;
+  const next=html.getAttribute('data-theme')==='dark'?'light':'dark';
+  html.setAttribute('data-theme',next);
+  document.getElementById('themeIcon').textContent=next==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',next)}catch(e){}
+}
+(function(){
+  function apply(t){
+    document.documentElement.setAttribute('data-theme',t);
+    document.addEventListener('DOMContentLoaded',()=>{
+      const icon=document.getElementById('themeIcon');
+      if(icon)icon.textContent=t==='dark'?'☀️':'🌙';
+    });
+  }
+  try{
+    const saved=localStorage.getItem('theme');
+    if(saved){apply(saved)}
+    else{const h=new Date().getHours();apply(h>=7&&h<19?'light':'dark')}
+  }catch(e){apply('dark')}
+})();
+
+// LANG
+var currentLang='en';
+function setLang(lang){
+  currentLang=lang;
+  document.querySelectorAll('[data-lang]').forEach(el=>{
+    el.classList.toggle('active',el.getAttribute('data-lang')===lang);
+  });
+  document.querySelectorAll('[data-lang-inline]').forEach(el=>{
+    el.classList.toggle('active',el.getAttribute('data-lang-inline')===lang);
+  });
+  document.querySelectorAll('.lang-btn').forEach((btn,i)=>{
+    btn.classList.toggle('active',['en','es','de','it'][i]===lang);
+  });
+}
+// Fix: ensure hero-sub paragraphs work (they have class="active" hardcoded initially)
+document.addEventListener('DOMContentLoaded',()=>setLang('en'));
+</script>
+</body>
+</html>

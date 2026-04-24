@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F.L. Wright Type Community — A Story</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0d0d0f;
+    --bg2: #13131a;
+    --bg3: #1a1a25;
+    --border: #252535;
+    --text: #d8d8e8;
+    --text-dim: #8888aa;
+    --text-muted: #555570;
+    --accent: #c8a96e;
+    --accent2: #a07840;
+    --gold: #d4af70;
+    --white: #f0f0f8;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.9;
+  }
+  .hero {
+    position: relative;
+    text-align: center;
+    padding: 5rem 1.5rem 3.5rem;
+    background: linear-gradient(180deg, #0a0a14 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(200,169,110,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    opacity: 0.85;
+  }
+  .hero-title {
+    font-size: clamp(1.8rem, 5vw, 3.2rem);
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 0.8rem;
+    font-style: italic;
+  }
+  .hero-title span { color: var(--gold); font-style: normal; }
+  .hero-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    margin-bottom: 2rem;
+  }
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    max-width: 300px;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+  }
+  .divider::before { background: linear-gradient(90deg, transparent, var(--accent2)); }
+  .divider::after  { background: linear-gradient(90deg, var(--accent2), transparent); }
+  .divider-gem { color: var(--gold); font-size: 0.9rem; }
+
+  /* LANG BAR */
+  .lang-bar {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 1.25rem 1rem;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+  }
+  .lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-dim);
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 2rem;
+    padding: 0.35rem 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    letter-spacing: 0.03em;
+  }
+  .lang-btn:hover { color: var(--white); border-color: var(--accent2); background: #1e1e2c; }
+  .lang-btn.active { color: var(--bg); background: var(--gold); border-color: var(--gold); font-weight: 600; }
+  .lang-flag { font-size: 1.05rem; line-height: 1; }
+
+  /* CONTENT */
+  .content-wrap { max-width: 720px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+  .lang-section { display: none; }
+  .lang-section.visible { display: block; }
+
+  .story-intro {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  .story-block {
+    margin-bottom: 1.8rem;
+    font-size: clamp(1.1rem, 2.5vw, 1.22rem);
+    color: var(--text);
+    text-align: justify;
+    hyphens: auto;
+  }
+  .story-block.command {
+    font-style: italic;
+    color: var(--gold);
+    padding-left: 1.2rem;
+    border-left: 2px solid var(--accent2);
+    font-size: clamp(1.05rem, 2.3vw, 1.18rem);
+  }
+  .story-block.dialogue {
+    padding-left: 1.2rem;
+    border-left: 2px solid #333348;
+    font-style: italic;
+    color: #b0b0cc;
+  }
+  .story-separator {
+    text-align: center;
+    color: var(--accent);
+    font-size: 1.3rem;
+    margin: 2.5rem 0;
+    letter-spacing: 0.5rem;
+    opacity: 0.5;
+  }
+  .footnote {
+    margin-top: 2.5rem;
+    padding: 1.5rem;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent2);
+    border-radius: 0 0.5rem 0.5rem 0;
+    font-size: clamp(0.95rem, 2vw, 1.05rem);
+    color: var(--text-dim);
+    font-style: italic;
+  }
+  .footnote-mark {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.75rem;
+    font-style: normal;
+  }
+  .story-block.drop-cap::first-letter {
+    float: left;
+    font-size: 4rem;
+    line-height: 0.8;
+    padding-right: 0.12em;
+    padding-top: 0.08em;
+    color: var(--gold);
+    font-weight: 600;
+  }
+  footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    border-top: 1px solid var(--border);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  #progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent2), var(--gold));
+    width: 0%;
+    z-index: 9999;
+    transition: width 0.1s linear;
+  }
+  @media (max-width: 480px) {
+    .lang-btn { font-size: 0.72rem; padding: 0.3rem 0.65rem; }
+    .content-wrap { padding: 2rem 1rem 4rem; }
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<div class="hero">
+  <div class="hero-eyebrow">A Story · O poveste · Una historia · Eine Geschichte · Una storia</div>
+  <h1 class="hero-title">F.L. Wright<br><span>Type Community</span></h1>
+  <p class="hero-subtitle">speculative fiction · communitarian vision · intimacy &amp; order</p>
+  <div class="divider"><span class="divider-gem">✦</span></div>
+</div>
+
+<nav class="lang-bar" role="navigation" aria-label="Language selector">
+  <button class="lang-btn active" onclick="setLang('ro')"><span class="lang-flag">🇷🇴</span> Română</button>
+  <button class="lang-btn" onclick="setLang('en')"><span class="lang-flag">🇬🇧</span> English</button>
+  <button class="lang-btn" onclick="setLang('es')"><span class="lang-flag">🇪🇸</span> Español</button>
+  <button class="lang-btn" onclick="setLang('de')"><span class="lang-flag">🇩🇪</span> Deutsch</button>
+  <button class="lang-btn" onclick="setLang('it')"><span class="lang-flag">🇮🇹</span> Italiano</button>
+</nav>
+
+<main class="content-wrap">
+
+<!-- ══════════════════ ROMÂNĂ ══════════════════ -->
+<section class="lang-section visible" id="lang-ro">
+  <p class="story-intro">Versiunea originală · Română</p>
+
+  <p class="story-block command">„–spre casă" am dat comanda verbală și capsula s-a pus în mișcare lin ca o fantomă… eram doborât de aburii alcoolului… dar mă simțeam bine.</p>
+  <p class="story-block command">„–deschide cerul" am comandat cu jumătate de glas și plafonul capsulei s-a deschis oferindu-mi priveliștea cerului înstelat… am adormit…</p>
+
+  <p class="story-block drop-cap">Am tresărit trezindu-mă cu o mângâiere abia adiată… capsula a ajuns în living, iar Ducesa, Doamna mea, a venit să mă sărute… cu mișcări de felină mi-a deschis centura… a început să mi-o sugă leneș dar voluptos până mi-a sculat-o… am dominat-o pătrunzător, cu bestialitate, așa cum ne plăcea uneori când mă întorceam acasă.</p>
+  <p class="story-block">M-a ajutat apoi să mă întind pe sofa, a făcut focul în șemineu și apoi a plecat lin la culcare… am adormit din nou fericit, chiar dacă a fost o zi cu multă bătaie de cap.</p>
+
+  <div class="story-separator">· · · ✦ · · ·</div>
+
+  <p class="story-block">Se împlineau aproape 10 ani de când exista comunitatea noastră de 120 de familii… și era totul aproape perfect… toată lumea era fericită. Consiliul care se întrunea lunar era format din talking‑circle‑ul bărbaților‑cap de familie, și secondat de femei, care aveau rol consultativ și în unele situații care le privea direct, drept de veto. Problemele erau prezentate în rețea iar deciziile erau luate prin consens în întâlnirea de la sfârșitul lunii. Gregorio, consulul nostru imperial, care era și lider spiritual, ratifica deciziile astfel încât să nu contravină simplelor legi imperiale. Comunitatea avea autonomie și funcționa independent, având libertatea să‑și stabilească propriile reguli/legi interne prin consens.</p>
+  <p class="story-block">Fiecare deținea o suprafață cu raza min. 150 m, achiziționarea acesteia precum și plata inițială a serviciilor/bunurilor comune (sistemul de capsule și platforme pt transport, utilaje, sisteme pt independența energetică etc.) fiind o condiție pt accesul în comunitate, însă totul era gândit a.î. să nu mai necesite costuri ulterioare, ci doar o taxă anuală de solidaritate al cărei cuantum depindea de bunăvoința fiecărei reședințe. Activitățile economice (profitul din vânzarea produselor) erau taxate cu 10% tribut imperial obligatoriu.</p>
+  <p class="story-block">La formarea comunității au avut prioritate cei care stăpâneau o meserie/profesie esențială (ex. medic, pedagog waldorf/montessori), însă majoritatea erau încurajați să activeze independent fie în cadrul comunității (muncă‑voluntariat remunerată pe înțelegere simplă netaxată), fie ca întreprinzători privați în legătură cu economia regională și/sau globală (activitate taxată de imperiu).</p>
+  <p class="story-block">În prezent funcționează peste 80 de întreprinderi taxate pe profit din 120 de unități familiale. Corectitudinea taxării și transparența activităților comerciale/de producție era condiție imperială și întreaga comunitate veghea la bunul mers al lucrurilor, totul fiind înregistrat (mai puțin ceea ce ține de viața privată/intimă a persoanelor). Legăturile financiare/economice cu exteriorul se desfășurau printr‑o e‑bank proprie comunității, cu comisioanele stabilite de comun acord, iar profiturile erau transferate în contul de solidaritate din care se puteau acorda și împrumuturi/finanțări de afaceri pe business‑planuri discutate în Consiliu (în unele cazuri existau și femei întreprinzătoare, acestea fiind acceptate în Consiliu cu drepturi depline pt probleme economice/financiare).</p>
+  <p class="story-block">Eu am participat ca membru fondator al comunității și serveam ca și consilier (arhitect) pt amenajări/construcții, însă mă ocupam și de alte activități.</p>
+
+  <div class="footnote">
+    <span class="footnote-mark">✦ Notă</span>
+    <p style="margin-bottom:1rem">Pe Jaques l-am cunoscut încă de când s-a mutat la noi (ne-am întâlnit în barul de pe insulă), era o fire boemă și ne-am împrietenit instant. Felicia, consoarta lui, era întruparea unui înger. Ducesa mea i-a simțit de la început puterea farmecului și au durat câteva întâlniri până să se „accepte". Acum sunt prietene bune și ele. Oricum, confortul psihic era asigurat fiindcă relațiile extraconjugale erau interzise în comunitate și atrăgeau după sine exilul permanent și excluderea (regulă convenită de comun acord încă de la înființare și ratificată oficial de Gregorio pt comunitatea noastră).</p>
+    <p style="margin-bottom:1rem">Jaques era fericitul moștenitor al unor apartamente din Amsterdam și trăia mai mult din rente, însă era un desăvârșit poli‑artist și încasa venituri în comunitate ca și pedagog artistic (urmase niște cursuri). Lucra mai mult cu copiii dar și cu adulții doritori. Felicia făcea niște prăjituri și torturi excelente pentru toți copiii și toată lumea o iubea.</p>
+    <p style="margin-bottom:1rem">Jaques și Ana s-au cunoscut la lecțiile de pian. El ar fi putut să‑i fie tată, însă părinții Anei erau de asemenea foarte prezenți în viața ei… de altfel oameni onești și cumsecade. Niște necazuri însă le-a ruinat business‑ul (era pe o nișă foarte concurențială și ei erau relativ aproape de vârsta retragerii… o lipsă de 2,5 luni din motive medicale a fost de ajuns să‑i dezechilibreze… dar au închis la timp și au salvat ceva capital). De 2 ani trebuie să meargă la muncă în oraș (ceea ce comunitatea nu încuraja decât în astfel de cazuri) ca să‑și completeze capitalul necesar pt un nou business în cadrul comunității, o fermă în comunitate, în condițiile Consiliului (nepoluantă, biologică etc.) cu livrare în comunitate dar și exterior… pt achiziționarea terenului aveau un accept de principiu pt un împrumut din contul de solidaritate.</p>
+    <p style="margin-bottom:1rem">Deci Ana era nevoită să trăiască cu Sonia, sora ei mai mare, o fire dominatoare și intimidantă pt ea (au fost relatate niște episoade în bar despre relația surorilor… și Ducesa mea mi-a mai povestit câte ceva)… deci în general se știa despre situație și era logic pt toată lumea că Anei nu‑i prea plăcea acasă și prefera compania lui Jaques și a Feliciei… și s‑au și îndrăgostit între ei, într‑o frumoasă combinație de vibeuri pozitive :-)… dar… relațiile extraconjugale erau interzise și nimeni nu voia să părăsească comunitatea… și așa a fost pusă problema pe tapet de către Jaques, care, cu acceptul Feliciei (nu reușiseră să aibă copii) dorea să o aibă ca consoartă și pe Ana, și, bineînțeles și Ana dorea… atât de mult încât suferea din dragoste și refuza hrana.</p>
+    <p>De asemenea Jaques s-a oferit să vândă o proprietate și astfel să‑i ajute pe părinții Anei să scurteze calvarul navetelor și să ajungă la ținta de capital propusă (animalele fermei și alte investiții). Problema trebuia prezentată lui Gregorio, însă după ce era discutată în Consiliu… deși Gregorio deja știa :-), toată comunitatea știa, dar procedura era discutarea în Consiliu a acestui caz care crea precedentul poligamiei… sau excluderea unor persoane valoroase pt comunitate (cei excluși erau expropriați în interes comunitar, dacă erau proprietari, cu despăgubire în sumă dublă față de valoarea evaluată a bunurilor; Consiliul dispunea de fonduri generoase, niciodată banii nu erau o problemă. Înțelegerea era condiție de acceptare în comunitate și bineînțeles că era ratificată oficial de către Gregorio).</p>
+  </div>
+
+  <div class="story-separator">· · · ✦ · · ·</div>
+
+  <p class="story-block">M-am trezit în toiul nopții în urma unui vis straniu. Simțeam nevoia să vorbesc cu cineva și Ducesa dormea. Am intrat în capsulă și am comandat direcția:</p>
+  <p class="story-block command">„barul de pe insulă"… pe drum am văzut în rețea că Matt, medicul comunității, era online. L-am apelat și ne-am dat întâlnire la bar.</p>
+  <p class="story-block">Am ajuns la bar înaintea lui Matt. Johnny, barmanul, dormea… suava melodie a soneriei l-a trezit și a fost bucuros să mă vadă. Barul era deschis permanent și era principalul loc de socializare… la ora asta din noapte doar barmanul era la bar. Johnny locuia la periferia orașului celui mai apropiat și lucra la barul comunității de 5 ani. Era un băiat dezghețat, decent și distins și îi plăcea munca sa. Câștiga bine la noi în comunitate, mai ales pe timp de noapte bacșișurile erau grase. Îi plăcea să fie bine informat și pentru mulți era o adevărată sursă de știri… toată lumea îl plăcea. Referințele pozitive îl puteau ajuta în îndeplinirea visului său… un loc în comunitatea noastră… însă momentan era prea devreme, și el era prea tânăr pt a‑și asuma o familie, însă cred că în viitor vom fi vecini; are și el un business‑plan (vrea un loc la noi și se va ocupa cu creșterea marijuanei și producerea de alcool… deja studiază intens ce‑i trebuie pt asta). Abia am apucat să comand un cocktail răcoritor și un joint și a apărut și Matt:</p>
+
+  <p class="story-block dialogue">– Ce faci, doctore, nici tu nu ai somn? l-am întrebat zâmbind.</p>
+  <p class="story-block dialogue">– Am stat toată noaptea pe grupul de susținere a lui Jaques… tu nu te-ai înscris?!?</p>
+  <p class="story-block dialogue">– Încă nu, am mărturisit… e o perioadă aglomerată pt mine după cum bine știi…</p>
+
+  <p class="story-block">(lucram împreună la un proiect de investiții într‑un cabinet medical total automatizat și robotizat by remote… era un deziderat important pt comunitatea noastră, și astfel s‑ar fi putut realiza analize complete, RMN, și chiar operații mai puțin complicate prin remote… și totul chiar aici… în condiții de confort… pacienții erau transportați direct din living în MedicalCube fără să se miște de pe targă… s‑ar fi salvat astfel timp prețios, foarte important mai ales pt întreprinzătorii comunității… singura problemă etică erau costurile: Consiliul îți permitea investiția însă etic era ca fiecare să contribuie cu partea sa… așadar urmau discuții lungi iar obiectivul nostru era să realizăm proiectul până la venirea iernii… în doar 2 luni… și în plus a apărut și cazul Jaques&amp;Ana.)</p>
+
+  <p class="story-block dialogue">– Auzi ce zice Jaques pe grup: că D-zeu ne-a dat două coaie ca să avem două femei… îmi povestește amuzat.</p>
+  <p class="story-block dialogue">– Păi și îl poți contrazice?!? l-am întrebat zâmbind.</p>
+  <p class="story-block dialogue">– Dacă vom reuși să‑i ajutăm, ne vor sări toți invidiozii în cap… m-a avertizat Matt.</p>
+  <p class="story-block dialogue">– Ce să zic, doctore, cine este orbit de invidie nu are ce căuta în Paradis, mi-am expus părerea și am aprins jointul.</p>
+  <p class="story-block dialogue">– Just, mi-a replicat Matt… în altă ordine de idei… am găsit un RMN second‑hand, o să‑ți trimit linkul.</p>
+  <p class="story-block dialogue">– Mulțumesc… o să studiez și o să discutăm mâine… odihnește‑te, doctore, avem mult de lucru… iar în cazul lor (Jaques&amp;Ana), eu cred că D-zeu o să‑i ajute.</p>
+
+  <p class="story-block">Am fumat jointul împreună pe malul iazului, degustând în tăcere compania, așa cum ne plăcea uneori.</p>
+
+  <p class="story-block dialogue">– Eu trebuie să plec acum, mi-a spus Matt după un timp… rămâi cu bine, prieten drag, ne auzim mâine.</p>
+  <p class="story-block dialogue">– Mulțumesc, prieten, nu uita să te odihnești, i-am replicat zâmbind cu înțelegere.</p>
+
+  <p class="story-block">Am rămas singur așteptând răsăritul… ar trebui să‑i propun lui Burt (patronul barului) să monteze niște hamace… stelele erau minunate…</p>
+</section>
+
+<!-- ══════════════════ ENGLISH ══════════════════ -->
+<section class="lang-section" id="lang-en">
+  <p class="story-intro">English translation</p>
+
+  <p class="story-block command">"–home" I gave the voice command and the capsule began moving smoothly, like a ghost… I had been knocked down by the alcohol fumes… but I felt good.</p>
+  <p class="story-block command">"–open the sky" I commanded in half a voice and the ceiling of the capsule opened, offering me the view of the starry sky… I fell asleep…</p>
+
+  <p class="story-block drop-cap">I startled awake with a barely-breathed caress… the capsule had arrived in the living room, and the Duchess, my Lady, had come to kiss me… with feline movements she undid my belt… she began to suck it lazily but voluptuously until she had raised it… I dominated her penetratingly, with bestiality, as we sometimes liked when I came home.</p>
+  <p class="story-block">She then helped me stretch out on the sofa, made a fire in the fireplace and then left quietly to sleep… I fell asleep again, happy, even if it had been a day full of headaches.</p>
+
+  <div class="story-separator">· · · ✦ · · ·</div>
+
+  <p class="story-block">It was almost 10 years since our community of 120 families had come into existence… and everything was nearly perfect… everyone was happy. The Council, which met monthly, was composed of the talking‑circle of the men who were heads of family, seconded by the women, who held a consultative role and in some situations that directly concerned them, a right of veto. Problems were presented to the network and decisions were taken by consensus at the end-of-month meeting. Gregorio, our imperial consul, who was also the spiritual leader, ratified the decisions so that they did not contradict the simple imperial laws. The community had autonomy and functioned independently, with the freedom to establish its own internal rules and laws by consensus.</p>
+  <p class="story-block">Each member held a plot with a minimum radius of 150 m; its acquisition as well as the initial payment for common services and goods — the capsule-and-platform transport system, machinery, systems for energy independence, and so forth — was a condition for entry into the community, but everything was designed so as to require no further costs beyond an annual solidarity contribution whose amount depended on the goodwill of each resident. Economic activities (profits from the sale of products) were taxed with a mandatory 10% imperial tribute.</p>
+  <p class="story-block">At the formation of the community, priority was given to those who mastered an essential trade or profession — for example, a doctor or a Waldorf/Montessori educator — but the majority were encouraged to operate independently, either within the community (remunerated volunteer work on a simple, untaxed agreement) or as private entrepreneurs in connection with the regional and/or global economy (activity taxed by the empire).</p>
+  <p class="story-block">At present more than 80 profit-taxed enterprises operate across 120 family units. Correctness of taxation and transparency of commercial and production activities was an imperial condition, and the entire community watched over the smooth running of things — everything being recorded, except for what pertains to the private and intimate life of individuals. Financial and economic links with the outside world were conducted through the community's own e-bank, with fees set by mutual agreement, and profits were transferred into the solidarity account from which loans and business financing could also be granted on business plans discussed in the Council. In some cases there were also women entrepreneurs, and these were accepted into the Council with full rights on economic and financial matters.</p>
+  <p class="story-block">I participated as a founding member of the community and served as an advisor — architect — for fittings and constructions, but I also engaged in other activities.</p>
+
+  <div class="footnote">
+    <span class="footnote-mark">✦ Note</span>
+    <p style="margin-bottom:1rem">I had known Jaques ever since he moved among us — we met in the bar on the island — he was a bohemian soul and we became friends instantly. Felicia, his consort, was the embodiment of an angel. My Duchess sensed the power of her charm from the very beginning, and it took several meetings before they "accepted" each other. Now they are good friends too. At any rate, psychological comfort was assured because extramarital relations were forbidden in the community and brought with them permanent exile and exclusion (a rule agreed upon jointly from the very founding and officially ratified by Gregorio for our community).</p>
+    <p style="margin-bottom:1rem">Jaques was the happy heir to some apartments in Amsterdam and lived mostly from his rents, but he was a consummate multi-artist and earned income in the community as an arts educator (he had taken some courses). He worked mostly with children but also with willing adults. Felicia made superb pastries and cakes for all the children and everyone loved her.</p>
+    <p style="margin-bottom:1rem">Jaques and Ana met at piano lessons. He could have been her father, but Ana's parents were also very present in her life — decent, honest people all around. Some misfortunes, however, had ruined their business (it operated in a very competitive niche and they were relatively close to retirement age… an absence of 2.5 months for medical reasons was enough to throw them off balance… but they closed in time and managed to save some capital). For 2 years they have had to commute to work in the city (which the community only encouraged in such cases) in order to build up the capital needed for a new business within the community — a farm, meeting the Council's conditions of being non-polluting, organic, etc. — with delivery inside the community but also to the outside… For the purchase of the land they had a preliminary approval for a loan from the solidarity account.</p>
+    <p style="margin-bottom:1rem">Ana was therefore forced to live with Sonia, her older sister, a domineering and intimidating personality for her (some episodes about the sisters' relationship had been recounted at the bar… and my Duchess had told me a thing or two as well)… so in general the situation was known and it made sense to everyone that Ana wasn't very happy at home and preferred the company of Jaques and Felicia… and they had fallen in love with each other, in a beautiful blend of positive vibes :-)… but… extramarital relations were forbidden and nobody wanted to leave the community… and so Jaques brought the matter to the table, with Felicia's consent (they had not managed to have children), wishing to take Ana as his consort as well — and of course Ana wished it too… so much so that she was suffering from love and refusing food.</p>
+    <p>Jaques also offered to sell one of his properties so as to help Ana's parents shorten their commuting ordeal and reach their target capital (livestock and other farm investments). The matter had to be presented to Gregorio, but only after it had been discussed in the Council… although Gregorio already knew :-), the whole community knew, but the procedure was for the Council to discuss this case, which would set the precedent for polygamy… or else the exclusion of people valuable to the community (those excluded were expropriated in the community's interest, if they were owners, with compensation of double the assessed value of their property; the Council had generous funds — money was never a problem. The agreement was a condition for acceptance into the community and was of course officially ratified by Gregorio).</p>
+  </div>
+
+  <div class="story-separator">· · · ✦ · · ·</div>
+
+  <p class="story-block">I woke up in the middle of the night after a strange dream. I felt the need to talk to someone and the Duchess was asleep. I got into the capsule and commanded its direction:</p>
+  <p class="story-block command">"the bar on the island"… on the way I saw on the network that Matt, the community's doctor, was online. I called him and we arranged to meet at the bar.</p>
+  <p class="story-block">I arrived at the bar before Matt. Johnny the barman was asleep… the gentle sound of the doorbell woke him up and he was happy to see me. The bar was open around the clock and was the main place for socialising… at this hour of the night only the barman was there. Johnny lived on the outskirts of the nearest town and had been working at the community bar for 5 years. He was a sharp, decent and distinguished young man who loved his work. He earned well with us in the community — tips were especially generous at night. He liked to be well informed and for many he was a genuine source of news… everyone liked him. Good references could help him fulfil his dream — a place in our community — but for now it was too early, and he was too young to take on a family; I do believe we will be neighbours in the future, though — he has a business plan too (he wants a spot with us and intends to grow marijuana and produce alcohol… he is already studying intensely what he needs for that). I had barely managed to order a refreshing cocktail and a joint when Matt appeared:</p>
+
+  <p class="story-block dialogue">– How are you, doctor — can't sleep either? I asked with a smile.</p>
+  <p class="story-block dialogue">– I've been up all night on Jaques' support group… didn't you join?!</p>
+  <p class="story-block dialogue">– Not yet, I admitted… it's a busy period for me, as you well know…</p>
+
+  <p class="story-block">(we were working together on an investment project for a fully automated and remotely robotised medical suite… it was an important aspiration for our community — it would have made it possible to carry out full analyses, MRIs, and even less complex operations remotely… and all right here… in conditions of comfort… patients would be transported directly from the living room into the MedicalCube without having to move off the stretcher… precious time would be saved, very important especially for the community's entrepreneurs… the only ethical issue was cost: the Council could afford the investment but ethically it was right for everyone to contribute their share… so lengthy discussions lay ahead, and our objective was to complete the project before winter arrived… in just 2 months… and on top of that the Jaques &amp; Ana case had arisen.)</p>
+
+  <p class="story-block dialogue">– Listen to what Jaques says on the group: that God gave us two balls so we could have two women… he told me, amused.</p>
+  <p class="story-block dialogue">– Well, can you argue with that?! I asked, smiling.</p>
+  <p class="story-block dialogue">– If we manage to help them, all the envious ones will be at our throats… Matt warned me.</p>
+  <p class="story-block dialogue">– What can I say, doctor — whoever is blinded by envy has no place in Paradise, I offered my view and lit the joint.</p>
+  <p class="story-block dialogue">– Fair enough, Matt replied… on another note… I found a second-hand MRI scanner — I'll send you the link.</p>
+  <p class="story-block dialogue">– Thank you… I'll look into it and we'll talk tomorrow… get some rest, doctor, we have a lot of work ahead… and as for those two (Jaques &amp; Ana), I believe God will help them.</p>
+
+  <p class="story-block">We smoked the joint together on the bank of the pond, savouring the silence and each other's company, as we sometimes liked to do.</p>
+
+  <p class="story-block dialogue">– I have to go now, Matt said after a while… farewell, dear friend, we'll talk tomorrow.</p>
+  <p class="story-block dialogue">– Thank you, friend — don't forget to rest, I replied with an understanding smile.</p>
+
+  <p class="story-block">I stayed alone waiting for the sunrise… I should suggest to Burt (the bar's owner) that he put up some hammocks… the stars were magnificent…</p>
+</section>
+
+<!-- ══════════════════ ESPAÑOL ══════════════════ -->
+<section class="lang-section" id="lang-es">
+  <p class="story-intro">Traducción al español</p>
+
+  <p class="story-block command">"–a casa" di la orden de voz y la cápsula comenzó a moverse suavemente, como un fantasma… me habían derribado los vapores del alcohol… pero me sentía bien.</p>
+  <p class="story-block command">"–abre el cielo" ordené en voz baja y el techo de la cápsula se abrió ofreciéndome la vista del cielo estrellado… me quedé dormido…</p>
+
+  <p class="story-block drop-cap">Me sobresalté al despertar con una caricia apenas soplada… la cápsula había llegado al salón, y la Duquesa, mi Señora, había venido a besarme… con movimientos de felino me desabrochó el cinturón… comenzó a chupármela perezosa pero voluptuosamente hasta que me la puso dura… la dominé de manera penetrante, con bestialidad, como a veces nos gustaba cuando volvía a casa.</p>
+  <p class="story-block">Luego me ayudó a tenderme en el sofá, encendió el fuego en la chimenea y después se fue suavemente a dormir… me quedé dormido de nuevo, feliz, aunque había sido un día con muchos quebraderos de cabeza.</p>
+
+  <div class="story-separator">· · · ✦ · · ·</div>
+
+  <p class="story-block">Se cumplían casi 10 años desde que existía nuestra comunidad de 120 familias… y todo era casi perfecto… todo el mundo era feliz. El Consejo, que se reunía mensualmente, estaba formado por el talking‑circle de los hombres cabeza de familia, secundado por las mujeres, quienes tenían un papel consultivo y en algunas situaciones que las afectaban directamente, derecho de veto. Los problemas se presentaban en la red y las decisiones se tomaban por consenso en la reunión de fin de mes. Gregorio, nuestro cónsul imperial, que era también el líder espiritual, ratificaba las decisiones de modo que no contradijeran las simples leyes imperiales. La comunidad tenía autonomía y funcionaba de manera independiente, con libertad para establecer sus propias reglas y leyes internas por consenso.</p>
+  <p class="story-block">Cada uno poseía una superficie con radio mínimo de 150 m; su adquisición así como el pago inicial de los servicios y bienes comunes — el sistema de cápsulas y plataformas para el transporte, maquinaria, sistemas para la independencia energética, etc. — era condición para el acceso a la comunidad, pero todo estaba concebido de manera que no requiriese costos posteriores, sino solo una cuota anual de solidaridad cuya cuantía dependía de la buena voluntad de cada residente. Las actividades económicas (beneficio de la venta de productos) eran gravadas con un tributo imperial obligatorio del 10%.</p>
+  <p class="story-block">En la formación de la comunidad tuvieron prioridad quienes dominaban un oficio o profesión esencial — por ejemplo, médico o pedagogo waldorf/montessori —, pero la mayoría eran alentados a actuar de manera independiente, ya fuera dentro de la comunidad (trabajo voluntario remunerado por acuerdo simple no gravado) o como emprendedores privados en conexión con la economía regional y/o global (actividad gravada por el imperio).</p>
+  <p class="story-block">Actualmente funcionan más de 80 empresas gravadas sobre el beneficio en 120 unidades familiares. La corrección del gravamen y la transparencia de las actividades comerciales y de producción era condición imperial, y toda la comunidad velaba por el buen funcionamiento de todo — todo quedando registrado, excepto lo que atañe a la vida privada e íntima de las personas. Los vínculos financieros y económicos con el exterior se llevaban a cabo a través de un banco electrónico propio de la comunidad, con comisiones establecidas de común acuerdo, y los beneficios eran transferidos a la cuenta de solidaridad desde la que también podían concederse préstamos y financiamientos de negocios sobre planes de negocio discutidos en el Consejo. En algunos casos había también mujeres emprendedoras, aceptadas en el Consejo con plenos derechos en asuntos económicos y financieros.</p>
+  <p class="story-block">Yo participé como miembro fundador de la comunidad y servía como consejero — arquitecto — para acondicionamientos y construcciones, pero también me ocupaba de otras actividades.</p>
+
+  <div class="footnote">
+    <span class="footnote-mark">✦ Nota</span>
+    <p style="margin-bottom:1rem">A Jaques lo conocí desde que se mudó entre nosotros — nos encontramos en el bar de la isla —, era de naturaleza bohemia y nos hicimos amigos al instante. Felicia, su consorte, era la encarnación de un ángel. Mi Duquesa sintió desde el principio el poder de su encanto y tardaron varias reuniones antes de "aceptarse". Ahora también son buenas amigas. De todos modos, la comodidad psicológica estaba garantizada porque las relaciones extraconyugales estaban prohibidas en la comunidad y acarreaban el exilio permanente y la exclusión (regla acordada de común acuerdo desde la propia fundación y oficialmente ratificada por Gregorio para nuestra comunidad).</p>
+    <p style="margin-bottom:1rem">Jaques era el feliz heredero de unos apartamentos en Ámsterdam y vivía principalmente de sus rentas, pero era un consumado poli-artista y obtenía ingresos en la comunidad como pedagogo artístico (había seguido algunos cursos). Trabajaba sobre todo con niños, pero también con adultos interesados. Felicia preparaba unos pasteles y tartas excelentes para todos los niños y todo el mundo la quería.</p>
+    <p style="margin-bottom:1rem">Jaques y Ana se conocieron en las clases de piano. Él podría haberle sido padre, pero los padres de Ana también estaban muy presentes en su vida… personas honestas y decentes, por lo demás. Algunas desgracias, sin embargo, les habían arruinado el negocio (operaban en un nicho muy competitivo y estaban relativamente cerca de la edad de jubilación… una ausencia de 2,5 meses por razones médicas bastó para desestabilizarlos… pero cerraron a tiempo y lograron salvar algo de capital). Desde hace 2 años tienen que desplazarse a trabajar a la ciudad (lo que la comunidad solo alentaba en casos así) para completar el capital necesario para un nuevo negocio en la comunidad — una granja, en las condiciones del Consejo (no contaminante, biológica, etc.) — con entrega dentro de la comunidad pero también al exterior… Para la adquisición del terreno tenían una aprobación de principio para un préstamo de la cuenta de solidaridad.</p>
+    <p style="margin-bottom:1rem">Ana se veía pues obligada a vivir con Sonia, su hermana mayor, de carácter dominante e intimidador para ella (se habían relatado algunos episodios en el bar sobre la relación entre las hermanas… y mi Duquesa me había contado alguna que otra cosa)… así que en general la situación era conocida y para todos era lógico que Ana no se sintiese muy a gusto en casa y prefiriese la compañía de Jaques y Felicia… y se enamoraron entre ellos, en una hermosa combinación de vibraciones positivas :-)… pero… las relaciones extraconyugales estaban prohibidas y nadie quería abandonar la comunidad… y así Jaques planteó el asunto, con el consentimiento de Felicia (no habían conseguido tener hijos), queriendo tener también a Ana como consorte — y por supuesto Ana también lo deseaba… tanto que sufría de amor y rechazaba la comida.</p>
+    <p>Jaques también se ofreció a vender una propiedad para ayudar a los padres de Ana a acortar su calvario de desplazamientos y alcanzar el capital objetivo propuesto (los animales de la granja y otras inversiones). El asunto debía presentarse a Gregorio, pero después de que fuera discutido en el Consejo… aunque Gregorio ya lo sabía :-), toda la comunidad lo sabía, pero el procedimiento era que el Consejo discutiera este caso, que crearía el precedente de la poligamia… o la exclusión de personas valiosas para la comunidad (los excluidos eran expropiados en interés comunitario, si eran propietarios, con indemnización del doble del valor tasado de los bienes; el Consejo disponía de fondos generosos — el dinero nunca era un problema. El acuerdo era condición de aceptación en la comunidad y por supuesto estaba oficialmente ratificado por Gregorio).</p>
+  </div>
+
+  <div class="story-separator">· · · ✦ · · ·</div>
+
+  <p class="story-block">Me desperté en mitad de la noche tras un sueño extraño. Sentía la necesidad de hablar con alguien y la Duquesa dormía. Entré en la cápsula y ordené la dirección:</p>
+  <p class="story-block command">"el bar de la isla"… por el camino vi en la red que Matt, el médico de la comunidad, estaba en línea. Lo llamé y quedamos en el bar.</p>
+  <p class="story-block">Llegué al bar antes que Matt. Johnny el barman dormía… la suave melodía del timbre lo despertó y se alegró de verme. El bar estaba abierto permanentemente y era el principal lugar de socialización… a estas horas de la noche solo el barman estaba allí. Johnny vivía en las afueras de la ciudad más cercana y llevaba 5 años trabajando en el bar de la comunidad. Era un chico espabilado, decente y distinguido, y le gustaba su trabajo. Ganaba bien entre nosotros — las propinas eran especialmente generosas de noche. Le gustaba estar bien informado y para muchos era una auténtica fuente de noticias… todo el mundo lo apreciaba. Las referencias positivas podían ayudarle a cumplir su sueño — un lugar en nuestra comunidad — pero por el momento era demasiado pronto y él era demasiado joven para asumir una familia; creo que en el futuro seremos vecinos, pues tiene también un plan de negocio (quiere un lugar entre nosotros y se ocupará del cultivo de marihuana y la producción de alcohol… ya estudia intensamente lo que necesita para ello). Apenas había conseguido pedir un cóctel refrescante y un porro cuando apareció Matt:</p>
+
+  <p class="story-block dialogue">– ¿Qué tal, doctor, tú tampoco puedes dormir? le pregunté sonriendo.</p>
+  <p class="story-block dialogue">– He pasado la noche entera en el grupo de apoyo de Jaques… ¿tú no te has apuntado?!</p>
+  <p class="story-block dialogue">– Todavía no, admití… es un período muy ajetreado para mí, como bien sabes…</p>
+
+  <p class="story-block">(trabajábamos juntos en un proyecto de inversión para una consulta médica totalmente automatizada y robotizada por control remoto… era un objetivo importante para nuestra comunidad — así se habrían podido realizar análisis completos, resonancias magnéticas e incluso operaciones menos complejas por control remoto… y todo justo aquí… en condiciones de confort… los pacientes eran transportados directamente desde el salón al MedicalCube sin moverse de la camilla… se habría ahorrado un tiempo precioso, muy importante sobre todo para los emprendedores de la comunidad… el único problema ético eran los costes: el Consejo podía permitirse la inversión, pero éticamente correspondía que cada uno contribuyera con su parte… así que se avecinaban largas discusiones y nuestro objetivo era realizar el proyecto antes de que llegara el invierno… en solo 2 meses… y encima había surgido el caso Jaques &amp; Ana.)</p>
+
+  <p class="story-block dialogue">– Escucha lo que dice Jaques en el grupo: que Dios nos dio dos cojones para tener dos mujeres… me contó divertido.</p>
+  <p class="story-block dialogue">– ¿Y puedes contradecirle?! le pregunté sonriendo.</p>
+  <p class="story-block dialogue">– Si logramos ayudarles, todos los envidiosos nos van a saltar encima… me advirtió Matt.</p>
+  <p class="story-block dialogue">– Qué quieres que te diga, doctor — quien está cegado por la envidia no tiene nada que hacer en el Paraíso, expuse mi opinión y encendí el porro.</p>
+  <p class="story-block dialogue">– Exacto, me replicó Matt… por otro lado… encontré una resonancia magnética de segunda mano — te mandaré el enlace.</p>
+  <p class="story-block dialogue">– Gracias… lo estudiaré y hablaremos mañana… descansa, doctor, tenemos mucho trabajo por delante… y en cuanto a ellos (Jaques &amp; Ana), creo que Dios los va a ayudar.</p>
+
+  <p class="story-block">Fumamos el porro juntos a orillas del estanque, saboreando en silencio la compañía, como a veces nos gustaba.</p>
+
+  <p class="story-block dialogue">– Tengo que irme ya, dijo Matt al cabo de un rato… quédate bien, querido amigo, hablamos mañana.</p>
+  <p class="story-block dialogue">– Gracias, amigo — no olvides descansar, le repliqué sonriendo con complicidad.</p>
+
+  <p class="story-block">Me quedé solo esperando el amanecer… debería proponerle a Burt (el dueño del bar) que pusiera unas hamacas… las estrellas eran magníficas…</p>
+</section>
+
+<!-- ══════════════════ DEUTSCH ══════════════════ -->
+<section class="lang-section" id="lang-de">
+  <p class="story-intro">Deutsche Übersetzung</p>
+
+  <p class="story-block command">„–nach Hause" gab ich den Sprachbefehl und die Kapsel begann sich zu bewegen, sanft wie ein Geist… die Alkoholdämpfe hatten mich niedergestreckt… aber ich fühlte mich gut.</p>
+  <p class="story-block command">„–öffne den Himmel" befahl ich mit halber Stimme, und die Decke der Kapsel öffnete sich und bot mir den Anblick des gestirnten Himmels… ich schlief ein…</p>
+
+  <p class="story-block drop-cap">Ich schreckte auf und erwachte durch eine kaum angehauchte Liebkosung… die Kapsel war im Wohnzimmer angekommen, und die Herzogin, meine Herrin, war gekommen, mich zu küssen… mit katzenhaften Bewegungen öffnete sie meinen Gürtel… sie begann, ihn träge, aber wollüstig zu saugen, bis sie ihn aufgerichtet hatte… ich dominierte sie eindringlich, mit Bestialität, wie wir es manchmal mochten, wenn ich nach Hause zurückkehrte.</p>
+  <p class="story-block">Dann half sie mir, mich auf dem Sofa auszustrecken, machte Feuer im Kamin und ging dann leise schlafen… ich schlief wieder ein, glücklich, auch wenn es ein Tag mit viel Kopfzerbrechen gewesen war.</p>
+
+  <div class="story-separator">· · · ✦ · · ·</div>
+
+  <p class="story-block">Es waren beinahe 10 Jahre seit der Gründung unserer Gemeinschaft aus 120 Familien… und alles war fast perfekt… alle waren glücklich. Der Rat, der sich monatlich versammelte, bestand aus dem Talking‑Circle der männlichen Familienoberhäupter, unterstützt von den Frauen, die eine beratende Rolle innehatten und in manchen Situationen, die sie direkt betrafen, ein Vetorecht besaßen. Probleme wurden im Netzwerk präsentiert, und Entscheidungen wurden am Ende jedes Monats im Konsens getroffen. Gregorio, unser kaiserlicher Konsul und zugleich spiritueller Führer, ratifizierte die Beschlüsse, damit sie nicht den einfachen kaiserlichen Gesetzen widersprachen. Die Gemeinschaft besaß Autonomie und funktionierte unabhängig — mit der Freiheit, ihre eigenen internen Regeln und Gesetze im Konsens festzulegen.</p>
+  <p class="story-block">Jedes Mitglied besaß ein Grundstück mit einem Mindestradius von 150 m; sein Erwerb sowie die anfängliche Zahlung für die gemeinsamen Dienstleistungen und Güter — das Kapsel‑ und Plattformtransportsystem, Maschinen, Systeme für die Energieunabhängigkeit usw. — war Zugangsbedingung zur Gemeinschaft, aber alles war so konzipiert, dass keine weiteren Kosten entstehen würden, sondern lediglich eine jährliche Solidaritätsgebühr, deren Betrag vom guten Willen jedes Bewohners abhing. Wirtschaftliche Aktivitäten (Gewinne aus dem Produktverkauf) wurden mit einem obligatorischen kaiserlichen Tribut von 10 % besteuert.</p>
+  <p class="story-block">Bei der Gründung der Gemeinschaft hatten diejenigen Vorrang, die ein wesentliches Handwerk oder einen wesentlichen Beruf beherrschten — etwa Arzt oder Waldorf‑/Montessori‑Pädagoge —, die Mehrheit jedoch wurde ermutigt, unabhängig tätig zu sein: entweder innerhalb der Gemeinschaft (vergütete Freiwilligenarbeit auf der Grundlage einer einfachen, unversteuerten Vereinbarung) oder als private Unternehmer im Verbund mit der regionalen und/oder globalen Wirtschaft (vom Reich besteuerte Tätigkeit).</p>
+  <p class="story-block">Derzeit sind mehr als 80 gewinnsteuerpflichtige Unternehmen in 120 Familieneinheiten in Betrieb. Die Korrektheit der Besteuerung und die Transparenz der Handels‑ und Produktionsaktivitäten war kaiserliche Bedingung, und die gesamte Gemeinschaft wachte über den reibungslosen Ablauf aller Dinge — alles wurde aufgezeichnet, außer was das private und intime Leben der Personen betrifft. Finanzielle und wirtschaftliche Verbindungen mit der Außenwelt liefen über eine eigene E‑Bank der Gemeinschaft, mit gegenseitig vereinbarten Gebühren; die Gewinne wurden auf das Solidaritätskonto überwiesen, von dem aus auch Darlehen und Unternehmensfinanzierungen auf der Grundlage im Rat diskutierter Geschäftspläne gewährt werden konnten. In einigen Fällen gab es auch weibliche Unternehmerinnen, die für wirtschaftliche und finanzielle Angelegenheiten mit vollen Rechten in den Rat aufgenommen wurden.</p>
+  <p class="story-block">Ich nahm als Gründungsmitglied der Gemeinschaft teil und diente als Berater — Architekt — für Einrichtungen und Bauten, beschäftigte mich aber auch mit anderen Aktivitäten.</p>
+
+  <div class="footnote">
+    <span class="footnote-mark">✦ Anmerkung</span>
+    <p style="margin-bottom:1rem">Jaques hatte ich schon kennengelernt, als er zu uns zog — wir trafen uns in der Bar auf der Insel —, er war eine bohemische Natur, und wir freundeten uns sofort an. Felicia, seine Gefährtin, war die Verkörperung eines Engels. Meine Herzogin spürte von Anfang an die Kraft ihres Charmes, und es dauerte einige Treffen, bis sie sich „akzeptierten". Jetzt sind sie auch gute Freundinnen. Jedenfalls war der seelische Komfort gesichert, denn außereheliche Beziehungen waren in der Gemeinschaft verboten und zogen permanentes Exil und Ausschluss nach sich (eine Regel, die von Anfang an gemeinsam vereinbart und von Gregorio offiziell für unsere Gemeinschaft ratifiziert worden war).</p>
+    <p style="margin-bottom:1rem">Jaques war der glückliche Erbe einiger Wohnungen in Amsterdam und lebte größtenteils von seinen Mieteinnahmen, war aber ein vollendeter Vielfachkünstler und verdiente in der Gemeinschaft als Kunstpädagoge (er hatte einige Kurse absolviert). Er arbeitete vor allem mit Kindern, aber auch mit interessierten Erwachsenen. Felicia backte ausgezeichnete Kuchen und Torten für alle Kinder, und jeder liebte sie.</p>
+    <p style="margin-bottom:1rem">Jaques und Ana lernten sich beim Klavierunterricht kennen. Er hätte ihr Vater sein können, doch Anas Eltern waren ebenfalls sehr präsent in ihrem Leben — durch und durch ehrliche und anständige Menschen. Einige Misslichkeiten hatten jedoch ihr Geschäft ruiniert (sie waren in einer sehr wettbewerbsintensiven Nische tätig und relativ nah am Rentenalter… eine krankheitsbedingte Abwesenheit von 2,5 Monaten reichte aus, um sie aus dem Gleichgewicht zu bringen… aber sie schlossen rechtzeitig und retteten noch etwas Kapital). Seit 2 Jahren müssen sie in die Stadt zur Arbeit pendeln (was die Gemeinschaft nur in solchen Fällen förderte), um das nötige Kapital für ein neues Unternehmen in der Gemeinschaft aufzubauen — einen Bauernhof unter den Bedingungen des Rates (umweltfreundlich, biologisch usw.) — mit Lieferung innerhalb der Gemeinschaft, aber auch nach außen… Für den Grunderwerb hatten sie eine grundsätzliche Zusage für ein Darlehen aus dem Solidaritätskonto.</p>
+    <p style="margin-bottom:1rem">Ana war daher gezwungen, bei Sonia zu leben, ihrer älteren Schwester, einem für sie dominanten und einschüchternden Charakter (in der Bar waren einige Episoden über das Verhältnis der Schwestern berichtet worden… und meine Herzogin hatte mir das eine oder andere erzählt)… die Situation war also allgemein bekannt, und es war für alle verständlich, dass Ana sich zu Hause nicht besonders wohlfühlte und die Gesellschaft von Jaques und Felicia bevorzugte… und sie hatten sich ineinander verliebt, in einer schönen Mischung positiver Schwingungen :-)… aber… außereheliche Beziehungen waren verboten, und niemand wollte die Gemeinschaft verlassen… und so brachte Jaques die Sache auf den Tisch, mit Felicias Einverständnis (sie hatten es nicht geschafft, Kinder zu bekommen), und wünschte sich auch Ana als Gefährtin — und natürlich wünschte es sich auch Ana… so sehr, dass sie vor Liebe litt und das Essen verweigerte.</p>
+    <p>Jaques bot außerdem an, eine Immobilie zu verkaufen, um Anas Eltern zu helfen, ihr Pendelmartyrium zu verkürzen und das angestrebte Kapitalziel zu erreichen (Nutztiere und andere Investitionen). Die Angelegenheit musste Gregorio vorgelegt werden, aber erst nachdem sie im Rat besprochen worden war… obwohl Gregorio es bereits wusste :-), die ganze Gemeinschaft wusste es, aber das Verfahren sah vor, dass der Rat diesen Fall besprach, der den Präzedenzfall für Polygamie schuf… oder den Ausschluss wertvoller Mitglieder der Gemeinschaft (die Ausgeschlossenen wurden im Gemeinschaftsinteresse enteignet, sofern sie Eigentümer waren, mit einer Entschädigung in doppelter Höhe des geschätzten Wertes ihres Eigentums; der Rat verfügte über großzügige Mittel — Geld war nie ein Problem. Die Vereinbarung war Bedingung für die Aufnahme in die Gemeinschaft und wurde selbstverständlich von Gregorio offiziell ratifiziert).</p>
+  </div>
+
+  <div class="story-separator">· · · ✦ · · ·</div>
+
+  <p class="story-block">Ich wachte mitten in der Nacht nach einem seltsamen Traum auf. Ich verspürte das Bedürfnis, mit jemandem zu reden, und die Herzogin schlief. Ich stieg in die Kapsel und gab die Richtung an:</p>
+  <p class="story-block command">„die Bar auf der Insel"… unterwegs sah ich im Netzwerk, dass Matt, der Arzt der Gemeinschaft, online war. Ich rief ihn an und wir verabredeten uns in der Bar.</p>
+  <p class="story-block">Ich kam vor Matt in der Bar an. Johnny der Barkeeper schlief… die sanfte Klingelmelodie weckte ihn, und er freute sich, mich zu sehen. Die Bar war rund um die Uhr geöffnet und der wichtigste Treffpunkt… zu dieser nächtlichen Stunde war nur der Barkeeper da. Johnny wohnte am Stadtrand der nächstgelegenen Stadt und arbeitete seit 5 Jahren in der Bar der Gemeinschaft. Er war ein aufgeweckter, anständiger und distinguierter junger Mann, der seine Arbeit liebte. Er verdiente gut bei uns — die Trinkgelder waren nachts besonders üppig. Er mochte gut informiert sein und war für viele eine regelrechte Nachrichtenquelle… alle mochten ihn. Gute Referenzen konnten ihm helfen, seinen Traum zu erfüllen — einen Platz in unserer Gemeinschaft —, aber vorläufig war es noch zu früh, und er war zu jung, um eine Familie zu gründen; ich glaube aber, wir werden in Zukunft Nachbarn sein — er hat ebenfalls einen Businessplan (er möchte einen Platz bei uns und wird sich mit dem Anbau von Marihuana und der Herstellung von Alkohol beschäftigen… er studiert bereits intensiv, was er dafür braucht). Kaum hatte ich einen erfrischenden Cocktail und einen Joint bestellt, erschien auch Matt:</p>
+
+  <p class="story-block dialogue">– Wie geht's, Doktor — kannst du auch nicht schlafen? fragte ich lächelnd.</p>
+  <p class="story-block dialogue">– Ich war die ganze Nacht in Jaques' Unterstützungsgruppe… hast du dich nicht eingetragen?!</p>
+  <p class="story-block dialogue">– Noch nicht, gestand ich… es ist gerade eine sehr geschäftige Phase für mich, wie du weißt…</p>
+
+  <p class="story-block">(wir arbeiteten gemeinsam an einem Investitionsprojekt für eine vollständig automatisierte und ferngesteuert robotisierte Arztpraxis… es war ein wichtiges Ziel für unsere Gemeinschaft — so wären vollständige Analysen, MRTs und sogar weniger komplexe Operationen per Fernsteuerung möglich gewesen… und das alles genau hier… unter komfortablen Bedingungen… die Patienten würden direkt aus dem Wohnzimmer in den MedicalCube transportiert, ohne die Trage zu verlassen… kostbare Zeit würde gespart, was besonders für die Unternehmer der Gemeinschaft wichtig war… das einzige ethische Problem waren die Kosten: Der Rat konnte sich die Investition leisten, aber ethisch war es richtig, dass jeder seinen Anteil beisteuerte… also standen lange Diskussionen bevor, und unser Ziel war es, das Projekt vor dem Winter abzuschließen… in nur 2 Monaten… und obendrein war noch der Fall Jaques &amp; Ana aufgetaucht.)</p>
+
+  <p class="story-block dialogue">– Hör mal, was Jaques in der Gruppe sagt: dass Gott uns zwei Hoden gegeben hat, damit wir zwei Frauen haben können… erzählte er mir amüsiert.</p>
+  <p class="story-block dialogue">– Na, und kannst du ihm widersprechen?! fragte ich lächelnd.</p>
+  <p class="story-block dialogue">– Wenn wir es schaffen, ihnen zu helfen, werden uns alle Neider an die Kehle springen… warnte mich Matt.</p>
+  <p class="story-block dialogue">– Was soll ich sagen, Doktor — wer vom Neid geblendet ist, hat im Paradies nichts verloren, sagte ich meine Meinung und zündete den Joint an.</p>
+  <p class="story-block dialogue">– Stimmt, erwiderte Matt… in einer anderen Angelegenheit… ich habe ein gebrauchtes MRT gefunden — ich schicke dir den Link.</p>
+  <p class="story-block dialogue">– Danke… ich werde es mir ansehen und wir reden morgen… ruh dich aus, Doktor, wir haben viel Arbeit vor uns… und was die beiden betrifft (Jaques &amp; Ana), ich glaube, Gott wird ihnen helfen.</p>
+
+  <p class="story-block">Wir rauchten den Joint zusammen am Ufer des Teiches und genossen schweigend die Gesellschaft, wie wir es manchmal mochten.</p>
+
+  <p class="story-block dialogue">– Ich muss jetzt gehen, sagte Matt nach einer Weile… bleib gesund, lieber Freund, wir hören uns morgen.</p>
+  <p class="story-block dialogue">– Danke, Freund — vergiss nicht, dich auszuruhen, erwiderte ich mit verständnisvollem Lächeln.</p>
+
+  <p class="story-block">Ich blieb allein und wartete auf den Sonnenaufgang… ich sollte Burt (dem Besitzer der Bar) vorschlagen, ein paar Hängematten aufzuhängen… die Sterne waren wunderschön…</p>
+</section>
+
+<!-- ══════════════════ ITALIANO ══════════════════ -->
+<section class="lang-section" id="lang-it">
+  <p class="story-intro">Traduzione italiana</p>
+
+  <p class="story-block command">"–a casa" diedi il comando vocale e la capsula si mise in moto dolcemente, come un fantasma… ero abbattuto dai vapori dell'alcol… ma mi sentivo bene.</p>
+  <p class="story-block command">"–apri il cielo" comandai a mezza voce e il soffitto della capsula si aprì offrendomi la vista del cielo stellato… mi addormentai…</p>
+
+  <p class="story-block drop-cap">Mi svegliai di soprassalto con una carezza appena soffiata… la capsula era arrivata in soggiorno, e la Duchessa, la mia Signora, era venuta a baciarmi… con movimenti felini mi aprì la cintura… cominciò a succhiarmela pigramente ma voluttuosamente finché me la eresse… la dominai in modo penetrante, con bestialità, come a noi talvolta piaceva quando tornavo a casa.</p>
+  <p class="story-block">Mi aiutò poi a stendermi sul divano, accese il fuoco nel caminetto e poi se ne andò dolcemente a dormire… mi riaddormentai di nuovo felice, anche se era stata una giornata con molti grattacapi.</p>
+
+  <div class="story-separator">· · · ✦ · · ·</div>
+
+  <p class="story-block">Si compivano quasi 10 anni da quando esisteva la nostra comunità di 120 famiglie… e tutto era quasi perfetto… tutti erano felici. Il Consiglio, che si riuniva mensilmente, era composto dal talking‑circle degli uomini capofamiglia, secondato dalle donne, che avevano un ruolo consultivo e, in alcune situazioni che le riguardavano direttamente, diritto di veto. I problemi venivano presentati nella rete e le decisioni erano prese per consenso nell'incontro di fine mese. Gregorio, il nostro console imperiale e al contempo leader spirituale, ratificava le decisioni in modo che non contraddicessero le semplici leggi imperiali. La comunità godeva di autonomia e funzionava in modo indipendente, con la libertà di stabilire le proprie regole e leggi interne per consenso.</p>
+  <p class="story-block">Ognuno deteneva una superficie con raggio minimo di 150 m; la sua acquisizione nonché il pagamento iniziale dei servizi e beni comuni — il sistema di capsule e piattaforme per il trasporto, macchinari, sistemi per l'indipendenza energetica ecc. — costituiva condizione d'accesso alla comunità, ma tutto era stato pensato in modo da non richiedere costi successivi, bensì soltanto una quota annua di solidarietà il cui ammontare dipendeva dalla buona volontà di ogni residente. Le attività economiche (profitto dalla vendita di prodotti) erano tassate con un tributo imperiale obbligatorio del 10%.</p>
+  <p class="story-block">Alla formazione della comunità ebbero priorità coloro che padroneggiavano un mestiere o una professione essenziale — ad esempio medico o pedagogo waldorf/montessori —, ma la maggioranza era incoraggiata a operare in modo indipendente, sia all'interno della comunità (lavoro volontario retribuito su semplice accordo non tassato) sia come imprenditori privati in connessione con l'economia regionale e/o globale (attività tassata dall'impero).</p>
+  <p class="story-block">Attualmente funzionano oltre 80 imprese tassate sull'utile su 120 unità familiari. La correttezza della tassazione e la trasparenza delle attività commerciali e produttive era condizione imperiale, e l'intera comunità vegliava sul buon andamento delle cose — tutto veniva registrato, tranne ciò che riguarda la vita privata e intima delle persone. I legami finanziari ed economici con l'esterno si svolgevano tramite un e‑bank proprio della comunità, con commissioni stabilite di comune accordo, e i profitti venivano trasferiti nel conto di solidarietà dal quale si potevano concedere anche prestiti e finanziamenti d'impresa su business‑plan discussi in Consiglio. In alcuni casi erano presenti anche donne imprenditrici, accettate in Consiglio con pieni diritti per le questioni economiche e finanziarie.</p>
+  <p class="story-block">Ho partecipato come membro fondatore della comunità e servivo come consulente — architetto — per sistemazioni e costruzioni, ma mi occupavo anche di altre attività.</p>
+
+  <div class="footnote">
+    <span class="footnote-mark">✦ Nota</span>
+    <p style="margin-bottom:1rem">Jaques l'avevo conosciuto fin da quando si era trasferito tra noi — ci eravamo incontrati nel bar dell'isola —, era di natura bohémien e diventammo amici all'istante. Felicia, la sua consorte, era l'incarnazione di un angelo. La mia Duchessa aveva sentito fin dall'inizio il potere del suo fascino, e ci vollero diversi incontri prima che si "accettassero". Ora sono anche buone amiche. Ad ogni modo, il conforto psicologico era garantito perché le relazioni extraconiugali erano proibite nella comunità e comportavano l'esilio permanente e l'esclusione (regola concordata di comune accordo sin dalla fondazione e ufficialmente ratificata da Gregorio per la nostra comunità).</p>
+    <p style="margin-bottom:1rem">Jaques era il felice erede di alcuni appartamenti ad Amsterdam e viveva prevalentemente di rendite, ma era un consumato poliedrico artista e otteneva redditi nella comunità come pedagogo artistico (aveva seguito alcuni corsi). Lavorava soprattutto con i bambini ma anche con gli adulti desiderosi. Felicia preparava paste e torte eccellenti per tutti i bambini e tutti la amavano.</p>
+    <p style="margin-bottom:1rem">Jaques e Ana si erano conosciuti alle lezioni di pianoforte. Lui avrebbe potuto esserle padre, ma i genitori di Ana erano anch'essi molto presenti nella sua vita… persone oneste e per bene, del resto. Alcune disgrazie avevano tuttavia rovinato il loro business (operavano in una nicchia molto competitiva ed erano relativamente vicini all'età del pensionamento… un'assenza di 2,5 mesi per motivi medici era bastata a destabilizzarli… ma avevano chiuso in tempo e riuscito a salvare un po' di capitale). Da 2 anni devono andare a lavorare in città (cosa che la comunità incoraggiava solo in questi casi) per completare il capitale necessario a un nuovo business all'interno della comunità — una fattoria, nelle condizioni del Consiglio (non inquinante, biologica, ecc.) — con consegna nella comunità ma anche all'esterno… Per l'acquisto del terreno avevano un'approvazione di principio per un prestito dal conto di solidarietà.</p>
+    <p style="margin-bottom:1rem">Ana era quindi costretta a vivere con Sonia, la sorella maggiore, un carattere dominante e intimidatorio per lei (al bar erano stati riferiti alcuni episodi sul rapporto tra le sorelle… e la mia Duchessa mi aveva raccontato qualcosa)… quindi in generale la situazione era nota e per tutti era logico che Ana non si sentisse molto a suo agio a casa e preferisse la compagnia di Jaques e Felicia… e si erano innamorati, in una bella combinazione di vibrazioni positive :-)… ma… le relazioni extraconiugali erano proibite e nessuno voleva lasciare la comunità… e così Jaques aveva posto la questione sul tavolo, con il consenso di Felicia (non erano riusciti ad avere figli), desiderando avere come consorte anche Ana — e ovviamente anche Ana lo desiderava… tanto da soffrire d'amore e rifiutare il cibo.</p>
+    <p>Jaques si era anche offerto di vendere una proprietà per aiutare i genitori di Ana ad accorciare il calvario dei pendolari e raggiungere il capitale obiettivo (gli animali della fattoria e altri investimenti). La questione doveva essere presentata a Gregorio, ma solo dopo essere stata discussa in Consiglio… benché Gregorio lo sapesse già :-), tutta la comunità lo sapeva, ma la procedura prevedeva che il Consiglio discutesse questo caso, che avrebbe creato il precedente della poligamia… o l'esclusione di persone preziose per la comunità (gli esclusi venivano espropriati nell'interesse comunitario, se proprietari, con un risarcimento pari al doppio del valore stimato dei beni; il Consiglio disponeva di fondi generosi — il denaro non era mai un problema. L'accordo era condizione di accettazione nella comunità ed era ovviamente ratificato ufficialmente da Gregorio).</p>
+  </div>
+
+  <div class="story-separator">· · · ✦ · · ·</div>
+
+  <p class="story-block">Mi svegliai nel cuore della notte dopo uno strano sogno. Sentivo il bisogno di parlare con qualcuno e la Duchessa dormiva. Entrai nella capsula e comandai la direzione:</p>
+  <p class="story-block command">"il bar dell'isola"… per strada vidi in rete che Matt, il medico della comunità, era online. Lo chiamai e ci demmo appuntamento al bar.</p>
+  <p class="story-block">Arrivai al bar prima di Matt. Johnny il barman dormiva… la soave melodia del campanello lo svegliò ed era felice di vedermi. Il bar era aperto permanentemente ed era il principale luogo di socializzazione… a quest'ora di notte solo il barman era al bar. Johnny abitava alla periferia della città più vicina e lavorava al bar della comunità da 5 anni. Era un ragazzo sveglio, decoroso e distinto che amava il suo lavoro. Guadagnava bene da noi — le mance erano particolarmente generose di notte. Gli piaceva essere ben informato e per molti era una vera fonte di notizie… tutti lo apprezzavano. Le referenze positive potevano aiutarlo a realizzare il suo sogno — un posto nella nostra comunità — ma per ora era troppo presto e lui era troppo giovane per assumersi una famiglia; credo però che in futuro saremo vicini — ha anche lui un business plan (vuole un posto da noi e si occuperà della coltivazione della marijuana e della produzione di alcol… studia già intensamente ciò di cui ha bisogno). Avevo appena fatto in tempo a ordinare un cocktail rinfrescante e uno spinello che apparve anche Matt:</p>
+
+  <p class="story-block dialogue">– Come stai, dottore, nemmeno tu riesci a dormire? gli chiesi sorridendo.</p>
+  <p class="story-block dialogue">– Ho passato tutta la notte nel gruppo di sostegno di Jaques… tu non ti sei iscritto?!</p>
+  <p class="story-block dialogue">– Non ancora, ammisi… è un periodo intenso per me, come sai bene…</p>
+
+  <p class="story-block">(lavoravamo insieme a un progetto di investimento per uno studio medico completamente automatizzato e robotizzato da remoto… era un obiettivo importante per la nostra comunità — così sarebbero stati possibili analisi complete, risonanze magnetiche e persino operazioni meno complesse da remoto… e tutto proprio qui… in condizioni di comfort… i pazienti sarebbero stati trasportati direttamente dal soggiorno al MedicalCube senza spostarsi dalla barella… si sarebbe risparmiato tempo prezioso, molto importante soprattutto per gli imprenditori della comunità… l'unico problema etico erano i costi: il Consiglio poteva permettersi l'investimento ma eticamente era giusto che ognuno contribuisse con la propria parte… quindi si prospettavano lunghe discussioni e il nostro obiettivo era realizzare il progetto prima dell'arrivo dell'inverno… in soli 2 mesi… e per giunta era emerso il caso Jaques &amp; Ana.)</p>
+
+  <p class="story-block dialogue">– Senti cosa dice Jaques nel gruppo: che Dio ci ha dato due coglioni così da avere due donne… mi racconta divertito.</p>
+  <p class="story-block dialogue">– E puoi contraddirlo?! gli chiesi sorridendo.</p>
+  <p class="story-block dialogue">– Se riusciremo ad aiutarli, tutti gli invidiosi ci salteranno addosso… mi avvertì Matt.</p>
+  <p class="story-block dialogue">– Che vuoi che ti dica, dottore — chi è accecato dall'invidia non ha nulla da fare in Paradiso, esposi la mia opinione e accesi lo spinello.</p>
+  <p class="story-block dialogue">– Giusto, mi replicò Matt… per un'altra cosa… ho trovato una risonanza magnetica di seconda mano — ti mando il link.</p>
+  <p class="story-block dialogue">– Grazie… la studierò e ne parliamo domani… riposati, dottore, abbiamo molto lavoro davanti… e per quanto li riguarda (Jaques &amp; Ana), credo che Dio li aiuterà.</p>
+
+  <p class="story-block">Fumammo lo spinello insieme sulla riva dello stagno, assaporando in silenzio la compagnia, come a noi talvolta piaceva.</p>
+
+  <p class="story-block dialogue">– Devo andare adesso, disse Matt dopo un po'… stammi bene, caro amico, ci sentiamo domani.</p>
+  <p class="story-block dialogue">– Grazie, amico — non dimenticare di riposare, replicai sorridendo con comprensione.</p>
+
+  <p class="story-block">Rimasi solo ad aspettare l'alba… dovrei proporre a Burt (il proprietario del bar) di mettere alcune amache… le stelle erano meravigliose…</p>
+</section>
+
+</main>
+
+<footer>
+  <p>F.L. Wright Type Community &nbsp;·&nbsp; speculative fiction &nbsp;·&nbsp; digitalAIventures LLC</p>
+  <p style="margin-top:0.4rem"><a href="https://amber-kitten-4khe.here.now/" target="_blank">↗ more sites</a></p>
+</footer>
+
+<script>
+  function setLang(code) {
+    document.querySelectorAll('.lang-section').forEach(s => s.classList.remove('visible'));
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    const sec = document.getElementById('lang-' + code);
+    if (sec) sec.classList.add('visible');
+    const btn = document.querySelector('[onclick="setLang(\'' + code + '\')"]');
+    if (btn) btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const scrolled = doc.scrollTop / (doc.scrollHeight - doc.clientHeight);
+    document.getElementById('progress').style.width = (scrolled * 100) + '%';
+  });
+</script>
+</body>
+</html>
