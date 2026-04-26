@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f0f11">
+<title>Olive Mill Quote Configurator</title>
+
+<!-- Theme bootstrap (per here-now skill T3 — runs before paint) -->
+<script>
+(function(){
+  function apply(t){ document.documentElement.setAttribute('data-theme', t); }
+  try {
+    var saved = localStorage.getItem('theme');
+    if (saved) apply(saved);
+    else { var h = new Date().getHours(); apply(h >= 7 && h < 19 ? 'light' : 'dark'); }
+  } catch(e){ apply('dark'); }
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header id="topbar">
+  <div class="lang-switcher" role="group" aria-label="Language">
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="es">ES</button>
+    <button class="lang-btn" data-lang="it">IT</button>
+    <button class="lang-btn" data-lang="zh">中文</button>
+  </div>
+
+  <div id="save-status" aria-live="polite">
+    <span class="dot"></span>
+    <span class="label">…</span>
+  </div>
+
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+    <span class="theme-icon" id="themeIcon">☀️</span>
+  </button>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Olive Mill Quote Configurator</h1>
+  <p class="tagline">Comprehensive inquiry &amp; quotation form — 500–1,000 kg/h olive oil extraction lines</p>
+  <div class="accent-bar"></div>
+</section>
+
+<!-- COMING SOON NOTICE (Drop 2 features) -->
+<div class="upcoming-notice" id="upcoming-notice">
+  <strong>Coming in next update</strong>
+  <span class="body">Photo upload, named drafts, JSON export/import, and PDF print are being added in the next drop. For now, your work auto-saves on this device.</span>
+</div>
+
+<!-- ACTION BAR -->
+<div class="action-bar">
+  <button id="btn-drafts" class="primary icon-btn">📁 <span data-i18n="ui.drafts.btn">Drafts</span></button>
+  <button id="btn-export" class="icon-btn">📤 <span data-i18n="ui.export.btn">Export</span></button>
+  <button id="btn-import" class="icon-btn">📥 <span data-i18n="ui.import.btn">Import</span></button>
+  <button id="btn-expand-all" data-i18n="ui.expand_all">Expand all</button>
+  <button id="btn-collapse-all" data-i18n="ui.collapse_all">Collapse all</button>
+  <button id="btn-clear-form" class="danger" data-i18n="ui.clear_form">Clear form</button>
+</div>
+
+<!-- FORM ROOT -->
+<main id="form-root"></main>
+
+<!-- MODALS (Drop 2) -->
+<div class="modal-backdrop" id="modal-backdrop"></div>
+
+<div class="modal" id="modal-drafts" role="dialog" aria-labelledby="modal-drafts-title">
+  <div class="modal-head">
+    <h3 id="modal-drafts-title" data-i18n="ui.drafts.title">Saved drafts</h3>
+    <button class="close-btn" data-modal-close="modal-drafts" aria-label="Close">×</button>
+  </div>
+  <div class="modal-body">
+    <p class="subtitle" data-i18n="ui.drafts.subtitle"></p>
+    <div class="drafts-list" id="drafts-list"></div>
+  </div>
+  <div class="modal-actions">
+    <button class="primary" id="btn-save-as" data-i18n="ui.drafts.save_as">Save as new draft</button>
+    <button data-modal-close="modal-drafts" data-i18n="ui.modal.close">Close</button>
+  </div>
+</div>
+
+<div class="modal" id="modal-export" role="dialog" aria-labelledby="modal-export-title">
+  <div class="modal-head">
+    <h3 id="modal-export-title" data-i18n="ui.export.title">Export draft</h3>
+    <button class="close-btn" data-modal-close="modal-export" aria-label="Close">×</button>
+  </div>
+  <div class="modal-body">
+    <p class="subtitle" data-i18n="ui.export.subtitle"></p>
+    <div class="export-options" id="export-options">
+      <label class="export-option selected">
+        <input type="radio" name="export-mode" value="full" checked>
+        <div class="opt-info">
+          <div class="opt-name" data-i18n="ui.export.full">Full export (with photos)</div>
+          <div class="opt-size" id="export-size-full">—</div>
+        </div>
+      </label>
+      <label class="export-option">
+        <input type="radio" name="export-mode" value="values">
+        <div class="opt-info">
+          <div class="opt-name" data-i18n="ui.export.values_only">Values only</div>
+          <div class="opt-size" id="export-size-values">—</div>
+        </div>
+      </label>
+    </div>
+  </div>
+  <div class="modal-actions">
+    <button class="primary" id="btn-export-download" data-i18n="ui.export.download">Download .json</button>
+    <button id="btn-export-copy" data-i18n="ui.export.copy">Copy to clipboard</button>
+    <button data-modal-close="modal-export" data-i18n="ui.export.cancel">Cancel</button>
+  </div>
+</div>
+
+<div class="modal" id="modal-import" role="dialog" aria-labelledby="modal-import-title">
+  <div class="modal-head">
+    <h3 id="modal-import-title" data-i18n="ui.import.title">Import draft</h3>
+    <button class="close-btn" data-modal-close="modal-import" aria-label="Close">×</button>
+  </div>
+  <div class="modal-body">
+    <p class="subtitle" data-i18n="ui.import.subtitle"></p>
+    <label class="import-file-btn">
+      <span data-i18n="ui.import.file">Choose .json file</span>
+      <input type="file" id="import-file" accept=".json,application/json">
+    </label>
+    <div class="import-divider">— OR —</div>
+    <textarea class="import-textarea" id="import-textarea" placeholder="Paste JSON…" data-i18n-ph="ui.import.paste"></textarea>
+  </div>
+  <div class="modal-actions">
+    <button class="primary" id="btn-import-go" data-i18n="ui.import.go">Import</button>
+    <button data-modal-close="modal-import" data-i18n="ui.import.cancel">Cancel</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- FOOTER -->
+<footer class="app-footer">
+  <p>digitalAIventures · Mediterranean Sourcing · 2026</p>
+</footer>
+
+<!-- THEME TOGGLE JS (per skill T3) -->
+<script>
+function toggleTheme(){
+  var html = document.documentElement;
+  var current = html.getAttribute('data-theme') || 'dark';
+  var next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('themeIcon').textContent = next === 'dark' ? '☀️' : '🌙';
+  try { localStorage.setItem('theme', next); } catch(e){}
+}
+(function(){
+  document.addEventListener('DOMContentLoaded', function(){
+    var t = document.documentElement.getAttribute('data-theme') || 'dark';
+    var icon = document.getElementById('themeIcon');
+    if (icon) icon.textContent = t === 'dark' ? '☀️' : '🌙';
+  });
+})();
+</script>
+
+<script src="schema.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
