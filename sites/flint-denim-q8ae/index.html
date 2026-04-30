@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GuardOS — An AI-Armored Personal Operating System</title>
+<meta name="description" content="GuardOS is an open-source operating system that defends a single device across every layer — from firmware to human behavior — using a local-first AI advisor.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root, [data-theme="dark"]{
+  --bg:#0e0d0b;
+  --bg-soft:#15140f;
+  --bg-card:#1a1814;
+  --bg-hero:radial-gradient(ellipse at top, #1d1a14 0%, #0e0d0b 60%);
+  --paper:#1a1814;
+  --ink:#e8e3d5;
+  --ink-soft:#bdb6a3;
+  --ink-muted:#8a8472;
+  --rule:#322d24;
+  --rule-soft:#23201a;
+  --accent:#d4a548;
+  --accent-soft:#d4a54822;
+  --accent-deep:#a37d2c;
+  --serif-shadow:0 1px 0 rgba(255,255,255,0.02);
+  --quote-mark:#3a3528;
+  --link:#d4a548;
+  --link-hover:#f0c068;
+  --code-bg:#0a0907;
+  --shadow-card:0 1px 0 rgba(255,255,255,.03), 0 18px 40px -22px rgba(0,0,0,.7);
+}
+[data-theme="light"]{
+  --bg:#f6f1e6;
+  --bg-soft:#efe8d9;
+  --bg-card:#fffdf6;
+  --bg-hero:radial-gradient(ellipse at top, #ece4d0 0%, #f6f1e6 60%);
+  --paper:#fffdf6;
+  --ink:#1f1c14;
+  --ink-soft:#4a4537;
+  --ink-muted:#7a7460;
+  --rule:#d8cfb8;
+  --rule-soft:#e6dec8;
+  --accent:#8a6418;
+  --accent-soft:#8a641815;
+  --accent-deep:#6e4f10;
+  --serif-shadow:none;
+  --quote-mark:#d4cab2;
+  --link:#8a6418;
+  --link-hover:#5e4408;
+  --code-bg:#ece4d0;
+  --shadow-card:0 1px 0 rgba(0,0,0,.02), 0 18px 40px -28px rgba(40,30,10,.18);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Crimson Pro', Georgia, serif;
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.7;
+  font-size:18px;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+/* THEME TOGGLE */
+.theme-toggle{
+  position:fixed;top:.85rem;right:.85rem;z-index:200;
+  background:var(--bg-card);border:1px solid var(--rule);
+  width:2.5rem;height:2.5rem;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 12px rgba(0,0,0,.3);transition:all .25s ease;
+}
+.theme-toggle:hover{transform:scale(1.08);border-color:var(--accent)}
+.theme-icon{font-size:1.1rem;line-height:1}
+
+/* TYPOGRAPHY */
+h1,h2,h3,h4{
+  font-family:'Playfair Display', Georgia, serif;
+  font-weight:600;
+  color:var(--ink);
+  line-height:1.2;
+  letter-spacing:-0.01em;
+}
+
+.container{max-width:780px;margin:0 auto;padding:0 1.5rem}
+.wide{max-width:1080px;margin:0 auto;padding:0 1.5rem}
+
+/* MASTHEAD / NAV */
+.masthead{
+  border-bottom:1px solid var(--rule);
+  background:var(--bg-soft);
+  padding:.65rem 0;
+  font-family:'Playfair Display',serif;
+  font-size:.78rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-muted);
+}
+.masthead-inner{
+  max-width:1080px;margin:0 auto;padding:0 1.5rem;
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;
+}
+.masthead-left{display:flex;gap:1rem;align-items:center}
+.masthead-divider{color:var(--rule);font-weight:300}
+.masthead-right{font-style:italic;font-family:'Crimson Pro',serif;text-transform:none;letter-spacing:0;color:var(--ink-muted);font-size:.82rem}
+
+/* HERO */
+.hero{
+  background:var(--bg-hero);
+  padding:5rem 1.5rem 4rem;
+  text-align:center;
+  border-bottom:1px solid var(--rule);
+  position:relative;overflow:hidden;
+}
+.hero-kicker{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  color:var(--accent);
+  font-size:1rem;
+  letter-spacing:.04em;
+  margin-bottom:1.25rem;
+}
+.hero h1{
+  font-size:clamp(2.6rem,7.5vw,5.2rem);
+  font-weight:700;
+  letter-spacing:-.025em;
+  line-height:1;
+  margin-bottom:1rem;
+}
+.hero-sub{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-weight:400;
+  font-size:clamp(1.15rem,2.4vw,1.5rem);
+  color:var(--ink-soft);
+  max-width:620px;
+  margin:0 auto 2rem;
+  line-height:1.4;
+}
+.hero-rule{
+  width:80px;height:1px;background:var(--accent);
+  margin:2rem auto 1.5rem;
+}
+.hero-meta{
+  font-size:.85rem;
+  color:var(--ink-muted);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-family:'Playfair Display',serif;
+}
+.hero-meta span{margin:0 .6rem;color:var(--accent)}
+
+.hero-cta{
+  margin-top:2.5rem;
+  display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;
+}
+.btn{
+  display:inline-block;
+  padding:.7rem 1.4rem;
+  border-radius:2px;
+  font-family:'Playfair Display',serif;
+  font-size:.92rem;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  text-decoration:none;
+  transition:all .2s ease;
+  cursor:pointer;
+}
+.btn-primary{
+  background:var(--accent);
+  color:#0e0d0b;
+  font-weight:600;
+}
+.btn-primary:hover{background:var(--link-hover);transform:translateY(-1px)}
+.btn-secondary{
+  background:transparent;
+  color:var(--ink);
+  border:1px solid var(--rule);
+}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+
+/* SECTIONS */
+section{padding:4rem 0}
+section + section{border-top:1px solid var(--rule-soft)}
+
+.section-tag{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  color:var(--accent);
+  font-size:.95rem;
+  letter-spacing:.04em;
+  text-align:center;
+  margin-bottom:.6rem;
+}
+.section-title{
+  font-size:clamp(1.9rem,4vw,2.8rem);
+  text-align:center;
+  margin-bottom:.6rem;
+  font-weight:700;
+}
+.section-deck{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  text-align:center;
+  color:var(--ink-soft);
+  max-width:620px;
+  margin:0 auto 3rem;
+  font-size:1.15rem;
+  line-height:1.5;
+}
+.section-rule{
+  width:60px;height:1px;background:var(--accent);
+  margin:1.2rem auto 1.8rem;
+}
+
+/* PROSE */
+.prose p{margin-bottom:1.3rem;color:var(--ink-soft)}
+.prose p:first-of-type::first-letter{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:4.5rem;
+  line-height:.85;
+  float:left;
+  margin:.18rem .55rem -.1rem 0;
+  color:var(--accent);
+}
+
+/* PULL QUOTE */
+.pull-quote{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:1.55rem;
+  line-height:1.4;
+  color:var(--ink);
+  text-align:center;
+  padding:2.5rem 1rem;
+  margin:3rem auto;
+  max-width:680px;
+  position:relative;
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+}
+.pull-quote::before{
+  content:'\201C';
+  font-size:5rem;
+  color:var(--quote-mark);
+  position:absolute;
+  top:-.4rem;left:50%;transform:translateX(-50%);
+  line-height:1;
+  font-weight:700;
+}
+.pull-quote-attr{
+  display:block;
+  font-style:normal;
+  font-family:'Crimson Pro',serif;
+  font-size:.85rem;
+  color:var(--ink-muted);
+  margin-top:1rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+/* ONION DIAGRAM */
+.onion-wrap{
+  display:flex;flex-direction:column;align-items:center;
+  margin:2rem auto;
+}
+.onion-svg{max-width:480px;width:100%;height:auto}
+.onion-legend{
+  margin-top:2rem;
+  display:grid;grid-template-columns:1fr;gap:.4rem;
+  width:100%;max-width:560px;
+  font-size:.95rem;
+}
+.onion-legend-row{
+  display:grid;grid-template-columns:auto 1fr;
+  gap:.85rem;align-items:baseline;
+  padding:.55rem 0;
+  border-bottom:1px dashed var(--rule-soft);
+}
+.onion-legend-num{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  color:var(--accent);
+  font-size:.95rem;
+  letter-spacing:.05em;
+  white-space:nowrap;
+}
+.onion-legend-text strong{font-weight:600;color:var(--ink)}
+.onion-legend-text{color:var(--ink-soft)}
+
+/* FEATURE GRID — editorial cards */
+.feature-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;margin-top:2.5rem;
+}
+.feature{
+  background:var(--bg-card);
+  padding:1.75rem;
+  border:1px solid var(--rule);
+  position:relative;
+  box-shadow:var(--shadow-card);
+}
+.feature-num{
+  position:absolute;top:-.6rem;left:1.5rem;
+  background:var(--bg);
+  padding:0 .5rem;
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:.78rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--accent);
+}
+.feature h3{
+  font-size:1.4rem;margin-bottom:.6rem;
+  font-weight:700;
+}
+.feature p{color:var(--ink-soft);font-size:.98rem;line-height:1.6}
+
+/* COMPARISON TABLE */
+.compare-wrap{overflow-x:auto;margin-top:2rem}
+.compare{
+  width:100%;border-collapse:collapse;
+  font-family:'Crimson Pro',serif;
+  background:var(--bg-card);
+  border:1px solid var(--rule);
+  min-width:560px;
+}
+.compare th, .compare td{
+  padding:.85rem 1rem;
+  text-align:left;
+  border-bottom:1px solid var(--rule-soft);
+  font-size:.95rem;
+}
+.compare thead th{
+  background:var(--bg-soft);
+  font-family:'Playfair Display',serif;
+  font-size:.85rem;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--accent);
+  border-bottom:1px solid var(--rule);
+}
+.compare tbody th{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  color:var(--ink);
+  font-weight:500;
+}
+.compare tbody tr:last-child td, .compare tbody tr:last-child th{border-bottom:none}
+.compare .yes{color:var(--accent);font-weight:600}
+.compare .no{color:var(--ink-muted)}
+.compare .partial{color:var(--ink-soft);font-style:italic}
+
+/* HARDWARE TIERS */
+.tiers{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:1.25rem;margin-top:2rem;
+}
+.tier{
+  border:1px solid var(--rule);
+  padding:1.5rem;
+  background:var(--bg-card);
+}
+.tier-label{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  color:var(--accent);
+  font-size:.85rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-bottom:.75rem;
+}
+.tier h3{font-size:1.2rem;margin-bottom:.8rem}
+.tier ul{list-style:none}
+.tier li{
+  padding:.4rem 0;
+  border-bottom:1px dashed var(--rule-soft);
+  color:var(--ink-soft);
+  font-size:.95rem;
+}
+.tier li:last-child{border-bottom:none}
+.tier li::before{content:'— ';color:var(--accent);margin-right:.3rem}
+
+/* ROADMAP TIMELINE */
+.timeline{
+  margin:2.5rem auto 0;
+  max-width:680px;
+  position:relative;
+  padding-left:1.8rem;
+  border-left:1px solid var(--rule);
+}
+.milestone{
+  position:relative;
+  padding:.4rem 0 1.8rem 0;
+}
+.milestone::before{
+  content:'';
+  position:absolute;
+  left:-2.2rem;top:.85rem;
+  width:.65rem;height:.65rem;border-radius:50%;
+  background:var(--bg);
+  border:2px solid var(--rule);
+}
+.milestone.done::before{background:var(--accent);border-color:var(--accent)}
+.milestone.active::before{background:var(--accent-soft);border-color:var(--accent)}
+.milestone-tag{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:.78rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:.3rem;
+}
+.milestone h4{
+  font-size:1.15rem;
+  font-weight:600;
+  margin-bottom:.4rem;
+}
+.milestone p{color:var(--ink-soft);font-size:.95rem;line-height:1.5}
+
+/* GENESIS BLOCK */
+.genesis{
+  background:var(--bg-soft);
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+  padding:4rem 0;
+}
+.genesis-inner{
+  max-width:680px;margin:0 auto;padding:0 1.5rem;
+}
+.genesis-mono{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.78rem;
+  color:var(--ink-muted);
+  letter-spacing:.05em;
+  margin-bottom:1.5rem;
+}
+
+/* FOOTER */
+footer{
+  background:var(--bg-soft);
+  border-top:1px solid var(--rule);
+  padding:3rem 0 2rem;
+  text-align:center;
+}
+.footer-rule{width:60px;height:1px;background:var(--accent);margin:0 auto 1.5rem}
+.footer-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.4rem;
+  font-weight:700;
+  margin-bottom:.6rem;
+}
+.footer-deck{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  color:var(--ink-soft);
+  margin-bottom:2rem;
+  font-size:1rem;
+}
+.footer-cta{
+  display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem;
+}
+.footer-meta{
+  font-size:.78rem;
+  color:var(--ink-muted);
+  letter-spacing:.06em;
+  margin-top:1rem;
+  font-family:'Playfair Display',serif;
+}
+.footer-meta a{color:var(--accent);text-decoration:none}
+.footer-meta a:hover{color:var(--link-hover)}
+.footer-divider{margin:0 .5rem;color:var(--rule)}
+
+/* INLINE LINK STYLE */
+.prose a, .genesis-inner a, .feature a{
+  color:var(--link);
+  text-decoration:none;
+  border-bottom:1px solid var(--accent-soft);
+  transition:all .2s;
+}
+.prose a:hover, .genesis-inner a:hover, .feature a:hover{
+  color:var(--link-hover);
+  border-bottom-color:var(--link-hover);
+}
+
+/* CODE BADGE */
+.mono{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.85em;
+  background:var(--code-bg);
+  padding:.1rem .4rem;
+  border-radius:2px;
+  color:var(--ink);
+}
+
+/* SMALL CAPS HEADINGS WITHIN PROSE */
+.smallcaps{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  color:var(--accent);
+  font-size:.92rem;
+  letter-spacing:.06em;
+}
+
+/* RESPONSIVE */
+@media (max-width:640px){
+  body{font-size:17px}
+  .hero{padding:3.5rem 1rem 3rem}
+  section{padding:3rem 0}
+  .pull-quote{font-size:1.25rem;padding:2rem .5rem}
+  .prose p:first-of-type::first-letter{font-size:3.6rem}
+  .masthead-inner{flex-direction:column;align-items:flex-start;gap:.3rem}
+  .masthead{font-size:.7rem;letter-spacing:.14em}
+}
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <span class="theme-icon" id="themeIcon">☀️</span>
+</button>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-left">
+      <span>The GuardOS Review</span>
+      <span class="masthead-divider">·</span>
+      <span>Vol. I · No. 1</span>
+    </div>
+    <div class="masthead-right">An open dispatch on personal computing &amp; defense</div>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-kicker">— A field report from the edge of trust —</div>
+    <h1>GuardOS</h1>
+    <p class="hero-sub">An AI-armored personal operating system that defends a single device across every layer — from firmware to human behavior.</p>
+    <div class="hero-rule"></div>
+    <div class="hero-meta">Open Source <span>·</span> GPL-3.0 <span>·</span> Local-First AI</div>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="https://github.com/juanitto-maker/GuardOS" target="_blank" rel="noopener">View the Repository →</a>
+      <a class="btn btn-secondary" href="#onion">Read the Argument</a>
+    </div>
+  </div>
+</header>
+
+<!-- THE PREMISE -->
+<section>
+  <div class="container">
+    <div class="section-tag">i. the premise</div>
+    <h2 class="section-title">A castle with seven walls</h2>
+    <div class="section-rule"></div>
+    <p class="section-deck">Modern attacks do not respect perimeters. They move from a poisoned PDF to the kernel to the firmware in a single afternoon. GuardOS asks: what if every layer defended itself?</p>
+
+    <div class="prose">
+      <p>The dominant model of personal-computer security is, when examined honestly, a thin wall around an open courtyard. A firewall here, an antivirus there, a vague hope that the user will not click. Once that wall is breached — by a phishing email, a poisoned download, a malicious USB stick — the attacker enjoys the run of the place: applications, files, network sessions, sometimes the kernel, occasionally the firmware itself.</p>
+
+      <p>GuardOS proposes a different shape. Imagine the device not as a courtyard but as an onion: seven concentric layers of defense, each verifying the layer beneath it and constraining the layer above. A breach in one is contained by the next. There is no single wall to fail.</p>
+
+      <p>It is, at its heart, a simple architectural commitment: <em>treat every layer as suspect, and have every layer prove itself</em>. Built on hardened open-source foundations — a NixOS-style immutable base, Coreboot-friendly firmware, Flatpak-sandboxed applications, an eBPF firewall, TPM-sealed identity — and tied together by a local AI advisor that explains risk in plain English without phoning home.</p>
+    </div>
+
+    <div class="pull-quote">
+      Security is not a product — it is a practice. And practice begins by refusing the lie that one wall is enough.
+      <span class="pull-quote-attr">— GuardOS Core Principles</span>
+    </div>
+  </div>
+</section>
+
+<!-- THE ONION MODEL -->
+<section id="onion">
+  <div class="wide">
+    <div class="section-tag">ii. the architecture</div>
+    <h2 class="section-title">The Onion, in detail</h2>
+    <div class="section-rule"></div>
+    <p class="section-deck">Seven layers. Each with its own gatekeeper, its own telemetry, its own containment. A breach must cross every wall to reach the next.</p>
+
+    <div class="onion-wrap">
+      <svg class="onion-svg" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg" aria-label="Onion security model diagram">
+        <defs>
+          <radialGradient id="onionGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.18"/>
+            <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.02"/>
+          </radialGradient>
+        </defs>
+        <!-- Outer layers, drawn from outermost (L6) to innermost (L0) -->
+        <circle cx="240" cy="240" r="220" fill="none" stroke="var(--rule)" stroke-width="1"/>
+        <circle cx="240" cy="240" r="186" fill="none" stroke="var(--rule)" stroke-width="1"/>
+        <circle cx="240" cy="240" r="156" fill="none" stroke="var(--rule)" stroke-width="1"/>
+        <circle cx="240" cy="240" r="126" fill="none" stroke="var(--rule)" stroke-width="1"/>
+        <circle cx="240" cy="240" r="96" fill="none" stroke="var(--rule)" stroke-width="1"/>
+        <circle cx="240" cy="240" r="66" fill="none" stroke="var(--rule)" stroke-width="1"/>
+        <circle cx="240" cy="240" r="36" fill="url(#onionGrad)" stroke="var(--accent)" stroke-width="1.2"/>
+
+        <!-- Layer labels -->
+        <g font-family="Playfair Display, serif" font-size="11" fill="var(--ink-soft)" font-style="italic" text-anchor="middle">
+          <text x="240" y="32">L6 · Human</text>
+          <text x="240" y="66">L5 · Identity</text>
+          <text x="240" y="98">L4 · Network</text>
+          <text x="240" y="128">L3 · Apps</text>
+          <text x="240" y="158">L2 · OS</text>
+          <text x="240" y="188">L1 · Kernel</text>
+        </g>
+        <g font-family="Playfair Display, serif" font-size="10" fill="var(--accent)" font-weight="700" text-anchor="middle" letter-spacing="0.5">
+          <text x="240" y="244">L0</text>
+          <text x="240" y="258" font-size="8" font-style="italic" font-weight="400">FIRMWARE</text>
+        </g>
+        <!-- Decorative shield mark -->
+        <g transform="translate(240,240)" opacity="0.0"></g>
+      </svg>
+
+      <div class="onion-legend">
+        <div class="onion-legend-row"><span class="onion-legend-num">L0</span><span class="onion-legend-text"><strong>Firmware &amp; Hardware</strong> — Coreboot or Heads where possible. Measured boot. TPM-anchored attestation. The root of every trust decision above.</span></div>
+        <div class="onion-legend-row"><span class="onion-legend-num">L1</span><span class="onion-legend-text"><strong>Kernel &amp; Drivers</strong> — Hardened Linux with lockdown mode, AppArmor + Landlock, signed module loading. The brainstem.</span></div>
+        <div class="onion-legend-row"><span class="onion-legend-num">L2</span><span class="onion-legend-text"><strong>Operating System</strong> — Immutable, declarative, atomically rollbackable. If malware writes to the system, you reboot the wound away.</span></div>
+        <div class="onion-legend-row"><span class="onion-legend-num">L3</span><span class="onion-legend-text"><strong>Applications</strong> — Flatpak sandboxes by default; micro-VMs for high-risk formats. PDFs and Office files open in <em>SafeView</em>, with no network, no execution.</span></div>
+        <div class="onion-legend-row"><span class="onion-legend-num">L4</span><span class="onion-legend-text"><strong>Network &amp; Interfaces</strong> — Per-app eBPF firewall, USBGuard quarantine on insertion, encrypted DNS, optional WireGuard egress.</span></div>
+        <div class="onion-legend-row"><span class="onion-legend-num">L5</span><span class="onion-legend-text"><strong>Identity &amp; Credentials</strong> — Passkeys, FIDO2, TPM-sealed LUKS. No plaintext secrets. No biometric fallbacks that can be coerced.</span></div>
+        <div class="onion-legend-row"><span class="onion-legend-num">L6</span><span class="onion-legend-text"><strong>Human Behavior</strong> — Aegis, the local AI advisor: explains risk in plain English, classifies phishing, flags beaconing. The user is part of the trust base, given superpowers.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AEGIS -->
+<section>
+  <div class="container">
+    <div class="section-tag">iii. the advisor</div>
+    <h2 class="section-title">Aegis: an AI that does not phone home</h2>
+    <div class="section-rule"></div>
+
+    <div class="prose">
+      <p>The seventh layer of the onion is the user — and traditional security has been almost cruel about it. Pop-ups asking, in technical jargon, whether to allow a certificate. Dialog boxes that punish curiosity. The user, by design, is the weakest link.</p>
+
+      <p>GuardOS treats the user as part of the trusted computing base, and equips them accordingly. <span class="smallcaps">Aegis</span> is a quantized LLM that runs entirely on-device. No API keys. No remote inference. No telemetry, by default. It watches the audit bus — process events, USB insertions, outbound DNS, file integrity — and turns alerts into sentences a human can act on.</p>
+
+      <p><em>“This PDF was downloaded from a domain first seen two hours ago and contains macros. Open in SafeView, or quarantine?”</em> That is Aegis. The model itself never leaves the device, and the data it sees never leaves either.</p>
+
+      <p>Three policies govern its behavior, all written as plain YAML in <span class="mono">ai/policies/</span>: a safety policy, a tool-rules policy, and a per-profile mode that defaults to <strong>local-only</strong> with all network paths denied. Hybrid and cloud modes exist as future options, gated behind explicit user consent and a planned encrypted Guard-Tunnel — never as defaults.</p>
+    </div>
+  </div>
+</section>
+
+<!-- KEY DEFENSES -->
+<section>
+  <div class="wide">
+    <div class="section-tag">iv. the defenses</div>
+    <h2 class="section-title">What you actually get</h2>
+    <div class="section-rule"></div>
+    <p class="section-deck">A handful of concrete tools, each contained, each explainable, each replaceable.</p>
+
+    <div class="feature-grid">
+      <div class="feature">
+        <div class="feature-num">No. 01</div>
+        <h3>Immutable base</h3>
+        <p>NixOS-style declarative system with A/B atomic updates and signed generations. If an update breaks anything, the previous generation is one reboot away.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-num">No. 02</div>
+        <h3>SafeView</h3>
+        <p>Untrusted PDFs, images, and Office files open in a rasterized, networkless sandbox. Macros never execute. Trackers never load. The file stays where it is.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-num">No. 03</div>
+        <h3>Hunter Mode</h3>
+        <p>An opt-in defensive trap layer: canary files, decoy credentials, sinkholed DNS, ring-buffer packet capture. Useful when you suspect you are already compromised.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-num">No. 04</div>
+        <h3>Per-app egress</h3>
+        <p>An eBPF/XDP firewall enforces allowlists at the application layer. Your browser may speak to the world; your PDF reader may not.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-num">No. 05</div>
+        <h3>USB quarantine</h3>
+        <p>Newly inserted devices are blocked by default. A keyboard claiming to be a keyboard must justify itself before the kernel grants it the right to type.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-num">No. 06</div>
+        <h3>TPM-sealed identity</h3>
+        <p>LUKS volumes unlocked by hardware-bound keys. Passkeys and FIDO2 instead of passwords. Secrets that cannot leave the silicon they were sealed to.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section>
+  <div class="container">
+    <div class="section-tag">v. comparisons</div>
+    <h2 class="section-title">In the company of giants</h2>
+    <div class="section-rule"></div>
+    <p class="section-deck">GuardOS shares its spirit with Qubes, Tails, and GrapheneOS — and differs in three meaningful ways.</p>
+
+    <div class="compare-wrap">
+      <table class="compare">
+        <thead>
+          <tr>
+            <th>Capability</th>
+            <th>GuardOS</th>
+            <th>Qubes OS</th>
+            <th>Tails</th>
+            <th>GrapheneOS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th>Target device</th><td>Desktop / laptop</td><td>Desktop / laptop</td><td>Live USB</td><td>Mobile (Pixel)</td></tr>
+          <tr><th>Immutable base + rollback</th><td class="yes">Yes</td><td class="partial">Templates</td><td class="partial">Amnesic</td><td class="yes">Yes</td></tr>
+          <tr><th>Verified boot &amp; TPM</th><td class="yes">Yes (Heads)</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td></tr>
+          <tr><th>App sandboxing</th><td class="yes">Flatpak + micro-VM</td><td class="yes">Per-VM</td><td class="partial">Limited</td><td class="yes">Per-app SELinux</td></tr>
+          <tr><th>Local AI advisor</th><td class="yes">Yes (Aegis)</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
+          <tr><th>Performance cost</th><td class="partial">Moderate</td><td class="partial">High</td><td class="yes">Low</td><td class="yes">Low</td></tr>
+          <tr><th>Beginner friendly</th><td class="partial">Improving</td><td class="no">Steep</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="text-align:center;color:var(--ink-muted);font-size:.9rem;margin-top:1.2rem;font-style:italic">No system today combines an immutable base, hardware-anchored boot, layered sandboxing, <em>and</em> an explainable on-device AI. That is the gap GuardOS aims to fill.</p>
+  </div>
+</section>
+
+<!-- HARDWARE -->
+<section>
+  <div class="wide">
+    <div class="section-tag">vi. hardware</div>
+    <h2 class="section-title">What you can run it on</h2>
+    <div class="section-rule"></div>
+    <p class="section-deck">Reference devices are chosen for openness — flashable firmware, available TPM, audited drivers — not for novelty.</p>
+
+    <div class="tiers">
+      <div class="tier">
+        <div class="tier-label">Tier I — flagship</div>
+        <h3>Best supported</h3>
+        <ul>
+          <li>ThinkPad X230 (Coreboot/Heads, TPM 1.2)</li>
+          <li>ThinkPad T480 (TPM 2.0, modern specs)</li>
+          <li>Framework 13 / 16</li>
+          <li>Librem 14</li>
+          <li>MinisForum UM790</li>
+        </ul>
+      </div>
+      <div class="tier">
+        <div class="tier-label">Tier II — capable</div>
+        <h3>Works well</h3>
+        <ul>
+          <li>ThinkPad T420, T430, X270</li>
+          <li>HP EliteBook 820 G2, 2170p</li>
+          <li>Most 2018+ Intel/AMD with TPM 2.0</li>
+        </ul>
+      </div>
+      <div class="tier">
+        <div class="tier-label">Beta — experimental</div>
+        <h3>Use with caution</h3>
+        <ul>
+          <li>Pinebook Pro (ARM64)</li>
+          <li>RockPro64</li>
+          <li>RPi 4 / 5 (limited AI)</li>
+        </ul>
+      </div>
+      <div class="tier">
+        <div class="tier-label">Not recommended</div>
+        <h3>Avoid</h3>
+        <ul>
+          <li>MacBooks with T2 chips</li>
+          <li>Locked Chromebooks</li>
+          <li>Modern X1 Carbon (locked ME)</li>
+          <li>Android tablets</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section>
+  <div class="container">
+    <div class="section-tag">vii. status</div>
+    <h2 class="section-title">Where the project actually is</h2>
+    <div class="section-rule"></div>
+    <p class="section-deck">A pre-alpha shell prototype, with a credible path to a bootable v1.0 — and a community-led pace.</p>
+
+    <div class="timeline">
+      <div class="milestone done">
+        <div class="milestone-tag">v0.1 — done</div>
+        <h4>Conceptual base</h4>
+        <p>Onion model published, Aegis policies drafted, profiles and validators working, hardware shortlist confirmed.</p>
+      </div>
+      <div class="milestone active">
+        <div class="milestone-tag">v0.2 — in progress</div>
+        <h4>Developer kickstart</h4>
+        <p>Starter Nix flake, Flatpak sandbox baseline, contributor onboarding docs, build helpers for ISO and QEMU.</p>
+      </div>
+      <div class="milestone">
+        <div class="milestone-tag">v0.3 — next</div>
+        <h4>QEMU pre-alpha boot</h4>
+        <p>Boots to a guarded desktop in QEMU. Egress-first network presets. First Aegis watchdog shell.</p>
+      </div>
+      <div class="milestone">
+        <div class="milestone-tag">v0.4 — alpha</div>
+        <h4>Reference hardware</h4>
+        <p>Boots on X230 and T480. TPM-sealed LUKS. USB quarantine. Per-app firewall live.</p>
+      </div>
+      <div class="milestone">
+        <div class="milestone-tag">v1.0 — MVP</div>
+        <h4>Bootable &amp; working</h4>
+        <p>Public ISO, signed checksums, hardened defaults, plain-language docs. Daily-driver capable on two reference laptops.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GENESIS -->
+<div class="genesis">
+  <div class="genesis-inner">
+    <div class="genesis-mono">// ORIGIN — GENESYS.md</div>
+    <h2 class="section-title" style="text-align:left;font-size:1.9rem;margin-bottom:1rem">An idea, in transcript</h2>
+    <div class="prose" style="margin-top:1.2rem">
+      <p>GuardOS began as a conversation. A non-technical question — <em>“if a computer is an onion, what are its layers?”</em> — that grew, over many afternoons, into an architecture, a threat model, a hardware matrix, and a roadmap. The full literal transcript, with personal information removed, is preserved in the repository as <span class="mono">GENESYS.md</span>: not as marketing, but as receipts. Anyone who wants to know how GuardOS arrived at its claims is invited to read the whole exchange.</p>
+      <p>The codebase is small and shell-first by design. The policies are YAML you can read in five minutes. The diagrams are SVG, the prose is Markdown, the license is GPL-3.0. There are no hidden services, no closed components, no required cloud. If you can read a configuration file, you can audit GuardOS.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER / CTA -->
+<footer>
+  <div class="container">
+    <div class="footer-rule"></div>
+    <div class="footer-title">Read the source.</div>
+    <div class="footer-deck">It is the only way to know what an OS does. GuardOS makes that easy on purpose.</div>
+    <div class="footer-cta">
+      <a class="btn btn-primary" href="https://github.com/juanitto-maker/GuardOS" target="_blank" rel="noopener">github.com/juanitto-maker/GuardOS</a>
+      <a class="btn btn-secondary" href="https://github.com/juanitto-maker/GuardOS/blob/main/SECURITY_MODEL.md" target="_blank" rel="noopener">Security Model</a>
+      <a class="btn btn-secondary" href="https://github.com/juanitto-maker/GuardOS/discussions" target="_blank" rel="noopener">Discussions</a>
+    </div>
+    <div class="footer-meta">
+      GuardOS is open source under GPL-3.0
+      <span class="footer-divider">·</span>
+      <a href="https://ko-fi.com/guardos" target="_blank" rel="noopener">Support on Ko-fi</a>
+      <span class="footer-divider">·</span>
+      Published via here.now
+    </div>
+    <div class="footer-meta" style="margin-top:.6rem;font-style:italic">
+      “Security is not a product — it is a practice.”
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleTheme(){
+  const html=document.documentElement;
+  const current=html.getAttribute('data-theme')||'dark';
+  const next=current==='dark'?'light':'dark';
+  html.setAttribute('data-theme',next);
+  document.getElementById('themeIcon').textContent=next==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',next)}catch(e){}
+}
+(function(){
+  function apply(t){
+    document.documentElement.setAttribute('data-theme',t);
+    document.addEventListener('DOMContentLoaded',()=>{
+      const icon=document.getElementById('themeIcon');
+      if(icon)icon.textContent=t==='dark'?'☀️':'🌙';
+    });
+  }
+  try{
+    const saved=localStorage.getItem('theme');
+    if(saved){apply(saved)}
+    else{const h=new Date().getHours();apply(h>=7&&h<19?'light':'dark')}
+  }catch(e){apply('dark')}
+})();
+</script>
+
+</body>
+</html>

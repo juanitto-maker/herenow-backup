@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mediterranean Mill Partners — Independent Olive Oil Mill Consulting</title>
+<meta name="description" content="Independent industrial olive oil mill consulting and turnkey delivery for the Mediterranean basin. Multi-supplier Chinese manufacturer portfolio with European adaptation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root, [data-theme="dark"] {
+  --bg: #0f1410;
+  --bg-card: #1a201c;
+  --bg-hero: linear-gradient(135deg, #1f2820 0%, #0f1410 60%, #0a0d0b 100%);
+  --bg-section: #131815;
+  --text: #d8d6cf;
+  --text-muted: #8a877d;
+  --text-heading: #ffffff;
+  --border: #2a302c;
+  --border-soft: #1f2521;
+  --accent: #c9a84c;
+  --accent-bg: rgba(201,168,76,.12);
+  --accent-strong: #d9b85c;
+  --link: #9bbf7a;
+  --link-hover: #b9d99c;
+  --shadow: 0 2px 8px rgba(0,0,0,.4);
+  --dialog-overlay: rgba(0,0,0,.7);
+}
+[data-theme="light"] {
+  --bg: #faf6ef;
+  --bg-card: #ffffff;
+  --bg-hero: linear-gradient(135deg, #ede5d2 0%, #f5efe1 60%, #faf6ef 100%);
+  --bg-section: #f4efe2;
+  --text: #3a3a32;
+  --text-muted: #6a6a62;
+  --text-heading: #1f2820;
+  --border: #e0d9c7;
+  --border-soft: #ece6d6;
+  --accent: #6b8a48;
+  --accent-bg: rgba(107,138,72,.10);
+  --accent-strong: #5a7639;
+  --link: #5a7639;
+  --link-hover: #3e5527;
+  --shadow: 0 2px 8px rgba(0,0,0,.08);
+  --dialog-overlay: rgba(0,0,0,.4);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+  transition:background .3s,color .3s;
+}
+
+/* ========= LANG BAR ========= */
+.lang-bar{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:center;gap:.5rem;padding:.5rem;
+  background:rgba(15,20,16,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border-soft);
+}
+[data-theme="light"] .lang-bar{background:rgba(250,246,239,.94)}
+.lang-btn{
+  background:none;border:1px solid var(--border);color:var(--text-muted);
+  font:600 .72rem/1 'Inter',sans-serif;padding:.35rem .8rem;
+  border-radius:999px;cursor:pointer;letter-spacing:.06em;
+  text-transform:uppercase;transition:all .2s;
+}
+.lang-btn.active,.lang-btn:hover{
+  background:var(--accent);color:#0f1410;border-color:var(--accent);
+}
+[data-theme="light"] .lang-btn.active,[data-theme="light"] .lang-btn:hover{color:#fff}
+
+/* ========= THEME TOGGLE ========= */
+.theme-toggle{
+  position:fixed;top:3.5rem;right:.75rem;z-index:150;
+  background:var(--bg-card);border:1px solid var(--border);
+  width:2.4rem;height:2.4rem;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--shadow);transition:all .2s;
+}
+.theme-toggle:hover{transform:scale(1.1)}
+.theme-icon{font-size:1.1rem;line-height:1}
+
+/* ========= LANG VISIBILITY ========= */
+[data-lang]{display:none!important}
+[data-lang].v{display:block!important}
+span[data-lang].v{display:inline!important}
+a[data-lang].v{display:inline-block!important}
+li[data-lang].v{display:list-item!important}
+strong[data-lang].v{display:inline!important}
+
+/* ========= HERO ========= */
+.hero{
+  background:var(--bg-hero);
+  padding:5rem 1.5rem 3.5rem;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  border-bottom:1px solid var(--border-soft);
+}
+.hero::before{
+  content:'';position:absolute;top:-50%;right:-20%;width:60%;height:200%;
+  background:radial-gradient(ellipse,var(--accent-bg) 0%,transparent 60%);
+  pointer-events:none;
+}
+.hero-inner{position:relative;max-width:780px;margin:0 auto}
+.brand-mark{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent);background:var(--accent-bg);
+  padding:.4rem 1rem;border-radius:999px;border:1px solid var(--accent);
+  margin-bottom:1.5rem;
+}
+.brand-mark::before{content:'◆';font-size:.6rem}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,7vw,3.2rem);
+  font-weight:600;color:var(--text-heading);
+  line-height:1.15;margin-bottom:1rem;letter-spacing:-.01em;
+}
+.hero h1 .accent{color:var(--accent);font-style:italic}
+.hero-sub{
+  font-size:clamp(.95rem,3vw,1.15rem);
+  color:var(--text);max-width:600px;margin:0 auto 1.5rem;
+  font-weight:400;
+}
+.hero-lead{
+  font-size:.95rem;color:var(--text-muted);
+  max-width:600px;margin:0 auto;line-height:1.7;
+}
+
+/* ========= STATS BAR ========= */
+.stats-bar{
+  display:flex;background:var(--bg-card);
+  border:1px solid var(--border);border-radius:.75rem;
+  overflow:hidden;margin:2rem auto 0;max-width:780px;
+  box-shadow:var(--shadow);
+}
+.stat-cell{
+  flex:1;padding:.85rem .4rem;text-align:center;
+  border-right:1px solid var(--border-soft);
+}
+.stat-cell:last-child{border-right:none}
+.st-val{
+  display:block;font-size:1.05rem;font-weight:700;color:var(--text-heading);
+  margin-bottom:.15rem;line-height:1.2;
+}
+.st-val span{font-size:.7rem;font-weight:500;color:var(--text-muted);margin-left:.15rem}
+.st-desc{font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted)}
+
+/* ========= SECTIONS ========= */
+section{
+  padding:2.5rem 1.5rem;
+  max-width:780px;
+  margin:0 auto;
+}
+section.alt{
+  background:var(--bg-section);max-width:none;
+  border-top:1px solid var(--border-soft);
+  border-bottom:1px solid var(--border-soft);
+}
+section.alt .inner{max-width:780px;margin:0 auto;padding:0}
+
+.eyebrow{
+  display:block;font-size:.7rem;font-weight:600;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;
+}
+h2{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.5rem,5vw,2rem);
+  font-weight:600;color:var(--text-heading);
+  margin-bottom:1rem;line-height:1.25;letter-spacing:-.005em;
+}
+h3{
+  font-family:'Inter',sans-serif;
+  font-size:1.05rem;font-weight:600;color:var(--text-heading);
+  margin-bottom:.5rem;
+}
+p{margin-bottom:.9rem;color:var(--text)}
+p.lead{font-size:1rem;color:var(--text);line-height:1.7}
+
+/* ========= SERVICES ========= */
+.svc{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:.85rem;padding:1.4rem;margin-bottom:1rem;
+  box-shadow:var(--shadow);transition:border-color .2s,transform .2s;
+  position:relative;overflow:hidden;
+}
+.svc:hover{border-color:var(--accent)}
+.svc::before{
+  content:'';position:absolute;top:0;left:0;width:3px;height:100%;
+  background:var(--accent);opacity:.6;
+}
+.svc-num{
+  display:inline-block;font-size:.7rem;font-weight:700;color:var(--accent);
+  letter-spacing:.1em;margin-bottom:.4rem;
+}
+.svc-title{
+  font-family:'Inter',sans-serif;font-size:1.1rem;font-weight:600;
+  color:var(--text-heading);margin-bottom:.5rem;
+}
+.svc-body{font-size:.92rem;line-height:1.65;color:var(--text)}
+.svc-tag{
+  display:inline-block;font-size:.7rem;color:var(--accent);
+  background:var(--accent-bg);padding:.2rem .55rem;border-radius:.3rem;
+  font-weight:600;margin-top:.6rem;
+}
+
+/* ========= LISTS ========= */
+ul.clean{list-style:none;margin:.5rem 0 1rem;padding:0}
+ul.clean li{
+  position:relative;padding:.4rem 0 .4rem 1.5rem;
+  font-size:.93rem;color:var(--text);
+  border-bottom:1px solid var(--border-soft);
+}
+ul.clean li:last-child{border-bottom:none}
+ul.clean li::before{
+  content:'›';position:absolute;left:.3rem;top:.4rem;
+  color:var(--accent);font-weight:700;font-size:1rem;
+}
+
+/* ========= LINKS ========= */
+a{color:var(--link);text-decoration:none;transition:color .15s}
+a:hover{color:var(--link-hover);text-decoration:underline}
+.inline-link{font-weight:600}
+.sample-link{
+  display:inline-block;margin-top:.6rem;padding:.7rem 1.2rem;
+  background:var(--accent-bg);border:1px solid var(--accent);
+  color:var(--accent-strong);border-radius:.5rem;
+  font-weight:600;font-size:.9rem;transition:all .2s;
+}
+.sample-link:hover{background:var(--accent);color:#0f1410;text-decoration:none}
+[data-theme="light"] .sample-link:hover{color:#fff}
+
+/* ========= ABOUT ========= */
+.about-grid{
+  display:flex;flex-direction:column;gap:1rem;
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:.85rem;padding:1.4rem;box-shadow:var(--shadow);
+}
+.about-grid p{margin-bottom:.5rem}
+.about-grid p:last-child{margin-bottom:0}
+.about-grid p.signature{
+  font-style:italic;color:var(--text-muted);font-size:.88rem;
+  padding-top:.8rem;border-top:1px solid var(--border-soft);
+}
+
+/* ========= GEO ========= */
+.geo-row{
+  display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem;
+}
+.geo-pill{
+  font-size:.78rem;padding:.3rem .7rem;border-radius:.4rem;
+  background:var(--accent-bg);color:var(--accent-strong);
+  font-weight:600;border:1px solid var(--border-soft);
+}
+.geo-pill.secondary{
+  background:transparent;color:var(--text-muted);
+}
+
+/* ========= CONTACT BLOCK ========= */
+.contact-block{
+  text-align:center;padding:2rem 1.5rem;
+  background:var(--bg-hero);
+  border-top:1px solid var(--border-soft);
+}
+.contact-block h2{margin-bottom:.5rem}
+.contact-block p{color:var(--text-muted);margin-bottom:1.2rem;max-width:520px;margin-left:auto;margin-right:auto}
+.cta-btn{
+  display:inline-block;padding:.85rem 1.8rem;
+  background:var(--accent);color:#0f1410;
+  border:none;border-radius:.5rem;cursor:pointer;
+  font-family:'Inter',sans-serif;font-weight:700;font-size:.95rem;
+  letter-spacing:.02em;transition:all .2s;
+  text-decoration:none;
+}
+[data-theme="light"] .cta-btn{color:#fff}
+.cta-btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(201,168,76,.3);text-decoration:none}
+
+/* ========= FOOTER ========= */
+footer{
+  text-align:center;padding:1.8rem 1.5rem 2.5rem;
+  border-top:1px solid var(--border-soft);
+  font-size:.78rem;color:var(--text-muted);background:var(--bg);
+}
+footer .footer-brand{
+  font-family:'Playfair Display',serif;font-size:.95rem;
+  color:var(--text-heading);margin-bottom:.3rem;font-weight:600;
+}
+footer p{margin-bottom:.3rem;color:var(--text-muted)}
+
+/* ========= DIALOG ========= */
+.dialog-overlay{
+  display:none;position:fixed;inset:0;
+  background:var(--dialog-overlay);z-index:200;
+  align-items:center;justify-content:center;padding:1rem;
+}
+.dialog-overlay.open{display:flex}
+.dialog-box{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:1rem;padding:1.75rem;max-width:340px;width:100%;
+  text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.4);
+}
+.dialog-box h4{
+  font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;
+  color:var(--text-heading);margin-bottom:.4rem;
+}
+.dialog-box .dialog-sub{
+  font-size:.82rem;color:var(--text-muted);margin-bottom:1.2rem;
+}
+.dialog-option{
+  display:block;width:100%;padding:.75rem;margin-bottom:.6rem;
+  border-radius:.5rem;text-decoration:none;font-weight:600;
+  font-size:.9rem;text-align:center;transition:transform .15s;
+}
+.dialog-option:hover{transform:translateY(-1px);text-decoration:none}
+.dialog-email{background:var(--accent);color:#0f1410}
+[data-theme="light"] .dialog-email{color:#fff}
+.dialog-close{
+  background:none;border:1px solid var(--border);color:var(--text-muted);
+  cursor:pointer;font-size:.82rem;padding:.5rem 1.2rem;
+  border-radius:.4rem;margin-top:.4rem;font-family:'Inter',sans-serif;
+}
+.dialog-close:hover{color:var(--text-heading);border-color:var(--accent)}
+
+/* ========= SEPARATORS ========= */
+.sep{
+  border:none;border-top:1px solid var(--border-soft);
+  margin:.75rem auto;max-width:200px;
+}
+
+/* ========= RESPONSIVE ========= */
+@media (min-width:640px){
+  .hero{padding:5.5rem 2rem 4rem}
+  section{padding:3rem 2rem}
+}
+</style>
+</head>
+<body>
+
+<!-- LANG BAR -->
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" onclick="setLang('es')">ES</button>
+</div>
+
+<!-- THEME TOGGLE -->
+<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <span class="theme-icon" id="themeIcon">☀️</span>
+</button>
+
+<!-- HERO -->
+<section class="hero" style="max-width:none;padding-top:5rem">
+  <div class="hero-inner">
+    <span class="brand-mark" data-lang="en">Mediterranean Basin · Industrial Mill Consulting</span>
+    <span class="brand-mark" data-lang="es">Cuenca Mediterránea · Consultoría Industrial de Almazaras</span>
+    <h1 data-lang="en">Mediterranean <span class="accent">Mill Partners</span></h1>
+    <h1 data-lang="es">Mediterranean <span class="accent">Mill Partners</span></h1>
+    <p class="hero-sub" data-lang="en">Independent industrial olive oil mill consulting and turnkey delivery — across the Mediterranean basin.</p>
+    <p class="hero-sub" data-lang="es">Consultoría independiente y entrega llave en mano de almazaras industriales — en toda la cuenca mediterránea.</p>
+    <p class="hero-lead" data-lang="en">We help olive growers, cooperatives, and investors evaluate and adapt Chinese-manufactured industrial olive oil lines for European sites. Multi-supplier portfolio. European technical and regulatory adaptation. Optional turnkey project delivery.</p>
+    <p class="hero-lead" data-lang="es">Ayudamos a olivicultores, cooperativas e inversores a evaluar y adaptar líneas industriales de aceite de oliva fabricadas en China para emplazamientos europeos. Portafolio multi-proveedor. Adaptación técnica y normativa europea. Entrega llave en mano opcional.</p>
+
+    <div class="stats-bar">
+      <div class="stat-cell">
+        <span class="st-val">250–1000 <span>kg/h</span></span>
+        <span class="st-desc" data-lang="en">Capacity range</span>
+        <span class="st-desc" data-lang="es">Capacidad</span>
+      </div>
+      <div class="stat-cell">
+        <span class="st-val">EN · ES <span>+ AI</span></span>
+        <span class="st-desc" data-lang="en">Languages</span>
+        <span class="st-desc" data-lang="es">Idiomas</span>
+      </div>
+      <div class="stat-cell">
+        <span class="st-val">Multi <span>·supplier</span></span>
+        <span class="st-desc" data-lang="en">Independent</span>
+        <span class="st-desc" data-lang="es">Independiente</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE DO -->
+<section>
+  <span class="eyebrow" data-lang="en">What we do</span>
+  <span class="eyebrow" data-lang="es">Qué hacemos</span>
+  <h2 data-lang="en">Three ways to engage</h2>
+  <h2 data-lang="es">Tres formas de colaborar</h2>
+  <p class="lead" data-lang="en">From a low-commitment investment review to full project delivery — pick the depth of involvement you need.</p>
+  <p class="lead" data-lang="es">Desde una revisión de inversión de bajo compromiso hasta la ejecución completa del proyecto — elige el nivel de implicación que necesites.</p>
+
+  <!-- Service 1 -->
+  <div class="svc">
+    <span class="svc-num">01</span>
+    <h3 class="svc-title" data-lang="en">Investment Analysis</h3>
+    <h3 class="svc-title" data-lang="es">Análisis de Inversión</h3>
+    <p class="svc-body" data-lang="en">Independent technical and financial review of a Chinese-manufactured olive oil mill purchase. CAPEX breakdown, ROI scenarios, layout adaptation, regulatory checklist for the target European site. Delivered as a bilingual report.</p>
+    <p class="svc-body" data-lang="es">Revisión técnica y financiera independiente para la compra de una almazara industrial fabricada en China. Desglose de CAPEX, escenarios de ROI, adaptación del layout, lista de verificación normativa para el emplazamiento europeo. Entregado como informe bilingüe.</p>
+    <span class="svc-tag" data-lang="en">Entry engagement</span>
+    <span class="svc-tag" data-lang="es">Compromiso inicial</span>
+  </div>
+
+  <!-- Service 2 -->
+  <div class="svc">
+    <span class="svc-num">02</span>
+    <h3 class="svc-title" data-lang="en">Sourcing &amp; Procurement</h3>
+    <h3 class="svc-title" data-lang="es">Abastecimiento y Compra</h3>
+    <p class="svc-body" data-lang="en">Multi-supplier comparison from a vetted Chinese manufacturer portfolio. Specification negotiation, contract drafting (Incoterms, payment milestones, performance guarantees), freight, customs, and CE conformity coordination.</p>
+    <p class="svc-body" data-lang="es">Comparativa entre proveedores de un portafolio chino verificado. Negociación de especificaciones, redacción de contrato (Incoterms, hitos de pago, garantías de desempeño), flete, aduana y coordinación de conformidad CE.</p>
+    <span class="svc-tag" data-lang="en">End-to-end purchase</span>
+    <span class="svc-tag" data-lang="es">Compra integral</span>
+  </div>
+
+  <!-- Service 3 -->
+  <div class="svc">
+    <span class="svc-num">03</span>
+    <h3 class="svc-title" data-lang="en">Turnkey Compound Delivery</h3>
+    <h3 class="svc-title" data-lang="es">Entrega de Planta Llave en Mano</h3>
+    <p class="svc-body" data-lang="en">Available on enquiry — full plant delivery including equipment, prefabricated industrial buildings, and a Chinese installation crew on the European site. Mobilization: 60–90 days from signed contract. Fixed-price quotation upon site survey.</p>
+    <p class="svc-body" data-lang="es">Disponible bajo consulta — entrega de planta completa que incluye equipo, edificios industriales prefabricados y equipo de instalación chino en el emplazamiento europeo. Movilización: 60–90 días desde firma de contrato. Cotización a precio fijo tras estudio del sitio.</p>
+    <span class="svc-tag" data-lang="en">On enquiry · 60–90d</span>
+    <span class="svc-tag" data-lang="es">Bajo consulta · 60–90d</span>
+  </div>
+</section>
+
+<!-- WHAT WE EVALUATE -->
+<section class="alt">
+  <div class="inner">
+    <span class="eyebrow" data-lang="en">Methodology</span>
+    <span class="eyebrow" data-lang="es">Metodología</span>
+    <h2 data-lang="en">What every analysis covers</h2>
+    <h2 data-lang="es">Qué cubre cada análisis</h2>
+    <p data-lang="en">A serious mill investment is a 10–20 year commitment. Our reports are designed to surface the questions that get skipped in vendor conversations.</p>
+    <p data-lang="es">Una inversión seria en almazara es un compromiso a 10–20 años. Nuestros informes están diseñados para sacar a la luz las preguntas que se pasan por alto en las conversaciones con proveedores.</p>
+
+    <ul class="clean">
+      <li data-lang="en">Capacity sizing matched to harvest profile and regional supply curves</li>
+      <li data-lang="es">Dimensionado de capacidad según perfil de cosecha y curvas de suministro regional</li>
+      <li data-lang="en">Layout adaptation to European site constraints (ceiling height, access, services)</li>
+      <li data-lang="es">Adaptación del layout a restricciones del emplazamiento europeo (altura, acceso, servicios)</li>
+      <li data-lang="en">CE marking and EU Machinery Directive (2006/42/EC) compliance assessment</li>
+      <li data-lang="es">Evaluación del marcado CE y cumplimiento de la Directiva de Máquinas (2006/42/CE)</li>
+      <li data-lang="en">Local building permits, environmental permits, and food-grade certifications</li>
+      <li data-lang="es">Permisos de obra, ambientales y certificaciones alimentarias locales</li>
+      <li data-lang="en">Process water, three-phase electrical, and waste/byproduct management</li>
+      <li data-lang="es">Agua de proceso, suministro trifásico y gestión de residuos/subproductos</li>
+      <li data-lang="en">ROI scenarios under realistic operational and financial assumptions</li>
+      <li data-lang="es">Escenarios de ROI con supuestos operativos y financieros realistas</li>
+      <li data-lang="en">Total cost of ownership over 10 years (maintenance, parts, energy, labor)</li>
+      <li data-lang="es">Coste total de propiedad a 10 años (mantenimiento, repuestos, energía, mano de obra)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- WHO WE WORK WITH -->
+<section>
+  <span class="eyebrow" data-lang="en">Clients</span>
+  <span class="eyebrow" data-lang="es">Clientes</span>
+  <h2 data-lang="en">Who we work with</h2>
+  <h2 data-lang="es">Con quién trabajamos</h2>
+
+  <ul class="clean">
+    <li data-lang="en">Large olive growers (50+ hectares) considering vertical integration into milling</li>
+    <li data-lang="es">Grandes olivicultores (50+ hectáreas) que evalúan integración vertical hacia molturación</li>
+    <li data-lang="en">Agricultural cooperatives currently outsourcing milling and seeking own capacity</li>
+    <li data-lang="es">Cooperativas agrícolas que externalizan la molturación y buscan capacidad propia</li>
+    <li data-lang="en">Investor groups entering the olive oil sector — agriculture funds, family offices</li>
+    <li data-lang="es">Grupos inversores que entran al sector del aceite de oliva — fondos agrícolas, family offices</li>
+    <li data-lang="en">DOP / IGP councils and regional bodies studying member capacity expansion</li>
+    <li data-lang="es">Consejos de DOP/IGP y entes regionales que estudian ampliación de capacidad para socios</li>
+  </ul>
+</section>
+
+<!-- SAMPLE WORK -->
+<section class="alt">
+  <div class="inner">
+    <span class="eyebrow" data-lang="en">Sample work</span>
+    <span class="eyebrow" data-lang="es">Trabajo de muestra</span>
+    <h2 data-lang="en">A real deliverable</h2>
+    <h2 data-lang="es">Un entregable real</h2>
+    <p data-lang="en">Below is a sanitized sample of our investment analysis format — a 500 kg/h GLY-series project review, presented in four languages with full technical and financial depth.</p>
+    <p data-lang="es">A continuación, una muestra anonimizada de nuestro formato de análisis de inversión — la revisión de un proyecto GLY-500 kg/h, presentada en cuatro idiomas con profundidad técnica y financiera completa.</p>
+    <a class="sample-link" href="https://quiet-olive-ch5g.here.now/" target="_blank" rel="noopener" data-lang="en">View sample analysis →</a>
+    <a class="sample-link" href="https://quiet-olive-ch5g.here.now/" target="_blank" rel="noopener" data-lang="es">Ver análisis de muestra →</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section>
+  <span class="eyebrow" data-lang="en">About</span>
+  <span class="eyebrow" data-lang="es">Acerca de</span>
+  <h2 data-lang="en">Why us</h2>
+  <h2 data-lang="es">Por qué nosotros</h2>
+
+  <div class="about-grid">
+    <p data-lang="en">Founded by Alexandru-Ioan Nistoroiu — architect, with direct field experience coordinating Chinese suppliers and construction crews on European sites. Based in rural Andalucía. Operating under digitalAIventures LLC (Wyoming, USA).</p>
+    <p data-lang="es">Fundada por Alexandru-Ioan Nistoroiu — arquitecto, con experiencia directa coordinando proveedores y equipos chinos en obras europeas. Basado en la Andalucía rural. Operando bajo digitalAIventures LLC (Wyoming, EE.UU.).</p>
+    <p data-lang="en">The advantage we provide is not the equipment — anyone can buy that. The advantage is independent judgment, contract discipline, and a working network on both sides of the Eurasia route.</p>
+    <p data-lang="es">La ventaja que ofrecemos no es el equipamiento — cualquiera puede comprarlo. La ventaja es juicio independiente, disciplina contractual y una red operativa a ambos lados de la ruta euroasiática.</p>
+    <p class="signature" data-lang="en">— independent · multi-supplier · accountable</p>
+    <p class="signature" data-lang="es">— independiente · multi-proveedor · responsable</p>
+  </div>
+</section>
+
+<!-- GEOGRAPHY -->
+<section class="alt">
+  <div class="inner">
+    <span class="eyebrow" data-lang="en">Geography</span>
+    <span class="eyebrow" data-lang="es">Geografía</span>
+    <h2 data-lang="en">Where we operate</h2>
+    <h2 data-lang="es">Dónde operamos</h2>
+    <p data-lang="en">All work delivered remotely. Site surveys arranged on a per-project basis. Active engagements in Spain; available across the wider Mediterranean basin.</p>
+    <p data-lang="es">Trabajo entregado de forma remota. Visitas al sitio organizadas por proyecto. Trabajos activos en España; disponibilidad en toda la cuenca mediterránea.</p>
+    <div class="geo-row">
+      <span class="geo-pill">🇪🇸 Spain</span>
+      <span class="geo-pill">🇮🇹 Italy</span>
+      <span class="geo-pill secondary">🇲🇦 Morocco</span>
+      <span class="geo-pill secondary">🇹🇳 Tunisia</span>
+      <span class="geo-pill secondary">🇬🇷 Greece</span>
+      <span class="geo-pill secondary" data-lang="en">+ wider basin</span>
+      <span class="geo-pill secondary" data-lang="es">+ cuenca ampliada</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-block" style="max-width:none">
+  <span class="eyebrow" data-lang="en">Get in touch</span>
+  <span class="eyebrow" data-lang="es">Contacto</span>
+  <h2 data-lang="en">Considering a mill investment?</h2>
+  <h2 data-lang="es">¿Evaluando una inversión en almazara?</h2>
+  <p data-lang="en">Send a brief description of your project — site, capacity target, and timing. We respond within 48 hours.</p>
+  <p data-lang="es">Envíe una breve descripción de su proyecto — emplazamiento, capacidad objetivo y plazos. Respondemos en 48 horas.</p>
+  <button class="cta-btn" onclick="document.getElementById('cd').classList.add('open')">
+    <span data-lang="en">Contact Mediterranean Mill Partners</span>
+    <span data-lang="es">Contactar Mediterranean Mill Partners</span>
+  </button>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-brand">Mediterranean Mill Partners</p>
+  <p data-lang="en">An initiative of digitalAIventures LLC · Wyoming, USA</p>
+  <p data-lang="es">Una iniciativa de digitalAIventures LLC · Wyoming, EE.UU.</p>
+  <p style="margin-top:.4rem;opacity:.7">© 2026</p>
+</footer>
+
+<!-- DIALOG -->
+<div class="dialog-overlay" id="cd" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="dialog-box">
+    <h4 data-lang="en">Get in Touch</h4>
+    <h4 data-lang="es">Contacto</h4>
+    <p class="dialog-sub" data-lang="en">Email us with your project brief.</p>
+    <p class="dialog-sub" data-lang="es">Escríbanos con un resumen del proyecto.</p>
+    <a class="dialog-option dialog-email" href="mailto:digitalAIventures.LLC@gmail.com?subject=Mill%20project%20enquiry">✉ digitalAIventures.LLC@gmail.com</a>
+    <button class="dialog-close" onclick="document.getElementById('cd').classList.remove('open')">
+      <span data-lang="en">Close</span>
+      <span data-lang="es">Cerrar</span>
+    </button>
+  </div>
+</div>
+
+<script>
+// ===== Theme toggle (time-aware + persistent) =====
+function toggleTheme(){
+  const html=document.documentElement;
+  const current=html.getAttribute('data-theme')||'dark';
+  const next=current==='dark'?'light':'dark';
+  html.setAttribute('data-theme',next);
+  document.getElementById('themeIcon').textContent=next==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',next)}catch(e){}
+}
+(function(){
+  function apply(t){
+    document.documentElement.setAttribute('data-theme',t);
+    document.addEventListener('DOMContentLoaded',()=>{
+      const icon=document.getElementById('themeIcon');
+      if(icon)icon.textContent=t==='dark'?'☀️':'🌙';
+    });
+  }
+  try{
+    const saved=localStorage.getItem('theme');
+    if(saved){apply(saved)}
+    else{const h=new Date().getHours();apply(h>=7&&h<19?'light':'dark')}
+  }catch(e){apply('dark')}
+})();
+
+// ===== Language toggle =====
+function setLang(l){
+  document.querySelectorAll('[data-lang]').forEach(e=>{
+    e.classList.toggle('v',e.getAttribute('data-lang')===l)
+  });
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    b.classList.toggle('active',b.textContent.trim().toLowerCase()===l)
+  });
+  document.documentElement.lang=l;
+  try{localStorage.setItem('lang',l)}catch(e){}
+}
+(function(){
+  let lang='en';
+  try{const saved=localStorage.getItem('lang');if(saved)lang=saved;}catch(e){}
+  // also detect browser language as a hint, only on first visit
+  try{
+    if(!localStorage.getItem('lang')){
+      const nav=(navigator.language||'en').toLowerCase();
+      if(nav.startsWith('es'))lang='es';
+    }
+  }catch(e){}
+  setLang(lang);
+})();
+</script>
+</body>
+</html>
