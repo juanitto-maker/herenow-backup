@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>digitalAIventures — Partner Program</title>
+<meta name="description" content="An informal invitation to partner with digitalAIventures LLC — capital, connections, building, operations, expertise, ground, or joint ventures.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root, [data-theme="dark"] {
+  --bg: #0f0f11;
+  --bg-card: #18181c;
+  --bg-hero: linear-gradient(135deg, #1a1510 0%, #0f0f11 60%, #14140e 100%);
+  --bg-section: #131318;
+  --text: #d8d8de;
+  --text-muted: #888;
+  --text-soft: #a8a8b0;
+  --text-heading: #fff;
+  --border: #28282f;
+  --border-soft: #1f1f25;
+  --accent: #d4af56;
+  --accent-2: #8aa97b;
+  --accent-bg: rgba(212,175,86,0.10);
+  --accent-soft: rgba(212,175,86,0.06);
+  --link: #d4af56;
+  --link-hover: #e9c878;
+  --bar-bg: #232329;
+  --bar-fill: linear-gradient(90deg, #d4af56, #e9c878);
+  --tag-bg: rgba(138,169,123,0.12);
+  --tag-text: #a8c898;
+  --shadow: 0 4px 20px rgba(0,0,0,0.4);
+  --code-bg: #16161a;
+}
+[data-theme="light"] {
+  --bg: #faf6ef;
+  --bg-card: #ffffff;
+  --bg-hero: linear-gradient(135deg, #f5ecd9 0%, #faf6ef 60%, #f0ead9 100%);
+  --bg-section: #f4ede0;
+  --text: #3a3a32;
+  --text-muted: #7a7a72;
+  --text-soft: #5a5a52;
+  --text-heading: #1a1a18;
+  --border: #e4ddc9;
+  --border-soft: #ede6d3;
+  --accent: #b8923a;
+  --accent-2: #4a6741;
+  --accent-bg: rgba(184,146,58,0.10);
+  --accent-soft: rgba(184,146,58,0.05);
+  --link: #b8923a;
+  --link-hover: #8a6a25;
+  --bar-bg: #ede6d3;
+  --bar-fill: linear-gradient(90deg, #b8923a, #d4af56);
+  --tag-bg: rgba(74,103,65,0.10);
+  --tag-text: #4a6741;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
+  --code-bg: #f0ead9;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  font-weight:400;
+  font-size:16px;
+}
+.container{max-width:780px;margin:0 auto;padding:0 1.25rem}
+
+/* Theme toggle */
+.theme-toggle{
+  position:fixed;top:.75rem;right:.75rem;z-index:150;
+  background:var(--bg-card);border:1px solid var(--border);
+  width:2.4rem;height:2.4rem;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--shadow);transition:all .2s;
+}
+.theme-toggle:hover{transform:scale(1.1)}
+.theme-icon{font-size:1.05rem;line-height:1}
+
+/* Hero */
+.hero{
+  background:var(--bg-hero);
+  padding:5rem 1.25rem 4rem;
+  text-align:center;
+  border-bottom:1px solid var(--border-soft);
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 30% 20%, var(--accent-soft) 0%, transparent 50%);
+  pointer-events:none;
+}
+.hero-inner{position:relative;z-index:1;max-width:680px;margin:0 auto}
+.badge{
+  display:inline-block;
+  font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);background:var(--accent-bg);
+  border:1px solid var(--accent);
+  border-radius:999px;padding:.32rem .9rem;margin-bottom:1.5rem;
+}
+.brand{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(2.2rem,6vw,3.2rem);
+  font-weight:400;
+  color:var(--text-heading);
+  letter-spacing:-.02em;
+  line-height:1.05;
+  margin-bottom:.75rem;
+}
+.brand-accent{color:var(--accent);font-style:italic}
+.hero-tag{
+  font-size:1.05rem;color:var(--text-soft);
+  max-width:540px;margin:0 auto;
+  font-weight:300;
+}
+.hero-tag em{color:var(--accent);font-style:normal;font-weight:500}
+.hero-meta{
+  margin-top:1.75rem;font-size:.78rem;color:var(--text-muted);
+  letter-spacing:.05em;
+}
+.hero-meta span{margin:0 .5rem}
+
+/* Section common */
+section{padding:4rem 0}
+.eyebrow{
+  font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:.6rem;
+}
+h2{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(1.7rem,4vw,2.3rem);
+  font-weight:400;
+  color:var(--text-heading);
+  letter-spacing:-.015em;
+  line-height:1.15;
+  margin-bottom:1rem;
+}
+h3{
+  font-family:'Inter',sans-serif;
+  font-size:1.05rem;
+  font-weight:600;
+  color:var(--text-heading);
+  margin-bottom:.4rem;
+  letter-spacing:-.01em;
+}
+p{color:var(--text);font-weight:400}
+p+p{margin-top:1rem}
+
+/* Letter */
+.letter{
+  background:var(--bg-section);
+  border-top:1px solid var(--border-soft);
+  border-bottom:1px solid var(--border-soft);
+}
+.letter-body{
+  font-family:'Inter',sans-serif;
+  font-size:1.02rem;
+  font-weight:300;
+  line-height:1.78;
+  color:var(--text);
+  max-width:640px;
+}
+.letter-body p{font-size:1.02rem;line-height:1.78;font-weight:300}
+.letter-body em{color:var(--accent);font-style:normal;font-weight:500;letter-spacing:.005em}
+.letter-body strong{color:var(--text-heading);font-weight:600}
+.signature{
+  margin-top:2rem;
+  padding-top:1.25rem;
+  border-top:1px dashed var(--border);
+  font-size:.95rem;
+  color:var(--text-soft);
+}
+.signature-name{
+  font-family:'DM Serif Display',serif;
+  font-size:1.4rem;color:var(--accent);font-style:italic;
+  display:block;margin-bottom:.2rem;
+}
+.signature-title{font-size:.82rem;color:var(--text-muted);letter-spacing:.02em}
+
+/* Portfolio buckets */
+.bucket{margin-bottom:3rem}
+.bucket:last-child{margin-bottom:0}
+.bucket-head{
+  display:flex;align-items:baseline;gap:.6rem;
+  margin-bottom:1.4rem;padding-bottom:.7rem;
+  border-bottom:1px solid var(--border-soft);
+}
+.bucket-icon{font-size:1.2rem}
+.bucket-title{
+  font-family:'Inter',sans-serif;
+  font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--text-heading);
+}
+.bucket-count{
+  font-size:.72rem;color:var(--text-muted);
+  margin-left:auto;
+  font-variant-numeric:tabular-nums;
+}
+
+.proj-grid{display:flex;flex-direction:column;gap:.85rem}
+.proj{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:.7rem;
+  padding:1.1rem 1.15rem;
+  transition:border-color .2s, transform .15s;
+}
+.proj:hover{border-color:var(--accent);transform:translateY(-1px)}
+.proj-head{
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:.75rem;margin-bottom:.4rem;flex-wrap:wrap;
+}
+.proj-name{
+  font-size:1rem;font-weight:600;color:var(--text-heading);
+  letter-spacing:-.005em;
+}
+.proj-link{
+  font-size:.7rem;color:var(--link);text-decoration:none;
+  letter-spacing:.05em;font-weight:500;
+  border:1px solid var(--accent);
+  padding:.18rem .55rem;border-radius:.4rem;
+  transition:all .2s;white-space:nowrap;
+  background:var(--accent-soft);
+}
+.proj-link:hover{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.proj-desc{
+  font-size:.88rem;color:var(--text-soft);
+  line-height:1.55;font-weight:400;
+  margin-bottom:.7rem;
+}
+.proj-foot{
+  display:flex;align-items:center;gap:.7rem;
+  font-size:.74rem;color:var(--text-muted);
+}
+.proj-stage{
+  font-size:.66rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  background:var(--tag-bg);color:var(--tag-text);
+  padding:.16rem .5rem;border-radius:.3rem;
+  white-space:nowrap;
+}
+.proj-bar{
+  flex:1;height:4px;background:var(--bar-bg);
+  border-radius:2px;overflow:hidden;min-width:60px;
+}
+.proj-bar-fill{
+  height:100%;background:var(--bar-fill);
+  border-radius:2px;
+}
+.proj-pct{
+  font-variant-numeric:tabular-nums;font-weight:600;
+  color:var(--accent);min-width:34px;text-align:right;
+  font-size:.74rem;
+}
+.proj-links{
+  display:flex;gap:.4rem;flex-wrap:wrap;
+}
+
+/* Infrastructure note */
+.infra-note{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:.7rem;
+  padding:1rem 1.15rem;
+  margin-top:1rem;
+  font-size:.83rem;
+  color:var(--text-soft);
+  line-height:1.55;
+}
+.infra-note strong{color:var(--text-heading);font-weight:600}
+.infra-note code{
+  background:var(--code-bg);
+  padding:.08rem .35rem;
+  border-radius:.25rem;
+  font-size:.78rem;
+  color:var(--accent);
+  font-family:ui-monospace,Consolas,monospace;
+}
+
+/* Tiers */
+.tiers{background:var(--bg-section)}
+.tier-grid{
+  display:grid;grid-template-columns:1fr;gap:1rem;
+}
+.tier{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:.85rem;
+  padding:1.4rem 1.3rem;
+  position:relative;
+  transition:all .2s;
+}
+.tier:hover{border-color:var(--accent);box-shadow:var(--shadow)}
+.tier-icon{
+  font-size:1.7rem;display:block;margin-bottom:.6rem;
+}
+.tier-name{
+  font-family:'Inter',sans-serif;
+  font-size:1.05rem;font-weight:700;color:var(--text-heading);
+  margin-bottom:.5rem;letter-spacing:-.01em;
+}
+.tier-name span{color:var(--accent);font-weight:500;font-size:.78rem;letter-spacing:.05em;display:block;margin-top:.15rem;text-transform:uppercase}
+.tier-body{
+  font-size:.9rem;color:var(--text-soft);line-height:1.6;
+  font-weight:400;
+}
+.tier-body strong{color:var(--text);font-weight:600}
+
+/* CTA */
+.cta{
+  background:var(--bg-hero);
+  text-align:center;
+  border-top:1px solid var(--border-soft);
+}
+.cta-inner{max-width:580px;margin:0 auto}
+.cta h2{margin-bottom:1rem}
+.cta-sub{
+  font-size:1rem;color:var(--text-soft);
+  margin-bottom:2rem;font-weight:300;
+}
+.cta-email{
+  display:inline-flex;align-items:center;gap:.6rem;
+  background:var(--accent);color:var(--bg);
+  padding:.95rem 1.6rem;border-radius:.6rem;
+  font-size:1rem;font-weight:600;
+  text-decoration:none;letter-spacing:.005em;
+  transition:all .2s;
+  font-family:'Inter',sans-serif;
+}
+.cta-email:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(212,175,86,0.3)}
+.cta-email-icon{font-size:1.1rem}
+.cta-note{
+  margin-top:1.5rem;font-size:.82rem;color:var(--text-muted);
+  font-style:italic;
+}
+.cta-phase{
+  margin-top:2.5rem;padding-top:1.5rem;
+  border-top:1px dashed var(--border);
+  font-size:.78rem;color:var(--text-muted);
+  letter-spacing:.02em;
+}
+.cta-phase strong{color:var(--accent);font-weight:600}
+
+/* Footer */
+footer{
+  padding:2.5rem 1.25rem 3rem;
+  text-align:center;
+  font-size:.78rem;color:var(--text-muted);
+  border-top:1px solid var(--border-soft);
+}
+footer a{color:var(--link);text-decoration:none}
+footer a:hover{text-decoration:underline}
+footer .legal{margin-top:.5rem;font-size:.72rem;color:var(--text-muted)}
+
+@media (min-width:640px){
+  .tier-grid{grid-template-columns:1fr 1fr;gap:1.1rem}
+  section{padding:5rem 0}
+  .hero{padding:6rem 1.25rem 5rem}
+}
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <span class="theme-icon" id="themeIcon">☀️</span>
+</button>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="badge">Partner Program · Informal Invitation</div>
+    <h1 class="brand">digital<span class="brand-accent">AI</span>ventures</h1>
+    <p class="hero-tag">Building seriously, from anywhere — with people who want to <em>build along</em>.</p>
+    <div class="hero-meta">
+      <span>Wyoming LLC</span>·<span>Solo founder</span>·<span>Lean by design</span>
+    </div>
+  </div>
+</header>
+
+<!-- LETTER -->
+<section class="letter">
+  <div class="container">
+    <div class="eyebrow">A note from the founder</div>
+    <h2>If you've found this page, something resonated.</h2>
+    <div class="letter-body">
+      <p>digitalAIventures is a one-person studio with a portfolio mind. I build <strong>real things</strong> — software shipped to clients, hardware concepts pushed through defensive publication, trade work bringing CE-grade equipment from China to Europe, and a steady stream of ideas that get prototyped, documented, and put online for anyone to find.</p>
+
+      <p>The base is a quiet patch of Andalucía. Low burn, focused work, no office overhead, no team to manage — just <em>output</em>. The whole stack runs from a phone: GitHub web, Claude as collaborator, Vercel and Supabase doing the heavy lifting. It's a constraint that became a method.</p>
+
+      <p>Some projects are revenue-bearing today. Some are deep R&amp;D plays where the moat is being first to publish. Some are open-source infrastructure I use to run everything else. They share a thread: solving real problems with the smallest possible footprint.</p>
+
+      <p>What's missing is <strong>partners</strong>. Not employees, not co-founders in the rigid sense — partners. People who pick a project that lights them up and bring whatever they bring: capital, a phone number, a contact, a skill, a piece of land, an afternoon. The studio is structured to <em>absorb</em> that. Equity, revenue share, advisory shares, finder's fees, JV splits — whichever shape fits.</p>
+
+      <p>If anything in the portfolio below speaks to you, the door is open.</p>
+
+      <div class="signature">
+        <span class="signature-name">Juanitto Calvares</span>
+        <span class="signature-title">Founder · digitalAIventures LLC</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section>
+  <div class="container">
+    <div class="eyebrow">What we're building</div>
+    <h2>The portfolio.</h2>
+    <p style="color:var(--text-soft);margin-bottom:2.5rem;font-size:.95rem">A snapshot of active work, grouped by stage. Completion percentages are honest estimates — not marketing inflation. Tap <em style="color:var(--accent);font-style:normal">Try it live ↗</em> to walk through the deployed app, or <em style="color:var(--accent);font-style:normal">View page ↗</em> for the dedicated landing.</p>
+
+    <!-- BUCKET 1: Active products & services -->
+    <div class="bucket">
+      <div class="bucket-head">
+        <span class="bucket-icon">⚙️</span>
+        <span class="bucket-title">Active products &amp; services</span>
+        <span class="bucket-count">12 projects</span>
+      </div>
+      <div class="proj-grid">
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">Viki Properties</h3>
+            <div class="proj-links"><a class="proj-link" href="https://viki-properties.vercel.app" target="_blank" rel="noopener">Try it live ↗</a><a class="proj-link" href="https://ember-brook-9wrf.here.now/" target="_blank" rel="noopener">View pitch ↗</a></div>
+          </div>
+          <p class="proj-desc">Multi-tenant real estate platform letting boutique agencies operate 24/7 with AI chat, agent portal, admin dashboard. Next.js + Supabase + Gemini 2.5 Flash. Live MVP for a paying client.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Deployed</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:75%"></div></div>
+            <span class="proj-pct">75%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">Mediterranean Mill Partners</h3>
+            <a class="proj-link" href="https://sandy-zenith-57rn.here.now/" target="_blank" rel="noopener">View page ↗</a>
+          </div>
+          <p class="proj-desc">Independent olive oil mill consulting — sourcing CE-compliant Chinese mill equipment for EU growers. Active negotiations with Henan-based manufacturers. Live consulting service.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Live service</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:80%"></div></div>
+            <span class="proj-pct">80%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">ButterViz</h3>
+            <a class="proj-link" href="https://butter-viz3.vercel.app/" target="_blank" rel="noopener">Try it live ↗</a>
+          </div>
+          <p class="proj-desc">Audio visualizer transforming music into MilkDrop-style visual art. 300+ presets, real-time bass/BPM analysis, dynamic palettes. React 19 + Butterchurn + Web Audio. Web + Android APK via Capacitor.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">v1 Released</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:80%"></div></div>
+            <span class="proj-pct">80%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">FooLab</h3>
+            <a class="proj-link" href="https://foo-lab.netlify.app" target="_blank" rel="noopener">Try it live ↗</a>
+          </div>
+          <p class="proj-desc">AI-powered food &amp; drink label scanner — point your phone at supermarket labels, get NutriScore + red-flag alerts (palm oil, additives, allergens). Privacy-first PWA, Gemini vision, IndexedDB archive. Vercel + Netlify ready.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Beta</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:70%"></div></div>
+            <span class="proj-pct">70%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">AudiobookMaker</h3>
+            <a class="proj-link" href="https://audiobookmaker.netlify.app" target="_blank" rel="noopener">Live app ↗</a>
+          </div>
+          <p class="proj-desc">Document → professional audiobook PWA. Drop a PDF or TXT, get a multi-chapter audiobook with 6 premium voices. Gemini for chapter detection + OpenAI TTS-1-HD. Single-file PWA, installable, ~$2-4 per book.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Deployed</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:75%"></div></div>
+            <span class="proj-pct">75%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">Sacred Verse</h3>
+            <a class="proj-link" href="https://sacred-verse.vercel.app" target="_blank" rel="noopener">Try it live ↗</a>
+          </div>
+          <p class="proj-desc">Multi-faith scripture interpreter PWA — Quran, Bible, and other texts with AI-assisted commentary in multiple languages. Deployed and used.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Deployed</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:85%"></div></div>
+            <span class="proj-pct">85%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">SketchpadAI</h3>
+            <div class="proj-links"><a class="proj-link" href="https://sketchpad-ai.netlify.app" target="_blank" rel="noopener">Try it live ↗</a><a class="proj-link" href="https://github.com/juanitto-maker/SketchpadAI" target="_blank" rel="noopener">GitHub ↗</a></div>
+          </div>
+          <p class="proj-desc">AI-native infinite-canvas whiteboard built on Excalidraw. Gemini sidebar reads your diagram and modifies it from natural language: "connect the box to a database with a labeled arrow" — it just works. URL-shareable, Vercel + Netlify ready.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Building</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:40%"></div></div>
+            <span class="proj-pct">40%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">Audio2Score</h3>
+            <a class="proj-link" href="https://audio2score.netlify.app" target="_blank" rel="noopener">Try it live ↗</a>
+          </div>
+          <p class="proj-desc">Audio → sheet music PWA via Gemini + Demucs stem separation on Replicate. Drop in a recording, get a transcribed score back.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Prototype</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:50%"></div></div>
+            <span class="proj-pct">50%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">Love Me Again</h3>
+            <a class="proj-link" href="https://love-me-again.vercel.app" target="_blank" rel="noopener">Try it live ↗</a>
+          </div>
+          <p class="proj-desc">Secondhand shop PWA with AI-assisted pricing and multilingual support. Built for a real shop with volunteer onboarding flows. Backend live.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Building</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:55%"></div></div>
+            <span class="proj-pct">55%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">FlashMemo</h3>
+            <a class="proj-link" href="https://flash-note.netlify.app" target="_blank" rel="noopener">Try it live ↗</a>
+          </div>
+          <p class="proj-desc">Spaced-repetition learning PWA — flash cards with AI-generated content, deployed and active.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Deployed</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:80%"></div></div>
+            <span class="proj-pct">80%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">AIcodeArh</h3>
+            <div class="proj-links"><a class="proj-link" href="https://aicodearh.netlify.app" target="_blank" rel="noopener">Try it live ↗</a><a class="proj-link" href="https://github.com/juanitto-maker/AIcodeArh" target="_blank" rel="noopener">GitHub ↗</a></div>
+          </div>
+          <p class="proj-desc">Mobile-first AI code platform — generate complete project structures with Claude/Gemini/Groq, edit in CodeMirror with 15+ language syntax, manage context across files, download as ZIP. Vanilla JS for max performance, IndexedDB persistence. Built for Android-first dev.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Deployed</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:70%"></div></div>
+            <span class="proj-pct">70%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">AIsmartStorage</h3>
+            <div class="proj-links"><a class="proj-link" href="https://aismartstorage.netlify.app" target="_blank" rel="noopener">Try it live ↗</a><a class="proj-link" href="https://github.com/juanitto-maker/AIsmartStorage" target="_blank" rel="noopener">GitHub ↗</a></div>
+          </div>
+          <p class="proj-desc">Privacy-first file organizer — two-tier on-device AI (SmolLM2 base + optional Gemma 4 E4B). Designed for Android. No cloud dependency.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Building</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:45%"></div></div>
+            <span class="proj-pct">45%</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- BUCKET 2: Innovation R&D -->
+    <div class="bucket">
+      <div class="bucket-head">
+        <span class="bucket-icon">🔬</span>
+        <span class="bucket-title">Innovation &amp; R&amp;D</span>
+        <span class="bucket-count">9 projects</span>
+      </div>
+      <div class="proj-grid">
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">VacOil</h3>
+            <a class="proj-link" href="https://silken-jungle-kpeq.here.now/" target="_blank" rel="noopener">View page ↗</a>
+          </div>
+          <p class="proj-desc">Modular vacuum tray drying system for ultra-high-phenolic olive oil. Mobile <em>frantoio</em> variant for small Alpujarras growers. Design + active OEM outreach in China. Pilot programme open.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Design + Outreach</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:35%"></div></div>
+            <span class="proj-pct">35%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">DeepData</h3>
+            <a class="proj-link" href="https://silver-summit-nzq3.here.now/" target="_blank" rel="noopener">View page ↗</a>
+          </div>
+          <p class="proj-desc">Submersible datacenter using passive lake cooling — modular, retrievable, near-zero water consumption. Targeting DCD &amp; Datacloud Awards 2026/27. Whitepaper published.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Defensive pub</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:25%"></div></div>
+            <span class="proj-pct">25%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">DeepCore Power</h3>
+            <a class="proj-link" href="https://awake-drift-nnxe.here.now/" target="_blank" rel="noopener">View page ↗</a>
+          </div>
+          <p class="proj-desc">Modular underwater nuclear power plant concept — small-scale, sealed, lake-deployed. Defensive publication on Zenodo + here.now.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Defensive pub</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:20%"></div></div>
+            <span class="proj-pct">20%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">AgroRail</h3>
+            <a class="proj-link" href="https://lusty-igloo-mf5b.here.now/" target="_blank" rel="noopener">View page ↗</a>
+          </div>
+          <p class="proj-desc">Archimedean spiral electric rail farm — robotic agriculture on a fixed-track logarithmic spiral. Defensive publication.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Defensive pub</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:20%"></div></div>
+            <span class="proj-pct">20%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">ALLVOLT</h3>
+            <a class="proj-link" href="https://mellow-opera-ef6z.here.now/" target="_blank" rel="noopener">View page ↗</a>
+          </div>
+          <p class="proj-desc">Universal LiFePO4 backpack battery powering 18V/12V cordless tools — 6S2P EVE LF40 cells, swap-tool architecture for tradespeople and off-grid users.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Branded concept</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:25%"></div></div>
+            <span class="proj-pct">25%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">NeuroSeed</h3>
+            <a class="proj-link" href="https://rosy-mango-ggzz.here.now/" target="_blank" rel="noopener">View page ↗</a>
+          </div>
+          <p class="proj-desc">Brain health concept by Symbionic Corp — preventive cognitive maintenance framework.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Concept</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:20%"></div></div>
+            <span class="proj-pct">20%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">3D FEMS</h3>
+            <a class="proj-link" href="https://pearly-bloom-6876.here.now/" target="_blank" rel="noopener">View page ↗</a>
+          </div>
+          <p class="proj-desc">Fractal Executive Management System — investor-ready portfolio management framework for multi-project solo operators and small studios.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Documented</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:40%"></div></div>
+            <span class="proj-pct">40%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">Tessera Open Protocol</h3>
+            <a class="proj-link" href="https://silent-island-f42b.here.now/" target="_blank" rel="noopener">View page ↗</a>
+          </div>
+          <p class="proj-desc">Federated AI broker protocol — portable identity, private coordination, enforceable agreements for humans and AI agents without territory. Whitepaper + Rust skeleton.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Spec + repo</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:30%"></div></div>
+            <span class="proj-pct">30%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">Tripolarity</h3>
+            <a class="proj-link" href="https://fancy-kernel-e7fn.here.now/" target="_blank" rel="noopener">View page ↗</a>
+          </div>
+          <p class="proj-desc">Three-forces philosophical framework — a lens for understanding decisions, identity, and systems through balance rather than duality. Living document.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Ongoing</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:50%"></div></div>
+            <span class="proj-pct">50%</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- BUCKET 2.5: Architecture & construction -->
+    <div class="bucket">
+      <div class="bucket-head">
+        <span class="bucket-icon">🏛️</span>
+        <span class="bucket-title">Architecture &amp; construction</span>
+        <span class="bucket-count">3 projects</span>
+      </div>
+      <div class="proj-grid">
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">Al-Kahf Zawiya Alpujarra</h3>
+            <a class="proj-link" href="https://indigo-quartz-8d86.here.now/" target="_blank" rel="noopener">View page ↗</a>
+          </div>
+          <p class="proj-desc">Spiritual retreat &amp; mosque concept rooted in the Alpujarras — the human-scale architectural anchor that grounds the whole studio. Bioconstruction-friendly, contextual, long-arc project.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Long-arc concept</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:30%"></div></div>
+            <span class="proj-pct">30%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">The Alkaline Veil</h3>
+            <a class="proj-link" href="https://subtle-mesa-aj6v.here.now/" target="_blank" rel="noopener">View protocol ↗</a>
+          </div>
+          <p class="proj-desc">Dummy-proof three-strike bio-remediation protocol for contaminated wood-and-earth spaces — kills mold, neutralizes decomposition residue, seals every surface against future contamination. Per-m² and per-bucket dosing. Multilingual: EN · ES · IT · DE.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Published protocol</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:75%"></div></div>
+            <span class="proj-pct">75%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">PearlShell</h3>
+            <a class="proj-link" href="https://fancy-atlas-w49b.here.now/" target="_blank" rel="noopener">View page ↗</a>
+          </div>
+          <p class="proj-desc">Modular perlite-insulated rapid shelter system — DIY-friendly, low-tool, scalable. Material research and supplier sourcing in progress.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Design</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:30%"></div></div>
+            <span class="proj-pct">30%</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- BUCKET 3: Open-source & infrastructure -->
+    <div class="bucket">
+      <div class="bucket-head">
+        <span class="bucket-icon">🛠️</span>
+        <span class="bucket-title">Open-source &amp; infrastructure</span>
+        <span class="bucket-count">6 projects</span>
+      </div>
+      <div class="proj-grid">
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">Clide</h3>
+            <a class="proj-link" href="https://zippy-huckle-zwq5.here.now/" target="_blank" rel="noopener">View page ↗</a>
+          </div>
+          <p class="proj-desc">Rust-based Telegram + Matrix AI assistant bot with cascade architecture — local model first, escalates to cloud only when needed. VPS-deployed.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">VPS-deployed</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:60%"></div></div>
+            <span class="proj-pct">60%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">GuardOS</h3>
+            <a class="proj-link" href="https://flint-denim-q8ae.here.now/" target="_blank" rel="noopener">View page ↗</a>
+          </div>
+          <p class="proj-desc">AI-armored personal OS for air-gapped privacy work on old hardware. CPU-only inference, Gemma + Qwen via Ollama. Public, 7★.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Public</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:70%"></div></div>
+            <span class="proj-pct">70%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">virtOS</h3>
+            <a class="proj-link" href="https://github.com/juanitto-maker/virtOS" target="_blank" rel="noopener">GitHub ↗</a>
+          </div>
+          <p class="proj-desc">Privacy-first virtualized OS environment — companion concept to GuardOS for users who want air-gapped AI work without dedicated hardware.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Public</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:35%"></div></div>
+            <span class="proj-pct">35%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">Hardbot</h3>
+            <a class="proj-link" href="https://github.com/juanitto-maker/Hardbot" target="_blank" rel="noopener">GitHub ↗</a>
+          </div>
+          <p class="proj-desc">Multi-layer security-hardening blueprint for AI agent deployments. 4-container Docker architecture, Tailscale-only access, Signal-DM-only ownership, sandboxed tool execution, prompt-injection defense, encrypted credentials, dynamic web allowlist with owner approval. Implementation-ready spec.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Blueprint</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:20%"></div></div>
+            <span class="proj-pct">20%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">here.now ecosystem</h3>
+            <a class="proj-link" href="https://amber-kitten-4khe.here.now/" target="_blank" rel="noopener">Live hub ↗</a>
+          </div>
+          <p class="proj-desc">Self-publishing hub with 26+ live landing pages, weekly auto-backups via GitHub Actions. The connective tissue for everything else here.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Self-maintaining</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:90%"></div></div>
+            <span class="proj-pct">90%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">AIWB — AI Workbench</h3>
+            <a class="proj-link" href="https://github.com/juanitto-maker/AIworkbench" target="_blank" rel="noopener">GitHub ↗</a>
+          </div>
+          <p class="proj-desc">CLI toolkit orchestrating multiple AI providers (Gemini, Claude, OpenAI, Groq, xAI, Ollama) with a Generator-Verifier loop. Termux installer, GitHub integration like Claude Code, cost tracking. Open-source GPL-3.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Active OSS</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:65%"></div></div>
+            <span class="proj-pct">65%</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- BUCKET 4: Apps, prototypes & experiments -->
+    <div class="bucket">
+      <div class="bucket-head">
+        <span class="bucket-icon">🧪</span>
+        <span class="bucket-title">Apps, prototypes &amp; experiments</span>
+        <span class="bucket-count">5 projects</span>
+      </div>
+      <div class="proj-grid">
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">DramaGenieAI</h3>
+          </div>
+          <p class="proj-desc">Personalized AI-generated micro-drama platform — Netflix meets AI. 3 questions → custom 60-episode series. Full investor-ready business plan, prototype phase. ReelShort/DramaBox killer with personalization edge.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Investor-ready concept</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:30%"></div></div>
+            <span class="proj-pct">30%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">AIcompares</h3>
+            <a class="proj-link" href="https://a-icompares.vercel.app" target="_blank" rel="noopener">Try it live ↗</a>
+          </div>
+          <p class="proj-desc">Side-by-side AI model comparison tool — query multiple LLMs simultaneously and compare outputs. Useful for prompt engineering and provider evaluation.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Prototype</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:50%"></div></div>
+            <span class="proj-pct">50%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">DirectTranslate</h3>
+            <a class="proj-link" href="https://direct-translate.netlify.app" target="_blank" rel="noopener">Try it live ↗</a>
+          </div>
+          <p class="proj-desc">Lightweight AI translator PWA — instant translation across 50+ languages with context preservation.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Functional</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:55%"></div></div>
+            <span class="proj-pct">55%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">SpellChecker</h3>
+            <a class="proj-link" href="https://aispellchecker.vercel.app" target="_blank" rel="noopener">Try it live ↗</a>
+          </div>
+          <p class="proj-desc">AI-powered grammar &amp; spell-check utility for multilingual writing. Used internally to clean exported chat content.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Functional</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:60%"></div></div>
+            <span class="proj-pct">60%</span>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-name">Mandalascope</h3>
+            <a class="proj-link" href="https://github.com/juanitto-maker/Mandalascope1" target="_blank" rel="noopener">GitHub ↗</a>
+          </div>
+          <p class="proj-desc">Generative mandala visualization tool — AI-driven sacred geometry patterns for meditation and design inspiration.</p>
+          <div class="proj-foot">
+            <span class="proj-stage">Concept</span>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:20%"></div></div>
+            <span class="proj-pct">20%</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WAYS TO PARTNER -->
+<section class="tiers">
+  <div class="container">
+    <div class="eyebrow">Ways to partner</div>
+    <h2>Capital is one path. There are six others.</h2>
+    <p style="color:var(--text-soft);margin-bottom:2.5rem;font-size:.95rem;max-width:600px">Pick a project, pick a lane. Every partnership is shaped to fit — equity, revenue share, advisory shares, finder's fee, JV split, or just a handshake.</p>
+
+    <div class="tier-grid">
+
+      <div class="tier">
+        <span class="tier-icon">💰</span>
+        <div class="tier-name">Capital<span>angels · cheques · grants</span></div>
+        <p class="tier-body">From <strong>€2k seed cheques</strong> for a single project to larger commitments for a portfolio slice. Project-specific funding works as well as studio-level. Equity, SAFE, or revenue-share — your shape.</p>
+      </div>
+
+      <div class="tier">
+        <span class="tier-icon">🤝</span>
+        <div class="tier-name">Connectors<span>intros · referrals · finders</span></div>
+        <p class="tier-body">Open doors to investors, clients, or strategic partners. <strong>Finder's fees on closed deals</strong>, retainers for ongoing introductions. Especially valuable: olive industry, datacenter, real estate, manufacturing.</p>
+      </div>
+
+      <div class="tier">
+        <span class="tier-icon">🛠️</span>
+        <div class="tier-name">Builders<span>devs · designers · writers</span></div>
+        <p class="tier-body">Pick a project, ship something. Frontend, backend, design, content, translation, QA — paid hourly, project-rate, or revenue-share. <strong>Bring your craft to a real product</strong>, not a roadmap deck.</p>
+      </div>
+
+      <div class="tier">
+        <span class="tier-icon">📋</span>
+        <div class="tier-name">Operators<span>legal · ops · cert · IP</span></div>
+        <p class="tier-body">EU entity setup, accounting, CE certification, patent prosecution, contracts. <strong>The boring layer that unlocks everything else</strong>. Retainer or equity, depending on scope.</p>
+      </div>
+
+      <div class="tier">
+        <span class="tier-icon">🧠</span>
+        <div class="tier-name">Domain experts<span>industry insiders</span></div>
+        <p class="tier-body">Deep knowledge in olive oil, datacenters, real estate, manufacturing, agriculture, energy, or building science. <strong>Advisory shares, board-style guidance</strong>, or paid consulting.</p>
+      </div>
+
+      <div class="tier">
+        <span class="tier-icon">🌍</span>
+        <div class="tier-name">Ground partners<span>land · sites · prototypes</span></div>
+        <p class="tier-body">Land for AgroRail pilots, lake access for DeepData, olive groves for VacOil, host sites for PearlShell shelters. <strong>Real-world testbeds</strong> in exchange for equity, royalty, or simply a working prototype on your land.</p>
+      </div>
+
+      <div class="tier" style="grid-column:1/-1">
+        <span class="tier-icon">🚀</span>
+        <div class="tier-name">Joint venturers<span>take a project · run it · split it</span></div>
+        <p class="tier-body">Take any single project — VacOil, DeepData, ButterViz, DramaGenieAI, anything — and run it as your own venture under a <strong>revenue or equity split</strong>. The studio holds the IP scaffolding; you bring the operator energy. White-label, co-brand, or full spinout — open to discussion.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="eyebrow">Reach out</div>
+      <h2>Tell me which project speaks to you, and what you bring.</h2>
+      <p class="cta-sub">One paragraph is enough. Replies usually within 48 hours.</p>
+
+      <a class="cta-email" href="mailto:digitalAIventures.LLC@gmail.com?subject=Partner%20Program%20%E2%80%94%20%5Byour%20project%20interest%5D">
+        <span class="cta-email-icon">✉️</span>
+        digitalAIventures.LLC@gmail.com
+      </a>
+
+      <p class="cta-note">No pitch decks required. No NDAs to start. Just a real message.</p>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>digitalAIventures LLC · Wyoming, USA · operating from Andalucía</p>
+  <p class="legal">© 2026 · This page is a living document. Last updated: <span id="lastUpdated"></span></p>
+  <p class="legal" style="margin-top:1rem"><a href="https://amber-kitten-4khe.here.now/" target="_blank" rel="noopener">Browse all published sites →</a> · <a href="https://github.com/juanitto-maker" target="_blank" rel="noopener">Code &amp; repos →</a></p>
+</footer>
+
+<script>
+function toggleTheme(){
+  const html=document.documentElement;
+  const current=html.getAttribute('data-theme')||'dark';
+  const next=current==='dark'?'light':'dark';
+  html.setAttribute('data-theme',next);
+  document.getElementById('themeIcon').textContent=next==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',next)}catch(e){}
+}
+(function(){
+  function apply(t){
+    document.documentElement.setAttribute('data-theme',t);
+    document.addEventListener('DOMContentLoaded',()=>{
+      const icon=document.getElementById('themeIcon');
+      if(icon)icon.textContent=t==='dark'?'☀️':'🌙';
+    });
+  }
+  try{
+    const saved=localStorage.getItem('theme');
+    if(saved){apply(saved)}
+    else{const h=new Date().getHours();apply(h>=7&&h<19?'light':'dark')}
+  }catch(e){apply('dark')}
+})();
+
+// Last updated
+document.addEventListener('DOMContentLoaded',()=>{
+  const el=document.getElementById('lastUpdated');
+  if(el){
+    const d=new Date();
+    const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+    el.textContent=months[d.getMonth()]+' '+d.getFullYear();
+  }
+});
+</script>
+
+</body>
+</html>

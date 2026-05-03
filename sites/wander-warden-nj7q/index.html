@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cal Viva Protocol — The Mummy-Wrap Cottage Reset</title>
+<meta name="description" content="A complete bio-remediation protocol for sanitizing wood-and-earth dwellings after biological decomposition. Triple-strike chemistry: acid → alkali → seal.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root, [data-theme="dark"] {
+  --bg: #0f0f14;
+  --bg-card: #1a1a22;
+  --bg-hero: linear-gradient(135deg, #11182c 0%, #0f0f14 60%, #0a0a0f 100%);
+  --text: #d8dae3;
+  --text-muted: #7a7e8a;
+  --text-heading: #fff;
+  --border: #2a2d3a;
+  --accent: #6b9eff;
+  --accent-deep: #4a7fdb;
+  --accent-bg: rgba(107,158,255,.12);
+  --accent-bg-strong: rgba(107,158,255,.22);
+  --link: #6b9eff;
+  --link-hover: #93b7ff;
+  --warn: #ffb86b;
+  --warn-bg: rgba(255,184,107,.12);
+  --danger: #ff7a7a;
+  --danger-bg: rgba(255,122,122,.12);
+  --good: #5fd0a8;
+  --good-bg: rgba(95,208,168,.12);
+  --code-bg: #15151c;
+}
+[data-theme="light"] {
+  --bg: #faf7f1;
+  --bg-card: #fff;
+  --bg-hero: linear-gradient(135deg, #e8eef9 0%, #f5f0e6 60%, #faf7f1 100%);
+  --text: #2e2f36;
+  --text-muted: #6c6e76;
+  --text-heading: #15161c;
+  --border: #e6e0d4;
+  --accent: #1e3a8a;
+  --accent-deep: #15296b;
+  --accent-bg: rgba(30,58,138,.08);
+  --accent-bg-strong: rgba(30,58,138,.16);
+  --link: #1e3a8a;
+  --link-hover: #15296b;
+  --warn: #b45309;
+  --warn-bg: rgba(180,83,9,.10);
+  --danger: #b91c1c;
+  --danger-bg: rgba(185,28,28,.10);
+  --good: #15803d;
+  --good-bg: rgba(21,128,61,.10);
+  --code-bg: #f0ece2;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);
+  line-height:1.65;font-size:15px;-webkit-font-smoothing:antialiased}
+
+[data-lang]{display:none!important}
+[data-lang].v{display:block!important}
+span[data-lang].v{display:inline!important}
+strong[data-lang].v,em[data-lang].v{display:inline!important}
+a[data-lang].v{display:inline-block!important}
+li[data-lang].v{display:list-item!important}
+table[data-lang].v{display:table!important}
+
+/* Lang bar */
+.lang-bar{position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:center;gap:.4rem;padding:.45rem;
+  background:rgba(15,15,20,.85);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border)}
+[data-theme="light"] .lang-bar{background:rgba(250,247,241,.9)}
+.lang-btn{background:none;border:1px solid var(--border);color:var(--text-muted);
+  font:600 .68rem/1 'Inter',sans-serif;padding:.32rem .65rem;
+  border-radius:999px;cursor:pointer;letter-spacing:.05em;
+  text-transform:uppercase;transition:all .2s}
+.lang-btn.active,.lang-btn:hover{background:var(--accent);
+  color:#fff;border-color:var(--accent)}
+
+/* Theme toggle (below lang bar) */
+.theme-toggle{position:fixed;top:3rem;right:.75rem;z-index:99;
+  background:var(--bg-card);border:1px solid var(--border);
+  width:2.2rem;height:2.2rem;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.2);transition:all .2s}
+.theme-toggle:hover{transform:scale(1.1)}
+.theme-icon{font-size:1rem;line-height:1}
+
+/* Hero */
+.hero{background:var(--bg-hero);padding:5rem 1.5rem 3.5rem;text-align:center;
+  position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
+.hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,var(--accent-bg-strong),transparent 60%);
+  pointer-events:none}
+.badge{display:inline-block;font-size:.68rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent);background:var(--accent-bg);
+  border:1px solid var(--accent);padding:.3rem .85rem;border-radius:999px;
+  margin-bottom:1.2rem;position:relative;z-index:1}
+.hero h1{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;
+  color:var(--text-heading);line-height:1.1;margin-bottom:.5rem;
+  letter-spacing:-.01em;position:relative;z-index:1}
+.hero .sub{font-size:1.05rem;color:var(--text-muted);max-width:520px;
+  margin:0 auto;position:relative;z-index:1;font-style:italic}
+.hero .meta{margin-top:1.5rem;font-size:.8rem;color:var(--text-muted);
+  position:relative;z-index:1;letter-spacing:.05em}
+
+/* Sections */
+section{max-width:780px;margin:0 auto;padding:2.2rem 1.4rem 1rem}
+section h2{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:600;
+  color:var(--text-heading);margin-bottom:.4rem;letter-spacing:-.005em}
+section h2 .num{display:inline-block;font-family:'Inter',sans-serif;
+  font-size:.7rem;font-weight:700;color:var(--accent);background:var(--accent-bg);
+  padding:.2rem .55rem;border-radius:.4rem;margin-right:.55rem;
+  vertical-align:middle;letter-spacing:.08em;text-transform:uppercase}
+section h3{font-family:'Inter',sans-serif;font-size:1.1rem;font-weight:600;
+  color:var(--text-heading);margin:1.4rem 0 .5rem}
+section h4{font-size:.95rem;font-weight:600;color:var(--text-heading);
+  margin:1rem 0 .35rem;letter-spacing:.005em}
+section p{margin-bottom:.7rem;color:var(--text)}
+section p.lead{font-size:1.02rem;color:var(--text-muted);font-style:italic;
+  margin-bottom:1rem}
+section ul,section ol{padding-left:1.3rem;margin-bottom:.8rem}
+section li{margin-bottom:.35rem}
+section a{color:var(--link);text-decoration:none;font-weight:500}
+section a:hover{color:var(--link-hover);text-decoration:underline}
+strong{color:var(--text-heading);font-weight:600}
+
+hr.sep{border:none;border-top:1px solid var(--border);
+  max-width:160px;margin:1.4rem auto}
+
+/* Stats bar */
+.stats-bar{display:flex;border:1px solid var(--border);border-radius:.7rem;
+  overflow:hidden;background:var(--bg-card);margin:1.2rem 0}
+.stat-cell{flex:1;padding:.85rem .4rem;text-align:center;
+  border-right:1px solid var(--border)}
+.stat-cell:last-child{border-right:none}
+.st-val{font-size:1.25rem;font-weight:700;color:var(--accent);
+  line-height:1.1;margin-bottom:.15rem}
+.st-val span{font-size:.7rem;font-weight:500;color:var(--text-muted);
+  margin-left:.1rem}
+.st-desc{font-size:.7rem;color:var(--text-muted);text-transform:uppercase;
+  letter-spacing:.05em;line-height:1.3}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;margin:1rem 0;
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:.6rem;overflow:hidden;font-size:.86rem}
+th{text-align:left;padding:.65rem .7rem;background:var(--accent-bg);
+  color:var(--text-heading);font-size:.72rem;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  border-bottom:1px solid var(--border)}
+td{padding:.6rem .7rem;border-bottom:1px solid var(--border);
+  vertical-align:top}
+tr:last-child td{border-bottom:none}
+td strong{display:block;color:var(--text-heading)}
+.amt{font-variant-numeric:tabular-nums;color:var(--accent);font-weight:600;
+  white-space:nowrap}
+
+/* Callout boxes */
+.callout{padding:.85rem 1rem;border-radius:.6rem;margin:1rem 0;
+  border-left:3px solid;font-size:.9rem}
+.callout.warn{background:var(--warn-bg);border-color:var(--warn);
+  color:var(--text)}
+.callout.warn strong{color:var(--warn)}
+.callout.danger{background:var(--danger-bg);border-color:var(--danger)}
+.callout.danger strong{color:var(--danger)}
+.callout.good{background:var(--good-bg);border-color:var(--good)}
+.callout.good strong{color:var(--good)}
+.callout.info{background:var(--accent-bg);border-color:var(--accent)}
+.callout.info strong{color:var(--accent)}
+.callout p{margin-bottom:.3rem}
+.callout p:last-child{margin-bottom:0}
+.callout .icon{font-size:1.05rem;margin-right:.3rem}
+
+/* Phase block */
+.phase{background:var(--bg-card);border:1px solid var(--border);
+  border-radius:.8rem;padding:1.2rem 1.1rem;margin:1.1rem 0}
+.phase-tag{display:inline-block;font-size:.68rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--accent);
+  background:var(--accent-bg);padding:.22rem .6rem;border-radius:.4rem;
+  margin-bottom:.55rem}
+.phase h3{margin-top:0!important;font-size:1.2rem!important}
+
+/* Recipe steps */
+.steps{list-style:none!important;padding:0!important;counter-reset:step}
+.steps li{counter-increment:step;position:relative;padding-left:2.4rem;
+  margin-bottom:.85rem;min-height:1.7rem}
+.steps li::before{content:counter(step);position:absolute;left:0;top:0;
+  width:1.7rem;height:1.7rem;border-radius:50%;
+  background:var(--accent);color:#fff;font-weight:700;font-size:.78rem;
+  display:flex;align-items:center;justify-content:center}
+
+/* Checklist */
+.check{list-style:none!important;padding:0!important}
+.check li{padding:.4rem 0 .4rem 1.6rem;position:relative;
+  border-bottom:1px solid var(--border);font-size:.9rem}
+.check li:last-child{border-bottom:none}
+.check li::before{content:'☐';position:absolute;left:.2rem;top:.4rem;
+  color:var(--accent);font-size:1.05rem;line-height:1}
+
+/* Sourcing box */
+.source{background:var(--bg-card);border:1px solid var(--border);
+  border-radius:.6rem;padding:.85rem 1rem;margin-bottom:.7rem;font-size:.88rem}
+.source .src-name{font-weight:700;color:var(--text-heading);font-size:.92rem;
+  margin-bottom:.2rem}
+.source .src-es{display:inline-block;font-size:.78rem;color:var(--accent);
+  font-weight:600;margin-left:.3rem}
+.source .src-where{font-size:.8rem;color:var(--text-muted);margin-top:.25rem}
+
+/* Footer */
+footer{margin-top:2rem;padding:2rem 1.4rem 2.5rem;text-align:center;
+  border-top:1px solid var(--border);font-size:.78rem;color:var(--text-muted);
+  background:var(--bg-card)}
+footer .footer-contact{background:var(--accent);color:#fff;border:none;
+  padding:.55rem 1.2rem;border-radius:999px;font-weight:600;font-size:.82rem;
+  cursor:pointer;margin-bottom:.9rem;font-family:'Inter',sans-serif}
+footer .footer-contact:hover{background:var(--accent-deep)}
+footer p{margin-bottom:.2rem}
+
+/* Dialog */
+.dialog-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center}
+.dialog-overlay.open{display:flex}
+.dialog-box{background:var(--bg-card);color:var(--text);
+  border:1px solid var(--border);border-radius:1rem;padding:1.6rem;
+  max-width:300px;width:90%;text-align:center}
+.dialog-box h4{font-size:1.05rem;color:var(--text-heading);margin-bottom:1rem}
+.dialog-option{display:block;width:100%;padding:.6rem;margin-bottom:.55rem;
+  border-radius:.5rem;text-decoration:none;font-weight:600;font-size:.88rem;
+  text-align:center}
+.dialog-email{background:var(--accent);color:#fff!important}
+.dialog-telegram{background:#0088cc;color:#fff!important}
+.dialog-close{background:none;border:1px solid var(--border);
+  color:var(--text-muted);cursor:pointer;font-size:.8rem;
+  padding:.4rem 1.1rem;border-radius:.4rem;margin-top:.3rem;
+  font-family:'Inter',sans-serif}
+
+/* Schedule timeline */
+.timeline{position:relative;padding-left:1.4rem;margin:1rem 0}
+.timeline::before{content:'';position:absolute;left:.4rem;top:.4rem;bottom:.4rem;
+  width:2px;background:var(--border)}
+.tl-item{position:relative;padding-bottom:.9rem}
+.tl-item::before{content:'';position:absolute;left:-1.25rem;top:.35rem;
+  width:.7rem;height:.7rem;border-radius:50%;background:var(--accent);
+  border:2px solid var(--bg)}
+.tl-day{font-size:.7rem;font-weight:700;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.07em;margin-bottom:.15rem}
+.tl-act{font-size:.88rem;color:var(--text)}
+
+/* Pad top for fixed bars */
+body{padding-top:0}
+.hero{padding-top:5rem}
+@media (max-width:480px){
+  .hero h1{font-size:1.95rem}
+  section{padding:1.8rem 1.1rem 1rem}
+  section h2{font-size:1.35rem}
+  .stat-cell{padding:.7rem .25rem}
+  .st-val{font-size:1.05rem}
+}
+</style>
+</head>
+<body>
+
+<!-- Lang bar -->
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" onclick="setLang('es')">ES</button>
+</div>
+
+<!-- Theme toggle -->
+<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <span class="theme-icon" id="themeIcon">☀️</span>
+</button>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="badge" data-lang="en">Bio-Remediation Protocol</div>
+  <div class="badge" data-lang="es">Protocolo de Bio-Remediación</div>
+  <h1>Cal Viva Protocol</h1>
+  <p class="sub" data-lang="en">The Mummy-Wrap Cottage Reset — a triple-strike system for sanitizing wood-and-earth dwellings after biological decomposition.</p>
+  <p class="sub" data-lang="es">El Reset Momificador para Cabañas — un sistema de triple golpe para sanear viviendas de madera y tierra tras descomposición biológica.</p>
+  <div class="meta" data-lang="en">v1.0 · Acid → Alkali → Seal · Andalucía edition</div>
+  <div class="meta" data-lang="es">v1.0 · Ácido → Álcali → Sellado · Edición Andalucía</div>
+</header>
+
+<!-- Stats bar -->
+<section style="padding-top:1.5rem">
+<div class="stats-bar">
+  <div class="stat-cell">
+    <div class="st-val">pH 12+</div>
+    <div class="st-desc" data-lang="en">Surface alkalinity</div>
+    <div class="st-desc" data-lang="es">Alcalinidad final</div>
+  </div>
+  <div class="stat-cell">
+    <div class="st-val">3<span data-lang="en"> phases</span><span data-lang="es"> fases</span></div>
+    <div class="st-desc" data-lang="en">Acid · Alkali · Seal</div>
+    <div class="st-desc" data-lang="es">Ácido · Álcali · Sellado</div>
+  </div>
+  <div class="stat-cell">
+    <div class="st-val">€30–60</div>
+    <div class="st-desc" data-lang="en">Total materials</div>
+    <div class="st-desc" data-lang="es">Materiales totales</div>
+  </div>
+  <div class="stat-cell">
+    <div class="st-val">5–7<span data-lang="en"> days</span><span data-lang="es"> días</span></div>
+    <div class="st-desc" data-lang="en">Full cycle</div>
+    <div class="st-desc" data-lang="es">Ciclo completo</div>
+  </div>
+</div>
+</section>
+
+<!-- Problem -->
+<section>
+  <h2><span class="num" data-lang="en">Why</span><span class="num" data-lang="es">Por qué</span><span data-lang="en">The Decomposition Problem</span><span data-lang="es">El Problema de la Descomposición</span></h2>
+  <p data-lang="en">A 3-week biological decomposition inside a wood-and-earth structure is not a "smell problem." It is a <strong>colonisation event</strong>. Lipid and protein residues soak into porous substrates (rammed earth, plywood end-grain, untreated beams) and become a long-term feeding ground for putrefactive bacteria, anaerobic moulds, and wood-degrading fungi.</p>
+  <p data-lang="en">Painting over it traps the colony. Bleaching it kills the surface only. The Cal Viva Protocol changes the <strong>pH of every porous surface so high (12+) that no microorganism can metabolise</strong>, while sealing the substrate against future humidity reactivation.</p>
+  <p data-lang="es">Una descomposición biológica de 3 semanas dentro de una estructura de madera y tierra no es un "problema de olor". Es un <strong>evento de colonización</strong>. Residuos de lípidos y proteínas se filtran en sustratos porosos (tierra apisonada, contrachapado, vigas sin tratar) y se convierten en alimento a largo plazo para bacterias putrefactivas, mohos anaerobios y hongos lignívoros.</p>
+  <p data-lang="es">Pintar encima atrapa la colonia. La lejía solo mata la superficie. El Cal Viva Protocol cambia el <strong>pH de cada superficie porosa tan alto (12+) que ningún microorganismo puede metabolizar</strong>, sellando además el sustrato contra futura reactivación por humedad.</p>
+</section>
+
+<hr class="sep">
+
+<!-- Strategy -->
+<section>
+  <h2><span class="num">01</span><span data-lang="en">The Triple Strike Strategy</span><span data-lang="es">La Estrategia del Triple Golpe</span></h2>
+  <p class="lead" data-lang="en">Three chemical fronts, applied in order, that no microbe can survive together.</p>
+  <p class="lead" data-lang="es">Tres frentes químicos, aplicados en orden, que ningún microbio puede sobrevivir juntos.</p>
+
+  <div class="phase">
+    <div class="phase-tag" data-lang="en">Strike 1 · Acid</div>
+    <div class="phase-tag" data-lang="es">Golpe 1 · Ácido</div>
+    <h3 data-lang="en">Vinegar — penetrates and kills</h3>
+    <h3 data-lang="es">Vinagre — penetra y elimina</h3>
+    <p data-lang="en">Acetic acid soaks deeper into wood fibres than any alkali. It denatures protein residues and kills 80%+ of mould and bacterial species before the lime arrives.</p>
+    <p data-lang="es">El ácido acético penetra más profundo en las fibras de madera que cualquier álcali. Desnaturaliza residuos proteicos y elimina más del 80% de hongos y bacterias antes de que llegue la cal.</p>
+  </div>
+
+  <div class="phase">
+    <div class="phase-tag" data-lang="en">Strike 2 · Alkali</div>
+    <div class="phase-tag" data-lang="es">Golpe 2 · Álcali</div>
+    <h3 data-lang="en">Hydrated lime + copper sulfate — sterilises</h3>
+    <h3 data-lang="es">Cal hidratada + sulfato de cobre — esteriliza</h3>
+    <p data-lang="en">Lime raises surface pH to 12.4 — caustic to all known microbial life. Copper sulfate stops re-colonisation by fungi. Together they create a permanent biocidal layer.</p>
+    <p data-lang="es">La cal eleva el pH superficial a 12.4 — cáustico para toda vida microbiana conocida. El sulfato de cobre impide la recolonización fúngica. Juntos crean una capa biocida permanente.</p>
+  </div>
+
+  <div class="phase">
+    <div class="phase-tag" data-lang="en">Strike 3 · Seal</div>
+    <div class="phase-tag" data-lang="es">Golpe 3 · Sellado</div>
+    <h3 data-lang="en">PVA glue (Aracet) + salt — locks it down</h3>
+    <h3 data-lang="es">Cola PVA (Aracet) + sal — lo fija</h3>
+    <p data-lang="en">Aracet binds the lime to porous wood as a thin "stone-plastic" sheet, eliminating the rub-off problem of traditional whitewash. Salt hardens and adds osmotic stress to surviving microbes.</p>
+    <p data-lang="es">El Aracet liga la cal a la madera porosa como una fina lámina de "piedra-plástico", eliminando el problema del polvillo del encalado tradicional. La sal endurece y añade estrés osmótico a microbios supervivientes.</p>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- Phase 0 -->
+<section>
+  <h2><span class="num">00</span><span data-lang="en">Phase 0 — Excavate & Pre-Clean</span><span data-lang="es">Fase 0 — Excavar y Pre-Limpiar</span></h2>
+  <p class="lead" data-lang="en">Critical and most-skipped step. Without this, you seal contamination in.</p>
+  <p class="lead" data-lang="es">Paso crítico y el más omitido. Sin esto, sellas la contaminación dentro.</p>
+
+  <h3 data-lang="en">0a · Remove contaminated earth</h3>
+  <h3 data-lang="es">0a · Retirar la tierra contaminada</h3>
+  <p data-lang="en">At ground zero (the spot directly under the body), <strong>scrape and remove the top 2–5 cm of rammed earth</strong>. Decomposition fluids penetrate deep — chemistry alone cannot reach them. Bag the removed earth in two heavy plastic bags and dispose <strong>far from the dwelling, water sources, and food crops</strong> (deep burial 50+ m away, or municipal waste).</p>
+  <p data-lang="es">En el punto cero (el lugar directamente bajo el cuerpo), <strong>raspa y retira los 2–5 cm superiores de tierra apisonada</strong>. Los fluidos de descomposición penetran profundo — la química sola no puede alcanzarlos. Embolsa la tierra retirada en doble bolsa de plástico gruesa y deséchala <strong>lejos de la vivienda, fuentes de agua y cultivos</strong> (entierro profundo a 50+ m, o residuos municipales).</p>
+
+  <h3 data-lang="en">0b · Enzymatic pre-clean</h3>
+  <h3 data-lang="es">0b · Pre-limpieza enzimática</h3>
+  <p data-lang="en">Lime is a strong base, but it does <strong>not digest fats and proteins</strong>. Apply a bio-enzyme cleaner to break down the biological residue first. Spray generously, let it work for 2–4 hours, then rinse with water.</p>
+  <p data-lang="es">La cal es una base fuerte, pero <strong>no digiere grasas ni proteínas</strong>. Aplica un limpiador bio-enzimático para descomponer el residuo biológico primero. Pulveriza generosamente, deja actuar 2–4 horas y aclara con agua.</p>
+
+  <div class="callout info">
+    <p data-lang="en"><strong>🇪🇸 Spain sourcing:</strong> Look for <em>Biolimp</em>, <em>Probac Hogar</em>, <em>Bioenzim</em>, or any "limpiador enzimático" at a droguería or Mercadona. As DIY backup: a strong solution of biological laundry detergent (Ariel Bio, etc.) works on protein/fat residues.</p>
+    <p data-lang="es"><strong>🇪🇸 Sourcing:</strong> Busca <em>Biolimp</em>, <em>Probac Hogar</em>, <em>Bioenzim</em>, o cualquier "limpiador enzimático" en droguería o Mercadona. Como alternativa casera: una solución fuerte de detergente bio para ropa (Ariel Bio, etc.) funciona sobre residuos proteicos.</p>
+  </div>
+
+  <div class="callout warn">
+    <p data-lang="en"><span class="icon">⚠️</span><strong>PPE before you start:</strong> FFP3/N95 mask (decomposing material aerosolises spores and bacteria when disturbed), nitrile gloves under heavy work gloves, full sleeves, eye protection. This is non-negotiable for Phase 0.</p>
+    <p data-lang="es"><span class="icon">⚠️</span><strong>EPI antes de empezar:</strong> mascarilla FFP3/N95 (el material en descomposición aerosoliza esporas y bacterias al manipularlo), guantes de nitrilo bajo guantes de trabajo, mangas largas, protección ocular. No negociable para la Fase 0.</p>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- Phase 1 -->
+<section>
+  <h2><span class="num">01</span><span data-lang="en">Phase 1 — The Vinegar Strike</span><span data-lang="es">Fase 1 — El Golpe del Vinagre</span></h2>
+  <p class="lead" data-lang="en">Acid shock: kills 80%+ of mould species before the alkali arrives.</p>
+  <p class="lead" data-lang="es">Choque ácido: elimina más del 80% de hongos antes de que llegue el álcali.</p>
+
+  <table data-lang="en">
+    <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Vinegar type</strong></td><td>Cheapest white vinegar, 5–8% acidity</td></tr>
+      <tr><td><strong>Dilution</strong></td><td>None — apply at full strength</td></tr>
+      <tr><td><strong>Coverage</strong></td><td>Every cm² of wood, plywood, beams</td></tr>
+      <tr><td><strong>Tool</strong></td><td>Plastic spray bottle (no metal)</td></tr>
+      <tr><td><strong>Wait time</strong></td><td>12–24 h until fully dry</td></tr>
+    </tbody>
+  </table>
+
+  <table data-lang="es">
+    <thead><tr><th>Parámetro</th><th>Valor</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Tipo de vinagre</strong></td><td>Vinagre blanco más barato, 5–8% acidez</td></tr>
+      <tr><td><strong>Dilución</strong></td><td>Ninguna — aplicar puro</td></tr>
+      <tr><td><strong>Cobertura</strong></td><td>Cada cm² de madera, contrachapado, vigas</td></tr>
+      <tr><td><strong>Herramienta</strong></td><td>Pulverizador plástico (sin metal)</td></tr>
+      <tr><td><strong>Espera</strong></td><td>12–24 h hasta secado total</td></tr>
+    </tbody>
+  </table>
+
+  <h3 data-lang="en">Optional booster — H₂O₂ spot treatment</h3>
+  <h3 data-lang="es">Refuerzo opcional — Tratamiento puntual con H₂O₂</h3>
+  <p data-lang="en">For visible black mould patches, spray <strong>3% hydrogen peroxide</strong> (standard pharmacy "agua oxigenada") after the vinegar has dried. Wait another 4–6 h before Phase 2. Hydrogen peroxide oxidises the mould pigments that vinegar leaves behind.</p>
+  <p data-lang="es">Para manchas visibles de moho negro, pulveriza <strong>peróxido de hidrógeno al 3%</strong> (agua oxigenada de farmacia) después de que el vinagre haya secado. Espera otras 4–6 h antes de la Fase 2. El peróxido oxida los pigmentos del moho que el vinagre deja atrás.</p>
+
+  <div class="callout good">
+    <p data-lang="en"><strong>The smell test:</strong> Vinegar smell vanishes completely once dry. If you can still smell vinegar, it's not dry yet — wait. If you smell decomposition <em>through</em> the vinegar, repeat Phase 1 in that area.</p>
+    <p data-lang="es"><strong>La prueba del olor:</strong> El olor a vinagre desaparece por completo al secar. Si aún hueles vinagre, no está seco — espera. Si hueles descomposición <em>a través</em> del vinagre, repite la Fase 1 en esa zona.</p>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- Phase 2 -->
+<section>
+  <h2><span class="num">02</span><span data-lang="en">Phase 2 — The Blue Milk</span><span data-lang="es">Fase 2 — La Leche Azul</span></h2>
+  <p class="lead" data-lang="en">The main weapon. Lime kills, copper sulfate prevents return, Aracet binds, salt hardens.</p>
+  <p class="lead" data-lang="es">El arma principal. La cal mata, el sulfato de cobre previene el retorno, el Aracet liga, la sal endurece.</p>
+
+  <h3 data-lang="en">The Master Recipe (per 10 L of mix)</h3>
+  <h3 data-lang="es">Receta Maestra (por 10 L de mezcla)</h3>
+
+  <table data-lang="en">
+    <thead><tr><th>Ingredient</th><th>Quantity</th><th>Role</th><th>Cost (€)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Water</strong></td><td class="amt">7–8 L</td><td>Base</td><td>—</td></tr>
+      <tr><td><strong>Hydrated lime</strong><br><em style="font-size:.78rem;color:var(--text-muted)">Cal apagada / Cal hidratada</em></td><td class="amt">4–5 kg</td><td>Killer (pH 12.4)</td><td>5–10</td></tr>
+      <tr><td><strong>PVA glue (Aracet)</strong><br><em style="font-size:.78rem;color:var(--text-muted)">Cola blanca</em></td><td class="amt">0.5–1 L</td><td>Binder</td><td>10–15</td></tr>
+      <tr><td><strong>Copper sulfate</strong><br><em style="font-size:.78rem;color:var(--text-muted)">Sulfato de cobre / Piedra azul</em></td><td class="amt">100–150 g</td><td>Anti-fungal</td><td>5–8</td></tr>
+      <tr><td><strong>Coarse salt</strong><br><em style="font-size:.78rem;color:var(--text-muted)">Sal gorda</em></td><td class="amt">2–3 handfuls</td><td>Hardener</td><td>1</td></tr>
+      <tr><td><strong>Borax</strong> (optional)<br><em style="font-size:.78rem;color:var(--text-muted)">Bórax</em></td><td class="amt">50–100 g</td><td>Wood-fungi killer</td><td>3–5</td></tr>
+    </tbody>
+  </table>
+
+  <table data-lang="es">
+    <thead><tr><th>Ingrediente</th><th>Cantidad</th><th>Función</th><th>Coste (€)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Agua</strong></td><td class="amt">7–8 L</td><td>Base</td><td>—</td></tr>
+      <tr><td><strong>Cal hidratada</strong><br><em style="font-size:.78rem;color:var(--text-muted)">Cal apagada</em></td><td class="amt">4–5 kg</td><td>Asesina (pH 12.4)</td><td>5–10</td></tr>
+      <tr><td><strong>Cola blanca</strong><br><em style="font-size:.78rem;color:var(--text-muted)">Cola PVA / Aracet</em></td><td class="amt">0.5–1 L</td><td>Aglutinante</td><td>10–15</td></tr>
+      <tr><td><strong>Sulfato de cobre</strong><br><em style="font-size:.78rem;color:var(--text-muted)">Piedra azul</em></td><td class="amt">100–150 g</td><td>Anti-hongos</td><td>5–8</td></tr>
+      <tr><td><strong>Sal gorda</strong></td><td class="amt">2–3 puñados</td><td>Endurecedor</td><td>1</td></tr>
+      <tr><td><strong>Bórax</strong> (opcional)</td><td class="amt">50–100 g</td><td>Mata hongos de madera</td><td>3–5</td></tr>
+    </tbody>
+  </table>
+
+  <h3 data-lang="en">Mixing — order is critical</h3>
+  <h3 data-lang="es">Mezcla — el orden es crítico</h3>
+
+  <ol class="steps" data-lang="en">
+    <li><strong>Blue Water:</strong> Dissolve copper sulfate (and borax if using) in 1 L of <em>warm</em> water in a plastic bucket. Stir with a wooden stick until you get a clear blue "ink."</li>
+    <li><strong>The Slake:</strong> In a large 15 L plastic bucket, pour 6 L of cold water. <em>Slowly</em> add the lime powder while stirring continuously. The mix will heat up slightly — this is normal. Stir until smooth, like thick milk.</li>
+    <li><strong>The Combine:</strong> Pour the Blue Water into the lime bucket. The mix turns pale powder-blue.</li>
+    <li><strong>The Glue:</strong> Stir in the Aracet (PVA). The mix becomes slightly creamy and glossy.</li>
+    <li><strong>The Salt:</strong> Dissolve coarse salt in a small cup of warm water, add last. Stir.</li>
+  </ol>
+
+  <ol class="steps" data-lang="es">
+    <li><strong>Agua Azul:</strong> Disuelve sulfato de cobre (y bórax si lo usas) en 1 L de agua <em>tibia</em> en un cubo plástico. Remueve con palo de madera hasta obtener una "tinta" azul clara.</li>
+    <li><strong>El Apagado:</strong> En un cubo plástico grande de 15 L, vierte 6 L de agua fría. <em>Lentamente</em> añade el polvo de cal mientras remueves sin parar. La mezcla calentará ligeramente — es normal. Remueve hasta que esté lisa, como leche espesa.</li>
+    <li><strong>La Combinación:</strong> Vierte el Agua Azul en el cubo de cal. La mezcla se vuelve azul polvo claro.</li>
+    <li><strong>La Cola:</strong> Incorpora el Aracet (PVA). La mezcla se vuelve ligeramente cremosa y satinada.</li>
+    <li><strong>La Sal:</strong> Disuelve la sal gorda en una taza pequeña de agua tibia, añade al final. Remueve.</li>
+  </ol>
+
+  <div class="callout warn">
+    <p data-lang="en"><span class="icon">⚠️</span><strong>Plastic only.</strong> Copper sulfate corrodes metal and the lime will react with aluminium. Use plastic buckets, wooden sticks, plastic spoons. Never galvanised, never aluminium.</p>
+    <p data-lang="es"><span class="icon">⚠️</span><strong>Solo plástico.</strong> El sulfato de cobre corroe metales y la cal reacciona con aluminio. Usa cubos plásticos, palos de madera, cucharas plásticas. Nunca galvanizado, nunca aluminio.</p>
+  </div>
+
+  <h3 data-lang="en">Optional aroma layer</h3>
+  <h3 data-lang="es">Capa aromática opcional</h3>
+  <p data-lang="en">Add 30–40 drops of <strong>clove + thyme essential oil</strong> to the final coat. Both have proven antimicrobial action and they leave a clean herbal scent that complements the chalky lime smell as it cures.</p>
+  <p data-lang="es">Añade 30–40 gotas de <strong>aceite esencial de clavo + tomillo</strong> a la última capa. Ambos tienen acción antimicrobiana probada y dejan un aroma herbal limpio que complementa el olor calizo durante el curado.</p>
+</section>
+
+<hr class="sep">
+
+<!-- Phase 3 -->
+<section>
+  <h2><span class="num">03</span><span data-lang="en">Phase 3 — Application</span><span data-lang="es">Fase 3 — Aplicación</span></h2>
+
+  <div class="phase">
+    <div class="phase-tag">3a</div>
+    <h3 data-lang="en">Rammed Earth Floor — the Seal</h3>
+    <h3 data-lang="es">Suelo de Tierra Apisonada — el Sellado</h3>
+    <p data-lang="en"><strong>3 layers.</strong> Layer 1 diluted with 20% extra water to soak deep into the dirt. Layers 2 & 3 standard mix. Use a stiff masonry brush (<em>bidinea / brocha de albañil</em>) — never a roller, it will pull up the dirt.</p>
+    <p data-lang="es"><strong>3 capas.</strong> La capa 1 diluida con 20% más de agua para empapar la tierra. Capas 2 y 3 con mezcla estándar. Usa una brocha de albañil rígida (<em>bidinea</em>) — nunca rodillo, levantará la tierra.</p>
+  </div>
+
+  <div class="phase">
+    <div class="phase-tag">3b</div>
+    <h3 data-lang="en">Plywood & Wood Beams</h3>
+    <h3 data-lang="es">Contrachapado y Vigas de Madera</h3>
+    <p data-lang="en"><strong>2 layers.</strong> Plywood drinks fast — paint quickly without over-brushing or the top veneer can lift. Use a wide brush or thick-nap roller.</p>
+    <p data-lang="es"><strong>2 capas.</strong> El contrachapado bebe rápido — pinta deprisa sin cepillar de más o se puede levantar la capa superior. Usa brocha ancha o rodillo de pelo grueso.</p>
+  </div>
+
+  <div class="phase">
+    <div class="phase-tag" data-lang="en">3c · Ground Zero</div>
+    <div class="phase-tag" data-lang="es">3c · Punto Cero</div>
+    <h3 data-lang="en">The Body Spot — extra care</h3>
+    <h3 data-lang="es">El Punto del Cuerpo — cuidado extra</h3>
+    <p data-lang="en">Before painting, sprinkle <strong>dry hydrated lime powder</strong> directly on the (already-excavated) earth. Let it sit for 1 hour. Then paint over with an extra-thick "paste" version of the Blue Milk (use 5 kg of lime per 7 L of water for that area). Apply 4 layers here, not 3.</p>
+    <p data-lang="es">Antes de pintar, espolvorea <strong>cal hidratada en polvo seco</strong> directamente sobre la tierra (ya excavada). Déjalo actuar 1 hora. Luego pinta encima con una versión "pasta" extra-gruesa de la Leche Azul (5 kg de cal por 7 L de agua en esa zona). Aplica 4 capas aquí, no 3.</p>
+  </div>
+
+  <div class="callout info">
+    <p data-lang="en"><strong>Drying between layers.</strong> Wait until each layer is "chalky to the touch" — fully white-blue, no glossy patches — before applying the next. Typical wait: 4–8 h depending on humidity. Avoid direct sun on fresh lime, it can crack.</p>
+    <p data-lang="es"><strong>Secado entre capas.</strong> Espera a que cada capa esté "tiza al tacto" — completamente blanco-azul, sin zonas brillantes — antes de aplicar la siguiente. Espera típica: 4–8 h según humedad. Evita el sol directo sobre cal fresca, puede cuartearse.</p>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- Schedule -->
+<section>
+  <h2><span class="num">📅</span><span data-lang="en">Suggested Schedule</span><span data-lang="es">Cronograma Sugerido</span></h2>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-day" data-lang="en">Day 1 · Morning</div>
+      <div class="tl-day" data-lang="es">Día 1 · Mañana</div>
+      <div class="tl-act" data-lang="en">PPE up. Excavate ground-zero earth. Bag and dispose. Open all windows.</div>
+      <div class="tl-act" data-lang="es">EPI puesto. Excavar tierra del punto cero. Embolsar y desechar. Abrir todas las ventanas.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-day" data-lang="en">Day 1 · Afternoon</div>
+      <div class="tl-day" data-lang="es">Día 1 · Tarde</div>
+      <div class="tl-act" data-lang="en">Spray bio-enzyme cleaner. Let work 2–4 h. Rinse with water. Leave to dry overnight.</div>
+      <div class="tl-act" data-lang="es">Pulverizar limpiador bio-enzimático. Dejar actuar 2–4 h. Aclarar con agua. Dejar secar toda la noche.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-day" data-lang="en">Day 2</div>
+      <div class="tl-day" data-lang="es">Día 2</div>
+      <div class="tl-act" data-lang="en">Vinegar strike — full strength on every wood surface. Optional H₂O₂ spot treatment in afternoon.</div>
+      <div class="tl-act" data-lang="es">Golpe de vinagre — puro sobre cada superficie de madera. Tratamiento puntual con agua oxigenada por la tarde (opcional).</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-day" data-lang="en">Day 3</div>
+      <div class="tl-day" data-lang="es">Día 3</div>
+      <div class="tl-act" data-lang="en">Dry day — let everything air. Mix and apply Blue Milk Layer 1 (diluted) in the afternoon.</div>
+      <div class="tl-act" data-lang="es">Día de secado — dejar airear todo. Mezclar y aplicar la Leche Azul Capa 1 (diluida) por la tarde.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-day" data-lang="en">Day 4</div>
+      <div class="tl-day" data-lang="es">Día 4</div>
+      <div class="tl-act" data-lang="en">Layer 2 (standard mix). Sprinkle dry lime on ground zero before painting.</div>
+      <div class="tl-act" data-lang="es">Capa 2 (mezcla estándar). Espolvorear cal seca sobre el punto cero antes de pintar.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-day" data-lang="en">Day 5</div>
+      <div class="tl-day" data-lang="es">Día 5</div>
+      <div class="tl-act" data-lang="en">Layer 3 (with optional essential oils). Extra layer on ground zero.</div>
+      <div class="tl-act" data-lang="es">Capa 3 (con aceites esenciales opcionales). Capa extra en punto cero.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-day" data-lang="en">Day 6–7 · Cure</div>
+      <div class="tl-day" data-lang="es">Día 6–7 · Curado</div>
+      <div class="tl-act" data-lang="en">Doors and windows open 48 h. Lime needs CO₂ from air to carbonate back into stone.</div>
+      <div class="tl-act" data-lang="es">Puertas y ventanas abiertas 48 h. La cal necesita CO₂ del aire para carbonatar de nuevo en piedra.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- PPE -->
+<section>
+  <h2><span class="num">🛡️</span><span data-lang="en">PPE & Safety</span><span data-lang="es">EPI y Seguridad</span></h2>
+
+  <table data-lang="en">
+    <thead><tr><th>Item</th><th>Why it's mandatory</th></tr></thead>
+    <tbody>
+      <tr><td><strong>FFP3 / N95 mask</strong></td><td>Decomposition aerosols, mould spores, lime dust — all damage lungs</td></tr>
+      <tr><td><strong>Sealed goggles</strong></td><td>Lime in the eye = chemical burn within seconds</td></tr>
+      <tr><td><strong>Nitrile gloves</strong></td><td>Under heavy work gloves; lime causes "lime burn" cracks</td></tr>
+      <tr><td><strong>Long sleeves + trousers</strong></td><td>Skin contact prevention; old clothes you can dispose of</td></tr>
+      <tr><td><strong>Rubber boots</strong></td><td>Floor work means standing in lime/copper splatter</td></tr>
+    </tbody>
+  </table>
+
+  <table data-lang="es">
+    <thead><tr><th>Elemento</th><th>Por qué es obligatorio</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Mascarilla FFP3 / N95</strong></td><td>Aerosoles de descomposición, esporas de moho, polvo de cal — todo daña los pulmones</td></tr>
+      <tr><td><strong>Gafas selladas</strong></td><td>Cal en el ojo = quemadura química en segundos</td></tr>
+      <tr><td><strong>Guantes nitrilo</strong></td><td>Bajo guantes de trabajo gruesos; la cal causa grietas por "quemadura calcárea"</td></tr>
+      <tr><td><strong>Manga y pantalón largos</strong></td><td>Prevenir contacto cutáneo; ropa vieja desechable</td></tr>
+      <tr><td><strong>Botas de goma</strong></td><td>Trabajar en suelo significa pisar salpicaduras de cal/cobre</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout danger">
+    <p data-lang="en"><strong>Lime in the eye — first aid:</strong> Flush copiously with clean water for 15+ minutes. Do <em>not</em> try to neutralise with vinegar; the heat of neutralisation can worsen the burn. Get to a clinic.</p>
+    <p data-lang="es"><strong>Cal en el ojo — primeros auxilios:</strong> Lavar abundantemente con agua limpia durante 15+ minutos. <em>No</em> intentes neutralizar con vinagre; el calor de la neutralización puede empeorar la quemadura. Ve a un centro médico.</p>
+  </div>
+
+  <div class="callout warn">
+    <p data-lang="en"><strong>Skin lime burn:</strong> Rinse with cold water, then apply a mildly acidic compress (diluted vinegar 1:5 or yoghurt). Lime sucks moisture aggressively — moisturise generously after.</p>
+    <p data-lang="es"><strong>Quemadura calcárea cutánea:</strong> Aclarar con agua fría, luego aplicar una compresa ligeramente ácida (vinagre diluido 1:5 o yogur). La cal absorbe humedad agresivamente — hidrata generosamente después.</p>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- Sourcing -->
+<section>
+  <h2><span class="num">🇪🇸</span><span data-lang="en">Spain Sourcing Guide</span><span data-lang="es">Guía de Compra en España</span></h2>
+  <p data-lang="en">Where and what to ask for in Andalucía. Most rural towns have all of these in a single ferretería or cooperativa agrícola.</p>
+  <p data-lang="es">Dónde y qué pedir en Andalucía. La mayoría de pueblos tienen todo esto en una ferretería o cooperativa agrícola.</p>
+
+  <div class="source">
+    <div data-lang="en"><span class="src-name">Hydrated lime</span> <span class="src-es">Cal apagada</span></div>
+    <div data-lang="es"><span class="src-name">Cal apagada</span></div>
+    <div class="src-where" data-lang="en">📍 Almacén de materiales / ferretería · 25 kg sacks ~€8–12 · brand: Calcinor, Cales de Pachs, Calcasa</div>
+    <div class="src-where" data-lang="es">📍 Almacén de materiales / ferretería · sacos de 25 kg ~€8–12 · marcas: Calcinor, Cales de Pachs, Calcasa</div>
+  </div>
+
+  <div class="source">
+    <div data-lang="en"><span class="src-name">Copper sulfate</span> <span class="src-es">Sulfato de cobre / Piedra azul</span></div>
+    <div data-lang="es"><span class="src-name">Sulfato de cobre</span> <span class="src-es">Piedra azul</span></div>
+    <div class="src-where" data-lang="en">📍 Cooperativa agrícola, droguería, agro-supplier · 1 kg ~€6–10 · used in vineyards & olive groves so always available</div>
+    <div class="src-where" data-lang="es">📍 Cooperativa agrícola, droguería, agro-tienda · 1 kg ~€6–10 · usado en viñas y olivares — siempre disponible</div>
+  </div>
+
+  <div class="source">
+    <div data-lang="en"><span class="src-name">PVA glue (Aracet equivalent)</span> <span class="src-es">Cola blanca</span></div>
+    <div data-lang="es"><span class="src-name">Cola blanca PVA</span></div>
+    <div class="src-where" data-lang="en">📍 Ferretería, Leroy Merlin, Bricomart · 1 L ~€6–10 · brands: Ceys Cola Blanca, Bostik PVA, Pattex</div>
+    <div class="src-where" data-lang="es">📍 Ferretería, Leroy Merlin, Bricomart · 1 L ~€6–10 · marcas: Ceys Cola Blanca, Bostik PVA, Pattex</div>
+  </div>
+
+  <div class="source">
+    <div data-lang="en"><span class="src-name">White vinegar</span> <span class="src-es">Vinagre blanco</span></div>
+    <div data-lang="es"><span class="src-name">Vinagre blanco</span></div>
+    <div class="src-where" data-lang="en">📍 Mercadona, Lidl, any supermarket · 5 L bottle ~€2–3 · cheapest "vinagre de limpieza" or alcohol vinegar</div>
+    <div class="src-where" data-lang="es">📍 Mercadona, Lidl, cualquier supermercado · botella 5 L ~€2–3 · "vinagre de limpieza" o vinagre de alcohol más barato</div>
+  </div>
+
+  <div class="source">
+    <div data-lang="en"><span class="src-name">Coarse salt</span> <span class="src-es">Sal gorda</span></div>
+    <div data-lang="es"><span class="src-name">Sal gorda</span></div>
+    <div class="src-where" data-lang="en">📍 Any supermarket · 1 kg ~€1 · marine coarse salt is fine</div>
+    <div class="src-where" data-lang="es">📍 Cualquier supermercado · 1 kg ~€1 · sal marina gruesa va bien</div>
+  </div>
+
+  <div class="source">
+    <div data-lang="en"><span class="src-name">Borax (optional)</span> <span class="src-es">Bórax / Borato sódico</span></div>
+    <div data-lang="es"><span class="src-name">Bórax</span> <span class="src-es">Borato sódico</span></div>
+    <div class="src-where" data-lang="en">📍 Droguería tradicional or online (Amazon ES) · 500 g ~€8–12</div>
+    <div class="src-where" data-lang="es">📍 Droguería tradicional o online (Amazon ES) · 500 g ~€8–12</div>
+  </div>
+
+  <div class="source">
+    <div data-lang="en"><span class="src-name">Bio-enzyme cleaner</span></div>
+    <div data-lang="es"><span class="src-name">Limpiador enzimático</span></div>
+    <div class="src-where" data-lang="en">📍 Mercadona (Bosque Verde Bio), pet store, droguería · 1 L ~€5–8</div>
+    <div class="src-where" data-lang="es">📍 Mercadona (Bosque Verde Bio), tienda de mascotas, droguería · 1 L ~€5–8</div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- Verification -->
+<section>
+  <h2><span class="num">✅</span><span data-lang="en">Verification</span><span data-lang="es">Verificación</span></h2>
+  <p data-lang="en">Three tests to confirm the protocol worked. Run all three before re-occupying the space.</p>
+  <p data-lang="es">Tres pruebas para confirmar que el protocolo funcionó. Realiza las tres antes de volver a ocupar el espacio.</p>
+
+  <h3 data-lang="en">1 · Smell test (Day 7)</h3>
+  <h3 data-lang="es">1 · Prueba del olor (Día 7)</h3>
+  <p data-lang="en">Close the cottage for 6 hours. Re-enter without breathing in beforehand. You should smell <strong>only chalk and faint lime</strong>. Any whiff of decomposition, mould, or sweet rot = repeat Phase 2 in the smelliest area.</p>
+  <p data-lang="es">Cierra la cabaña 6 horas. Vuelve a entrar sin respirar antes. Deberías oler <strong>solo tiza y cal suave</strong>. Cualquier rastro de descomposición, moho o dulzor putrefacto = repite la Fase 2 en la zona más olorosa.</p>
+
+  <h3 data-lang="en">2 · Chalk test</h3>
+  <h3 data-lang="es">2 · Prueba de la tiza</h3>
+  <p data-lang="en">Rub a clean dark cloth firmly on the painted surface. With proper Aracet binding, you get <strong>almost no white residue</strong>. If it dusts off heavily, your Aracet ratio was too low — apply one more thin coat with extra glue.</p>
+  <p data-lang="es">Frota un paño oscuro limpio firmemente sobre la superficie pintada. Con buena ligazón de Aracet, <strong>casi no debe quedar residuo blanco</strong>. Si desprende mucho polvo, la proporción de Aracet fue baja — aplica una capa fina más con cola extra.</p>
+
+  <h3 data-lang="en">3 · 30-day check</h3>
+  <h3 data-lang="es">3 · Revisión a 30 días</h3>
+  <p data-lang="en">Inspect every surface under bright light. Look for: dark spots reappearing, surface peeling, salt efflorescence (white fluffy crystals — usually harmless), any musty smell. Spot-treat anything suspicious with a thick Blue Milk paste.</p>
+  <p data-lang="es">Inspecciona cada superficie con luz fuerte. Busca: manchas oscuras reaparecidas, descamación, eflorescencias salinas (cristales blancos esponjosos — usualmente inofensivos), cualquier olor a moho. Trata puntualmente con pasta espesa de Leche Azul.</p>
+
+  <div class="callout info">
+    <p data-lang="en"><strong>Residual odour catcher:</strong> Place 4–6 sachets of <strong>activated charcoal</strong> or <strong>natural zeolite</strong> around the room for the first 2 weeks. Each sachet adsorbs leftover volatile compounds the lime cannot reach.</p>
+    <p data-lang="es"><strong>Captura de olores residuales:</strong> Coloca 4–6 sobres de <strong>carbón activado</strong> o <strong>zeolita natural</strong> por la habitación las primeras 2 semanas. Cada sobre adsorbe compuestos volátiles que la cal no alcanza.</p>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- Maintenance -->
+<section>
+  <h2><span class="num">🔄</span><span data-lang="en">Long-Term Maintenance</span><span data-lang="es">Mantenimiento a Largo Plazo</span></h2>
+  <ul data-lang="en">
+    <li><strong>Annual touch-up:</strong> One thin coat of Blue Milk on high-humidity surfaces (floor, lower walls) every 12 months. Total cost ~€8.</li>
+    <li><strong>Humidity monitoring:</strong> A €10 hygrometer. Keep ambient humidity below 65%. Use desiccants or improve ventilation if higher.</li>
+    <li><strong>Full re-protocol:</strong> Only needed if visible mould returns or another biological event occurs. Properly sealed surfaces should hold for 5+ years.</li>
+    <li><strong>Textiles & tools:</strong> Anything porous that was in the contaminated space — full sun exposure (UV-C) for 6+ hours minimum, or discard.</li>
+  </ul>
+  <ul data-lang="es">
+    <li><strong>Retoque anual:</strong> Una capa fina de Leche Azul en superficies de alta humedad (suelo, parte baja de paredes) cada 12 meses. Coste ~€8.</li>
+    <li><strong>Control de humedad:</strong> Un higrómetro de €10. Mantén humedad ambiente bajo 65%. Usa desecantes o mejora ventilación si es mayor.</li>
+    <li><strong>Re-protocolo completo:</strong> Solo necesario si reaparece moho visible o sucede otro evento biológico. Superficies bien selladas deberían aguantar 5+ años.</li>
+    <li><strong>Textiles y herramientas:</strong> Cualquier objeto poroso que estuvo en el espacio contaminado — exposición solar plena (UV-C) mínimo 6+ horas, o desechar.</li>
+  </ul>
+</section>
+
+<hr class="sep">
+
+<!-- Why it works -->
+<section>
+  <h2><span class="num">🧪</span><span data-lang="en">Why It Works — The Chemistry</span><span data-lang="es">Por Qué Funciona — La Química</span></h2>
+
+  <h3 data-lang="en">pH as a weapon</h3>
+  <h3 data-lang="es">El pH como arma</h3>
+  <p data-lang="en">Living cells maintain an internal pH near 7. At <strong>pH above 11.5</strong>, cell walls dissolve, proteins denature, enzymes deactivate. Hydrated lime in solution sits at <strong>pH 12.4</strong> — well above that lethal threshold. There is no microbe known that survives sustained pH 12.4.</p>
+  <p data-lang="es">Las células vivas mantienen un pH interno cerca de 7. A <strong>pH superior a 11.5</strong>, las paredes celulares se disuelven, las proteínas se desnaturalizan, las enzimas se desactivan. La cal hidratada en solución está en <strong>pH 12.4</strong> — muy por encima de ese umbral letal. No hay microbio conocido que sobreviva pH 12.4 sostenido.</p>
+
+  <h3 data-lang="en">Why Aracet matters</h3>
+  <h3 data-lang="es">Por qué importa el Aracet</h3>
+  <p data-lang="en">Traditional lime whitewash chalks off when touched — the lime particles never bond to the substrate, they just sit on top. PVA glue (Aracet) creates a polymer matrix that the lime crystals embed into during carbonation. The result is a thin, flexible "stone-plastic" laminate that does not rub off and resists humidity flexing without cracking.</p>
+  <p data-lang="es">El encalado tradicional desprende polvo al tocar — las partículas de cal nunca se ligan al sustrato, solo se posan encima. La cola PVA (Aracet) crea una matriz polimérica donde los cristales de cal se incrustan durante la carbonatación. El resultado es un laminado fino y flexible de "piedra-plástico" que no desprende polvo y resiste flexiones por humedad sin agrietarse.</p>
+
+  <h3 data-lang="en">The copper keystone</h3>
+  <h3 data-lang="es">La piedra clave del cobre</h3>
+  <p data-lang="en">Lime kills <em>now</em>; copper sulfate prevents <em>later</em>. Copper ions remain biologically active in the wall matrix for years, disrupting fungal cell membranes the moment new spores try to germinate. This is why bordelaise mixture (copper-lime) has worked on vines since 1885 — the same principle, applied to interior surfaces.</p>
+  <p data-lang="es">La cal mata <em>ahora</em>; el sulfato de cobre previene <em>después</em>. Los iones de cobre permanecen biológicamente activos en la matriz mural durante años, alterando membranas fúngicas en el momento que nuevas esporas intentan germinar. Por eso el caldo bordelés (cobre-cal) funciona en viñas desde 1885 — mismo principio, aplicado a superficies interiores.</p>
+
+  <h3 data-lang="en">Carbonation — turning back into stone</h3>
+  <h3 data-lang="es">Carbonatación — convertirse en piedra de nuevo</h3>
+  <p data-lang="en">The final cure happens in slow motion. Calcium hydroxide in the lime absorbs CO₂ from the air and converts back to calcium carbonate — limestone. Hence the 48-hour open-door rule. The chalky feel disappears, the surface hardens, and the alkaline reservoir lasts decades.</p>
+  <p data-lang="es">El curado final ocurre a cámara lenta. El hidróxido de calcio de la cal absorbe CO₂ del aire y se convierte de nuevo en carbonato cálcico — caliza. De ahí la regla de 48 horas con puertas abiertas. La sensación calcárea desaparece, la superficie endurece, y la reserva alcalina dura décadas.</p>
+</section>
+
+<hr class="sep">
+
+<!-- Cost -->
+<section>
+  <h2><span class="num">💶</span><span data-lang="en">Cost Breakdown</span><span data-lang="es">Desglose de Coste</span></h2>
+
+  <table data-lang="en">
+    <thead><tr><th>Item</th><th>Quantity</th><th>Cost (€)</th></tr></thead>
+    <tbody>
+      <tr><td>Hydrated lime</td><td>25 kg sack</td><td class="amt">8–12</td></tr>
+      <tr><td>Copper sulfate</td><td>1 kg</td><td class="amt">6–10</td></tr>
+      <tr><td>PVA glue / cola blanca</td><td>1 L</td><td class="amt">6–10</td></tr>
+      <tr><td>White vinegar</td><td>5 L</td><td class="amt">2–3</td></tr>
+      <tr><td>Bio-enzyme cleaner</td><td>1 L</td><td class="amt">5–8</td></tr>
+      <tr><td>Coarse salt</td><td>1 kg</td><td class="amt">1</td></tr>
+      <tr><td>Borax (opt)</td><td>500 g</td><td class="amt">8–12</td></tr>
+      <tr><td>Hydrogen peroxide 3% (opt)</td><td>1 L</td><td class="amt">2–4</td></tr>
+      <tr><td>Activated charcoal sachets</td><td>4 pcs</td><td class="amt">5–8</td></tr>
+      <tr><td>FFP3 mask + goggles + gloves</td><td>set</td><td class="amt">10–15</td></tr>
+      <tr style="background:var(--accent-bg)"><td><strong>Total estimate</strong></td><td><strong>full kit</strong></td><td class="amt"><strong>53–83</strong></td></tr>
+    </tbody>
+  </table>
+
+  <table data-lang="es">
+    <thead><tr><th>Producto</th><th>Cantidad</th><th>Coste (€)</th></tr></thead>
+    <tbody>
+      <tr><td>Cal hidratada</td><td>saco 25 kg</td><td class="amt">8–12</td></tr>
+      <tr><td>Sulfato de cobre</td><td>1 kg</td><td class="amt">6–10</td></tr>
+      <tr><td>Cola blanca PVA</td><td>1 L</td><td class="amt">6–10</td></tr>
+      <tr><td>Vinagre blanco</td><td>5 L</td><td class="amt">2–3</td></tr>
+      <tr><td>Limpiador enzimático</td><td>1 L</td><td class="amt">5–8</td></tr>
+      <tr><td>Sal gorda</td><td>1 kg</td><td class="amt">1</td></tr>
+      <tr><td>Bórax (opc)</td><td>500 g</td><td class="amt">8–12</td></tr>
+      <tr><td>Agua oxigenada 3% (opc)</td><td>1 L</td><td class="amt">2–4</td></tr>
+      <tr><td>Sobres de carbón activado</td><td>4 uds</td><td class="amt">5–8</td></tr>
+      <tr><td>Mascarilla FFP3 + gafas + guantes</td><td>set</td><td class="amt">10–15</td></tr>
+      <tr style="background:var(--accent-bg)"><td><strong>Total estimado</strong></td><td><strong>kit completo</strong></td><td class="amt"><strong>53–83</strong></td></tr>
+    </tbody>
+  </table>
+
+  <p data-lang="en">For a small cottage (20–30 m² interior), one 25 kg lime sack + 1 kg copper sulfate produces enough Blue Milk for the full 3-coat protocol with leftovers for annual touch-ups.</p>
+  <p data-lang="es">Para una cabaña pequeña (20–30 m² interior), un saco de 25 kg de cal + 1 kg de sulfato de cobre produce suficiente Leche Azul para el protocolo completo de 3 capas con sobrantes para retoques anuales.</p>
+</section>
+
+<hr class="sep">
+
+<!-- Checklist -->
+<section>
+  <h2><span class="num">📋</span><span data-lang="en">Final Checklist</span><span data-lang="es">Lista Final</span></h2>
+
+  <ul class="check" data-lang="en">
+    <li>FFP3 mask, goggles, nitrile gloves, long sleeves on</li>
+    <li>Top 2–5 cm of contaminated earth excavated and bagged</li>
+    <li>Bio-enzyme cleaner applied, worked, rinsed</li>
+    <li>White vinegar sprayed on every wood surface, fully dried</li>
+    <li>Optional H₂O₂ spot treatment on visible mould</li>
+    <li>Plastic buckets only (no metal anywhere)</li>
+    <li>Blue Water mixed (copper sulfate + warm water)</li>
+    <li>Lime slaked smooth, then Blue Water + Aracet + salt added in order</li>
+    <li>Floor: 3 layers (1st diluted)</li>
+    <li>Wood/plywood: 2 layers (don't over-brush)</li>
+    <li>Ground zero: dry lime sprinkle + 4 thick layers</li>
+    <li>Each layer fully chalky before next</li>
+    <li>Doors and windows open 48 h after final coat</li>
+    <li>Activated charcoal sachets placed</li>
+    <li>30-day inspection scheduled</li>
+  </ul>
+
+  <ul class="check" data-lang="es">
+    <li>Mascarilla FFP3, gafas, guantes nitrilo, mangas largas puestos</li>
+    <li>Top 2–5 cm de tierra contaminada excavados y embolsados</li>
+    <li>Limpiador bio-enzimático aplicado, actuado, aclarado</li>
+    <li>Vinagre blanco pulverizado sobre cada superficie de madera, totalmente seco</li>
+    <li>Tratamiento puntual con agua oxigenada sobre moho visible (opcional)</li>
+    <li>Solo cubos plásticos (nada de metal)</li>
+    <li>Agua Azul mezclada (sulfato de cobre + agua tibia)</li>
+    <li>Cal apagada lisa, luego Agua Azul + Aracet + sal en orden</li>
+    <li>Suelo: 3 capas (la 1ª diluida)</li>
+    <li>Madera/contrachapado: 2 capas (sin cepillar de más)</li>
+    <li>Punto cero: espolvoreado de cal seca + 4 capas espesas</li>
+    <li>Cada capa totalmente calcárea antes de la siguiente</li>
+    <li>Puertas y ventanas abiertas 48 h tras la capa final</li>
+    <li>Sobres de carbón activado colocados</li>
+    <li>Inspección a 30 días programada</li>
+  </ul>
+</section>
+
+<hr class="sep">
+
+<!-- Closing -->
+<section>
+  <h2><span class="num">🌬️</span><span data-lang="en">Final Word</span><span data-lang="es">Palabra Final</span></h2>
+  <p data-lang="en">Cal Viva is not decoration. It is a deliberate, low-cost, ancient-meets-modern intervention that returns a contaminated structure to a biologically inert state. Once cured, the cottage holds an alkaline reservoir in its walls and floor that quietly sterilises the air around it for years.</p>
+  <p data-lang="en">The same chemistry has protected European cellars, wine caves, hospitals, and stables for five centuries. Aracet is the only modern addition — and it is what makes it possible to do this in a wood-frame structure where you actually live.</p>
+  <p data-lang="es">Cal Viva no es decoración. Es una intervención deliberada, de bajo coste, donde lo antiguo encuentra lo moderno, y devuelve una estructura contaminada a un estado biológicamente inerte. Una vez curada, la cabaña conserva una reserva alcalina en sus muros y suelo que esteriliza silenciosamente el aire a su alrededor durante años.</p>
+  <p data-lang="es">La misma química ha protegido bodegas europeas, cuevas de vino, hospitales y cuadras durante cinco siglos. El Aracet es la única añadidura moderna — y es lo que hace posible aplicarla en una estructura de madera donde realmente vives.</p>
+
+  <div class="callout good">
+    <p data-lang="en"><strong>The protocol is complete when:</strong> the only smell is faint chalk, surfaces are firm but not dusty, and you can sleep in the room without that "gritty feeling in the eyes" within a week.</p>
+    <p data-lang="es"><strong>El protocolo está completo cuando:</strong> el único olor es tiza suave, las superficies están firmes pero no polvorientas, y puedes dormir en la habitación sin esa "sensación arenosa en los ojos" en una semana.</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <button class="footer-contact" onclick="document.getElementById('cd').classList.add('open')">
+    <span data-lang="en">Contact digitalAIventures</span>
+    <span data-lang="es">Contactar digitalAIventures</span>
+  </button>
+  <p data-lang="en">Cal Viva Protocol v1.0 · A digitalAIventures publication</p>
+  <p data-lang="es">Cal Viva Protocol v1.0 · Una publicación de digitalAIventures</p>
+  <p data-lang="en">Compiled for off-grid Andalucía cottages · Use at your own discretion · Not medical advice</p>
+  <p data-lang="es">Compilado para cabañas off-grid en Andalucía · Uso bajo tu criterio · No es consejo médico</p>
+</footer>
+
+<!-- Contact Dialog -->
+<div class="dialog-overlay" id="cd" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="dialog-box">
+    <h4 data-lang="en">Get in Touch</h4>
+    <h4 data-lang="es">Contacto</h4>
+    <a class="dialog-option dialog-email" href="mailto:hello@digitalaiventures.com">✉ Email</a>
+    <a class="dialog-option dialog-telegram" href="https://t.me/juanitto" target="_blank">✈ Telegram</a>
+    <button class="dialog-close" onclick="document.getElementById('cd').classList.remove('open')">
+      <span data-lang="en">Close</span>
+      <span data-lang="es">Cerrar</span>
+    </button>
+  </div>
+</div>
+
+<script>
+function setLang(l){
+  document.querySelectorAll('[data-lang]').forEach(e=>{
+    e.classList.toggle('v',e.getAttribute('data-lang')===l)
+  });
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    b.classList.toggle('active',b.textContent.trim().toLowerCase()===l)
+  });
+  document.documentElement.lang=l;
+}
+setLang('en');
+
+function toggleTheme(){
+  const html=document.documentElement;
+  const current=html.getAttribute('data-theme')||'dark';
+  const next=current==='dark'?'light':'dark';
+  html.setAttribute('data-theme',next);
+  document.getElementById('themeIcon').textContent=next==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',next)}catch(e){}
+}
+(function(){
+  function apply(t){
+    document.documentElement.setAttribute('data-theme',t);
+    document.addEventListener('DOMContentLoaded',()=>{
+      const icon=document.getElementById('themeIcon');
+      if(icon)icon.textContent=t==='dark'?'☀️':'🌙';
+    });
+  }
+  try{
+    const saved=localStorage.getItem('theme');
+    if(saved){apply(saved)}
+    else{const h=new Date().getHours();apply(h>=7&&h<19?'light':'dark')}
+  }catch(e){apply('dark')}
+})();
+</script>
+</body>
+</html>

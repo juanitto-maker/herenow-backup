@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Alkaline Veil — Bio-Remediation Protocol</title>
+<meta name="description" content="A dummy-proof guide to deep-reset a contaminated cottage using lime, vinegar, copper sulfate and PVA glue. Per m² and per bucket. EN · ES · IT · DE.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Crimson+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root, [data-theme="dark"] {
+  --bg: #0d1620;
+  --bg-card: #141f2d;
+  --bg-hero: linear-gradient(160deg, #0a2540 0%, #0d1620 60%, #141f2d 100%);
+  --bg-soft: #11192399;
+  --text: #c9d6e2;
+  --text-muted: #7d8a99;
+  --text-heading: #f0f4f8;
+  --border: #1e2a3c;
+  --border-soft: #1a2533;
+  --accent: #6ea8d4;
+  --accent-strong: #4a90c9;
+  --accent-bg: rgba(110,168,212,.12);
+  --link: #6ea8d4;
+  --link-hover: #9bc1e0;
+  --copper: #4a90c9;
+  --lime: #d8e6f0;
+  --warn: #d97757;
+  --good: #6ec98e;
+  --code-bg: #0a121b;
+  --shadow: 0 4px 16px rgba(0,0,0,.4);
+}
+[data-theme="light"] {
+  --bg: #f5f1e8;
+  --bg-card: #fffdf6;
+  --bg-hero: linear-gradient(160deg, #e8eef5 0%, #f5f1e8 60%, #ede4cf 100%);
+  --bg-soft: #fffdf6cc;
+  --text: #3a3a32;
+  --text-muted: #6a6a62;
+  --text-heading: #1a1a18;
+  --border: #d8d1bf;
+  --border-soft: #e8e2d0;
+  --accent: #1e5f8a;
+  --accent-strong: #154872;
+  --accent-bg: rgba(30,95,138,.08);
+  --link: #1e5f8a;
+  --link-hover: #154872;
+  --copper: #1e5f8a;
+  --lime: #f5f1e8;
+  --warn: #b85a3a;
+  --good: #4a8a5e;
+  --code-bg: #ede4cf;
+  --shadow: 0 4px 14px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);
+  line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased;
+}
+[data-lang]{display:none!important}
+[data-lang].v{display:block!important}
+span[data-lang].v{display:inline!important}
+a[data-lang].v{display:inline-block!important}
+li[data-lang].v{display:list-item!important}
+table[data-lang].v{display:table!important}
+
+/* Lang bar */
+.lang-bar{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:center;gap:.4rem;padding:.55rem;
+  background:var(--bg-soft);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+.lang-btn{
+  background:none;border:1px solid var(--border);color:var(--text-muted);
+  font:600 .72rem/1 'Inter',sans-serif;padding:.35rem .75rem;
+  border-radius:999px;cursor:pointer;letter-spacing:.05em;
+  text-transform:uppercase;transition:all .2s;
+}
+.lang-btn.active,.lang-btn:hover{
+  background:var(--accent);color:var(--bg);border-color:var(--accent);
+}
+
+/* Theme toggle */
+.theme-toggle{
+  position:fixed;top:3rem;right:.75rem;z-index:150;
+  background:var(--bg-card);border:1px solid var(--border);
+  width:2.4rem;height:2.4rem;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--shadow);transition:all .2s;
+}
+.theme-toggle:hover{transform:scale(1.1)}
+.theme-icon{font-size:1.05rem;line-height:1}
+
+/* Hero */
+.hero{
+  background:var(--bg-hero);padding:5rem 1.5rem 3.5rem;text-align:center;
+  border-bottom:1px solid var(--border);
+}
+.hero-badge{
+  display:inline-block;font-size:.68rem;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--accent);background:var(--accent-bg);
+  border:1px solid var(--accent);border-radius:999px;padding:.25rem .8rem;margin-bottom:1.25rem;
+}
+.hero h1{
+  font-family:'Crimson Pro',serif;font-size:2.4rem;font-weight:600;
+  color:var(--text-heading);line-height:1.1;letter-spacing:-.01em;margin-bottom:.6rem;
+}
+.hero .sub{
+  font-size:.95rem;color:var(--text-muted);max-width:480px;margin:0 auto 1.4rem;
+}
+.hero .tagline{
+  font-style:italic;color:var(--accent);font-size:.85rem;letter-spacing:.02em;
+}
+
+/* Sections */
+section{padding:2.2rem 1.5rem;max-width:760px;margin:0 auto}
+.sep{margin:.8rem auto;max-width:140px;border:none;border-top:1px solid var(--border)}
+h2{
+  font-family:'Crimson Pro',serif;font-size:1.7rem;font-weight:600;
+  color:var(--text-heading);margin-bottom:1rem;letter-spacing:-.005em;
+}
+h3{
+  font-size:1.05rem;font-weight:600;color:var(--text-heading);
+  margin:1.4rem 0 .65rem;letter-spacing:.005em;
+}
+h4{
+  font-size:.85rem;font-weight:600;color:var(--accent);
+  margin:1rem 0 .4rem;text-transform:uppercase;letter-spacing:.08em;
+}
+p{margin-bottom:.8rem}
+strong{color:var(--text-heading);font-weight:600}
+a{color:var(--link);text-decoration:none}
+a:hover{color:var(--link-hover);text-decoration:underline}
+
+.section-num{
+  display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.1em;
+  color:var(--accent);text-transform:uppercase;margin-bottom:.5rem;
+  border:1px solid var(--accent);border-radius:.3rem;padding:.15rem .5rem;
+}
+.callout{
+  background:var(--bg-card);border-left:3px solid var(--accent);
+  padding:.85rem 1rem;margin:1rem 0;border-radius:.4rem;font-size:.9rem;
+}
+.callout.warn{border-left-color:var(--warn)}
+.callout.good{border-left-color:var(--good)}
+.callout strong{display:block;margin-bottom:.25rem;color:var(--text-heading)}
+
+/* Stats bar */
+.stats-bar{
+  display:flex;border:1px solid var(--border);border-radius:.75rem;
+  overflow:hidden;background:var(--bg-card);margin:1.2rem 0;
+}
+.stat-cell{
+  flex:1;padding:.85rem .4rem;text-align:center;
+  border-right:1px solid var(--border);
+}
+.stat-cell:last-child{border-right:none}
+.st-val{font-size:1.05rem;font-weight:700;color:var(--text-heading);line-height:1.2}
+.st-val span{font-size:.7rem;font-weight:500;color:var(--text-muted);margin-left:.15rem}
+.st-desc{font-size:.7rem;color:var(--text-muted);margin-top:.25rem;line-height:1.3}
+
+/* Recipe table */
+.rcp{
+  width:100%;border-collapse:collapse;background:var(--bg-card);
+  border:1px solid var(--border);border-radius:.6rem;overflow:hidden;
+  margin:1rem 0;font-size:.82rem;
+}
+.rcp th{
+  background:var(--accent-bg);color:var(--accent);text-align:left;
+  padding:.6rem .65rem;font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;
+  font-weight:700;border-bottom:1px solid var(--border);
+}
+.rcp td{
+  padding:.55rem .65rem;border-bottom:1px solid var(--border-soft);
+  vertical-align:top;
+}
+.rcp tr:last-child td{border-bottom:none}
+.rcp td:first-child{font-weight:600;color:var(--text-heading);width:38%}
+.rcp .num{color:var(--accent);font-weight:600;white-space:nowrap}
+
+/* Accordion */
+.acc{
+  margin:1rem 0;border:1px solid var(--border);
+  border-radius:.7rem;overflow:hidden;background:var(--bg-card);
+}
+.acc-item{border-bottom:1px solid var(--border-soft)}
+.acc-item:last-child{border-bottom:none}
+.acc-head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.75rem .9rem;cursor:pointer;font-size:.88rem;font-weight:600;
+  color:var(--text-heading);-webkit-tap-highlight-color:transparent;
+}
+.acc-head .acc-flag{font-size:1.1rem;margin-right:.5rem}
+.acc-head .acc-arrow{transition:transform .2s;color:var(--text-muted)}
+.acc-item.open .acc-arrow{transform:rotate(180deg)}
+.acc-detail{display:none;padding:0 .9rem .85rem;font-size:.82rem;color:var(--text);line-height:1.6}
+.acc-item.open .acc-detail{display:block}
+.acc-detail ul{list-style:none;padding:0;margin:.4rem 0}
+.acc-detail li{padding:.2rem 0;color:var(--text);font-size:.82rem}
+.acc-detail .label{font-weight:600;color:var(--text-heading)}
+
+/* Phase blocks */
+.phase{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:.8rem;padding:1.2rem 1.1rem;margin:1.2rem 0;
+}
+.phase-head{
+  display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem;
+  padding-bottom:.7rem;border-bottom:1px solid var(--border-soft);
+}
+.phase-num{
+  background:var(--accent);color:var(--bg);font-weight:700;font-size:.75rem;
+  width:1.8rem;height:1.8rem;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.phase-title{font-family:'Crimson Pro',serif;font-size:1.2rem;font-weight:600;color:var(--text-heading);margin:0}
+.phase ul{padding-left:1.1rem;margin:.4rem 0}
+.phase li{margin-bottom:.35rem;font-size:.88rem}
+
+/* Checklist */
+.chk{list-style:none;padding:0;margin:1rem 0}
+.chk li{
+  padding:.55rem .8rem;background:var(--bg-card);border:1px solid var(--border-soft);
+  border-radius:.5rem;margin-bottom:.45rem;font-size:.86rem;
+  display:flex;align-items:flex-start;gap:.55rem;
+}
+.chk li::before{content:'☐';color:var(--accent);font-size:1.1rem;line-height:1;flex-shrink:0}
+
+/* Footer */
+footer{
+  background:var(--bg-card);border-top:1px solid var(--border);
+  padding:2rem 1.5rem;text-align:center;font-size:.78rem;color:var(--text-muted);
+  margin-top:2rem;
+}
+footer .footer-contact{
+  background:var(--accent);color:var(--bg);border:none;
+  padding:.6rem 1.2rem;border-radius:.5rem;font-weight:600;font-size:.82rem;
+  cursor:pointer;margin-bottom:1rem;font-family:'Inter',sans-serif;
+}
+footer .hub-link{
+  display:inline-block;margin-top:.6rem;color:var(--accent);
+  font-size:.8rem;font-weight:500;
+}
+
+/* Dialog */
+.dialog-overlay{
+  display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;
+}
+.dialog-overlay.open{display:flex}
+.dialog-box{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:1rem;padding:1.75rem;max-width:300px;width:90%;text-align:center;
+}
+.dialog-box h4{color:var(--text-heading);margin-bottom:1rem}
+.dialog-option{
+  display:block;width:100%;padding:.65rem;margin-bottom:.6rem;border-radius:.5rem;
+  text-decoration:none;font-weight:600;font-size:.9rem;text-align:center;
+}
+.dialog-email{background:var(--accent);color:var(--bg)}
+.dialog-telegram{background:#0088cc;color:#fff}
+.dialog-close{
+  background:none;border:1px solid var(--border);color:var(--text-muted);cursor:pointer;
+  font-size:.82rem;padding:.4rem 1.2rem;border-radius:.4rem;margin-top:.2rem;
+  font-family:'Inter',sans-serif;
+}
+
+/* Coverage formula */
+.formula{
+  background:var(--code-bg);border:1px solid var(--border);
+  border-radius:.5rem;padding:.7rem .9rem;margin:.7rem 0;
+  font-family:monospace;font-size:.82rem;color:var(--text-heading);
+  border-left:3px solid var(--accent);
+}
+
+@media (max-width:520px){
+  .hero h1{font-size:1.9rem}
+  .hero{padding:4.5rem 1.2rem 2.8rem}
+  section{padding:1.8rem 1.1rem}
+  h2{font-size:1.4rem}
+  .stats-bar{flex-wrap:wrap}
+  .stat-cell{flex:1 1 50%;border-bottom:1px solid var(--border)}
+  .stat-cell:nth-child(odd){border-right:1px solid var(--border)}
+  .stat-cell:nth-child(even){border-right:none}
+  .stat-cell:nth-last-child(-n+2){border-bottom:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Language bar -->
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" onclick="setLang('es')">ES</button>
+  <button class="lang-btn" onclick="setLang('it')">IT</button>
+  <button class="lang-btn" onclick="setLang('de')">DE</button>
+</div>
+
+<!-- Theme toggle -->
+<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <span class="theme-icon" id="themeIcon">☀️</span>
+</button>
+
+<!-- HERO -->
+<section class="hero" style="max-width:none;padding-top:5rem">
+  <div class="hero-badge">
+    <span data-lang="en">Bio-Remediation Protocol</span>
+    <span data-lang="es">Protocolo de Bio-Remediación</span>
+    <span data-lang="it">Protocollo di Bio-Risanamento</span>
+    <span data-lang="de">Bio-Sanierungsprotokoll</span>
+  </div>
+  <h1>The Alkaline Veil</h1>
+  <p class="sub" data-lang="en">A dummy-proof, three-strike protocol to deep-reset a contaminated wood-and-earth space — kills mold, neutralizes decomposition residue, and seals every surface against future contamination.</p>
+  <p class="sub" data-lang="es">Un protocolo a prueba de tontos, en tres golpes, para resetear un espacio contaminado de madera y tierra — mata el moho, neutraliza los residuos de descomposición y sella cada superficie contra contaminaciones futuras.</p>
+  <p class="sub" data-lang="it">Un protocollo a prova di principianti, in tre colpi, per resettare uno spazio contaminato di legno e terra — uccide la muffa, neutralizza i residui di decomposizione e sigilla ogni superficie contro contaminazioni future.</p>
+  <p class="sub" data-lang="de">Ein narrensicheres Drei-Schlag-Protokoll, um einen kontaminierten Holz- und Erdraum tiefgreifend zurückzusetzen — tötet Schimmel, neutralisiert Verwesungsrückstände und versiegelt jede Oberfläche gegen zukünftige Kontamination.</p>
+  <p class="tagline">
+    <span data-lang="en">Acid · Alkali · Seal — chemistry, not magic.</span>
+    <span data-lang="es">Ácido · Álcali · Sellado — química, no magia.</span>
+    <span data-lang="it">Acido · Alcali · Sigillatura — chimica, non magia.</span>
+    <span data-lang="de">Säure · Lauge · Versiegelung — Chemie, keine Magie.</span>
+  </p>
+</section>
+
+<!-- THE PROBLEM -->
+<section>
+  <span class="section-num">01</span>
+  <h2>
+    <span data-lang="en">What you are fighting</span>
+    <span data-lang="es">Contra qué luchas</span>
+    <span data-lang="it">Contro cosa stai combattendo</span>
+    <span data-lang="de">Wogegen du kämpfst</span>
+  </h2>
+  <hr class="sep">
+  <p data-lang="en">When organic matter decomposes inside a closed space, it leaves three layers of contamination: <strong>volatile gases</strong> (the smell), <strong>microbial colonies</strong> (mold and bacteria living on every surface), and <strong>protein and fat residue</strong> soaked deep into porous materials like rammed earth, plywood and wood. Painting over it does nothing — the colonies feed on what stays underneath and re-emerge in weeks.</p>
+  <p data-lang="en">The Alkaline Veil works because it attacks all three layers in sequence: an acid that penetrates wood and kills mold spores, a strong alkali (lime) that raises the pH so high that no microbe can survive, and a binder (PVA glue) plus an antifungal (copper sulfate) that lock the seal in place for years.</p>
+
+  <p data-lang="es">Cuando la materia orgánica se descompone dentro de un espacio cerrado, deja tres capas de contaminación: <strong>gases volátiles</strong> (el olor), <strong>colonias microbianas</strong> (moho y bacterias viviendo en cada superficie) y <strong>residuos de proteína y grasa</strong> empapados profundamente en materiales porosos como tierra apisonada, contrachapado y madera. Pintar encima no sirve de nada — las colonias se alimentan de lo que queda debajo y reaparecen en semanas.</p>
+  <p data-lang="es">El Velo Alcalino funciona porque ataca las tres capas en secuencia: un ácido que penetra la madera y mata las esporas, un álcali fuerte (cal) que sube el pH tanto que ningún microbio sobrevive, y un aglutinante (cola PVA) más un antifúngico (sulfato de cobre) que fijan el sello durante años.</p>
+
+  <p data-lang="it">Quando la materia organica si decompone in uno spazio chiuso, lascia tre strati di contaminazione: <strong>gas volatili</strong> (l'odore), <strong>colonie microbiche</strong> (muffa e batteri che vivono su ogni superficie) e <strong>residui proteici e grassi</strong> impregnati in profondità nei materiali porosi come terra battuta, compensato e legno. Verniciare sopra non serve a nulla — le colonie si nutrono di ciò che resta sotto e riemergono in settimane.</p>
+  <p data-lang="it">Il Velo Alcalino funziona perché attacca tutti e tre gli strati in sequenza: un acido che penetra il legno e uccide le spore, un alcali forte (calce) che alza il pH così tanto che nessun microbo sopravvive, e un legante (colla vinilica) più un antifungino (solfato di rame) che fissano il sigillo per anni.</p>
+
+  <p data-lang="de">Wenn organisches Material in einem geschlossenen Raum verwest, hinterlässt es drei Kontaminationsschichten: <strong>flüchtige Gase</strong> (der Geruch), <strong>mikrobielle Kolonien</strong> (Schimmel und Bakterien auf jeder Oberfläche) und <strong>Eiweiß- und Fettrückstände</strong>, tief eingesickert in poröse Materialien wie Stampflehm, Sperrholz und Holz. Drüberstreichen bringt nichts — die Kolonien ernähren sich von dem, was darunter bleibt, und tauchen nach Wochen wieder auf.</p>
+  <p data-lang="de">Der Alkaline Veil wirkt, weil er alle drei Schichten nacheinander angreift: eine Säure, die ins Holz eindringt und Sporen tötet, eine starke Lauge (Kalk), die den pH-Wert so hoch treibt, dass keine Mikrobe überlebt, und ein Bindemittel (PVA-Leim) plus Antifungizid (Kupfersulfat), die die Versiegelung jahrelang fixieren.</p>
+
+  <div class="callout">
+    <strong data-lang="en">🌿 Beyond emergency reset — annual maintenance & re-inhabiting</strong>
+    <strong data-lang="es">🌿 Más allá del reseteo de emergencia — mantenimiento anual y re-habitar</strong>
+    <strong data-lang="it">🌿 Oltre il reset di emergenza — manutenzione annuale e re-abitare</strong>
+    <strong data-lang="de">🌿 Mehr als Notfall-Reset — jährliche Pflege & Wiederbeziehen</strong>
+    <span data-lang="en">This protocol also works as a strong annual maintenance treatment for any bioconstruction (earth, wood, straw-bale, alternative materials), and is especially valuable when re-inhabiting a hut, cottage, shelter or dwelling that has been abandoned for a long period. A single application kills accumulated mold, neutralizes lingering smells, and restores a clean alkaline baseline before you settle back in.</span>
+    <span data-lang="es">Este protocolo también funciona como un fuerte tratamiento anual de mantenimiento para cualquier bioconstrucción (tierra, madera, paja, materiales alternativos), y es especialmente valioso al re-habitar una cabaña, casita, refugio o vivienda abandonada durante mucho tiempo. Una sola aplicación mata el moho acumulado, neutraliza los olores persistentes y restaura una base alcalina limpia antes de volver a instalarse.</span>
+    <span data-lang="it">Questo protocollo funziona anche come potente trattamento di manutenzione annuale per qualsiasi bioedilizia (terra, legno, paglia, materiali alternativi), ed è particolarmente prezioso quando si torna ad abitare una capanna, casetta, rifugio o abitazione rimasta a lungo abbandonata. Una sola applicazione uccide la muffa accumulata, neutralizza gli odori persistenti e ripristina una base alcalina pulita prima di re-insediarsi.</span>
+    <span data-lang="de">Dieses Protokoll funktioniert auch als starke jährliche Pflegebehandlung für jede Bio-Bauweise (Lehm, Holz, Strohballen, alternative Materialien) und ist besonders wertvoll, wenn man eine Hütte, ein Häuschen, einen Unterstand oder eine Behausung wieder bezieht, die lange verlassen war. Eine einzige Anwendung tötet angesammelten Schimmel, neutralisiert hartnäckige Gerüche und stellt eine saubere alkalische Basis wieder her, bevor man wieder einzieht.</span>
+  </div>
+</section>
+
+<!-- STATS / OVERVIEW -->
+<section style="padding-top:.5rem">
+  <div class="stats-bar">
+    <div class="stat-cell">
+      <div class="st-val">4</div>
+      <div class="st-desc">
+        <span data-lang="en">Phases</span>
+        <span data-lang="es">Fases</span>
+        <span data-lang="it">Fasi</span>
+        <span data-lang="de">Phasen</span>
+      </div>
+    </div>
+    <div class="stat-cell">
+      <div class="st-val">2–3 <span>days</span></div>
+      <div class="st-desc">
+        <span data-lang="en">Total work time</span>
+        <span data-lang="es">Tiempo total</span>
+        <span data-lang="it">Tempo totale</span>
+        <span data-lang="de">Gesamtdauer</span>
+      </div>
+    </div>
+    <div class="stat-cell">
+      <div class="st-val">€30–60</div>
+      <div class="st-desc">
+        <span data-lang="en">Materials (small cottage)</span>
+        <span data-lang="es">Materiales (casita)</span>
+        <span data-lang="it">Materiali (casetta)</span>
+        <span data-lang="de">Material (kleine Hütte)</span>
+      </div>
+    </div>
+    <div class="stat-cell">
+      <div class="st-val">10+ <span>yr</span></div>
+      <div class="st-desc">
+        <span data-lang="en">Seal lifespan</span>
+        <span data-lang="es">Duración del sello</span>
+        <span data-lang="it">Durata del sigillo</span>
+        <span data-lang="de">Versiegelungsdauer</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE STRATEGY -->
+<section>
+  <span class="section-num">02</span>
+  <h2>
+    <span data-lang="en">The strategy in one glance</span>
+    <span data-lang="es">La estrategia de un vistazo</span>
+    <span data-lang="it">La strategia in un colpo d'occhio</span>
+    <span data-lang="de">Die Strategie auf einen Blick</span>
+  </h2>
+  <hr class="sep">
+
+  <div class="phase">
+    <div class="phase-head">
+      <div class="phase-num">0</div>
+      <h3 class="phase-title">
+        <span data-lang="en">Excavate & Pre-clean</span>
+        <span data-lang="es">Excavar y limpiar</span>
+        <span data-lang="it">Scavare e pre-pulire</span>
+        <span data-lang="de">Ausschaben und vorreinigen</span>
+      </h3>
+    </div>
+    <p data-lang="en">Remove the contaminated top 2–5 cm of earth at ground zero. Apply enzyme cleaner to digest fat/protein residue. Ventilate.</p>
+    <p data-lang="es">Retira los 2–5 cm superiores de tierra contaminada en la zona cero. Aplica limpiador enzimático para digerir grasas y proteínas. Ventila.</p>
+    <p data-lang="it">Rimuovi i primi 2–5 cm di terra contaminata nel punto zero. Applica un detergente enzimatico per digerire grassi e proteine. Ventila.</p>
+    <p data-lang="de">Entferne die obersten 2–5 cm kontaminierter Erde am Nullpunkt. Trage Enzymreiniger auf, um Fett- und Eiweißreste zu zersetzen. Lüfte.</p>
+  </div>
+
+  <div class="phase">
+    <div class="phase-head">
+      <div class="phase-num">1</div>
+      <h3 class="phase-title">
+        <span data-lang="en">The Vinegar Strike</span>
+        <span data-lang="es">El Golpe de Vinagre</span>
+        <span data-lang="it">Il Colpo d'Aceto</span>
+        <span data-lang="de">Der Essigschlag</span>
+      </h3>
+    </div>
+    <p data-lang="en">Spray pure white vinegar on every wood surface. Acetic acid penetrates fibers and kills 80%+ of mold species. Wait 12–24 h.</p>
+    <p data-lang="es">Pulveriza vinagre blanco puro sobre cada superficie de madera. El ácido acético penetra las fibras y mata más del 80% de las especies de moho. Espera 12–24 h.</p>
+    <p data-lang="it">Spruzza aceto bianco puro su ogni superficie di legno. L'acido acetico penetra le fibre e uccide oltre l'80% delle specie di muffa. Attendi 12–24 h.</p>
+    <p data-lang="de">Sprühe reinen weißen Essig auf jede Holzoberfläche. Essigsäure dringt in die Fasern ein und tötet über 80% der Schimmelarten. 12–24 h warten.</p>
+  </div>
+
+  <div class="phase">
+    <div class="phase-head">
+      <div class="phase-num">2</div>
+      <h3 class="phase-title">
+        <span data-lang="en">The Blue Milk</span>
+        <span data-lang="es">La Leche Azul</span>
+        <span data-lang="it">Il Latte Azzurro</span>
+        <span data-lang="de">Die Blaue Milch</span>
+      </h3>
+    </div>
+    <p data-lang="en">Lime + copper sulfate + PVA glue + salt + borax. Raises pH above 12 — nothing biological survives. PVA binds it to wood like a thin sheet of stone-plastic.</p>
+    <p data-lang="es">Cal + sulfato de cobre + cola PVA + sal + bórax. Sube el pH por encima de 12 — nada biológico sobrevive. La cola PVA lo fija a la madera como una fina capa de piedra-plástico.</p>
+    <p data-lang="it">Calce + solfato di rame + colla vinilica + sale + borace. Alza il pH oltre 12 — nulla di biologico sopravvive. La colla fissa il composto al legno come un sottile strato di pietra-plastica.</p>
+    <p data-lang="de">Kalk + Kupfersulfat + PVA-Leim + Salz + Borax. Hebt den pH-Wert über 12 — nichts Biologisches überlebt. Der Leim bindet alles wie eine dünne Stein-Plastik-Schicht ans Holz.</p>
+  </div>
+
+  <div class="phase">
+    <div class="phase-head">
+      <div class="phase-num">3</div>
+      <h3 class="phase-title">
+        <span data-lang="en">Application & Cure</span>
+        <span data-lang="es">Aplicación y curado</span>
+        <span data-lang="it">Applicazione e maturazione</span>
+        <span data-lang="de">Auftragen und Aushärten</span>
+      </h3>
+    </div>
+    <p data-lang="en">2 coats on wood, 3 coats on earth, extra paste at the contamination spot. 48 h ventilation so the lime carbonates back into stone.</p>
+    <p data-lang="es">2 capas en madera, 3 capas en tierra, pasta extra en el punto de contaminación. 48 h de ventilación para que la cal carbonate y vuelva a piedra.</p>
+    <p data-lang="it">2 mani sul legno, 3 mani sulla terra, pasta extra sul punto contaminato. 48 h di ventilazione perché la calce carbonati e torni pietra.</p>
+    <p data-lang="de">2 Schichten auf Holz, 3 Schichten auf Erde, extra Paste am Kontaminationspunkt. 48 h lüften, damit der Kalk zurück zu Stein karbonatisiert.</p>
+  </div>
+</section>
+
+<!-- PHASE 0 -->
+<section>
+  <span class="section-num">03</span>
+  <h2>
+    <span data-lang="en">Phase 0 — Excavate & Pre-clean</span>
+    <span data-lang="es">Fase 0 — Excavar y limpiar</span>
+    <span data-lang="it">Fase 0 — Scavare e pre-pulire</span>
+    <span data-lang="de">Phase 0 — Ausschaben und vorreinigen</span>
+  </h2>
+  <hr class="sep">
+
+  <h4>
+    <span data-lang="en">Step A — Remove the contaminated earth</span>
+    <span data-lang="es">Paso A — Retira la tierra contaminada</span>
+    <span data-lang="it">Passo A — Rimuovi la terra contaminata</span>
+    <span data-lang="de">Schritt A — Entferne die kontaminierte Erde</span>
+  </h4>
+  <p data-lang="en">At ground zero (where decomposition fluids soaked in), scrape off the top <strong>2–5 cm</strong> of rammed earth with a flat shovel or trowel. Bag it in a thick contractor bag and dispose of it at least 50 m from the building. Without this, you are sealing contamination in instead of removing it.</p>
+  <p data-lang="es">En la zona cero (donde los fluidos de descomposición empaparon el suelo), raspa los primeros <strong>2–5 cm</strong> de tierra apisonada con una pala plana o una llana. Embolsa los restos en una bolsa de obra gruesa y deséchalos al menos a 50 m del edificio. Sin esto, estás sellando la contaminación en vez de eliminarla.</p>
+  <p data-lang="it">Sul punto zero (dove i fluidi di decomposizione si sono infiltrati), raschia i primi <strong>2–5 cm</strong> di terra battuta con una pala piatta o una cazzuola. Insacca tutto in un sacco da cantiere robusto e smaltisci ad almeno 50 m dall'edificio. Senza questo, stai sigillando la contaminazione invece di rimuoverla.</p>
+  <p data-lang="de">Am Nullpunkt (wo Verwesungsflüssigkeiten eingedrungen sind) die obersten <strong>2–5 cm</strong> Stampflehm mit einem Flachspaten oder einer Kelle abkratzen. In einen festen Bausack verpacken und mindestens 50 m vom Gebäude entfernt entsorgen. Ohne diesen Schritt versiegelst du die Kontamination, statt sie zu entfernen.</p>
+
+  <h4>
+    <span data-lang="en">Step B — Enzyme cleaner pre-treatment</span>
+    <span data-lang="es">Paso B — Pre-tratamiento con limpiador enzimático</span>
+    <span data-lang="it">Passo B — Pre-trattamento con detergente enzimatico</span>
+    <span data-lang="de">Schritt B — Vorbehandlung mit Enzymreiniger</span>
+  </h4>
+  <p data-lang="en">Lime alone does not break down proteins and fats — those keep feeding microbes underneath the seal. Spray a bio-enzyme cleaner (laundry enzyme detergent works: <strong>1 cap per 1 L water</strong>, ~5 m² coverage) on every contaminated surface. Let it sit 30–60 minutes, then wipe with a damp cloth and let dry overnight before Phase 1.</p>
+  <p data-lang="es">La cal sola no descompone proteínas ni grasas — eso sigue alimentando microbios bajo el sello. Pulveriza un limpiador bio-enzimático (un detergente con enzimas vale: <strong>1 tapón por 1 L de agua</strong>, cubre ~5 m²) sobre cada superficie contaminada. Déjalo actuar 30–60 minutos, pasa un trapo húmedo y deja secar toda la noche antes de la Fase 1.</p>
+  <p data-lang="it">La sola calce non scompone proteine e grassi — questi continuano a nutrire i microbi sotto il sigillo. Spruzza un detergente bio-enzimatico (un detersivo con enzimi va bene: <strong>1 tappo per 1 L d'acqua</strong>, copre ~5 m²) su ogni superficie contaminata. Lascia agire 30–60 minuti, passa un panno umido e lascia asciugare tutta la notte prima della Fase 1.</p>
+  <p data-lang="de">Kalk allein zersetzt keine Proteine oder Fette — diese ernähren weiterhin Mikroben unter der Versiegelung. Sprühe einen Bio-Enzymreiniger (Enzym-Waschmittel reicht: <strong>1 Verschluss auf 1 L Wasser</strong>, deckt ~5 m²) auf jede kontaminierte Oberfläche. 30–60 Minuten einwirken lassen, mit feuchtem Lappen abwischen und über Nacht trocknen lassen, bevor Phase 1 beginnt.</p>
+
+  <h4>
+    <span data-lang="en">Step C — Solar UV-C step (optional but recommended)</span>
+    <span data-lang="es">Paso C — Paso solar UV-C (opcional pero recomendado)</span>
+    <span data-lang="it">Passo C — Passo solare UV-C (opzionale ma consigliato)</span>
+    <span data-lang="de">Schritt C — Sonnen-UV-C-Schritt (optional aber empfohlen)</span>
+  </h4>
+  <p data-lang="en">Take all removable items (textiles, tools, mattresses, rugs) outside and lay them in direct sunlight for at least <strong>6 hours</strong>. Solar UV-C kills surface microbes for free.</p>
+  <p data-lang="es">Saca todos los objetos removibles (textiles, herramientas, colchones, alfombras) y déjalos al sol directo al menos <strong>6 horas</strong>. La UV-C solar mata microbios superficiales gratis.</p>
+  <p data-lang="it">Porta fuori tutti gli oggetti rimovibili (tessuti, attrezzi, materassi, tappeti) e lasciali al sole diretto per almeno <strong>6 ore</strong>. L'UV-C solare uccide i microbi di superficie gratis.</p>
+  <p data-lang="de">Bringe alle abnehmbaren Gegenstände (Textilien, Werkzeuge, Matratzen, Teppiche) nach draußen und lass sie mindestens <strong>6 Stunden</strong> in direktem Sonnenlicht liegen. Solare UV-C tötet Oberflächenmikroben kostenlos.</p>
+
+  <div class="callout warn">
+    <strong data-lang="en">⚠ Wear PPE from this step on</strong>
+    <strong data-lang="es">⚠ Usa EPI desde este paso</strong>
+    <strong data-lang="it">⚠ Indossa DPI da questo passo</strong>
+    <strong data-lang="de">⚠ Trage PSA ab diesem Schritt</strong>
+    <span data-lang="en">FFP3/N95 mask, nitrile gloves, full sleeves, plastic goggles. Disturbed mold colonies aerosolize spores you don't want in your lungs.</span>
+    <span data-lang="es">Mascarilla FFP3/N95, guantes de nitrilo, manga larga, gafas de plástico. Las colonias de moho perturbadas liberan esporas que no quieres en los pulmones.</span>
+    <span data-lang="it">Mascherina FFP3/N95, guanti in nitrile, maniche lunghe, occhiali di plastica. Le colonie di muffa disturbate rilasciano spore che non vuoi nei polmoni.</span>
+    <span data-lang="de">FFP3/N95-Maske, Nitrilhandschuhe, lange Ärmel, Plastikbrille. Gestörte Schimmelkolonien geben Sporen frei, die du nicht in der Lunge haben willst.</span>
+  </div>
+</section>
+
+<!-- PHASE 1 -->
+<section>
+  <span class="section-num">04</span>
+  <h2>
+    <span data-lang="en">Phase 1 — The Vinegar Strike</span>
+    <span data-lang="es">Fase 1 — El Golpe de Vinagre</span>
+    <span data-lang="it">Fase 1 — Il Colpo d'Aceto</span>
+    <span data-lang="de">Phase 1 — Der Essigschlag</span>
+  </h2>
+  <hr class="sep">
+
+  <p data-lang="en">Before the lime, you kill the mold. Vinegar (acetic acid) penetrates plywood and wood fibers far better than water-based solutions and kills the majority of surface mold species in one application.</p>
+  <p data-lang="es">Antes de la cal, matas el moho. El vinagre (ácido acético) penetra el contrachapado y las fibras de madera mucho mejor que las soluciones acuosas y mata la mayoría de las especies de moho superficiales en una sola aplicación.</p>
+  <p data-lang="it">Prima della calce, uccidi la muffa. L'aceto (acido acetico) penetra il compensato e le fibre del legno molto meglio delle soluzioni acquose e uccide la maggior parte delle specie di muffa superficiali in una sola applicazione.</p>
+  <p data-lang="de">Vor dem Kalk tötest du den Schimmel. Essig (Essigsäure) dringt deutlich besser in Sperrholz und Holzfasern ein als wasserbasierte Lösungen und tötet die meisten Oberflächenschimmelarten mit einer einzigen Anwendung.</p>
+
+  <h4>
+    <span data-lang="en">Quantities — per m² and per liter</span>
+    <span data-lang="es">Cantidades — por m² y por litro</span>
+    <span data-lang="it">Quantità — per m² e per litro</span>
+    <span data-lang="de">Mengen — pro m² und pro Liter</span>
+  </h4>
+
+  <table class="rcp" data-lang="en">
+    <thead><tr><th>For</th><th>Vinegar needed</th></tr></thead>
+    <tbody>
+      <tr><td>Per 1 m² of wood/plywood</td><td><span class="num">~100 ml</span> (light spray, 2 passes)</td></tr>
+      <tr><td>Per 10 m²</td><td><span class="num">1 L</span> white vinegar</td></tr>
+      <tr><td>Small cottage (~25 m² total wood)</td><td><span class="num">2.5 L</span></td></tr>
+      <tr><td>Medium cottage (~50 m²)</td><td><span class="num">5 L</span></td></tr>
+      <tr><td>Strength</td><td>100% pure (cheapest white, do NOT dilute)</td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="es">
+    <thead><tr><th>Para</th><th>Vinagre necesario</th></tr></thead>
+    <tbody>
+      <tr><td>Por 1 m² de madera/contrachapado</td><td><span class="num">~100 ml</span> (rociado ligero, 2 pasadas)</td></tr>
+      <tr><td>Por 10 m²</td><td><span class="num">1 L</span> de vinagre blanco</td></tr>
+      <tr><td>Casita pequeña (~25 m² madera)</td><td><span class="num">2,5 L</span></td></tr>
+      <tr><td>Casita mediana (~50 m²)</td><td><span class="num">5 L</span></td></tr>
+      <tr><td>Concentración</td><td>100% puro (el blanco más barato, NO diluir)</td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="it">
+    <thead><tr><th>Per</th><th>Aceto necessario</th></tr></thead>
+    <tbody>
+      <tr><td>Per 1 m² di legno/compensato</td><td><span class="num">~100 ml</span> (spruzzo leggero, 2 passate)</td></tr>
+      <tr><td>Per 10 m²</td><td><span class="num">1 L</span> di aceto bianco</td></tr>
+      <tr><td>Casetta piccola (~25 m² legno)</td><td><span class="num">2,5 L</span></td></tr>
+      <tr><td>Casetta media (~50 m²)</td><td><span class="num">5 L</span></td></tr>
+      <tr><td>Concentrazione</td><td>100% puro (bianco economico, NON diluire)</td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="de">
+    <thead><tr><th>Für</th><th>Essig benötigt</th></tr></thead>
+    <tbody>
+      <tr><td>Pro 1 m² Holz/Sperrholz</td><td><span class="num">~100 ml</span> (leichter Sprühnebel, 2 Durchgänge)</td></tr>
+      <tr><td>Pro 10 m²</td><td><span class="num">1 L</span> weißer Essig</td></tr>
+      <tr><td>Kleine Hütte (~25 m² Holz)</td><td><span class="num">2,5 L</span></td></tr>
+      <tr><td>Mittlere Hütte (~50 m²)</td><td><span class="num">5 L</span></td></tr>
+      <tr><td>Konzentration</td><td>100% pur (billigster Weißessig, NICHT verdünnen)</td></tr>
+    </tbody>
+  </table>
+
+  <h4>
+    <span data-lang="en">How to apply</span>
+    <span data-lang="es">Cómo aplicar</span>
+    <span data-lang="it">Come applicare</span>
+    <span data-lang="de">Wie auftragen</span>
+  </h4>
+  <p data-lang="en">Use a simple plastic spray bottle (1 L garden type). Spray every plywood panel, every wood beam, every joint. Don't soak — fine mist, twice. Let it dry completely for <strong>12–24 hours</strong>. The smell vanishes once it dries. Open windows and doors fully during this phase.</p>
+  <p data-lang="es">Usa un pulverizador de plástico simple (tipo jardín, 1 L). Pulveriza cada panel de contrachapado, cada viga, cada junta. No empapes — niebla fina, dos veces. Deja secar completamente <strong>12–24 horas</strong>. El olor desaparece al secar. Abre puertas y ventanas durante toda esta fase.</p>
+  <p data-lang="it">Usa un semplice nebulizzatore di plastica (tipo giardino, 1 L). Spruzza ogni pannello di compensato, ogni trave, ogni giunto. Non inzuppare — nebbia fine, due passate. Lascia asciugare completamente per <strong>12–24 ore</strong>. L'odore svanisce con l'asciugatura. Apri porte e finestre durante tutta questa fase.</p>
+  <p data-lang="de">Verwende eine einfache Plastiksprühflasche (Gartentyp, 1 L). Sprühe jede Sperrholzplatte, jeden Holzbalken, jede Fuge. Nicht durchnässen — feiner Nebel, zwei Durchgänge. <strong>12–24 Stunden</strong> vollständig trocknen lassen. Der Geruch verschwindet beim Trocknen. Türen und Fenster während dieser ganzen Phase weit offen lassen.</p>
+
+  <div class="callout">
+    <strong data-lang="en">💡 Optional booster</strong>
+    <strong data-lang="es">💡 Refuerzo opcional</strong>
+    <strong data-lang="it">💡 Potenziatore opzionale</strong>
+    <strong data-lang="de">💡 Optionaler Booster</strong>
+    <span data-lang="en">For stubborn black spots, follow the vinegar with a 3% hydrogen peroxide spray after 2 hours. Do NOT mix peroxide and vinegar in the same bottle — apply sequentially.</span>
+    <span data-lang="es">Para manchas negras tenaces, después de 2 horas pulveriza peróxido de hidrógeno al 3%. NO mezcles peróxido y vinagre en el mismo bote — aplícalos por separado.</span>
+    <span data-lang="it">Per macchie nere ostinate, dopo 2 ore spruzza perossido di idrogeno al 3%. NON mescolare perossido e aceto nella stessa bottiglia — applica separatamente.</span>
+    <span data-lang="de">Bei hartnäckigen schwarzen Flecken nach 2 Stunden 3%iges Wasserstoffperoxid sprühen. Peroxid und Essig NIE in derselben Flasche mischen — nacheinander auftragen.</span>
+  </div>
+</section>
+
+<!-- PHASE 2 — BLUE MILK -->
+<section>
+  <span class="section-num">05</span>
+  <h2>
+    <span data-lang="en">Phase 2 — The Blue Milk recipe</span>
+    <span data-lang="es">Fase 2 — La receta de la Leche Azul</span>
+    <span data-lang="it">Fase 2 — La ricetta del Latte Azzurro</span>
+    <span data-lang="de">Phase 2 — Das Rezept der Blauen Milch</span>
+  </h2>
+  <hr class="sep">
+
+  <p data-lang="en">This is your main weapon. Five ingredients. Mixed in the right order, in plastic buckets only (copper sulfate eats metal). Below are the ratios per <strong>1 liter of mix</strong>, per <strong>5 L (small bucket)</strong>, and per <strong>10 L (standard bucket)</strong> — pick whichever bucket you have.</p>
+  <p data-lang="es">Esta es tu arma principal. Cinco ingredientes. Mezclados en el orden correcto, solo en cubos de plástico (el sulfato de cobre corroe el metal). Abajo tienes las proporciones por <strong>1 litro de mezcla</strong>, por <strong>5 L (cubo pequeño)</strong> y por <strong>10 L (cubo estándar)</strong> — usa el cubo que tengas.</p>
+  <p data-lang="it">Questa è la tua arma principale. Cinque ingredienti. Miscelati nell'ordine giusto, solo in secchi di plastica (il solfato di rame corrode il metallo). Sotto trovi le proporzioni per <strong>1 litro di miscela</strong>, per <strong>5 L (secchio piccolo)</strong> e per <strong>10 L (secchio standard)</strong> — usa il secchio che hai.</p>
+  <p data-lang="de">Das ist deine Hauptwaffe. Fünf Zutaten. In der richtigen Reihenfolge gemischt, ausschließlich in Plastikeimern (Kupfersulfat frisst Metall). Unten findest du die Anteile pro <strong>1 Liter Mischung</strong>, pro <strong>5 L (kleiner Eimer)</strong> und pro <strong>10 L (Standardeimer)</strong> — nimm den Eimer, den du hast.</p>
+
+  <h4>
+    <span data-lang="en">Master recipe</span>
+    <span data-lang="es">Receta maestra</span>
+    <span data-lang="it">Ricetta madre</span>
+    <span data-lang="de">Grundrezept</span>
+  </h4>
+
+  <table class="rcp" data-lang="en">
+    <thead><tr><th>Ingredient</th><th>per 1 L</th><th>5 L bucket</th><th>10 L bucket</th></tr></thead>
+    <tbody>
+      <tr><td>Water (warm)</td><td class="num">700 ml</td><td class="num">3.5 L</td><td class="num">7 L</td></tr>
+      <tr><td>Hydrated lime</td><td class="num">450 g</td><td class="num">2.25 kg</td><td class="num">4.5 kg</td></tr>
+      <tr><td>PVA glue (white wood glue)</td><td class="num">70 ml</td><td class="num">350 ml</td><td class="num">700 ml</td></tr>
+      <tr><td>Copper sulfate (blue stone)</td><td class="num">12 g</td><td class="num">60 g</td><td class="num">120 g</td></tr>
+      <tr><td>Borax (optional, anti-fungal)</td><td class="num">8 g</td><td class="num">40 g</td><td class="num">80 g</td></tr>
+      <tr><td>Coarse salt (hardener)</td><td class="num">6 g</td><td class="num">30 g</td><td class="num">60 g (2 small handfuls)</td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="es">
+    <thead><tr><th>Ingrediente</th><th>por 1 L</th><th>cubo 5 L</th><th>cubo 10 L</th></tr></thead>
+    <tbody>
+      <tr><td>Agua (templada)</td><td class="num">700 ml</td><td class="num">3,5 L</td><td class="num">7 L</td></tr>
+      <tr><td>Cal apagada (hidratada)</td><td class="num">450 g</td><td class="num">2,25 kg</td><td class="num">4,5 kg</td></tr>
+      <tr><td>Cola blanca PVA (de carpintero)</td><td class="num">70 ml</td><td class="num">350 ml</td><td class="num">700 ml</td></tr>
+      <tr><td>Sulfato de cobre (piedra azul)</td><td class="num">12 g</td><td class="num">60 g</td><td class="num">120 g</td></tr>
+      <tr><td>Bórax (opcional, antifúngico)</td><td class="num">8 g</td><td class="num">40 g</td><td class="num">80 g</td></tr>
+      <tr><td>Sal gruesa (endurecedor)</td><td class="num">6 g</td><td class="num">30 g</td><td class="num">60 g (2 puñados pequeños)</td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="it">
+    <thead><tr><th>Ingrediente</th><th>per 1 L</th><th>secchio 5 L</th><th>secchio 10 L</th></tr></thead>
+    <tbody>
+      <tr><td>Acqua (tiepida)</td><td class="num">700 ml</td><td class="num">3,5 L</td><td class="num">7 L</td></tr>
+      <tr><td>Calce idrata (spenta)</td><td class="num">450 g</td><td class="num">2,25 kg</td><td class="num">4,5 kg</td></tr>
+      <tr><td>Colla vinilica (per legno)</td><td class="num">70 ml</td><td class="num">350 ml</td><td class="num">700 ml</td></tr>
+      <tr><td>Solfato di rame (pietra azzurra)</td><td class="num">12 g</td><td class="num">60 g</td><td class="num">120 g</td></tr>
+      <tr><td>Borace (opzionale, antifungino)</td><td class="num">8 g</td><td class="num">40 g</td><td class="num">80 g</td></tr>
+      <tr><td>Sale grosso (indurente)</td><td class="num">6 g</td><td class="num">30 g</td><td class="num">60 g (2 manciate piccole)</td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="de">
+    <thead><tr><th>Zutat</th><th>pro 1 L</th><th>5 L Eimer</th><th>10 L Eimer</th></tr></thead>
+    <tbody>
+      <tr><td>Wasser (warm)</td><td class="num">700 ml</td><td class="num">3,5 L</td><td class="num">7 L</td></tr>
+      <tr><td>Sumpfkalk / Kalkhydrat</td><td class="num">450 g</td><td class="num">2,25 kg</td><td class="num">4,5 kg</td></tr>
+      <tr><td>Weißleim (PVA, Holzleim)</td><td class="num">70 ml</td><td class="num">350 ml</td><td class="num">700 ml</td></tr>
+      <tr><td>Kupfersulfat (Blaustein)</td><td class="num">12 g</td><td class="num">60 g</td><td class="num">120 g</td></tr>
+      <tr><td>Borax (optional, Antifungizid)</td><td class="num">8 g</td><td class="num">40 g</td><td class="num">80 g</td></tr>
+      <tr><td>Grobes Salz (Härter)</td><td class="num">6 g</td><td class="num">30 g</td><td class="num">60 g (2 kleine Handvoll)</td></tr>
+    </tbody>
+  </table>
+
+  <h4>
+    <span data-lang="en">Coverage — how much surface 1 bucket covers</span>
+    <span data-lang="es">Cobertura — cuánta superficie cubre 1 cubo</span>
+    <span data-lang="it">Copertura — quanta superficie copre 1 secchio</span>
+    <span data-lang="de">Reichweite — wie viel Fläche 1 Eimer abdeckt</span>
+  </h4>
+
+  <table class="rcp" data-lang="en">
+    <thead><tr><th>Surface</th><th>1 L mix covers</th><th>10 L bucket covers</th></tr></thead>
+    <tbody>
+      <tr><td>Plywood / wood, 1 thin coat</td><td class="num">~5 m²</td><td class="num">~50 m²</td></tr>
+      <tr><td>Plywood / wood, 2 coats (final)</td><td class="num">~3 m²</td><td class="num">~25–30 m²</td></tr>
+      <tr><td>Rammed earth, 1 thick coat</td><td class="num">~3 m²</td><td class="num">~25 m²</td></tr>
+      <tr><td>Rammed earth, 3 coats (final)</td><td class="num">~1.5 m²</td><td class="num">~12–15 m²</td></tr>
+      <tr><td>Stone wall, 2 coats (final)</td><td class="num">~3 m²</td><td class="num">~28–30 m²</td></tr>
+      <tr><td><strong>Quick formula</strong></td><td colspan="2"><span class="formula" style="display:block">L of mix needed = m² × 0.30 (wood) · × 0.35 (stone) · × 0.55 (earth)</span></td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="es">
+    <thead><tr><th>Superficie</th><th>1 L cubre</th><th>cubo 10 L cubre</th></tr></thead>
+    <tbody>
+      <tr><td>Contrachapado / madera, 1 capa fina</td><td class="num">~5 m²</td><td class="num">~50 m²</td></tr>
+      <tr><td>Contrachapado / madera, 2 capas (final)</td><td class="num">~3 m²</td><td class="num">~25–30 m²</td></tr>
+      <tr><td>Tierra apisonada, 1 capa gruesa</td><td class="num">~3 m²</td><td class="num">~25 m²</td></tr>
+      <tr><td>Tierra apisonada, 3 capas (final)</td><td class="num">~1,5 m²</td><td class="num">~12–15 m²</td></tr>
+      <tr><td>Muro de piedra, 2 capas (final)</td><td class="num">~3 m²</td><td class="num">~28–30 m²</td></tr>
+      <tr><td><strong>Fórmula rápida</strong></td><td colspan="2"><span class="formula" style="display:block">L de mezcla = m² × 0,30 (madera) · × 0,35 (piedra) · × 0,55 (tierra)</span></td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="it">
+    <thead><tr><th>Superficie</th><th>1 L copre</th><th>secchio 10 L copre</th></tr></thead>
+    <tbody>
+      <tr><td>Compensato / legno, 1 mano sottile</td><td class="num">~5 m²</td><td class="num">~50 m²</td></tr>
+      <tr><td>Compensato / legno, 2 mani (finale)</td><td class="num">~3 m²</td><td class="num">~25–30 m²</td></tr>
+      <tr><td>Terra battuta, 1 mano spessa</td><td class="num">~3 m²</td><td class="num">~25 m²</td></tr>
+      <tr><td>Terra battuta, 3 mani (finale)</td><td class="num">~1,5 m²</td><td class="num">~12–15 m²</td></tr>
+      <tr><td>Muro di pietra, 2 mani (finale)</td><td class="num">~3 m²</td><td class="num">~28–30 m²</td></tr>
+      <tr><td><strong>Formula rapida</strong></td><td colspan="2"><span class="formula" style="display:block">L di miscela = m² × 0,30 (legno) · × 0,35 (pietra) · × 0,55 (terra)</span></td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="de">
+    <thead><tr><th>Oberfläche</th><th>1 L deckt</th><th>10 L Eimer deckt</th></tr></thead>
+    <tbody>
+      <tr><td>Sperrholz / Holz, 1 dünne Schicht</td><td class="num">~5 m²</td><td class="num">~50 m²</td></tr>
+      <tr><td>Sperrholz / Holz, 2 Schichten (final)</td><td class="num">~3 m²</td><td class="num">~25–30 m²</td></tr>
+      <tr><td>Stampflehm, 1 dicke Schicht</td><td class="num">~3 m²</td><td class="num">~25 m²</td></tr>
+      <tr><td>Stampflehm, 3 Schichten (final)</td><td class="num">~1,5 m²</td><td class="num">~12–15 m²</td></tr>
+      <tr><td>Steinmauer, 2 Schichten (final)</td><td class="num">~3 m²</td><td class="num">~28–30 m²</td></tr>
+      <tr><td><strong>Schnellformel</strong></td><td colspan="2"><span class="formula" style="display:block">L Mischung = m² × 0,30 (Holz) · × 0,35 (Stein) · × 0,55 (Erde)</span></td></tr>
+    </tbody>
+  </table>
+
+  <h4>
+    <span data-lang="en">Mixing order — do not skip steps</span>
+    <span data-lang="es">Orden de mezcla — no saltes pasos</span>
+    <span data-lang="it">Ordine di miscelazione — non saltare passaggi</span>
+    <span data-lang="de">Mischreihenfolge — keine Schritte überspringen</span>
+  </h4>
+
+  <ol style="padding-left:1.3rem;margin:.6rem 0">
+    <li data-lang="en"><strong>Blue water:</strong> dissolve copper sulfate in 1 L (or 0.5 L for small batches) of warm water in a separate plastic container. Stir until clear blue "ink." 5 min.</li>
+    <li data-lang="en"><strong>Slake the lime:</strong> in your main bucket, put the cold water (1 L less than total — you'll add the blue water later). SLOWLY pour the lime in while stirring constantly with a wood stick. Never the reverse. It will get warm. Stir until it looks like thick milk.</li>
+    <li data-lang="en"><strong>Combine:</strong> pour the blue water into the lime bucket. The mix turns pale teal-blue.</li>
+    <li data-lang="en"><strong>Add PVA glue:</strong> stir in the white glue last but one. The mix becomes "creamy" and slightly thicker.</li>
+    <li data-lang="en"><strong>Salt + borax (if used):</strong> dissolve them in a tiny bit of warm water first, then stir in. Don't dump them dry — they clump.</li>
+    <li data-lang="en"><strong>Rest 10 min, stir again, apply.</strong> The mix stays workable for ~6 hours; if it sets, add a splash of water and stir.</li>
+
+    <li data-lang="es"><strong>Agua azul:</strong> disuelve el sulfato de cobre en 1 L (o 0,5 L para lotes pequeños) de agua templada, en un recipiente plástico aparte. Remueve hasta obtener una "tinta" azul clara. 5 min.</li>
+    <li data-lang="es"><strong>Apaga la cal:</strong> en el cubo principal pon el agua fría (1 L menos del total — el agua azul se añade después). Vierte la cal LENTAMENTE mientras remueves sin parar con un palo de madera. Nunca al revés. Se calentará. Remueve hasta que parezca leche espesa.</li>
+    <li data-lang="es"><strong>Combina:</strong> echa el agua azul en el cubo de cal. La mezcla se vuelve azul-turquesa pálido.</li>
+    <li data-lang="es"><strong>Añade la cola PVA:</strong> integra la cola blanca penúltima. La mezcla se pone "cremosa" y algo más densa.</li>
+    <li data-lang="es"><strong>Sal + bórax (si se usa):</strong> disuélvelos primero en un poco de agua templada, luego incorpóralos. No los eches secos — forman grumos.</li>
+    <li data-lang="es"><strong>Reposa 10 min, remueve y aplica.</strong> La mezcla aguanta ~6 horas; si fragua, añade un chorrito de agua y remueve.</li>
+
+    <li data-lang="it"><strong>Acqua blu:</strong> sciogli il solfato di rame in 1 L (o 0,5 L per piccole quantità) di acqua tiepida, in un contenitore di plastica separato. Mescola fino a ottenere un "inchiostro" blu chiaro. 5 min.</li>
+    <li data-lang="it"><strong>Spegnimento della calce:</strong> nel secchio principale metti l'acqua fredda (1 L meno del totale — l'acqua blu si aggiunge dopo). Versa la calce LENTAMENTE mentre mescoli senza sosta con un bastone di legno. Mai al contrario. Si scalderà. Mescola fino a sembrare latte denso.</li>
+    <li data-lang="it"><strong>Combina:</strong> versa l'acqua blu nel secchio della calce. La miscela diventa azzurro-turchese pallido.</li>
+    <li data-lang="it"><strong>Aggiungi colla PVA:</strong> incorpora la colla bianca per penultima. La miscela diventa "cremosa" e leggermente più densa.</li>
+    <li data-lang="it"><strong>Sale + borace (se usato):</strong> scioglili prima in poca acqua tiepida, poi mescola. Non versarli a secco — formano grumi.</li>
+    <li data-lang="it"><strong>Riposo 10 min, mescola, applica.</strong> La miscela resta lavorabile per ~6 ore; se indurisce, aggiungi un goccio d'acqua e mescola.</li>
+
+    <li data-lang="de"><strong>Blaues Wasser:</strong> Löse das Kupfersulfat in 1 L (oder 0,5 L für kleine Mengen) warmem Wasser in einem separaten Plastikbehälter. Rühre, bis eine klare blaue "Tinte" entsteht. 5 Min.</li>
+    <li data-lang="de"><strong>Kalk löschen:</strong> Gib in den Hauptkübel das kalte Wasser (1 L weniger als die Gesamtmenge — das blaue Wasser kommt später). LANGSAM den Kalk einrühren, dabei mit einem Holzstab pausenlos rühren. Niemals umgekehrt. Es wird warm. Rühre, bis es wie dicke Milch aussieht.</li>
+    <li data-lang="de"><strong>Verbinden:</strong> Gieße das blaue Wasser in den Kalkkübel. Die Mischung wird hellblau-türkis.</li>
+    <li data-lang="de"><strong>PVA-Leim hinzufügen:</strong> Rühre den Weißleim als Vorletztes ein. Die Mischung wird "cremig" und etwas dicker.</li>
+    <li data-lang="de"><strong>Salz + Borax (falls genutzt):</strong> Erst in wenig warmem Wasser auflösen, dann einrühren. Nicht trocken einschütten — bildet Klumpen.</li>
+    <li data-lang="de"><strong>10 Min ruhen lassen, umrühren, auftragen.</strong> Die Mischung bleibt ~6 Stunden verarbeitbar; falls sie abbindet, einen Schluck Wasser nachgeben und rühren.</li>
+  </ol>
+
+  <div class="callout warn">
+    <strong data-lang="en">⚠ Plastic only — never metal</strong>
+    <strong data-lang="es">⚠ Solo plástico — nunca metal</strong>
+    <strong data-lang="it">⚠ Solo plastica — mai metallo</strong>
+    <strong data-lang="de">⚠ Nur Plastik — niemals Metall</strong>
+    <span data-lang="en">Copper sulfate corrodes metal buckets, stirring sticks and trowels. Use plastic buckets, plastic or wood sticks, plastic or natural-bristle brushes only.</span>
+    <span data-lang="es">El sulfato de cobre corroe cubos, palos y llanas metálicas. Usa solo cubos de plástico, palos de plástico o madera y brochas de plástico o cerda natural.</span>
+    <span data-lang="it">Il solfato di rame corrode secchi, bastoni e cazzuole metalliche. Usa solo secchi di plastica, bastoni di plastica o legno e pennelli di plastica o setola naturale.</span>
+    <span data-lang="de">Kupfersulfat korrodiert Metalleimer, Rührstäbe und Kellen. Nur Plastikeimer, Plastik- oder Holzstäbe und Plastik- oder Naturborstenpinsel verwenden.</span>
+  </div>
+</section>
+
+<!-- PHASE 3 — APPLICATION -->
+<section>
+  <span class="section-num">06</span>
+  <h2>
+    <span data-lang="en">Phase 3 — Where and how to apply</span>
+    <span data-lang="es">Fase 3 — Dónde y cómo aplicar</span>
+    <span data-lang="it">Fase 3 — Dove e come applicare</span>
+    <span data-lang="de">Phase 3 — Wo und wie auftragen</span>
+  </h2>
+  <hr class="sep">
+
+  <h3>
+    <span data-lang="en">A. Rammed earth floor — the seal</span>
+    <span data-lang="es">A. Suelo de tierra apisonada — el sello</span>
+    <span data-lang="it">A. Pavimento in terra battuta — il sigillo</span>
+    <span data-lang="de">A. Stampflehmboden — die Versiegelung</span>
+  </h3>
+  <ul style="padding-left:1.2rem;margin-bottom:.8rem">
+    <li data-lang="en"><strong>3 coats.</strong> First coat: dilute the mix with 20% extra water — you want it to soak into the dirt. Coats 2 and 3: standard thick mix.</li>
+    <li data-lang="en"><strong>Tool:</strong> a stiff masonry brush (bidinea / banister brush). Don't use a roller — it pulls up the dirt.</li>
+    <li data-lang="en"><strong>Drying:</strong> 4–8 hours between coats. Each coat must be chalky-dry to the touch before the next.</li>
+
+    <li data-lang="es"><strong>3 capas.</strong> Primera capa: diluye la mezcla con un 20% más de agua — quieres que penetre la tierra. Capas 2 y 3: mezcla estándar gruesa.</li>
+    <li data-lang="es"><strong>Herramienta:</strong> brocha de albañil rígida (bidinea / bastón). No uses rodillo — arranca tierra.</li>
+    <li data-lang="es"><strong>Secado:</strong> 4–8 horas entre capas. Cada capa debe estar seca y caliza al tacto antes de la siguiente.</li>
+
+    <li data-lang="it"><strong>3 mani.</strong> Prima mano: diluisci la miscela con il 20% di acqua in più — deve infiltrarsi nella terra. Mani 2 e 3: miscela standard densa.</li>
+    <li data-lang="it"><strong>Strumento:</strong> pennellone da muratore rigido (pennellessa). Non usare rullo — solleva la terra.</li>
+    <li data-lang="it"><strong>Asciugatura:</strong> 4–8 ore tra le mani. Ogni mano deve essere asciutta e gessosa al tatto prima della successiva.</li>
+
+    <li data-lang="de"><strong>3 Schichten.</strong> Erste Schicht: Mischung mit 20% mehr Wasser verdünnen — sie soll in den Boden einsickern. Schichten 2 und 3: Standard-Dickmischung.</li>
+    <li data-lang="de"><strong>Werkzeug:</strong> steife Maurerbürste (Streichbürste). Keine Rolle — reißt Erde mit.</li>
+    <li data-lang="de"><strong>Trocknung:</strong> 4–8 Stunden zwischen den Schichten. Jede Schicht muss kreidig-trocken sein, bevor die nächste kommt.</li>
+  </ul>
+
+  <div class="callout">
+    <strong data-lang="en">🎨 Pigmenting the floor dark</strong>
+    <strong data-lang="es">🎨 Pigmentar el suelo oscuro</strong>
+    <strong data-lang="it">🎨 Pigmentare il pavimento scuro</strong>
+    <strong data-lang="de">🎨 Den Boden dunkel pigmentieren</strong>
+    <span data-lang="en">All three options below are alkali-stable and can be dry-mixed into the lime before slaking. Lime wash always lightens ~30% as it carbonates, so add more pigment than your target shade and test a small patch first.</span>
+    <span data-lang="es">Las tres opciones siguientes son estables al álcali y pueden mezclarse en seco con la cal antes de apagarla. El encalado siempre se aclara ~30% al carbonatar, así que añade más pigmento que el tono deseado y haz una prueba pequeña primero.</span>
+    <span data-lang="it">Tutte e tre le opzioni qui sotto sono stabili agli alcali e possono essere miscelate a secco con la calce prima dello spegnimento. La calce schiarisce sempre del ~30% carbonatando, quindi aggiungi più pigmento del tono desiderato e fai una prova prima.</span>
+    <span data-lang="de">Alle drei Optionen unten sind alkalibeständig und können trocken mit dem Kalk vor dem Löschen vermischt werden. Kalkanstrich hellt beim Karbonatisieren immer um ~30% auf, also mehr Pigment zugeben als die Zielfarbe und vorher eine kleine Testfläche anlegen.</span>
+  </div>
+
+  <table class="rcp" data-lang="en">
+    <thead><tr><th>Pigment</th><th>% by weight of lime</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>Wood ash (sieved)</td><td class="num">5–10%</td><td>Soft warm gray. Free if you have a stove. Alkali-friendly.</td></tr>
+      <tr><td>Powdered charcoal</td><td class="num">10–15%</td><td>Deep gray to near-black. Slightly weakens the wash above 15%.</td></tr>
+      <tr><td>Black iron oxide pigment</td><td class="num">5–10%</td><td>Stable deep black. ~€5–10/kg in any drogería.</td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="es">
+    <thead><tr><th>Pigmento</th><th>% sobre el peso de cal</th><th>Resultado</th></tr></thead>
+    <tbody>
+      <tr><td>Ceniza de leña (tamizada)</td><td class="num">5–10%</td><td>Gris cálido suave. Gratis si tienes estufa. Compatible con álcali.</td></tr>
+      <tr><td>Carbón vegetal en polvo</td><td class="num">10–15%</td><td>Gris oscuro a casi negro. Por encima del 15% debilita ligeramente el encalado.</td></tr>
+      <tr><td>Óxido de hierro negro</td><td class="num">5–10%</td><td>Negro profundo estable. ~€5–10/kg en cualquier droguería.</td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="it">
+    <thead><tr><th>Pigmento</th><th>% sul peso della calce</th><th>Risultato</th></tr></thead>
+    <tbody>
+      <tr><td>Cenere di legna (setacciata)</td><td class="num">5–10%</td><td>Grigio caldo morbido. Gratis se hai una stufa. Compatibile con alcali.</td></tr>
+      <tr><td>Carbone vegetale in polvere</td><td class="num">10–15%</td><td>Grigio scuro fino a quasi nero. Oltre il 15% indebolisce leggermente il composto.</td></tr>
+      <tr><td>Ossido di ferro nero</td><td class="num">5–10%</td><td>Nero profondo stabile. ~€5–10/kg in qualsiasi drogheria.</td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="de">
+    <thead><tr><th>Pigment</th><th>% vom Kalkgewicht</th><th>Ergebnis</th></tr></thead>
+    <tbody>
+      <tr><td>Holzasche (gesiebt)</td><td class="num">5–10%</td><td>Sanft warmes Grau. Kostenlos mit Holzofen. Alkalifest.</td></tr>
+      <tr><td>Pulverkohle</td><td class="num">10–15%</td><td>Tiefes Grau bis Fast-Schwarz. Über 15% schwächt den Anstrich leicht.</td></tr>
+      <tr><td>Eisenoxidpigment schwarz</td><td class="num">5–10%</td><td>Stabiles Tiefschwarz. ~5–10 €/kg in jeder Drogerie.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>
+    <span data-lang="en">B. Plywood and wood beams</span>
+    <span data-lang="es">B. Contrachapado y vigas de madera</span>
+    <span data-lang="it">B. Compensato e travi di legno</span>
+    <span data-lang="de">B. Sperrholz und Holzbalken</span>
+  </h3>
+  <ul style="padding-left:1.2rem;margin-bottom:.8rem">
+    <li data-lang="en"><strong>2 coats.</strong> Standard mix on both.</li>
+    <li data-lang="en"><strong>Technique:</strong> plywood drinks fast. Paint quickly, don't over-brush — over-brushing pulls the top fibers and the surface peels.</li>
+    <li data-lang="en"><strong>Tool:</strong> wide brush (8–10 cm) or thick-nap roller. Brush is better for joints and beams; roller for flat panels.</li>
+    <li data-lang="en"><strong>Drying:</strong> 6–12 hours between coats. The first coat looks streaky — that's normal. Coat 2 evens out.</li>
+
+    <li data-lang="es"><strong>2 capas.</strong> Mezcla estándar en ambas.</li>
+    <li data-lang="es"><strong>Técnica:</strong> el contrachapado bebe rápido. Pinta deprisa, sin sobrepasar — al insistir levantas las fibras y se descama.</li>
+    <li data-lang="es"><strong>Herramienta:</strong> brocha ancha (8–10 cm) o rodillo de pelo grueso. Brocha mejor para juntas y vigas; rodillo para paneles lisos.</li>
+    <li data-lang="es"><strong>Secado:</strong> 6–12 horas entre capas. La primera capa se ve a rayas — es normal. La 2ª iguala.</li>
+
+    <li data-lang="it"><strong>2 mani.</strong> Miscela standard in entrambe.</li>
+    <li data-lang="it"><strong>Tecnica:</strong> il compensato beve in fretta. Dipingi velocemente, non insistere — insistendo sollevi le fibre e la superficie si stacca.</li>
+    <li data-lang="it"><strong>Strumento:</strong> pennello largo (8–10 cm) o rullo a pelo lungo. Pennello meglio per giunti e travi; rullo per pannelli piatti.</li>
+    <li data-lang="it"><strong>Asciugatura:</strong> 6–12 ore tra le mani. La prima mano sembra a righe — è normale. La 2ª uniforma.</li>
+
+    <li data-lang="de"><strong>2 Schichten.</strong> Standardmischung für beide.</li>
+    <li data-lang="de"><strong>Technik:</strong> Sperrholz saugt schnell. Schnell streichen, nicht nachpinseln — sonst löst du die Oberfaser und es blättert ab.</li>
+    <li data-lang="de"><strong>Werkzeug:</strong> breiter Pinsel (8–10 cm) oder Rolle mit langem Flor. Pinsel besser für Fugen und Balken; Rolle für glatte Platten.</li>
+    <li data-lang="de"><strong>Trocknung:</strong> 6–12 Stunden zwischen den Schichten. Erste Schicht wirkt streifig — normal. Schicht 2 gleicht aus.</li>
+  </ul>
+
+  <h3>
+    <span data-lang="en">C. Stone walls — interior and exterior</span>
+    <span data-lang="es">C. Muros de piedra — interior y exterior</span>
+    <span data-lang="it">C. Muri di pietra — interni ed esterni</span>
+    <span data-lang="de">C. Steinmauern — innen und außen</span>
+  </h3>
+  <ul style="padding-left:1.2rem;margin-bottom:.8rem">
+    <li data-lang="en"><strong>2 coats.</strong> Standard mix; for very rough or dry-stacked stone, give a third pass on the joints.</li>
+    <li data-lang="en"><strong>Mist the wall first.</strong> Spray with clean water until uniformly damp (not soaking) — dry stone burns the lime fast and gives a powdery, weak finish.</li>
+    <li data-lang="en"><strong>Tool:</strong> stiff masonry brush or 10 cm natural-bristle brush; work the mix deep into the joints. Roller is poor on irregular surfaces.</li>
+    <li data-lang="en"><strong>Drying:</strong> 6–12 hours between coats. Stone takes longer than wood — wait for full surface dryness before the next coat.</li>
+    <li data-lang="en"><strong>Exterior note:</strong> the same recipe is the classic Mediterranean <em>encalado</em> — perfect for outside use, breathable, and reflective enough to keep the walls cool in summer.</li>
+
+    <li data-lang="es"><strong>2 capas.</strong> Mezcla estándar; en piedra muy rugosa o en seco da una tercera pasada en las juntas.</li>
+    <li data-lang="es"><strong>Humedece el muro primero.</strong> Pulveriza agua limpia hasta dejarlo uniformemente húmedo (sin empapar) — la piedra seca quema la cal y deja un acabado polvoriento y débil.</li>
+    <li data-lang="es"><strong>Herramienta:</strong> brocha de albañil rígida o brocha de cerda natural de 10 cm; trabaja la mezcla bien dentro de las juntas. El rodillo va mal en superficies irregulares.</li>
+    <li data-lang="es"><strong>Secado:</strong> 6–12 horas entre capas. La piedra tarda más que la madera — espera a que la superficie esté totalmente seca antes de repasar.</li>
+    <li data-lang="es"><strong>Nota exterior:</strong> esta misma receta es el <em>encalado</em> mediterráneo de toda la vida — perfecta para uso exterior, transpirable y reflectante, mantiene los muros frescos en verano.</li>
+
+    <li data-lang="it"><strong>2 mani.</strong> Miscela standard; su pietra molto ruvida o a secco dai una terza passata sui giunti.</li>
+    <li data-lang="it"><strong>Inumidisci il muro prima.</strong> Spruzza acqua pulita fino a renderlo uniformemente umido (non zuppo) — la pietra asciutta brucia la calce e dà una finitura polverosa e debole.</li>
+    <li data-lang="it"><strong>Strumento:</strong> pennellone da muratore rigido o pennello a setola naturale da 10 cm; lavora la miscela in profondità nei giunti. Il rullo va male su superfici irregolari.</li>
+    <li data-lang="it"><strong>Asciugatura:</strong> 6–12 ore tra le mani. La pietra impiega più del legno — attendi che la superficie sia completamente asciutta prima della successiva.</li>
+    <li data-lang="it"><strong>Nota esterna:</strong> la stessa ricetta è la classica calcinatura mediterranea — perfetta per uso esterno, traspirante e riflettente, mantiene i muri freschi d'estate.</li>
+
+    <li data-lang="de"><strong>2 Schichten.</strong> Standardmischung; bei sehr rauem oder trocken aufgeschichtetem Stein einen dritten Auftrag auf den Fugen geben.</li>
+    <li data-lang="de"><strong>Mauer vorher anfeuchten.</strong> Mit sauberem Wasser besprühen, bis sie gleichmäßig feucht ist (nicht durchnässt) — trockener Stein verbrennt den Kalk und ergibt ein pulvriges, schwaches Finish.</li>
+    <li data-lang="de"><strong>Werkzeug:</strong> steife Maurerbürste oder 10 cm Naturborstenpinsel; die Mischung tief in die Fugen arbeiten. Rolle ist auf unregelmäßigen Flächen schlecht.</li>
+    <li data-lang="de"><strong>Trocknung:</strong> 6–12 Stunden zwischen den Schichten. Stein braucht länger als Holz — auf vollständige Oberflächentrockenheit warten.</li>
+    <li data-lang="de"><strong>Außenanwendung:</strong> Dasselbe Rezept ist der klassische mediterrane Kalkanstrich — perfekt für draußen, atmungsaktiv und reflektierend, hält die Mauern im Sommer kühl.</li>
+  </ul>
+
+  <h3>
+    <span data-lang="en">D. The contamination spot — ground zero</span>
+    <span data-lang="es">D. El punto de contaminación — la zona cero</span>
+    <span data-lang="it">D. Il punto di contaminazione — punto zero</span>
+    <span data-lang="de">D. Der Kontaminationspunkt — Nullpunkt</span>
+  </h3>
+  <ul style="padding-left:1.2rem;margin-bottom:.8rem">
+    <li data-lang="en"><strong>Dry lime sprinkle first.</strong> After Phase 0, sprinkle <strong>250–500 g of dry hydrated lime per m²</strong> directly on the spot. Let sit 1 hour. Sweep loose excess.</li>
+    <li data-lang="en"><strong>Then thick paste.</strong> Mix Blue Milk with only <strong>500 ml of water per kg of lime</strong> (instead of the standard 1.5 L) — you want a yogurt-like paste. Apply with a small trowel or thick brush. 1 cm layer is fine.</li>
+    <li data-lang="en"><strong>Activated charcoal layer.</strong> After cure, place 2–3 small bowls of activated charcoal or zeolite on top for 14 days to adsorb residual odor.</li>
+
+    <li data-lang="es"><strong>Espolvorea cal seca primero.</strong> Después de la Fase 0, esparce <strong>250–500 g de cal apagada seca por m²</strong> directamente sobre el punto. Deja 1 hora. Barre el exceso suelto.</li>
+    <li data-lang="es"><strong>Luego pasta espesa.</strong> Mezcla la Leche Azul con solo <strong>500 ml de agua por kg de cal</strong> (en vez de los 1,5 L estándar) — quieres una pasta tipo yogur. Aplica con paleta pequeña o brocha gruesa. 1 cm de espesor está bien.</li>
+    <li data-lang="es"><strong>Capa de carbón activado.</strong> Tras curar, pon 2–3 cuencos pequeños de carbón activado o zeolita encima durante 14 días para adsorber el olor residual.</li>
+
+    <li data-lang="it"><strong>Prima spolvero di calce secca.</strong> Dopo la Fase 0, spargi <strong>250–500 g di calce spenta secca per m²</strong> direttamente sul punto. Lascia 1 ora. Spazza l'eccesso libero.</li>
+    <li data-lang="it"><strong>Poi pasta densa.</strong> Miscela il Latte Azzurro con solo <strong>500 ml d'acqua per kg di calce</strong> (invece dei 1,5 L standard) — serve una pasta tipo yogurt. Applica con cazzuolino o pennello spesso. 1 cm di spessore va bene.</li>
+    <li data-lang="it"><strong>Strato di carbone attivo.</strong> Dopo la stagionatura, metti 2–3 ciotoline di carbone attivo o zeolite sopra per 14 giorni per assorbire l'odore residuo.</li>
+
+    <li data-lang="de"><strong>Erst trockenen Kalk streuen.</strong> Nach Phase 0 <strong>250–500 g trockenen Kalkhydrat pro m²</strong> direkt auf den Punkt streuen. 1 Stunde liegen lassen. Loseüberschuss abkehren.</li>
+    <li data-lang="de"><strong>Dann dicke Paste.</strong> Blaue Milch nur mit <strong>500 ml Wasser pro kg Kalk</strong> mischen (statt der üblichen 1,5 L) — du willst eine joghurtartige Paste. Mit kleiner Kelle oder dickem Pinsel auftragen. 1 cm Schichtdicke reicht.</li>
+    <li data-lang="de"><strong>Aktivkohle-Schicht.</strong> Nach Aushärtung 2–3 kleine Schalen Aktivkohle oder Zeolith für 14 Tage darauflegen, um Restgeruch zu binden.</li>
+  </ul>
+
+  <div class="callout good">
+    <strong data-lang="en">🌬 Cure phase — keep ventilation high</strong>
+    <strong data-lang="es">🌬 Fase de curado — mantén alta la ventilación</strong>
+    <strong data-lang="it">🌬 Fase di stagionatura — tieni alta la ventilazione</strong>
+    <strong data-lang="de">🌬 Aushärtungsphase — Lüftung hoch halten</strong>
+    <span data-lang="en">After the final coat, leave doors and windows wide open for 48 hours. Lime needs CO₂ from the air to carbonate back into stone. The "gritty feel" in your eyes disappears once carbonation is complete.</span>
+    <span data-lang="es">Tras la última capa, deja puertas y ventanas abiertas durante 48 horas. La cal necesita CO₂ del aire para carbonatar y volver a piedra. La sensación "arenosa" en los ojos desaparece al completarse la carbonatación.</span>
+    <span data-lang="it">Dopo l'ultima mano, tieni porte e finestre spalancate per 48 ore. La calce ha bisogno di CO₂ dall'aria per carbonatare e tornare pietra. La sensazione "granulosa" agli occhi sparisce a carbonatazione completata.</span>
+    <span data-lang="de">Nach der letzten Schicht Türen und Fenster 48 Stunden weit offen lassen. Kalk braucht CO₂ aus der Luft, um zu Stein zu karbonatisieren. Das "Sandgefühl" in den Augen verschwindet, sobald die Karbonatisierung abgeschlossen ist.</span>
+  </div>
+</section>
+
+<!-- PPE -->
+<section>
+  <span class="section-num">07</span>
+  <h2>
+    <span data-lang="en">Safety & PPE</span>
+    <span data-lang="es">Seguridad y EPI</span>
+    <span data-lang="it">Sicurezza e DPI</span>
+    <span data-lang="de">Sicherheit & PSA</span>
+  </h2>
+  <hr class="sep">
+
+  <ul class="chk">
+    <li data-lang="en"><strong>FFP3 / N95 mask.</strong> Mandatory for all phases. Mold spores aerosolize when disturbed.</li>
+    <li data-lang="en"><strong>Nitrile gloves under cotton gloves.</strong> Lime sucks moisture out of skin and causes deep cracks ("lime burns").</li>
+    <li data-lang="en"><strong>Plastic safety goggles.</strong> A drop of lime in the eye is a chemical burn. Wear them, even if it's "just for a minute."</li>
+    <li data-lang="en"><strong>Long sleeves and full pants.</strong> Splashes happen on every job.</li>
+    <li data-lang="en"><strong>Closed shoes (rubber boots ideal).</strong> Earth dust + lime + bleach residues are not for bare feet.</li>
+    <li data-lang="en"><strong>If lime hits skin: rinse 15 minutes with cold water.</strong> If in eye: rinse 15 minutes and seek medical attention.</li>
+    <li data-lang="en"><strong>Do NOT mix bleach with vinegar.</strong> Releases chlorine gas. Never use bleach in this protocol.</li>
+    <li data-lang="en"><strong>Do NOT eat, drink or smoke during work.</strong> Wash hands and face thoroughly between phases.</li>
+
+    <li data-lang="es"><strong>Mascarilla FFP3 / N95.</strong> Obligatoria en todas las fases. Las esporas de moho se aerosolizan al moverse.</li>
+    <li data-lang="es"><strong>Guantes de nitrilo bajo guantes de algodón.</strong> La cal absorbe la humedad de la piel y provoca grietas profundas ("quemadura por cal").</li>
+    <li data-lang="es"><strong>Gafas de seguridad de plástico.</strong> Una gota de cal en el ojo es una quemadura química. Úsalas siempre, aunque sea "un momento".</li>
+    <li data-lang="es"><strong>Manga larga y pantalón largo.</strong> Las salpicaduras pasan en todos los trabajos.</li>
+    <li data-lang="es"><strong>Calzado cerrado (botas de goma idealmente).</strong> Polvo + cal + restos no son para pies descalzos.</li>
+    <li data-lang="es"><strong>Si cae cal en la piel: enjuaga 15 minutos con agua fría.</strong> Si cae en el ojo: enjuaga 15 minutos y acude al médico.</li>
+    <li data-lang="es"><strong>NO mezcles lejía con vinagre.</strong> Libera gas cloro. Nunca uses lejía en este protocolo.</li>
+    <li data-lang="es"><strong>NO comas, bebas ni fumes durante el trabajo.</strong> Lávate manos y cara a fondo entre fases.</li>
+
+    <li data-lang="it"><strong>Mascherina FFP3 / N95.</strong> Obbligatoria in tutte le fasi. Le spore di muffa si aerosolizzano quando vengono mosse.</li>
+    <li data-lang="it"><strong>Guanti in nitrile sotto guanti di cotone.</strong> La calce sottrae umidità alla pelle e provoca screpolature profonde ("ustione da calce").</li>
+    <li data-lang="it"><strong>Occhiali di sicurezza in plastica.</strong> Una goccia di calce nell'occhio è un'ustione chimica. Indossali sempre, anche solo "per un momento".</li>
+    <li data-lang="it"><strong>Maniche e pantaloni lunghi.</strong> Gli schizzi capitano in ogni lavoro.</li>
+    <li data-lang="it"><strong>Calzature chiuse (stivali in gomma ideali).</strong> Polvere + calce + residui non sono per piedi nudi.</li>
+    <li data-lang="it"><strong>Se la calce tocca la pelle: sciacqua 15 minuti con acqua fredda.</strong> Se finisce nell'occhio: sciacqua 15 minuti e vai dal medico.</li>
+    <li data-lang="it"><strong>NON mescolare candeggina con aceto.</strong> Libera cloro gas. Mai usare candeggina in questo protocollo.</li>
+    <li data-lang="it"><strong>NON mangiare, bere o fumare durante il lavoro.</strong> Lavati mani e viso a fondo tra le fasi.</li>
+
+    <li data-lang="de"><strong>FFP3 / N95-Maske.</strong> Pflicht in allen Phasen. Schimmelsporen werden beim Aufwirbeln aerosolisiert.</li>
+    <li data-lang="de"><strong>Nitrilhandschuhe unter Baumwollhandschuhen.</strong> Kalk entzieht der Haut Feuchtigkeit und verursacht tiefe Risse ("Kalkverbrennung").</li>
+    <li data-lang="de"><strong>Plastik-Schutzbrille.</strong> Ein Tropfen Kalk im Auge ist eine Verätzung. Immer tragen, auch "nur kurz".</li>
+    <li data-lang="de"><strong>Lange Ärmel und Hosen.</strong> Spritzer passieren bei jedem Job.</li>
+    <li data-lang="de"><strong>Geschlossene Schuhe (am besten Gummistiefel).</strong> Erdstaub + Kalk + Reste sind nichts für nackte Füße.</li>
+    <li data-lang="de"><strong>Bei Kalk auf der Haut: 15 Minuten mit kaltem Wasser spülen.</strong> Bei Auge: 15 Minuten spülen und Arzt aufsuchen.</li>
+    <li data-lang="de"><strong>KEIN Bleichmittel mit Essig mischen.</strong> Setzt Chlorgas frei. Bleiche kommt in diesem Protokoll nie zum Einsatz.</li>
+    <li data-lang="de"><strong>NICHT essen, trinken oder rauchen während der Arbeit.</strong> Hände und Gesicht zwischen den Phasen gründlich waschen.</li>
+  </ul>
+</section>
+
+<!-- SOURCING -->
+<section>
+  <span class="section-num">08</span>
+  <h2>
+    <span data-lang="en">Where to buy — local sourcing guide</span>
+    <span data-lang="es">Dónde comprar — guía de compra local</span>
+    <span data-lang="it">Dove comprare — guida acquisti locali</span>
+    <span data-lang="de">Wo kaufen — lokaler Einkaufsführer</span>
+  </h2>
+  <hr class="sep">
+
+  <p data-lang="en">All five ingredients are cheap and available in any small town. Use the right local name and you'll be in and out of the shop in 5 minutes.</p>
+  <p data-lang="es">Los cinco ingredientes son baratos y se encuentran en cualquier pueblo. Usa el nombre local correcto y entras y sales de la tienda en 5 minutos.</p>
+  <p data-lang="it">Tutti e cinque gli ingredienti sono economici e si trovano in ogni paese. Usa il nome locale giusto ed entri ed esci dal negozio in 5 minuti.</p>
+  <p data-lang="de">Alle fünf Zutaten sind günstig und in jeder Kleinstadt erhältlich. Mit dem richtigen lokalen Namen bist du in 5 Minuten im und aus dem Laden.</p>
+
+  <div class="acc">
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head">
+        <span><span class="acc-flag">🇪🇸</span>España / Andalucía</span>
+        <span class="acc-arrow">▼</span>
+      </div>
+      <div class="acc-detail">
+        <ul>
+          <li><span class="label">Vinagre blanco:</span> supermercado, ~€0,50/L. Compra el más barato (5–10° acidez)</li>
+          <li><span class="label">Cal apagada / cal hidratada:</span> ferretería o droguería. Saco 25 kg, ~€8–12. Pide "cal apagada en polvo"</li>
+          <li><span class="label">Cola blanca PVA:</span> ferretería. Bote de 1 kg ~€6–10. "Cola blanca de carpintero" o "Aracet" (marca)</li>
+          <li><span class="label">Sulfato de cobre / Piedra azul:</span> agro-tienda o droguería. Caja de 250 g ~€5–8. "Sulfato de cobre" o "Caldo bordelés en polvo" (precaución: ya viene mezclado con cal — pide solo el sulfato)</li>
+          <li><span class="label">Bórax:</span> droguería o farmacia. Bolsa 500 g ~€6</li>
+          <li><span class="label">Sal gruesa:</span> supermercado, ~€0,80/kg</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head">
+        <span><span class="acc-flag">🇮🇹</span>Italia</span>
+        <span class="acc-arrow">▼</span>
+      </div>
+      <div class="acc-detail">
+        <ul>
+          <li><span class="label">Aceto bianco:</span> supermercato, ~€0,50/L. Anche aceto di alcol</li>
+          <li><span class="label">Calce idrata / calce spenta:</span> ferramenta o consorzio agrario. Sacco 25 kg, ~€8–12</li>
+          <li><span class="label">Colla vinilica (Vinavil):</span> ferramenta o brico-center. Barattolo 1 kg ~€7–10</li>
+          <li><span class="label">Solfato di rame / Verderame:</span> consorzio agrario o ferramenta agricola. Scatola 500 g ~€8–12. Conosciuto come "Poltiglia bordolese" se già miscelato — chiedi solfato puro</li>
+          <li><span class="label">Borace:</span> farmacia o drogheria. 500 g ~€7</li>
+          <li><span class="label">Sale grosso:</span> supermercato, ~€0,80/kg</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head">
+        <span><span class="acc-flag">🇩🇪</span>Deutschland / Österreich / Schweiz</span>
+        <span class="acc-arrow">▼</span>
+      </div>
+      <div class="acc-detail">
+        <ul>
+          <li><span class="label">Weißer Essig / Essigessenz:</span> Supermarkt. Reine Essigessenz (25%) muss verdünnt werden auf ~5% — billiger Haushaltsessig direkt nutzen, ~0,50 €/L</li>
+          <li><span class="label">Sumpfkalk / Kalkhydrat:</span> Baumarkt (Hornbach, OBI, Bauhaus) oder Landhandel. 25 kg Sack, ~10–14 €. "Weißkalkhydrat CL90"</li>
+          <li><span class="label">Weißleim / PVA-Holzleim:</span> Baumarkt. 1 kg ~7–11 €. Ponal Classic ist der Klassiker</li>
+          <li><span class="label">Kupfersulfat / Blaustein / Kupfervitriol:</span> Apotheke, Landhandel oder online. 500 g ~10–15 €</li>
+          <li><span class="label">Borax:</span> Apotheke (in Deutschland regelreguliert) oder online. 500 g ~8–12 €</li>
+          <li><span class="label">Grobes Salz:</span> Supermarkt, ~1 €/kg</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="acc-item" onclick="this.classList.toggle('open')">
+      <div class="acc-head">
+        <span><span class="acc-flag">🌍</span>Generic / Other countries</span>
+        <span class="acc-arrow">▼</span>
+      </div>
+      <div class="acc-detail">
+        <ul>
+          <li><span class="label">White distilled vinegar</span> — supermarket / grocery</li>
+          <li><span class="label">Hydrated lime (calcium hydroxide, Ca(OH)₂)</span> — masonry supply, hardware store, agricultural co-op. Also called "slaked lime" or "builder's lime"</li>
+          <li><span class="label">PVA wood glue</span> — hardware store. Brand-agnostic; common ones: Elmer's, Titebond, Ponal, Vinavil, Aracet</li>
+          <li><span class="label">Copper sulfate pentahydrate (CuSO₄·5H₂O)</span> — agricultural supply (fungicide/algaecide section), pool supply, online chemistry suppliers. "Bluestone" is a common nickname</li>
+          <li><span class="label">Borax (sodium tetraborate)</span> — pharmacy, laundry aisle (in some countries), or online</li>
+          <li><span class="label">Coarse / kosher salt</span> — supermarket</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VERIFICATION -->
+<section>
+  <span class="section-num">09</span>
+  <h2>
+    <span data-lang="en">Verification & long-term maintenance</span>
+    <span data-lang="es">Verificación y mantenimiento a largo plazo</span>
+    <span data-lang="it">Verifica e manutenzione a lungo termine</span>
+    <span data-lang="de">Prüfung & Langzeitpflege</span>
+  </h2>
+  <hr class="sep">
+
+  <h4>
+    <span data-lang="en">After 48 hours of cure</span>
+    <span data-lang="es">A las 48 horas del curado</span>
+    <span data-lang="it">Dopo 48 ore di stagionatura</span>
+    <span data-lang="de">Nach 48 Stunden Aushärtung</span>
+  </h4>
+  <ul style="padding-left:1.2rem;margin-bottom:.8rem">
+    <li data-lang="en"><strong>Smell test:</strong> close the room for 4 hours, open and step in. You should smell only fresh lime (mineral, slightly sweet). Any musty, sour or organic smell = redo Phase 1 + a thin Blue Milk coat on that area.</li>
+    <li data-lang="en"><strong>Surface test:</strong> rub the wall lightly with a dark cloth. White chalk dust on the cloth is normal for the first week. After 7–10 days, carbonation completes and rubbing-off stops.</li>
+    <li data-lang="en"><strong>Spot check at day 30:</strong> inspect with a strong LED light at low angle. Look for any darkening, fluffy spots or wet patches. None = success.</li>
+
+    <li data-lang="es"><strong>Prueba de olfato:</strong> cierra la habitación 4 horas, abre y entra. Solo debes oler cal fresca (mineral, ligeramente dulce). Cualquier olor a moho, agrio u orgánico = repite Fase 1 + una capa fina de Leche Azul en esa zona.</li>
+    <li data-lang="es"><strong>Prueba de superficie:</strong> frota la pared con un trapo oscuro. Polvo blanco calcáreo en el trapo es normal la primera semana. Tras 7–10 días, la carbonatación se completa y deja de soltar.</li>
+    <li data-lang="es"><strong>Inspección a los 30 días:</strong> revisa con LED potente en ángulo bajo. Busca oscurecimientos, manchas algodonosas o zonas húmedas. Nada = éxito.</li>
+
+    <li data-lang="it"><strong>Test olfattivo:</strong> chiudi la stanza per 4 ore, apri ed entra. Devi sentire solo calce fresca (minerale, leggermente dolce). Qualsiasi odore di muffa, acido od organico = rifai Fase 1 + una mano sottile di Latte Azzurro su quell'area.</li>
+    <li data-lang="it"><strong>Test di superficie:</strong> sfrega la parete con un panno scuro. Polvere bianca calcarea sul panno è normale la prima settimana. Dopo 7–10 giorni la carbonatazione si completa e smette di sfregare.</li>
+    <li data-lang="it"><strong>Ispezione a 30 giorni:</strong> controlla con LED potente in luce radente. Cerca scurimenti, macchie cotonose o zone umide. Niente = successo.</li>
+
+    <li data-lang="de"><strong>Geruchstest:</strong> Raum 4 Stunden geschlossen halten, dann öffnen und reingehen. Du solltest nur frischen Kalk riechen (mineralisch, leicht süßlich). Modriger, saurer oder organischer Geruch = Phase 1 + eine dünne Blaue-Milch-Schicht an der Stelle wiederholen.</li>
+    <li data-lang="de"><strong>Oberflächentest:</strong> Wand mit dunklem Tuch leicht reiben. Weißer Kalkstaub am Tuch ist die erste Woche normal. Nach 7–10 Tagen ist die Karbonatisierung abgeschlossen und das Abreiben hört auf.</li>
+    <li data-lang="de"><strong>30-Tage-Inspektion:</strong> Mit starker LED in flachem Winkel prüfen. Such nach Verdunkelungen, flaumigen Stellen oder feuchten Bereichen. Nichts = Erfolg.</li>
+  </ul>
+
+  <h4>
+    <span data-lang="en">Long-term maintenance</span>
+    <span data-lang="es">Mantenimiento a largo plazo</span>
+    <span data-lang="it">Manutenzione a lungo termine</span>
+    <span data-lang="de">Langzeitpflege</span>
+  </h4>
+  <ul style="padding-left:1.2rem;margin-bottom:.8rem">
+    <li data-lang="en"><strong>Year 1:</strong> monitor humidity. Above 70% sustained = ventilation problem, fix it before it becomes a mold problem.</li>
+    <li data-lang="en"><strong>Year 2–5:</strong> annual touch-up coat on high-wear areas (door frames, around bed, kitchen splash zone). One thin layer of standard Blue Milk.</li>
+    <li data-lang="en"><strong>Year 7–10:</strong> full reapplication if you see chalk dust on contact surfaces or color shift. Cheaper than mold remediation any day.</li>
+    <li data-lang="en"><strong>Trigger for full reset:</strong> visible mold, persistent musty smell after 1 week of dry weather, or recurring respiratory issues in occupants.</li>
+
+    <li data-lang="es"><strong>Año 1:</strong> vigila la humedad. Por encima del 70% sostenido = problema de ventilación, soluciónalo antes de que sea problema de moho.</li>
+    <li data-lang="es"><strong>Años 2–5:</strong> repaso anual en zonas de mucho roce (marcos de puertas, alrededor de la cama, salpicaduras de cocina). Una capa fina de Leche Azul estándar.</li>
+    <li data-lang="es"><strong>Años 7–10:</strong> reaplicación completa si ves polvo calcáreo en superficies de contacto o cambio de color. Más barato que cualquier remediación de moho.</li>
+    <li data-lang="es"><strong>Señales para resetear:</strong> moho visible, olor a moho persistente tras 1 semana de tiempo seco, o problemas respiratorios recurrentes en los ocupantes.</li>
+
+    <li data-lang="it"><strong>Anno 1:</strong> monitora l'umidità. Oltre il 70% costante = problema di ventilazione, risolvilo prima che diventi problema di muffa.</li>
+    <li data-lang="it"><strong>Anni 2–5:</strong> ritocco annuale sulle aree di maggior usura (telai porte, intorno al letto, schizzi cucina). Una mano sottile di Latte Azzurro standard.</li>
+    <li data-lang="it"><strong>Anni 7–10:</strong> riapplicazione completa se vedi polvere calcarea sulle superfici di contatto o variazione di colore. Più economico di qualsiasi bonifica da muffa.</li>
+    <li data-lang="it"><strong>Segnali per reset completo:</strong> muffa visibile, odore di muffa persistente dopo 1 settimana di tempo asciutto, o problemi respiratori ricorrenti negli occupanti.</li>
+
+    <li data-lang="de"><strong>Jahr 1:</strong> Luftfeuchtigkeit überwachen. Über 70% dauerhaft = Lüftungsproblem, behebe es, bevor es zum Schimmelproblem wird.</li>
+    <li data-lang="de"><strong>Jahre 2–5:</strong> Jährliche Auffrischung an stark beanspruchten Stellen (Türrahmen, Bettbereich, Küchenspritzzone). Eine dünne Schicht Standard-Blaue-Milch.</li>
+    <li data-lang="de"><strong>Jahre 7–10:</strong> Vollständige Neuanwendung, wenn Kalkstaub auf Kontaktflächen oder Farbveränderung sichtbar wird. Billiger als jede Schimmelsanierung.</li>
+    <li data-lang="de"><strong>Auslöser für Vollreset:</strong> sichtbarer Schimmel, hartnäckiger Modergeruch nach 1 Woche trockenem Wetter oder wiederkehrende Atemwegsprobleme bei Bewohnern.</li>
+  </ul>
+</section>
+
+<!-- WHY IT WORKS -->
+<section>
+  <span class="section-num">10</span>
+  <h2>
+    <span data-lang="en">Why it works — the science</span>
+    <span data-lang="es">Por qué funciona — la ciencia</span>
+    <span data-lang="it">Perché funziona — la scienza</span>
+    <span data-lang="de">Warum es funktioniert — die Wissenschaft</span>
+  </h2>
+  <hr class="sep">
+
+  <p data-lang="en"><strong>pH warfare.</strong> Most bacteria thrive between pH 6 and 8. Most molds between pH 4 and 7. Hydrated lime in water sits at pH 12.5+. At that alkalinity, microbial cell walls rupture and proteins denature — same mechanism food preservers used for thousands of years.</p>
+  <p data-lang="en"><strong>Carbonation = stone.</strong> When wet lime (Ca(OH)₂) meets atmospheric CO₂, it converts back to calcium carbonate (CaCO₃) — literally the same compound as limestone. That's why a properly cured lime wash lasts decades and only gets harder over time.</p>
+  <p data-lang="en"><strong>PVA glue is the modern twist.</strong> Traditional lime wash rubs off when you brush against it. PVA forms a microscopic plastic web around the lime crystals, holding them in place without breaking the breathability that lime needs. The wall stays alive but stops shedding chalk.</p>
+  <p data-lang="en"><strong>Copper sulfate as a tracer + safety net.</strong> The blue color tells you exactly where you've already painted (no missed spots). And copper ions are toxic to fungal hyphae — they can't penetrate a copper-laced lime even after the pH eventually drops over years.</p>
+  <p data-lang="en"><strong>Borax (optional).</strong> Sodium tetraborate disrupts wood-rotting fungi specifically. Combined with copper sulfate, it gives belt-and-suspenders protection against the two most common long-term failures.</p>
+  <p data-lang="en"><strong>Salt as hardener.</strong> Coarse salt slightly delays carbonation and pulls extra moisture during cure, leading to a denser final crystal structure. Old Mediterranean lime workers have done this for centuries.</p>
+
+  <p data-lang="es"><strong>Guerra de pH.</strong> La mayoría de bacterias prosperan entre pH 6 y 8. Los hongos entre 4 y 7. La cal hidratada en agua está a pH 12,5+. Con esa alcalinidad, las paredes celulares microbianas se rompen y las proteínas se desnaturalizan — el mismo principio que los conservadores de alimentos llevan usando milenios.</p>
+  <p data-lang="es"><strong>Carbonatación = piedra.</strong> Cuando la cal húmeda (Ca(OH)₂) encuentra CO₂ atmosférico, vuelve a carbonato de calcio (CaCO₃) — literalmente el mismo compuesto que la piedra caliza. Por eso un encalado bien curado dura décadas y solo se endurece con el tiempo.</p>
+  <p data-lang="es"><strong>La cola PVA es el toque moderno.</strong> El encalado tradicional se desprende al rozarlo. La PVA forma una red plástica microscópica alrededor de los cristales de cal, fijándolos sin romper la transpirabilidad que la cal necesita. La pared sigue "viva" pero deja de soltar polvo.</p>
+  <p data-lang="es"><strong>Sulfato de cobre como trazador + red de seguridad.</strong> El color azul te muestra exactamente dónde ya pintaste (sin huecos). Y los iones de cobre son tóxicos para las hifas fúngicas — no pueden atravesar una cal con cobre incluso si el pH cae con los años.</p>
+  <p data-lang="es"><strong>Bórax (opcional).</strong> El tetraborato de sodio interrumpe específicamente a los hongos xilófagos. Junto con el sulfato de cobre da doble protección contra los dos fallos más comunes a largo plazo.</p>
+  <p data-lang="es"><strong>Sal como endurecedor.</strong> La sal gruesa retrasa ligeramente la carbonatación y atrae humedad durante el curado, dando una estructura cristalina final más densa. Los caleros mediterráneos llevan siglos haciéndolo así.</p>
+
+  <p data-lang="it"><strong>Guerra di pH.</strong> La maggior parte dei batteri prospera tra pH 6 e 8. La muffa tra 4 e 7. La calce idrata in acqua sta a pH 12,5+. A quell'alcalinità, le pareti cellulari microbiche si rompono e le proteine si denaturano — lo stesso principio usato dai conservatori di cibo da millenni.</p>
+  <p data-lang="it"><strong>Carbonatazione = pietra.</strong> Quando la calce umida (Ca(OH)₂) incontra la CO₂ atmosferica, torna a carbonato di calcio (CaCO₃) — letteralmente lo stesso composto della pietra calcarea. Per questo una calcinatura ben stagionata dura decenni e indurisce nel tempo.</p>
+  <p data-lang="it"><strong>La colla vinilica è il tocco moderno.</strong> La calce tradizionale si stacca al contatto. La PVA forma una rete plastica microscopica attorno ai cristalli di calce, fissandoli senza compromettere la traspirabilità di cui la calce ha bisogno. La parete resta "viva" ma smette di lasciare polvere.</p>
+  <p data-lang="it"><strong>Solfato di rame come tracciante + rete di sicurezza.</strong> Il colore blu mostra dove hai già dipinto (niente zone saltate). E gli ioni di rame sono tossici per le ife fungine — non penetrano una calce arricchita di rame anche se il pH cala negli anni.</p>
+  <p data-lang="it"><strong>Borace (opzionale).</strong> Il tetraborato di sodio disturba specificamente i funghi xilofagi. Insieme al solfato di rame dà doppia protezione contro i due cedimenti più comuni a lungo termine.</p>
+  <p data-lang="it"><strong>Sale come indurente.</strong> Il sale grosso ritarda leggermente la carbonatazione e attira umidità durante la stagionatura, dando una struttura cristallina finale più densa. I calcinai mediterranei lo fanno da secoli.</p>
+
+  <p data-lang="de"><strong>pH-Krieg.</strong> Die meisten Bakterien gedeihen bei pH 6–8. Schimmel bei pH 4–7. Kalkhydrat in Wasser liegt bei pH 12,5+. Bei dieser Alkalität platzen Zellwände und Proteine denaturieren — genau das Prinzip, das Lebensmittelkonservierer seit Jahrtausenden nutzen.</p>
+  <p data-lang="de"><strong>Karbonatisierung = Stein.</strong> Wenn nasser Kalk (Ca(OH)₂) auf Luft-CO₂ trifft, wird er wieder zu Calciumcarbonat (CaCO₃) — buchstäblich dieselbe Verbindung wie Kalkstein. Deshalb hält ein gut ausgehärteter Kalkanstrich Jahrzehnte und wird mit der Zeit nur härter.</p>
+  <p data-lang="de"><strong>PVA-Leim ist der moderne Kniff.</strong> Klassischer Kalkanstrich reibt sich ab. PVA bildet ein mikroskopisches Kunststoffnetz um die Kalkkristalle, fixiert sie, ohne die Atmungsaktivität zu zerstören, die Kalk braucht. Die Wand bleibt "lebendig", verliert aber keinen Kalkstaub mehr.</p>
+  <p data-lang="de"><strong>Kupfersulfat als Tracer + Sicherheitsnetz.</strong> Die blaue Farbe zeigt dir genau, wo du schon gestrichen hast (keine Lücken). Und Kupferionen sind giftig für Pilzhyphen — sie können einen kupferhaltigen Kalk nicht durchdringen, selbst wenn der pH-Wert über Jahre sinkt.</p>
+  <p data-lang="de"><strong>Borax (optional).</strong> Natriumtetraborat stört speziell holzzerstörende Pilze. Zusammen mit Kupfersulfat bietet es Doppelschutz gegen die zwei häufigsten Langzeit-Ausfälle.</p>
+  <p data-lang="de"><strong>Salz als Härter.</strong> Grobes Salz verzögert die Karbonatisierung leicht und zieht während der Aushärtung zusätzliche Feuchtigkeit, was zu einer dichteren Endkristallstruktur führt. Mittelmeer-Kalkmacher kennen das seit Jahrhunderten.</p>
+</section>
+
+<!-- CASE STUDY -->
+<section>
+  <span class="section-num">11</span>
+  <h2>
+    <span data-lang="en">Worked example — a 5×5 m hut</span>
+    <span data-lang="es">Ejemplo práctico — una caseta de 5×5 m</span>
+    <span data-lang="it">Esempio pratico — una capanna di 5×5 m</span>
+    <span data-lang="de">Rechenbeispiel — eine 5×5 m Hütte</span>
+  </h2>
+  <hr class="sep">
+
+  <p data-lang="en">A standard reference hut: 5 × 5 m floor plan, 2.5 m wall height, one door (~1.6 m²), one window (~1 m²), exposed beams. Two construction scenarios cover most real cases — your hut probably sits between them.</p>
+  <p data-lang="es">Una caseta de referencia estándar: 5 × 5 m de planta, 2,5 m de altura, una puerta (~1,6 m²), una ventana (~1 m²), vigas a la vista. Dos escenarios cubren la mayoría de los casos reales — tu caseta probablemente esté entre ambos.</p>
+  <p data-lang="it">Una capanna di riferimento standard: pianta 5 × 5 m, altezza 2,5 m, una porta (~1,6 m²), una finestra (~1 m²), travi a vista. Due scenari coprono la maggior parte dei casi reali — la tua capanna probabilmente si trova tra i due.</p>
+  <p data-lang="de">Eine Standard-Referenzhütte: 5 × 5 m Grundriss, 2,5 m Wandhöhe, eine Tür (~1,6 m²), ein Fenster (~1 m²), sichtbare Balken. Zwei Szenarien decken die meisten realen Fälle ab — deine Hütte liegt wahrscheinlich dazwischen.</p>
+
+  <h4>
+    <span data-lang="en">Surface breakdown</span>
+    <span data-lang="es">Desglose de superficies</span>
+    <span data-lang="it">Ripartizione superfici</span>
+    <span data-lang="de">Flächenaufschlüsselung</span>
+  </h4>
+
+  <table class="rcp" data-lang="en">
+    <thead><tr><th>Surface</th><th>Calculation</th><th>Area</th></tr></thead>
+    <tbody>
+      <tr><td>Floor (rammed earth)</td><td>5 × 5</td><td class="num">25 m²</td></tr>
+      <tr><td>Interior walls</td><td>20 m perimeter × 2.5 − openings</td><td class="num">~47 m²</td></tr>
+      <tr><td>Exterior walls</td><td>20 m perimeter × 2.5 − openings</td><td class="num">~47 m²</td></tr>
+      <tr><td>Ceiling</td><td>5 × 5</td><td class="num">25 m²</td></tr>
+      <tr><td>Exposed beams (rough est.)</td><td>4 main + joists</td><td class="num">~10 m²</td></tr>
+      <tr><td><strong>Total surface to treat</strong></td><td></td><td class="num"><strong>~154 m²</strong></td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="es">
+    <thead><tr><th>Superficie</th><th>Cálculo</th><th>Área</th></tr></thead>
+    <tbody>
+      <tr><td>Suelo (tierra apisonada)</td><td>5 × 5</td><td class="num">25 m²</td></tr>
+      <tr><td>Muros interiores</td><td>20 m perímetro × 2,5 − huecos</td><td class="num">~47 m²</td></tr>
+      <tr><td>Muros exteriores</td><td>20 m perímetro × 2,5 − huecos</td><td class="num">~47 m²</td></tr>
+      <tr><td>Techo</td><td>5 × 5</td><td class="num">25 m²</td></tr>
+      <tr><td>Vigas a la vista (estimado)</td><td>4 principales + viguetas</td><td class="num">~10 m²</td></tr>
+      <tr><td><strong>Superficie total a tratar</strong></td><td></td><td class="num"><strong>~154 m²</strong></td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="it">
+    <thead><tr><th>Superficie</th><th>Calcolo</th><th>Area</th></tr></thead>
+    <tbody>
+      <tr><td>Pavimento (terra battuta)</td><td>5 × 5</td><td class="num">25 m²</td></tr>
+      <tr><td>Muri interni</td><td>20 m perimetro × 2,5 − aperture</td><td class="num">~47 m²</td></tr>
+      <tr><td>Muri esterni</td><td>20 m perimetro × 2,5 − aperture</td><td class="num">~47 m²</td></tr>
+      <tr><td>Soffitto</td><td>5 × 5</td><td class="num">25 m²</td></tr>
+      <tr><td>Travi a vista (stima)</td><td>4 principali + travetti</td><td class="num">~10 m²</td></tr>
+      <tr><td><strong>Superficie totale da trattare</strong></td><td></td><td class="num"><strong>~154 m²</strong></td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="de">
+    <thead><tr><th>Oberfläche</th><th>Berechnung</th><th>Fläche</th></tr></thead>
+    <tbody>
+      <tr><td>Boden (Stampflehm)</td><td>5 × 5</td><td class="num">25 m²</td></tr>
+      <tr><td>Innenwände</td><td>20 m Umfang × 2,5 − Öffnungen</td><td class="num">~47 m²</td></tr>
+      <tr><td>Außenwände</td><td>20 m Umfang × 2,5 − Öffnungen</td><td class="num">~47 m²</td></tr>
+      <tr><td>Decke</td><td>5 × 5</td><td class="num">25 m²</td></tr>
+      <tr><td>Sichtbare Balken (geschätzt)</td><td>4 Haupt- + Querbalken</td><td class="num">~10 m²</td></tr>
+      <tr><td><strong>Gesamtfläche</strong></td><td></td><td class="num"><strong>~154 m²</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h4>
+    <span data-lang="en">🌲 Scenario A — wood-frame hut</span>
+    <span data-lang="es">🌲 Escenario A — caseta de madera</span>
+    <span data-lang="it">🌲 Scenario A — capanna a struttura lignea</span>
+    <span data-lang="de">🌲 Szenario A — Holzrahmenhütte</span>
+  </h4>
+  <p style="font-size:.9rem;color:var(--text-muted);margin-top:-.4rem">
+    <span data-lang="en">Walls (interior + exterior) + ceiling + beams = wood. Floor = earth.</span>
+    <span data-lang="es">Muros (interior + exterior) + techo + vigas = madera. Suelo = tierra.</span>
+    <span data-lang="it">Muri (interni + esterni) + soffitto + travi = legno. Pavimento = terra.</span>
+    <span data-lang="de">Wände (innen + außen) + Decke + Balken = Holz. Boden = Erde.</span>
+  </p>
+
+  <table class="rcp" data-lang="en">
+    <thead><tr><th>Material</th><th>Calculation</th><th>Need</th></tr></thead>
+    <tbody>
+      <tr><td>Vinegar</td><td>129 m² wood × 100 ml</td><td class="num">~13 L</td></tr>
+      <tr><td>Mix volume</td><td>13.75 (earth) + 38.7 (wood)</td><td class="num">~53 L</td></tr>
+      <tr><td>Hydrated lime</td><td>53 × 0.45 kg</td><td class="num"><strong>~24 kg</strong> → 1 × 25 kg sack</td></tr>
+      <tr><td>PVA glue</td><td>53 × 70 ml</td><td class="num">~3.7 L → 4 × 1 kg jugs</td></tr>
+      <tr><td>Copper sulfate</td><td>53 × 12 g</td><td class="num">~640 g</td></tr>
+      <tr><td>Borax</td><td>53 × 8 g</td><td class="num">~430 g → 1 × 500 g bag</td></tr>
+      <tr><td>Coarse salt</td><td>53 × 6 g</td><td class="num">~320 g → 1 × 500 g pack</td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="es">
+    <thead><tr><th>Material</th><th>Cálculo</th><th>Necesario</th></tr></thead>
+    <tbody>
+      <tr><td>Vinagre</td><td>129 m² madera × 100 ml</td><td class="num">~13 L</td></tr>
+      <tr><td>Volumen de mezcla</td><td>13,75 (tierra) + 38,7 (madera)</td><td class="num">~53 L</td></tr>
+      <tr><td>Cal apagada</td><td>53 × 0,45 kg</td><td class="num"><strong>~24 kg</strong> → 1 saco de 25 kg</td></tr>
+      <tr><td>Cola PVA</td><td>53 × 70 ml</td><td class="num">~3,7 L → 4 botes de 1 kg</td></tr>
+      <tr><td>Sulfato de cobre</td><td>53 × 12 g</td><td class="num">~640 g</td></tr>
+      <tr><td>Bórax</td><td>53 × 8 g</td><td class="num">~430 g → 1 bolsa de 500 g</td></tr>
+      <tr><td>Sal gruesa</td><td>53 × 6 g</td><td class="num">~320 g → 1 paquete de 500 g</td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="it">
+    <thead><tr><th>Materiale</th><th>Calcolo</th><th>Necessario</th></tr></thead>
+    <tbody>
+      <tr><td>Aceto</td><td>129 m² legno × 100 ml</td><td class="num">~13 L</td></tr>
+      <tr><td>Volume miscela</td><td>13,75 (terra) + 38,7 (legno)</td><td class="num">~53 L</td></tr>
+      <tr><td>Calce idrata</td><td>53 × 0,45 kg</td><td class="num"><strong>~24 kg</strong> → 1 sacco da 25 kg</td></tr>
+      <tr><td>Colla vinilica</td><td>53 × 70 ml</td><td class="num">~3,7 L → 4 barattoli da 1 kg</td></tr>
+      <tr><td>Solfato di rame</td><td>53 × 12 g</td><td class="num">~640 g</td></tr>
+      <tr><td>Borace</td><td>53 × 8 g</td><td class="num">~430 g → 1 sacchetto da 500 g</td></tr>
+      <tr><td>Sale grosso</td><td>53 × 6 g</td><td class="num">~320 g → 1 pacchetto da 500 g</td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="de">
+    <thead><tr><th>Material</th><th>Berechnung</th><th>Bedarf</th></tr></thead>
+    <tbody>
+      <tr><td>Essig</td><td>129 m² Holz × 100 ml</td><td class="num">~13 L</td></tr>
+      <tr><td>Mischungsvolumen</td><td>13,75 (Erde) + 38,7 (Holz)</td><td class="num">~53 L</td></tr>
+      <tr><td>Kalkhydrat</td><td>53 × 0,45 kg</td><td class="num"><strong>~24 kg</strong> → 1 × 25 kg Sack</td></tr>
+      <tr><td>PVA-Leim</td><td>53 × 70 ml</td><td class="num">~3,7 L → 4 × 1 kg Flaschen</td></tr>
+      <tr><td>Kupfersulfat</td><td>53 × 12 g</td><td class="num">~640 g</td></tr>
+      <tr><td>Borax</td><td>53 × 8 g</td><td class="num">~430 g → 1 × 500 g Beutel</td></tr>
+      <tr><td>Grobes Salz</td><td>53 × 6 g</td><td class="num">~320 g → 1 × 500 g Pack</td></tr>
+    </tbody>
+  </table>
+
+  <h4>
+    <span data-lang="en">🪨 Scenario B — stone-walled hut</span>
+    <span data-lang="es">🪨 Escenario B — caseta con muros de piedra</span>
+    <span data-lang="it">🪨 Scenario B — capanna con muri in pietra</span>
+    <span data-lang="de">🪨 Szenario B — Hütte mit Steinmauern</span>
+  </h4>
+  <p style="font-size:.9rem;color:var(--text-muted);margin-top:-.4rem">
+    <span data-lang="en">Walls (interior + exterior) = stone. Ceiling + beams = wood. Floor = earth.</span>
+    <span data-lang="es">Muros (interior + exterior) = piedra. Techo + vigas = madera. Suelo = tierra.</span>
+    <span data-lang="it">Muri (interni + esterni) = pietra. Soffitto + travi = legno. Pavimento = terra.</span>
+    <span data-lang="de">Wände (innen + außen) = Stein. Decke + Balken = Holz. Boden = Erde.</span>
+  </p>
+
+  <table class="rcp" data-lang="en">
+    <thead><tr><th>Material</th><th>Calculation</th><th>Need</th></tr></thead>
+    <tbody>
+      <tr><td>Vinegar</td><td>35 m² wood × 100 ml</td><td class="num">~3.5 L</td></tr>
+      <tr><td>Mix volume</td><td>13.75 (earth) + 32.9 (stone) + 10.5 (wood)</td><td class="num">~57 L</td></tr>
+      <tr><td>Hydrated lime</td><td>57 × 0.45 kg</td><td class="num"><strong>~26 kg</strong> → 1 × 25 kg sack + small margin</td></tr>
+      <tr><td>PVA glue</td><td>57 × 70 ml</td><td class="num">~4 L → 4 × 1 kg jugs</td></tr>
+      <tr><td>Copper sulfate</td><td>57 × 12 g</td><td class="num">~690 g → 1 kg pack</td></tr>
+      <tr><td>Borax</td><td>57 × 8 g</td><td class="num">~460 g → 1 × 500 g bag</td></tr>
+      <tr><td>Coarse salt</td><td>57 × 6 g</td><td class="num">~340 g → 1 × 500 g pack</td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="es">
+    <thead><tr><th>Material</th><th>Cálculo</th><th>Necesario</th></tr></thead>
+    <tbody>
+      <tr><td>Vinagre</td><td>35 m² madera × 100 ml</td><td class="num">~3,5 L</td></tr>
+      <tr><td>Volumen de mezcla</td><td>13,75 (tierra) + 32,9 (piedra) + 10,5 (madera)</td><td class="num">~57 L</td></tr>
+      <tr><td>Cal apagada</td><td>57 × 0,45 kg</td><td class="num"><strong>~26 kg</strong> → 1 saco de 25 kg + pequeño margen</td></tr>
+      <tr><td>Cola PVA</td><td>57 × 70 ml</td><td class="num">~4 L → 4 botes de 1 kg</td></tr>
+      <tr><td>Sulfato de cobre</td><td>57 × 12 g</td><td class="num">~690 g → 1 kg</td></tr>
+      <tr><td>Bórax</td><td>57 × 8 g</td><td class="num">~460 g → 1 bolsa de 500 g</td></tr>
+      <tr><td>Sal gruesa</td><td>57 × 6 g</td><td class="num">~340 g → 1 paquete de 500 g</td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="it">
+    <thead><tr><th>Materiale</th><th>Calcolo</th><th>Necessario</th></tr></thead>
+    <tbody>
+      <tr><td>Aceto</td><td>35 m² legno × 100 ml</td><td class="num">~3,5 L</td></tr>
+      <tr><td>Volume miscela</td><td>13,75 (terra) + 32,9 (pietra) + 10,5 (legno)</td><td class="num">~57 L</td></tr>
+      <tr><td>Calce idrata</td><td>57 × 0,45 kg</td><td class="num"><strong>~26 kg</strong> → 1 sacco da 25 kg + piccolo margine</td></tr>
+      <tr><td>Colla vinilica</td><td>57 × 70 ml</td><td class="num">~4 L → 4 barattoli da 1 kg</td></tr>
+      <tr><td>Solfato di rame</td><td>57 × 12 g</td><td class="num">~690 g → 1 kg</td></tr>
+      <tr><td>Borace</td><td>57 × 8 g</td><td class="num">~460 g → 1 sacchetto da 500 g</td></tr>
+      <tr><td>Sale grosso</td><td>57 × 6 g</td><td class="num">~340 g → 1 pacchetto da 500 g</td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="de">
+    <thead><tr><th>Material</th><th>Berechnung</th><th>Bedarf</th></tr></thead>
+    <tbody>
+      <tr><td>Essig</td><td>35 m² Holz × 100 ml</td><td class="num">~3,5 L</td></tr>
+      <tr><td>Mischungsvolumen</td><td>13,75 (Erde) + 32,9 (Stein) + 10,5 (Holz)</td><td class="num">~57 L</td></tr>
+      <tr><td>Kalkhydrat</td><td>57 × 0,45 kg</td><td class="num"><strong>~26 kg</strong> → 1 × 25 kg Sack + kleine Reserve</td></tr>
+      <tr><td>PVA-Leim</td><td>57 × 70 ml</td><td class="num">~4 L → 4 × 1 kg Flaschen</td></tr>
+      <tr><td>Kupfersulfat</td><td>57 × 12 g</td><td class="num">~690 g → 1 kg</td></tr>
+      <tr><td>Borax</td><td>57 × 8 g</td><td class="num">~460 g → 1 × 500 g Beutel</td></tr>
+      <tr><td>Grobes Salz</td><td>57 × 6 g</td><td class="num">~340 g → 1 × 500 g Pack</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout good">
+    <strong data-lang="en">📝 Quick takeaway</strong>
+    <strong data-lang="es">📝 Para llevarse</strong>
+    <strong data-lang="it">📝 Da ricordare</strong>
+    <strong data-lang="de">📝 Zum Mitnehmen</strong>
+    <span data-lang="en">For a typical 5×5 m hut (~150 m² of total surface), a single 25 kg sack of hydrated lime covers it, plus ~4 L of PVA glue and a 500 g–1 kg pack of copper sulfate. Total cost ~€60–80, half a day of mixing, two days of work.</span>
+    <span data-lang="es">Para una caseta típica de 5×5 m (~150 m² totales), un solo saco de 25 kg de cal apagada llega, más ~4 L de cola PVA y un paquete de 500 g–1 kg de sulfato de cobre. Coste total ~€60–80, medio día de mezcla, dos días de trabajo.</span>
+    <span data-lang="it">Per una capanna tipica 5×5 m (~150 m² totali), un solo sacco da 25 kg di calce idrata basta, più ~4 L di colla vinilica e una confezione da 500 g–1 kg di solfato di rame. Costo totale ~€60–80, mezza giornata di miscelazione, due giorni di lavoro.</span>
+    <span data-lang="de">Für eine typische 5×5 m Hütte (~150 m² Gesamtfläche) reicht ein einzelner 25 kg Sack Kalkhydrat, plus ~4 L PVA-Leim und 500 g–1 kg Kupfersulfat. Gesamtkosten ~60–80 €, halber Tag Mischen, zwei Tage Arbeit.</span>
+  </div>
+</section>
+
+<!-- COST + CHECKLIST -->
+<section>
+  <span class="section-num">12</span>
+  <h2>
+    <span data-lang="en">Cost & final shopping checklist</span>
+    <span data-lang="es">Coste y lista de compra final</span>
+    <span data-lang="it">Costo e lista della spesa finale</span>
+    <span data-lang="de">Kosten & finale Einkaufsliste</span>
+  </h2>
+  <hr class="sep">
+
+  <table class="rcp" data-lang="en">
+    <thead><tr><th>Item</th><th>Quantity (small cottage ~25 m²)</th><th>~Cost (EU)</th></tr></thead>
+    <tbody>
+      <tr><td>White vinegar</td><td>3 L</td><td class="num">€1.50</td></tr>
+      <tr><td>Hydrated lime (25 kg sack)</td><td>1 sack</td><td class="num">€10</td></tr>
+      <tr><td>PVA wood glue (1 kg)</td><td>1 jug</td><td class="num">€8</td></tr>
+      <tr><td>Copper sulfate (250 g)</td><td>1 box</td><td class="num">€6</td></tr>
+      <tr><td>Borax (500 g)</td><td>1 bag (optional)</td><td class="num">€7</td></tr>
+      <tr><td>Coarse salt</td><td>500 g</td><td class="num">€0.50</td></tr>
+      <tr><td>Activated charcoal (250 g)</td><td>1 box (optional)</td><td class="num">€8</td></tr>
+      <tr><td>Plastic spray bottle (1 L)</td><td>1</td><td class="num">€2</td></tr>
+      <tr><td>Plastic buckets (10 L + 5 L)</td><td>2</td><td class="num">€4</td></tr>
+      <tr><td>Masonry brush (Bidinea)</td><td>1</td><td class="num">€5</td></tr>
+      <tr><td>FFP3 mask + nitrile gloves + goggles</td><td>1 set</td><td class="num">€10</td></tr>
+      <tr><td><strong>Total</strong></td><td></td><td class="num"><strong>~€60</strong></td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="es">
+    <thead><tr><th>Artículo</th><th>Cantidad (casita ~25 m²)</th><th>~Coste (UE)</th></tr></thead>
+    <tbody>
+      <tr><td>Vinagre blanco</td><td>3 L</td><td class="num">€1,50</td></tr>
+      <tr><td>Cal apagada (saco 25 kg)</td><td>1 saco</td><td class="num">€10</td></tr>
+      <tr><td>Cola PVA (1 kg)</td><td>1 bote</td><td class="num">€8</td></tr>
+      <tr><td>Sulfato de cobre (250 g)</td><td>1 caja</td><td class="num">€6</td></tr>
+      <tr><td>Bórax (500 g)</td><td>1 bolsa (opcional)</td><td class="num">€7</td></tr>
+      <tr><td>Sal gruesa</td><td>500 g</td><td class="num">€0,50</td></tr>
+      <tr><td>Carbón activado (250 g)</td><td>1 caja (opcional)</td><td class="num">€8</td></tr>
+      <tr><td>Pulverizador plástico (1 L)</td><td>1</td><td class="num">€2</td></tr>
+      <tr><td>Cubos de plástico (10 L + 5 L)</td><td>2</td><td class="num">€4</td></tr>
+      <tr><td>Brocha de albañil (Bidinea)</td><td>1</td><td class="num">€5</td></tr>
+      <tr><td>Mascarilla FFP3 + nitrilo + gafas</td><td>1 set</td><td class="num">€10</td></tr>
+      <tr><td><strong>Total</strong></td><td></td><td class="num"><strong>~€60</strong></td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="it">
+    <thead><tr><th>Articolo</th><th>Quantità (casetta ~25 m²)</th><th>~Costo (UE)</th></tr></thead>
+    <tbody>
+      <tr><td>Aceto bianco</td><td>3 L</td><td class="num">€1,50</td></tr>
+      <tr><td>Calce idrata (sacco 25 kg)</td><td>1 sacco</td><td class="num">€10</td></tr>
+      <tr><td>Colla vinilica (1 kg)</td><td>1 barattolo</td><td class="num">€8</td></tr>
+      <tr><td>Solfato di rame (250 g)</td><td>1 scatola</td><td class="num">€6</td></tr>
+      <tr><td>Borace (500 g)</td><td>1 sacchetto (opzionale)</td><td class="num">€7</td></tr>
+      <tr><td>Sale grosso</td><td>500 g</td><td class="num">€0,50</td></tr>
+      <tr><td>Carbone attivo (250 g)</td><td>1 scatola (opzionale)</td><td class="num">€8</td></tr>
+      <tr><td>Nebulizzatore plastica (1 L)</td><td>1</td><td class="num">€2</td></tr>
+      <tr><td>Secchi di plastica (10 L + 5 L)</td><td>2</td><td class="num">€4</td></tr>
+      <tr><td>Pennellone da muratore</td><td>1</td><td class="num">€5</td></tr>
+      <tr><td>FFP3 + nitrile + occhiali</td><td>1 set</td><td class="num">€10</td></tr>
+      <tr><td><strong>Totale</strong></td><td></td><td class="num"><strong>~€60</strong></td></tr>
+    </tbody>
+  </table>
+  <table class="rcp" data-lang="de">
+    <thead><tr><th>Posten</th><th>Menge (kleine Hütte ~25 m²)</th><th>~Kosten (EU)</th></tr></thead>
+    <tbody>
+      <tr><td>Weißer Essig</td><td>3 L</td><td class="num">€1,50</td></tr>
+      <tr><td>Kalkhydrat (25 kg Sack)</td><td>1 Sack</td><td class="num">€10</td></tr>
+      <tr><td>PVA-Holzleim (1 kg)</td><td>1 Flasche</td><td class="num">€8</td></tr>
+      <tr><td>Kupfersulfat (250 g)</td><td>1 Schachtel</td><td class="num">€6</td></tr>
+      <tr><td>Borax (500 g)</td><td>1 Beutel (optional)</td><td class="num">€7</td></tr>
+      <tr><td>Grobes Salz</td><td>500 g</td><td class="num">€0,50</td></tr>
+      <tr><td>Aktivkohle (250 g)</td><td>1 Schachtel (optional)</td><td class="num">€8</td></tr>
+      <tr><td>Plastik-Sprühflasche (1 L)</td><td>1</td><td class="num">€2</td></tr>
+      <tr><td>Plastikeimer (10 L + 5 L)</td><td>2</td><td class="num">€4</td></tr>
+      <tr><td>Maurerbürste</td><td>1</td><td class="num">€5</td></tr>
+      <tr><td>FFP3 + Nitril + Brille</td><td>1 Set</td><td class="num">€10</td></tr>
+      <tr><td><strong>Summe</strong></td><td></td><td class="num"><strong>~€60</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h4>
+    <span data-lang="en">Field-day checklist</span>
+    <span data-lang="es">Checklist del día de obra</span>
+    <span data-lang="it">Checklist giorno di lavoro</span>
+    <span data-lang="de">Arbeitstag-Checkliste</span>
+  </h4>
+
+  <ul class="chk">
+    <li data-lang="en">PPE on (mask, gloves, goggles, long sleeves)</li>
+    <li data-lang="en">Items moved out of cottage and put in sun (UV-C step)</li>
+    <li data-lang="en">Top 2–5 cm of contaminated earth scraped and bagged 50 m away</li>
+    <li data-lang="en">Enzyme cleaner sprayed, 30 min wait, wiped, overnight dry</li>
+    <li data-lang="en">Vinegar sprayed on all wood — let dry 12–24 h</li>
+    <li data-lang="en">Plastic buckets, wood stick, brush, water source ready</li>
+    <li data-lang="en">All five Blue Milk ingredients weighed and at hand</li>
+    <li data-lang="en">Mix in correct order: blue water → slake lime → combine → PVA → salt+borax</li>
+    <li data-lang="en">2 coats on wood, 3 coats on earth, paste at ground zero</li>
+    <li data-lang="en">48 h ventilation cure, doors and windows wide open</li>
+    <li data-lang="en">Activated charcoal bowls placed at ground zero for 14 days</li>
+    <li data-lang="en">Day-30 inspection performed and logged</li>
+
+    <li data-lang="es">EPI puesto (mascarilla, guantes, gafas, manga larga)</li>
+    <li data-lang="es">Objetos sacados de la casita y al sol (paso UV-C)</li>
+    <li data-lang="es">Capa de 2–5 cm de tierra contaminada raspada y embolsada a 50 m</li>
+    <li data-lang="es">Limpiador enzimático pulverizado, 30 min, limpiado, secado nocturno</li>
+    <li data-lang="es">Vinagre pulverizado en toda la madera — secado 12–24 h</li>
+    <li data-lang="es">Cubos de plástico, palo, brocha, fuente de agua listos</li>
+    <li data-lang="es">Los cinco ingredientes de la Leche Azul pesados y a mano</li>
+    <li data-lang="es">Mezcla en orden: agua azul → apagar cal → combinar → PVA → sal+bórax</li>
+    <li data-lang="es">2 capas en madera, 3 en tierra, pasta en zona cero</li>
+    <li data-lang="es">48 h de ventilación, puertas y ventanas abiertas de par en par</li>
+    <li data-lang="es">Cuencos de carbón activado en zona cero durante 14 días</li>
+    <li data-lang="es">Inspección a los 30 días realizada y registrada</li>
+
+    <li data-lang="it">DPI indossati (mascherina, guanti, occhiali, maniche lunghe)</li>
+    <li data-lang="it">Oggetti portati fuori dalla casetta e al sole (passo UV-C)</li>
+    <li data-lang="it">Strato 2–5 cm di terra contaminata raschiato e insaccato a 50 m</li>
+    <li data-lang="it">Detergente enzimatico spruzzato, 30 min, pulito, asciugato la notte</li>
+    <li data-lang="it">Aceto spruzzato su tutto il legno — asciugatura 12–24 h</li>
+    <li data-lang="it">Secchi di plastica, bastone, pennello, fonte d'acqua pronti</li>
+    <li data-lang="it">Tutti e cinque gli ingredienti del Latte Azzurro pesati e a portata</li>
+    <li data-lang="it">Miscela nell'ordine: acqua blu → spegnimento calce → unire → PVA → sale+borace</li>
+    <li data-lang="it">2 mani sul legno, 3 mani sulla terra, pasta sul punto zero</li>
+    <li data-lang="it">48 h di ventilazione, porte e finestre spalancate</li>
+    <li data-lang="it">Ciotoline di carbone attivo nel punto zero per 14 giorni</li>
+    <li data-lang="it">Ispezione a 30 giorni eseguita e registrata</li>
+
+    <li data-lang="de">PSA an (Maske, Handschuhe, Brille, lange Ärmel)</li>
+    <li data-lang="de">Gegenstände aus der Hütte und in die Sonne (UV-C-Schritt)</li>
+    <li data-lang="de">Obere 2–5 cm kontaminierte Erde abgekratzt und 50 m entfernt entsorgt</li>
+    <li data-lang="de">Enzymreiniger aufgesprüht, 30 min, abgewischt, über Nacht getrocknet</li>
+    <li data-lang="de">Essig auf alles Holz gesprüht — 12–24 h Trocknung</li>
+    <li data-lang="de">Plastikeimer, Holzstab, Pinsel, Wasserquelle bereit</li>
+    <li data-lang="de">Alle fünf Blaue-Milch-Zutaten abgewogen und griffbereit</li>
+    <li data-lang="de">Mischen in Reihenfolge: Blauwasser → Kalk löschen → vereinen → PVA → Salz+Borax</li>
+    <li data-lang="de">2 Schichten auf Holz, 3 auf Erde, Paste am Nullpunkt</li>
+    <li data-lang="de">48 h Lüften, Türen und Fenster weit offen</li>
+    <li data-lang="de">Aktivkohle-Schalen am Nullpunkt für 14 Tage</li>
+    <li data-lang="de">30-Tage-Inspektion durchgeführt und dokumentiert</li>
+  </ul>
+
+  <p style="margin-top:1.2rem;font-style:italic;color:var(--text-muted);font-size:.85rem">
+    <span data-lang="en">— That's the whole protocol. Three strikes, four phases, five ingredients. Cheaper than mold remediation, more effective than paint. Built from chemistry that has been doing the same job since the Romans.</span>
+    <span data-lang="es">— Ese es todo el protocolo. Tres golpes, cuatro fases, cinco ingredientes. Más barato que cualquier remediación, más eficaz que la pintura. Química que hace el mismo trabajo desde los romanos.</span>
+    <span data-lang="it">— Questo è l'intero protocollo. Tre colpi, quattro fasi, cinque ingredienti. Più economico di qualsiasi bonifica, più efficace della vernice. Chimica che fa lo stesso lavoro dai romani.</span>
+    <span data-lang="de">— Das ist das ganze Protokoll. Drei Schläge, vier Phasen, fünf Zutaten. Billiger als jede Sanierung, wirksamer als Farbe. Chemie, die seit den Römern denselben Job macht.</span>
+  </p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <button class="footer-contact" onclick="document.getElementById('cd').classList.add('open')">
+    <span data-lang="en">Get in touch</span>
+    <span data-lang="es">Contacto</span>
+    <span data-lang="it">Contatto</span>
+    <span data-lang="de">Kontakt</span>
+  </button>
+  <p>The Alkaline Veil · Bio-Remediation Protocol · digitalAIventures LLC</p>
+  <p style="margin-top:.4rem;opacity:.7">
+    <span data-lang="en">Field-tested in the Alpujarras, Andalucía. Use at your own risk; consult a professional if structural damage is suspected.</span>
+    <span data-lang="es">Probado en las Alpujarras, Andalucía. Úsalo bajo tu responsabilidad; consulta a un profesional si sospechas daño estructural.</span>
+    <span data-lang="it">Testato sul campo nelle Alpujarras, Andalusia. Usalo a tuo rischio; consulta un professionista se sospetti danni strutturali.</span>
+    <span data-lang="de">Praxiserprobt in den Alpujarras, Andalusien. Anwendung auf eigene Gefahr; bei Verdacht auf Bauschaden Fachperson hinzuziehen.</span>
+  </p>
+</footer>
+
+<!-- Contact dialog -->
+<div class="dialog-overlay" id="cd" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="dialog-box">
+    <h4>Get in Touch</h4>
+    <a class="dialog-option dialog-email" href="mailto:hello@digitalaiventures.com">✉ Email</a>
+    <a class="dialog-option dialog-telegram" href="https://t.me/juanitto" target="_blank">✈ Telegram</a>
+    <button class="dialog-close" onclick="document.getElementById('cd').classList.remove('open')">Close</button>
+  </div>
+</div>
+
+<script>
+function setLang(l){
+  document.querySelectorAll('[data-lang]').forEach(e=>{
+    e.classList.toggle('v',e.getAttribute('data-lang')===l)
+  });
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    b.classList.toggle('active',b.textContent.trim().toLowerCase()===l)
+  });
+  document.documentElement.lang=l;
+}
+setLang('en');
+
+function toggleTheme(){
+  const html=document.documentElement;
+  const current=html.getAttribute('data-theme')||'dark';
+  const next=current==='dark'?'light':'dark';
+  html.setAttribute('data-theme',next);
+  document.getElementById('themeIcon').textContent=next==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',next)}catch(e){}
+}
+(function(){
+  function apply(t){
+    document.documentElement.setAttribute('data-theme',t);
+    document.addEventListener('DOMContentLoaded',()=>{
+      const icon=document.getElementById('themeIcon');
+      if(icon)icon.textContent=t==='dark'?'☀️':'🌙';
+    });
+  }
+  try{
+    const saved=localStorage.getItem('theme');
+    if(saved){apply(saved)}
+    else{const h=new Date().getHours();apply(h>=7&&h<19?'light':'dark')}
+  }catch(e){apply('dark')}
+})();
+</script>
+</body>
+</html>
