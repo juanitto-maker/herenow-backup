@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ValorApp — Prototype Tester Guide</title>
+<meta name="description" content="ValorApp prototype tester kit — know what it's worth. EN / ES / DE">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="dark"]{--bg:#0d0d10;--bg-card:#16161c;--bg-hero:linear-gradient(135deg,#12100e 0%,#0d0d10 100%);--text:#e0e0e8;--text-muted:#888;--text-heading:#fff;--border:#252530;--accent:#f59e0b;--accent-bg:rgba(245,158,11,.1);--link:#60a5fa;--step-bg:#1a1a22;--warn-bg:rgba(239,68,68,.12);--warn-border:#ef4444;--tip-bg:rgba(16,185,129,.1);--tip-border:#10b981}
+[data-theme="light"]{--bg:#faf8f4;--bg-card:#fff;--bg-hero:linear-gradient(135deg,#f5f0e6 0%,#faf8f4 100%);--text:#3a3a32;--text-muted:#6a6a5f;--text-heading:#1a1a18;--border:#e8e2d8;--accent:#d97706;--accent-bg:rgba(217,119,6,.08);--link:#4a6741;--step-bg:#f8f5ef;--warn-bg:rgba(239,68,68,.07);--warn-border:#dc2626;--tip-bg:rgba(5,150,105,.07);--tip-border:#059669}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh}
+.lang-bar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:center;gap:.4rem;padding:.45rem .75rem;background:rgba(13,13,16,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+[data-theme="light"] .lang-bar{background:rgba(250,248,244,.88)}
+.lang-btn{background:none;border:1px solid transparent;color:var(--text-muted);font-size:.8rem;font-weight:600;padding:.25rem .7rem;border-radius:2rem;cursor:pointer;font-family:inherit;transition:all .2s}
+.lang-btn.active,.lang-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+.theme-toggle{position:fixed;top:.65rem;right:.75rem;z-index:150;background:var(--bg-card);border:1px solid var(--border);width:2.3rem;height:2.3rem;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.25);transition:all .2s}
+.theme-toggle:hover{transform:scale(1.1)}.theme-icon{font-size:1rem;line-height:1}
+.hero{background:var(--bg-hero);padding:5.5rem 1.25rem 3.5rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(245,158,11,.12),transparent);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:.4rem;background:var(--accent-bg);border:1px solid rgba(245,158,11,.3);color:var(--accent);font-size:.72rem;font-weight:700;padding:.3rem .85rem;border-radius:2rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1.25rem}
+.hero-badge .dot{width:.45rem;height:.45rem;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2rem,7vw,3.25rem);font-weight:700;color:var(--text-heading);line-height:1.1;margin-bottom:.6rem}
+h1 .gold{color:var(--accent)}.hero-sub{font-size:clamp(.95rem,2.5vw,1.15rem);color:var(--text-muted);max-width:540px;margin:0 auto 2rem}
+.cta-btn{display:inline-flex;align-items:center;gap:.55rem;background:var(--accent);color:#000;font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:700;padding:.85rem 2rem;border-radius:.75rem;text-decoration:none;transition:all .2s;box-shadow:0 4px 20px rgba(245,158,11,.35)}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(245,158,11,.5);color:#000}.cta-arrow{font-size:1.1rem}
+.section{padding:2.75rem 1.25rem;max-width:700px;margin:0 auto}
+.section-title{font-family:'Space Grotesk',sans-serif;font-size:1.25rem;font-weight:700;color:var(--text-heading);margin-bottom:1.25rem;display:flex;align-items:center;gap:.55rem}
+.section-title .ico{font-size:1.4rem}
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+@media(min-width:520px){.feat-grid{grid-template-columns:1fr 1fr 1fr}}
+.feat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:.875rem;padding:1rem .9rem}
+.feat-icon{font-size:1.6rem;margin-bottom:.4rem;display:block}.feat-name{font-size:.78rem;font-weight:700;color:var(--text-heading);margin-bottom:.2rem}.feat-desc{font-size:.72rem;color:var(--text-muted);line-height:1.45}
+.steps{display:flex;flex-direction:column;gap:.75rem}
+.step{display:flex;gap:1rem;align-items:flex-start;background:var(--step-bg);border:1px solid var(--border);border-radius:.875rem;padding:1rem 1.1rem}
+.step-num{min-width:2rem;height:2rem;border-radius:50%;background:var(--accent);color:#000;font-weight:800;font-size:.85rem;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;flex-shrink:0}
+.step-title{font-weight:700;font-size:.9rem;color:var(--text-heading);margin-bottom:.15rem}.step-desc{font-size:.8rem;color:var(--text-muted);line-height:1.5}
+.warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:.75rem;padding:.9rem 1rem;margin-bottom:1rem;font-size:.82rem;line-height:1.55}
+.warn strong,.tip strong{display:block;margin-bottom:.2rem;font-size:.85rem}
+.tip{background:var(--tip-bg);border:1px solid var(--tip-border);border-radius:.75rem;padding:.9rem 1rem;margin-bottom:1rem;font-size:.82rem;line-height:1.55}
+.acc-wrap{display:flex;flex-direction:column;gap:.6rem}
+.acc{background:var(--bg-card);border:1px solid var(--border);border-radius:.875rem;overflow:hidden}
+.acc-head{display:flex;justify-content:space-between;align-items:center;padding:.9rem 1.1rem;cursor:pointer;-webkit-tap-highlight-color:transparent;font-size:.9rem;font-weight:700;color:var(--text-heading)}
+.platform-ico{font-size:1.25rem;margin-right:.5rem}.acc-arrow{transition:transform .2s;color:var(--text-muted);font-size:.85rem}
+.acc.open .acc-arrow{transform:rotate(180deg)}.acc-body{display:none;padding:0 1.1rem 1.1rem;font-size:.8rem;line-height:1.6;color:var(--text)}
+.acc.open .acc-body{display:block}.acc-body ol{padding-left:1.2rem;margin:.4rem 0}.acc-body li{margin-bottom:.4rem}
+.code-inline{background:var(--step-bg);border:1px solid var(--border);border-radius:.3rem;padding:.1rem .4rem;font-family:monospace;font-size:.78rem;color:var(--accent)}
+.divider{border:none;border-top:1px solid var(--border);margin:0}
+.contact-row{display:flex;align-items:center;gap:.65rem;background:var(--bg-card);border:1px solid var(--border);border-radius:.75rem;padding:.85rem 1rem;text-decoration:none;color:var(--text-heading);font-size:.88rem;font-weight:600}
+footer{text-align:center;padding:2rem 1.25rem 3rem;font-size:.75rem;color:var(--text-muted)}
+footer a{color:var(--link);text-decoration:none}
+.lang-content{display:none}.lang-content.active{display:block}
+</style>
+</head>
+<body>
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('en')">🇬🇧 EN</button>
+  <button class="lang-btn" onclick="setLang('es')">🇪🇸 ES</button>
+  <button class="lang-btn" onclick="setLang('de')">🇩🇪 DE</button>
+</div>
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme"><span class="theme-icon" id="themeIcon">☀️</span></button>
+
+<!-- EN -->
+<div class="lang-content active" data-lang="en" id="lang-en">
+  <div class="hero">
+    <div class="hero-badge"><span class="dot"></span> Prototype — Tester Kit</div>
+    <h1>Know what it's<br><span class="gold">worth.</span></h1>
+    <p class="hero-sub">ValorApp uses AI to estimate secondhand prices from a photo — no account, no fuss. You have early access. Thank you for testing!</p>
+    <a class="cta-btn" href="https://valor-app.netlify.app/" target="_blank" rel="noopener">Open ValorApp <span class="cta-arrow">→</span></a>
+  </div>
+  <hr class="divider">
+  <div class="section">
+    <div class="section-title"><span class="ico">💡</span> What is ValorApp?</div>
+    <div class="feat-grid">
+      <div class="feat-card"><span class="feat-icon">📸</span><div class="feat-name">Snap &amp; Price</div><div class="feat-desc">Photograph any secondhand item — AI gives you a real price range in seconds.</div></div>
+      <div class="feat-card"><span class="feat-icon">🔒</span><div class="feat-name">Zero Registration</div><div class="feat-desc">No account, no email, no password — completely anonymous by design.</div></div>
+      <div class="feat-card"><span class="feat-icon">🆓</span><div class="feat-name">5 Free Credits / Day</div><div class="feat-desc">New daily quota every day. No payment needed to try it out fully.</div></div>
+      <div class="feat-card"><span class="feat-icon">🌍</span><div class="feat-name">7 Languages</div><div class="feat-desc">EN, ES, FR, DE, IT, PT, RO — auto-detected from your browser.</div></div>
+      <div class="feat-card"><span class="feat-icon">📱</span><div class="feat-name">Installable PWA</div><div class="feat-desc">Add to Home Screen on Android — works like a native app, no Play Store needed.</div></div>
+      <div class="feat-card"><span class="feat-icon">📊</span><div class="feat-name">Price Catalogue</div><div class="feat-desc">Crowdsourced price reference for secondhand items across Europe.</div></div>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="section">
+    <div class="section-title"><span class="ico">🚀</span> How to test it</div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open the app</div><div class="step-desc">Tap the button above or go to <strong>valor-app.netlify.app</strong> in your browser.</div></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Take or upload a photo</div><div class="step-desc">Point your camera at any secondhand item — a lamp, a phone, a jacket. Any object works.</div></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Get your estimate</div><div class="step-desc">The AI returns a price range with condition notes and category — usually in under 5 seconds.</div></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Contribute to the catalogue (optional)</div><div class="step-desc">After each estimate you can contribute anonymously to the shared secondhand price database.</div></div></div>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="section">
+    <div class="section-title"><span class="ico">🧹</span> Getting the latest version</div>
+    <div class="tip"><strong>💡 When to do this</strong>If the app looks outdated or shows errors — clear the site data. The app uses a service worker that caches files aggressively.</div>
+    <div class="warn"><strong>⚠️ Save your credit token first!</strong>If you purchased credits, your token is stored in your browser. Clearing site data <strong>will delete it</strong>. Note it down or use the email receipt before proceeding.</div>
+    <div class="acc-wrap">
+      <div class="acc open"><div class="acc-head" onclick="this.parentElement.classList.toggle('open')"><span><span class="platform-ico">🤖</span> Android Chrome</span><span class="acc-arrow">▼</span></div>
+        <div class="acc-body"><ol><li>Open Chrome → go to <span class="code-inline">valor-app.netlify.app</span></li><li>Tap <strong>⋮ menu</strong> → <strong>Settings</strong> → <strong>Privacy and security</strong> → <strong>Clear browsing data</strong></li><li>Select <strong>Cached images and files</strong> + <strong>Cookies and site data</strong> → <strong>Clear data</strong></li><li>Return to the app and reload.</li></ol><div class="tip" style="margin-top:.75rem;margin-bottom:0"><strong>Faster:</strong> Long-press app icon → <strong>App info</strong> → <strong>Storage</strong> → <strong>Clear cache</strong> + <strong>Clear data</strong>.</div></div>
+      </div>
+      <div class="acc"><div class="acc-head" onclick="this.parentElement.classList.toggle('open')"><span><span class="platform-ico">🍎</span> iOS Safari</span><span class="acc-arrow">▼</span></div>
+        <div class="acc-body"><ol><li>Settings → Apps → Safari → <strong>Clear History and Website Data</strong></li><li>Reopen Safari → go to <span class="code-inline">valor-app.netlify.app</span></li></ol><div class="tip" style="margin-top:.75rem;margin-bottom:0"><strong>Site-only:</strong> Settings → Safari → Advanced → Website Data → search "valor-app" → swipe to delete.</div></div>
+      </div>
+      <div class="acc"><div class="acc-head" onclick="this.parentElement.classList.toggle('open')"><span><span class="platform-ico">🖥️</span> Desktop Chrome / Brave</span><span class="acc-arrow">▼</span></div>
+        <div class="acc-body"><ol><li>Press <span class="code-inline">F12</span> → <strong>Application</strong> tab → <strong>Storage</strong> → <strong>Clear site data</strong></li><li>Reload the page.</li></ol><div class="tip" style="margin-top:.75rem;margin-bottom:0"><strong>Quick reload:</strong> <span class="code-inline">Ctrl+Shift+R</span></div></div>
+      </div>
+      <div class="acc"><div class="acc-head" onclick="this.parentElement.classList.toggle('open')"><span><span class="platform-ico">🦊</span> Desktop Firefox</span><span class="acc-arrow">▼</span></div>
+        <div class="acc-body"><ol><li>Click the <strong>🔒 lock icon</strong> → <strong>Clear Cookies and Site Data…</strong> → confirm and reload.</li></ol></div>
+      </div>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="section">
+    <div class="section-title"><span class="ico">💬</span> Send feedback</div>
+    <p style="font-size:.87rem;color:var(--text-muted);margin-bottom:1rem">Found a bug? Something felt off? Your notes are gold at this stage — reach out directly:</p>
+    <div style="display:flex;flex-direction:column;gap:.6rem">
+      <a href="mailto:digitalAIventures.LLC@gmail.com" class="contact-row"><span>📧</span> digitalAIventures.LLC@gmail.com</a>
+      <a href="https://t.me/JuanittoCalvares" target="_blank" rel="noopener" class="contact-row"><span>✈️</span> Telegram: @JuanittoCalvares</a>
+    </div>
+  </div>
+</div>
+
+<!-- ES -->
+<div class="lang-content" data-lang="es" id="lang-es">
+  <div class="hero">
+    <div class="hero-badge"><span class="dot"></span> Prototipo — Kit de Tester</div>
+    <h1>Sabe lo que<br><span class="gold">vale.</span></h1>
+    <p class="hero-sub">ValorApp usa IA para estimar precios de segunda mano a partir de una foto — sin cuenta, sin complicaciones. Tienes acceso anticipado. ¡Gracias por testear!</p>
+    <a class="cta-btn" href="https://valor-app.netlify.app/" target="_blank" rel="noopener">Abrir ValorApp <span class="cta-arrow">→</span></a>
+  </div>
+  <hr class="divider">
+  <div class="section">
+    <div class="section-title"><span class="ico">💡</span> ¿Qué es ValorApp?</div>
+    <div class="feat-grid">
+      <div class="feat-card"><span class="feat-icon">📸</span><div class="feat-name">Foto y Precio</div><div class="feat-desc">Fotografía cualquier artículo de segunda mano — la IA te da un rango de precio real en segundos.</div></div>
+      <div class="feat-card"><span class="feat-icon">🔒</span><div class="feat-name">Sin Registro</div><div class="feat-desc">Sin cuenta, sin email, sin contraseña — completamente anónimo por diseño.</div></div>
+      <div class="feat-card"><span class="feat-icon">🆓</span><div class="feat-name">5 Créditos / Día</div><div class="feat-desc">Nueva cuota diaria. No se necesita pago para probarlo en profundidad.</div></div>
+      <div class="feat-card"><span class="feat-icon">🌍</span><div class="feat-name">7 Idiomas</div><div class="feat-desc">EN, ES, FR, DE, IT, PT, RO — detectado automáticamente.</div></div>
+      <div class="feat-card"><span class="feat-icon">📱</span><div class="feat-name">PWA Instalable</div><div class="feat-desc">Añade a la pantalla de inicio en Android — sin Google Play.</div></div>
+      <div class="feat-card"><span class="feat-icon">📊</span><div class="feat-name">Catálogo de Precios</div><div class="feat-desc">Referencia colaborativa de precios de segunda mano para Europa.</div></div>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="section">
+    <div class="section-title"><span class="ico">🚀</span> Cómo testear</div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Abre la app</div><div class="step-desc">Pulsa el botón de arriba o ve a <strong>valor-app.netlify.app</strong>.</div></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Haz o sube una foto</div><div class="step-desc">Apunta la cámara a cualquier artículo de segunda mano — una lámpara, un móvil, una chaqueta.</div></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Recibe tu estimación</div><div class="step-desc">La IA devuelve un rango de precio con notas de estado — en menos de 5 segundos.</div></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Contribuye al catálogo (opcional)</div><div class="step-desc">Después de cada estimación puedes contribuir anónimamente a la base de datos compartida.</div></div></div>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="section">
+    <div class="section-title"><span class="ico">🧹</span> Obtener la última versión</div>
+    <div class="tip"><strong>💡 ¿Cuándo hacerlo?</strong>Si la app parece desactualizada o muestra errores — borra los datos del sitio.</div>
+    <div class="warn"><strong>⚠️ ¡Guarda tu token primero!</strong>Si compraste créditos, borra los datos del sitio <strong>eliminará tu token</strong>. Anótalo antes.</div>
+    <div class="acc-wrap">
+      <div class="acc open"><div class="acc-head" onclick="this.parentElement.classList.toggle('open')"><span><span class="platform-ico">🤖</span> Android Chrome</span><span class="acc-arrow">▼</span></div>
+        <div class="acc-body"><ol><li>⋮ menú → <strong>Ajustes</strong> → <strong>Privacidad y seguridad</strong> → <strong>Borrar datos</strong></li><li>Selecciona <strong>Caché</strong> + <strong>Cookies</strong> → borrar → recargar.</li></ol><div class="tip" style="margin-top:.75rem;margin-bottom:0"><strong>Rápido:</strong> Mantén pulsado el icono → <strong>Info app</strong> → <strong>Almacenamiento</strong> → borrar caché + datos.</div></div>
+      </div>
+      <div class="acc"><div class="acc-head" onclick="this.parentElement.classList.toggle('open')"><span><span class="platform-ico">🍎</span> iOS Safari</span><span class="acc-arrow">▼</span></div>
+        <div class="acc-body"><ol><li>Ajustes → Safari → <strong>Borrar historial y datos de sitios web</strong> → reabrir Safari.</li></ol></div>
+      </div>
+      <div class="acc"><div class="acc-head" onclick="this.parentElement.classList.toggle('open')"><span><span class="platform-ico">🖥️</span> Chrome / Brave Escritorio</span><span class="acc-arrow">▼</span></div>
+        <div class="acc-body"><ol><li>F12 → <strong>Application</strong> → <strong>Storage</strong> → <strong>Clear site data</strong> → recargar.</li></ol><div class="tip" style="margin-top:.75rem;margin-bottom:0"><strong>Rápido:</strong> <span class="code-inline">Ctrl+Shift+R</span></div></div>
+      </div>
+      <div class="acc"><div class="acc-head" onclick="this.parentElement.classList.toggle('open')"><span><span class="platform-ico">🦊</span> Firefox Escritorio</span><span class="acc-arrow">▼</span></div>
+        <div class="acc-body"><ol><li>🔒 candado → <strong>Borrar cookies y datos del sitio…</strong> → confirmar.</li></ol></div>
+      </div>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="section">
+    <div class="section-title"><span class="ico">💬</span> Enviar feedback</div>
+    <p style="font-size:.87rem;color:var(--text-muted);margin-bottom:1rem">¿Bug? ¿Algo raro? Escríbenos directamente:</p>
+    <div style="display:flex;flex-direction:column;gap:.6rem">
+      <a href="mailto:digitalAIventures.LLC@gmail.com" class="contact-row"><span>📧</span> digitalAIventures.LLC@gmail.com</a>
+      <a href="https://t.me/JuanittoCalvares" target="_blank" rel="noopener" class="contact-row"><span>✈️</span> Telegram: @JuanittoCalvares</a>
+    </div>
+  </div>
+</div>
+
+<!-- DE -->
+<div class="lang-content" data-lang="de" id="lang-de">
+  <div class="hero">
+    <div class="hero-badge"><span class="dot"></span> Prototyp — Tester-Kit</div>
+    <h1>Weiß, was es<br><span class="gold">wert ist.</span></h1>
+    <p class="hero-sub">ValorApp nutzt KI, um Secondhand-Preise anhand eines Fotos zu schätzen — kein Konto, kein Aufwand. Du hast Frühzugang. Danke fürs Testen!</p>
+    <a class="cta-btn" href="https://valor-app.netlify.app/" target="_blank" rel="noopener">ValorApp öffnen <span class="cta-arrow">→</span></a>
+  </div>
+  <hr class="divider">
+  <div class="section">
+    <div class="section-title"><span class="ico">💡</span> Was ist ValorApp?</div>
+    <div class="feat-grid">
+      <div class="feat-card"><span class="feat-icon">📸</span><div class="feat-name">Foto &amp; Preis</div><div class="feat-desc">Fotografiere einen Gebrauchtartikel — die KI liefert in Sekunden eine Preisspanne.</div></div>
+      <div class="feat-card"><span class="feat-icon">🔒</span><div class="feat-name">Ohne Registrierung</div><div class="feat-desc">Kein Konto, keine E-Mail, kein Passwort — komplett anonym by Design.</div></div>
+      <div class="feat-card"><span class="feat-icon">🆓</span><div class="feat-name">5 Gratis-Credits / Tag</div><div class="feat-desc">Täglich neue Credits. Kein Kauf nötig zum Testen.</div></div>
+      <div class="feat-card"><span class="feat-icon">🌍</span><div class="feat-name">7 Sprachen</div><div class="feat-desc">EN, ES, FR, DE, IT, PT, RO — automatisch erkannt.</div></div>
+      <div class="feat-card"><span class="feat-icon">📱</span><div class="feat-name">Installierbare PWA</div><div class="feat-desc">Startbildschirm auf Android — ohne Play Store.</div></div>
+      <div class="feat-card"><span class="feat-icon">📊</span><div class="feat-name">Preiskatalog</div><div class="feat-desc">Community-Preisreferenz für Secondhand in Europa.</div></div>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="section">
+    <div class="section-title"><span class="ico">🚀</span> So testest du es</div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">App öffnen</div><div class="step-desc">Button oben oder <strong>valor-app.netlify.app</strong> im Browser.</div></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Foto aufnehmen oder hochladen</div><div class="step-desc">Kamera auf einen Gebrauchtartikel — Lampe, Handy, Jacke. Alles funktioniert.</div></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Schätzung erhalten</div><div class="step-desc">KI liefert Preisspanne mit Zustandshinweisen — meist unter 5 Sekunden.</div></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Zum Katalog beitragen (optional)</div><div class="step-desc">Nach jeder Schätzung anonym zur Preis-Datenbank beitragen.</div></div></div>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="section">
+    <div class="section-title"><span class="ico">🧹</span> Neueste Version laden</div>
+    <div class="tip"><strong>💡 Wann nötig?</strong>Wenn die App veraltet wirkt oder Fehler anzeigt — leere die Websitedaten.</div>
+    <div class="warn"><strong>⚠️ Token zuerst sichern!</strong>Wenn du Credits hast, löscht das Bereinigen <strong>deinen Token dauerhaft</strong>. Notiere ihn vorher.</div>
+    <div class="acc-wrap">
+      <div class="acc open"><div class="acc-head" onclick="this.parentElement.classList.toggle('open')"><span><span class="platform-ico">🤖</span> Android Chrome</span><span class="acc-arrow">▼</span></div>
+        <div class="acc-body"><ol><li>⋮ Menü → <strong>Einstellungen</strong> → <strong>Datenschutz</strong> → <strong>Browserdaten löschen</strong></li><li>Cache + Cookies → löschen → App neu laden.</li></ol><div class="tip" style="margin-top:.75rem;margin-bottom:0"><strong>Schnell:</strong> App-Symbol lang drücken → <strong>App-Info</strong> → <strong>Speicher</strong> → Cache + Daten löschen.</div></div>
+      </div>
+      <div class="acc"><div class="acc-head" onclick="this.parentElement.classList.toggle('open')"><span><span class="platform-ico">🍎</span> iOS Safari</span><span class="acc-arrow">▼</span></div>
+        <div class="acc-body"><ol><li>Einstellungen → Safari → <strong>Verlauf und Websitedaten löschen</strong> → Safari neu öffnen.</li></ol></div>
+      </div>
+      <div class="acc"><div class="acc-head" onclick="this.parentElement.classList.toggle('open')"><span><span class="platform-ico">🖥️</span> Desktop Chrome / Brave</span><span class="acc-arrow">▼</span></div>
+        <div class="acc-body"><ol><li>F12 → <strong>Application</strong> → <strong>Storage</strong> → <strong>Clear site data</strong> → neu laden.</li></ol><div class="tip" style="margin-top:.75rem;margin-bottom:0"><strong>Schnell:</strong> <span class="code-inline">Ctrl+Shift+R</span></div></div>
+      </div>
+      <div class="acc"><div class="acc-head" onclick="this.parentElement.classList.toggle('open')"><span><span class="platform-ico">🦊</span> Desktop Firefox</span><span class="acc-arrow">▼</span></div>
+        <div class="acc-body"><ol><li>🔒 Schloss → <strong>Cookies und Websitedaten löschen…</strong> → bestätigen.</li></ol></div>
+      </div>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="section">
+    <div class="section-title"><span class="ico">💬</span> Feedback senden</div>
+    <p style="font-size:.87rem;color:var(--text-muted);margin-bottom:1rem">Bug gefunden? Schreib uns direkt:</p>
+    <div style="display:flex;flex-direction:column;gap:.6rem">
+      <a href="mailto:digitalAIventures.LLC@gmail.com" class="contact-row"><span>📧</span> digitalAIventures.LLC@gmail.com</a>
+      <a href="https://t.me/JuanittoCalvares" target="_blank" rel="noopener" class="contact-row"><span>✈️</span> Telegram: @JuanittoCalvares</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>ValorApp · Prototype · digitalAIventures LLC · Alpujarras, Spain</p>
+  <p style="margin-top:.4rem"><a href="https://valor-app.netlify.app/" target="_blank" rel="noopener">valor-app.netlify.app</a></p>
+</footer>
+<script>
+function setLang(lang){
+  document.querySelectorAll('.lang-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.lang-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById('lang-'+lang).classList.add('active');
+  document.querySelector('.lang-btn[onclick="setLang(\''+lang+'\')"]').classList.add('active');
+  document.documentElement.lang=lang;
+  try{localStorage.setItem('lang',lang)}catch(e){}
+}
+(function(){
+  try{
+    const saved=localStorage.getItem('lang');
+    const browser=navigator.language?.slice(0,2)||'en';
+    const lang=saved||(['en','es','de'].includes(browser)?browser:'en');
+    if(lang!=='en')setLang(lang);
+  }catch(e){}
+})();
+function toggleTheme(){
+  const html=document.documentElement;const cur=html.getAttribute('data-theme')||'dark';const next=cur==='dark'?'light':'dark';
+  html.setAttribute('data-theme',next);document.getElementById('themeIcon').textContent=next==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',next)}catch(e){}
+}
+(function(){
+  function apply(t){document.documentElement.setAttribute('data-theme',t);document.addEventListener('DOMContentLoaded',()=>{const i=document.getElementById('themeIcon');if(i)i.textContent=t==='dark'?'☀️':'🌙'})}
+  try{const s=localStorage.getItem('theme');if(s){apply(s)}else{const h=new Date().getHours();apply(h>=7&&h<19?'light':'dark')}}catch(e){apply('dark')}
+})();
+</script>
+</body>
+</html>
