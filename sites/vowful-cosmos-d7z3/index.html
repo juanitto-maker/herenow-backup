@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love Me Again — Tester Kit</title>
+  <meta name="description" content="Love Me Again — Rastro Solidario · Tester Kit · Prototype access. ES / EN / DE">
+  <meta name="theme-color" content="#D4820A">
+  <link rel="icon" href="https://love-me-again.vercel.app/icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root, [data-theme="dark"] {
+      --bg: #1a1308;
+      --bg-card: #251c10;
+      --bg-hero: linear-gradient(135deg, #2a1f10 0%, #1a1308 100%);
+      --text: #e8dcc4;
+      --text-muted: #a89880;
+      --text-heading: #fff3dc;
+      --border: #3a2f1c;
+      --accent: #E8A038;
+      --accent-bg: rgba(232,160,56,0.12);
+      --accent-2: #E0653A;
+      --accent-3: #2DAFB8;
+      --link: #E8A038;
+      --link-hover: #FFC062;
+      --code-bg: #14100a;
+      --shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+    [data-theme="light"] {
+      --bg: #fdf8ee;
+      --bg-card: #ffffff;
+      --bg-hero: linear-gradient(135deg, #fff3dc 0%, #fdf8ee 100%);
+      --text: #3a2a1a;
+      --text-muted: #7a6a5a;
+      --text-heading: #2a1a0a;
+      --border: #e8dcc4;
+      --accent: #D4820A;
+      --accent-bg: rgba(212,130,10,0.10);
+      --accent-2: #C4440A;
+      --accent-3: #00838F;
+      --link: #C4440A;
+      --link-hover: #8B2F08;
+      --code-bg: #f5ede0;
+      --shadow: 0 2px 12px rgba(58,42,26,0.06);
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Inter',system-ui,-apple-system,sans-serif;
+      background:var(--bg);color:var(--text);line-height:1.65;
+      -webkit-font-smoothing:antialiased;
+      transition:background .25s ease, color .25s ease;
+    }
+    h1,h2,h3{font-family:'Playfair Display',Georgia,serif;color:var(--text-heading);line-height:1.2;font-weight:700}
+    a{color:var(--link);text-decoration:none;transition:color .15s}
+    a:hover{color:var(--link-hover)}
+
+    /* Lang bar */
+    .lang-bar{
+      position:fixed;top:0;left:0;right:0;
+      background:var(--bg-card);border-bottom:1px solid var(--border);
+      display:flex;justify-content:center;gap:.4rem;
+      padding:.5rem;z-index:100;
+      backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    }
+    .lang-btn{
+      background:transparent;border:1px solid var(--border);
+      color:var(--text-muted);padding:.3rem .75rem;border-radius:1rem;
+      font-size:.78rem;font-weight:600;cursor:pointer;
+      font-family:inherit;transition:all .15s;
+    }
+    .lang-btn.active{background:var(--accent);color:#1a1308;border-color:var(--accent)}
+    .lang-btn:not(.active):hover{color:var(--text);border-color:var(--text-muted)}
+
+    /* Theme toggle */
+    .theme-toggle{
+      position:fixed;top:3.2rem;right:.75rem;z-index:150;
+      background:var(--bg-card);border:1px solid var(--border);
+      width:2.3rem;height:2.3rem;border-radius:50%;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:var(--shadow);transition:transform .2s, background .25s;
+    }
+    .theme-toggle:hover{transform:scale(1.1)}
+    .theme-icon{font-size:1rem;line-height:1}
+
+    /* Lang content */
+    .lang-content{display:none}
+    .lang-content.active{display:block}
+
+    /* Wrapper */
+    .page{padding-top:3rem;padding-bottom:0}
+    .container{max-width:760px;margin:0 auto;padding:0 1.25rem}
+
+    /* Hero */
+    .hero{
+      background:var(--bg-hero);
+      padding:3.5rem 1.25rem 3rem;text-align:center;
+      border-bottom:1px solid var(--border);position:relative;
+    }
+    .hero-logo{
+      width:130px;height:130px;border-radius:50%;
+      background:#fff;padding:.6rem;margin:0 auto 1.25rem;
+      box-shadow:0 6px 24px rgba(212,130,10,0.25);display:block;
+      object-fit:contain;
+    }
+    .badge{
+      display:inline-block;padding:.3rem .85rem;
+      background:var(--accent-bg);color:var(--accent);
+      border-radius:1rem;font-size:.7rem;font-weight:700;
+      letter-spacing:.1em;text-transform:uppercase;
+      margin-bottom:1.1rem;border:1px solid var(--accent);
+    }
+    .hero h1{font-size:clamp(1.9rem,5.5vw,2.7rem);margin-bottom:1rem}
+    .hero h1 .accent{color:var(--accent-2);font-style:italic}
+    .hero p.lead{
+      font-size:1.02rem;color:var(--text-muted);
+      max-width:480px;margin:0 auto 1.75rem;
+    }
+    .cta-primary{
+      display:inline-flex;align-items:center;gap:.5rem;
+      background:var(--accent-2);color:#fff;
+      padding:.85rem 1.6rem;border-radius:.6rem;
+      font-weight:700;font-size:1rem;
+      box-shadow:0 4px 14px rgba(196,68,10,.3);
+      transition:transform .15s, box-shadow .15s;
+    }
+    .cta-primary:hover{transform:translateY(-2px);color:#fff;box-shadow:0 6px 20px rgba(196,68,10,.45)}
+
+    /* Paisley divider */
+    .divider{
+      max-width:280px;margin:2.5rem auto;display:block;
+      opacity:.7;
+    }
+
+    /* Section */
+    section.block{padding:1.5rem 0}
+    .block h2{
+      font-size:clamp(1.5rem,4vw,2rem);text-align:center;
+      margin-bottom:.5rem;
+    }
+    .block h2 .h2-emoji{font-family:'Inter',sans-serif;font-size:.9em;margin-right:.4rem}
+    .block .sub{color:var(--text-muted);text-align:center;margin-bottom:2rem;font-size:.95rem}
+
+    /* Features grid */
+    .features{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+      gap:1rem;
+    }
+    .feature{
+      background:var(--bg-card);border:1px solid var(--border);
+      border-radius:.85rem;padding:1.25rem;
+      transition:transform .15s, border-color .15s;
+    }
+    .feature:hover{transform:translateY(-2px);border-color:var(--accent)}
+    .feature-emoji{font-size:1.6rem;margin-bottom:.6rem;display:block}
+    .feature h3{font-size:1.02rem;margin-bottom:.4rem;font-family:'Inter',sans-serif;font-weight:700;color:var(--text-heading)}
+    .feature p{font-size:.86rem;color:var(--text-muted);line-height:1.55}
+
+    /* Steps - role cards */
+    .roles{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:1.25rem;
+    }
+    .role{
+      background:var(--bg-card);border:1px solid var(--border);
+      border-radius:.85rem;padding:1.5rem;
+    }
+    .role-header{
+      display:flex;align-items:center;gap:.6rem;margin-bottom:1.1rem;
+      padding-bottom:.85rem;border-bottom:1px solid var(--border);
+    }
+    .role-emoji{font-size:1.55rem}
+    .role-title{
+      font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;
+      color:var(--text-heading);
+    }
+    .role-tag{
+      margin-left:auto;font-size:.65rem;background:var(--accent-bg);color:var(--accent);
+      padding:.2rem .55rem;border-radius:.8rem;font-weight:700;letter-spacing:.06em;
+      border:1px solid var(--accent);
+    }
+    .step{
+      display:flex;gap:.85rem;margin-bottom:1rem;
+    }
+    .step:last-child{margin-bottom:0}
+    .step-num{
+      flex-shrink:0;width:1.85rem;height:1.85rem;border-radius:50%;
+      background:var(--accent);color:#1a1308;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:700;font-size:.85rem;
+    }
+    .step-body strong{display:block;color:var(--text-heading);margin-bottom:.15rem;font-size:.95rem}
+    .step-body{font-size:.86rem;color:var(--text-muted);line-height:1.55}
+    .step-body code{
+      background:var(--code-bg);padding:.1rem .35rem;border-radius:.25rem;
+      font-size:.82rem;color:var(--accent-2);font-family:ui-monospace,SFMono-Regular,monospace;
+    }
+    .step-body a{color:var(--accent);font-weight:600}
+
+    /* Cache section - accordion */
+    details{
+      background:var(--bg-card);border:1px solid var(--border);
+      border-radius:.65rem;margin-bottom:.75rem;overflow:hidden;
+    }
+    details summary{
+      padding:.85rem 1rem;cursor:pointer;font-weight:600;font-size:.9rem;
+      list-style:none;display:flex;justify-content:space-between;align-items:center;
+      color:var(--text-heading);
+      -webkit-tap-highlight-color:transparent;
+    }
+    details summary::-webkit-details-marker{display:none}
+    details summary::after{content:'▼';font-size:.7rem;color:var(--text-muted);transition:transform .2s}
+    details[open] summary::after{transform:rotate(180deg)}
+    details .body{padding:0 1rem 1rem;font-size:.85rem;color:var(--text-muted);line-height:1.65}
+    details .body ol{margin:.5rem 0 .5rem 1.25rem}
+    details .body li{margin-bottom:.35rem}
+    details .body strong{color:var(--text)}
+    details .body code{
+      background:var(--code-bg);padding:.1rem .3rem;border-radius:.25rem;
+      font-size:.8rem;color:var(--accent-2);font-family:ui-monospace,SFMono-Regular,monospace;
+    }
+
+    .info-tip{
+      background:var(--accent-bg);border:1px solid var(--accent);
+      border-radius:.6rem;padding:.85rem 1rem;margin-bottom:1.25rem;
+      font-size:.85rem;
+    }
+    .info-tip strong{color:var(--accent);display:block;margin-bottom:.2rem}
+
+    /* Feedback */
+    .feedback{text-align:center}
+    .feedback-btn{
+      display:flex;align-items:center;justify-content:center;gap:.6rem;
+      background:var(--accent);color:#000;
+      font-weight:700;font-size:1.02rem;
+      padding:1rem 1.25rem;border-radius:.875rem;
+      text-decoration:none;transition:all .2s;
+      box-shadow:0 4px 20px rgba(232,160,56,.35);
+      max-width:340px;margin:1.4rem auto 1rem;
+    }
+    .feedback-btn:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(232,160,56,.5);color:#000}
+    .feedback-btn .bug{font-size:1.25rem}
+    .contact-toggle{
+      display:flex;align-items:center;justify-content:center;gap:.55rem;
+      width:100%;max-width:340px;margin:0 auto;
+      background:transparent;border:1.5px solid var(--accent);color:var(--accent);
+      font-family:inherit;font-size:.95rem;font-weight:600;
+      padding:.85rem 1rem;border-radius:.875rem;
+      cursor:pointer;transition:all .2s;
+    }
+    .contact-toggle:hover,.contact-toggle:active{background:var(--accent-bg);transform:translateY(-1px)}
+    .contact-toggle .chev{font-size:.75rem;opacity:.7;margin-left:.15rem}
+
+    /* Contact modal */
+    .modal-overlay{
+      position:fixed;inset:0;background:rgba(0,0,0,.65);
+      backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+      display:none;align-items:flex-end;justify-content:center;z-index:1000;
+      animation:mFade .2s ease;
+    }
+    .modal-overlay.active{display:flex}
+    @keyframes mFade{from{opacity:0}to{opacity:1}}
+    @keyframes mSlide{from{transform:translateY(100%)}to{transform:translateY(0)}}
+    .modal-box{
+      background:var(--bg-card);width:100%;max-width:480px;
+      border-radius:1.25rem 1.25rem 0 0;padding:1.5rem 1.25rem 1.75rem;
+      box-shadow:0 -8px 30px rgba(0,0,0,.5);animation:mSlide .25s ease;
+      border:1px solid var(--border);border-bottom:none;
+    }
+    .modal-title{
+      font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;
+      color:var(--text-heading);text-align:center;margin-bottom:1.25rem;
+    }
+    .modal-row{
+      display:flex;align-items:center;gap:.85rem;
+      padding:.95rem 1rem;border-radius:.75rem;
+      text-decoration:none;color:var(--text-heading);
+      background:rgba(255,255,255,.03);border:1px solid var(--border);
+      margin-bottom:.55rem;transition:all .15s;
+    }
+    [data-theme="light"] .modal-row{background:rgba(0,0,0,.025)}
+    .modal-row:hover,.modal-row:active{border-color:var(--accent);background:var(--accent-bg)}
+    .modal-row .modal-ico{font-size:1.3rem;flex-shrink:0;line-height:1}
+    .modal-row .modal-label{font-size:.93rem;font-weight:600;display:block;line-height:1.25}
+    .modal-row .modal-sub{display:block;font-size:.7rem;font-weight:400;color:var(--text-muted);margin-top:.2rem;line-height:1.35}
+    .modal-cancel{
+      display:block;width:100%;background:transparent;
+      border:1px solid var(--border);color:var(--text-muted);
+      font-family:inherit;font-size:.9rem;font-weight:600;
+      padding:.85rem;border-radius:.75rem;cursor:pointer;
+      margin-top:.75rem;transition:all .15s;
+    }
+    .modal-cancel:hover{border-color:var(--text-muted);color:var(--text-heading)}
+    @media (min-width:520px){
+      .modal-overlay{align-items:center;padding:1rem}
+      .modal-box{border-radius:1.25rem;border-bottom:1px solid var(--border);animation:mFade .2s ease}
+    }
+
+    /* Footer */
+    footer{
+      text-align:center;padding:2.5rem 1.25rem 2rem;
+      border-top:1px solid var(--border);margin-top:2.5rem;
+      font-size:.8rem;color:var(--text-muted);
+    }
+    footer a{color:var(--accent)}
+
+    @media (max-width:520px){
+      .hero{padding:3rem 1rem 2.5rem}
+      .hero-logo{width:110px;height:110px}
+      .features{grid-template-columns:1fr}
+      .role{padding:1.25rem}
+      .container{padding:0 1rem}
+    }
+  </style>
+</head>
+<body>
+
+<!-- Lang bar -->
+<div class="lang-bar">
+  <button class="lang-btn active" data-lang-btn="es" onclick="setLang('es')">🇪🇸 ES</button>
+  <button class="lang-btn" data-lang-btn="en" onclick="setLang('en')">🇬🇧 EN</button>
+  <button class="lang-btn" data-lang-btn="de" onclick="setLang('de')">🇩🇪 DE</button>
+</div>
+
+<!-- Theme toggle -->
+<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <span class="theme-icon" id="themeIcon">☀️</span>
+</button>
+
+<div class="page">
+
+<!-- ============== ESPAÑOL ============== -->
+<div class="lang-content active" data-lang="es">
+
+<section class="hero">
+  <img class="hero-logo" src="https://love-me-again.vercel.app/icons/love_me_again_logo.png" alt="Love Me Again">
+  <span class="badge">Prototipo · Kit de Tester</span>
+  <h1>Dale otra vida<br>a las cosas <span class="accent">que ya no usas</span>.</h1>
+  <p class="lead">Love Me Again es un rastro solidario que valora cada artículo con IA. Tienes acceso anticipado — ¡gracias por testear!</p>
+  <a href="https://love-me-again.vercel.app/" class="cta-primary" target="_blank" rel="noopener">Abrir la tienda →</a>
+</section>
+
+<svg class="divider" viewBox="0 0 280 30" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,15 Q17,3 35,15 T70,15 T105,15 T140,15 T175,15 T210,15 T245,15 T280,15" fill="none" stroke="#C4440A" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M0,19 Q17,7 35,19 T70,19 T105,19 T140,19 T175,19 T210,19 T245,19 T280,19" fill="none" stroke="#00838F" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  <path d="M140,8 C142,4 146,3 146,7 C146,11 142,12 140,8Z" fill="#D4820A" opacity="0.4"/>
+  <circle cx="140" cy="8" r="1.5" fill="#00838F" opacity="0.4"/>
+  <circle cx="70" cy="12" r="1.5" fill="#C4440A" opacity="0.3"/>
+  <circle cx="210" cy="12" r="1.5" fill="#C4440A" opacity="0.3"/>
+</svg>
+
+<section class="block container">
+  <h2><span class="h2-emoji">💡</span>¿Qué es Love Me Again?</h2>
+  <p class="sub">Rastro solidario de las Alpujarras, valorado con IA</p>
+  <div class="features">
+    <div class="feature"><span class="feature-emoji">🤖</span><h3>Precio justo con IA</h3><p>Foto del artículo → Gemini sugiere un precio de mercado en segundos.</p></div>
+    <div class="feature"><span class="feature-emoji">🛍️</span><h3>Tienda sin cuenta</h3><p>Cualquiera navega el catálogo público — sin registro, sin email, sin contraseña.</p></div>
+    <div class="feature"><span class="feature-emoji">🔐</span><h3>Voluntarios con PIN</h3><p>Solo voluntarios autorizados pueden añadir, valorar y vender artículos.</p></div>
+    <div class="feature"><span class="feature-emoji">🎨</span><h3>Talleres comunitarios</h3><p>Reparar, reutilizar y crear, abierto al barrio.</p></div>
+    <div class="feature"><span class="feature-emoji">📅</span><h3>Eventos del rastro</h3><p>Mercadillos, ferias y encuentros — toda la agenda en un sitio.</p></div>
+    <div class="feature"><span class="feature-emoji">🌍</span><h3>50+ idiomas</h3><p>Toda la web traducida automáticamente — incluso las descripciones.</p></div>
+  </div>
+</section>
+
+<svg class="divider" viewBox="0 0 280 30" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,15 Q17,3 35,15 T70,15 T105,15 T140,15 T175,15 T210,15 T245,15 T280,15" fill="none" stroke="#C4440A" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M0,19 Q17,7 35,19 T70,19 T105,19 T140,19 T175,19 T210,19 T245,19 T280,19" fill="none" stroke="#00838F" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  <path d="M140,8 C142,4 146,3 146,7 C146,11 142,12 140,8Z" fill="#D4820A" opacity="0.4"/>
+  <circle cx="140" cy="8" r="1.5" fill="#00838F" opacity="0.4"/>
+</svg>
+
+<section class="block container">
+  <h2><span class="h2-emoji">🚀</span>Cómo testear</h2>
+  <p class="sub">Hay dos formas de probarlo según tu rol</p>
+  <div class="roles">
+    <div class="role">
+      <div class="role-header">
+        <span class="role-emoji">🛍️</span>
+        <span class="role-title">Cliente</span>
+        <span class="role-tag">SIN PIN</span>
+      </div>
+      <div class="step"><span class="step-num">1</span><div class="step-body"><strong>Abre la tienda</strong>Ve a <code>love-me-again.vercel.app</code> o pulsa el botón de arriba.</div></div>
+      <div class="step"><span class="step-num">2</span><div class="step-body"><strong>Explora el catálogo</strong>Filtra por categoría: ropa, libros, electrónica, muebles, juguetes…</div></div>
+      <div class="step"><span class="step-num">3</span><div class="step-body"><strong>Cambia de idioma</strong>Prueba el selector — son 50+ idiomas traducidos por IA.</div></div>
+      <div class="step"><span class="step-num">4</span><div class="step-body"><strong>Mira talleres y eventos</strong>Próximas actividades comunitarias del rastro.</div></div>
+    </div>
+    <div class="role">
+      <div class="role-header">
+        <span class="role-emoji">🔐</span>
+        <span class="role-title">Voluntario</span>
+        <span class="role-tag">CON PIN</span>
+      </div>
+      <div class="step"><span class="step-num">1</span><div class="step-body"><strong>Solicita tu PIN</strong>Escribe a <a href="https://t.me/JuanittoCalvares" target="_blank" rel="noopener">@JuanittoCalvares</a> por Telegram.</div></div>
+      <div class="step"><span class="step-num">2</span><div class="step-body"><strong>Abre /volunteer</strong>Ve a <code>love-me-again.vercel.app/volunteer</code> e introduce el PIN.</div></div>
+      <div class="step"><span class="step-num">3</span><div class="step-body"><strong>Fotografía un artículo</strong>La IA lo identifica (marca, modelo, estado) y sugiere un precio.</div></div>
+      <div class="step"><span class="step-num">4</span><div class="step-body"><strong>Confirma o ajusta</strong>El artículo aparece en la tienda pública al instante.</div></div>
+    </div>
+  </div>
+</section>
+
+<svg class="divider" viewBox="0 0 280 30" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,15 Q17,3 35,15 T70,15 T105,15 T140,15 T175,15 T210,15 T245,15 T280,15" fill="none" stroke="#C4440A" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M0,19 Q17,7 35,19 T70,19 T105,19 T140,19 T175,19 T210,19 T245,19 T280,19" fill="none" stroke="#00838F" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  <circle cx="140" cy="10" r="2" fill="#D4820A" opacity="0.3"/>
+</svg>
+
+<section class="block container">
+  <h2><span class="h2-emoji">🧹</span>Obtener la última versión</h2>
+  <p class="sub">La app es una PWA con caché agresiva — limpia si ves errores</p>
+  <div class="info-tip"><strong>💡 ¿Cuándo hacerlo?</strong>Si la app parece desactualizada, no carga bien o muestra errores raros — borra los datos del sitio y recarga.</div>
+  <details>
+    <summary>🤖 Android Chrome</summary>
+    <div class="body">
+      <ol>
+        <li>Chrome → ⋮ menú → <strong>Ajustes</strong> → <strong>Privacidad y seguridad</strong> → <strong>Borrar datos</strong></li>
+        <li>Selecciona <strong>Caché</strong> + <strong>Cookies y datos del sitio</strong> → borrar</li>
+        <li>Recarga <code>love-me-again.vercel.app</code></li>
+      </ol>
+      <p style="margin-top:.5rem"><strong>Más rápido:</strong> Mantén pulsado el icono de la app → <strong>Info app</strong> → <strong>Almacenamiento</strong> → borrar caché y datos.</p>
+    </div>
+  </details>
+  <details>
+    <summary>🍎 iOS Safari</summary>
+    <div class="body">
+      <ol>
+        <li>Ajustes → Apps → Safari → <strong>Borrar historial y datos de sitios web</strong></li>
+        <li>Reabrir Safari → <code>love-me-again.vercel.app</code></li>
+      </ol>
+    </div>
+  </details>
+  <details>
+    <summary>🖥️ Chrome / Brave (escritorio)</summary>
+    <div class="body">
+      <ol>
+        <li>F12 → pestaña <strong>Application</strong> → <strong>Storage</strong> → <strong>Clear site data</strong></li>
+        <li>Recargar la página</li>
+      </ol>
+      <p style="margin-top:.5rem"><strong>Atajo:</strong> Ctrl+Shift+R (recarga forzada)</p>
+    </div>
+  </details>
+  <details>
+    <summary>🦊 Firefox</summary>
+    <div class="body">
+      <ol>
+        <li>🔒 candado → <strong>Borrar cookies y datos del sitio…</strong> → confirmar</li>
+        <li>Recargar la página</li>
+      </ol>
+    </div>
+  </details>
+</section>
+
+<svg class="divider" viewBox="0 0 280 30" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,15 Q17,3 35,15 T70,15 T105,15 T140,15 T175,15 T210,15 T245,15 T280,15" fill="none" stroke="#C4440A" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M0,19 Q17,7 35,19 T70,19 T105,19 T140,19 T175,19 T210,19 T245,19 T280,19" fill="none" stroke="#00838F" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  <circle cx="140" cy="10" r="2" fill="#D4820A" opacity="0.3"/>
+</svg>
+
+<section class="block container feedback">
+  <h2><span class="h2-emoji">💬</span>Cuéntanos qué tal</h2>
+  <p class="sub">¿Bug? ¿Idea? ¿Algo raro? Tus notas son oro en esta fase.</p>
+  <a href="https://t.me/Juanittos_feedback_bot?start=love_me_again" target="_blank" rel="noopener" class="feedback-btn"><span class="bug">🐛</span> Enviar feedback</a>
+  <button type="button" class="contact-toggle" onclick="openContactModal()"><span>✉️</span> Contacto <span class="chev">▾</span></button>
+</section>
+
+</div><!-- /es -->
+
+
+<!-- ============== ENGLISH ============== -->
+<div class="lang-content" data-lang="en">
+
+<section class="hero">
+  <img class="hero-logo" src="https://love-me-again.vercel.app/icons/love_me_again_logo.png" alt="Love Me Again">
+  <span class="badge">Prototype · Tester Kit</span>
+  <h1>Give a second life<br>to what you <span class="accent">no longer use</span>.</h1>
+  <p class="lead">Love Me Again is a solidarity flea market where every item is priced by AI. You have early access — thanks for testing!</p>
+  <a href="https://love-me-again.vercel.app/" class="cta-primary" target="_blank" rel="noopener">Open the shop →</a>
+</section>
+
+<svg class="divider" viewBox="0 0 280 30" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,15 Q17,3 35,15 T70,15 T105,15 T140,15 T175,15 T210,15 T245,15 T280,15" fill="none" stroke="#C4440A" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M0,19 Q17,7 35,19 T70,19 T105,19 T140,19 T175,19 T210,19 T245,19 T280,19" fill="none" stroke="#00838F" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  <path d="M140,8 C142,4 146,3 146,7 C146,11 142,12 140,8Z" fill="#D4820A" opacity="0.4"/>
+  <circle cx="140" cy="8" r="1.5" fill="#00838F" opacity="0.4"/>
+  <circle cx="70" cy="12" r="1.5" fill="#C4440A" opacity="0.3"/>
+  <circle cx="210" cy="12" r="1.5" fill="#C4440A" opacity="0.3"/>
+</svg>
+
+<section class="block container">
+  <h2><span class="h2-emoji">💡</span>What is Love Me Again?</h2>
+  <p class="sub">A solidarity flea market in the Alpujarras, priced by AI</p>
+  <div class="features">
+    <div class="feature"><span class="feature-emoji">🤖</span><h3>Fair AI pricing</h3><p>Snap a photo → Gemini suggests a fair market price in seconds.</p></div>
+    <div class="feature"><span class="feature-emoji">🛍️</span><h3>No-account browsing</h3><p>Anyone can browse the public catalogue — no signup, no email, no password.</p></div>
+    <div class="feature"><span class="feature-emoji">🔐</span><h3>PIN-protected volunteers</h3><p>Only authorised volunteers can add, price and sell items.</p></div>
+    <div class="feature"><span class="feature-emoji">🎨</span><h3>Community workshops</h3><p>Repair, reuse and craft sessions, open to the neighbourhood.</p></div>
+    <div class="feature"><span class="feature-emoji">📅</span><h3>Shop events</h3><p>Markets, fairs and gatherings — the full agenda in one place.</p></div>
+    <div class="feature"><span class="feature-emoji">🌍</span><h3>50+ languages</h3><p>The whole site auto-translated — including item descriptions.</p></div>
+  </div>
+</section>
+
+<svg class="divider" viewBox="0 0 280 30" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,15 Q17,3 35,15 T70,15 T105,15 T140,15 T175,15 T210,15 T245,15 T280,15" fill="none" stroke="#C4440A" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M0,19 Q17,7 35,19 T70,19 T105,19 T140,19 T175,19 T210,19 T245,19 T280,19" fill="none" stroke="#00838F" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  <path d="M140,8 C142,4 146,3 146,7 C146,11 142,12 140,8Z" fill="#D4820A" opacity="0.4"/>
+  <circle cx="140" cy="8" r="1.5" fill="#00838F" opacity="0.4"/>
+</svg>
+
+<section class="block container">
+  <h2><span class="h2-emoji">🚀</span>How to test it</h2>
+  <p class="sub">Two ways to try it depending on your role</p>
+  <div class="roles">
+    <div class="role">
+      <div class="role-header">
+        <span class="role-emoji">🛍️</span>
+        <span class="role-title">Customer</span>
+        <span class="role-tag">NO PIN</span>
+      </div>
+      <div class="step"><span class="step-num">1</span><div class="step-body"><strong>Open the shop</strong>Go to <code>love-me-again.vercel.app</code> or tap the button above.</div></div>
+      <div class="step"><span class="step-num">2</span><div class="step-body"><strong>Browse the catalogue</strong>Filter by category: clothes, books, electronics, furniture, toys…</div></div>
+      <div class="step"><span class="step-num">3</span><div class="step-body"><strong>Switch language</strong>Try the language picker — 50+ languages, AI-translated.</div></div>
+      <div class="step"><span class="step-num">4</span><div class="step-body"><strong>Check workshops &amp; events</strong>Upcoming community activities at the shop.</div></div>
+    </div>
+    <div class="role">
+      <div class="role-header">
+        <span class="role-emoji">🔐</span>
+        <span class="role-title">Volunteer</span>
+        <span class="role-tag">PIN</span>
+      </div>
+      <div class="step"><span class="step-num">1</span><div class="step-body"><strong>Request your PIN</strong>Message <a href="https://t.me/JuanittoCalvares" target="_blank" rel="noopener">@JuanittoCalvares</a> on Telegram.</div></div>
+      <div class="step"><span class="step-num">2</span><div class="step-body"><strong>Open /volunteer</strong>Go to <code>love-me-again.vercel.app/volunteer</code> and enter the PIN.</div></div>
+      <div class="step"><span class="step-num">3</span><div class="step-body"><strong>Photograph an item</strong>AI identifies brand, model and condition — and suggests a price.</div></div>
+      <div class="step"><span class="step-num">4</span><div class="step-body"><strong>Confirm or adjust</strong>The item appears in the public shop instantly.</div></div>
+    </div>
+  </div>
+</section>
+
+<svg class="divider" viewBox="0 0 280 30" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,15 Q17,3 35,15 T70,15 T105,15 T140,15 T175,15 T210,15 T245,15 T280,15" fill="none" stroke="#C4440A" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M0,19 Q17,7 35,19 T70,19 T105,19 T140,19 T175,19 T210,19 T245,19 T280,19" fill="none" stroke="#00838F" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  <circle cx="140" cy="10" r="2" fill="#D4820A" opacity="0.3"/>
+</svg>
+
+<section class="block container">
+  <h2><span class="h2-emoji">🧹</span>Getting the latest version</h2>
+  <p class="sub">The app is a PWA with aggressive caching — clear it if you see issues</p>
+  <div class="info-tip"><strong>💡 When to do this</strong>If the app looks outdated, won't load properly, or shows weird errors — clear site data and reload.</div>
+  <details>
+    <summary>🤖 Android Chrome</summary>
+    <div class="body">
+      <ol>
+        <li>Chrome → ⋮ menu → <strong>Settings</strong> → <strong>Privacy and security</strong> → <strong>Clear browsing data</strong></li>
+        <li>Select <strong>Cached images and files</strong> + <strong>Cookies and site data</strong> → clear</li>
+        <li>Reload <code>love-me-again.vercel.app</code></li>
+      </ol>
+      <p style="margin-top:.5rem"><strong>Faster:</strong> Long-press the app icon → <strong>App info</strong> → <strong>Storage</strong> → clear cache and data.</p>
+    </div>
+  </details>
+  <details>
+    <summary>🍎 iOS Safari</summary>
+    <div class="body">
+      <ol>
+        <li>Settings → Apps → Safari → <strong>Clear History and Website Data</strong></li>
+        <li>Reopen Safari → <code>love-me-again.vercel.app</code></li>
+      </ol>
+    </div>
+  </details>
+  <details>
+    <summary>🖥️ Chrome / Brave (desktop)</summary>
+    <div class="body">
+      <ol>
+        <li>F12 → <strong>Application</strong> tab → <strong>Storage</strong> → <strong>Clear site data</strong></li>
+        <li>Reload the page</li>
+      </ol>
+      <p style="margin-top:.5rem"><strong>Shortcut:</strong> Ctrl+Shift+R (force reload)</p>
+    </div>
+  </details>
+  <details>
+    <summary>🦊 Firefox</summary>
+    <div class="body">
+      <ol>
+        <li>🔒 lock icon → <strong>Clear Cookies and Site Data…</strong> → confirm</li>
+        <li>Reload the page</li>
+      </ol>
+    </div>
+  </details>
+</section>
+
+<svg class="divider" viewBox="0 0 280 30" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,15 Q17,3 35,15 T70,15 T105,15 T140,15 T175,15 T210,15 T245,15 T280,15" fill="none" stroke="#C4440A" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M0,19 Q17,7 35,19 T70,19 T105,19 T140,19 T175,19 T210,19 T245,19 T280,19" fill="none" stroke="#00838F" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  <circle cx="140" cy="10" r="2" fill="#D4820A" opacity="0.3"/>
+</svg>
+
+<section class="block container feedback">
+  <h2><span class="h2-emoji">💬</span>Send feedback</h2>
+  <p class="sub">Bug? Idea? Something felt off? Your notes are gold at this stage.</p>
+  <a href="https://t.me/Juanittos_feedback_bot?start=love_me_again" target="_blank" rel="noopener" class="feedback-btn"><span class="bug">🐛</span> Send feedback</a>
+  <button type="button" class="contact-toggle" onclick="openContactModal()"><span>✉️</span> Contact <span class="chev">▾</span></button>
+</section>
+
+</div><!-- /en -->
+
+
+<!-- ============== DEUTSCH ============== -->
+<div class="lang-content" data-lang="de">
+
+<section class="hero">
+  <img class="hero-logo" src="https://love-me-again.vercel.app/icons/love_me_again_logo.png" alt="Love Me Again">
+  <span class="badge">Prototyp · Tester-Kit</span>
+  <h1>Gib Dingen ein<br>zweites <span class="accent">Leben</span>.</h1>
+  <p class="lead">Love Me Again ist ein Solidaritäts-Flohmarkt — jedes Stück wird per KI bewertet. Du hast Frühzugang — danke fürs Testen!</p>
+  <a href="https://love-me-again.vercel.app/" class="cta-primary" target="_blank" rel="noopener">Shop öffnen →</a>
+</section>
+
+<svg class="divider" viewBox="0 0 280 30" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,15 Q17,3 35,15 T70,15 T105,15 T140,15 T175,15 T210,15 T245,15 T280,15" fill="none" stroke="#C4440A" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M0,19 Q17,7 35,19 T70,19 T105,19 T140,19 T175,19 T210,19 T245,19 T280,19" fill="none" stroke="#00838F" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  <path d="M140,8 C142,4 146,3 146,7 C146,11 142,12 140,8Z" fill="#D4820A" opacity="0.4"/>
+  <circle cx="140" cy="8" r="1.5" fill="#00838F" opacity="0.4"/>
+  <circle cx="70" cy="12" r="1.5" fill="#C4440A" opacity="0.3"/>
+  <circle cx="210" cy="12" r="1.5" fill="#C4440A" opacity="0.3"/>
+</svg>
+
+<section class="block container">
+  <h2><span class="h2-emoji">💡</span>Was ist Love Me Again?</h2>
+  <p class="sub">Ein Solidaritäts-Flohmarkt in den Alpujarras, KI-bepreist</p>
+  <div class="features">
+    <div class="feature"><span class="feature-emoji">🤖</span><h3>Faire KI-Preise</h3><p>Foto machen → Gemini schlägt in Sekunden einen fairen Marktpreis vor.</p></div>
+    <div class="feature"><span class="feature-emoji">🛍️</span><h3>Stöbern ohne Konto</h3><p>Jeder kann den öffentlichen Katalog durchsuchen — ohne Anmeldung.</p></div>
+    <div class="feature"><span class="feature-emoji">🔐</span><h3>PIN für Freiwillige</h3><p>Nur autorisierte Freiwillige können Artikel hinzufügen, bewerten und verkaufen.</p></div>
+    <div class="feature"><span class="feature-emoji">🎨</span><h3>Workshops</h3><p>Reparatur-, Recycling- und Kreativ-Workshops für die Nachbarschaft.</p></div>
+    <div class="feature"><span class="feature-emoji">📅</span><h3>Veranstaltungen</h3><p>Märkte, Messen und Treffen — alle Termine an einem Ort.</p></div>
+    <div class="feature"><span class="feature-emoji">🌍</span><h3>50+ Sprachen</h3><p>Die ganze Seite automatisch übersetzt — auch die Artikelbeschreibungen.</p></div>
+  </div>
+</section>
+
+<svg class="divider" viewBox="0 0 280 30" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,15 Q17,3 35,15 T70,15 T105,15 T140,15 T175,15 T210,15 T245,15 T280,15" fill="none" stroke="#C4440A" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M0,19 Q17,7 35,19 T70,19 T105,19 T140,19 T175,19 T210,19 T245,19 T280,19" fill="none" stroke="#00838F" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  <path d="M140,8 C142,4 146,3 146,7 C146,11 142,12 140,8Z" fill="#D4820A" opacity="0.4"/>
+  <circle cx="140" cy="8" r="1.5" fill="#00838F" opacity="0.4"/>
+</svg>
+
+<section class="block container">
+  <h2><span class="h2-emoji">🚀</span>So testest du es</h2>
+  <p class="sub">Zwei Wege, je nach Rolle</p>
+  <div class="roles">
+    <div class="role">
+      <div class="role-header">
+        <span class="role-emoji">🛍️</span>
+        <span class="role-title">Kunde</span>
+        <span class="role-tag">OHNE PIN</span>
+      </div>
+      <div class="step"><span class="step-num">1</span><div class="step-body"><strong>Shop öffnen</strong><code>love-me-again.vercel.app</code> oder den Button oben tippen.</div></div>
+      <div class="step"><span class="step-num">2</span><div class="step-body"><strong>Katalog durchstöbern</strong>Filter nach Kategorie: Kleidung, Bücher, Elektronik, Möbel, Spielzeug…</div></div>
+      <div class="step"><span class="step-num">3</span><div class="step-body"><strong>Sprache wechseln</strong>Sprachwähler ausprobieren — 50+ Sprachen, KI-übersetzt.</div></div>
+      <div class="step"><span class="step-num">4</span><div class="step-body"><strong>Workshops &amp; Events anschauen</strong>Bevorstehende Aktivitäten der Nachbarschaft.</div></div>
+    </div>
+    <div class="role">
+      <div class="role-header">
+        <span class="role-emoji">🔐</span>
+        <span class="role-title">Freiwillige</span>
+        <span class="role-tag">PIN</span>
+      </div>
+      <div class="step"><span class="step-num">1</span><div class="step-body"><strong>PIN anfragen</strong>Schreibe <a href="https://t.me/JuanittoCalvares" target="_blank" rel="noopener">@JuanittoCalvares</a> auf Telegram.</div></div>
+      <div class="step"><span class="step-num">2</span><div class="step-body"><strong>/volunteer öffnen</strong><code>love-me-again.vercel.app/volunteer</code> aufrufen und PIN eingeben.</div></div>
+      <div class="step"><span class="step-num">3</span><div class="step-body"><strong>Artikel fotografieren</strong>KI erkennt Marke, Modell, Zustand — und schlägt einen Preis vor.</div></div>
+      <div class="step"><span class="step-num">4</span><div class="step-body"><strong>Bestätigen oder anpassen</strong>Der Artikel erscheint sofort im öffentlichen Shop.</div></div>
+    </div>
+  </div>
+</section>
+
+<svg class="divider" viewBox="0 0 280 30" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,15 Q17,3 35,15 T70,15 T105,15 T140,15 T175,15 T210,15 T245,15 T280,15" fill="none" stroke="#C4440A" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M0,19 Q17,7 35,19 T70,19 T105,19 T140,19 T175,19 T210,19 T245,19 T280,19" fill="none" stroke="#00838F" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  <circle cx="140" cy="10" r="2" fill="#D4820A" opacity="0.3"/>
+</svg>
+
+<section class="block container">
+  <h2><span class="h2-emoji">🧹</span>Neueste Version laden</h2>
+  <p class="sub">Die App ist eine PWA mit aggressivem Cache — leeren bei Problemen</p>
+  <div class="info-tip"><strong>💡 Wann nötig?</strong>Wenn die App veraltet wirkt, nicht richtig lädt oder seltsame Fehler zeigt — Websitedaten leeren und neu laden.</div>
+  <details>
+    <summary>🤖 Android Chrome</summary>
+    <div class="body">
+      <ol>
+        <li>Chrome → ⋮ Menü → <strong>Einstellungen</strong> → <strong>Datenschutz</strong> → <strong>Browserdaten löschen</strong></li>
+        <li><strong>Bilder im Cache</strong> + <strong>Cookies und Websitedaten</strong> → löschen</li>
+        <li><code>love-me-again.vercel.app</code> neu laden</li>
+      </ol>
+      <p style="margin-top:.5rem"><strong>Schneller:</strong> App-Symbol lange drücken → <strong>App-Info</strong> → <strong>Speicher</strong> → Cache und Daten löschen.</p>
+    </div>
+  </details>
+  <details>
+    <summary>🍎 iOS Safari</summary>
+    <div class="body">
+      <ol>
+        <li>Einstellungen → Apps → Safari → <strong>Verlauf und Websitedaten löschen</strong></li>
+        <li>Safari neu öffnen → <code>love-me-again.vercel.app</code></li>
+      </ol>
+    </div>
+  </details>
+  <details>
+    <summary>🖥️ Chrome / Brave (Desktop)</summary>
+    <div class="body">
+      <ol>
+        <li>F12 → Tab <strong>Application</strong> → <strong>Storage</strong> → <strong>Clear site data</strong></li>
+        <li>Seite neu laden</li>
+      </ol>
+      <p style="margin-top:.5rem"><strong>Shortcut:</strong> Ctrl+Shift+R</p>
+    </div>
+  </details>
+  <details>
+    <summary>🦊 Firefox</summary>
+    <div class="body">
+      <ol>
+        <li>🔒 Schloss → <strong>Cookies und Websitedaten löschen…</strong> → bestätigen</li>
+        <li>Seite neu laden</li>
+      </ol>
+    </div>
+  </details>
+</section>
+
+<svg class="divider" viewBox="0 0 280 30" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,15 Q17,3 35,15 T70,15 T105,15 T140,15 T175,15 T210,15 T245,15 T280,15" fill="none" stroke="#C4440A" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M0,19 Q17,7 35,19 T70,19 T105,19 T140,19 T175,19 T210,19 T245,19 T280,19" fill="none" stroke="#00838F" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  <circle cx="140" cy="10" r="2" fill="#D4820A" opacity="0.3"/>
+</svg>
+
+<section class="block container feedback">
+  <h2><span class="h2-emoji">💬</span>Feedback senden</h2>
+  <p class="sub">Bug? Idee? Etwas seltsam? Deine Notizen sind in dieser Phase Gold wert.</p>
+  <a href="https://t.me/Juanittos_feedback_bot?start=love_me_again" target="_blank" rel="noopener" class="feedback-btn"><span class="bug">🐛</span> Feedback senden</a>
+  <button type="button" class="contact-toggle" onclick="openContactModal()"><span>✉️</span> Kontakt <span class="chev">▾</span></button>
+</section>
+
+</div><!-- /de -->
+
+<footer>
+  Love Me Again · Prototype · digitalAIventures LLC · Alpujarras, Spain<br>
+  <a href="https://love-me-again.vercel.app/">love-me-again.vercel.app</a>
+</footer>
+
+</div><!-- /page -->
+
+<script>
+function setLang(lang){
+  document.querySelectorAll('[data-lang-btn]').forEach(b=>{
+    b.classList.toggle('active', b.dataset.langBtn===lang);
+  });
+  document.querySelectorAll('.lang-content').forEach(c=>{
+    c.classList.toggle('active', c.dataset.lang===lang);
+  });
+  document.documentElement.setAttribute('lang', lang);
+  try{localStorage.setItem('lma_lang', lang)}catch(e){}
+  if(typeof updateModalLang==='function')updateModalLang(lang);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function toggleTheme(){
+  const html=document.documentElement;
+  const current=html.getAttribute('data-theme')||'dark';
+  const next=current==='dark'?'light':'dark';
+  html.setAttribute('data-theme',next);
+  document.getElementById('themeIcon').textContent=next==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',next)}catch(e){}
+}
+
+(function(){
+  // Theme: saved → time-of-day → dark fallback
+  function applyTheme(t){
+    document.documentElement.setAttribute('data-theme',t);
+    document.addEventListener('DOMContentLoaded',()=>{
+      const icon=document.getElementById('themeIcon');
+      if(icon)icon.textContent=t==='dark'?'☀️':'🌙';
+    });
+  }
+  try{
+    const saved=localStorage.getItem('theme');
+    if(saved){applyTheme(saved)}
+    else{const h=new Date().getHours();applyTheme(h>=7&&h<19?'light':'dark')}
+  }catch(e){applyTheme('dark')}
+
+  // Language: saved → browser → ES default
+  document.addEventListener('DOMContentLoaded',()=>{
+    let lang='es';
+    try{
+      const saved=localStorage.getItem('lma_lang');
+      if(saved && ['es','en','de'].includes(saved)){
+        lang=saved;
+      } else {
+        const browserLang=(navigator.language||'es').slice(0,2).toLowerCase();
+        if(['en','de'].includes(browserLang))lang=browserLang;
+      }
+    }catch(e){}
+    if(lang!=='es')setLang(lang);
+    if(typeof updateModalLang==='function')updateModalLang(lang);
+  });
+})();
+</script>
+
+<!-- Contact modal (shared across languages) -->
+<div class="modal-overlay" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="mTitle" onclick="closeContactModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-title" id="mTitle">Contacto</div>
+    <a href="mailto:digitalAIventures.LLC+LoveMeAgain@gmail.com" class="modal-row" onclick="closeContactModal()">
+      <span class="modal-ico">📧</span>
+      <span><span class="modal-label" id="mEmail">Enviar email</span></span>
+    </a>
+    <a href="https://t.me/Juanitto_assist_bot" target="_blank" rel="noopener" class="modal-row" onclick="closeContactModal()">
+      <span class="modal-ico">🤖</span>
+      <span><span class="modal-label" id="mAsst">Asistente</span><span class="modal-sub" id="mAsstSub">para servicios, portafolio, clientes, colaboradores</span></span>
+    </a>
+    <a href="https://t.me/JuanittoCalvares" target="_blank" rel="noopener" class="modal-row" onclick="closeContactModal()">
+      <span class="modal-ico">✈️</span>
+      <span><span class="modal-label" id="mPersonal">Personal</span></span>
+    </a>
+    <button type="button" class="modal-cancel" id="mCancel" onclick="closeContactModal()">Cancelar</button>
+  </div>
+</div>
+
+<script>
+const MODAL_T={
+  es:{title:'Contacto',email:'Enviar email',asst:'Asistente',asstSub:'para servicios, portafolio, clientes, colaboradores',personal:'Personal',cancel:'Cancelar'},
+  en:{title:'Contact',email:'Send email',asst:'Assistant',asstSub:'for our services, portfolio, clients, collaborators',personal:'Personal',cancel:'Cancel'},
+  de:{title:'Kontakt',email:'E-Mail senden',asst:'Assistent',asstSub:'für Dienstleistungen, Portfolio, Kunden, Kooperationen',personal:'Persönlich',cancel:'Abbrechen'}
+};
+function updateModalLang(lang){
+  const t=MODAL_T[lang]||MODAL_T.es;
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
+  set('mTitle',t.title);
+  set('mEmail',t.email);
+  set('mAsst',t.asst);
+  set('mAsstSub',t.asstSub);
+  set('mPersonal',t.personal);
+  set('mCancel',t.cancel);
+}
+function openContactModal(){
+  document.getElementById('contactModal').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeContactModal(e){
+  if(e&&e.target&&e.currentTarget&&e.target!==e.currentTarget&&e.type==='click'&&e.currentTarget.classList.contains('modal-overlay'))return;
+  document.getElementById('contactModal').classList.remove('active');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeContactModal()});
+</script>
+
+</body>
+</html>

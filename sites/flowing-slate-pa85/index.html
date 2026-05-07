@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Visions & Sound — Mandala Dreams</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root,[data-theme="dark"]{
+      --bg:#030108;--bg-card:#0d0620;
+      --bg-hero:radial-gradient(ellipse at 50% 0%,#1a0836 0%,#030108 65%);
+      --text:#f0e8ff;--text-muted:rgba(240,232,255,0.55);--text-heading:#fff;
+      --border:rgba(255,255,255,0.08);
+      --accent:#e8c86a;--accent2:#d42a9c;--accent3:#16c4c4;
+      --card-glow:rgba(212,42,156,0.35);--card-glow2:rgba(22,196,196,0.2);
+      --star-opacity:1;--hero-filter:drop-shadow(0 0 22px rgba(212,42,156,0.45)) drop-shadow(0 0 44px rgba(22,196,196,0.25));
+    }
+    [data-theme="light"]{
+      --bg:#f5f0ff;--bg-card:#fff;
+      --bg-hero:radial-gradient(ellipse at 50% 0%,#e2d4ff 0%,#f5f0ff 65%);
+      --text:#1a0a2e;--text-muted:rgba(26,10,46,0.58);--text-heading:#0d0020;
+      --border:rgba(26,10,46,0.12);
+      --accent:#9a6f10;--accent2:#a01a70;--accent3:#0a7878;
+      --card-glow:rgba(160,26,112,0.2);--card-glow2:rgba(10,120,120,0.15);
+      --star-opacity:0;--hero-filter:drop-shadow(0 0 16px rgba(160,26,112,0.3));
+    }
+
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      background:var(--bg);color:var(--text);
+      font-family:'Cormorant Garamond',Georgia,serif;
+      min-height:100vh;overflow-x:hidden;
+      transition:background .4s,color .4s;
+    }
+
+    /* Cosmic background */
+    .cosmos-bg{
+      position:fixed;inset:0;pointer-events:none;z-index:0;
+      background:var(--bg-hero);
+      transition:opacity .4s;
+    }
+    /* Stars */
+    .stars{
+      position:fixed;inset:0;pointer-events:none;z-index:0;
+      opacity:var(--star-opacity);transition:opacity .4s;
+    }
+
+    /* Theme toggle */
+    .theme-toggle{
+      position:fixed;top:.75rem;right:.75rem;z-index:150;
+      background:var(--bg-card);border:1px solid var(--border);
+      width:2.4rem;height:2.4rem;border-radius:50%;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 2px 8px rgba(0,0,0,.3);transition:all .2s;
+    }
+    .theme-toggle:hover{transform:scale(1.1)}
+    .theme-icon{font-size:1.1rem;line-height:1}
+
+    /* HERO */
+    .hero{
+      position:relative;z-index:1;
+      display:flex;flex-direction:column;align-items:center;
+      padding:3.5rem 1.5rem 1.5rem;text-align:center;
+    }
+    .mandala-wrap{
+      width:200px;height:200px;margin-bottom:2rem;
+      filter:var(--hero-filter);
+      transition:filter .4s;
+    }
+    .ring-outer{animation:spinCW 22s linear infinite;transform-box:fill-box;transform-origin:center}
+    .ring-mid{animation:spinCCW 15s linear infinite;transform-box:fill-box;transform-origin:center}
+    .ring-inner{animation:spinCW 9s linear infinite;transform-box:fill-box;transform-origin:center}
+    .ring-pulse{animation:pulse 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+    @keyframes spinCW{to{transform:rotate(360deg)}}
+    @keyframes spinCCW{to{transform:rotate(-360deg)}}
+    @keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
+
+    .hero-eyebrow{
+      font-size:.72rem;letter-spacing:.45em;text-transform:uppercase;
+      color:var(--accent3);margin-bottom:.6rem;
+      opacity:0;animation:fadeUp 1s ease .3s forwards;
+    }
+    .hero-title{
+      font-family:'Cinzel Decorative',serif;
+      font-size:clamp(1.6rem,5.5vw,3.2rem);font-weight:900;line-height:1.1;
+      background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 50%,var(--accent3) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      margin-bottom:1rem;opacity:0;animation:fadeUp 1s ease .5s forwards;
+    }
+    .hero-sub{
+      font-size:1.05rem;font-weight:300;font-style:italic;
+      color:var(--text-muted);letter-spacing:.03em;
+      max-width:380px;line-height:1.65;
+      opacity:0;animation:fadeUp 1s ease .7s forwards;
+    }
+    .divider-ornament{
+      display:flex;align-items:center;gap:.75rem;margin:1.75rem auto;
+      opacity:0;animation:fadeUp 1s ease .9s forwards;
+    }
+    .divider-line{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--accent))}
+    .divider-line.r{background:linear-gradient(90deg,var(--accent),transparent)}
+    .divider-gem{
+      width:8px;height:8px;background:var(--accent2);
+      transform:rotate(45deg);box-shadow:0 0 10px var(--accent2);
+    }
+    .yt-btn{
+      display:inline-flex;align-items:center;gap:.5rem;
+      background:#ff0000;color:#fff;
+      font-family:'Cormorant Garamond',serif;
+      font-size:.9rem;letter-spacing:.08em;
+      text-decoration:none;padding:.55rem 1.35rem;border-radius:50px;
+      transition:transform .2s,box-shadow .2s;
+      opacity:0;animation:fadeUp 1s ease 1.1s forwards;
+    }
+    .yt-btn:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(255,0,0,.45)}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+    /* GRID */
+    .grid-section{
+      position:relative;z-index:1;
+      padding:0 1rem 4rem;max-width:920px;margin:0 auto;
+    }
+    .section-label{
+      text-align:center;font-size:.7rem;letter-spacing:.4em;
+      text-transform:uppercase;color:var(--text-muted);margin-bottom:1.5rem;
+    }
+    .grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;
+    }
+    @media(min-width:560px){.grid{grid-template-columns:repeat(3,1fr);gap:1.2rem}}
+    @media(min-width:820px){.grid{grid-template-columns:repeat(4,1fr);gap:1.4rem}}
+
+    .card{
+      position:relative;border-radius:14px;overflow:hidden;
+      background:var(--bg-card);
+      opacity:0;transform:translateY(24px) scale(0.97);
+      transition:opacity .5s ease,transform .5s ease,box-shadow .35s ease;
+    }
+    .card.visible{opacity:1;transform:translateY(0) scale(1)}
+    .card:hover{
+      transform:translateY(-5px) scale(1.03);
+      box-shadow:0 0 28px var(--card-glow),0 0 55px var(--card-glow2);
+      z-index:2;
+    }
+    /* Gradient border */
+    .card::after{
+      content:'';position:absolute;inset:0;border-radius:14px;
+      border:1.5px solid transparent;
+      background:linear-gradient(var(--bg-card),var(--bg-card)) padding-box,
+                 linear-gradient(135deg,rgba(232,200,106,.55),rgba(212,42,156,.55),rgba(22,196,196,.55)) border-box;
+      pointer-events:none;opacity:.5;transition:opacity .3s;
+    }
+    .card:hover::after{opacity:1}
+
+    .card a{
+      display:block;width:100%;aspect-ratio:9/16;
+      background-size:cover;background-position:center;
+      position:relative;text-decoration:none;
+    }
+    .card a::before{
+      content:'';position:absolute;inset:0;
+      background:rgba(0,0,0,.22);transition:background .3s;
+    }
+    .card:hover a::before{background:rgba(0,0,0,.06)}
+
+    .play-btn{
+      position:absolute;top:50%;left:50%;
+      transform:translate(-50%,-50%);
+      display:flex;flex-direction:column;align-items:center;gap:.5rem;
+      pointer-events:none;transition:transform .2s;
+    }
+    .card:hover .play-btn{transform:translate(-50%,-50%) scale(1.12)}
+    .play-icon{
+      width:52px;height:36px;background:#ff0000;border-radius:10px;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 3px 16px rgba(0,0,0,.65);
+    }
+    .play-icon::before{
+      content:'';border-style:solid;
+      border-width:8px 0 8px 14px;
+      border-color:transparent transparent transparent #fff;
+      margin-left:2px;
+    }
+    .play-label{
+      color:#fff;font-size:.62rem;letter-spacing:.12em;
+      text-transform:uppercase;text-shadow:0 1px 6px rgba(0,0,0,.9);
+    }
+    .card-num{
+      position:absolute;top:8px;left:8px;
+      width:22px;height:22px;border-radius:50%;
+      background:rgba(0,0,0,.55);backdrop-filter:blur(4px);
+      color:var(--accent);font-size:.65rem;
+      font-family:'Cinzel Decorative',serif;
+      display:flex;align-items:center;justify-content:center;
+      pointer-events:none;
+    }
+
+    /* FOOTER */
+    footer{
+      position:relative;z-index:1;text-align:center;
+      padding:2rem 1rem 3rem;
+      border-top:1px solid var(--border);
+    }
+    .footer-mandala{
+      width:50px;height:50px;margin:0 auto 1.25rem;
+      opacity:.35;animation:spinCW 30s linear infinite;
+    }
+    .footer-text{font-size:.75rem;letter-spacing:.15em;color:var(--text-muted)}
+    .footer-text a{color:var(--accent);text-decoration:none}
+    .footer-credit{margin-top:.5rem;font-size:.65rem;opacity:.35;color:var(--text-muted)}
+  </style>
+</head>
+<body>
+
+<div class="cosmos-bg"></div>
+
+<!-- Stars -->
+<svg class="stars" viewBox="0 0 1000 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" style="position:fixed;inset:0;width:100%;height:100%">
+  <circle cx="80"  cy="96"  r="1.1" fill="white" opacity=".75"/>
+  <circle cx="230" cy="42"  r=".8"  fill="white" opacity=".55"/>
+  <circle cx="450" cy="144" r="1.3" fill="white" opacity=".8"/>
+  <circle cx="670" cy="64"  r=".7"  fill="white" opacity=".6"/>
+  <circle cx="890" cy="120" r="1"   fill="white" opacity=".7"/>
+  <circle cx="120" cy="280" r=".9"  fill="white" opacity=".45"/>
+  <circle cx="780" cy="336" r="1.1" fill="white" opacity=".6"/>
+  <circle cx="340" cy="440" r=".8"  fill="white" opacity=".5"/>
+  <circle cx="910" cy="480" r="1"   fill="white" opacity=".7"/>
+  <circle cx="560" cy="624" r=".9"  fill="white" opacity=".45"/>
+  <circle cx="170" cy="656" r="1.2" fill="white" opacity=".65"/>
+  <circle cx="730" cy="704" r=".8"  fill="white" opacity=".5"/>
+  <circle cx="390" cy="736" r="1"   fill="white" opacity=".7"/>
+  <circle cx="60"  cy="560" r=".7"  fill="white" opacity=".4"/>
+  <circle cx="480" cy="24"  r=".6"  fill="white" opacity=".5"/>
+  <circle cx="820" cy="200" r=".9"  fill="white" opacity=".55"/>
+  <!-- Coloured accent stars -->
+  <circle cx="150" cy="520" r="1.5" fill="#e8c86a" opacity=".6"/>
+  <circle cx="820" cy="224" r="1.3" fill="#d42a9c" opacity=".5"/>
+  <circle cx="500" cy="360" r="1"   fill="#16c4c4" opacity=".45"/>
+  <circle cx="290" cy="680" r="1.2" fill="#9b59b6" opacity=".5"/>
+  <circle cx="700" cy="560" r=".9"  fill="#e8c86a" opacity=".45"/>
+</svg>
+
+<!-- Theme toggle -->
+<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <span class="theme-icon" id="themeIcon">☀️</span>
+</button>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="mandala-wrap">
+    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="gG" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#e8c86a"/><stop offset="100%" stop-color="#c9903a"/></radialGradient>
+        <radialGradient id="gT" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#16c4c4"/><stop offset="100%" stop-color="#0a6060"/></radialGradient>
+        <radialGradient id="gM" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#d42a9c"/><stop offset="100%" stop-color="#6c0840"/></radialGradient>
+        <radialGradient id="gP" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#9b59b6"/><stop offset="100%" stop-color="#4a1060"/></radialGradient>
+      </defs>
+      <!-- Outer ring (12 gold petals) -->
+      <g class="ring-outer">
+        <circle cx="100" cy="100" r="92" stroke="url(#gG)" stroke-width=".4" opacity=".3"/>
+        <ellipse cx="100" cy="14" rx="4.5" ry="11" fill="url(#gG)" opacity=".65" transform="rotate(0 100 100)"/>
+        <ellipse cx="100" cy="14" rx="4.5" ry="11" fill="url(#gG)" opacity=".65" transform="rotate(30 100 100)"/>
+        <ellipse cx="100" cy="14" rx="4.5" ry="11" fill="url(#gG)" opacity=".65" transform="rotate(60 100 100)"/>
+        <ellipse cx="100" cy="14" rx="4.5" ry="11" fill="url(#gG)" opacity=".65" transform="rotate(90 100 100)"/>
+        <ellipse cx="100" cy="14" rx="4.5" ry="11" fill="url(#gG)" opacity=".65" transform="rotate(120 100 100)"/>
+        <ellipse cx="100" cy="14" rx="4.5" ry="11" fill="url(#gG)" opacity=".65" transform="rotate(150 100 100)"/>
+        <ellipse cx="100" cy="14" rx="4.5" ry="11" fill="url(#gG)" opacity=".65" transform="rotate(180 100 100)"/>
+        <ellipse cx="100" cy="14" rx="4.5" ry="11" fill="url(#gG)" opacity=".65" transform="rotate(210 100 100)"/>
+        <ellipse cx="100" cy="14" rx="4.5" ry="11" fill="url(#gG)" opacity=".65" transform="rotate(240 100 100)"/>
+        <ellipse cx="100" cy="14" rx="4.5" ry="11" fill="url(#gG)" opacity=".65" transform="rotate(270 100 100)"/>
+        <ellipse cx="100" cy="14" rx="4.5" ry="11" fill="url(#gG)" opacity=".65" transform="rotate(300 100 100)"/>
+        <ellipse cx="100" cy="14" rx="4.5" ry="11" fill="url(#gG)" opacity=".65" transform="rotate(330 100 100)"/>
+      </g>
+      <!-- Mid ring (8 teal petals) -->
+      <g class="ring-mid">
+        <circle cx="100" cy="100" r="66" stroke="url(#gT)" stroke-width=".5" opacity=".4"/>
+        <ellipse cx="100" cy="40" rx="5.5" ry="14" fill="url(#gT)" opacity=".6" transform="rotate(0 100 100)"/>
+        <ellipse cx="100" cy="40" rx="5.5" ry="14" fill="url(#gT)" opacity=".6" transform="rotate(45 100 100)"/>
+        <ellipse cx="100" cy="40" rx="5.5" ry="14" fill="url(#gT)" opacity=".6" transform="rotate(90 100 100)"/>
+        <ellipse cx="100" cy="40" rx="5.5" ry="14" fill="url(#gT)" opacity=".6" transform="rotate(135 100 100)"/>
+        <ellipse cx="100" cy="40" rx="5.5" ry="14" fill="url(#gT)" opacity=".6" transform="rotate(180 100 100)"/>
+        <ellipse cx="100" cy="40" rx="5.5" ry="14" fill="url(#gT)" opacity=".6" transform="rotate(225 100 100)"/>
+        <ellipse cx="100" cy="40" rx="5.5" ry="14" fill="url(#gT)" opacity=".6" transform="rotate(270 100 100)"/>
+        <ellipse cx="100" cy="40" rx="5.5" ry="14" fill="url(#gT)" opacity=".6" transform="rotate(315 100 100)"/>
+      </g>
+      <!-- Inner ring (6 magenta petals) -->
+      <g class="ring-inner">
+        <circle cx="100" cy="100" r="42" stroke="url(#gM)" stroke-width=".7" opacity=".5"/>
+        <ellipse cx="100" cy="64" rx="6" ry="16" fill="url(#gM)" opacity=".75" transform="rotate(0 100 100)"/>
+        <ellipse cx="100" cy="64" rx="6" ry="16" fill="url(#gM)" opacity=".75" transform="rotate(60 100 100)"/>
+        <ellipse cx="100" cy="64" rx="6" ry="16" fill="url(#gM)" opacity=".75" transform="rotate(120 100 100)"/>
+        <ellipse cx="100" cy="64" rx="6" ry="16" fill="url(#gM)" opacity=".75" transform="rotate(180 100 100)"/>
+        <ellipse cx="100" cy="64" rx="6" ry="16" fill="url(#gM)" opacity=".75" transform="rotate(240 100 100)"/>
+        <ellipse cx="100" cy="64" rx="6" ry="16" fill="url(#gM)" opacity=".75" transform="rotate(300 100 100)"/>
+      </g>
+      <!-- Centre -->
+      <g class="ring-pulse">
+        <circle cx="100" cy="100" r="18" fill="url(#gP)" opacity=".9"/>
+        <circle cx="100" cy="100" r="10" fill="url(#gM)" opacity=".8"/>
+        <circle cx="100" cy="100" r="5"  fill="#fff"       opacity=".4"/>
+        <circle cx="100" cy="100" r="2.5" fill="url(#gG)"/>
+      </g>
+    </svg>
+  </div>
+
+  <p class="hero-eyebrow">AI Generated Art &amp; Sound</p>
+  <h1 class="hero-title">AI Visions &amp; Sound</h1>
+  <p class="hero-sub">Sacred geometry, kaleidoscopic colour, and algorithmic music — born from the machine</p>
+
+  <div class="divider-ornament">
+    <div class="divider-line"></div>
+    <div class="divider-gem"></div>
+    <div class="divider-line r"></div>
+  </div>
+
+  <a class="yt-btn" href="https://www.youtube.com/channel/UCyourchannelid" target="_blank" rel="noopener">
+    ▶&nbsp;Subscribe on YouTube
+  </a>
+</section>
+
+<!-- VIDEO GALLERY -->
+<section class="grid-section">
+  <p class="section-label">✦ Latest Shorts ✦</p>
+  <div class="grid" id="videoGrid">
+
+    <div class="card" style="transition-delay:.05s">
+      <a href="https://www.youtube.com/watch?v=2z6HheGuM5M" target="_blank" rel="noopener"
+         style="background-image:url('https://img.youtube.com/vi/2z6HheGuM5M/maxresdefault.jpg')">
+        <div class="play-btn"><div class="play-icon"></div><span class="play-label">Watch</span></div>
+        <div class="card-num">1</div>
+      </a>
+    </div>
+
+    <div class="card" style="transition-delay:.1s">
+      <a href="https://www.youtube.com/watch?v=VTA9IN-FhQM" target="_blank" rel="noopener"
+         style="background-image:url('https://img.youtube.com/vi/VTA9IN-FhQM/maxresdefault.jpg')">
+        <div class="play-btn"><div class="play-icon"></div><span class="play-label">Watch</span></div>
+        <div class="card-num">2</div>
+      </a>
+    </div>
+
+    <div class="card" style="transition-delay:.15s">
+      <a href="https://www.youtube.com/watch?v=SyjpMqvbMT0" target="_blank" rel="noopener"
+         style="background-image:url('https://img.youtube.com/vi/SyjpMqvbMT0/maxresdefault.jpg')">
+        <div class="play-btn"><div class="play-icon"></div><span class="play-label">Watch</span></div>
+        <div class="card-num">3</div>
+      </a>
+    </div>
+
+    <div class="card" style="transition-delay:.2s">
+      <a href="https://www.youtube.com/watch?v=WMHmAAkcMlQ" target="_blank" rel="noopener"
+         style="background-image:url('https://img.youtube.com/vi/WMHmAAkcMlQ/maxresdefault.jpg')">
+        <div class="play-btn"><div class="play-icon"></div><span class="play-label">Watch</span></div>
+        <div class="card-num">4</div>
+      </a>
+    </div>
+
+    <div class="card" style="transition-delay:.25s">
+      <a href="https://www.youtube.com/watch?v=XrbdMNeahA8" target="_blank" rel="noopener"
+         style="background-image:url('https://img.youtube.com/vi/XrbdMNeahA8/maxresdefault.jpg')">
+        <div class="play-btn"><div class="play-icon"></div><span class="play-label">Watch</span></div>
+        <div class="card-num">5</div>
+      </a>
+    </div>
+
+    <div class="card" style="transition-delay:.3s">
+      <a href="https://www.youtube.com/watch?v=v4diKppIkOU" target="_blank" rel="noopener"
+         style="background-image:url('https://img.youtube.com/vi/v4diKppIkOU/maxresdefault.jpg')">
+        <div class="play-btn"><div class="play-icon"></div><span class="play-label">Watch</span></div>
+        <div class="card-num">6</div>
+      </a>
+    </div>
+
+    <div class="card" style="transition-delay:.35s">
+      <a href="https://www.youtube.com/watch?v=YUlSQBfjI8s" target="_blank" rel="noopener"
+         style="background-image:url('https://img.youtube.com/vi/YUlSQBfjI8s/maxresdefault.jpg')">
+        <div class="play-btn"><div class="play-icon"></div><span class="play-label">Watch</span></div>
+        <div class="card-num">7</div>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <svg class="footer-mandala" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="46" stroke="#e8c86a" stroke-width=".5"/>
+    <ellipse cx="50" cy="8" rx="3" ry="8" fill="#e8c86a" transform="rotate(0 50 50)"/>
+    <ellipse cx="50" cy="8" rx="3" ry="8" fill="#d42a9c" transform="rotate(45 50 50)"/>
+    <ellipse cx="50" cy="8" rx="3" ry="8" fill="#16c4c4" transform="rotate(90 50 50)"/>
+    <ellipse cx="50" cy="8" rx="3" ry="8" fill="#e8c86a" transform="rotate(135 50 50)"/>
+    <ellipse cx="50" cy="8" rx="3" ry="8" fill="#d42a9c" transform="rotate(180 50 50)"/>
+    <ellipse cx="50" cy="8" rx="3" ry="8" fill="#16c4c4" transform="rotate(225 50 50)"/>
+    <ellipse cx="50" cy="8" rx="3" ry="8" fill="#e8c86a" transform="rotate(270 50 50)"/>
+    <ellipse cx="50" cy="8" rx="3" ry="8" fill="#d42a9c" transform="rotate(315 50 50)"/>
+    <circle cx="50" cy="50" r="10" fill="#7c3aed" opacity=".9"/>
+    <circle cx="50" cy="50" r="4"  fill="#e8c86a"/>
+  </svg>
+  <p class="footer-text">Made with AI · <a href="https://www.youtube.com/channel/UCyourchannelid" target="_blank" rel="noopener">YouTube Channel ↗</a></p>
+  <p class="footer-credit">Made by digitalAIventures LLC — Alpujarras, Spain</p>
+</footer>
+
+<script>
+  // Theme
+  function toggleTheme(){
+    const html=document.documentElement;
+    const cur=html.getAttribute('data-theme')||'dark';
+    const next=cur==='dark'?'light':'dark';
+    html.setAttribute('data-theme',next);
+    document.getElementById('themeIcon').textContent=next==='dark'?'☀️':'🌙';
+    try{localStorage.setItem('theme',next)}catch(e){}
+  }
+  (function(){
+    function apply(t){
+      document.documentElement.setAttribute('data-theme',t);
+      document.addEventListener('DOMContentLoaded',()=>{
+        const ic=document.getElementById('themeIcon');
+        if(ic)ic.textContent=t==='dark'?'☀️':'🌙';
+      });
+    }
+    try{
+      const s=localStorage.getItem('theme');
+      if(s){apply(s)}else{const h=new Date().getHours();apply(h>=7&&h<19?'light':'dark')}
+    }catch(e){apply('dark')}
+  })();
+
+  // Scroll-triggered card reveal
+  const cards=document.querySelectorAll('.card');
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
+  },{threshold:.08});
+  cards.forEach(c=>obs.observe(c));
+</script>
+</body>
+</html>

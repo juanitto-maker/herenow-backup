@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="FooLab prototype tester kit — know what's in it. AI food label scanner with NutriScore A–E and red-flag alerts. EN / ES / DE">
+<title>FooLab — Prototype Tester Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+/* ---- Theme tokens ---- */
+:root,[data-theme="dark"]{
+  --bg:#0f0f11;
+  --bg-card:#1a1a1f;
+  --bg-hero:linear-gradient(135deg,#101a14 0%,#0f0f11 100%);
+  --bg-warn:rgba(230,51,18,.10);
+  --bg-info:rgba(34,197,94,.08);
+  --text:#e2e2e7;
+  --text-muted:#888;
+  --text-heading:#fff;
+  --border:#2a2a35;
+  --border-soft:#1e1e26;
+  --accent:#4ade80;          /* NutriScore A — light green for dark theme */
+  --accent-bg:rgba(74,222,128,.10);
+  --accent-text:#0f0f11;
+  --link:#86efac;
+  --link-hover:#bbf7d0;
+  --overlay-bg:rgba(0,0,0,.6);
+  --dialog-bg:#1a1a1f;
+}
+[data-theme="light"]{
+  --bg:#fafaf7;
+  --bg-card:#ffffff;
+  --bg-hero:linear-gradient(135deg,#eef5ee 0%,#fafaf7 100%);
+  --bg-warn:rgba(230,51,18,.06);
+  --bg-info:rgba(0,133,65,.06);
+  --text:#2a2a28;
+  --text-muted:#6a6a62;
+  --text-heading:#0f0f11;
+  --border:#e6e6df;
+  --border-soft:#f0f0e9;
+  --accent:#008541;          /* NutriScore A — dark green for light theme */
+  --accent-bg:rgba(0,133,65,.08);
+  --accent-text:#ffffff;
+  --link:#008541;
+  --link-hover:#005a2c;
+  --overlay-bg:rgba(0,0,0,.4);
+  --dialog-bg:#ffffff;
+}
+
+html,body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.55;-webkit-tap-highlight-color:transparent}
+body{padding-top:3rem}
+
+/* ---- Lang bar ---- */
+.lang-bar{position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:center;gap:.5rem;padding:.5rem;
+  background:rgba(15,15,17,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,.06)}
+[data-theme="light"] .lang-bar{background:rgba(250,250,247,.92);border-bottom:1px solid rgba(0,0,0,.06)}
+.lang-btn{background:none;border:1px solid var(--border);color:var(--text-muted);
+  font:600 .72rem/1 'Inter',sans-serif;padding:.4rem .75rem;
+  border-radius:999px;cursor:pointer;letter-spacing:.04em;
+  text-transform:uppercase;transition:all .2s}
+.lang-btn.active,.lang-btn:hover{background:var(--accent);color:var(--accent-text);border-color:var(--accent)}
+
+/* ---- Theme toggle ---- */
+.theme-toggle{position:fixed;top:3.5rem;right:.75rem;z-index:150;
+  background:var(--bg-card);border:1px solid var(--border);
+  width:2.4rem;height:2.4rem;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.2);transition:all .2s}
+.theme-toggle:hover{transform:scale(1.1)}
+.theme-icon{font-size:1.1rem;line-height:1}
+
+/* ---- Lang visibility ---- */
+[data-lang]{display:none!important}
+[data-lang].v{display:block!important}
+span[data-lang].v{display:inline!important}
+a[data-lang].v{display:inline-block!important}
+li[data-lang].v{display:list-item!important}
+
+/* ---- Layout ---- */
+section{padding:2rem 1.25rem;max-width:760px;margin:0 auto}
+.hero{padding:3rem 1.25rem 2rem;text-align:center;background:var(--bg-hero);max-width:none}
+.hero-inner{max-width:760px;margin:0 auto}
+.hero-emoji{font-size:3.5rem;margin-bottom:.75rem;line-height:1}
+.hero-badge{display:inline-block;font-size:.7rem;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--accent);background:var(--accent-bg);
+  border:1px solid var(--accent);border-radius:999px;padding:.3rem .9rem;margin-bottom:1rem}
+.hero h1{font-size:2.4rem;font-weight:800;color:var(--text-heading);
+  letter-spacing:-.02em;margin-bottom:1rem;line-height:1.1}
+.hero h1 .accent{color:var(--accent)}
+
+/* NutriScore strip — single decorative element */
+.nutri-strip{display:flex;justify-content:center;gap:.25rem;margin:1.25rem auto;max-width:280px}
+.nutri-grade{flex:1;height:32px;border-radius:.4rem;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:.85rem;color:#fff;letter-spacing:.05em;
+  box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.ng-a{background:#008541}
+.ng-b{background:#85bb2f}
+.ng-c{background:#ffcc00;color:#1a1a1a}
+.ng-d{background:#ef8200}
+.ng-e{background:#e63312}
+
+.tagline{font-size:1.02rem;color:var(--text);max-width:520px;margin:0 auto 1.75rem;line-height:1.55}
+.cta{display:inline-block;background:var(--accent);color:var(--accent-text);
+  padding:.85rem 1.75rem;border-radius:.6rem;text-decoration:none;font-weight:700;font-size:1rem;
+  transition:all .2s;box-shadow:0 4px 12px rgba(0,133,65,.2)}
+.cta:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,133,65,.3)}
+
+hr.sep{border:none;border-top:1px solid var(--border);max-width:200px;margin:.5rem auto}
+
+h2{font-size:1.4rem;font-weight:700;color:var(--text-heading);margin-bottom:1rem;letter-spacing:-.01em}
+
+/* ---- Feature grid ---- */
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.85rem;margin-top:1rem}
+.feature{background:var(--bg-card);border:1px solid var(--border);border-radius:.85rem;
+  padding:1.1rem;transition:all .2s}
+.feature:hover{border-color:var(--accent);transform:translateY(-2px)}
+.f-emoji{font-size:1.7rem;margin-bottom:.5rem;line-height:1}
+.f-title{font-size:1rem;font-weight:700;color:var(--text-heading);margin-bottom:.35rem}
+.f-desc{font-size:.86rem;color:var(--text-muted);line-height:1.5}
+
+/* ---- Steps ---- */
+.steps{margin-top:1rem;display:flex;flex-direction:column;gap:.75rem}
+.step{display:flex;gap:.9rem;background:var(--bg-card);border:1px solid var(--border);
+  border-radius:.75rem;padding:1rem 1.1rem}
+.step-num{flex-shrink:0;width:2rem;height:2rem;border-radius:50%;background:var(--accent);
+  color:var(--accent-text);display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:.95rem}
+.step-body{flex:1;min-width:0}
+.step-title{font-size:.96rem;font-weight:700;color:var(--text-heading);margin-bottom:.15rem}
+.step-desc{font-size:.85rem;color:var(--text-muted);line-height:1.5}
+.step-desc strong{color:var(--text);font-weight:600}
+
+/* ---- Info / warn boxes ---- */
+.info-box,.warn-box{border-radius:.6rem;padding:.75rem .9rem;margin:.85rem 0;
+  font-size:.86rem;line-height:1.5;border:1px solid}
+.info-box{background:var(--bg-info);border-color:var(--accent)}
+.warn-box{background:var(--bg-warn);border-color:#e63312}
+.info-box strong,.warn-box strong{color:var(--text-heading);display:block;margin-bottom:.2rem}
+
+/* ---- Collapsibles (cache clearing) ---- */
+.collapsible{border:1px solid var(--border);border-radius:.6rem;margin-bottom:.5rem;
+  background:var(--bg-card);overflow:hidden}
+.collapsible summary{padding:.7rem .9rem;cursor:pointer;font-size:.9rem;font-weight:600;
+  color:var(--text-heading);list-style:none;display:flex;align-items:center;gap:.5rem;
+  -webkit-tap-highlight-color:transparent}
+.collapsible summary::-webkit-details-marker{display:none}
+.collapsible summary::after{content:'▼';margin-left:auto;font-size:.6rem;color:var(--text-muted);
+  transition:transform .2s}
+.collapsible[open] summary::after{transform:rotate(180deg)}
+.collapsible-body{padding:0 .9rem .85rem;font-size:.85rem;color:var(--text);line-height:1.6}
+.collapsible-body ol{padding-left:1.25rem;margin-top:.4rem}
+.collapsible-body li{margin-bottom:.3rem}
+.collapsible-body p{margin-top:.5rem}
+.collapsible-body strong{color:var(--text-heading)}
+.collapsible-body code{background:var(--bg);padding:.1rem .35rem;border-radius:.25rem;
+  font-size:.82em;color:var(--accent)}
+
+/* ---- Feedback ---- */
+.feedback{text-align:center;padding:.5rem 0}
+.feedback p{color:var(--text-muted);font-size:.92rem;margin-bottom:1rem}
+.feedback-btn{
+  display:inline-flex;align-items:center;gap:.55rem;
+  background:var(--accent);color:var(--accent-text);
+  padding:.85rem 1.65rem;border-radius:.65rem;text-decoration:none;
+  font-weight:700;font-size:1rem;
+  box-shadow:0 4px 18px rgba(212,130,10,.35);
+  transition:transform .18s,box-shadow .18s,color .18s
+}
+.feedback-btn:hover,.feedback-btn:active{
+  transform:translateY(-2px);
+  box-shadow:0 6px 28px rgba(212,130,10,.5);
+  color:var(--accent-text)
+}
+.feedback-btn .bug{font-size:1.25rem}
+
+.contact-toggle{
+  display:inline-flex;align-items:center;gap:.4rem;
+  margin-top:.9rem;background:transparent;
+  color:var(--text-muted);border:1px solid var(--border);
+  padding:.55rem 1.1rem;border-radius:.5rem;
+  font-weight:600;font-size:.85rem;cursor:pointer;
+  font-family:inherit;
+  transition:background .18s,color .18s,border-color .18s,transform .18s
+}
+.contact-toggle:hover,.contact-toggle:active{
+  background:var(--accent-bg);color:var(--accent);
+  border-color:var(--accent);
+  transform:translateY(-1px)
+}
+.contact-toggle .chev{font-size:.7rem;opacity:.7;margin-left:.1rem}
+
+/* ---- Contact modal ---- */
+.modal-overlay{
+  display:none;position:fixed;inset:0;background:var(--overlay-bg);
+  z-index:200;align-items:center;justify-content:center;padding:1rem
+}
+.modal-overlay.active{display:flex}
+.modal-box{
+  background:var(--dialog-bg);border-radius:1rem;
+  padding:1.5rem;max-width:340px;width:100%;
+  border:1px solid var(--border);
+  animation:mFade .2s ease
+}
+@keyframes mFade{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.modal-title{
+  font-size:1.05rem;font-weight:700;color:var(--text-heading);
+  text-align:center;margin-bottom:1.1rem
+}
+.modal-row{
+  display:flex;align-items:center;gap:.85rem;
+  padding:.75rem .85rem;margin-bottom:.55rem;
+  border:1px solid var(--border);border-radius:.6rem;
+  text-decoration:none;color:var(--text);
+  background:transparent;cursor:pointer;
+  transition:background .18s,border-color .18s
+}
+[data-theme="light"] .modal-row{background:rgba(0,0,0,.025)}
+.modal-row:hover,.modal-row:active{
+  background:var(--accent-bg);border-color:var(--accent);color:var(--text-heading)
+}
+.modal-row .modal-ico{font-size:1.3rem;flex-shrink:0;line-height:1}
+.modal-row .modal-label{font-size:.93rem;font-weight:600;display:block;line-height:1.25;color:var(--text-heading)}
+.modal-row .modal-sub{display:block;font-size:.7rem;font-weight:400;color:var(--text-muted);margin-top:.2rem;line-height:1.35}
+.modal-cancel{
+  display:block;width:100%;background:none;
+  border:1px solid var(--border);color:var(--text-muted);
+  cursor:pointer;font-size:.82rem;padding:.5rem 1.2rem;
+  border-radius:.4rem;margin-top:.5rem;font-family:inherit;
+  transition:border-color .18s,color .18s
+}
+.modal-cancel:hover{border-color:var(--text-muted);color:var(--text-heading)}
+
+/* ---- Footer ---- */
+footer{text-align:center;padding:2rem 1rem 3rem;font-size:.78rem;color:var(--text-muted);
+  border-top:1px solid var(--border);margin-top:2rem}
+footer a{color:var(--link);text-decoration:none}
+footer a:hover{color:var(--link-hover);text-decoration:underline}
+
+/* ---- Mobile tweaks ---- */
+@media (max-width:520px){
+  .hero h1{font-size:1.95rem}
+  .hero-emoji{font-size:3rem}
+  .feature-grid{grid-template-columns:1fr}
+  .nutri-strip{max-width:240px}
+  section{padding:1.75rem 1rem}
+}
+</style>
+</head>
+<body>
+
+<!-- Lang bar -->
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('en')">🇬🇧 EN</button>
+  <button class="lang-btn" onclick="setLang('es')">🇪🇸 ES</button>
+  <button class="lang-btn" onclick="setLang('de')">🇩🇪 DE</button>
+</div>
+
+<!-- Theme toggle -->
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <span class="theme-icon" id="themeIcon">☀️</span>
+</button>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-emoji">🧪</div>
+    <span class="hero-badge" data-lang="en">Prototype — Tester Kit</span>
+    <span class="hero-badge" data-lang="es">Prototipo — Kit de Tester</span>
+    <span class="hero-badge" data-lang="de">Prototyp — Tester-Kit</span>
+
+    <h1 data-lang="en">Know what's <span class="accent">in it.</span></h1>
+    <h1 data-lang="es">Sabe qué <span class="accent">contiene.</span></h1>
+    <h1 data-lang="de">Wisse, was <span class="accent">drin ist.</span></h1>
+
+    <div class="nutri-strip" aria-label="NutriScore A to E">
+      <div class="nutri-grade ng-a">A</div>
+      <div class="nutri-grade ng-b">B</div>
+      <div class="nutri-grade ng-c">C</div>
+      <div class="nutri-grade ng-d">D</div>
+      <div class="nutri-grade ng-e">E</div>
+    </div>
+
+    <p class="tagline" data-lang="en">FooLab uses AI to read food &amp; drink labels and score what's inside — NutriScore A–E plus red-flag alerts. No account, no fuss. You have early access. Thank you for testing!</p>
+    <p class="tagline" data-lang="es">FooLab usa IA para leer etiquetas de alimentos y bebidas y puntuar lo que contienen — NutriScore A–E más alertas de banderas rojas. Sin cuenta, sin complicaciones. Tienes acceso anticipado. ¡Gracias por testear!</p>
+    <p class="tagline" data-lang="de">FooLab nutzt KI, um Lebensmittel- und Getränke-Etiketten zu lesen und Inhaltsstoffe zu bewerten — NutriScore A–E plus Warnsignale. Kein Konto, kein Aufwand. Du hast Frühzugang. Danke fürs Testen!</p>
+
+    <a class="cta" href="https://foo-lab.netlify.app/" data-lang="en">Open FooLab →</a>
+    <a class="cta" href="https://foo-lab.netlify.app/" data-lang="es">Abrir FooLab →</a>
+    <a class="cta" href="https://foo-lab.netlify.app/" data-lang="de">FooLab öffnen →</a>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ========== WHAT IS FOOLAB ========== -->
+<section>
+  <h2 data-lang="en">💡 What is FooLab?</h2>
+  <h2 data-lang="es">💡 ¿Qué es FooLab?</h2>
+  <h2 data-lang="de">💡 Was ist FooLab?</h2>
+
+  <div class="feature-grid">
+    <!-- 1 Snap & Score -->
+    <div class="feature">
+      <div class="f-emoji">🧪</div>
+      <div class="f-title" data-lang="en">Snap &amp; Score</div>
+      <div class="f-title" data-lang="es">Foto y Puntuación</div>
+      <div class="f-title" data-lang="de">Foto &amp; Bewertung</div>
+      <div class="f-desc" data-lang="en">Photograph any food or drink label — AI returns a NutriScore A–E plus a 0–100 score in seconds.</div>
+      <div class="f-desc" data-lang="es">Fotografía cualquier etiqueta de alimento o bebida — la IA devuelve un NutriScore A–E más una puntuación 0–100 en segundos.</div>
+      <div class="f-desc" data-lang="de">Fotografiere ein Lebensmittel- oder Getränke-Etikett — die KI liefert einen NutriScore A–E plus eine 0–100-Bewertung in Sekunden.</div>
+    </div>
+
+    <!-- 2 Red Flags -->
+    <div class="feature">
+      <div class="f-emoji">🚩</div>
+      <div class="f-title" data-lang="en">Red-Flag Alerts</div>
+      <div class="f-title" data-lang="es">Alertas de Bandera Roja</div>
+      <div class="f-title" data-lang="de">Warnsignale</div>
+      <div class="f-desc" data-lang="en">Spots palm oil, high sugar, artificial colours, controversial E-numbers and other ingredients worth knowing about.</div>
+      <div class="f-desc" data-lang="es">Detecta aceite de palma, azúcar alto, colorantes artificiales, números E controvertidos y otros ingredientes a tener en cuenta.</div>
+      <div class="f-desc" data-lang="de">Erkennt Palmöl, viel Zucker, künstliche Farbstoffe, umstrittene E-Nummern und andere Inhaltsstoffe, die du kennen solltest.</div>
+    </div>
+
+    <!-- 3 Zero Reg -->
+    <div class="feature">
+      <div class="f-emoji">🔒</div>
+      <div class="f-title" data-lang="en">Zero Registration</div>
+      <div class="f-title" data-lang="es">Sin Registro</div>
+      <div class="f-title" data-lang="de">Ohne Registrierung</div>
+      <div class="f-desc" data-lang="en">No account, no email, no password — completely anonymous by design.</div>
+      <div class="f-desc" data-lang="es">Sin cuenta, sin email, sin contraseña — completamente anónimo por diseño.</div>
+      <div class="f-desc" data-lang="de">Kein Konto, keine E-Mail, kein Passwort — komplett anonym by Design.</div>
+    </div>
+
+    <!-- 4 PWA -->
+    <div class="feature">
+      <div class="f-emoji">📱</div>
+      <div class="f-title" data-lang="en">Installable PWA</div>
+      <div class="f-title" data-lang="es">PWA Instalable</div>
+      <div class="f-title" data-lang="de">Installierbare PWA</div>
+      <div class="f-desc" data-lang="en">Add to Home Screen on Android — works like a native app, no Play Store needed.</div>
+      <div class="f-desc" data-lang="es">Añade a la pantalla de inicio en Android — funciona como una app nativa, sin Play Store.</div>
+      <div class="f-desc" data-lang="de">Startbildschirm auf Android — funktioniert wie eine native App, ohne Play Store.</div>
+    </div>
+
+    <!-- 5 Local Archive -->
+    <div class="feature">
+      <div class="f-emoji">📚</div>
+      <div class="f-title" data-lang="en">Local Archive</div>
+      <div class="f-title" data-lang="es">Archivo Local</div>
+      <div class="f-title" data-lang="de">Lokales Archiv</div>
+      <div class="f-desc" data-lang="en">Your last 50 scans stay on your device — review history anytime, no cloud, no tracking.</div>
+      <div class="f-desc" data-lang="es">Tus últimos 50 escaneos permanecen en tu dispositivo — revisa el historial cuando quieras, sin nube, sin rastreo.</div>
+      <div class="f-desc" data-lang="de">Deine letzten 50 Scans bleiben auf deinem Gerät — jederzeit nachsehen, keine Cloud, kein Tracking.</div>
+    </div>
+
+    <!-- 6 Shareable Cards -->
+    <div class="feature">
+      <div class="f-emoji">📤</div>
+      <div class="f-title" data-lang="en">Shareable Cards</div>
+      <div class="f-title" data-lang="es">Tarjetas Compartibles</div>
+      <div class="f-title" data-lang="de">Teilbare Karten</div>
+      <div class="f-desc" data-lang="en">Export a clean PNG score card — share with family, friends, or social media.</div>
+      <div class="f-desc" data-lang="es">Exporta una tarjeta de puntuación PNG limpia — comparte con familia, amigos o redes sociales.</div>
+      <div class="f-desc" data-lang="de">Exportiere eine saubere PNG-Bewertungskarte — teile sie mit Familie, Freunden oder in sozialen Medien.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ========== HOW TO TEST ========== -->
+<section>
+  <h2 data-lang="en">🚀 How to test it</h2>
+  <h2 data-lang="es">🚀 Cómo testear</h2>
+  <h2 data-lang="de">🚀 So testest du es</h2>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title" data-lang="en">Open the app</div>
+        <div class="step-title" data-lang="es">Abre la app</div>
+        <div class="step-title" data-lang="de">App öffnen</div>
+        <div class="step-desc" data-lang="en">Tap the button above or go to <strong>foo-lab.netlify.app</strong> in your browser.</div>
+        <div class="step-desc" data-lang="es">Pulsa el botón de arriba o ve a <strong>foo-lab.netlify.app</strong> en tu navegador.</div>
+        <div class="step-desc" data-lang="de">Tippe auf den Button oben oder gehe zu <strong>foo-lab.netlify.app</strong> in deinem Browser.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title" data-lang="en">Photograph the label</div>
+        <div class="step-title" data-lang="es">Fotografía la etiqueta</div>
+        <div class="step-title" data-lang="de">Etikett fotografieren</div>
+        <div class="step-desc" data-lang="en">Point your camera at the <strong>ingredients side</strong> — well-lit, in focus, close enough to read clearly.</div>
+        <div class="step-desc" data-lang="es">Apunta la cámara al <strong>lado de los ingredientes</strong> — bien iluminado, enfocado, cerca para leer claramente.</div>
+        <div class="step-desc" data-lang="de">Richte die Kamera auf die <strong>Zutatenseite</strong> — gut beleuchtet, scharf, nah genug zum klaren Lesen.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title" data-lang="en">Crop to the ingredients</div>
+        <div class="step-title" data-lang="es">Recorta a los ingredientes</div>
+        <div class="step-title" data-lang="de">Auf die Zutaten zuschneiden</div>
+        <div class="step-desc" data-lang="en">Drag the corners around the ingredients block to help the AI focus on what matters.</div>
+        <div class="step-desc" data-lang="es">Arrastra las esquinas alrededor del bloque de ingredientes para que la IA se centre en lo importante.</div>
+        <div class="step-desc" data-lang="de">Ziehe die Ecken um den Zutaten-Block, damit sich die KI auf das Wesentliche konzentriert.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title" data-lang="en">Review the score</div>
+        <div class="step-title" data-lang="es">Revisa la puntuación</div>
+        <div class="step-title" data-lang="de">Bewertung prüfen</div>
+        <div class="step-desc" data-lang="en">NutriScore + 0–100 score + red-flag chips + per-ingredient notes — usually in under 5 seconds. Save it, share it as a PNG, or scan the next product.</div>
+        <div class="step-desc" data-lang="es">NutriScore + puntuación 0–100 + chips de banderas rojas + notas por ingrediente — normalmente en menos de 5 segundos. Guárdalo, compártelo como PNG o escanea el siguiente producto.</div>
+        <div class="step-desc" data-lang="de">NutriScore + 0–100-Score + Warn-Chips + Notizen pro Zutat — meist unter 5 Sekunden. Speichern, als PNG teilen oder das nächste Produkt scannen.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ========== GETTING LATEST VERSION ========== -->
+<section>
+  <h2 data-lang="en">🧹 Getting the latest version</h2>
+  <h2 data-lang="es">🧹 Obtener la última versión</h2>
+  <h2 data-lang="de">🧹 Neueste Version laden</h2>
+
+  <div class="info-box" data-lang="en"><strong>💡 When to do this</strong>If the app looks outdated or shows errors — clear the site data. The app uses a service worker that caches files aggressively.</div>
+  <div class="info-box" data-lang="es"><strong>💡 ¿Cuándo hacerlo?</strong>Si la app parece desactualizada o muestra errores — borra los datos del sitio. Usa un service worker que cachea agresivamente.</div>
+  <div class="info-box" data-lang="de"><strong>💡 Wann nötig?</strong>Wenn die App veraltet wirkt oder Fehler anzeigt — leere die Websitedaten. Sie nutzt einen Service Worker, der aggressiv cached.</div>
+
+  <div class="warn-box" data-lang="en"><strong>⚠️ Save your scan archive first!</strong>Your scans live in your browser. Clearing site data <strong>will delete them</strong>. Export important scores as PNG cards before proceeding.</div>
+  <div class="warn-box" data-lang="es"><strong>⚠️ ¡Guarda tu archivo primero!</strong>Tus escaneos viven en el navegador. Borrar los datos del sitio <strong>los eliminará</strong>. Exporta las puntuaciones importantes como tarjetas PNG antes de continuar.</div>
+  <div class="warn-box" data-lang="de"><strong>⚠️ Sichere zuerst dein Archiv!</strong>Deine Scans leben im Browser. Browserdaten löschen <strong>wird sie entfernen</strong>. Exportiere wichtige Bewertungen vorher als PNG-Karten.</div>
+
+  <!-- Android -->
+  <details class="collapsible">
+    <summary>🤖 Android Chrome</summary>
+    <div class="collapsible-body">
+      <div data-lang="en">
+        <ol>
+          <li>Open Chrome → go to <code>foo-lab.netlify.app</code></li>
+          <li>Tap <strong>⋮ menu</strong> → <strong>Settings</strong> → <strong>Privacy and security</strong> → <strong>Clear browsing data</strong></li>
+          <li>Select <strong>Cached images and files</strong> + <strong>Cookies and site data</strong> → <strong>Clear data</strong></li>
+          <li>Return to the app and reload.</li>
+        </ol>
+        <p><strong>Faster:</strong> Long-press app icon → <strong>App info</strong> → <strong>Storage</strong> → <strong>Clear cache</strong> + <strong>Clear data</strong>.</p>
+      </div>
+      <div data-lang="es">
+        <ol>
+          <li>Abre Chrome → ve a <code>foo-lab.netlify.app</code></li>
+          <li><strong>⋮ menú</strong> → <strong>Ajustes</strong> → <strong>Privacidad y seguridad</strong> → <strong>Borrar datos de navegación</strong></li>
+          <li>Selecciona <strong>Caché</strong> + <strong>Cookies y datos de sitios</strong> → <strong>Borrar datos</strong></li>
+          <li>Vuelve a la app y recárgala.</li>
+        </ol>
+        <p><strong>Más rápido:</strong> Mantén pulsado el icono → <strong>Info app</strong> → <strong>Almacenamiento</strong> → borrar caché + datos.</p>
+      </div>
+      <div data-lang="de">
+        <ol>
+          <li>Chrome öffnen → <code>foo-lab.netlify.app</code></li>
+          <li><strong>⋮ Menü</strong> → <strong>Einstellungen</strong> → <strong>Datenschutz und Sicherheit</strong> → <strong>Browserdaten löschen</strong></li>
+          <li><strong>Bilder und Dateien im Cache</strong> + <strong>Cookies und Websitedaten</strong> → <strong>Daten löschen</strong></li>
+          <li>Zurück zur App und neu laden.</li>
+        </ol>
+        <p><strong>Schneller:</strong> App-Symbol lang drücken → <strong>App-Info</strong> → <strong>Speicher</strong> → Cache + Daten löschen.</p>
+      </div>
+    </div>
+  </details>
+
+  <!-- iOS -->
+  <details class="collapsible">
+    <summary>🍎 iOS Safari</summary>
+    <div class="collapsible-body">
+      <div data-lang="en">
+        <ol>
+          <li>Settings → Apps → Safari → <strong>Clear History and Website Data</strong></li>
+          <li>Reopen Safari → go to <code>foo-lab.netlify.app</code></li>
+        </ol>
+        <p><strong>Site-only:</strong> Settings → Safari → Advanced → Website Data → search "foo-lab" → swipe to delete.</p>
+      </div>
+      <div data-lang="es">
+        <ol>
+          <li>Ajustes → Safari → <strong>Borrar historial y datos de sitios web</strong></li>
+          <li>Reabre Safari → ve a <code>foo-lab.netlify.app</code></li>
+        </ol>
+        <p><strong>Solo este sitio:</strong> Ajustes → Safari → Avanzado → Datos de sitios web → busca "foo-lab" → desliza para borrar.</p>
+      </div>
+      <div data-lang="de">
+        <ol>
+          <li>Einstellungen → Safari → <strong>Verlauf und Websitedaten löschen</strong></li>
+          <li>Safari neu öffnen → <code>foo-lab.netlify.app</code></li>
+        </ol>
+        <p><strong>Nur diese Seite:</strong> Einstellungen → Safari → Erweitert → Websitedaten → "foo-lab" suchen → wischen zum Löschen.</p>
+      </div>
+    </div>
+  </details>
+
+  <!-- Desktop Chrome -->
+  <details class="collapsible">
+    <summary>🖥️ Desktop Chrome / Brave</summary>
+    <div class="collapsible-body">
+      <div data-lang="en">
+        <ol>
+          <li>Press <strong>F12</strong> → <strong>Application</strong> tab → <strong>Storage</strong> → <strong>Clear site data</strong></li>
+          <li>Reload the page.</li>
+        </ol>
+        <p><strong>Quick reload:</strong> <code>Ctrl+Shift+R</code></p>
+      </div>
+      <div data-lang="es">
+        <ol>
+          <li>Pulsa <strong>F12</strong> → pestaña <strong>Application</strong> → <strong>Storage</strong> → <strong>Clear site data</strong></li>
+          <li>Recarga la página.</li>
+        </ol>
+        <p><strong>Recarga rápida:</strong> <code>Ctrl+Shift+R</code></p>
+      </div>
+      <div data-lang="de">
+        <ol>
+          <li><strong>F12</strong> drücken → Tab <strong>Application</strong> → <strong>Storage</strong> → <strong>Clear site data</strong></li>
+          <li>Seite neu laden.</li>
+        </ol>
+        <p><strong>Schneller Reload:</strong> <code>Strg+Shift+R</code></p>
+      </div>
+    </div>
+  </details>
+
+  <!-- Firefox -->
+  <details class="collapsible">
+    <summary>🦊 Desktop Firefox</summary>
+    <div class="collapsible-body">
+      <div data-lang="en">
+        <ol>
+          <li>Click the <strong>🔒 lock icon</strong> → <strong>Clear Cookies and Site Data…</strong> → confirm and reload.</li>
+        </ol>
+      </div>
+      <div data-lang="es">
+        <ol>
+          <li>Pulsa el <strong>🔒 candado</strong> → <strong>Borrar cookies y datos del sitio…</strong> → confirma y recarga.</li>
+        </ol>
+      </div>
+      <div data-lang="de">
+        <ol>
+          <li><strong>🔒 Schloss</strong> klicken → <strong>Cookies und Websitedaten löschen…</strong> → bestätigen und neu laden.</li>
+        </ol>
+      </div>
+    </div>
+  </details>
+</section>
+
+<hr class="sep">
+
+<!-- ========== FEEDBACK ========== -->
+<section class="feedback">
+  <h2 data-lang="en">💬 Send feedback</h2>
+  <h2 data-lang="es">💬 Enviar feedback</h2>
+  <h2 data-lang="de">💬 Feedback senden</h2>
+
+  <p data-lang="en">Found a bug? Got a wild scan that scored weird? Your notes are gold at this stage — reach out directly:</p>
+  <p data-lang="es">¿Encontraste un bug? ¿Algún escaneo raro? Tus notas son oro en esta fase — escríbenos directamente:</p>
+  <p data-lang="de">Bug gefunden? Komische Bewertung erhalten? Deine Notizen sind in dieser Phase Gold wert — schreib uns direkt:</p>
+
+  <a href="https://t.me/Juanittos_feedback_bot?start=foolab" target="_blank" rel="noopener" class="feedback-btn">
+    <span class="bug">🐛</span>
+    <span data-lang="en">Send feedback</span>
+    <span data-lang="es">Enviar feedback</span>
+    <span data-lang="de">Feedback senden</span>
+  </a>
+  <br>
+  <button type="button" class="contact-toggle" onclick="openContactModal()">
+    <span>✉️</span>
+    <span data-lang="en">Contact</span>
+    <span data-lang="es">Contacto</span>
+    <span data-lang="de">Kontakt</span>
+    <span class="chev">▾</span>
+  </button>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <p>FooLab · <span data-lang="en">Prototype</span><span data-lang="es">Prototipo</span><span data-lang="de">Prototyp</span> · digitalAIventures LLC · Alpujarras, Spain</p>
+  <p style="margin-top:.4rem"><a href="https://foo-lab.netlify.app/" target="_blank" rel="noopener">foo-lab.netlify.app</a></p>
+</footer>
+
+<!-- ========== CONTACT MODAL (shared across languages) ========== -->
+<div class="modal-overlay" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="mTitle" onclick="closeContactModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-title" id="mTitle">Contact</div>
+    <a href="mailto:digitalAIventures.LLC+FooLab@gmail.com" class="modal-row" onclick="closeContactModal()">
+      <span class="modal-ico">📧</span>
+      <span><span class="modal-label" id="mEmail">Send email</span></span>
+    </a>
+    <a href="https://t.me/Juanitto_assist_bot" target="_blank" rel="noopener" class="modal-row" onclick="closeContactModal()">
+      <span class="modal-ico">🤖</span>
+      <span><span class="modal-label" id="mAsst">Assistant</span><span class="modal-sub" id="mAsstSub">for our services, portfolio, clients, collaborators</span></span>
+    </a>
+    <a href="https://t.me/JuanittoCalvares" target="_blank" rel="noopener" class="modal-row" onclick="closeContactModal()">
+      <span class="modal-ico">✈️</span>
+      <span><span class="modal-label" id="mPersonal">Personal</span></span>
+    </a>
+    <button type="button" class="modal-cancel" id="mCancel" onclick="closeContactModal()">Cancel</button>
+  </div>
+</div>
+
+<script>
+/* ---- Theme toggle (time-aware + persistent) ---- */
+function toggleTheme(){
+  const html=document.documentElement;
+  const current=html.getAttribute('data-theme')||'dark';
+  const next=current==='dark'?'light':'dark';
+  html.setAttribute('data-theme',next);
+  document.getElementById('themeIcon').textContent=next==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',next)}catch(e){}
+}
+(function(){
+  function apply(t){
+    document.documentElement.setAttribute('data-theme',t);
+    document.addEventListener('DOMContentLoaded',()=>{
+      const icon=document.getElementById('themeIcon');
+      if(icon)icon.textContent=t==='dark'?'☀️':'🌙';
+    });
+  }
+  try{
+    const saved=localStorage.getItem('theme');
+    if(saved){apply(saved)}
+    else{const h=new Date().getHours();apply(h>=7&&h<19?'light':'dark')}
+  }catch(e){apply('dark')}
+})();
+
+/* ---- Lang switcher ---- */
+function setLang(l){
+  document.querySelectorAll('[data-lang]').forEach(e=>{
+    e.classList.toggle('v',e.getAttribute('data-lang')===l);
+  });
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    b.classList.toggle('active',b.textContent.trim().toLowerCase().endsWith(l));
+  });
+  document.documentElement.lang=l;
+  if(typeof updateModalLang==='function')updateModalLang(l);
+  try{localStorage.setItem('foolab-lang',l)}catch(e){}
+}
+(function(){
+  let lang='en';
+  try{
+    const saved=localStorage.getItem('foolab-lang');
+    if(saved && ['en','es','de'].includes(saved)) lang=saved;
+    else{
+      const browser=(navigator.language||'en').slice(0,2).toLowerCase();
+      if(['en','es','de'].includes(browser)) lang=browser;
+    }
+  }catch(e){}
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',()=>setLang(lang));
+  }else{
+    setLang(lang);
+  }
+})();
+
+/* ---- Contact modal ---- */
+const MODAL_T={
+  en:{title:'Contact',email:'Send email',asst:'Assistant',asstSub:'for our services, portfolio, clients, collaborators',personal:'Personal',cancel:'Cancel'},
+  es:{title:'Contacto',email:'Enviar email',asst:'Asistente',asstSub:'para servicios, portafolio, clientes, colaboradores',personal:'Personal',cancel:'Cancelar'},
+  de:{title:'Kontakt',email:'E-Mail senden',asst:'Assistent',asstSub:'für Dienstleistungen, Portfolio, Kunden, Kooperationen',personal:'Persönlich',cancel:'Abbrechen'}
+};
+function updateModalLang(lang){
+  const t=MODAL_T[lang]||MODAL_T.en;
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
+  set('mTitle',t.title);
+  set('mEmail',t.email);
+  set('mAsst',t.asst);
+  set('mAsstSub',t.asstSub);
+  set('mPersonal',t.personal);
+  set('mCancel',t.cancel);
+}
+function openContactModal(){
+  document.getElementById('contactModal').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeContactModal(e){
+  if(e&&e.target&&e.currentTarget&&e.target!==e.currentTarget&&e.type==='click'&&e.currentTarget.classList.contains('modal-overlay'))return;
+  document.getElementById('contactModal').classList.remove('active');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeContactModal()});
+</script>
+
+</body>
+</html>
