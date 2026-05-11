@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>don González / JuanittoCalvares</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    min-height: 100%;
+    background: #f7f4ee;
+    color: #2a2520;
+    font-family: 'Crimson Pro', Georgia, serif;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 3rem 1.5rem;
+  }
+
+  .page {
+    max-width: 480px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3.5rem;
+  }
+
+  /* ornament */
+  .ornament {
+    font-size: 1.4rem;
+    color: #b8a98a;
+    letter-spacing: .5rem;
+    user-select: none;
+  }
+
+  /* poem block */
+  .poem {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+  }
+
+  .poem-lang {
+    font-family: 'Playfair Display', serif;
+    font-size: .65rem;
+    font-weight: 500;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: #b8a98a;
+    margin-bottom: .8rem;
+  }
+
+  .poem-line {
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: #2a2520;
+  }
+
+  .poem-line.speaker {
+    font-style: normal;
+    color: #3d3630;
+  }
+
+  .poem-line.dialogue {
+    font-style: italic;
+    color: #4a4540;
+    padding-left: .1rem;
+  }
+
+  .poem-line.year {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: #7a6a5a;
+    margin-top: .3rem;
+  }
+
+  /* divider between languages */
+  .divider {
+    width: 3rem;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #c8b898, transparent);
+  }
+
+  /* footer */
+  footer {
+    font-size: .72rem;
+    color: #b8a98a;
+    letter-spacing: .08em;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="ornament">· · ·</div>
+
+  <!-- SPANISH -->
+  <div class="poem">
+    <div class="poem-lang">español</div>
+    <div class="poem-line speaker">don González preguntó con una sonrisa:</div>
+    <div class="poem-line dialogue">— ¿desde cuándo estás tan flojo?</div>
+    <div class="poem-line speaker">JuanittoCalvares contestaba triste:</div>
+    <div class="poem-line dialogue">— hace años, pasó tiempo</div>
+    <div class="poem-line speaker">van Heron me llamaba entonces</div>
+    <div class="poem-line dialogue">— ¿cuándo? preguntó don González,</div>
+    <div class="poem-line dialogue">&nbsp;&nbsp;&nbsp;Heron, en Holanda?</div>
+    <div class="poem-line year">2018, sí, contestó Juanitto</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ENGLISH -->
+  <div class="poem">
+    <div class="poem-lang">english</div>
+    <div class="poem-line speaker">don González asked with a smile:</div>
+    <div class="poem-line dialogue">— Since when are you so weak?</div>
+    <div class="poem-line speaker">JuanittoCalvares answered sadly:</div>
+    <div class="poem-line dialogue">— For years, time passed.</div>
+    <div class="poem-line speaker">van Heron used to call me back then.</div>
+    <div class="poem-line dialogue">— When? asked don González,</div>
+    <div class="poem-line dialogue">&nbsp;&nbsp;&nbsp;Heron, in Holland?</div>
+    <div class="poem-line year">2018, yes, answered Juanitto</div>
+  </div>
+
+  <div class="ornament">· · ·</div>
+
+  <footer>JuanittoCalvares</footer>
+
+</div>
+</body>
+</html>
