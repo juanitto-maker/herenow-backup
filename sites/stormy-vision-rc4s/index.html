@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#D4820A">
+<meta name="description" content="Feed Me Again — Nevera solidaria por Love Me Again. 24/7, sin preguntas.">
+<title>Feed Me Again — Nevera Solidaria por Love Me Again</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Crimson+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============ THEME TOKENS ============ */
+:root, [data-theme="light"] {
+  --bg: #FAF6F0;
+  --bg-card: #ffffff;
+  --bg-hero-overlay: linear-gradient(180deg, rgba(26,21,16,.10) 0%, rgba(26,21,16,.55) 100%);
+  --text: #3a3024;
+  --text-muted: #8a7a6b;
+  --text-heading: #2D2317;
+  --text-on-hero: #FAF6F0;
+  --border: #E8DFD3;
+  --accent: #D4820A;
+  --accent-bg: rgba(212,130,10,.10);
+  --accent-strong: #B06A05;
+  --olive: #4A6741;
+  --olive-bg: rgba(74,103,65,.10);
+  --link: #4A6741;
+  --link-hover: #3a5231;
+  --shadow-soft: 0 1px 3px rgba(45,35,23,.06), 0 4px 12px rgba(45,35,23,.05);
+  --shadow-card: 0 1px 2px rgba(45,35,23,.04), 0 2px 8px rgba(45,35,23,.06);
+  --ask-bg: linear-gradient(135deg, #D4820A 0%, #B06A05 100%);
+  --ask-text: #FAF6F0;
+}
+[data-theme="dark"] {
+  --bg: #17120d;
+  --bg-card: #221a13;
+  --bg-hero-overlay: linear-gradient(180deg, rgba(0,0,0,.20) 0%, rgba(0,0,0,.70) 100%);
+  --text: #e2d8c8;
+  --text-muted: #8a7a6b;
+  --text-heading: #faf6f0;
+  --text-on-hero: #faf6f0;
+  --border: #3a2d22;
+  --accent: #E89940;
+  --accent-bg: rgba(232,153,64,.12);
+  --accent-strong: #F2A85A;
+  --olive: #8FAB83;
+  --olive-bg: rgba(143,171,131,.10);
+  --link: #8FAB83;
+  --link-hover: #A8C49C;
+  --shadow-soft: 0 1px 3px rgba(0,0,0,.4), 0 4px 12px rgba(0,0,0,.3);
+  --shadow-card: 0 1px 2px rgba(0,0,0,.5), 0 2px 8px rgba(0,0,0,.4);
+  --ask-bg: linear-gradient(135deg, #B06A05 0%, #8a5004 100%);
+  --ask-text: #faf6f0;
+}
+
+/* ============ RESET / BASE ============ */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{overflow-x:hidden}
+body{
+  font-family:'Crimson Pro', Georgia, serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  font-size:17px;
+  -webkit-font-smoothing:antialiased;
+  transition:background .25s, color .25s;
+}
+h1,h2,h3,h4{font-family:'Playfair Display', Georgia, serif;color:var(--text-heading);line-height:1.2;font-weight:700}
+
+/* ============ MULTILINGUAL ============ */
+[data-lang]{display:none!important}
+[data-lang].v{display:block!important}
+span[data-lang].v{display:inline!important}
+a[data-lang].v{display:inline-block!important}
+li[data-lang].v{display:list-item!important}
+table[data-lang].v{display:table!important}
+
+/* ============ LANG BAR ============ */
+.lang-bar{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:center;gap:.5rem;padding:.45rem;
+  background:var(--bg-card);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+.lang-btn{
+  background:none;border:1px solid var(--border);
+  color:var(--text-muted);
+  font:600 .72rem/1 'Crimson Pro', sans-serif;
+  padding:.4rem .8rem;border-radius:999px;cursor:pointer;
+  letter-spacing:.06em;text-transform:uppercase;
+  transition:all .2s;
+}
+.lang-btn.active, .lang-btn:hover{
+  background:var(--accent);color:#fff;border-color:var(--accent);
+}
+
+/* ============ THEME TOGGLE ============ */
+.theme-toggle{
+  position:fixed;top:3.2rem;right:.75rem;z-index:99;
+  background:var(--bg-card);border:1px solid var(--border);
+  width:2.3rem;height:2.3rem;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--shadow-soft);
+  transition:all .2s;
+}
+.theme-toggle:hover{transform:scale(1.08)}
+.theme-icon{font-size:1rem;line-height:1}
+
+/* ============ HERO ============ */
+.hero{
+  position:relative;
+  min-height:78svh;
+  margin-top:2.3rem;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  overflow:hidden;
+}
+.hero-img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center;
+  z-index:0;
+}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:var(--bg-hero-overlay);
+  z-index:1;
+}
+.hero-mockup-label{
+  position:absolute;top:.9rem;left:.9rem;z-index:3;
+  background:rgba(0,0,0,.55);color:#faf6f0;
+  font-size:.66rem;font-weight:500;letter-spacing:.04em;
+  padding:.3rem .6rem;border-radius:.3rem;
+  backdrop-filter:blur(4px);
+}
+.hero-content{
+  position:relative;z-index:2;
+  padding:1.5rem 1.5rem 2rem;
+  text-align:left;
+  color:var(--text-on-hero);
+}
+.hero-eyebrow{
+  display:inline-block;
+  font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:#FAF6F0;
+  background:rgba(212,130,10,.85);
+  padding:.3rem .7rem;border-radius:.3rem;
+  margin-bottom:1rem;
+}
+.hero h1{
+  color:#FAF6F0;
+  font-size:clamp(2.5rem, 9vw, 4rem);
+  margin-bottom:.5rem;
+  text-shadow:0 2px 12px rgba(0,0,0,.4);
+  letter-spacing:-.01em;
+}
+.hero-sub{
+  font-size:clamp(1.05rem, 3.6vw, 1.35rem);
+  font-weight:500;
+  max-width:30rem;
+  text-shadow:0 1px 6px rgba(0,0,0,.5);
+  line-height:1.4;
+}
+.hero-scroll{
+  position:absolute;bottom:.8rem;left:50%;transform:translateX(-50%);
+  z-index:3;color:#faf6f0;opacity:.7;font-size:1.2rem;
+  animation:bounce 2s ease-in-out infinite;
+}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+/* ============ SECTIONS ============ */
+section{padding:2rem 1.25rem;max-width:720px;margin:0 auto}
+.sep{border:none;border-top:1px solid var(--border);max-width:140px;margin:1rem auto}
+
+/* ============ THE ASK ============ */
+.ask{
+  margin-top:-1rem;
+  position:relative;
+  z-index:5;
+}
+.ask-card{
+  background:var(--ask-bg);
+  color:var(--ask-text);
+  border-radius:1rem;
+  padding:1.5rem 1.4rem;
+  box-shadow:0 8px 24px rgba(45,35,23,.18);
+}
+.ask-label{
+  display:inline-block;
+  font-size:.66rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  background:rgba(255,255,255,.20);
+  padding:.25rem .6rem;border-radius:.3rem;
+  margin-bottom:.85rem;
+}
+.ask-card h2{
+  color:#fff;
+  font-size:1.5rem;
+  margin-bottom:.85rem;
+}
+.ask-when{
+  font-size:.92rem;opacity:.95;
+  margin-bottom:1rem;
+  padding-bottom:.85rem;
+  border-bottom:1px solid rgba(255,255,255,.20);
+}
+.ask-when strong{font-weight:600}
+.ask-items{list-style:none;margin:0;padding:0}
+.ask-items li{
+  padding:.4rem 0 .4rem 1.5rem;
+  position:relative;
+  font-size:1.02rem;
+}
+.ask-items li::before{
+  content:"→";
+  position:absolute;left:0;top:.4rem;
+  font-weight:600;color:#fff;
+}
+.ask-foot{
+  margin-top:1.1rem;font-size:.78rem;opacity:.85;font-style:italic;
+}
+
+/* ============ DROPS ============ */
+.drops-section h2{
+  font-size:1.4rem;color:var(--text-heading);
+  margin-bottom:.4rem;
+}
+.drops-intro{
+  font-size:.92rem;color:var(--text-muted);
+  margin-bottom:1.3rem;
+}
+.drop-list{margin:1rem 0}
+.drop-item{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:.75rem;
+  margin-bottom:.7rem;
+  overflow:hidden;
+  box-shadow:var(--shadow-card);
+}
+.drop-head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1rem 1.15rem;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;
+}
+.drop-num{
+  font-size:.72rem;font-weight:600;letter-spacing:.08em;
+  color:var(--accent);margin-right:.7rem;
+}
+.drop-title{
+  font-family:'Playfair Display', Georgia, serif;
+  font-size:1.08rem;font-weight:600;color:var(--text-heading);
+  flex:1;
+}
+.drop-arrow{
+  font-size:.8rem;color:var(--accent);
+  transition:transform .25s;flex-shrink:0;
+}
+.drop-item.open .drop-arrow{transform:rotate(180deg)}
+.drop-body{
+  max-height:0;overflow:hidden;
+  transition:max-height .35s ease, padding .35s ease;
+  padding:0 1.15rem;
+}
+.drop-item.open .drop-body{
+  max-height:2400px;
+  padding:0 1.15rem 1.15rem;
+}
+.drop-body p{margin-bottom:.7rem;font-size:.96rem;line-height:1.65}
+.drop-body p:last-child{margin-bottom:0}
+.drop-body strong{color:var(--text-heading);font-weight:600}
+.drop-body em{color:var(--accent-strong);font-style:italic}
+
+/* Phase list */
+.phase-summary{
+  background:var(--accent-bg);border-left:3px solid var(--accent);
+  padding:.7rem .9rem;border-radius:.3rem;
+  font-size:.92rem;margin-bottom:1rem;
+  color:var(--text);
+}
+.phase{
+  display:flex;gap:.9rem;
+  padding:.7rem 0;border-bottom:1px solid var(--border);
+}
+.phase:last-child{border-bottom:none}
+.phase-n{
+  flex-shrink:0;
+  width:1.8rem;height:1.8rem;
+  background:var(--accent);color:#fff;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:.85rem;
+}
+.phase-body{flex:1}
+.phase-title{font-weight:600;color:var(--text-heading);font-size:.96rem;margin-bottom:.15rem}
+.phase-meta{font-size:.76rem;color:var(--text-muted);margin-bottom:.25rem;font-weight:500}
+.phase-desc{font-size:.88rem;color:var(--text);line-height:1.5}
+
+/* Budget list */
+.budget-grp{margin-bottom:1rem}
+.budget-grp:last-child{margin-bottom:0}
+.budget-label{
+  font-weight:700;color:var(--text-heading);
+  font-size:.95rem;margin-bottom:.3rem;
+  display:flex;justify-content:space-between;align-items:baseline;gap:.5rem;
+}
+.budget-amount{
+  color:var(--accent);font-family:'Playfair Display', Georgia, serif;
+  font-size:1.05rem;
+}
+.budget-items{list-style:none;padding:0;margin:0}
+.budget-items li{
+  font-size:.88rem;color:var(--text);
+  padding:.2rem 0 .2rem 1rem;position:relative;line-height:1.45;
+}
+.budget-items li::before{
+  content:"·";position:absolute;left:.2rem;color:var(--accent);font-weight:700;
+}
+
+/* Commitment ladder */
+.ladder{list-style:none;padding:0;margin:1rem 0 0}
+.ladder li{
+  background:var(--accent-bg);
+  border:1px solid var(--border);
+  border-left:3px solid var(--accent);
+  padding:.75rem .9rem;
+  margin-bottom:.55rem;
+  border-radius:.4rem;
+  font-size:.92rem;line-height:1.5;
+}
+.ladder li strong{display:block;color:var(--text-heading);margin-bottom:.15rem}
+.ladder-note{
+  margin-top:1.1rem;font-size:.88rem;
+  padding-top:.85rem;border-top:1px solid var(--border);
+}
+.tg-link{
+  color:var(--link);font-weight:600;text-decoration:none;
+  border-bottom:1px dotted var(--link);
+}
+.tg-link:hover{color:var(--link-hover)}
+
+/* ============ FOOTER ============ */
+footer{
+  background:var(--bg-card);
+  border-top:1px solid var(--border);
+  padding:2rem 1.25rem 2.5rem;
+  text-align:center;margin-top:2rem;
+}
+.f-status{
+  display:inline-block;
+  font-size:.65rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);background:var(--accent-bg);
+  padding:.3rem .65rem;border-radius:999px;
+  margin-bottom:1rem;
+}
+.f-meeting{
+  color:var(--text);font-size:.95rem;margin-bottom:1.2rem;
+  line-height:1.55;
+}
+.f-meeting strong{color:var(--text-heading)}
+.f-links{
+  display:flex;flex-direction:column;gap:.6rem;
+  margin-bottom:1.3rem;
+  max-width:280px;margin-left:auto;margin-right:auto;
+}
+.f-link{
+  display:block;padding:.65rem 1rem;
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:.5rem;color:var(--text);
+  font-weight:600;font-size:.88rem;
+  text-decoration:none;
+  transition:all .2s;
+}
+.f-link:hover{
+  border-color:var(--accent);color:var(--accent);
+  transform:translateY(-1px);
+}
+.f-link span{font-size:.72rem;color:var(--text-muted);font-weight:400;display:block;margin-top:.15rem}
+.f-link:hover span{color:var(--accent)}
+.f-contact-btn{
+  background:var(--accent);color:#fff;border:none;
+  padding:.7rem 1.4rem;border-radius:.5rem;
+  font-weight:600;font-size:.9rem;cursor:pointer;
+  font-family:'Crimson Pro', sans-serif;
+  transition:all .2s;
+}
+.f-contact-btn:hover{background:var(--accent-strong);transform:translateY(-1px)}
+.f-tagline{
+  margin-top:1.4rem;font-size:.75rem;color:var(--text-muted);font-style:italic;
+}
+
+/* ============ CONTACT DIALOG ============ */
+.dialog-overlay{
+  display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,.6);z-index:200;
+  align-items:center;justify-content:center;padding:1rem;
+}
+.dialog-overlay.open{display:flex}
+.dialog-box{
+  background:var(--bg-card);
+  border-radius:1rem;padding:1.75rem 1.5rem;
+  max-width:320px;width:100%;text-align:center;
+  box-shadow:0 12px 36px rgba(0,0,0,.3);
+}
+.dialog-box h4{
+  font-family:'Playfair Display', serif;
+  color:var(--text-heading);
+  margin-bottom:.3rem;font-size:1.2rem;
+}
+.dialog-box p{
+  color:var(--text-muted);font-size:.85rem;
+  margin-bottom:1.2rem;
+}
+.dialog-option{
+  display:block;width:100%;padding:.7rem;margin-bottom:.55rem;
+  border-radius:.5rem;text-decoration:none;
+  font-weight:600;font-size:.9rem;text-align:center;
+  font-family:'Crimson Pro', sans-serif;
+}
+.dialog-telegram{background:#0088cc;color:#fff}
+.dialog-telegram:hover{background:#0077b5}
+.dialog-close{
+  background:none;border:1px solid var(--border);color:var(--text-muted);cursor:pointer;
+  font-size:.82rem;padding:.45rem 1.2rem;border-radius:.4rem;margin-top:.4rem;
+  font-family:'Crimson Pro', sans-serif;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (min-width:640px){
+  section{padding:2.5rem 2rem}
+  .hero-content{padding:1.5rem 2rem 2.5rem}
+  body{font-size:18px}
+  .hero{min-height:72svh}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ LANG BAR ============ -->
+<div class="lang-bar">
+  <button class="lang-btn" onclick="setLang('en')">EN</button>
+  <button class="lang-btn active" onclick="setLang('es')">ES</button>
+  <button class="lang-btn" onclick="setLang('de')">DE</button>
+</div>
+
+<!-- ============ THEME TOGGLE ============ -->
+<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <span class="theme-icon" id="themeIcon">☀️</span>
+</button>
+
+<!-- ============ HERO ============ -->
+<section class="hero" style="padding:0;max-width:none">
+  <img src="hero.png" class="hero-img" alt="Concept mockup of Feed Me Again solidarity fridge in an Andalusian village">
+  <div class="hero-overlay"></div>
+
+  <div class="hero-mockup-label">
+    <span data-lang="en">AI-generated concept mockup</span>
+    <span data-lang="es" class="v">Mockup conceptual · IA</span>
+    <span data-lang="de">KI-Konzept-Mockup</span>
+  </div>
+
+  <div class="hero-content">
+    <span class="hero-eyebrow" data-lang="en">A new project · proposal</span>
+    <span class="hero-eyebrow v" data-lang="es">Nuevo proyecto · propuesta</span>
+    <span class="hero-eyebrow" data-lang="de">Neues Projekt · Vorschlag</span>
+
+    <h1>Feed Me Again</h1>
+
+    <p class="hero-sub" data-lang="en">A solidarity fridge by Love Me Again.<br>24/7. No questions asked.</p>
+    <p class="hero-sub v" data-lang="es">Una nevera solidaria por Love Me Again.<br>24/7. Sin preguntas.</p>
+    <p class="hero-sub" data-lang="de">Ein Solidaritäts-Kühlschrank von Love Me Again.<br>24/7. Ohne Fragen.</p>
+  </div>
+
+  <div class="hero-scroll">↓</div>
+</section>
+
+<!-- ============ THE ASK ============ -->
+<section class="ask">
+  <div class="ask-card">
+    <span class="ask-label" data-lang="en">What we ask</span>
+    <span class="ask-label v" data-lang="es">Lo que pedimos</span>
+    <span class="ask-label" data-lang="de">Was wir bitten</span>
+
+    <h2 data-lang="en">From you, at the next meeting</h2>
+    <h2 data-lang="es">De ti, en la próxima reunión</h2>
+    <h2 data-lang="de">Von dir, beim nächsten Treffen</h2>
+
+    <p class="ask-when" data-lang="en"><strong>Tuesday · 14:00 – 16:00</strong> · Love Me Again shop</p>
+    <p class="ask-when" data-lang="es"><strong>Martes · 14:00 – 16:00</strong> · Tienda Love Me Again</p>
+    <p class="ask-when" data-lang="de"><strong>Dienstag · 14:00 – 16:00</strong> · Love Me Again Laden</p>
+
+    <ul class="ask-items">
+      <li data-lang="en">A <strong>yes / no</strong> in principle</li>
+      <li data-lang="es">Un <strong>sí / no</strong> en principio</li>
+      <li data-lang="de">Ein <strong>Ja / Nein</strong> im Prinzip</li>
+      <li data-lang="en"><strong>2 – 3 people</strong> to join the working group</li>
+      <li data-lang="es"><strong>2 – 3 personas</strong> para el grupo de trabajo</li>
+      <li data-lang="de"><strong>2 – 3 Personen</strong> für die Arbeitsgruppe</li>
+    </ul>
+
+    <p class="ask-foot" data-lang="en">Everything below is optional reading. Tap any drop for the detail.</p>
+    <p class="ask-foot" data-lang="es">Todo lo demás es lectura opcional. Toca cualquier desplegable para más detalle.</p>
+    <p class="ask-foot" data-lang="de">Alles weitere ist optional. Tippe auf einen Punkt für Details.</p>
+  </div>
+</section>
+
+<!-- ============ DROPS ============ -->
+<section class="drops-section">
+  <h2 data-lang="en">The detail, if you want it</h2>
+  <h2 data-lang="es">El detalle, si lo quieres</h2>
+  <h2 data-lang="de">Die Details, wenn du sie willst</h2>
+
+  <p class="drops-intro" data-lang="en">Seven topics. Tap to expand. Skip whatever doesn't interest you.</p>
+  <p class="drops-intro" data-lang="es">Siete temas. Toca para expandir. Salta los que no te interesen.</p>
+  <p class="drops-intro" data-lang="de">Sieben Themen. Tippen zum Öffnen. Was nicht interessiert, überspringen.</p>
+
+  <div class="drop-list">
+
+    <!-- DROP 1 — Concept & Ethic -->
+    <div class="drop-item">
+      <div class="drop-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="drop-num">01</span>
+        <span class="drop-title" data-lang="en">The Concept &amp; Ethic</span>
+        <span class="drop-title" data-lang="es">El concepto y la ética</span>
+        <span class="drop-title" data-lang="de">Konzept &amp; Ethik</span>
+        <span class="drop-arrow">▼</span>
+      </div>
+      <div class="drop-body">
+        <div data-lang="en">
+          <p>The shop gives objects a second life. The fridge does the same for food.</p>
+          <p>A transparent commercial cooler placed in the village center, open <strong>24/7</strong>. Anyone can leave food they won't use. Anyone can take what they need.</p>
+          <p><strong>No questions. No register. No judgment.</strong></p>
+          <p>The model is proven — Galdakao 2015, then hundreds of solidarity fridges across Spain and beyond. We're not inventing something risky; we're joining a wave.</p>
+        </div>
+        <div data-lang="es">
+          <p>La tienda da una segunda vida a los objetos. La nevera hace lo mismo con la comida.</p>
+          <p>Una nevera comercial transparente colocada en el centro del pueblo, abierta <strong>24/7</strong>. Cualquiera puede dejar comida que no vaya a usar. Cualquiera puede coger lo que necesita.</p>
+          <p><strong>Sin preguntas. Sin registro. Sin juicio.</strong></p>
+          <p>El modelo está probado — Galdakao 2015, luego cientos de neveras solidarias por toda España y más allá. No inventamos nada arriesgado; nos sumamos a una ola.</p>
+        </div>
+        <div data-lang="de">
+          <p>Der Laden gibt Gegenständen ein zweites Leben. Der Kühlschrank macht dasselbe für Lebensmittel.</p>
+          <p>Ein transparenter Gewerbekühlschrank im Dorfzentrum, <strong>24/7</strong> geöffnet. Jeder kann Lebensmittel hinterlassen, die er nicht verwenden wird. Jeder kann nehmen, was er braucht.</p>
+          <p><strong>Keine Fragen. Keine Registrierung. Kein Urteil.</strong></p>
+          <p>Das Modell ist bewährt — Galdakao 2015, danach hunderte Solidaritäts-Kühlschränke in Spanien und darüber hinaus. Wir erfinden nichts Riskantes; wir schließen uns einer Welle an.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DROP 2 — How It Works -->
+    <div class="drop-item">
+      <div class="drop-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="drop-num">02</span>
+        <span class="drop-title" data-lang="en">How It Works</span>
+        <span class="drop-title" data-lang="es">Cómo funciona</span>
+        <span class="drop-title" data-lang="de">So funktioniert es</span>
+        <span class="drop-arrow">▼</span>
+      </div>
+      <div class="drop-body">
+        <div data-lang="en">
+          <p><strong>Location.</strong> A bar, <em>panadería</em>, or parish portico in the village center adopts the fridge under their awning — the <em>hostelero padrino</em> model. Civilian property, not public street: much simpler legally, weather-protected, naturally supervised, plugged into their power.</p>
+          <p><strong>Hours.</strong> Open 24/7. Night access matters — for dignity. People who'd feel ashamed during the day can come at 11pm.</p>
+          <p><strong>Rules</strong> posted on the fridge, multilingual: no raw meat or fish · expiry date visible · no unlabeled homemade · take only what you need.</p>
+          <p><strong>Operations.</strong> A volunteer rota checks the fridge daily (5 min: temperature + expiry sweep) and does a weekly deep clean.</p>
+          <p><strong>Donations.</strong> QR code linking to Bizum / PayPal / Stripe, plus a bolted coin box for cash. All donations channeled through Love Me Again.</p>
+        </div>
+        <div data-lang="es">
+          <p><strong>Ubicación.</strong> Un bar, <em>panadería</em> o pórtico parroquial en el centro del pueblo adopta la nevera bajo su toldo — el modelo del <em>hostelero padrino</em>. Propiedad civil, no vía pública: mucho más sencillo legalmente, protegida del clima, supervisada de forma natural, enchufada a su corriente.</p>
+          <p><strong>Horario.</strong> Abierta 24/7. El acceso nocturno importa — por dignidad. Quien sentiría vergüenza de día puede venir a las 23h.</p>
+          <p><strong>Reglas</strong> publicadas en la nevera, multilingües: nada de carne o pescado crudo · fecha de caducidad visible · nada casero sin etiquetar · coge solo lo que necesitas.</p>
+          <p><strong>Operaciones.</strong> Una rotación de voluntarios revisa la nevera a diario (5 min: temperatura + barrido de caducidades) y hace limpieza profunda semanal.</p>
+          <p><strong>Donaciones.</strong> Código QR a Bizum / PayPal / Stripe, más una caja de monedas atornillada. Todas las donaciones se canalizan vía Love Me Again.</p>
+        </div>
+        <div data-lang="de">
+          <p><strong>Standort.</strong> Eine Bar, <em>panadería</em> oder Pfarr-Vorhalle im Dorfzentrum nimmt den Kühlschrank unter ihre Markise — das <em>hostelero padrino</em>-Modell. Privatgrund, kein öffentlicher Raum: rechtlich viel einfacher, wettergeschützt, natürlich beaufsichtigt, an ihren Strom angeschlossen.</p>
+          <p><strong>Öffnungszeiten.</strong> 24/7 geöffnet. Nachtzugang ist wichtig — für die Würde. Wer sich tagsüber schämen würde, kann um 23 Uhr kommen.</p>
+          <p><strong>Regeln</strong> am Kühlschrank, mehrsprachig: kein rohes Fleisch oder Fisch · Verfallsdatum sichtbar · nichts Hausgemachtes ohne Etikett · nimm nur, was du brauchst.</p>
+          <p><strong>Betrieb.</strong> Eine Freiwilligen-Rotation prüft den Kühlschrank täglich (5 Min: Temperatur + Verfalls-Check) und führt wöchentliche Tiefenreinigung durch.</p>
+          <p><strong>Spenden.</strong> QR-Code zu Bizum / PayPal / Stripe, plus ein verschraubter Münzbehälter für Bargeld. Alle Spenden laufen über Love Me Again.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DROP 3 — Phases & Timeline -->
+    <div class="drop-item">
+      <div class="drop-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="drop-num">03</span>
+        <span class="drop-title" data-lang="en">Phases &amp; Timeline</span>
+        <span class="drop-title" data-lang="es">Fases y calendario</span>
+        <span class="drop-title" data-lang="de">Phasen &amp; Zeitplan</span>
+        <span class="drop-arrow">▼</span>
+      </div>
+      <div class="drop-body">
+        <p class="phase-summary" data-lang="en">~2–3 months from "yes" to soft launch.</p>
+        <p class="phase-summary" data-lang="es">~2–3 meses desde el "sí" al lanzamiento suave.</p>
+        <p class="phase-summary" data-lang="de">~2–3 Monate vom "Ja" bis zum sanften Start.</p>
+
+        <!-- Phase 1 -->
+        <div class="phase">
+          <div class="phase-n">1</div>
+          <div class="phase-body">
+            <div class="phase-title" data-lang="en">Internal yes</div>
+            <div class="phase-title" data-lang="es">Sí interno</div>
+            <div class="phase-title" data-lang="de">Internes Ja</div>
+            <div class="phase-meta" data-lang="en">1–2 weeks · €0</div>
+            <div class="phase-meta" data-lang="es">1–2 semanas · €0</div>
+            <div class="phase-meta" data-lang="de">1–2 Wochen · €0</div>
+            <div class="phase-desc" data-lang="en">LMA volunteer vote · form a 2–3 person working group · confirm asociación statutes cover food redistribution.</div>
+            <div class="phase-desc" data-lang="es">Voto de voluntarios LMA · formar grupo de trabajo de 2–3 personas · confirmar que los estatutos de la asociación cubren la redistribución de alimentos.</div>
+            <div class="phase-desc" data-lang="de">LMA-Freiwilligen-Abstimmung · 2–3 Personen-Arbeitsgruppe bilden · prüfen, ob die Satzung der Asociación Lebensmittelverteilung abdeckt.</div>
+          </div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="phase">
+          <div class="phase-n">2</div>
+          <div class="phase-body">
+            <div class="phase-title" data-lang="en">Scouting &amp; allies</div>
+            <div class="phase-title" data-lang="es">Búsqueda y aliados</div>
+            <div class="phase-title" data-lang="de">Erkundung &amp; Verbündete</div>
+            <div class="phase-meta" data-lang="en">2–4 weeks · €0</div>
+            <div class="phase-meta" data-lang="es">2–4 semanas · €0</div>
+            <div class="phase-meta" data-lang="de">2–4 Wochen · €0</div>
+            <div class="phase-desc" data-lang="en">Coffee with the ayuntamiento's ADL · call Banco de Alimentos de Granada · walk the village to identify 2–3 candidate <em>padrino</em> sites · sound them out.</div>
+            <div class="phase-desc" data-lang="es">Café con el ADL del ayuntamiento · llamar al Banco de Alimentos de Granada · caminar por el pueblo para identificar 2–3 candidatos a <em>padrino</em> · tantearles.</div>
+            <div class="phase-desc" data-lang="de">Kaffee mit dem ADL des Rathauses · Banco de Alimentos de Granada anrufen · durchs Dorf gehen, um 2–3 mögliche <em>padrino</em>-Standorte zu finden · sie ansprechen.</div>
+          </div>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="phase">
+          <div class="phase-n">3</div>
+          <div class="phase-body">
+            <div class="phase-title" data-lang="en">Paperwork</div>
+            <div class="phase-title" data-lang="es">Papeleo</div>
+            <div class="phase-title" data-lang="de">Papierkram</div>
+            <div class="phase-meta" data-lang="en">2–4 weeks · €100–300</div>
+            <div class="phase-meta" data-lang="es">2–4 semanas · €100–300</div>
+            <div class="phase-meta" data-lang="de">2–4 Wochen · €100–300</div>
+            <div class="phase-desc" data-lang="en">Gestoría files any statute amendment · one-page MoU with the <em>padrino</em> on paper · civil liability insurance check · draft posted rulebook.</div>
+            <div class="phase-desc" data-lang="es">Gestoría tramita modificación de estatutos si aplica · acuerdo de una página con el <em>padrino</em> por escrito · revisar seguro de responsabilidad civil · redactar reglamento publicado.</div>
+            <div class="phase-desc" data-lang="de">Gestoría reicht ggf. Satzungsänderung ein · einseitiges MoU mit dem <em>padrino</em> auf Papier · Haftpflichtversicherung prüfen · Regelwerk verfassen.</div>
+          </div>
+        </div>
+
+        <!-- Phase 4 -->
+        <div class="phase">
+          <div class="phase-n">4</div>
+          <div class="phase-body">
+            <div class="phase-title" data-lang="en">Hardware &amp; identity</div>
+            <div class="phase-title" data-lang="es">Hardware e identidad</div>
+            <div class="phase-title" data-lang="de">Hardware &amp; Identität</div>
+            <div class="phase-meta" data-lang="en">2–3 weeks · €300–500</div>
+            <div class="phase-meta" data-lang="es">2–3 semanas · €300–500</div>
+            <div class="phase-meta" data-lang="de">2–3 Wochen · €300–500</div>
+            <div class="phase-desc" data-lang="en">Source used <em>expositor refrigerado</em> on Wallapop / Milanuncios · print durable side panels and multilingual signage · QR codes for donations · bolt on coin box.</div>
+            <div class="phase-desc" data-lang="es">Comprar <em>expositor refrigerado</em> de segunda mano en Wallapop / Milanuncios · imprimir paneles laterales duraderos y señalización multilingüe · códigos QR para donaciones · atornillar caja de monedas.</div>
+            <div class="phase-desc" data-lang="de">Gebrauchten <em>expositor refrigerado</em> auf Wallapop / Milanuncios besorgen · langlebige Seitenpaneele und mehrsprachige Beschilderung drucken · QR-Codes für Spenden · Münzbehälter befestigen.</div>
+          </div>
+        </div>
+
+        <!-- Phase 5 -->
+        <div class="phase">
+          <div class="phase-n">5</div>
+          <div class="phase-body">
+            <div class="phase-title" data-lang="en">Soft launch</div>
+            <div class="phase-title" data-lang="es">Lanzamiento suave</div>
+            <div class="phase-title" data-lang="de">Sanfter Start</div>
+            <div class="phase-meta" data-lang="en">1 week · €0</div>
+            <div class="phase-meta" data-lang="es">1 semana · €0</div>
+            <div class="phase-meta" data-lang="de">1 Woche · €0</div>
+            <div class="phase-desc" data-lang="en">Install · initial stock from volunteer donations · quiet announcement on the volunteer WhatsApp · tight monitoring for 2 weeks. No press yet.</div>
+            <div class="phase-desc" data-lang="es">Instalar · stock inicial de donaciones de voluntarios · anuncio discreto en el WhatsApp de voluntarios · seguimiento estrecho 2 semanas. Sin prensa aún.</div>
+            <div class="phase-desc" data-lang="de">Installieren · Anfangsbestand aus Freiwilligen-Spenden · leise Ankündigung im Freiwilligen-WhatsApp · 2 Wochen lang enge Beobachtung. Noch keine Presse.</div>
+          </div>
+        </div>
+
+        <!-- Phase 6 -->
+        <div class="phase">
+          <div class="phase-n">6</div>
+          <div class="phase-body">
+            <div class="phase-title" data-lang="en">Operational rhythm</div>
+            <div class="phase-title" data-lang="es">Ritmo operativo</div>
+            <div class="phase-title" data-lang="de">Laufender Betrieb</div>
+            <div class="phase-meta" data-lang="en">Ongoing · €0</div>
+            <div class="phase-meta" data-lang="es">Continuo · €0</div>
+            <div class="phase-meta" data-lang="de">Fortlaufend · €0</div>
+            <div class="phase-desc" data-lang="en">Daily-check rota · status page in the LMA app · monthly retro for the first 6 months · public launch and wider Telegram outreach once steady.</div>
+            <div class="phase-desc" data-lang="es">Rotación de revisión diaria · página de estado en la app LMA · retrospectiva mensual los primeros 6 meses · lanzamiento público y difusión amplia en Telegram cuando esté estable.</div>
+            <div class="phase-desc" data-lang="de">Tägliche Prüf-Rotation · Status-Seite in der LMA-App · monatliche Rückschau in den ersten 6 Monaten · öffentlicher Start und breitere Telegram-Verbreitung, sobald stabil.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DROP 4 — Budget -->
+    <div class="drop-item">
+      <div class="drop-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="drop-num">04</span>
+        <span class="drop-title" data-lang="en">Budget &amp; Funding</span>
+        <span class="drop-title" data-lang="es">Presupuesto y financiación</span>
+        <span class="drop-title" data-lang="de">Budget &amp; Finanzierung</span>
+        <span class="drop-arrow">▼</span>
+      </div>
+      <div class="drop-body">
+        <!-- Upfront -->
+        <div class="budget-grp">
+          <div class="budget-label">
+            <span data-lang="en">Upfront cost</span>
+            <span data-lang="es">Coste inicial</span>
+            <span data-lang="de">Anschaffung</span>
+            <span class="budget-amount">€300 – €700</span>
+          </div>
+          <ul class="budget-items">
+            <li data-lang="en">Used vertical <em>expositor refrigerado</em> (Wallapop / Milanuncios): €150 – €400</li>
+            <li data-lang="es">Expositor refrigerado vertical de segunda mano (Wallapop / Milanuncios): €150 – €400</li>
+            <li data-lang="de">Gebrauchter vertikaler <em>expositor refrigerado</em> (Wallapop / Milanuncios): €150 – €400</li>
+            <li data-lang="en">Side panel printing &amp; multilingual signage: €80 – €150</li>
+            <li data-lang="es">Impresión de paneles laterales y señalización multilingüe: €80 – €150</li>
+            <li data-lang="de">Druck der Seitenpaneele &amp; mehrsprachige Beschilderung: €80 – €150</li>
+            <li data-lang="en">Bolted weatherproof coin box: €30 – €60</li>
+            <li data-lang="es">Caja de monedas atornillada e impermeable: €30 – €60</li>
+            <li data-lang="de">Verschraubter wetterfester Münzbehälter: €30 – €60</li>
+            <li data-lang="en">Misc (cables, padlock, brackets): €40 – €90</li>
+            <li data-lang="es">Varios (cables, candado, anclajes): €40 – €90</li>
+            <li data-lang="de">Sonstiges (Kabel, Schloss, Halterungen): €40 – €90</li>
+          </ul>
+        </div>
+
+        <!-- Ongoing -->
+        <div class="budget-grp">
+          <div class="budget-label">
+            <span data-lang="en">Ongoing per year</span>
+            <span data-lang="es">Coste anual continuo</span>
+            <span data-lang="de">Laufend pro Jahr</span>
+            <span class="budget-amount">~€100</span>
+          </div>
+          <ul class="budget-items">
+            <li data-lang="en">Electricity: typically absorbed by the <em>padrino</em> host</li>
+            <li data-lang="es">Electricidad: normalmente asumida por el <em>padrino</em> anfitrión</li>
+            <li data-lang="de">Strom: normalerweise vom <em>padrino</em>-Gastgeber übernommen</li>
+            <li data-lang="en">Civil liability insurance bump: €30 – €80 / year</li>
+            <li data-lang="es">Ampliación del seguro de responsabilidad civil: €30 – €80 / año</li>
+            <li data-lang="de">Aufstockung Haftpflichtversicherung: €30 – €80 / Jahr</li>
+            <li data-lang="en">Replacement printed panels / wear: ~€30 / year</li>
+            <li data-lang="es">Reposición de paneles impresos / desgaste: ~€30 / año</li>
+            <li data-lang="de">Ersatz Druckpaneele / Verschleiß: ~€30 / Jahr</li>
+          </ul>
+        </div>
+
+        <!-- Funding -->
+        <div class="budget-grp">
+          <div class="budget-label">
+            <span data-lang="en">Funding options</span>
+            <span data-lang="es">Opciones de financiación</span>
+            <span data-lang="de">Finanzierungsoptionen</span>
+          </div>
+          <ul class="budget-items">
+            <li data-lang="en">LMA budget allocation · dedicated mini-fundraiser · hardware-fund tier in the commitment ladder · donations through the QR / coin box.</li>
+            <li data-lang="es">Asignación del presupuesto LMA · mini-campaña dedicada · tramo de fondo hardware en la escala de compromiso · donaciones por QR / caja de monedas.</li>
+            <li data-lang="de">LMA-Budgetzuweisung · gezielte Mini-Spendenaktion · Hardware-Fonds-Stufe in der Beitragsleiter · Spenden über QR / Münzbehälter.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- DROP 5 — Legal -->
+    <div class="drop-item">
+      <div class="drop-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="drop-num">05</span>
+        <span class="drop-title" data-lang="en">Legal &amp; Approvals</span>
+        <span class="drop-title" data-lang="es">Legal y aprobaciones</span>
+        <span class="drop-title" data-lang="de">Recht &amp; Genehmigungen</span>
+        <span class="drop-arrow">▼</span>
+      </div>
+      <div class="drop-body">
+        <div data-lang="en">
+          <p><strong>Sub-brand of LMA asociación</strong> — not a new entity. May need a small statute amendment to add food redistribution as an activity (~€80–150 at a gestoría).</p>
+          <p><strong>First stop: ADL at the ayuntamiento.</strong> The <em>agente de desarrollo local</em> exists to help asociaciones with permits — for free. They'll tell us exactly what the village requires.</p>
+          <p><strong>MoU with the chosen <em>padrino</em></strong> on paper, not just a handshake. Covers: who provides power, who has keys, what happens if they close or sell.</p>
+          <p><strong>Civil liability insurance.</strong> Check whether LMA's current policy covers food redistribution. Extend if not.</p>
+          <p><strong>Banco de Alimentos de Granada</strong> has run food redistribution for years and has the legal / sanitary template solved. A friendly call costs nothing.</p>
+          <p><strong>Posted rulebook</strong> at the fridge (multilingual): no raw meat or fish, expiry visible, no unlabeled homemade. Aligns us with EU food hygiene practice.</p>
+        </div>
+        <div data-lang="es">
+          <p><strong>Sub-marca de la asociación LMA</strong> — no una entidad nueva. Puede requerir una pequeña modificación de estatutos para añadir la redistribución de alimentos como actividad (~€80–150 en una gestoría).</p>
+          <p><strong>Primera parada: el ADL del ayuntamiento.</strong> El <em>agente de desarrollo local</em> existe para ayudar a asociaciones con permisos — gratis. Nos dirá exactamente qué requiere el pueblo.</p>
+          <p><strong>Acuerdo (MoU) con el <em>padrino</em></strong> elegido, por escrito, no solo de palabra. Cubre: quién pone la luz, quién tiene las llaves, qué pasa si cierra o vende.</p>
+          <p><strong>Seguro de responsabilidad civil.</strong> Comprobar si la póliza actual de LMA cubre redistribución de alimentos. Ampliar si no.</p>
+          <p><strong>Banco de Alimentos de Granada</strong> lleva años haciendo redistribución y tiene resuelto el patrón legal / sanitario. Una llamada amistosa no cuesta nada.</p>
+          <p><strong>Reglamento publicado</strong> en la nevera (multilingüe): nada de carne o pescado crudo, caducidad visible, nada casero sin etiquetar. Nos alinea con la práctica europea de higiene alimentaria.</p>
+        </div>
+        <div data-lang="de">
+          <p><strong>Untermarke der LMA-Asociación</strong> — keine neue Rechtsform. Eventuell ist eine kleine Satzungsänderung nötig, um Lebensmittelverteilung als Aktivität aufzunehmen (~€80–150 bei einer Gestoría).</p>
+          <p><strong>Erste Anlaufstelle: ADL beim Rathaus.</strong> Der <em>agente de desarrollo local</em> hilft Asociaciones bei Genehmigungen — kostenlos. Er sagt uns genau, was das Dorf verlangt.</p>
+          <p><strong>MoU mit dem gewählten <em>padrino</em></strong> auf Papier, nicht nur per Handschlag. Regelt: wer den Strom stellt, wer die Schlüssel hat, was passiert, wenn er schließt oder verkauft.</p>
+          <p><strong>Haftpflichtversicherung.</strong> Prüfen, ob die aktuelle LMA-Police Lebensmittelverteilung abdeckt. Falls nicht, erweitern.</p>
+          <p><strong>Banco de Alimentos de Granada</strong> betreibt seit Jahren Lebensmittelverteilung und hat die rechtlich-sanitäre Vorlage gelöst. Ein freundlicher Anruf kostet nichts.</p>
+          <p><strong>Aushängendes Regelwerk</strong> am Kühlschrank (mehrsprachig): kein rohes Fleisch oder Fisch, Verfallsdatum sichtbar, nichts Hausgemachtes ohne Etikett. Im Einklang mit der EU-Lebensmittelhygiene.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DROP 6 — LMA Benefit -->
+    <div class="drop-item">
+      <div class="drop-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="drop-num">06</span>
+        <span class="drop-title" data-lang="en">Why this strengthens the shop</span>
+        <span class="drop-title" data-lang="es">Por qué fortalece la tienda</span>
+        <span class="drop-title" data-lang="de">Warum das den Laden stärkt</span>
+        <span class="drop-arrow">▼</span>
+      </div>
+      <div class="drop-body">
+        <div data-lang="en">
+          <p>This isn't competition for Love Me Again — it's an extension.</p>
+          <p><strong>Free advertising.</strong> The fridge sits at the busiest spot in the village, with two large side panels carrying LMA branding 24/7. That's prime visibility no money can buy.</p>
+          <p><strong>Brand extension into food.</strong> Same trust signal — second chances — applied to a new domain. The solidarity ethos becomes more visible, more present in daily life.</p>
+          <p><strong>Cross-traffic.</strong> People who use the fridge become curious about the shop. Shop visitors notice the fridge. Each amplifies the other.</p>
+          <p><strong>A bigger story.</strong> "Love Me Again gives second chances — to objects, and now to food." A stronger pitch to new volunteers, new donors, new partners than the shop alone.</p>
+        </div>
+        <div data-lang="es">
+          <p>Esto no es competencia para Love Me Again — es una extensión.</p>
+          <p><strong>Publicidad gratuita.</strong> La nevera se coloca en el punto más transitado del pueblo, con dos grandes paneles laterales que llevan la marca LMA 24/7. Visibilidad de primera que ningún dinero puede comprar.</p>
+          <p><strong>Extensión de marca al ámbito de la comida.</strong> El mismo mensaje de confianza — segundas oportunidades — aplicado a un dominio nuevo. La ética solidaria se hace más visible, más presente en la vida diaria.</p>
+          <p><strong>Tráfico cruzado.</strong> Quien usa la nevera se interesa por la tienda. Quien visita la tienda repara en la nevera. Cada una amplifica a la otra.</p>
+          <p><strong>Una historia más grande.</strong> "Love Me Again da segundas oportunidades — a los objetos, y ahora a la comida." Un argumento más fuerte para captar voluntarios, donantes y socios que la tienda sola.</p>
+        </div>
+        <div data-lang="de">
+          <p>Das ist keine Konkurrenz für Love Me Again — es ist eine Erweiterung.</p>
+          <p><strong>Kostenlose Werbung.</strong> Der Kühlschrank steht an der meistfrequentierten Stelle im Dorf, mit zwei großen Seitenpaneelen, die 24/7 die LMA-Marke tragen. Beste Sichtbarkeit, die kein Geld kaufen kann.</p>
+          <p><strong>Markenerweiterung in den Lebensmittelbereich.</strong> Dasselbe Vertrauenssignal — zweite Chancen — auf eine neue Domäne. Die solidarische Haltung wird sichtbarer, präsenter im Alltag.</p>
+          <p><strong>Kreuzbesuche.</strong> Wer den Kühlschrank nutzt, wird neugierig auf den Laden. Wer den Laden besucht, bemerkt den Kühlschrank. Beide verstärken einander.</p>
+          <p><strong>Eine größere Geschichte.</strong> "Love Me Again gibt zweite Chancen — Gegenständen und jetzt auch Lebensmitteln." Ein stärkeres Argument für neue Freiwillige, Spender und Partner als der Laden allein.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DROP 7 — How to Help -->
+    <div class="drop-item">
+      <div class="drop-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="drop-num">07</span>
+        <span class="drop-title" data-lang="en">How you can help</span>
+        <span class="drop-title" data-lang="es">Cómo puedes ayudar</span>
+        <span class="drop-title" data-lang="de">Wie du helfen kannst</span>
+        <span class="drop-arrow">▼</span>
+      </div>
+      <div class="drop-body">
+        <div data-lang="en">
+          <p>Pick whatever level fits your time and energy. Every level matters.</p>
+          <ul class="ladder">
+            <li><strong>Vote yes at Tuesday's meeting</strong>30 seconds. The decision in principle.</li>
+            <li><strong>Join the working group</strong>2–3 people needed. Light commitment, real decision-making role.</li>
+            <li><strong>Suggest a <em>padrino</em></strong>Know a bar, panadería, or shop that might host?</li>
+            <li><strong>Help with the legal step</strong>Contacts at the asociación, gestoría, or ayuntamiento?</li>
+            <li><strong>Contribute to the hardware fund</strong>€5 to €500 — any amount lights up the next step.</li>
+            <li><strong>Take a weekly check shift</strong>Post-launch. 5 minutes, once a week.</li>
+          </ul>
+          <p class="ladder-note">To commit at any level — DM <a class="tg-link" href="https://t.me/JuanittoCalvares" target="_blank" rel="noopener">@JuanittoCalvares</a> on Telegram, or bring it up at Tuesday's meeting.</p>
+        </div>
+        <div data-lang="es">
+          <p>Elige el nivel que encaje con tu tiempo y energía. Todos los niveles importan.</p>
+          <ul class="ladder">
+            <li><strong>Votar sí en la reunión del martes</strong>30 segundos. La decisión en principio.</li>
+            <li><strong>Unirte al grupo de trabajo</strong>2–3 personas necesarias. Compromiso ligero, rol real en las decisiones.</li>
+            <li><strong>Sugerir un <em>padrino</em></strong>¿Conoces un bar, panadería o tienda que pueda alojar la nevera?</li>
+            <li><strong>Ayudar con el paso legal</strong>¿Contactos en la asociación, gestoría o ayuntamiento?</li>
+            <li><strong>Contribuir al fondo de hardware</strong>De €5 a €500 — cualquier cantidad ilumina el siguiente paso.</li>
+            <li><strong>Tomar un turno de revisión semanal</strong>Post-lanzamiento. 5 minutos, una vez por semana.</li>
+          </ul>
+          <p class="ladder-note">Para comprometerte a cualquier nivel — DM a <a class="tg-link" href="https://t.me/JuanittoCalvares" target="_blank" rel="noopener">@JuanittoCalvares</a> en Telegram, o tráelo en la reunión del martes.</p>
+        </div>
+        <div data-lang="de">
+          <p>Wähle das Niveau, das zu deiner Zeit und Energie passt. Jedes Niveau zählt.</p>
+          <ul class="ladder">
+            <li><strong>Ja stimmen beim Dienstags-Treffen</strong>30 Sekunden. Die grundsätzliche Entscheidung.</li>
+            <li><strong>In die Arbeitsgruppe</strong>2–3 Personen gesucht. Leichtes Engagement, echte Entscheidungsrolle.</li>
+            <li><strong>Einen <em>padrino</em> vorschlagen</strong>Kennst du eine Bar, Bäckerei oder einen Laden als Gastgeber?</li>
+            <li><strong>Beim rechtlichen Schritt helfen</strong>Kontakte zu Asociación, Gestoría oder Rathaus?</li>
+            <li><strong>In den Hardware-Fonds einzahlen</strong>€5 bis €500 — jeder Betrag bringt den nächsten Schritt näher.</li>
+            <li><strong>Eine wöchentliche Prüf-Schicht übernehmen</strong>Nach dem Start. 5 Minuten, einmal pro Woche.</li>
+          </ul>
+          <p class="ladder-note">Um dich auf einem beliebigen Niveau zu engagieren — DM an <a class="tg-link" href="https://t.me/JuanittoCalvares" target="_blank" rel="noopener">@JuanittoCalvares</a> auf Telegram, oder beim Dienstags-Treffen ansprechen.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <span class="f-status" data-lang="en">v0 · Proposal stage</span>
+  <span class="f-status" data-lang="es">v0 · Fase de propuesta</span>
+  <span class="f-status" data-lang="de">v0 · Vorschlagsphase</span>
+
+  <p class="f-meeting" data-lang="en"><strong>Next meeting</strong><br>Tuesday · 14:00 – 16:00 · Love Me Again shop</p>
+  <p class="f-meeting" data-lang="es"><strong>Próxima reunión</strong><br>Martes · 14:00 – 16:00 · Tienda Love Me Again</p>
+  <p class="f-meeting" data-lang="de"><strong>Nächstes Treffen</strong><br>Dienstag · 14:00 – 16:00 · Love Me Again Laden</p>
+
+  <div class="f-links">
+    <a class="f-link" href="https://love-me-again.vercel.app" target="_blank" rel="noopener">
+      <span data-lang="en">↗ Love Me Again</span>
+      <span data-lang="es">↗ Love Me Again</span>
+      <span data-lang="de">↗ Love Me Again</span>
+      <span data-lang="en">The solidarity shop (rastro)</span>
+      <span data-lang="es">La tienda solidaria (rastro)</span>
+      <span data-lang="de">Der Solidaritätsladen (rastro)</span>
+    </a>
+    <a class="f-link" href="https://vowful-cosmos-d7z3.here.now/" target="_blank" rel="noopener">
+      <span data-lang="en">↗ Test our app</span>
+      <span data-lang="es">↗ Prueba nuestra app</span>
+      <span data-lang="de">↗ App testen</span>
+      <span data-lang="en">Prototype tester guide</span>
+      <span data-lang="es">Guía para probadores del prototipo</span>
+      <span data-lang="de">Anleitung für Prototyp-Tester</span>
+    </a>
+  </div>
+
+  <button class="f-contact-btn" onclick="document.getElementById('cd').classList.add('open')">
+    <span data-lang="en">Get in touch</span>
+    <span data-lang="es">Contacta</span>
+    <span data-lang="de">Kontakt</span>
+  </button>
+
+  <p class="f-tagline" data-lang="en">Built in collaboration with Claude · digitalAIventures</p>
+  <p class="f-tagline" data-lang="es">Hecho en colaboración con Claude · digitalAIventures</p>
+  <p class="f-tagline" data-lang="de">In Zusammenarbeit mit Claude erstellt · digitalAIventures</p>
+</footer>
+
+<!-- ============ CONTACT DIALOG ============ -->
+<div class="dialog-overlay" id="cd" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="dialog-box">
+    <h4 data-lang="en">Get in touch</h4>
+    <h4 data-lang="es">Contacta</h4>
+    <h4 data-lang="de">Kontakt</h4>
+
+    <p data-lang="en">DM Juanitto directly on Telegram about Feed Me Again.</p>
+    <p data-lang="es">Habla con Juanitto directamente en Telegram sobre Feed Me Again.</p>
+    <p data-lang="de">Schreib Juanitto direkt auf Telegram zu Feed Me Again.</p>
+
+    <a class="dialog-option dialog-telegram" href="https://t.me/JuanittoCalvares" target="_blank" rel="noopener">✈ Telegram · @JuanittoCalvares</a>
+    <button class="dialog-close" onclick="document.getElementById('cd').classList.remove('open')">
+      <span data-lang="en">Close</span>
+      <span data-lang="es">Cerrar</span>
+      <span data-lang="de">Schließen</span>
+    </button>
+  </div>
+</div>
+
+<script>
+/* ============ THEME TOGGLE ============ */
+function toggleTheme(){
+  const html=document.documentElement;
+  const current=html.getAttribute('data-theme')||'light';
+  const next=current==='dark'?'light':'dark';
+  html.setAttribute('data-theme',next);
+  document.getElementById('themeIcon').textContent=next==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',next)}catch(e){}
+}
+(function(){
+  function apply(t){
+    document.documentElement.setAttribute('data-theme',t);
+    document.addEventListener('DOMContentLoaded',()=>{
+      const icon=document.getElementById('themeIcon');
+      if(icon)icon.textContent=t==='dark'?'☀️':'🌙';
+    });
+  }
+  try{
+    const saved=localStorage.getItem('theme');
+    if(saved){apply(saved)}
+    else{const h=new Date().getHours();apply(h>=7&&h<19?'light':'dark')}
+  }catch(e){apply('light')}
+})();
+
+/* ============ LANGUAGE TOGGLE ============ */
+function setLang(l){
+  document.querySelectorAll('[data-lang]').forEach(e=>{
+    e.classList.toggle('v',e.getAttribute('data-lang')===l);
+  });
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    b.classList.toggle('active',b.textContent.trim().toLowerCase()===l);
+  });
+  document.documentElement.lang=l;
+  try{localStorage.setItem('lang',l)}catch(e){}
+}
+(function(){
+  let saved='es';
+  try{const s=localStorage.getItem('lang');if(s)saved=s}catch(e){}
+  setLang(saved);
+})();
+</script>
+</body>
+</html>
