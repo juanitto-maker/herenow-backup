@@ -144,6 +144,9 @@ jobs:
           DATE=$(date -u '+%Y-%m-%d')
           ZIP="zips/herenow-backup-${DATE}.zip"
 
+          # Always export the download URL (deterministic from date)
+          echo "ZIP_URL=https://github.com/juanitto-maker/herenow-backup/raw/main/zips/herenow-backup-${DATE}.zip" >> "$GITHUB_ENV"
+
           # Skip if today's zip already exists and nothing changed
           if [ -f "$ZIP" ] && [ -z "$CHANGED_SLUGS" ]; then
             echo "No changes and zip already exists — skipping"
@@ -186,7 +189,6 @@ jobs:
           print(f'Created {zip_path} with {ok_count}/{len(manifest)} sites')
           PY
             echo "ZIPPED=true" >> "$GITHUB_ENV"
-            echo "ZIP_URL=https://github.com/juanitto-maker/herenow-backup/raw/main/zips/herenow-backup-${DATE}.zip" >> "$GITHUB_ENV"
           fi
 
           git config user.name  "github-actions[bot]"
