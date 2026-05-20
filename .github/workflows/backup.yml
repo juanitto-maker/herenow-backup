@@ -50,6 +50,7 @@ jobs:
         run: |
           mkdir -p sites
           FAILED=()
+          CHANGED=()
           OK=0
           TOTAL=0
           while IFS= read -r slug || [ -n "$slug" ]; do
@@ -66,6 +67,9 @@ jobs:
                 --retry 5 --retry-delay 10 --retry-all-errors \
                 --max-time 60 -A "herenow-backup-bot/1.0" \
                 -o "$TMP" "https://$slug.here.now/"; then
+              if [ ! -f "sites/$slug/index.html" ] || ! cmp -s "$TMP" "sites/$slug/index.html"; then
+                CHANGED+=("$slug")
+              fi
               mv "$TMP" "sites/$slug/index.html"
               SIZE=$(wc -c < "sites/$slug/index.html")
               echo "✓ $slug ($SIZE bytes)"
@@ -83,6 +87,12 @@ jobs:
           echo "OK:     $OK / $TOTAL"
           echo "Failed: ${#FAILED[@]} — ${FAILED[*]:-none}"
           date -u '+Last backup: %Y-%m-%d %H:%M UTC' > last-backup.txt
+
+          echo "BACKUP_OK=$OK" >> "$GITHUB_ENV"
+          echo "BACKUP_FAILED=${#FAILED[@]}" >> "$GITHUB_ENV"
+          echo "BACKUP_DATE=$(date -u '+%Y-%m-%d')" >> "$GITHUB_ENV"
+          echo "BACKUP_FAILED_SLUGS=${FAILED[*]:-none}" >> "$GITHUB_ENV"
+          echo "CHANGED_SLUGS=${CHANGED[*]}" >> "$GITHUB_ENV"
 
       - name: Build titles.json
         run: |
@@ -128,3 +138,106 @@ jobs:
             git pull --rebase origin main
             git push
           fi
+
+      - name: Create/update zips for changed slugs
+        run: |
+          mkdir -p zips
+          ZIPPED=0
+          DATE=$(date -u '+%Y-%m-%d')
+
+          cat > /tmp/make_zip.py <<'PYEOF'
+          import sys, zipfile, json, os, datetime
+          slug = sys.argv[1]
+          with open('titles.json') as f:
+              titles = json.load(f)
+          html_path = f'sites/{slug}/index.html'
+          size_bytes = os.path.getsize(html_path)
+          backup_date = datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
+          entry = titles.get(slug, {})
+          title = entry.get('title', slug) if isinstance(entry, dict) else slug
+          metadata = {
+              'slug': slug,
+              'title': title,
+              'url': f'https://{slug}.here.now/',
+              'backup_date': backup_date,
+              'size_bytes': size_bytes,
+              'ok': True,
+          }
+          os.makedirs('zips', exist_ok=True)
+          with zipfile.ZipFile(f'zips/{slug}.zip', 'w', zipfile.ZIP_DEFLATED) as zf:
+              zf.write(html_path, f'sites/{slug}/index.html')
+              zf.writestr('metadata.json', json.dumps(metadata, ensure_ascii=False, indent=2))
+          print(f'  Zipped {slug}: {size_bytes} bytes')
+          PYEOF
+
+          for slug in $CHANGED_SLUGS; do
+            [ -z "$slug" ] && continue
+            [ -f "sites/$slug/index.html" ] || continue
+            python3 /tmp/make_zip.py "$slug"
+            ZIPPED=$((ZIPPED+1))
+          done
+
+          echo "ZIPPED_COUNT=$ZIPPED" >> "$GITHUB_ENV"
+          echo "Created/updated $ZIPPED zip(s)"
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add zips/
+          if git diff --staged --quiet; then
+            echo "No zip changes to commit"
+          else
+            git commit -m "Zips $DATE"
+            git pull --rebase origin main
+            git push
+          fi
+
+      - name: Send Telegram notification
+        if: always()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          python3 <<'PY'
+          import json, os, urllib.request
+          token = os.environ['TELEGRAM_BOT_TOKEN']
+          chat_id = os.environ['TELEGRAM_CHAT_ID']
+          date = os.environ.get('BACKUP_DATE', 'unknown')
+          ok = os.environ.get('BACKUP_OK', '0')
+          failed = os.environ.get('BACKUP_FAILED', '0')
+          zipped = os.environ.get('ZIPPED_COUNT', '0')
+          failed_slugs = os.environ.get('BACKUP_FAILED_SLUGS', 'none')
+          text = (
+              f"\U0001f5c2 here.now Backup — {date}\n"
+              f"✅ {ok} OK  ❌ {failed} failed\n"
+              f"\U0001f4e6 {zipped} zips updated\n"
+              f"⚠️ Failed: {failed_slugs}\n"
+              f"\U0001f517 https://github.com/juanitto-maker/herenow-backup/tree/main/zips"
+          )
+          payload = json.dumps({'chat_id': chat_id, 'text': text}).encode()
+          req = urllib.request.Request(
+              f'https://api.telegram.org/bot{token}/sendMessage',
+              data=payload,
+              headers={'Content-Type': 'application/json'},
+          )
+          with urllib.request.urlopen(req) as r:
+              print(r.read().decode())
+          PY
+
+      - name: Send email notification
+        if: always()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "🗂 here.now Backup ${{ env.BACKUP_DATE }} — ${{ env.BACKUP_OK }} OK / ${{ env.BACKUP_FAILED }} failed"
+          to: ${{ secrets.EMAIL_USERNAME }}
+          from: ${{ secrets.EMAIL_USERNAME }}
+          html_body: |
+            <h2>&#x1F5C2; here.now Backup &mdash; ${{ env.BACKUP_DATE }}</h2>
+            <p>&#x2705; <strong>${{ env.BACKUP_OK }} OK</strong> &nbsp;&nbsp; &#x274C; <strong>${{ env.BACKUP_FAILED }} failed</strong></p>
+            <p>&#x1F4E6; <strong>${{ env.ZIPPED_COUNT }} zips updated</strong></p>
+            <p>&#x26A0;&#xFE0F; Failed: ${{ env.BACKUP_FAILED_SLUGS }}</p>
+            <p>&#x1F517; <a href="https://github.com/juanitto-maker/herenow-backup/tree/main/zips">View zips on GitHub</a></p>
