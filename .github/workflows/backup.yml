@@ -157,10 +157,9 @@ jobs:
             mkdir -p zips
             echo "Building ${ZIP}..."
             python3 <<'PY'
-          import zipfile, json, os, datetime, re
+          import zipfile, json, os, datetime
           date = datetime.datetime.utcnow().strftime('%Y-%m-%d')
           zip_path = f'zips/herenow-backup-{date}.zip'
-          folder = f'herenow-backup-{date}'
           with open('titles.json') as f:
               titles = json.load(f)
           with open('slugs.txt') as f:
@@ -180,34 +179,13 @@ jobs:
                   'size_bytes': os.path.getsize(html_path) if ok else 0,
                   'ok': ok,
               })
-
-          def safe_filename(title, slug):
-              name = re.sub(r'[<>:"/\\|?*\x00-\x1f]', '', title).strip().rstrip('.')
-              if not name:
-                  name = slug
-              return name
-
-          used_names = {}
-          for e in manifest:
-              if not e['ok']:
-                  continue
-              name = safe_filename(e['title'], e['slug'])
-              if name in used_names:
-                  used_names[name].append(e['slug'])
-              else:
-                  used_names[name] = [e['slug']]
-
           os.makedirs('zips', exist_ok=True)
           with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zf:
               for e in manifest:
-                  if not e['ok']:
-                      continue
-                  name = safe_filename(e['title'], e['slug'])
-                  if len(used_names.get(name, [])) > 1:
-                      name = f"{name} ({e['slug']})"
-                  zf.write(f"sites/{e['slug']}/index.html",
-                           f"{folder}/{name}.html")
-              zf.writestr(f'{folder}/manifest.json',
+                  if e['ok']:
+                      zf.write(f"sites/{e['slug']}/index.html",
+                               f"herenow-backup/sites/{e['slug']}/index.html")
+              zf.writestr('herenow-backup/manifest.json',
                           json.dumps(manifest, ensure_ascii=False, indent=2))
           ok_count = sum(1 for e in manifest if e['ok'])
           print(f'Created {zip_path} with {ok_count}/{len(manifest)} sites')
