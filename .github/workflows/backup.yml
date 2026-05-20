@@ -139,59 +139,49 @@ jobs:
             git push
           fi
 
-      - name: Create/update zips for changed slugs
+      - name: Create/update zip (full backup)
         run: |
           mkdir -p zips
-          ZIPPED=0
           DATE=$(date -u '+%Y-%m-%d')
 
-          cat > /tmp/make_zip.py <<'PYEOF'
-          import sys, zipfile, json, os, datetime
-          slug = sys.argv[1]
+          # (Re)create the zip on first run or when any site changed
+          if [ ! -f "zips/herenow-backup-latest.zip" ] || [ -n "$CHANGED_SLUGS" ]; then
+            echo "Building zips/herenow-backup-latest.zip..."
+            python3 <<'PY'
+          import zipfile, json, os, datetime
           with open('titles.json') as f:
               titles = json.load(f)
-          html_path = f'sites/{slug}/index.html'
-          size_bytes = os.path.getsize(html_path)
+          with open('slugs.txt') as f:
+              slugs = [l.strip() for l in f if l.strip() and not l.startswith('#')]
           backup_date = datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
-          entry = titles.get(slug, {})
-          title = entry.get('title', slug) if isinstance(entry, dict) else slug
-          metadata = {
-              'slug': slug,
-              'title': title,
-              'url': f'https://{slug}.here.now/',
-              'backup_date': backup_date,
-              'size_bytes': size_bytes,
-              'ok': True,
-          }
+          manifest = []
+          for slug in slugs:
+              html_path = f'sites/{slug}/index.html'
+              entry = titles.get(slug, {})
+              title = entry.get('title', slug) if isinstance(entry, dict) else slug
+              ok = os.path.exists(html_path) and os.path.getsize(html_path) > 0
+              manifest.append({
+                  'slug': slug,
+                  'title': title,
+                  'url': f'https://{slug}.here.now/',
+                  'backup_date': backup_date,
+                  'size_bytes': os.path.getsize(html_path) if ok else 0,
+                  'ok': ok,
+              })
           os.makedirs('zips', exist_ok=True)
-          with zipfile.ZipFile(f'zips/{slug}.zip', 'w', zipfile.ZIP_DEFLATED) as zf:
-              zf.write(html_path, f'sites/{slug}/index.html')
-              zf.writestr('metadata.json', json.dumps(metadata, ensure_ascii=False, indent=2))
-          print(f'  Zipped {slug}: {size_bytes} bytes')
-          PYEOF
-
-          # Bootstrap: if zips/ is empty or missing, zip every successfully backed-up site
-          if [ -z "$(ls -A zips/ 2>/dev/null)" ]; then
-            echo "zips/ is empty — bootstrapping all sites"
-            while IFS= read -r slug || [ -n "$slug" ]; do
-              slug=$(echo "$slug" | tr -d '[:space:]')
-              [ -z "$slug" ] && continue
-              [[ "$slug" =~ ^# ]] && continue
-              [ -f "sites/$slug/index.html" ] || continue
-              python3 /tmp/make_zip.py "$slug"
-              ZIPPED=$((ZIPPED+1))
-            done < slugs.txt
+          with zipfile.ZipFile('zips/herenow-backup-latest.zip', 'w', zipfile.ZIP_DEFLATED) as zf:
+              for e in manifest:
+                  if e['ok']:
+                      zf.write(f"sites/{e['slug']}/index.html", f"sites/{e['slug']}/index.html")
+              zf.writestr('manifest.json', json.dumps(manifest, ensure_ascii=False, indent=2))
+          ok_count = sum(1 for e in manifest if e['ok'])
+          print(f'Created zips/herenow-backup-latest.zip with {ok_count}/{len(manifest)} sites')
+          PY
+            echo "ZIPPED=true" >> "$GITHUB_ENV"
           else
-            for slug in $CHANGED_SLUGS; do
-              [ -z "$slug" ] && continue
-              [ -f "sites/$slug/index.html" ] || continue
-              python3 /tmp/make_zip.py "$slug"
-              ZIPPED=$((ZIPPED+1))
-            done
+            echo "No changes — skipping zip update"
+            echo "ZIPPED=false" >> "$GITHUB_ENV"
           fi
-
-          echo "ZIPPED_COUNT=$ZIPPED" >> "$GITHUB_ENV"
-          echo "Created/updated $ZIPPED zip(s)"
 
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -217,12 +207,12 @@ jobs:
           date = os.environ.get('BACKUP_DATE', 'unknown')
           ok = os.environ.get('BACKUP_OK', '0')
           failed = os.environ.get('BACKUP_FAILED', '0')
-          zipped = os.environ.get('ZIPPED_COUNT', '0')
+          zipped = os.environ.get('ZIPPED', 'false')
           failed_slugs = os.environ.get('BACKUP_FAILED_SLUGS', 'none')
           text = (
               f"\U0001f5c2 here.now Backup — {date}\n"
               f"✅ {ok} OK  ❌ {failed} failed\n"
-              f"\U0001f4e6 {zipped} zips updated\n"
+              f"\U0001f4e6 zip updated: {zipped}\n"
               f"⚠️ Failed: {failed_slugs}\n"
               f"\U0001f517 https://github.com/juanitto-maker/herenow-backup/tree/main/zips"
           )
@@ -251,6 +241,6 @@ jobs:
           html_body: |
             <h2>&#x1F5C2; here.now Backup &mdash; ${{ env.BACKUP_DATE }}</h2>
             <p>&#x2705; <strong>${{ env.BACKUP_OK }} OK</strong> &nbsp;&nbsp; &#x274C; <strong>${{ env.BACKUP_FAILED }} failed</strong></p>
-            <p>&#x1F4E6; <strong>${{ env.ZIPPED_COUNT }} zips updated</strong></p>
+            <p>&#x1F4E6; zip updated: <strong>${{ env.ZIPPED }}</strong></p>
             <p>&#x26A0;&#xFE0F; Failed: ${{ env.BACKUP_FAILED_SLUGS }}</p>
             <p>&#x1F517; <a href="https://github.com/juanitto-maker/herenow-backup/tree/main/zips">View zips on GitHub</a></p>
