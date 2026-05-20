@@ -141,12 +141,15 @@ jobs:
 
       - name: Create/update zip (full backup)
         run: |
-          mkdir -p zips
           DATE=$(date -u '+%Y-%m-%d')
 
+          # Remove any stale per-slug zip files from the old design, keep herenow-backup.zip
+          find zips/ -maxdepth 1 -type f ! -name 'herenow-backup.zip' -delete 2>/dev/null || true
+          mkdir -p zips
+
           # (Re)create the zip on first run or when any site changed
-          if [ ! -f "zips/herenow-backup-latest.zip" ] || [ -n "$CHANGED_SLUGS" ]; then
-            echo "Building zips/herenow-backup-latest.zip..."
+          if [ ! -f "zips/herenow-backup.zip" ] || [ -n "$CHANGED_SLUGS" ]; then
+            echo "Building zips/herenow-backup.zip..."
             python3 <<'PY'
           import zipfile, json, os, datetime
           with open('titles.json') as f:
@@ -169,13 +172,13 @@ jobs:
                   'ok': ok,
               })
           os.makedirs('zips', exist_ok=True)
-          with zipfile.ZipFile('zips/herenow-backup-latest.zip', 'w', zipfile.ZIP_DEFLATED) as zf:
+          with zipfile.ZipFile('zips/herenow-backup.zip', 'w', zipfile.ZIP_DEFLATED) as zf:
               for e in manifest:
                   if e['ok']:
                       zf.write(f"sites/{e['slug']}/index.html", f"sites/{e['slug']}/index.html")
               zf.writestr('manifest.json', json.dumps(manifest, ensure_ascii=False, indent=2))
           ok_count = sum(1 for e in manifest if e['ok'])
-          print(f'Created zips/herenow-backup-latest.zip with {ok_count}/{len(manifest)} sites')
+          print(f'Created zips/herenow-backup.zip with {ok_count}/{len(manifest)} sites')
           PY
             echo "ZIPPED=true" >> "$GITHUB_ENV"
           else
