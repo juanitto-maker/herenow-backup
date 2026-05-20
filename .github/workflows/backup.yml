@@ -142,16 +142,21 @@ jobs:
       - name: Create/update zip (full backup)
         run: |
           DATE=$(date -u '+%Y-%m-%d')
+          ZIP="zips/herenow-backup-${DATE}.zip"
 
-          # Remove any stale per-slug zip files from the old design, keep herenow-backup.zip
-          find zips/ -maxdepth 1 -type f ! -name 'herenow-backup.zip' -delete 2>/dev/null || true
-          mkdir -p zips
-
-          # (Re)create the zip on first run or when any site changed
-          if [ ! -f "zips/herenow-backup.zip" ] || [ -n "$CHANGED_SLUGS" ]; then
-            echo "Building zips/herenow-backup.zip..."
+          # Skip if today's zip already exists and nothing changed
+          if [ -f "$ZIP" ] && [ -z "$CHANGED_SLUGS" ]; then
+            echo "No changes and zip already exists — skipping"
+            echo "ZIPPED=false" >> "$GITHUB_ENV"
+          else
+            # Wipe all old zips (old dates, legacy names) then create fresh
+            find zips/ -maxdepth 1 -type f -delete 2>/dev/null || true
+            mkdir -p zips
+            echo "Building ${ZIP}..."
             python3 <<'PY'
           import zipfile, json, os, datetime
+          date = datetime.datetime.utcnow().strftime('%Y-%m-%d')
+          zip_path = f'zips/herenow-backup-{date}.zip'
           with open('titles.json') as f:
               titles = json.load(f)
           with open('slugs.txt') as f:
@@ -172,18 +177,15 @@ jobs:
                   'ok': ok,
               })
           os.makedirs('zips', exist_ok=True)
-          with zipfile.ZipFile('zips/herenow-backup.zip', 'w', zipfile.ZIP_DEFLATED) as zf:
+          with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zf:
               for e in manifest:
                   if e['ok']:
                       zf.write(f"sites/{e['slug']}/index.html", f"sites/{e['slug']}/index.html")
               zf.writestr('manifest.json', json.dumps(manifest, ensure_ascii=False, indent=2))
           ok_count = sum(1 for e in manifest if e['ok'])
-          print(f'Created zips/herenow-backup.zip with {ok_count}/{len(manifest)} sites')
+          print(f'Created {zip_path} with {ok_count}/{len(manifest)} sites')
           PY
             echo "ZIPPED=true" >> "$GITHUB_ENV"
-          else
-            echo "No changes — skipping zip update"
-            echo "ZIPPED=false" >> "$GITHUB_ENV"
           fi
 
           git config user.name  "github-actions[bot]"
