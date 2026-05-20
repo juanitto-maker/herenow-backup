@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Alexandru-Ioan Nistoroiu — Arquitecto & Desarrollador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="light"]{
+  --bg:#faf6ef;--bg-card:#fff;
+  --bg-hero:linear-gradient(160deg,#f5f0e8 0%,#faf6ef 100%);
+  --text:#3a3a32;--text-m:#6a6a62;--text-h:#1a1a18;
+  --border:#e8e4dc;--accent:#4a6741;--ac2:#c9a84c;
+  --link:#4a6741;--shadow:rgba(0,0,0,.07);
+}
+[data-theme="dark"]{
+  --bg:#0f0f11;--bg-card:#1a1a1f;
+  --bg-hero:linear-gradient(160deg,#1a1a14 0%,#0f0f11 100%);
+  --text:#e2e2d8;--text-m:#888;--text-h:#fff;
+  --border:#2a2a35;--accent:#6aaa5e;--ac2:#d4a84c;
+  --link:#6aaa5e;--shadow:rgba(0,0,0,.3);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:background .25s,color .25s}
+h1,h2,h3{font-family:'Playfair Display',serif;color:var(--text-h);line-height:1.2}
+
+/* Lang bar */
+.lang-bar{position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;justify-content:center;gap:.5rem;padding:.45rem .75rem;
+  background:var(--bg-card);border-bottom:1px solid var(--border);
+  backdrop-filter:blur(8px)}
+.lb{background:none;border:1px solid var(--border);color:var(--text-m);
+  font-size:.75rem;font-weight:600;padding:.22rem .65rem;border-radius:2rem;cursor:pointer;transition:all .18s;font-family:'DM Sans',sans-serif}
+.lb.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* Theme toggle */
+.tt{position:fixed;top:.38rem;right:.75rem;z-index:300;
+  background:var(--bg-card);border:1px solid var(--border);
+  width:2.2rem;height:2.2rem;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px var(--shadow);transition:all .2s;font-size:1rem}
+.tt:hover{transform:scale(1.1)}
+
+/* Layout */
+.wrap{max-width:640px;margin:0 auto;padding:0 1.25rem}
+section{padding:3.5rem 0 2.5rem}
+section:nth-child(even){background:var(--bg-card)}
+
+/* Hero */
+.hero{padding:5.5rem 0 3.5rem;background:var(--bg-hero);text-align:center}
+.hero-avatar{width:82px;height:82px;border-radius:50%;background:var(--accent);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;margin:0 auto 1.25rem;box-shadow:0 4px 18px var(--shadow)}
+.hero h1{font-size:clamp(1.6rem,5vw,2.3rem);margin-bottom:.4rem}
+.hero-title{font-size:1rem;color:var(--accent);font-weight:600;letter-spacing:.04em;margin-bottom:.6rem}
+.hero-loc{font-size:.85rem;color:var(--text-m);display:flex;align-items:center;justify-content:center;gap:.3rem}
+.hero-tagline{font-family:'Playfair Display',serif;font-style:italic;
+  font-size:1.05rem;color:var(--text-m);max-width:420px;margin:1.25rem auto 0;line-height:1.55}
+
+/* Divider */
+.div{height:2px;width:2.5rem;background:var(--accent);margin:.5rem 0 1.2rem;border-radius:1px}
+.slbl{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ac2);font-weight:600;margin-bottom:.35rem}
+
+/* Skills grid */
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-top:1rem}
+.scard{background:var(--bg);border:1px solid var(--border);border-radius:.75rem;
+  padding:.85rem .9rem;display:flex;align-items:flex-start;gap:.6rem}
+.sico{font-size:1.3rem;flex-shrink:0;margin-top:.1rem}
+.stit{font-weight:600;font-size:.85rem;color:var(--text-h);margin-bottom:.2rem}
+.sdsc{font-size:.74rem;color:var(--text-m);line-height:1.4}
+
+/* Project cards */
+.pcard{background:var(--bg);border:1px solid var(--border);border-radius:.85rem;
+  padding:1.1rem 1.15rem;margin-bottom:.75rem;transition:box-shadow .18s}
+.pcard:hover{box-shadow:0 6px 20px var(--shadow)}
+.ptag{display:inline-block;background:var(--ac2);color:#fff;
+  font-size:.65rem;font-weight:700;padding:.15rem .5rem;border-radius:2rem;
+  letter-spacing:.05em;text-transform:uppercase;margin-bottom:.45rem}
+.pcard h3{font-size:1rem;margin-bottom:.35rem}
+.pcard p{font-size:.82rem;color:var(--text-m);line-height:1.45}
+.plink{display:inline-flex;align-items:center;gap:.3rem;margin-top:.65rem;
+  font-size:.78rem;font-weight:600;color:var(--accent);
+  border:1px solid var(--accent);border-radius:2rem;padding:.25rem .75rem;
+  transition:all .18s;text-decoration:none}
+.plink:hover{background:var(--accent);color:#fff;text-decoration:none}
+
+/* About */
+.about-text{font-size:.95rem;line-height:1.7;color:var(--text)}
+.about-text + .about-text{margin-top:.75rem}
+
+/* Stats */
+.srow{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-top:1.2rem}
+.scel{background:var(--bg-card);border:1px solid var(--border);border-radius:.7rem;
+  padding:.75rem .5rem;text-align:center}
+.snum{font-family:'Playfair Display',serif;font-size:1.55rem;color:var(--accent);font-weight:700;line-height:1}
+.slb{font-size:.67rem;color:var(--text-m);line-height:1.3;margin-top:.12rem}
+
+/* Contact button */
+.contact-btn{display:inline-flex;align-items:center;gap:.5rem;margin-top:1rem;
+  background:var(--accent);color:#fff;border:none;border-radius:2rem;
+  padding:.75rem 1.75rem;font-size:1rem;font-weight:600;cursor:pointer;
+  font-family:'DM Sans',sans-serif;transition:all .2s}
+.contact-btn:hover{filter:brightness(1.1);transform:translateY(-2px)}
+/* Dialog */
+.dov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;
+  display:none;align-items:flex-end;justify-content:center;padding:1rem}
+.dov.open{display:flex}
+.dob{background:var(--bg-card);border-radius:1.1rem;padding:1.5rem;
+  width:100%;max-width:370px;text-align:center;
+  animation:su .22s ease-out}
+@keyframes su{from{transform:translateY(36px);opacity:0}to{transform:none;opacity:1}}
+.dot{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;color:var(--text-h);margin-bottom:.25rem}
+.dos{font-size:.8rem;color:var(--text-m);margin-bottom:1rem}
+.dopt{display:flex;align-items:center;justify-content:center;gap:.5rem;
+  width:100%;padding:.65rem;margin-bottom:.5rem;
+  border-radius:.58rem;font-weight:600;font-size:.9rem;text-align:center;
+  border:none;cursor:pointer;transition:all .2s;text-decoration:none;font-family:'DM Sans',sans-serif}
+.dopt:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.d-email{background:#4a6741;color:#fff}
+.d-tg1{background:#0088cc;color:#fff}
+.d-tg2{background:#229ed9;color:#fff}
+.d-gh{background:#24292e;color:#fff}
+.dcl{background:none;border:1px solid var(--border);color:var(--text-m);
+  font-size:.82rem;padding:.42rem 1.2rem;border-radius:.4rem;cursor:pointer;
+  margin-top:.2rem;font-family:'DM Sans',sans-serif;transition:all .2s}
+.dcl:hover{border-color:var(--text-m)}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Footer */
+footer{padding:1.5rem 0;text-align:center;font-size:.75rem;color:var(--text-m);border-top:1px solid var(--border)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hero{animation:fadeUp .5s ease-out}
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <button class="lb" data-l="es" onclick="setLang('es')">ES</button>
+  <button class="lb" data-l="en" onclick="setLang('en')">EN</button>
+  <button class="lb" data-l="de" onclick="setLang('de')">DE</button>
+</div>
+<button class="tt" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <span id="ti">🌙</span>
+</button>
+
+<!-- HERO -->
+<div class="hero" style="padding-top:4.5rem">
+  <div class="wrap">
+    <div class="hero-avatar">🏛️</div>
+    <h1>Alexandru-Ioan Nistoroiu</h1>
+    <div class="hero-title">
+      <span data-lang="es">Arquitecto &amp; Desarrollador de Software Independiente</span>
+      <span data-lang="en">Architect &amp; Independent Software Developer</span>
+      <span data-lang="de">Architekt &amp; Unabhängiger Softwareentwickler</span>
+    </div>
+    <div class="hero-loc">📍 <span data-lang="es">Granada, España</span><span data-lang="en">Granada, Spain</span><span data-lang="de">Granada, Spanien</span></div>
+    <p class="hero-tagline">
+      <span data-lang="es">Construyendo herramientas digitales con inteligencia artificial para negocios locales y emprendedores.</span>
+      <span data-lang="en">Building AI-powered digital tools for local businesses and entrepreneurs.</span>
+      <span data-lang="de">KI-gestützte digitale Werkzeuge für lokale Unternehmen und Unternehmer.</span>
+    </p>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section>
+  <div class="wrap">
+    <div class="slbl"><span data-lang="es">Sobre mí</span><span data-lang="en">About</span><span data-lang="de">Über mich</span></div>
+    <h2 style="font-size:1.4rem;margin-bottom:.5rem">
+      <span data-lang="es">Arquitecto reconvertido en desarrollador de IA</span>
+      <span data-lang="en">Architect turned AI developer</span>
+      <span data-lang="de">Architekt, der zum KI-Entwickler wurde</span>
+    </h2>
+    <div class="div"></div>
+    <p class="about-text" data-lang="es">Soy un arquitecto y desarrollador de software independiente con sede en Granada, España. Combino formación en arquitectura y diseño con el desarrollo de aplicaciones web progresivas (PWA) impulsadas por inteligencia artificial, especializándome en soluciones para pequeñas empresas, comercios locales y emprendedores.</p>
+    <p class="about-text" data-lang="en">I am an architect and independent software developer based in Granada, Spain. I combine a background in architecture and design with the development of AI-powered Progressive Web Applications (PWA), specialising in solutions for small businesses, local shops, and entrepreneurs.</p>
+    <p class="about-text" data-lang="de">Ich bin Architekt und unabhängiger Softwareentwickler mit Sitz in Granada, Spanien. Ich verbinde meine Ausbildung in Architektur und Design mit der Entwicklung KI-gestützter Progressive Web Applications (PWA), spezialisiert auf Lösungen für Kleinunternehmen, lokale Geschäfte und Unternehmer.</p>
+
+    <div class="srow" style="margin-top:1.5rem">
+      <div class="scel">
+        <div class="snum">5+</div>
+        <div class="slb"><span data-lang="es">Apps activas</span><span data-lang="en">Active apps</span><span data-lang="de">Aktive Apps</span></div>
+      </div>
+      <div class="scel">
+        <div class="snum">7</div>
+        <div class="slb"><span data-lang="es">Idiomas soportados</span><span data-lang="en">Languages supported</span><span data-lang="de">Sprachen unterstützt</span></div>
+      </div>
+      <div class="scel">
+        <div class="snum">10+</div>
+        <div class="slb"><span data-lang="es">Años de experiencia</span><span data-lang="en">Years experience</span><span data-lang="de">Jahre Erfahrung</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section>
+  <div class="wrap">
+    <div class="slbl"><span data-lang="es">Servicios</span><span data-lang="en">Services</span><span data-lang="de">Dienstleistungen</span></div>
+    <h2 style="font-size:1.4rem;margin-bottom:.5rem">
+      <span data-lang="es">¿En qué puedo ayudarte?</span>
+      <span data-lang="en">What I can help with</span>
+      <span data-lang="de">Womit ich helfen kann</span>
+    </h2>
+    <div class="div"></div>
+    <div class="sgrid">
+      <div class="scard">
+        <span class="sico">🤖</span>
+        <div>
+          <div class="stit"><span data-lang="es">Apps con IA</span><span data-lang="en">AI-powered Apps</span><span data-lang="de">KI-Apps</span></div>
+          <div class="sdsc"><span data-lang="es">PWA con Gemini, estimadores de precios, clasificadores</span><span data-lang="en">PWA with Gemini, price estimators, classifiers</span><span data-lang="de">PWA mit Gemini, Preisschätzer, Klassifikatoren</span></div>
+        </div>
+      </div>
+      <div class="scard">
+        <span class="sico">🛍️</span>
+        <div>
+          <div class="stit"><span data-lang="es">E-commerce local</span><span data-lang="en">Local e-commerce</span><span data-lang="de">Lokaler E-Commerce</span></div>
+          <div class="sdsc"><span data-lang="es">Tiendas digitales para negocios pequeños</span><span data-lang="en">Digital shops for small businesses</span><span data-lang="de">Digitale Shops für kleine Unternehmen</span></div>
+        </div>
+      </div>
+      <div class="scard">
+        <span class="sico">🏠</span>
+        <div>
+          <div class="stit"><span data-lang="es">Plataformas inmobiliarias</span><span data-lang="en">Real estate platforms</span><span data-lang="de">Immobilienplattformen</span></div>
+          <div class="sdsc"><span data-lang="es">Listados multilingüe con búsqueda avanzada</span><span data-lang="en">Multilingual listings with advanced search</span><span data-lang="de">Mehrsprachige Angebote mit erweiterter Suche</span></div>
+        </div>
+      </div>
+      <div class="scard">
+        <span class="sico">🌐</span>
+        <div>
+          <div class="stit"><span data-lang="es">Presencia digital</span><span data-lang="en">Digital presence</span><span data-lang="de">Digitale Präsenz</span></div>
+          <div class="sdsc"><span data-lang="es">Sitios web profesionales, multilingüe, móvil-primero</span><span data-lang="en">Professional sites, multilingual, mobile-first</span><span data-lang="de">Professionelle Seiten, mehrsprachig, mobile-first</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section>
+  <div class="wrap">
+    <div class="slbl"><span data-lang="es">Proyectos destacados</span><span data-lang="en">Selected projects</span><span data-lang="de">Ausgewählte Projekte</span></div>
+    <h2 style="font-size:1.4rem;margin-bottom:.5rem">
+      <span data-lang="es">Aplicaciones en producción</span>
+      <span data-lang="en">Live applications</span>
+      <span data-lang="de">Live-Anwendungen</span>
+    </h2>
+    <div class="div"></div>
+
+    <div class="pcard">
+      <div class="ptag">AI · SaaS</div>
+      <h3>ValorApp</h3>
+      <p>
+        <span data-lang="es">Estimador de precios de segunda mano basado en IA para tiendas de ropa y particulares. Análisis fotográfico con Gemini 2.5 Flash.</span>
+        <span data-lang="en">AI-powered secondhand price estimator for resale shops and individuals. Photo analysis with Gemini 2.5 Flash.</span>
+        <span data-lang="de">KI-gestützter Gebrauchtwarenpreisschätzer für Wiederverkaufsshops. Fotoanalyse mit Gemini 2.5 Flash.</span>
+      </p>
+      <a href="https://deep-aurora-6tzt.here.now/" target="_blank" rel="noopener" class="plink">→ <span data-lang="es">Ver prototipo</span><span data-lang="en">View prototype</span><span data-lang="de">Prototyp ansehen</span></a>
+    </div>
+
+    <div class="pcard">
+      <div class="ptag">Solidaridad · PWA</div>
+      <h3>Love Me Again / Rastro</h3>
+      <p>
+        <span data-lang="es">Tienda solidaria digital con sistema de voluntarios, gestión de donaciones y catálogo multilingüe.</span>
+        <span data-lang="en">Digital solidarity shop with volunteer management system, donations tracking, and multilingual catalogue.</span>
+        <span data-lang="de">Digitaler Solidaritätsladen mit Freiwilligenverwaltung, Spendenerfassung und mehrsprachigem Katalog.</span>
+      </p>
+      <a href="https://vowful-cosmos-d7z3.here.now/" target="_blank" rel="noopener" class="plink">→ <span data-lang="es">Ver prototipo</span><span data-lang="en">View prototype</span><span data-lang="de">Prototyp ansehen</span></a>
+    </div>
+
+    <div class="pcard">
+      <div class="ptag">Inmobiliario · Next.js</div>
+      <h3>Viki Properties</h3>
+      <p>
+        <span data-lang="es">Plataforma inmobiliaria para Órgiva, Granada. Next.js, TypeScript, Supabase. ES / EN / IT.</span>
+        <span data-lang="en">Real estate platform for Órgiva, Granada. Next.js, TypeScript, Supabase. ES / EN / IT.</span>
+        <span data-lang="de">Immobilienplattform für Órgiva, Granada. Next.js, TypeScript, Supabase. ES / EN / IT.</span>
+      </p>
+      <a href="https://unfold-lagoon-rrt8.here.now/" target="_blank" rel="noopener" class="plink">→ <span data-lang="es">Ver prototipo</span><span data-lang="en">View prototype</span><span data-lang="de">Prototyp ansehen</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section>
+  <div class="wrap">
+    <div class="slbl"><span data-lang="es">Contacto</span><span data-lang="en">Contact</span><span data-lang="de">Kontakt</span></div>
+    <h2 style="font-size:1.4rem;margin-bottom:.5rem">
+      <span data-lang="es">¿Hablamos?</span>
+      <span data-lang="en">Get in touch</span>
+      <span data-lang="de">Kontakt aufnehmen</span>
+    </h2>
+    <div class="div"></div>
+    <p style="font-size:.9rem;color:var(--text-m)">
+      <span data-lang="es">Escríbeme por email, Telegram o explora mis proyectos en GitHub.</span>
+      <span data-lang="en">Reach me by email, Telegram, or explore my projects on GitHub.</span>
+      <span data-lang="de">Schreib mir per E-Mail, Telegram oder entdecke meine Projekte auf GitHub.</span>
+    </p>
+    <button class="contact-btn" onclick="openD()">
+      <span data-lang="es">✉️ Contactar</span>
+      <span data-lang="en">✉️ Get in touch</span>
+      <span data-lang="de">✉️ Kontakt aufnehmen</span>
+    </button>
+  </div>
+</section>
+
+<!-- DIALOG -->
+<div class="dov" id="dov" onclick="closeDout(event)">
+  <div class="dob">
+    <div class="dot">Alexandru-Ioan Nistoroiu</div>
+    <div class="dos">
+      <span data-lang="es">Elige cómo contactar</span>
+      <span data-lang="en">Choose how to reach me</span>
+      <span data-lang="de">Kontaktmethode wählen</span>
+    </div>
+    <a href="mailto:alexandru.nistoroiu@gmail.com" class="dopt d-email">✉️ alexandru.nistoroiu@gmail.com</a>
+    <a href="https://t.me/JuanittoCalvares" target="_blank" rel="noopener" class="dopt d-tg1">✈️ Telegram — <span data-lang="es">personal</span><span data-lang="en">personal</span><span data-lang="de">persönlich</span></a>
+    <a href="https://t.me/Juanitto_assist_bot" target="_blank" rel="noopener" class="dopt d-tg2">🤖 Telegram — AI assistant 24/7</a>
+    <a href="https://github.com/juanitto-maker" target="_blank" rel="noopener" class="dopt d-gh">💻 GitHub — <span data-lang="es">mis proyectos</span><span data-lang="en">my projects</span><span data-lang="de">meine Projekte</span></a>
+    <button class="dcl" onclick="closeD()">✕ <span data-lang="es">Cerrar</span><span data-lang="en">Close</span><span data-lang="de">Schließen</span></button>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Alexandru-Ioan Nistoroiu · <span data-lang="es">Desarrollador Independiente</span><span data-lang="en">Independent Developer</span><span data-lang="de">Unabhängiger Entwickler</span></p>
+  </div>
+</footer>
+
+<script>
+function openD(){document.getElementById('dov').classList.add('open')}
+function closeD(){document.getElementById('dov').classList.remove('open')}
+function closeDout(e){if(e.target===document.getElementById('dov'))closeD()}
+
+function setLang(l){
+  document.querySelectorAll('[data-lang]').forEach(el=>{
+    el.style.display=el.dataset.lang===l?'':'none';
+  });
+  document.querySelectorAll('[data-l]').forEach(b=>{
+    b.classList.toggle('on',b.dataset.l===l);
+  });
+  try{localStorage.setItem('lang',l)}catch(e){}
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  let l='es';
+  try{l=localStorage.getItem('lang')||navigator.language.slice(0,2)||'es';}catch(e){}
+  if(!['en','es','de'].includes(l))l='es';
+  setLang(l);
+});
+
+function toggleTheme(){
+  const h=document.documentElement;
+  const c=h.getAttribute('data-theme')||'light';
+  const n=c==='dark'?'light':'dark';
+  h.setAttribute('data-theme',n);
+  document.getElementById('ti').textContent=n==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',n)}catch(e){}
+}
+(function(){
+  function applyT(t){
+    document.documentElement.setAttribute('data-theme',t);
+    document.addEventListener('DOMContentLoaded',()=>{
+      const i=document.getElementById('ti');if(i)i.textContent=t==='dark'?'☀️':'🌙';
+    });
+  }
+  try{
+    const s=localStorage.getItem('theme');
+    if(s)applyT(s);
+    else{const h=new Date().getHours();applyT(h>=7&&h<19?'light':'dark');}
+  }catch(e){applyT('light')}
+})();
+</script>
+</body>
+</html>

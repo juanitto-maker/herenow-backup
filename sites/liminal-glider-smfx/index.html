@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Lanjarón Halal — Carnicería Halal Certificada</title>
+<meta name="description" content="Carnicería halal certificada en Lanjarón, Granada. Cordero, ternera, pollo y más productos halal de las Alpujarras.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="dark"]{
+  --bg:#1a1612;--bg-card:#242018;--bg-hero:linear-gradient(160deg,#251f15 0%,#1a1612 100%);
+  --text:#e8dcc8;--text-m:#a89070;--text-h:#f5e8d0;--border:#3d3530;
+  --accent:#c9a84c;--accent2:#8b6f47;--accent-bg:rgba(201,168,76,.12);
+  --overlay:rgba(0,0,0,.55);--chat-user:#c9a84c;--chat-bot:#2a2520;
+  --tg-bg:#17212b;--tg-head:#1c2733;--tg-in:#1e2c3a;--tg-out:#2b5278;
+}
+[data-theme="light"]{
+  --bg:#faf6ef;--bg-card:#fff;--bg-hero:linear-gradient(160deg,#f0ebe0 0%,#faf6ef 100%);
+  --text:#3a2f1f;--text-m:#7a6a52;--text-h:#2a1f10;--border:#e8e2d6;
+  --accent:#b8860b;--accent2:#8b6f47;--accent-bg:rgba(184,134,11,.10);
+  --overlay:rgba(0,0,0,.4);--chat-user:#b8860b;--chat-bot:#f0ebe0;
+  --tg-bg:#c8d3dc;--tg-head:#4a7a9b;--tg-in:#fff;--tg-out:#c8e6ff;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:background .3s,color .3s}
+h1,h2,h3{font-family:'Playfair Display',serif;color:var(--text-h);line-height:1.2}
+
+/* LANG BAR */
+.lb{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--bg-card);border-bottom:1px solid var(--border);display:flex;justify-content:center;gap:.5rem;padding:.4rem .75rem}
+.lbtn{background:none;border:1px solid var(--border);color:var(--text-m);font-size:.75rem;font-weight:600;padding:.22rem .6rem;border-radius:1rem;cursor:pointer;transition:all .2s;letter-spacing:.04em;font-family:'DM Sans',sans-serif}
+.lbtn.on{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* THEME TOGGLE */
+.tt{position:fixed;top:.3rem;right:.75rem;z-index:300;background:var(--bg-card);border:1px solid var(--border);width:2.2rem;height:2.2rem;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.2);transition:all .2s}
+.tt:hover{transform:scale(1.1)}
+
+/* LAYOUT */
+.pw{padding-top:2.7rem}
+.sec{padding:2.4rem 1.25rem;max-width:560px;margin:0 auto}
+.sec-alt{background:var(--bg-card)}
+.div{height:2px;width:3rem;background:var(--accent);margin:.5rem 0 1.25rem;border-radius:1px}
+.eye{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent2);font-weight:600;margin-bottom:.3rem}
+
+/* DEMO BANNER */
+.banner{background:var(--accent-bg);border:1px solid var(--accent);border-radius:.5rem;padding:.55rem .85rem;text-align:center;font-size:.75rem;color:var(--accent);margin:.7rem 1.25rem .3rem}
+
+/* HERO */
+.hero{background:var(--bg-hero);padding:3rem 1.25rem 2.5rem;text-align:center;border-bottom:1px solid var(--border)}
+.hlogo{font-size:3.2rem;margin-bottom:.5rem;animation:sway 3s ease-in-out infinite;display:inline-block}
+@keyframes sway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+.hname{font-size:2rem;font-weight:700;color:var(--accent);margin-bottom:.2rem;font-family:'Playfair Display',serif}
+.htag{font-size:.9rem;color:var(--text-m);margin-bottom:1.1rem}
+.badges{display:flex;justify-content:center;gap:.55rem;flex-wrap:wrap;margin-top:.9rem}
+.badge{background:var(--accent-bg);border:1px solid var(--accent);color:var(--accent);font-size:.7rem;font-weight:600;padding:.28rem .7rem;border-radius:2rem;letter-spacing:.03em}
+
+/* PRODUCTS */
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:1.1rem}
+.pcard{background:var(--bg-card);border:1px solid var(--border);border-radius:.85rem;padding:.95rem .8rem;text-align:center;transition:transform .18s,box-shadow .18s;display:flex;flex-direction:column}
+.pcard:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.13)}
+.pico{font-size:1.9rem;display:block;margin-bottom:.4rem}
+.pnam{font-weight:700;font-size:.86rem;color:var(--text-h);margin-bottom:.18rem}
+.pdsc{font-size:.74rem;color:var(--text-m);line-height:1.4;margin-bottom:.45rem;flex:1}
+.pprc{font-size:.82rem;color:var(--accent);font-weight:700;margin-top:auto}
+
+/* CHAT */
+.cwrap{background:var(--bg-card);border:1px solid var(--border);border-radius:1rem;overflow:hidden;margin-top:1rem}
+.chead{background:var(--accent-bg);border-bottom:1px solid var(--border);padding:.7rem 1rem;display:flex;align-items:center;gap:.6rem}
+.cav{font-size:1.35rem}
+.cname{font-weight:700;font-size:.88rem;color:var(--text-h)}
+.cstat{font-size:.7rem;color:var(--accent)}
+.cmsgs{padding:.9rem;min-height:190px;max-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:.7rem}
+.msg{max-width:86%;padding:.55rem .8rem;border-radius:.85rem;font-size:.84rem;line-height:1.45}
+.mbot{background:var(--chat-bot);border:1px solid var(--border);color:var(--text);align-self:flex-start;border-radius:.85rem .85rem .85rem .1rem}
+.musr{background:var(--accent2);color:#fff;align-self:flex-end;border-radius:.85rem .85rem .1rem .85rem}
+.mtime{font-size:.66rem;opacity:.55;margin-top:.2rem}
+.mthink{font-style:italic;opacity:.65}
+.csugs{padding:0 .75rem .55rem;display:flex;gap:.4rem;flex-wrap:wrap}
+.sbtn{background:var(--accent-bg);border:1px solid var(--border);color:var(--text-m);font-size:.71rem;padding:.26rem .6rem;border-radius:1rem;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.sbtn:hover{border-color:var(--accent);color:var(--accent)}
+.cinp{border-top:1px solid var(--border);padding:.55rem .7rem;display:flex;gap:.45rem;align-items:center}
+.cinput{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:1.5rem;padding:.5rem .95rem;font-size:.84rem;color:var(--text);font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s}
+.cinput:focus{border-color:var(--accent)}
+.csend{background:var(--accent);color:#fff;border:none;width:2.1rem;height:2.1rem;border-radius:50%;cursor:pointer;font-size:.95rem;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.csend:hover{filter:brightness(1.1);transform:scale(1.06)}
+
+/* TELEGRAM */
+.tgphone{background:var(--tg-bg);border-radius:1.2rem;border:2px solid var(--border);overflow:hidden;margin-top:1.1rem;max-width:330px;margin-left:auto;margin-right:auto}
+.tgsbar{background:var(--tg-head);padding:.35rem .7rem;display:flex;justify-content:space-between;font-size:.63rem;color:rgba(255,255,255,.8)}
+.tgtop{background:var(--tg-head);padding:.55rem .7rem;display:flex;align-items:center;gap:.55rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.tgav{width:1.9rem;height:1.9rem;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+.tgbname{font-weight:700;font-size:.8rem;color:#fff}
+.tgbsub{font-size:.65rem;color:rgba(255,255,255,.7)}
+.tgmsgs{padding:.7rem;display:flex;flex-direction:column;gap:.55rem;min-height:270px}
+.tgm{max-width:88%;font-size:.76rem;line-height:1.4}
+.tgin{background:var(--tg-in);color:var(--text-h);padding:.48rem .72rem;border-radius:.55rem .55rem .55rem .1rem;align-self:flex-start}
+.tgout{background:var(--tg-out);color:var(--text-h);padding:.48rem .72rem;border-radius:.55rem .55rem .1rem .55rem;align-self:flex-end}
+.tgt{font-size:.6rem;opacity:.5;margin-top:.18rem;text-align:right}
+.tgalert{background:rgba(201,168,76,.15);border-left:3px solid var(--accent);padding:.38rem .55rem;border-radius:0 .4rem .4rem 0}
+.tglbl{text-align:center;font-size:.67rem;color:rgba(255,255,255,.9);background:rgba(0,0,0,.3);padding:.18rem .55rem;border-radius:1rem;margin:.25rem auto;display:block;width:fit-content}
+.tgibar{background:var(--tg-head);padding:.45rem .7rem;display:flex;align-items:center;gap:.45rem;border-top:1px solid rgba(255,255,255,.06)}
+.tgfi{flex:1;background:rgba(255,255,255,.18);border-radius:1.5rem;padding:.36rem .75rem;font-size:.72rem;color:rgba(255,255,255,.8)}
+.tgsb{width:1.8rem;height:1.8rem;background:rgba(0,0,0,.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;color:#fff}
+
+/* INFO */
+.igrid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:1rem}
+.icard{background:var(--bg-card);border:1px solid var(--border);border-radius:.75rem;padding:.8rem}
+.iico{font-size:1.35rem;margin-bottom:.35rem}
+.ilbl{font-size:.68rem;color:var(--text-m);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.2rem}
+.ival{font-size:.82rem;color:var(--text-h);font-weight:600;line-height:1.4}
+
+/* WA */
+.wabtn{display:flex;align-items:center;justify-content:center;gap:.5rem;background:#25d366;color:#fff;font-weight:700;font-size:.93rem;padding:.8rem 1.4rem;border-radius:2rem;text-decoration:none;margin:1.25rem auto 0;max-width:280px;transition:all .2s;box-shadow:0 4px 16px rgba(37,211,102,.25)}
+.wabtn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+
+/* FOOTER */
+.footer{text-align:center;padding:2rem 1.25rem 3rem;border-top:1px solid var(--border);color:var(--text-m);font-size:.77rem;line-height:1.9}
+.footer strong{color:var(--accent)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.fu{animation:fadeUp .4s ease-out}
+
+/* FOOTER LINK */
+.dai-link{background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:inherit;padding:0;color:var(--accent);font-weight:700;text-decoration:underline dotted;text-underline-offset:3px;opacity:.85;transition:opacity .2s}
+.dai-link:hover{opacity:1}
+
+/* CONTACT DIALOG */
+.cdov{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:500;display:none;align-items:flex-end;justify-content:center;padding:1rem}
+.cdov.open{display:flex}
+.cdob{background:var(--bg-card);border:1px solid var(--border);border-radius:1.25rem 1.25rem 1rem 1rem;padding:1.5rem 1.25rem 1.25rem;width:100%;max-width:340px;text-align:center;animation:su .22s ease-out}
+@keyframes su{from{transform:translateY(32px);opacity:0}to{transform:none;opacity:1}}
+.cd-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--text-h);margin-bottom:.2rem}
+.cd-sub{font-size:.72rem;color:var(--text-m);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1.25rem}
+.cd-btns{display:flex;justify-content:center;gap:1.5rem;margin-bottom:1.25rem}
+.cd-btn{display:flex;flex-direction:column;align-items:center;gap:.35rem;text-decoration:none;transition:all .2s;opacity:.75}
+.cd-btn:hover{opacity:1;transform:translateY(-2px)}
+.cd-btn svg{width:2.4rem;height:2.4rem;border-radius:50%;padding:.4rem}
+.cd-email svg{background:rgba(201,168,76,.15);color:var(--accent);stroke:var(--accent)}
+.cd-tg svg{background:rgba(0,136,204,.15);color:#0088cc}
+.cd-lbl{font-size:.62rem;color:var(--text-m);letter-spacing:.05em;text-transform:uppercase;font-weight:600}
+.cd-cancel{background:none;border:1px solid var(--border);color:var(--text-m);font-size:.78rem;padding:.38rem 1.4rem;border-radius:.5rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.cd-cancel:hover{border-color:var(--accent);color:var(--accent)}
+
+/* SCROLLBAR */
+.cmsgs::-webkit-scrollbar{width:3px}
+.cmsgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+/* WHY SECTION */
+.wgrid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:1.1rem}
+.wcard{background:var(--bg);border:1px solid var(--border);border-radius:.85rem;padding:1rem .85rem;transition:transform .18s,box-shadow .18s}
+.wcard:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.13)}
+.wcard-odoo{grid-column:1/-1;border-color:var(--accent);background:var(--accent-bg)}
+.wico{font-size:1.6rem;display:block;margin-bottom:.4rem}
+.wtit{font-weight:700;font-size:.86rem;color:var(--text-h);margin-bottom:.3rem}
+.wdsc{font-size:.77rem;color:var(--text-m);line-height:1.45}
+.odoo-badge{margin-top:.6rem;background:var(--bg-card);border:1px solid var(--accent);border-radius:.5rem;padding:.3rem .65rem;font-size:.72rem;color:var(--accent);font-weight:600;display:inline-block}
+
+/* RTL */
+[dir="rtl"] .msg{text-align:right}
+</style>
+</head>
+<body>
+
+<div class="lb">
+  <button class="lbtn on" data-l="es" onclick="setLang('es')">ES</button>
+  <button class="lbtn" data-l="ar" onclick="setLang('ar')">عربي</button>
+  <button class="lbtn" data-l="en" onclick="setLang('en')">EN</button>
+</div>
+<button class="tt" onclick="toggleTheme()" aria-label="Toggle theme"><span id="ti">🌙</span></button>
+
+<div class="pw">
+
+<div class="banner">
+  <span data-lang="es">🛠️ Demo interactiva · Así quedaría tu web con asistente IA integrado</span>
+  <span data-lang="ar" style="display:none;font-family:'Amiri',serif;font-size:.82rem">🛠️ عرض تجريبي تفاعلي · هكذا سيبدو موقعك مع المساعد الذكي المدمج</span>
+  <span data-lang="en" style="display:none">🛠️ Interactive demo · This is how your site would look with an integrated AI assistant</span>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hlogo">🥩</div>
+  <div class="hname">Lanjarón Halal</div>
+  <div class="htag">
+    <span data-lang="es">Carnicería halal certificada · Lanjarón, Granada</span>
+    <span data-lang="ar" style="display:none;font-family:'Amiri',serif;font-size:1rem">جزارة حلال معتمدة · لانخارون، غرناطة</span>
+    <span data-lang="en" style="display:none">Certified halal butcher · Lanjarón, Granada</span>
+  </div>
+  <div class="badges">
+    <span class="badge">✅ Halal Certificado</span>
+    <span class="badge">🏔️ Alpujarras</span>
+    <span class="badge">🌿 Producto Local</span>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<div class="sec">
+  <div class="eye">
+    <span data-lang="es">Nuestros productos</span>
+    <span data-lang="ar" style="display:none;font-family:'Amiri',serif">منتجاتنا</span>
+    <span data-lang="en" style="display:none">Our products</span>
+  </div>
+  <h2 style="font-size:1.45rem">
+    <span data-lang="es">Carne Halal de Calidad</span>
+    <span data-lang="ar" style="display:none;font-family:'Amiri',serif">لحوم حلال عالية الجودة</span>
+    <span data-lang="en" style="display:none">Quality Halal Meat</span>
+  </h2>
+  <div class="div"></div>
+  <div class="pgrid">
+    <div class="pcard">
+      <span class="pico">🐑</span>
+      <div class="pnam"><span data-lang="es">Cordero</span><span data-lang="ar" style="display:none;font-family:'Amiri',serif">خروف</span><span data-lang="en" style="display:none">Lamb</span></div>
+      <div class="pdsc"><span data-lang="es">De las sierras de Alpujarra, fresco y tierno</span><span data-lang="ar" style="display:none;font-family:'Amiri',serif">من جبال البوخرة، طازج وطري</span><span data-lang="en" style="display:none">From Alpujarra mountains, fresh & tender</span></div>
+      <div class="pprc">desde 20€/kg</div>
+    </div>
+    <div class="pcard">
+      <span class="pico">🐄</span>
+      <div class="pnam"><span data-lang="es">Ternera</span><span data-lang="ar" style="display:none;font-family:'Amiri',serif">بقر</span><span data-lang="en" style="display:none">Beef</span></div>
+      <div class="pdsc"><span data-lang="es">Cortes seleccionados, sacrificio halal</span><span data-lang="ar" style="display:none;font-family:'Amiri',serif">قطع مختارة، ذبح حلال</span><span data-lang="en" style="display:none">Selected cuts, halal slaughter</span></div>
+      <div class="pprc">desde 16€/kg</div>
+    </div>
+    <div class="pcard">
+      <span class="pico">🐔</span>
+      <div class="pnam"><span data-lang="es">Pollo</span><span data-lang="ar" style="display:none;font-family:'Amiri',serif">دجاج</span><span data-lang="en" style="display:none">Chicken</span></div>
+      <div class="pdsc"><span data-lang="es">Entero o en piezas, certificado halal</span><span data-lang="ar" style="display:none;font-family:'Amiri',serif">كامل أو قطع، معتمد حلال</span><span data-lang="en" style="display:none">Whole or pieces, halal certified</span></div>
+      <div class="pprc">desde 7€/kg</div>
+    </div>
+    <div class="pcard">
+      <span class="pico">🐐</span>
+      <div class="pnam"><span data-lang="es">Chivo</span><span data-lang="ar" style="display:none;font-family:'Amiri',serif">ماعز</span><span data-lang="en" style="display:none">Goat</span></div>
+      <div class="pdsc"><span data-lang="es">Criado en libertad, sierra granadina</span><span data-lang="ar" style="display:none;font-family:'Amiri',serif">تربية حرة في جبال غرناطة</span><span data-lang="en" style="display:none">Free-range, Granada mountains</span></div>
+      <div class="pprc">desde 18€/kg</div>
+    </div>
+    <div class="pcard">
+      <span class="pico">🌶️</span>
+      <div class="pnam"><span data-lang="es">Especias</span><span data-lang="ar" style="display:none;font-family:'Amiri',serif">توابل</span><span data-lang="en" style="display:none">Spices</span></div>
+      <div class="pdsc"><span data-lang="es">Chermoula, ras el hanout, mezclas árabes</span><span data-lang="ar" style="display:none;font-family:'Amiri',serif">شرمولة، رأس الحانوت، خلطات عربية</span><span data-lang="en" style="display:none">Chermoula, ras el hanout, Arabic blends</span></div>
+      <div class="pprc">desde 4€/bote</div>
+    </div>
+    <div class="pcard">
+      <span class="pico">🥙</span>
+      <div class="pnam"><span data-lang="es">Embutidos Halal</span><span data-lang="ar" style="display:none;font-family:'Amiri',serif">لحوم مصنعة</span><span data-lang="en" style="display:none">Halal Deli</span></div>
+      <div class="pdsc"><span data-lang="es">Merguez, kefta, albóndigas preparadas</span><span data-lang="ar" style="display:none;font-family:'Amiri',serif">مرقاز، كفتة، كرات اللحم</span><span data-lang="en" style="display:none">Merguez, kefta, meatballs</span></div>
+      <div class="pprc">desde 12€/kg</div>
+    </div>
+  </div>
+</div>
+
+<!-- AI CHAT -->
+<div class="sec sec-alt">
+  <div class="eye">
+    <span data-lang="es">Asistente IA · 24/7</span>
+    <span data-lang="ar" style="display:none;font-family:'Amiri',serif">المساعد الذكي · ٢٤/٧</span>
+    <span data-lang="en" style="display:none">AI Assistant · 24/7</span>
+  </div>
+  <h2 style="font-size:1.45rem">
+    <span data-lang="es">¿Tienes una pregunta?</span>
+    <span data-lang="ar" style="display:none;font-family:'Amiri',serif">هل لديك سؤال؟</span>
+    <span data-lang="en" style="display:none">Got a question?</span>
+  </h2>
+  <div class="div"></div>
+  <p style="font-size:.84rem;color:var(--text-m);margin-bottom:.8rem">
+    <span data-lang="es">Nuestro asistente responde al instante en español, árabe e inglés — disponible siempre.</span>
+    <span data-lang="ar" style="display:none;font-family:'Amiri',serif">مساعدنا يجيب فوراً بالعربية والإسبانية والإنجليزية — متاح دائماً.</span>
+    <span data-lang="en" style="display:none">Our assistant responds instantly in Spanish, Arabic and English — always available.</span>
+  </p>
+  <div class="cwrap">
+    <div class="chead">
+      <span class="cav">🤖</span>
+      <div>
+        <div class="cname">Lanjarón Halal Bot</div>
+        <div class="cstat">
+          <span data-lang="es">● En línea ahora</span>
+          <span data-lang="ar" style="display:none;font-family:'Amiri',serif">● متاح الآن</span>
+          <span data-lang="en" style="display:none">● Online now</span>
+        </div>
+      </div>
+    </div>
+    <div class="cmsgs" id="chatMsgs">
+      <div class="msg mbot fu">
+        <div id="welmsg">¡Hola! Soy el asistente de Lanjarón Halal 🥩 ¿En qué puedo ayudarte? Pregúntame sobre productos, precios u horarios.</div>
+        <div class="mtime">ahora</div>
+      </div>
+    </div>
+    <div class="csugs" id="chatSugs">
+      <button class="sbtn" onclick="sendSug(this)">¿Qué productos tenéis?</button>
+      <button class="sbtn" onclick="sendSug(this)">Precio del cordero</button>
+      <button class="sbtn" onclick="sendSug(this)">¿Estáis abiertos hoy?</button>
+      <button class="sbtn" onclick="sendSug(this)">هل اللحم حلال؟</button>
+    </div>
+    <div class="cinp">
+      <input class="cinput" id="chatIn" type="text" placeholder="Escribe tu pregunta..." onkeydown="if(event.key==='Enter')sendMsg()">
+      <button class="csend" onclick="sendMsg()">➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- TELEGRAM OWNER PREVIEW -->
+<div class="sec">
+  <div class="eye">
+    <span data-lang="es">Panel del dueño</span>
+    <span data-lang="ar" style="display:none;font-family:'Amiri',serif">لوحة المالك</span>
+    <span data-lang="en" style="display:none">Owner panel</span>
+  </div>
+  <h2 style="font-size:1.45rem">
+    <span data-lang="es">Tu bot de Telegram</span>
+    <span data-lang="ar" style="display:none;font-family:'Amiri',serif">بوت تيليغرام الخاص بك</span>
+    <span data-lang="en" style="display:none">Your Telegram bot</span>
+  </h2>
+  <div class="div"></div>
+  <p style="font-size:.84rem;color:var(--text-m);margin-bottom:.8rem">
+    <span data-lang="es">Gestiona tu carnicería desde el móvil. Informes diarios, alertas de stock y consultas de clientes — todo en Telegram.</span>
+    <span data-lang="ar" style="display:none;font-family:'Amiri',serif">أدر جزارتك من هاتفك. تقارير يومية وتنبيهات المخزون واستفسارات العملاء — كل شيء في تيليغرام.</span>
+    <span data-lang="en" style="display:none">Manage your shop from your phone. Daily reports, stock alerts and customer queries — all in Telegram.</span>
+  </p>
+  <div class="tgphone">
+    <div class="tgsbar"><span>9:41</span><span>📶 🔋</span></div>
+    <div class="tgtop">
+      <div class="tgav">🤖</div>
+      <div><div class="tgbname">Lanjarón Halal Bot</div><div class="tgbsub">bot</div></div>
+    </div>
+    <div class="tgmsgs">
+      <span class="tglbl">Hoy · 8:00</span>
+      <div class="tgm tgin">
+        <div class="tgalert">
+          🌅 <strong>Buenos días, Yacub</strong><br>
+          📊 Ayer · <strong>23 ventas</strong> · 487€<br>
+          🔝 Más vendido: Cordero 8 kg<br>
+          ⚠️ Stock bajo: Merguez (1.2 kg)
+        </div>
+        <div class="tgt">8:00 ✓✓</div>
+      </div>
+      <span class="tglbl">10:32</span>
+      <div class="tgm tgin">
+        ⚠️ <strong>Alerta de stock</strong><br>
+        Pollo entero → solo 2 unidades<br>
+        ¿Te recuerdo pedir mañana?
+        <div class="tgt">10:32 ✓✓</div>
+      </div>
+      <div class="tgm tgout">
+        sí, recuérdame a las 9
+        <div class="tgt">10:33 ✓✓</div>
+      </div>
+      <div class="tgm tgin">
+        ✅ Recordatorio guardado para mañana 9:00
+        <div class="tgt">10:33 ✓✓</div>
+      </div>
+      <span class="tglbl">14:15</span>
+      <div class="tgm tgin">
+        💬 <strong>Pregunta de cliente (web)</strong><br>
+        <em>"¿Tenéis chivo para el fin de semana?"</em><br>
+        Bot respondió ✅ Sí, disponible
+        <div class="tgt">14:15 ✓✓</div>
+      </div>
+    </div>
+    <div class="tgibar">
+      <div class="tgfi">Escribe un mensaje...</div>
+      <div class="tgsb">➤</div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY THIS SOLUTION -->
+<div class="sec sec-alt">
+  <div class="eye">
+    <span data-lang="es">¿Por qué esta solución?</span>
+    <span data-lang="ar" style="display:none;font-family:'Amiri',serif">لماذا هذا الحل؟</span>
+    <span data-lang="en" style="display:none">Why this solution?</span>
+  </div>
+  <h2 style="font-size:1.45rem">
+    <span data-lang="es">Hecho para tu negocio</span>
+    <span data-lang="ar" style="display:none;font-family:'Amiri',serif">مصمم لعملك</span>
+    <span data-lang="en" style="display:none">Built for your business</span>
+  </h2>
+  <div class="div"></div>
+  <div class="wgrid">
+    <div class="wcard">
+      <span class="wico">☁️</span>
+      <div class="wtit">
+        <span data-lang="es">Siempre activo</span>
+        <span data-lang="ar" style="display:none;font-family:'Amiri',serif">متاح دائماً</span>
+        <span data-lang="en" style="display:none">Always on</span>
+      </div>
+      <div class="wdsc">
+        <span data-lang="es">Corre en la nube — sin ordenador encendido, sin mantenimiento técnico de tu parte.</span>
+        <span data-lang="ar" style="display:none;font-family:'Amiri',serif">يعمل في السحابة — بدون حاسوب مشغّل، بدون أي صيانة تقنية من طرفك.</span>
+        <span data-lang="en" style="display:none">Runs in the cloud — no laptop to keep on, no technical maintenance on your side.</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <span class="wico">🔒</span>
+      <div class="wtit">
+        <span data-lang="es">Seguro por diseño</span>
+        <span data-lang="ar" style="display:none;font-family:'Amiri',serif">آمن بالتصميم</span>
+        <span data-lang="en" style="display:none">Secure by design</span>
+      </div>
+      <div class="wdsc">
+        <span data-lang="es">Sin acceso al sistema de tu tienda ni tus archivos. Solo llamadas API controladas.</span>
+        <span data-lang="ar" style="display:none;font-family:'Amiri',serif">بدون وصول إلى نظام متجرك أو ملفاتك. فقط استدعاءات API محكومة.</span>
+        <span data-lang="en" style="display:none">No access to your shop system or files. Only controlled API calls.</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <span class="wico">📱</span>
+      <div class="wtit">
+        <span data-lang="es">Todo en Telegram</span>
+        <span data-lang="ar" style="display:none;font-family:'Amiri',serif">كل شيء في تيليغرام</span>
+        <span data-lang="en" style="display:none">All in Telegram</span>
+      </div>
+      <div class="wdsc">
+        <span data-lang="es">Sin apps nuevas que aprender. Gestionas tu carnicería desde el chat que ya usas.</span>
+        <span data-lang="ar" style="display:none;font-family:'Amiri',serif">بدون تطبيقات جديدة. تدير جزارتك من المحادثة التي تستخدمها مسبقاً.</span>
+        <span data-lang="en" style="display:none">No new apps to learn. Manage your shop from the chat you already use.</span>
+      </div>
+    </div>
+    <div class="wcard">
+      <span class="wico">📊</span>
+      <div class="wtit">
+        <span data-lang="es">Gestión desde el chat</span>
+        <span data-lang="ar" style="display:none;font-family:'Amiri',serif">الإدارة من المحادثة</span>
+        <span data-lang="en" style="display:none">Manage from the chat</span>
+      </div>
+      <div class="wdsc">
+        <span data-lang="es">Consulta stock, ventas y pedidos directamente en Telegram, conectado a tu Odoo.</span>
+        <span data-lang="ar" style="display:none;font-family:'Amiri',serif">استعلم عن المخزون والمبيعات والطلبات مباشرة في تيليغرام، متصل بـ Odoo.</span>
+        <span data-lang="en" style="display:none">Check stock, sales and orders directly in Telegram, connected to your Odoo.</span>
+      </div>
+    </div>
+    <div class="wcard wcard-odoo">
+      <span class="wico">🔗</span>
+      <div class="wtit">
+        <span data-lang="es">Conectado a tu Odoo</span>
+        <span data-lang="ar" style="display:none;font-family:'Amiri',serif">متصل بنظام Odoo الخاص بك</span>
+        <span data-lang="en" style="display:none">Connected to your Odoo</span>
+      </div>
+      <div class="wdsc">
+        <span data-lang="es">El asistente consulta tu Odoo en tiempo real — stock, pedidos, ventas — sin duplicar trabajo.</span>
+        <span data-lang="ar" style="display:none;font-family:'Amiri',serif">يستعلم المساعد من Odoo في الوقت الفعلي — المخزون، الطلبات، المبيعات — بدون تكرار العمل.</span>
+        <span data-lang="en" style="display:none">The assistant queries your Odoo in real time — stock, orders, sales — with no duplicated work.</span>
+      </div>
+      <div class="odoo-badge">
+        <span data-lang="es">✅ Ya usas Odoo · integración directa</span>
+        <span data-lang="ar" style="display:none;font-family:'Amiri',serif">✅ تستخدم Odoo بالفعل · تكامل مباشر</span>
+        <span data-lang="en" style="display:none">✅ You already use Odoo · direct integration</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INFO -->
+<div class="sec sec-alt">
+  <div class="eye">
+    <span data-lang="es">Visítanos</span>
+    <span data-lang="ar" style="display:none;font-family:'Amiri',serif">زورونا</span>
+    <span data-lang="en" style="display:none">Visit us</span>
+  </div>
+  <h2 style="font-size:1.45rem">
+    <span data-lang="es">Dónde y cuándo</span>
+    <span data-lang="ar" style="display:none;font-family:'Amiri',serif">أين ومتى</span>
+    <span data-lang="en" style="display:none">Where &amp; when</span>
+  </h2>
+  <div class="div"></div>
+  <div class="igrid">
+    <div class="icard">
+      <div class="iico">📍</div>
+      <div class="ilbl"><span data-lang="es">Ubicación</span><span data-lang="ar" style="display:none">الموقع</span><span data-lang="en" style="display:none">Location</span></div>
+      <div class="ival">Lanjarón<br>Granada · Alpujarras</div>
+    </div>
+    <div class="icard">
+      <div class="iico">🕐</div>
+      <div class="ilbl"><span data-lang="es">Horario</span><span data-lang="ar" style="display:none">الأوقات</span><span data-lang="en" style="display:none">Hours</span></div>
+      <div class="ival">L–V 9–14 / 17–20<br>Sábado 9–14</div>
+    </div>
+    <div class="icard">
+      <div class="iico">🙏</div>
+      <div class="ilbl"><span data-lang="es">Certificación</span><span data-lang="ar" style="display:none">الاعتماد</span><span data-lang="en" style="display:none">Cert.</span></div>
+      <div class="ival"><span data-lang="es">Sacrificio halal certificado</span><span data-lang="ar" style="display:none;font-family:'Amiri',serif">ذبح حلال معتمد</span><span data-lang="en" style="display:none">Certified halal slaughter</span></div>
+    </div>
+    <div class="icard">
+      <div class="iico">🤖</div>
+      <div class="ilbl"><span data-lang="es">Asistente IA</span><span data-lang="ar" style="display:none">المساعد</span><span data-lang="en" style="display:none">AI Bot</span></div>
+      <div class="ival"><span data-lang="es">24/7 · ES / AR / EN</span><span data-lang="ar" style="display:none;font-family:'Amiri',serif">٢٤/٧ · عربي / إسب / إنج</span><span data-lang="en" style="display:none">24/7 · ES / AR / EN</span></div>
+    </div>
+  </div>
+  <a href="https://wa.me/34722814777" class="wabtn" target="_blank">
+    <span>💬</span>
+    <span data-lang="es">Escríbenos en WhatsApp</span>
+    <span data-lang="ar" style="display:none;font-family:'Amiri',serif">راسلنا على واتساب</span>
+    <span data-lang="en" style="display:none">Message us on WhatsApp</span>
+  </a>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>Lanjarón Halal</strong><br>
+  Lanjarón · Granada · Las Alpujarras<br><br>
+  <span style="font-size:.7rem;opacity:.55">
+    <span data-lang="es">Web + asistente IA por</span>
+    <span data-lang="ar" style="display:none">الموقع والمساعد الذكي بواسطة</span>
+    <span data-lang="en" style="display:none">Web + AI assistant by</span>
+    <button class="dai-link" onclick="openCd()" aria-label="Contact digitalAIventures"><strong>digitalAIventures</strong></button>
+  </span>
+</div>
+
+</div><!-- /pw -->
+
+<!-- CONTACT DIALOG -->
+<div class="cdov" id="cdov" onclick="closeCdOut(event)">
+  <div class="cdob">
+    <div class="cd-title">digitalAIventures</div>
+    <div class="cd-sub">
+      <span data-lang="es">Contacto</span>
+      <span data-lang="ar" style="display:none;font-family:'Amiri',serif">تواصل</span>
+      <span data-lang="en" style="display:none">Get in touch</span>
+    </div>
+    <div class="cd-btns">
+      <a href="mailto:digitalAIventures.LLC@gmail.com" class="cd-btn cd-email" aria-label="Email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="2.5"/>
+          <polyline points="2,4 12,13 22,4"/>
+        </svg>
+        <span class="cd-lbl">
+          <span data-lang="es">Email</span>
+          <span data-lang="ar" style="display:none">بريد</span>
+          <span data-lang="en" style="display:none">Email</span>
+        </span>
+      </a>
+      <a href="https://t.me/Juanitto_assist_bot?start=lanjaron" class="cd-btn cd-tg" target="_blank" rel="noopener" aria-label="AI Assistant">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+        </svg>
+        <span class="cd-lbl">
+          <span data-lang="es">Bot IA</span>
+          <span data-lang="ar" style="display:none">بوت</span>
+          <span data-lang="en" style="display:none">AI Bot</span>
+        </span>
+      </a>
+      <a href="https://t.me/JuanittoCalvares" class="cd-btn cd-tg" target="_blank" rel="noopener" aria-label="Personal">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+        </svg>
+        <span class="cd-lbl">
+          <span data-lang="es">Personal</span>
+          <span data-lang="ar" style="display:none">شخصي</span>
+          <span data-lang="en" style="display:none">Personal</span>
+        </span>
+      </a>
+    </div>
+    <button class="cd-cancel" onclick="closeCd()">
+      <span data-lang="es">Cerrar</span>
+      <span data-lang="ar" style="display:none">إغلاق</span>
+      <span data-lang="en" style="display:none">Close</span>
+    </button>
+  </div>
+</div>
+
+<script>
+const GKEY='AIzaSyCFq_oIiaNIO5VYoDvT94oA5RN-Hx_LCFc';
+const GURL=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GKEY}`;
+const SYS=`Eres el asistente virtual de Lanjarón Halal, una carnicería halal certificada en Lanjarón, Granada (Las Alpujarras, España).
+
+TIENDA:
+- Nombre: Lanjarón Halal | Propietario: Yacub
+- Ubicación: Lanjarón, Granada, Las Alpujarras, España
+- Horario: Lunes–Viernes 9:00–14:00 y 17:00–20:00, Sábados 9:00–14:00, Domingos cerrado
+- Certificación: sacrificio halal certificado en todos los productos
+
+TERNERA — desde 16€/kg
+Cortes disponibles: solomillo, entrecot, lomo alto, lomo bajo, aguja, falda, jarrete, carrillada, costillas, carne picada. Ideal para asados, guisos y barbacoa.
+
+CORDERO — desde 20€/kg
+Cortes disponibles: pierna, paletilla, costillas, chuletas, cuello, espaldilla, carne picada de cordero. Animal local de las Alpujarras, tierno y de sabor intenso.
+
+POLLO — desde 7€/kg
+Disponible entero o en piezas: pechuga, muslos, contramuslos, alitas, carcasa para caldo. Sacrificio halal certificado.
+
+CHIVO — desde 18€/kg
+Cortes disponibles: pierna, paletilla, costillas, cuello. Criado en libertad en la sierra granadina. Producto de temporada — consultar disponibilidad.
+
+EMBUTIDOS Y PREPARADOS HALAL — desde 12€/kg
+Merguez (fresca o congelada), kefta lista para asar, hamburguesas halal congeladas, albóndigas, brochetas de cordero.
+
+ESPECIAS — desde 4€/bote
+Chermoula, ras el hanout, mezcla para kefta, baharat, comino, pimentón dulce y picante.
+
+REGLAS:
+- Detecta el idioma del usuario y responde siempre en ese idioma (español, árabe o inglés)
+- Sé amable, concreto y útil — menciona cortes específicos cuando pregunten
+- Máximo 3–4 líneas por respuesta
+- Para disponibilidad exacta o precios de cortes específicos, invita a llamar o visitar
+- Termina siempre con una pregunta corta o invitación a la tienda
+- NO saludes con "¡Hola!" en cada respuesta — solo en el primer mensaje
+- Mantén el contexto de la conversación, no repitas lo ya dicho`;
+
+let hist=[];
+function now(){return new Date().toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'})}
+
+function addMsg(txt,role){
+  const c=document.getElementById('chatMsgs');
+  const d=document.createElement('div');
+  d.className=`msg ${role==='user'?'musr':'mbot'} fu`;
+  d.innerHTML=`<div>${txt}</div><div class="mtime">${now()}</div>`;
+  c.appendChild(d);c.scrollTop=c.scrollHeight;
+  return d;
+}
+
+async function sendMsg(){
+  const inp=document.getElementById('chatIn');
+  const txt=inp.value.trim();if(!txt)return;
+  inp.value='';
+  document.getElementById('chatSugs').style.display='none';
+  addMsg(txt,'user');
+  const t=addMsg('<span class="mthink">...</span>','bot');
+  hist.push({role:'user',parts:[{text:txt}]});
+  if(GKEY==='GEMINI_KEY_HERE'){
+    t.innerHTML=`<div>⚙️ <em>Demo: introduce tu clave Gemini en el código para activar el chat en vivo.</em></div><div class="mtime">${now()}</div>`;
+    return;
+  }
+  try{
+    const r=await fetch(GURL,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({system_instruction:{parts:[{text:SYS}]},contents:hist,generationConfig:{maxOutputTokens:600,temperature:0.7}})});
+    const d=await r.json();
+    const fallbacks={es:'Disculpa, en este momento no puedo responder. ¡Visítanos en la tienda! 🥩',ar:'عذراً، لا أستطيع الرد الآن. زورونا في المتجر! 🥩',en:'Sorry, I cannot respond right now. Please visit us in store! 🥩'};
+    const rep=d.candidates?.[0]?.content?.parts?.[0]?.text||fallbacks[CL]||fallbacks.es;
+    t.innerHTML=`<div>${rep.replace(/\n/g,'<br>')}</div><div class="mtime">${now()}</div>`;
+    hist.push({role:'model',parts:[{text:rep}]});
+  }catch(e){
+    t.innerHTML=`<div>⚠️ Error de conexión. Por favor visítanos o llámanos directamente.</div><div class="mtime">${now()}</div>`;
+  }
+}
+
+function sendSug(b){document.getElementById('chatIn').value=b.textContent;sendMsg()}
+
+function openCd(){document.getElementById('cdov').classList.add('open')}
+function closeCd(){document.getElementById('cdov').classList.remove('open')}
+function closeCdOut(e){if(e.target===document.getElementById('cdov'))closeCd()}
+
+let CL='es';
+const WELMSG={
+  es:'¡Hola! Soy el asistente de Lanjarón Halal 🥩 ¿En qué puedo ayudarte? Pregúntame sobre productos, precios u horarios.',
+  ar:'أهلاً! أنا مساعد لانخارون حلال 🥩 كيف يمكنني مساعدتك؟ اسألني عن المنتجات والأسعار وأوقات العمل.',
+  en:'Hello! I\'m the Lanjarón Halal assistant 🥩 How can I help? Ask me about products, prices or opening hours.'
+};
+const PHDR={es:'Escribe tu pregunta...',ar:'اكتب سؤالك...',en:'Type your question...'};
+const SUGS={
+  es:['¿Qué productos tenéis?','Precio del cordero','¿Estáis abiertos hoy?','هل اللحم حلال؟'],
+  ar:['ما هي منتجاتكم؟','سعر لحم الخروف','هل أنتم مفتوحون اليوم؟','¿Hay chivo disponible?'],
+  en:['What products do you have?','Price of lamb?','Are you open today?','Is the meat halal certified?']
+};
+
+function setLang(l){
+  CL=l;
+  document.querySelectorAll('[data-lang]').forEach(el=>{el.style.display=el.dataset.lang===l?'':' none'});
+  document.querySelectorAll('[data-l]').forEach(b=>b.classList.toggle('on',b.dataset.l===l));
+  const ci=document.getElementById('chatIn');if(ci)ci.placeholder=PHDR[l]||PHDR.es;
+  const wm=document.getElementById('welmsg');if(wm)wm.textContent=WELMSG[l]||WELMSG.es;
+  const sg=document.getElementById('chatSugs');
+  if(sg&&hist.length===0)sg.innerHTML=(SUGS[l]||SUGS.es).map(s=>`<button class="sbtn" onclick="sendSug(this)">${s}</button>`).join('');
+  document.body.style.direction=l==='ar'?'rtl':'ltr';
+  try{localStorage.setItem('lang',l)}catch(e){}
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  let l='es';
+  try{l=localStorage.getItem('lang')||navigator.language.slice(0,2)||'es'}catch(e){}
+  if(!['en','es','ar'].includes(l))l='es';
+  setLang(l);
+  // Fix: make sure all lang elements are properly shown
+  document.querySelectorAll('[data-lang]').forEach(el=>{
+    el.style.display=el.dataset.lang===l?'':'none';
+  });
+});
+
+// THEME
+function toggleTheme(){
+  const h=document.documentElement;
+  const n=h.getAttribute('data-theme')==='dark'?'light':'dark';
+  h.setAttribute('data-theme',n);
+  document.getElementById('ti').textContent=n==='dark'?'🌙':'☀️';
+  try{localStorage.setItem('theme',n)}catch(e){}
+}
+(function(){
+  function apply(t){
+    document.documentElement.setAttribute('data-theme',t);
+    document.addEventListener('DOMContentLoaded',()=>{
+      const i=document.getElementById('ti');if(i)i.textContent=t==='dark'?'🌙':'☀️';
+    });
+  }
+  try{const s=localStorage.getItem('theme');if(s)apply(s);else{const h=new Date().getHours();apply(h>=7&&h<19?'light':'dark')}}catch(e){apply('dark')}
+})();
+</script>
+</body>
+</html>
