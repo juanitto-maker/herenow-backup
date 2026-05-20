@@ -90,7 +90,7 @@ jobs:
 
           echo "BACKUP_OK=$OK" >> "$GITHUB_ENV"
           echo "BACKUP_FAILED=${#FAILED[@]}" >> "$GITHUB_ENV"
-          echo "BACKUP_DATE=$(date -u '+%Y-%m-%d')" >> "$GITHUB_ENV"
+          echo "BACKUP_DATE=$(date -u '+%Y-%m-%d %H:%M UTC')" >> "$GITHUB_ENV"
           echo "BACKUP_FAILED_SLUGS=${FAILED[*]:-none}" >> "$GITHUB_ENV"
           echo "CHANGED_SLUGS=${CHANGED[*]}" >> "$GITHUB_ENV"
 
@@ -141,13 +141,12 @@ jobs:
 
       - name: Create/update zip (full backup)
         run: |
-          DATE=$(date -u '+%Y-%m-%d')
-          ZIP="zips/herenow-backup-${DATE}.zip"
+          DATESTAMP=$(date -u '+%Y-%m-%d-%H%M')
+          ZIP="zips/herenow-backup-${DATESTAMP}.zip"
 
-          # Always export the download URL (deterministic from date)
-          echo "ZIP_URL=https://github.com/juanitto-maker/herenow-backup/raw/main/zips/herenow-backup-${DATE}.zip" >> "$GITHUB_ENV"
+          echo "ZIP_URL=https://github.com/juanitto-maker/herenow-backup/raw/main/zips/herenow-backup-${DATESTAMP}.zip" >> "$GITHUB_ENV"
 
-          # Skip if today's zip already exists and nothing changed
+          # Skip if this zip already exists and nothing changed
           if [ -f "$ZIP" ] && [ -z "$CHANGED_SLUGS" ]; then
             echo "No changes and zip already exists — skipping"
             echo "ZIPPED=false" >> "$GITHUB_ENV"
@@ -158,59 +157,83 @@ jobs:
             echo "Building ${ZIP}..."
             python3 <<'PY'
           import zipfile, json, os, datetime, re
-          date = datetime.datetime.utcnow().strftime('%Y-%m-%d')
-          zip_path = f'zips/herenow-backup-{date}.zip'
-          folder = f'herenow-backup-{date}'
+          now = datetime.datetime.utcnow()
+          datestamp = now.strftime('%Y-%m-%d-%H%M')
+          zip_path = f'zips/herenow-backup-{datestamp}.zip'
+          backup_date = now.strftime('%Y-%m-%d %H:%M UTC')
+          repo = 'juanitto-maker/herenow-backup'
+          pages_base = f'https://{repo.split("/")[0]}.github.io/{repo.split("/")[1]}'
           with open('titles.json') as f:
               titles = json.load(f)
           with open('slugs.txt') as f:
               slugs = [l.strip() for l in f if l.strip() and not l.startswith('#')]
-          backup_date = datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
-          manifest = []
+
+          def human_size(b):
+              for u in ['B','kB','MB']:
+                  if b < 1024:
+                      return f'{b:.1f} {u}' if u != 'B' else f'{b} {u}'
+                  b /= 1024
+              return f'{b:.1f} GB'
+
+          def safe_filename(title, slug):
+              name = re.sub(r'[<>:"/\\|?*\x00-\x1f]', '', title).strip().rstrip('.')
+              return name if name else slug
+
+          sites = []
+          total_bytes = 0
           for slug in slugs:
               html_path = f'sites/{slug}/index.html'
               entry = titles.get(slug, {})
               title = entry.get('title', slug) if isinstance(entry, dict) else slug
               ok = os.path.exists(html_path) and os.path.getsize(html_path) > 0
-              manifest.append({
+              size = os.path.getsize(html_path) if ok else 0
+              if ok:
+                  total_bytes += size
+              sites.append({
                   'slug': slug,
                   'title': title,
-                  'url': f'https://{slug}.here.now/',
-                  'backup_date': backup_date,
-                  'size_bytes': os.path.getsize(html_path) if ok else 0,
+                  'live_url': f'https://{slug}.here.now/',
+                  'backup_url': f'{pages_base}/sites/{slug}/',
+                  'size_bytes': size,
+                  'size': human_size(size),
                   'ok': ok,
               })
 
-          def safe_filename(title, slug):
-              name = re.sub(r'[<>:"/\\|?*\x00-\x1f]', '', title).strip().rstrip('.')
-              if not name:
-                  name = slug
-              return name
-
-          used_names = {}
-          for e in manifest:
-              if not e['ok']:
+          # Detect duplicate titles to disambiguate filenames
+          name_counts = {}
+          for s in sites:
+              if not s['ok']:
                   continue
-              name = safe_filename(e['title'], e['slug'])
-              if name in used_names:
-                  used_names[name].append(e['slug'])
-              else:
-                  used_names[name] = [e['slug']]
+              name = safe_filename(s['title'], s['slug'])
+              name_counts[name] = name_counts.get(name, 0) + 1
+
+          # Assign final filename per site
+          for s in sites:
+              name = safe_filename(s['title'], s['slug'])
+              if name_counts.get(name, 0) > 1:
+                  name = f"{name} ({s['slug']})"
+              s['file'] = f"{name}.html"
+
+          manifest = {
+              'backup_date': backup_date,
+              'repo': f'https://github.com/{repo}',
+              'total_sites': len(sites),
+              'backed_up': sum(1 for s in sites if s['ok']),
+              'failed': sum(1 for s in sites if not s['ok']),
+              'total_size': human_size(total_bytes),
+              'total_size_bytes': total_bytes,
+              'sites': sites,
+          }
 
           os.makedirs('zips', exist_ok=True)
           with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zf:
-              for e in manifest:
-                  if not e['ok']:
-                      continue
-                  name = safe_filename(e['title'], e['slug'])
-                  if len(used_names.get(name, [])) > 1:
-                      name = f"{name} ({e['slug']})"
-                  zf.write(f"sites/{e['slug']}/index.html",
-                           f"{folder}/{name}.html")
-              zf.writestr(f'{folder}/manifest.json',
+              for s in sites:
+                  if s['ok']:
+                      zf.write(f"sites/{s['slug']}/index.html",
+                               f"herenow-backup/{s['file']}")
+              zf.writestr('herenow-backup/manifest.json',
                           json.dumps(manifest, ensure_ascii=False, indent=2))
-          ok_count = sum(1 for e in manifest if e['ok'])
-          print(f'Created {zip_path} with {ok_count}/{len(manifest)} sites')
+          print(f"Created {zip_path} with {manifest['backed_up']}/{manifest['total_sites']} sites")
           PY
             echo "ZIPPED=true" >> "$GITHUB_ENV"
           fi
@@ -276,4 +299,4 @@ jobs:
             <p>&#x2705; <strong>${{ env.BACKUP_OK }} OK</strong> &nbsp;&nbsp; &#x274C; <strong>${{ env.BACKUP_FAILED }} failed</strong></p>
             <p>&#x1F4E6; zip updated: <strong>${{ env.ZIPPED }}</strong></p>
             <p>&#x26A0;&#xFE0F; Failed: ${{ env.BACKUP_FAILED_SLUGS }}</p>
-            <p>&#x1F517; <a href="${{ env.ZIP_URL }}">⬇️ Download herenow-backup-${{ env.BACKUP_DATE }}.zip</a></p>
+            <p>&#x1F517; <a href="${{ env.ZIP_URL }}">⬇️ Download backup zip</a></p>
