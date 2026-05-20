@@ -90,7 +90,7 @@ jobs:
 
           echo "BACKUP_OK=$OK" >> "$GITHUB_ENV"
           echo "BACKUP_FAILED=${#FAILED[@]}" >> "$GITHUB_ENV"
-          echo "BACKUP_DATE=$(date -u '+%Y-%m-%d')" >> "$GITHUB_ENV"
+          echo "BACKUP_DATE=$(date -u '+%Y-%m-%d %H:%M UTC')" >> "$GITHUB_ENV"
           echo "BACKUP_FAILED_SLUGS=${FAILED[*]:-none}" >> "$GITHUB_ENV"
           echo "CHANGED_SLUGS=${CHANGED[*]}" >> "$GITHUB_ENV"
 
@@ -141,13 +141,12 @@ jobs:
 
       - name: Create/update zip (full backup)
         run: |
-          DATE=$(date -u '+%Y-%m-%d')
-          ZIP="zips/herenow-backup-${DATE}.zip"
+          DATESTAMP=$(date -u '+%Y-%m-%d-%H%M')
+          ZIP="zips/herenow-backup-${DATESTAMP}.zip"
 
-          # Always export the download URL (deterministic from date)
-          echo "ZIP_URL=https://github.com/juanitto-maker/herenow-backup/raw/main/zips/herenow-backup-${DATE}.zip" >> "$GITHUB_ENV"
+          echo "ZIP_URL=https://github.com/juanitto-maker/herenow-backup/raw/main/zips/herenow-backup-${DATESTAMP}.zip" >> "$GITHUB_ENV"
 
-          # Skip if today's zip already exists and nothing changed
+          # Skip if this zip already exists and nothing changed
           if [ -f "$ZIP" ] && [ -z "$CHANGED_SLUGS" ]; then
             echo "No changes and zip already exists — skipping"
             echo "ZIPPED=false" >> "$GITHUB_ENV"
@@ -157,10 +156,10 @@ jobs:
             mkdir -p zips
             echo "Building ${ZIP}..."
             python3 <<'PY'
-          import zipfile, json, os, datetime
-          date = datetime.datetime.utcnow().strftime('%Y-%m-%d')
-          zip_path = f'zips/herenow-backup-{date}.zip'
+          import zipfile, json, os, datetime, re
           now = datetime.datetime.utcnow()
+          datestamp = now.strftime('%Y-%m-%d-%H%M')
+          zip_path = f'zips/herenow-backup-{datestamp}.zip'
           backup_date = now.strftime('%Y-%m-%d %H:%M UTC')
           repo = 'juanitto-maker/herenow-backup'
           pages_base = f'https://{repo.split("/")[0]}.github.io/{repo.split("/")[1]}'
@@ -175,6 +174,10 @@ jobs:
                       return f'{b:.1f} {u}' if u != 'B' else f'{b} {u}'
                   b /= 1024
               return f'{b:.1f} GB'
+
+          def safe_filename(title, slug):
+              name = re.sub(r'[<>:"/\\|?*\x00-\x1f]', '', title).strip().rstrip('.')
+              return name if name else slug
 
           sites = []
           total_bytes = 0
@@ -191,11 +194,25 @@ jobs:
                   'title': title,
                   'live_url': f'https://{slug}.here.now/',
                   'backup_url': f'{pages_base}/sites/{slug}/',
-                  'file': f'sites/{slug}/index.html',
                   'size_bytes': size,
                   'size': human_size(size),
                   'ok': ok,
               })
+
+          # Detect duplicate titles to disambiguate filenames
+          name_counts = {}
+          for s in sites:
+              if not s['ok']:
+                  continue
+              name = safe_filename(s['title'], s['slug'])
+              name_counts[name] = name_counts.get(name, 0) + 1
+
+          # Assign final filename per site
+          for s in sites:
+              name = safe_filename(s['title'], s['slug'])
+              if name_counts.get(name, 0) > 1:
+                  name = f"{name} ({s['slug']})"
+              s['file'] = f"{name}.html"
 
           manifest = {
               'backup_date': backup_date,
@@ -213,7 +230,7 @@ jobs:
               for s in sites:
                   if s['ok']:
                       zf.write(f"sites/{s['slug']}/index.html",
-                               f"herenow-backup/sites/{s['slug']}/index.html")
+                               f"herenow-backup/{s['file']}")
               zf.writestr('herenow-backup/manifest.json',
                           json.dumps(manifest, ensure_ascii=False, indent=2))
           print(f"Created {zip_path} with {manifest['backed_up']}/{manifest['total_sites']} sites")
@@ -282,4 +299,4 @@ jobs:
             <p>&#x2705; <strong>${{ env.BACKUP_OK }} OK</strong> &nbsp;&nbsp; &#x274C; <strong>${{ env.BACKUP_FAILED }} failed</strong></p>
             <p>&#x1F4E6; zip updated: <strong>${{ env.ZIPPED }}</strong></p>
             <p>&#x26A0;&#xFE0F; Failed: ${{ env.BACKUP_FAILED_SLUGS }}</p>
-            <p>&#x1F517; <a href="${{ env.ZIP_URL }}">⬇️ Download herenow-backup-${{ env.BACKUP_DATE }}.zip</a></p>
+            <p>&#x1F517; <a href="${{ env.ZIP_URL }}">⬇️ Download backup zip</a></p>
