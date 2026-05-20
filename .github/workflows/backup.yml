@@ -160,35 +160,63 @@ jobs:
           import zipfile, json, os, datetime
           date = datetime.datetime.utcnow().strftime('%Y-%m-%d')
           zip_path = f'zips/herenow-backup-{date}.zip'
+          now = datetime.datetime.utcnow()
+          backup_date = now.strftime('%Y-%m-%d %H:%M UTC')
+          repo = 'juanitto-maker/herenow-backup'
+          pages_base = f'https://{repo.split("/")[0]}.github.io/{repo.split("/")[1]}'
           with open('titles.json') as f:
               titles = json.load(f)
           with open('slugs.txt') as f:
               slugs = [l.strip() for l in f if l.strip() and not l.startswith('#')]
-          backup_date = datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
-          manifest = []
+
+          def human_size(b):
+              for u in ['B','kB','MB']:
+                  if b < 1024:
+                      return f'{b:.1f} {u}' if u != 'B' else f'{b} {u}'
+                  b /= 1024
+              return f'{b:.1f} GB'
+
+          sites = []
+          total_bytes = 0
           for slug in slugs:
               html_path = f'sites/{slug}/index.html'
               entry = titles.get(slug, {})
               title = entry.get('title', slug) if isinstance(entry, dict) else slug
               ok = os.path.exists(html_path) and os.path.getsize(html_path) > 0
-              manifest.append({
+              size = os.path.getsize(html_path) if ok else 0
+              if ok:
+                  total_bytes += size
+              sites.append({
                   'slug': slug,
                   'title': title,
-                  'url': f'https://{slug}.here.now/',
-                  'backup_date': backup_date,
-                  'size_bytes': os.path.getsize(html_path) if ok else 0,
+                  'live_url': f'https://{slug}.here.now/',
+                  'backup_url': f'{pages_base}/sites/{slug}/',
+                  'file': f'sites/{slug}/index.html',
+                  'size_bytes': size,
+                  'size': human_size(size),
                   'ok': ok,
               })
+
+          manifest = {
+              'backup_date': backup_date,
+              'repo': f'https://github.com/{repo}',
+              'total_sites': len(sites),
+              'backed_up': sum(1 for s in sites if s['ok']),
+              'failed': sum(1 for s in sites if not s['ok']),
+              'total_size': human_size(total_bytes),
+              'total_size_bytes': total_bytes,
+              'sites': sites,
+          }
+
           os.makedirs('zips', exist_ok=True)
           with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zf:
-              for e in manifest:
-                  if e['ok']:
-                      zf.write(f"sites/{e['slug']}/index.html",
-                               f"herenow-backup/sites/{e['slug']}/index.html")
+              for s in sites:
+                  if s['ok']:
+                      zf.write(f"sites/{s['slug']}/index.html",
+                               f"herenow-backup/sites/{s['slug']}/index.html")
               zf.writestr('herenow-backup/manifest.json',
                           json.dumps(manifest, ensure_ascii=False, indent=2))
-          ok_count = sum(1 for e in manifest if e['ok'])
-          print(f'Created {zip_path} with {ok_count}/{len(manifest)} sites')
+          print(f"Created {zip_path} with {manifest['backed_up']}/{manifest['total_sites']} sites")
           PY
             echo "ZIPPED=true" >> "$GITHUB_ENV"
           fi
