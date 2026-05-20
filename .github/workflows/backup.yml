@@ -170,12 +170,25 @@ jobs:
           print(f'  Zipped {slug}: {size_bytes} bytes')
           PYEOF
 
-          for slug in $CHANGED_SLUGS; do
-            [ -z "$slug" ] && continue
-            [ -f "sites/$slug/index.html" ] || continue
-            python3 /tmp/make_zip.py "$slug"
-            ZIPPED=$((ZIPPED+1))
-          done
+          # Bootstrap: if zips/ is empty or missing, zip every successfully backed-up site
+          if [ -z "$(ls -A zips/ 2>/dev/null)" ]; then
+            echo "zips/ is empty — bootstrapping all sites"
+            while IFS= read -r slug || [ -n "$slug" ]; do
+              slug=$(echo "$slug" | tr -d '[:space:]')
+              [ -z "$slug" ] && continue
+              [[ "$slug" =~ ^# ]] && continue
+              [ -f "sites/$slug/index.html" ] || continue
+              python3 /tmp/make_zip.py "$slug"
+              ZIPPED=$((ZIPPED+1))
+            done < slugs.txt
+          else
+            for slug in $CHANGED_SLUGS; do
+              [ -z "$slug" ] && continue
+              [ -f "sites/$slug/index.html" ] || continue
+              python3 /tmp/make_zip.py "$slug"
+              ZIPPED=$((ZIPPED+1))
+            done
+          fi
 
           echo "ZIPPED_COUNT=$ZIPPED" >> "$GITHUB_ENV"
           echo "Created/updated $ZIPPED zip(s)"
