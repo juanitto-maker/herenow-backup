@@ -186,6 +186,7 @@ jobs:
           print(f'Created {zip_path} with {ok_count}/{len(manifest)} sites')
           PY
             echo "ZIPPED=true" >> "$GITHUB_ENV"
+            echo "ZIP_URL=https://github.com/juanitto-maker/herenow-backup/raw/main/zips/herenow-backup-${DATE}.zip" >> "$GITHUB_ENV"
           fi
 
           git config user.name  "github-actions[bot]"
@@ -214,12 +215,13 @@ jobs:
           failed = os.environ.get('BACKUP_FAILED', '0')
           zipped = os.environ.get('ZIPPED', 'false')
           failed_slugs = os.environ.get('BACKUP_FAILED_SLUGS', 'none')
+          zip_url = os.environ.get('ZIP_URL', 'https://github.com/juanitto-maker/herenow-backup/tree/main/zips')
           text = (
               f"\U0001f5c2 here.now Backup — {date}\n"
               f"✅ {ok} OK  ❌ {failed} failed\n"
               f"\U0001f4e6 zip updated: {zipped}\n"
               f"⚠️ Failed: {failed_slugs}\n"
-              f"\U0001f517 https://github.com/juanitto-maker/herenow-backup/tree/main/zips"
+              f"\U0001f517 {zip_url}"
           )
           payload = json.dumps({'chat_id': chat_id, 'text': text}).encode()
           req = urllib.request.Request(
@@ -248,4 +250,4 @@ jobs:
             <p>&#x2705; <strong>${{ env.BACKUP_OK }} OK</strong> &nbsp;&nbsp; &#x274C; <strong>${{ env.BACKUP_FAILED }} failed</strong></p>
             <p>&#x1F4E6; zip updated: <strong>${{ env.ZIPPED }}</strong></p>
             <p>&#x26A0;&#xFE0F; Failed: ${{ env.BACKUP_FAILED_SLUGS }}</p>
-            <p>&#x1F517; <a href="https://github.com/juanitto-maker/herenow-backup/tree/main/zips">View zips on GitHub</a></p>
+            <p>&#x1F517; <a href="${{ env.ZIP_URL }}">⬇️ Download herenow-backup-${{ env.BACKUP_DATE }}.zip</a></p>
