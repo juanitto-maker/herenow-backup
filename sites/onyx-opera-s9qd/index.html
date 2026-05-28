@@ -167,6 +167,16 @@ footer a{color:var(--accent);text-decoration:none}
 
 <hr class="sep">
 
+<!-- Prototype First -->
+<section>
+  <h2 data-i18n="proto_title">See It Running Before You Sign</h2>
+  <div class="model-box">
+    <p data-i18n="proto_desc">Before any agreement, we build a live prototype — running on our infrastructure, with our accounts. You test it on your phone, share it with your team, and validate every feature. When you're satisfied, you sign. Zero risk.</p>
+  </div>
+</section>
+
+<hr class="sep">
+
 <!-- Delivery Package -->
 <section>
   <h2 data-i18n="delivery_title">What You Receive</h2>
@@ -176,6 +186,7 @@ footer a{color:var(--accent);text-decoration:none}
     <li><span data-i18n="del_2"><strong>Setup Guide</strong> — Step-by-step instructions with screenshots. Covers database setup, hosting deployment, and configuration. Hosting-agnostic — works with any provider.</span></li>
     <li><span data-i18n="del_3"><strong>Database Schema</strong> — A single SQL file you paste into your database dashboard. Creates all tables, security rules, and functions automatically.</span></li>
     <li><span data-i18n="del_4"><strong>Configuration Template</strong> — A reference file showing exactly which values to fill in (database URL, API keys). No guesswork.</span></li>
+    <li><span data-i18n="del_5"><strong>Credential Vault</strong> (Setup Assistance) — A pre-configured KeePass password manager with all your accounts already set up inside. Your only task: rotate the passwords — a 10-minute walkthrough we do together.</span></li>
   </ul>
 </section>
 
@@ -222,6 +233,7 @@ footer a{color:var(--accent);text-decoration:none}
   <div class="after-box">
     <p data-i18n="after_p1"><strong>You are fully independent.</strong> Your app runs on your accounts, your database holds your data, your domain points to your hosting. Nothing depends on us.</p>
     <p data-i18n="after_p2"><strong>Need changes or new features?</strong> Contact us anytime. New scope, new quote, new delivery. Simple and transparent.</p>
+    <p data-i18n="after_p3"><strong>Future enhancements are faster through us.</strong> Because we built it, we know every corner of your application — no ramp-up time, no guesswork.</p>
   </div>
 </section>
 
@@ -232,6 +244,7 @@ footer a{color:var(--accent);text-decoration:none}
   <h2 data-i18n="addon_title">Optional: Setup Assistance</h2>
   <div class="addon">
     <p data-i18n="addon_desc">Not comfortable setting up accounts and deploying? We can do it for you as a separate, fixed-price service. You just provide login credentials — we handle the rest and hand everything back configured and running.</p>
+    <p data-i18n="addon_vault" style="margin-top:.75rem">We also hand you a pre-configured <strong>KeePass password vault</strong> with all your accounts already organised inside — database, hosting, domain, API keys. Your only task: rotate the passwords in a single 10-minute session we do together. After that, the vault is fully yours.</p>
   </div>
 </section>
 
@@ -248,8 +261,9 @@ footer a{color:var(--accent);text-decoration:none}
 <div class="dialog-overlay" id="cd" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="dialog-box">
     <h4 data-i18n="dialog_title">Get in Touch</h4>
-    <a class="dialog-option dialog-email" href="mailto:hello@digitalaiventures.com">✉ Email</a>
-    <a class="dialog-option dialog-telegram" href="https://t.me/juanitto" target="_blank">✈ Telegram</a>
+    <a class="dialog-option dialog-telegram" href="https://t.me/Juanitto_assist_bot" target="_blank">🤖 AI Assist 24/7</a>
+    <a class="dialog-option dialog-telegram" href="https://t.me/JuanittoCalvares" target="_blank">✈ Personal</a>
+    <a class="dialog-option dialog-email" href="mailto:digitalAIventures.LLC@gmail.com">✉ Email</a>
     <button class="dialog-close" onclick="document.getElementById('cd').classList.remove('open')" data-i18n="dialog_close">Close</button>
   </div>
 </div>
@@ -264,12 +278,15 @@ const T = {
     model_p1: "<strong>You get:</strong> a fully working application deployed on your own infrastructure. You own your data, you pay your own hosting — you depend on nobody.",
     model_p2: "<strong>We keep:</strong> the source code. It's our intellectual property, refined across projects. This is how we deliver top-quality software at a fair fixed price.",
     model_p3: "<strong>Think of it like this:</strong> you buy the furniture, beautifully crafted and fully yours to use — not the woodworking plans.",
+    proto_title: "See It Running Before You Sign",
+    proto_desc: "Before any agreement, we build a live prototype — running on our infrastructure, with our accounts. You test it on your phone, share it with your team, and validate every feature. When you're satisfied, you sign. Zero risk.",
     delivery_title: "What You Receive",
     delivery_intro: "Every project is delivered as a complete, self-contained package:",
     del_1: "<strong>Application Files</strong> — Your app, compiled and optimized, ready to upload to any hosting provider.",
     del_2: "<strong>Setup Guide</strong> — Step-by-step instructions with screenshots. Covers database setup, hosting deployment, and configuration. Hosting-agnostic — works with any provider.",
     del_3: "<strong>Database Schema</strong> — A single SQL file you paste into your database dashboard. Creates all tables, security rules, and functions automatically.",
     del_4: "<strong>Configuration Template</strong> — A reference file showing exactly which values to fill in (database URL, API keys). No guesswork.",
+    del_5: "<strong>Credential Vault</strong> (Setup Assistance) — A pre-configured KeePass password manager with all your accounts already set up inside. Your only task: rotate the passwords — a 10-minute walkthrough we do together.",
     infra_title: "Your Infrastructure",
     infra_desc: "You create and pay for your own accounts. This means full independence — if we part ways, everything keeps running.",
     infra_db: "<strong>Database:</strong> Supabase (free tier available) or equivalent PostgreSQL provider.",
@@ -290,8 +307,10 @@ const T = {
     after_title: "After Delivery",
     after_p1: "<strong>You are fully independent.</strong> Your app runs on your accounts, your database holds your data, your domain points to your hosting. Nothing depends on us.",
     after_p2: "<strong>Need changes or new features?</strong> Contact us anytime. New scope, new quote, new delivery. Simple and transparent.",
+    after_p3: "<strong>Future enhancements are faster through us.</strong> Because we built it, we know every corner of your application — no ramp-up time, no guesswork.",
     addon_title: "Optional: Setup Assistance",
     addon_desc: "Not comfortable setting up accounts and deploying? We can do it for you as a separate, fixed-price service. You just provide login credentials — we handle the rest and hand everything back configured and running.",
+    addon_vault: "We also hand you a pre-configured <strong>KeePass password vault</strong> with all your accounts already organised inside — database, hosting, domain, API keys. Your only task: rotate the passwords in a single 10-minute session we do together. After that, the vault is fully yours.",
     footer_btn: "Contact digitalAIventures",
     footer_text: "digitalAIventures LLC · Wyoming, USA",
     footer_copy: "All delivered products remain the intellectual property of digitalAIventures LLC. Clients receive a perpetual, non-exclusive license to use the delivered application. Source code is not included in the delivery.",
@@ -305,12 +324,15 @@ const T = {
     model_p1: "<strong>Tú recibes:</strong> una aplicación completamente funcional desplegada en tu propia infraestructura. Tus datos son tuyos, pagas tu propio hosting — no dependes de nadie.",
     model_p2: "<strong>Nosotros mantenemos:</strong> el código fuente. Es nuestra propiedad intelectual, perfeccionada a lo largo de los proyectos. Así entregamos software de primera calidad a un precio justo y fijo.",
     model_p3: "<strong>Piénsalo así:</strong> compras el mueble, bellamente elaborado y completamente tuyo para usar — no los planos del carpintero.",
+    proto_title: "Véalo Funcionando Antes de Firmar",
+    proto_desc: "Antes de cualquier acuerdo, construimos un prototipo en vivo — funcionando en nuestra infraestructura, con nuestras cuentas. Lo prueba en su teléfono, lo comparte con su equipo y valida cada función. Cuando esté satisfecho, firma. Riesgo cero.",
     delivery_title: "Qué Recibes",
     delivery_intro: "Cada proyecto se entrega como un paquete completo e independiente:",
     del_1: "<strong>Archivos de la Aplicación</strong> — Tu app, compilada y optimizada, lista para subir a cualquier proveedor de hosting.",
     del_2: "<strong>Guía de Instalación</strong> — Instrucciones paso a paso con capturas de pantalla. Cubre la configuración de la base de datos, el despliegue y la configuración. Funciona con cualquier proveedor.",
     del_3: "<strong>Esquema de Base de Datos</strong> — Un único archivo SQL que pegas en el panel de tu base de datos. Crea todas las tablas, reglas de seguridad y funciones automáticamente.",
     del_4: "<strong>Plantilla de Configuración</strong> — Un archivo de referencia que muestra exactamente qué valores completar (URL de la base de datos, claves API). Sin adivinanzas.",
+    del_5: "<strong>Bóveda de Credenciales</strong> (Asistencia de Configuración) — Un gestor de contraseñas KeePass preconfigurado con todas sus cuentas ya configuradas dentro. Su única tarea: rotar las contraseñas — un proceso de 10 minutos que hacemos juntos.",
     infra_title: "Tu Infraestructura",
     infra_desc: "Tú creas y pagas tus propias cuentas. Esto significa independencia total — si dejamos de trabajar juntos, todo sigue funcionando.",
     infra_db: "<strong>Base de datos:</strong> Supabase (nivel gratuito disponible) o proveedor PostgreSQL equivalente.",
@@ -331,8 +353,10 @@ const T = {
     after_title: "Después de la Entrega",
     after_p1: "<strong>Eres completamente independiente.</strong> Tu app funciona en tus cuentas, tu base de datos contiene tus datos, tu dominio apunta a tu hosting. Nada depende de nosotros.",
     after_p2: "<strong>¿Necesitas cambios o nuevas funcionalidades?</strong> Contáctanos cuando quieras. Nuevo alcance, nuevo presupuesto, nueva entrega. Simple y transparente.",
+    after_p3: "<strong>Las mejoras futuras son más rápidas con nosotros.</strong> Como lo construimos nosotros, conocemos cada rincón de tu aplicación — sin tiempos de adaptación, sin conjeturas.",
     addon_title: "Opcional: Asistencia de Configuración",
     addon_desc: "¿No te sientes cómodo configurando cuentas y desplegando? Podemos hacerlo por ti como un servicio separado a precio fijo. Solo proporcionas tus credenciales — nosotros nos encargamos del resto y te devolvemos todo configurado y funcionando.",
+    addon_vault: "También te entregamos una <strong>bóveda de contraseñas KeePass</strong> preconfigurada con todas tus cuentas ya organizadas dentro — base de datos, hosting, dominio, claves API. Tu única tarea: rotar las contraseñas en una sesión de 10 minutos que hacemos juntos. Después, la bóveda es completamente tuya.",
     footer_btn: "Contactar digitalAIventures",
     footer_text: "digitalAIventures LLC · Wyoming, EE.UU.",
     footer_copy: "Todos los productos entregados son propiedad intelectual de digitalAIventures LLC. Los clientes reciben una licencia perpetua y no exclusiva para usar la aplicación entregada. El código fuente no está incluido en la entrega.",
@@ -346,12 +370,15 @@ const T = {
     model_p1: "<strong>Tu ricevi:</strong> un'applicazione completamente funzionante, installata sulla tua infrastruttura. I tuoi dati sono tuoi, paghi il tuo hosting — non dipendi da nessuno.",
     model_p2: "<strong>Noi manteniamo:</strong> il codice sorgente. È la nostra proprietà intellettuale, perfezionata progetto dopo progetto. Così garantiamo software di alta qualità a un prezzo fisso e onesto.",
     model_p3: "<strong>Pensala così:</strong> compri il mobile, splendidamente realizzato e completamente tuo — non i progetti del falegname.",
+    proto_title: "Vedilo Funzionare Prima di Firmare",
+    proto_desc: "Prima di qualsiasi accordo, costruiamo un prototipo dal vivo — che gira sulla nostra infrastruttura, con i nostri account. Lo testi sul tuo telefono, lo condividi con il tuo team e validi ogni funzionalità. Quando sei soddisfatto, firmi. Rischio zero.",
     delivery_title: "Cosa Ricevi",
     delivery_intro: "Ogni progetto viene consegnato come un pacchetto completo e autonomo:",
     del_1: "<strong>File dell'Applicazione</strong> — La tua app, compilata e ottimizzata, pronta per essere caricata su qualsiasi hosting.",
     del_2: "<strong>Guida all'Installazione</strong> — Istruzioni passo dopo passo con screenshot. Copre la configurazione del database, il deploy e la configurazione. Funziona con qualsiasi provider.",
     del_3: "<strong>Schema del Database</strong> — Un singolo file SQL da incollare nel pannello del tuo database. Crea automaticamente tutte le tabelle, le regole di sicurezza e le funzioni.",
     del_4: "<strong>Template di Configurazione</strong> — Un file di riferimento che mostra esattamente quali valori inserire (URL del database, chiavi API). Nessuna approssimazione.",
+    del_5: "<strong>Cassaforte Credenziali</strong> (Assistenza Configurazione) — Un gestore password KeePass preconfigurato con tutti i tuoi account già impostati. Il tuo unico compito: ruotare le password — un processo di 10 minuti che facciamo insieme.",
     infra_title: "La Tua Infrastruttura",
     infra_desc: "Crei e paghi i tuoi account. Questo significa indipendenza totale — se le nostre strade si separano, tutto continua a funzionare.",
     infra_db: "<strong>Database:</strong> Supabase (piano gratuito disponibile) o provider PostgreSQL equivalente.",
@@ -372,8 +399,10 @@ const T = {
     after_title: "Dopo la Consegna",
     after_p1: "<strong>Sei completamente indipendente.</strong> La tua app gira sui tuoi account, il tuo database contiene i tuoi dati, il tuo dominio punta al tuo hosting. Nulla dipende da noi.",
     after_p2: "<strong>Servono modifiche o nuove funzionalità?</strong> Contattaci quando vuoi. Nuovo ambito, nuovo preventivo, nuova consegna. Semplice e trasparente.",
+    after_p3: "<strong>I miglioramenti futuri sono più veloci con noi.</strong> Poiché l'abbiamo costruito noi, conosciamo ogni angolo della tua applicazione — nessun tempo di ramp-up, nessuna congettura.",
     addon_title: "Opzionale: Assistenza alla Configurazione",
     addon_desc: "Non ti senti a tuo agio con la configurazione degli account e il deploy? Possiamo farlo noi come servizio separato a prezzo fisso. Fornisci le credenziali — noi ci occupiamo del resto e ti restituiamo tutto configurato e funzionante.",
+    addon_vault: "Ti consegniamo anche un <strong>vault KeePass</strong> preconfigurato con tutti i tuoi account già organizzati — database, hosting, dominio, chiavi API. Il tuo unico compito: ruotare le password in un'unica sessione di 10 minuti che facciamo insieme. Dopo, il vault è completamente tuo.",
     footer_btn: "Contatta digitalAIventures",
     footer_text: "digitalAIventures LLC · Wyoming, USA",
     footer_copy: "Tutti i prodotti consegnati restano proprietà intellettuale di digitalAIventures LLC. I clienti ricevono una licenza perpetua e non esclusiva per l'utilizzo dell'applicazione consegnata. Il codice sorgente non è incluso nella consegna.",
@@ -387,12 +416,15 @@ const T = {
     model_p1: "<strong>Sie erhalten:</strong> eine voll funktionsfähige Anwendung, die auf Ihrer eigenen Infrastruktur läuft. Ihre Daten gehören Ihnen, Sie bezahlen Ihr eigenes Hosting — Sie sind von niemandem abhängig.",
     model_p2: "<strong>Wir behalten:</strong> den Quellcode. Er ist unser geistiges Eigentum, verfeinert über viele Projekte. So liefern wir erstklassige Software zu einem fairen Festpreis.",
     model_p3: "<strong>Stellen Sie es sich so vor:</strong> Sie kaufen das Möbelstück, wunderschön gefertigt und ganz Ihres — nicht die Baupläne des Schreiners.",
+    proto_title: "Sehen Sie Es Live Vor der Unterzeichnung",
+    proto_desc: "Vor jeder Vereinbarung erstellen wir einen Live-Prototyp — der auf unserer Infrastruktur mit unseren Konten läuft. Sie testen ihn auf Ihrem Telefon, teilen ihn mit Ihrem Team und validieren jede Funktion. Wenn Sie zufrieden sind, unterzeichnen Sie. Null Risiko.",
     delivery_title: "Was Sie Erhalten",
     delivery_intro: "Jedes Projekt wird als vollständiges, eigenständiges Paket geliefert:",
     del_1: "<strong>Anwendungsdateien</strong> — Ihre App, kompiliert und optimiert, bereit zum Hochladen auf jeden Hosting-Anbieter.",
     del_2: "<strong>Einrichtungsanleitung</strong> — Schritt-für-Schritt-Anweisungen mit Screenshots. Deckt Datenbankeinrichtung, Hosting-Deployment und Konfiguration ab. Anbieterunabhängig.",
     del_3: "<strong>Datenbankschema</strong> — Eine einzelne SQL-Datei, die Sie in Ihr Datenbank-Dashboard einfügen. Erstellt automatisch alle Tabellen, Sicherheitsregeln und Funktionen.",
     del_4: "<strong>Konfigurationsvorlage</strong> — Eine Referenzdatei, die genau zeigt, welche Werte einzutragen sind (Datenbank-URL, API-Schlüssel). Kein Rätselraten.",
+    del_5: "<strong>Anmeldedaten-Tresor</strong> (Einrichtungshilfe) — Ein vorkonfigurierter KeePass-Passwort-Tresor mit allen Ihren Konten bereits eingerichtet. Ihre einzige Aufgabe: Passwörter rotieren — ein 10-minütiger Walkthrough, den wir gemeinsam durchführen.",
     infra_title: "Ihre Infrastruktur",
     infra_desc: "Sie erstellen und bezahlen Ihre eigenen Konten. Das bedeutet vollständige Unabhängigkeit — wenn wir getrennte Wege gehen, läuft alles weiter.",
     infra_db: "<strong>Datenbank:</strong> Supabase (kostenlose Stufe verfügbar) oder gleichwertiger PostgreSQL-Anbieter.",
@@ -413,8 +445,10 @@ const T = {
     after_title: "Nach der Lieferung",
     after_p1: "<strong>Sie sind vollständig unabhängig.</strong> Ihre App läuft auf Ihren Konten, Ihre Datenbank enthält Ihre Daten, Ihre Domain verweist auf Ihr Hosting. Nichts hängt von uns ab.",
     after_p2: "<strong>Änderungen oder neue Funktionen nötig?</strong> Kontaktieren Sie uns jederzeit. Neuer Umfang, neues Angebot, neue Lieferung. Einfach und transparent.",
+    after_p3: "<strong>Zukünftige Erweiterungen sind bei uns schneller.</strong> Da wir es gebaut haben, kennen wir jeden Winkel Ihrer Anwendung — keine Einarbeitungszeit, kein Rätselraten.",
     addon_title: "Optional: Einrichtungshilfe",
     addon_desc: "Nicht wohl beim Einrichten von Konten und Deployment? Wir können das für Sie erledigen — als separater Service zum Festpreis. Sie geben uns die Zugangsdaten — wir kümmern uns um den Rest und übergeben alles konfiguriert und einsatzbereit.",
+    addon_vault: "Wir übergeben Ihnen außerdem einen vorkonfigurierten <strong>KeePass-Passwort-Tresor</strong> mit allen Ihren Konten bereits organisiert — Datenbank, Hosting, Domain, API-Schlüssel. Ihre einzige Aufgabe: Passwörter in einer gemeinsamen 10-Minuten-Sitzung rotieren. Danach gehört der Tresor vollständig Ihnen.",
     footer_btn: "digitalAIventures kontaktieren",
     footer_text: "digitalAIventures LLC · Wyoming, USA",
     footer_copy: "Alle gelieferten Produkte bleiben geistiges Eigentum der digitalAIventures LLC. Kunden erhalten eine unbefristete, nicht-exklusive Lizenz zur Nutzung der gelieferten Anwendung. Der Quellcode ist nicht in der Lieferung enthalten.",
@@ -428,12 +462,15 @@ const T = {
     model_p1: "<strong>Вы получаете:</strong> полностью рабочее приложение, развёрнутое на вашей собственной инфраструктуре. Ваши данные — ваши, вы оплачиваете свой хостинг — вы ни от кого не зависите.",
     model_p2: "<strong>Мы сохраняем:</strong> исходный код. Это наша интеллектуальная собственность, совершенствуемая от проекта к проекту. Так мы обеспечиваем высочайшее качество по справедливой фиксированной цене.",
     model_p3: "<strong>Представьте так:</strong> вы покупаете мебель, прекрасно изготовленную и полностью вашу — но не чертежи столяра.",
+    proto_title: "Увидьте в Работе До Подписания",
+    proto_desc: "До любого соглашения мы создаём живой прототип — работающий на нашей инфраструктуре, с нашими аккаунтами. Вы тестируете его на своём телефоне, делитесь с командой и проверяете каждую функцию. Когда удовлетворены — подписываете. Нулевой риск.",
     delivery_title: "Что Вы Получаете",
     delivery_intro: "Каждый проект поставляется как полный, самодостаточный пакет:",
     del_1: "<strong>Файлы приложения</strong> — Ваше приложение, скомпилированное и оптимизированное, готовое для загрузки на любой хостинг.",
     del_2: "<strong>Руководство по установке</strong> — Пошаговые инструкции со скриншотами. Охватывает настройку базы данных, развёртывание и конфигурацию. Работает с любым провайдером.",
     del_3: "<strong>Схема базы данных</strong> — Единый SQL-файл, который вы вставляете в панель базы данных. Автоматически создаёт все таблицы, правила безопасности и функции.",
     del_4: "<strong>Шаблон конфигурации</strong> — Справочный файл, показывающий, какие именно значения нужно заполнить (URL базы данных, ключи API). Никаких догадок.",
+    del_5: "<strong>Хранилище Учётных Данных</strong> (Помощь в настройке) — Предварительно настроенный менеджер паролей KeePass со всеми вашими аккаунтами уже внутри. Ваша единственная задача: сменить пароли — 10-минутный процесс, который мы проходим вместе.",
     infra_title: "Ваша Инфраструктура",
     infra_desc: "Вы создаёте и оплачиваете свои собственные аккаунты. Это означает полную независимость — если мы перестанем сотрудничать, всё продолжит работать.",
     infra_db: "<strong>База данных:</strong> Supabase (бесплатный тариф доступен) или аналогичный PostgreSQL-провайдер.",
@@ -454,8 +491,10 @@ const T = {
     after_title: "После Доставки",
     after_p1: "<strong>Вы полностью независимы.</strong> Ваше приложение работает на ваших аккаунтах, ваша база данных хранит ваши данные, ваш домен указывает на ваш хостинг. Ничто не зависит от нас.",
     after_p2: "<strong>Нужны изменения или новые функции?</strong> Свяжитесь с нами в любое время. Новый объём, новое предложение, новая поставка. Просто и прозрачно.",
+    after_p3: "<strong>Будущие улучшения быстрее через нас.</strong> Поскольку мы создали это, мы знаем каждый уголок вашего приложения — никакого времени на адаптацию, никаких догадок.",
     addon_title: "Опционально: Помощь в Настройке",
     addon_desc: "Не уверены в настройке аккаунтов и развёртывании? Мы можем сделать это за вас как отдельную услугу с фиксированной ценой. Вы предоставляете учётные данные — мы берём на себя всё остальное и возвращаем всё настроенным и работающим.",
+    addon_vault: "Мы также передаём вам предварительно настроенное <strong>хранилище паролей KeePass</strong> со всеми вашими аккаунтами, уже организованными внутри — база данных, хостинг, домен, ключи API. Ваша единственная задача: сменить пароли за одну совместную сессию в 10 минут. После этого хранилище полностью ваше.",
     footer_btn: "Связаться с digitalAIventures",
     footer_text: "digitalAIventures LLC · Вайоминг, США",
     footer_copy: "Все доставленные продукты остаются интеллектуальной собственностью digitalAIventures LLC. Клиенты получают бессрочную, неисключительную лицензию на использование доставленного приложения. Исходный код не включён в поставку.",
@@ -469,12 +508,15 @@ const T = {
     model_p1: "<strong>Vous recevez :</strong> une application entièrement fonctionnelle déployée sur votre propre infrastructure. Vos données vous appartiennent, vous payez votre hébergement — vous ne dépendez de personne.",
     model_p2: "<strong>Nous gardons :</strong> le code source. C'est notre propriété intellectuelle, perfectionnée au fil des projets. C'est ainsi que nous livrons des logiciels de haute qualité à un prix fixe et juste.",
     model_p3: "<strong>Imaginez ceci :</strong> vous achetez le meuble, magnifiquement fabriqué et entièrement vôtre — pas les plans de l'ébéniste.",
+    proto_title: "Voyez-le Fonctionner Avant de Signer",
+    proto_desc: "Avant tout accord, nous construisons un prototype en direct — fonctionnant sur notre infrastructure, avec nos comptes. Vous le testez sur votre téléphone, le partagez avec votre équipe et validez chaque fonctionnalité. Quand vous êtes satisfait, vous signez. Risque zéro.",
     delivery_title: "Ce Que Vous Recevez",
     delivery_intro: "Chaque projet est livré sous forme de package complet et autonome :",
     del_1: "<strong>Fichiers de l'Application</strong> — Votre application, compilée et optimisée, prête à être téléchargée sur n'importe quel hébergeur.",
     del_2: "<strong>Guide d'Installation</strong> — Instructions étape par étape avec captures d'écran. Couvre la configuration de la base de données, le déploiement et la configuration. Compatible avec tout fournisseur.",
     del_3: "<strong>Schéma de Base de Données</strong> — Un fichier SQL unique à coller dans le tableau de bord de votre base de données. Crée automatiquement toutes les tables, règles de sécurité et fonctions.",
     del_4: "<strong>Modèle de Configuration</strong> — Un fichier de référence indiquant exactement quelles valeurs renseigner (URL de la base de données, clés API). Aucune approximation.",
+    del_5: "<strong>Coffre de Identifiants</strong> (Assistance à la Mise en Place) — Un gestionnaire de mots de passe KeePass préconfiguré avec tous vos comptes déjà configurés. Votre seule tâche : faire tourner les mots de passe — un processus de 10 minutes que nous faisons ensemble.",
     infra_title: "Votre Infrastructure",
     infra_desc: "Vous créez et payez vos propres comptes. Cela signifie une indépendance totale — si nous cessons de collaborer, tout continue de fonctionner.",
     infra_db: "<strong>Base de données :</strong> Supabase (offre gratuite disponible) ou fournisseur PostgreSQL équivalent.",
@@ -495,8 +537,10 @@ const T = {
     after_title: "Après la Livraison",
     after_p1: "<strong>Vous êtes totalement indépendant.</strong> Votre application tourne sur vos comptes, votre base de données contient vos données, votre domaine pointe vers votre hébergement. Rien ne dépend de nous.",
     after_p2: "<strong>Besoin de modifications ou de nouvelles fonctionnalités ?</strong> Contactez-nous à tout moment. Nouveau périmètre, nouveau devis, nouvelle livraison. Simple et transparent.",
+    after_p3: "<strong>Les améliorations futures sont plus rapides via nous.</strong> Puisque nous l'avons construit, nous connaissons chaque recoin de votre application — aucun temps de montée en charge, aucune approximation.",
     addon_title: "Optionnel : Assistance à la Mise en Place",
     addon_desc: "Pas à l'aise avec la création de comptes et le déploiement ? Nous pouvons le faire pour vous en tant que service séparé à prix fixe. Vous fournissez vos identifiants — nous nous occupons du reste et vous rendons tout configuré et opérationnel.",
+    addon_vault: "Nous vous remettons également un <strong>coffre-fort de mots de passe KeePass</strong> préconfiguré avec tous vos comptes déjà organisés — base de données, hébergement, domaine, clés API. Votre seule tâche : faire tourner les mots de passe en une session commune de 10 minutes. Ensuite, le coffre est entièrement à vous.",
     footer_btn: "Contacter digitalAIventures",
     footer_text: "digitalAIventures LLC · Wyoming, États-Unis",
     footer_copy: "Tous les produits livrés restent la propriété intellectuelle de digitalAIventures LLC. Les clients reçoivent une licence perpétuelle et non exclusive d'utilisation de l'application livrée. Le code source n'est pas inclus dans la livraison.",
@@ -510,12 +554,15 @@ const T = {
     model_p1: "<strong>您获得：</strong>一个完全可用的应用程序，部署在您自己的基础设施上。您拥有数据，您支付托管费用——您不依赖任何人。",
     model_p2: "<strong>我们保留：</strong>源代码。这是我们的知识产权，在项目中不断完善。这就是我们以公平固定价格交付高质量软件的方式。",
     model_p3: "<strong>这样理解：</strong>您购买的是精美制作的家具，完全归您使用——而不是木匠的图纸。",
+    proto_title: "签约前先看运行效果",
+    proto_desc: "在任何协议之前，我们构建一个实时原型——在我们的基础设施上运行，使用我们的账户。您在手机上测试它，与团队分享，验证每个功能。满意后，您签字。零风险。",
     delivery_title: "您收到什么",
     delivery_intro: "每个项目都作为完整的独立包交付：",
     del_1: "<strong>应用程序文件</strong>——您的应用，已编译和优化，可上传到任何托管提供商。",
     del_2: "<strong>安装指南</strong>——带截图的分步说明。涵盖数据库设置、托管部署和配置。适用于任何提供商。",
     del_3: "<strong>数据库架构</strong>——一个SQL文件，粘贴到数据库面板中。自动创建所有表、安全规则和函数。",
     del_4: "<strong>配置模板</strong>——一个参考文件，准确显示需要填写的值（数据库URL、API密钥）。无需猜测。",
+    del_5: "<strong>凭证保险库</strong>（安装协助）——一个预配置的KeePass密码管理器，所有账户已经设置好。您唯一的任务：轮换密码——我们一起完成的10分钟操作。",
     infra_title: "您的基础设施",
     infra_desc: "您创建并支付自己的账户。这意味着完全独立——如果我们停止合作，一切照常运行。",
     infra_db: "<strong>数据库：</strong>Supabase（提供免费层）或等效的PostgreSQL提供商。",
@@ -536,8 +583,10 @@ const T = {
     after_title: "交付之后",
     after_p1: "<strong>您完全独立。</strong>您的应用在您的账户上运行，您的数据库存储您的数据，您的域名指向您的托管。一切不依赖我们。",
     after_p2: "<strong>需要更改或新功能？</strong>随时联系我们。新范围、新报价、新交付。简单透明。",
+    after_p3: "<strong>未来的增强功能通过我们更快。</strong>因为是我们构建的，所以我们了解您应用的每个角落——无需适应时间，无需猜测。",
     addon_title: "可选：安装协助",
     addon_desc: "不习惯设置账户和部署？我们可以作为单独的固定价格服务为您完成。您只需提供登录凭据——我们处理其余一切，将所有内容配置好并交还给您。",
+    addon_vault: "我们还会交给您一个预配置的<strong>KeePass密码保险库</strong>，所有账户（数据库、托管、域名、API密钥）已经在里面组织好。您唯一的任务：在我们一起进行的10分钟会话中轮换密码。之后，保险库完全属于您。",
     footer_btn: "联系 digitalAIventures",
     footer_text: "digitalAIventures LLC · 怀俄明州，美国",
     footer_copy: "所有交付的产品仍为digitalAIventures LLC的知识产权。客户获得永久、非独占许可证以使用交付的应用程序。源代码不包含在交付中。",
