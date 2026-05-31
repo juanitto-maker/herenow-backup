@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feed Me Again — La cocina pirata · comedor social</title>
+<meta name="description" content="Feed Me Again — comedor social pirata y nevera solidaria en la terraza de Love Me Again, Órgiva. Rescatamos comida, alimentamos a la tripulación. Únete a la tripulación.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="dark"]{
+  --bg:#14110d; --bg2:#191510; --bg-card:#1f1a13;
+  --bg-hero:linear-gradient(160deg,#241c12 0%,#14110d 100%);
+  --text:#e7ddcb; --text-muted:#9a8b72; --text-heading:#f6ecd7;
+  --border:#34291d;
+  --accent:#cf4a22; --accent-soft:rgba(207,74,34,.14);
+  --gold:#d8a23a; --gold-soft:rgba(216,162,58,.12);
+  --overlay-bg:rgba(0,0,0,.66); --dialog-bg:#1f1a13;
+  --shadow:0 8px 28px rgba(0,0,0,.45);
+}
+[data-theme="light"]{
+  --bg:#f3e8d2; --bg2:#efe1c6; --bg-card:#fcf6ea;
+  --bg-hero:linear-gradient(160deg,#efe1c6 0%,#f3e8d2 100%);
+  --text:#3c2d1a; --text-muted:#7c6244; --text-heading:#2a1c0c;
+  --border:#e1cfa6;
+  --accent:#b23a14; --accent-soft:rgba(178,58,20,.10);
+  --gold:#a9791f; --gold-soft:rgba(169,121,31,.12);
+  --overlay-bg:rgba(35,22,8,.5); --dialog-bg:#fcf6ea;
+  --shadow:0 6px 22px rgba(80,50,20,.18);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);
+  font-family:'Crimson Pro',Georgia,serif;font-size:1.06rem;line-height:1.62;
+  -webkit-font-smoothing:antialiased}
+h1,h2,h3,.cinz{font-family:'Cinzel',serif;color:var(--text-heading);line-height:1.18;letter-spacing:.01em}
+img{max-width:100%;display:block}
+a{color:var(--accent)}
+
+/* lang bar */
+.lbar{display:flex;gap:.35rem;padding:.35rem .5rem;background:var(--bg2);
+  border-bottom:1px solid var(--border);position:sticky;top:0;z-index:190;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;justify-content:flex-start}
+.lbar::-webkit-scrollbar{display:none}
+.lb{flex:0 0 auto;background:none;border:1px solid var(--border);color:var(--text-muted);
+  font-family:'Cinzel',serif;font-size:.74rem;font-weight:600;letter-spacing:.04em;
+  padding:.2rem .6rem;border-radius:1rem;cursor:pointer;transition:all .18s;white-space:nowrap}
+.lb.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.lb-pir{font-size:.95rem;padding:.16rem .55rem}
+
+/* theme toggle */
+.theme-toggle{position:fixed;top:3rem;right:.6rem;z-index:160;background:var(--bg-card);
+  border:1px solid var(--border);width:2.3rem;height:2.3rem;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);transition:transform .2s}
+.theme-toggle:hover{transform:scale(1.1)}
+.theme-icon{font-size:1.05rem;line-height:1}
+
+/* hero */
+.hero{position:relative;min-height:88vh;display:flex;flex-direction:column;justify-content:center;
+  align-items:center;text-align:center;padding:3rem 1.3rem 3.5rem;overflow:hidden;
+  background:linear-gradient(180deg,rgba(15,12,8,.55),rgba(15,12,8,.82)),url('range.jpg');
+  background-size:cover;background-position:center}
+.hero::after{content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 30%,rgba(207,74,34,.18),transparent 60%);pointer-events:none}
+.hero-inner{position:relative;z-index:2;max-width:680px}
+.flag{font-size:2.2rem;margin-bottom:.7rem;display:inline-block;animation:sway 4s ease-in-out infinite;filter:drop-shadow(0 2px 8px rgba(0,0,0,.6))}
+@keyframes sway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+.wordmark{font-family:'Cinzel Decorative',serif;font-weight:900;color:#f8eed8;
+  font-size:clamp(2.6rem,11vw,4.6rem);line-height:.98;letter-spacing:.02em;
+  text-shadow:0 3px 18px rgba(0,0,0,.7),0 0 1px rgba(216,162,58,.5)}
+.tagline{font-family:'Cinzel',serif;font-weight:600;color:var(--gold);
+  font-size:clamp(1.05rem,4.4vw,1.5rem);margin:.9rem 0 .3rem;text-shadow:0 2px 10px rgba(0,0,0,.7)}
+.hero-sub{color:#eaddc6;font-size:1.06rem;max-width:46ch;margin:.6rem auto 1.6rem;
+  text-shadow:0 1px 8px rgba(0,0,0,.8)}
+.hero-cta{display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center}
+
+/* buttons */
+.btn{display:inline-block;font-family:'Cinzel',serif;font-weight:600;font-size:.95rem;
+  letter-spacing:.03em;padding:.72rem 1.5rem;border-radius:2rem;cursor:pointer;border:none;
+  text-decoration:none;transition:all .2s}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 4px 16px rgba(207,74,34,.35)}
+.btn-primary:hover{filter:brightness(1.08);transform:translateY(-2px)}
+.btn-outline{background:rgba(0,0,0,.25);border:2px solid var(--gold);color:#f3e3c2}
+.btn-outline:hover{background:var(--gold);color:#1a1206;transform:translateY(-2px)}
+
+/* sections */
+section{padding:3.2rem 1.3rem}
+.sec-alt{background:var(--bg2)}
+.wrap{max-width:760px;margin:0 auto}
+.eyebrow{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);font-weight:700;margin-bottom:.45rem}
+.div{height:3px;width:3rem;background:var(--accent);border-radius:2px;margin:0 0 1.3rem}
+h2{font-size:clamp(1.7rem,6.5vw,2.3rem);font-weight:700;margin-bottom:.9rem}
+.lead{font-size:1.12rem;color:var(--text)}
+.lead b{color:var(--text-heading)}
+
+/* gallery */
+.gal{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:1.6rem}
+@media(min-width:560px){.gal{grid-template-columns:repeat(3,1fr)}}
+.gcard{background:var(--bg-card);border:1px solid var(--border);border-radius:.8rem;overflow:hidden;
+  box-shadow:var(--shadow)}
+.gcard img{width:100%;height:140px;object-fit:cover}
+.gcap{padding:.5rem .65rem;font-size:.82rem;color:var(--text-muted);font-style:italic;line-height:1.35}
+
+/* nevera split */
+.split{display:grid;gap:1.3rem;margin-top:1.2rem}
+@media(min-width:620px){.split{grid-template-columns:1fr 1fr;align-items:center}}
+.split img{border-radius:.9rem;border:1px solid var(--border);box-shadow:var(--shadow);
+  width:100%;max-height:340px;object-fit:cover}
+.fcap{font-size:.82rem;color:var(--text-muted);font-style:italic;margin-top:.45rem;text-align:center}
+.motto{font-family:'Cinzel Decorative',serif;font-weight:700;color:var(--accent);
+  font-size:clamp(1.2rem,5.2vw,1.7rem);line-height:1.25;margin-bottom:.8rem}
+
+/* roles */
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.7rem}
+@media(min-width:620px){.roles{grid-template-columns:repeat(3,1fr)}}
+.role{background:var(--bg-card);border:1px solid var(--border);border-radius:.85rem;
+  padding:1rem .85rem;text-align:center;transition:transform .18s,box-shadow .18s}
+.role:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.rico{font-size:1.9rem;display:block;margin-bottom:.4rem}
+.rtit{font-family:'Cinzel',serif;font-weight:700;font-size:.95rem;color:var(--text-heading);margin-bottom:.25rem}
+.rdsc{font-size:.86rem;color:var(--text-muted);line-height:1.4}
+.cta-center{text-align:center;margin-top:2rem}
+
+/* footer */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2.6rem 1.3rem 3rem;text-align:center}
+.footer-contact{background:var(--accent);color:#fff;border:none;font-family:'Cinzel',serif;
+  padding:.6rem 1.6rem;border-radius:2rem;font-size:.92rem;font-weight:600;cursor:pointer;
+  box-shadow:0 4px 16px rgba(207,74,34,.3);transition:all .2s}
+.footer-contact:hover{filter:brightness(1.08);transform:translateY(-2px)}
+.fmeta{color:var(--text-muted);font-size:.86rem;margin-top:1.3rem;line-height:1.7}
+.ftags{color:var(--gold);font-family:'Cinzel',serif;letter-spacing:.05em;font-size:.82rem;margin-top:.3rem}
+.fcredit{margin-top:1.1rem;font-size:.74rem}
+.fcredit-btn{margin-top:1.2rem;background:none;border:none;cursor:pointer;color:var(--text-muted);font-family:'Crimson Pro',serif;font-size:.78rem;border-bottom:1px dotted var(--text-muted);padding:0 0 1px}
+.fcredit-btn:hover{color:var(--gold);border-color:var(--gold)}
+.fcredit a{color:var(--text-muted);text-decoration:none;border-bottom:1px dotted var(--text-muted)}
+.contact-inline{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.35rem .6rem;font-size:.8rem;margin-top:.55rem}
+.contact-inline a{color:var(--gold);text-decoration:none;font-family:'Cinzel',serif;font-weight:600}
+.contact-inline a:hover{text-decoration:underline}
+.contact-sep{color:var(--text-muted)}
+
+/* dialog */
+.dialog-overlay{display:none;position:fixed;inset:0;background:var(--overlay-bg);z-index:300;
+  align-items:flex-end;justify-content:center;padding:1rem}
+.dialog-overlay.open{display:flex}
+.dialog-box{background:var(--dialog-bg);border:1px solid var(--border);border-radius:1.1rem;
+  padding:1.6rem;max-width:360px;width:100%;text-align:center;animation:su .24s ease-out}
+@keyframes su{from{transform:translateY(36px);opacity:0}to{transform:none;opacity:1}}
+.dialog-box h4{font-family:'Cinzel',serif;color:var(--text-heading);font-size:1.15rem;margin-bottom:.3rem}
+.dialog-box .dsub{color:var(--text-muted);font-size:.92rem;margin-bottom:1.1rem}
+.dialog-option{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;
+  padding:.78rem;margin-bottom:.6rem;border-radius:.6rem;text-decoration:none;font-weight:600;
+  font-size:1rem;font-family:'Cinzel',serif}
+.dialog-tg{background:#229ED9;color:#fff}
+.dialog-bot{background:#0088cc;color:#fff}
+.dialog-mail{background:#4a6741;color:#fff}
+.dialog-tg:hover{filter:brightness(1.06)}
+.dhandle{font-family:'Crimson Pro',serif;font-style:italic;color:var(--text-muted);font-size:.84rem;margin:.2rem 0 .9rem}
+.dialog-close{background:none;border:1px solid var(--border);color:var(--text-muted);cursor:pointer;
+  font-size:.84rem;padding:.4rem 1.3rem;border-radius:.5rem;margin-top:.2rem;font-family:'Cinzel',serif}
+
+[data-lang]{display:none}
+[data-lang].lon{display:revert}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s}
+.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<!-- LANG BAR -->
+<div class="lbar" id="lbar">
+  <button class="lb lb-pir on" data-l="pir" onclick="setLang('pir')" title="Pirate">🏴‍☠️</button>
+  <button class="lb" data-l="es" onclick="setLang('es')">🇪🇸 ES</button>
+  <button class="lb" data-l="en" onclick="setLang('en')">🇬🇧 EN</button>
+  <button class="lb" data-l="fr" onclick="setLang('fr')">🇫🇷 FR</button>
+  <button class="lb" data-l="de" onclick="setLang('de')">🇩🇪 DE</button>
+  <button class="lb" data-l="it" onclick="setLang('it')">🇮🇹 IT</button>
+  <button class="lb" data-l="ru" onclick="setLang('ru')">🇷🇺 RU</button>
+</div>
+
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme"><span class="theme-icon" id="themeIcon">☀️</span></button>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <span class="flag">🏴‍☠️</span>
+    <div class="wordmark">FEED ME<br>AGAIN</div>
+    <p class="tagline" data-lang="pir">Arrr! We plunder fine victuals an' feed every last soul aboard — no belly left empty!</p>
+    <p class="tagline" data-lang="es">Rescatamos comida. Alimentamos a la tripulación.</p>
+    <p class="tagline" data-lang="en">We rescue food. We feed the crew.</p>
+    <p class="tagline" data-lang="fr">On sauve la nourriture. On nourrit l'équipage.</p>
+    <p class="tagline" data-lang="de">Wir retten Essen. Wir versorgen die Crew.</p>
+    <p class="tagline" data-lang="it">Salviamo il cibo. Sfamiamo la ciurma.</p>
+    <p class="tagline" data-lang="ru">Спасаем еду. Кормим команду.</p>
+
+    <p class="hero-sub" data-lang="pir">Ahoy! A galley be risin' upon the Love Me Again deck — cooked by wanderin' nomads, fired by plundered victuals, an' by the powers, no hungry soul be e'er turned from our board.</p>
+    <p class="hero-sub" data-lang="es">Un comedor social que nace en la terraza de Love Me Again — cocinado por nómadas, con comida rescatada, abierto a toda alma hambrienta.</p>
+    <p class="hero-sub" data-lang="en">A community kitchen rising on the Love Me Again terrace — cooked by nomads, powered by rescued food, open to every hungry soul.</p>
+    <p class="hero-sub" data-lang="fr">Une cantine solidaire qui naît sur la terrasse de Love Me Again — cuisinée par des nomades, avec des aliments sauvés, ouverte à toute âme affamée.</p>
+    <p class="hero-sub" data-lang="de">Eine solidarische Küche auf der Terrasse von Love Me Again — von Nomaden gekocht, aus geretteten Lebensmitteln, offen für jede hungrige Seele.</p>
+    <p class="hero-sub" data-lang="it">Una mensa solidale che nasce sulla terrazza di Love Me Again — cucinata da nomadi, con cibo salvato, aperta a ogni anima affamata.</p>
+    <p class="hero-sub" data-lang="ru">Народная кухня на террасе Love Me Again — готовят кочевники, из спасённой еды, открыта каждой голодной душе.</p>
+
+    <div class="hero-cta">
+      <button class="btn btn-primary" onclick="openD()">
+        <span data-lang="pir">Sign on, ye sea dog!</span><span data-lang="es">Únete a la tripulación</span><span data-lang="en">Join the crew</span><span data-lang="fr">Rejoindre l'équipage</span><span data-lang="de">Zur Crew stoßen</span><span data-lang="it">Unisciti alla ciurma</span><span data-lang="ru">В команду</span>
+      </button>
+      <a class="btn btn-outline" href="#galley">
+        <span data-lang="pir">Spy below decks</span><span data-lang="es">Ver el fogón</span><span data-lang="en">See the galley</span><span data-lang="fr">Voir la cuisine</span><span data-lang="de">Zur Kombüse</span><span data-lang="it">Vedi la cucina</span><span data-lang="ru">Камбуз</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- WHO WE ARE -->
+<section class="reveal">
+  <div class="wrap">
+    <div class="eyebrow"><span data-lang="pir">Who be sailin' this vessel</span><span data-lang="es">Quiénes navegamos</span><span data-lang="en">Who sails this ship</span><span data-lang="fr">Qui mène le navire</span><span data-lang="de">Wer dieses Schiff segelt</span><span data-lang="it">Chi guida la nave</span><span data-lang="ru">Кто ведёт корабль</span></div>
+    <div class="div"></div>
+    <h2><span data-lang="pir">A ragtag band o' nomad rovers</span><span data-lang="es">Una tripulación de nómadas</span><span data-lang="en">A crew of nomads</span><span data-lang="fr">Un équipage de nomades</span><span data-lang="de">Eine Crew aus Nomaden</span><span data-lang="it">Una ciurma di nomadi</span><span data-lang="ru">Команда кочевников</span></h2>
+    <p class="lead" data-lang="pir">Avast! We be the salty rogues behind the rastros, the fiestas an' the festivals — free spirits what live light an' share every doubloon we plunder. <b>Love Me Again</b> rescues forgotten trinkets; <b>Feed Me Again</b> rescues forgotten victuals an' turns 'em into hot grub for any soul gone hungry. No questions, no judgin', no scurvy lookin'-down — every weary soul be welcome at our board, arrr!</p>
+    <p class="lead" data-lang="es">Somos quienes están detrás de los rastros, las fiestas y los festivales — espíritus libres que viven ligero y lo comparten todo. <b>Love Me Again</b> rescata cosas olvidadas. <b>Feed Me Again</b> rescata comida olvidada y la convierte en platos calientes para quien lo necesite. Sin preguntas, sin juicios — toda alma es bienvenida.</p>
+    <p class="lead" data-lang="en">We're the ones behind the rastros, the fiestas and the festivals — free spirits who live light and share everything. <b>Love Me Again</b> rescues forgotten things. <b>Feed Me Again</b> rescues forgotten food and turns it into hot meals for whoever needs one. No questions, no judgement — all souls welcome.</p>
+    <p class="lead" data-lang="fr">Nous sommes ceux des rastros, des fêtes et des festivals — des esprits libres qui vivent léger et partagent tout. <b>Love Me Again</b> sauve les objets oubliés. <b>Feed Me Again</b> sauve la nourriture oubliée et la transforme en repas chauds pour qui en a besoin. Sans questions, sans jugement — toute âme est la bienvenue.</p>
+    <p class="lead" data-lang="de">Wir stecken hinter den Rastros, den Fiestas und den Festivals — freie Geister, die leicht leben und alles teilen. <b>Love Me Again</b> rettet vergessene Dinge. <b>Feed Me Again</b> rettet vergessenes Essen und macht daraus warme Mahlzeiten für alle, die sie brauchen. Keine Fragen, kein Urteil — jede Seele ist willkommen.</p>
+    <p class="lead" data-lang="it">Siamo quelli dietro ai rastros, alle feste e ai festival — spiriti liberi che vivono leggeri e condividono tutto. <b>Love Me Again</b> salva le cose dimenticate. <b>Feed Me Again</b> salva il cibo dimenticato e lo trasforma in pasti caldi per chi ne ha bisogno. Nessuna domanda, nessun giudizio — ogni anima è benvenuta.</p>
+    <p class="lead" data-lang="ru">Мы — те, кто стоит за rastros, праздниками и фестивалями: вольные души, что живут налегке и делятся всем. <b>Love Me Again</b> спасает забытые вещи. <b>Feed Me Again</b> спасает забытую еду и превращает её в горячие обеды для всех, кому нужно. Без вопросов и осуждения — каждой душе мы рады.</p>
+  </div>
+</section>
+
+<!-- THE GALLEY -->
+<section id="galley" class="sec-alt reveal">
+  <div class="wrap">
+    <div class="eyebrow"><span data-lang="pir">The ship's galley</span><span data-lang="es">El fogón</span><span data-lang="en">The galley</span><span data-lang="fr">La cuisine</span><span data-lang="de">Die Kombüse</span><span data-lang="it">La cucina</span><span data-lang="ru">Камбуз</span></div>
+    <div class="div"></div>
+    <h2><span data-lang="pir">Shiver me timbers — the vessel be rigged an' ready!</span><span data-lang="es">El barco está listo</span><span data-lang="en">The ship is ready</span><span data-lang="fr">Le navire est prêt</span><span data-lang="de">Das Schiff ist bereit</span><span data-lang="it">La nave è pronta</span><span data-lang="ru">Корабль готов</span></h2>
+    <p class="lead" data-lang="pir">Eight roarin' fires. A cast-iron plancha. Two ovens. Iceboxes standin' watch. By thunder, the galley be already aboard the Love Me Again deck — battle-tested gear, fit to feed a whole horde o' hungry hearties. All she lacks now be willin' <b>hands</b>.</p>
+    <p class="lead" data-lang="es">Ocho fuegos. Una plancha de hierro. Dos hornos. Neveras a punto. La cocina ya está aquí, en la terraza de Love Me Again — equipo probado, listo para alimentar a multitudes. Solo le faltan <b>manos</b>.</p>
+    <p class="lead" data-lang="en">Eight burners. A cast-iron plancha. Two ovens. Fridges standing by. The kitchen is already here, on the Love Me Again terrace — proven gear, ready to feed a crowd. All it needs now is <b>hands</b>.</p>
+    <p class="lead" data-lang="fr">Huit feux. Une plancha en fonte. Deux fours. Des frigos prêts. La cuisine est déjà là, sur la terrasse de Love Me Again — du matériel éprouvé, prêt à nourrir une foule. Il ne manque que des <b>bras</b>.</p>
+    <p class="lead" data-lang="de">Acht Flammen. Eine gusseiserne Plancha. Zwei Öfen. Kühlschränke bereit. Die Küche ist schon da, auf der Terrasse von Love Me Again — erprobtes Gerät, bereit, viele satt zu machen. Es fehlen nur <b>Hände</b>.</p>
+    <p class="lead" data-lang="it">Otto fuochi. Una piastra in ghisa. Due forni. Frigoriferi pronti. La cucina è già qui, sulla terrazza di Love Me Again — attrezzatura collaudata, pronta a sfamare una folla. Mancano solo le <b>mani</b>.</p>
+    <p class="lead" data-lang="ru">Восемь конфорок. Чугунная плита-планча. Две духовки. Холодильники наготове. Кухня уже здесь, на террасе Love Me Again — проверенная техника, готовая накормить толпу. Не хватает только <b>рук</b>.</p>
+
+    <div class="gal">
+      <div class="gcard"><img src="ovens.jpg" alt="Two ovens" loading="lazy">
+        <div class="gcap"><span data-lang="pir">Two ovens — bread, trays an' roasted bounty fit for a cap'n</span><span data-lang="es">Dos hornos — pan, bandejas, asados</span><span data-lang="en">Two ovens — bread, trays, roasts</span><span data-lang="fr">Deux fours — pain, plats, rôtis</span><span data-lang="de">Zwei Öfen — Brot, Bleche, Braten</span><span data-lang="it">Due forni — pane, teglie, arrosti</span><span data-lang="ru">Две духовки — хлеб, противни, жаркое</span></div>
+      </div>
+      <div class="gcard"><img src="burners.jpg" alt="Burners" loading="lazy">
+        <div class="gcap"><span data-lang="pir">Seasoned by many a salty voyage</span><span data-lang="es">Curtidos y listos</span><span data-lang="en">Seasoned and ready</span><span data-lang="fr">Rodés et prêts</span><span data-lang="de">Eingebrannt und bereit</span><span data-lang="it">Rodati e pronti</span><span data-lang="ru">Обкатаны и готовы</span></div>
+      </div>
+      <div class="gcard"><img src="plancha.jpg" alt="Gas plancha" loading="lazy">
+        <div class="gcap"><span data-lang="pir">The gas plancha, battle-scarred — #lovepirates</span><span data-lang="es">La plancha de gas — #lovepirates</span><span data-lang="en">The gas plancha — #lovepirates</span><span data-lang="fr">La plancha à gaz — #lovepirates</span><span data-lang="de">Die Gas-Plancha — #lovepirates</span><span data-lang="it">La piastra a gas — #lovepirates</span><span data-lang="ru">Газовая плита-планча — #lovepirates</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLIDARITY FRIDGE -->
+<section class="reveal">
+  <div class="wrap">
+    <div class="eyebrow"><span data-lang="pir">The solidarity icebox</span><span data-lang="es">La nevera solidaria</span><span data-lang="en">The solidarity fridge</span><span data-lang="fr">Le frigo solidaire</span><span data-lang="de">Der solidarische Kühlschrank</span><span data-lang="it">Il frigo solidale</span><span data-lang="ru">Холодильник солидарности</span></div>
+    <div class="div"></div>
+    <div class="split">
+      <div>
+        <div class="motto"><span data-lang="pir">Take what ye be needin',<br>leave what booty ye can spare</span><span data-lang="es">Coge lo que necesites,<br>deja lo que puedas</span><span data-lang="en">Take what you need,<br>leave what you can</span><span data-lang="fr">Prends ce qu'il te faut,<br>laisse ce que tu peux</span><span data-lang="de">Nimm, was du brauchst,<br>lass, was du kannst</span><span data-lang="it">Prendi ciò che ti serve,<br>lascia ciò che puoi</span><span data-lang="ru">Возьми, что нужно,<br>оставь, что можешь</span></div>
+        <p class="lead" data-lang="pir">Down in yonder village we be settin' loose a solidarity icebox — an open larder any soul may plunder or fill, by broad day or the dead o' night. She wants a good scrubbin' an' a touch o' love afore she sails. Lend a hand, ye sea dogs, an' get her runnin'!</p>
+        <p class="lead" data-lang="es">Abajo, en el pueblo, vamos a soltar una nevera solidaria — una despensa abierta a la que cualquiera puede dar o de la que puede tomar, de día o de noche. Necesita una limpieza y un poco de cariño antes de zarpar. Ayúdanos a ponerla en marcha.</p>
+        <p class="lead" data-lang="en">Down in the village we're setting loose a solidarity fridge — an open larder anyone can give to or take from, day or night. She needs a clean-up and a little love before she sails. Help us get her running.</p>
+        <p class="lead" data-lang="fr">En bas, au village, on lance un frigo solidaire — un garde-manger ouvert où chacun peut donner ou prendre, jour et nuit. Il a besoin d'un nettoyage et d'un peu d'amour avant de prendre la mer. Aide-nous à le mettre en route.</p>
+        <p class="lead" data-lang="de">Unten im Dorf lassen wir einen solidarischen Kühlschrank vom Stapel — eine offene Speisekammer, in die jede:r geben und aus der jede:r nehmen kann, Tag und Nacht. Er braucht eine Reinigung und etwas Liebe, bevor er in See sticht. Hilf uns, ihn zum Laufen zu bringen.</p>
+        <p class="lead" data-lang="it">Giù in paese stiamo varando un frigo solidale — una dispensa aperta in cui chiunque può dare o prendere, giorno e notte. Ha bisogno di una pulita e di un po' d'amore prima di salpare. Aiutaci a metterlo in moto.</p>
+        <p class="lead" data-lang="ru">Внизу, в деревне, мы спускаем на воду холодильник солидарности — открытую кладовую, куда каждый может что-то положить или взять, днём и ночью. Перед отплытием ей нужны уборка и немного любви. Помоги нам её запустить.</p>
+        <div style="margin-top:1.15rem">
+          <a class="btn btn-outline" href="https://stormy-vision-rc4s.here.now/" target="_blank" rel="noopener"><span data-lang="pir">📜 Study the full chart</span><span data-lang="es">Ver la propuesta completa →</span><span data-lang="en">Read the full plan →</span><span data-lang="fr">Voir le projet complet →</span><span data-lang="de">Den ganzen Plan lesen →</span><span data-lang="it">Leggi il progetto completo →</span><span data-lang="ru">Весь план →</span></a>
+        </div>
+      </div>
+      <div>
+        <img src="nevera.jpg" alt="Solidarity fridge" loading="lazy">
+        <div class="fcap"><span data-lang="pir">Soon a solidarity icebox — lend a hand to scrub her hull clean</span><span data-lang="es">Pronto una nevera solidaria — ayúdanos a darle brillo</span><span data-lang="en">Soon a solidarity fridge — help us scrub her up</span><span data-lang="fr">Bientôt un frigo solidaire — aide-nous à la récurer</span><span data-lang="de">Bald ein solidarischer Kühlschrank — hilf beim Schrubben</span><span data-lang="it">Presto un frigo solidale — aiutaci a lucidarlo</span><span data-lang="ru">Скоро — холодильник солидарности — помоги отмыть</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALL TO ACTION -->
+<section class="sec-alt reveal">
+  <div class="wrap">
+    <div class="eyebrow"><span data-lang="pir">Avast — all hands on deck</span><span data-lang="es">Todos a cubierta</span><span data-lang="en">All hands on deck</span><span data-lang="fr">Tous sur le pont</span><span data-lang="de">Alle Mann an Deck</span><span data-lang="it">Tutti in coperta</span><span data-lang="ru">Все на палубу</span></div>
+    <div class="div"></div>
+    <h2><span data-lang="pir">The ship be ours, by the powers. 'Tis a crew we be wantin'!</span><span data-lang="es">Ya tenemos el barco. Falta la tripulación.</span><span data-lang="en">We've got the ship. We need the crew.</span><span data-lang="fr">On a le navire. Il nous faut l'équipage.</span><span data-lang="de">Wir haben das Schiff. Uns fehlt die Crew.</span><span data-lang="it">La nave ce l'abbiamo. Ci serve la ciurma.</span><span data-lang="ru">Корабль есть. Нужна команда.</span></h2>
+    <p class="lead"><span data-lang="pir">She only floats if we all heave together. Pick yer post, ye scallywag:</span><span data-lang="es">Esto solo flota si lo navegamos juntos. Elige tu puesto:</span><span data-lang="en">This only floats if we sail it together. Pick your post:</span><span data-lang="fr">Ça ne flotte que si on rame ensemble. Choisis ton poste :</span><span data-lang="de">Das schwimmt nur, wenn wir gemeinsam segeln. Wähl deinen Posten:</span><span data-lang="it">Galleggia solo se navighiamo insieme. Scegli il tuo posto:</span><span data-lang="ru">Поплывём только вместе. Выбирай свой пост:</span></p>
+
+    <div class="roles">
+      <div class="role"><span class="rico">🍳</span>
+        <div class="rtit"><span data-lang="pir">Galley cooks</span><span data-lang="es">Cocineros</span><span data-lang="en">Cooks</span><span data-lang="fr">Cuisiniers</span><span data-lang="de">Köche</span><span data-lang="it">Cuochi</span><span data-lang="ru">Повара</span></div>
+        <div class="rdsc"><span data-lang="pir">Turn plundered victuals into hot grub.</span><span data-lang="es">Convierte comida rescatada en platos calientes.</span><span data-lang="en">Turn rescued food into hot meals.</span><span data-lang="fr">Transforme les aliments sauvés en repas chauds.</span><span data-lang="de">Aus geretteten Lebensmitteln warme Mahlzeiten machen.</span><span data-lang="it">Trasforma il cibo salvato in pasti caldi.</span><span data-lang="ru">Превращай спасённую еду в горячие блюда.</span></div>
+      </div>
+      <div class="role"><span class="rico">🧺</span>
+        <div class="rtit"><span data-lang="pir">Foragers</span><span data-lang="es">Recolectores</span><span data-lang="en">Gatherers</span><span data-lang="fr">Glaneurs</span><span data-lang="de">Sammler</span><span data-lang="it">Raccoglitori</span><span data-lang="ru">Сборщики</span></div>
+        <div class="rdsc"><span data-lang="pir">Scavenge an' plunder victuals afore they spoil.</span><span data-lang="es">Recoge y rescata comida antes de que se tire.</span><span data-lang="en">Forage and rescue food before it's wasted.</span><span data-lang="fr">Glane et sauve la nourriture avant le gaspillage.</span><span data-lang="de">Lebensmittel sammeln, bevor sie weggeworfen werden.</span><span data-lang="it">Raccogli e salva il cibo prima che si sprechi.</span><span data-lang="ru">Собирай еду, пока её не выбросили.</span></div>
+      </div>
+      <div class="role"><span class="rico">🧽</span>
+        <div class="rtit"><span data-lang="pir">Deck hands</span><span data-lang="es">Fregar cubierta</span><span data-lang="en">Deck crew</span><span data-lang="fr">Équipe de pont</span><span data-lang="de">Deckmannschaft</span><span data-lang="it">Equipaggio di coperta</span><span data-lang="ru">Палубная команда</span></div>
+        <div class="rdsc"><span data-lang="pir">Swab up an' keep the galley shipshape.</span><span data-lang="es">Friega y mantén el fogón impecable.</span><span data-lang="en">Wash up and keep the galley shipshape.</span><span data-lang="fr">Fais la vaisselle, garde la cuisine nickel.</span><span data-lang="de">Abwaschen und die Küche in Schuss halten.</span><span data-lang="it">Lava e tieni la cucina in ordine.</span><span data-lang="ru">Мой посуду, держи камбуз в чистоте.</span></div>
+      </div>
+      <div class="role"><span class="rico">🛵</span>
+        <div class="rtit"><span data-lang="pir">Runners</span><span data-lang="es">Reparto</span><span data-lang="en">Runners</span><span data-lang="fr">Coursiers</span><span data-lang="de">Boten</span><span data-lang="it">Fattorini</span><span data-lang="ru">Развозчики</span></div>
+        <div class="rdsc"><span data-lang="pir">Ferry the grub an' meals wherever they be wanted.</span><span data-lang="es">Lleva comida y platos donde hagan falta.</span><span data-lang="en">Move food and meals where they're needed.</span><span data-lang="fr">Achemine vivres et repas où il le faut.</span><span data-lang="de">Bring Essen dahin, wo es gebraucht wird.</span><span data-lang="it">Porta cibo e pasti dove servono.</span><span data-lang="ru">Доставляй еду туда, где нужно.</span></div>
+      </div>
+      <div class="role"><span class="rico">🔧</span>
+        <div class="rtit"><span data-lang="pir">Tinkers</span><span data-lang="es">Manitas</span><span data-lang="en">Fixers</span><span data-lang="fr">Bricoleurs</span><span data-lang="de">Tüftler</span><span data-lang="it">Tuttofare</span><span data-lang="ru">Мастера</span></div>
+        <div class="rdsc"><span data-lang="pir">Mend the riggin', the icebox, whate'er be broke.</span><span data-lang="es">Arregla equipos, la nevera, lo que se rompa.</span><span data-lang="en">Mend gear, the fridge, whatever breaks.</span><span data-lang="fr">Répare le matériel, le frigo, ce qui casse.</span><span data-lang="de">Geräte, Kühlschrank — alles reparieren.</span><span data-lang="it">Ripara attrezzi, frigo, ciò che si rompe.</span><span data-lang="ru">Чини технику, холодильник, что сломалось.</span></div>
+      </div>
+      <div class="role"><span class="rico">🎉</span>
+        <div class="rtit"><span data-lang="pir">Free hands</span><span data-lang="es">Tripulación libre</span><span data-lang="en">Free hands</span><span data-lang="fr">Mains libres</span><span data-lang="de">Freie Hände</span><span data-lang="it">Mani libere</span><span data-lang="ru">Вольные руки</span></div>
+        <div class="rdsc"><span data-lang="pir">Just blow in with a fair wind an' good cheer.</span><span data-lang="es">Solo aparece con buena energía.</span><span data-lang="en">Just show up with good energy.</span><span data-lang="fr">Viens simplement avec ta bonne énergie.</span><span data-lang="de">Einfach mit guter Energie auftauchen.</span><span data-lang="it">Presentati con la giusta energia.</span><span data-lang="ru">Просто приходи с хорошей энергией.</span></div>
+      </div>
+    </div>
+
+    <div class="cta-center">
+      <button class="btn btn-primary" onclick="openD()">
+        <span data-lang="pir">🏴‍☠️ Hoist the colours — sign on, ye sea dog!</span><span data-lang="es">🏴‍☠️ Iza la bandera — únete</span><span data-lang="en">🏴‍☠️ Hoist the flag — join us</span><span data-lang="fr">🏴‍☠️ Hisse le drapeau — rejoins-nous</span><span data-lang="de">🏴‍☠️ Flagge hissen — mach mit</span><span data-lang="it">🏴‍☠️ Issa la bandiera — unisciti</span><span data-lang="ru">🏴‍☠️ Поднять флаг — к нам</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fmeta">Feed Me Again · Love Me Again · Órgiva, Alpujarra</div>
+  <div class="ftags">#lovepirates · #feedmeagain</div>
+  <button class="fcredit-btn" onclick="document.getElementById('davd').classList.add('open')">Crafted with care · digitalAIventures</button>
+</footer>
+
+<!-- CONTACT MODAL -->
+<div class="dialog-overlay" id="cd" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="dialog-box">
+    <h4><span data-lang="pir">Hoist the colours, matey!</span><span data-lang="es">Únete a la tripulación</span><span data-lang="en">Join the crew</span><span data-lang="fr">Rejoins l'équipage</span><span data-lang="de">Komm an Bord</span><span data-lang="it">Unisciti alla ciurma</span><span data-lang="ru">Вступай в команду</span></h4>
+    <div class="dsub"><span data-lang="pir">We muster on Telegram, arrr. Climb aboard:</span><span data-lang="es">Nos reunimos en Telegram. Súbete a bordo:</span><span data-lang="en">We gather on Telegram. Jump aboard:</span><span data-lang="fr">On se retrouve sur Telegram. Monte à bord :</span><span data-lang="de">Wir treffen uns auf Telegram. Komm an Bord:</span><span data-lang="it">Ci troviamo su Telegram. Sali a bordo:</span><span data-lang="ru">Мы собираемся в Telegram. Поднимайся на борт:</span></div>
+    <a class="dialog-option dialog-tg" href="https://t.me/feed_me_again" target="_blank" rel="noopener">✈ Telegram · Feed Me Again</a>
+    <div class="dhandle">@feed_me_again</div>
+    <button class="dialog-close" onclick="document.getElementById('cd').classList.remove('open')"><span data-lang="pir">Belay that!</span><span data-lang="es">Cerrar</span><span data-lang="en">Close</span><span data-lang="fr">Fermer</span><span data-lang="de">Schließen</span><span data-lang="it">Chiudi</span><span data-lang="ru">Закрыть</span></button>
+  </div>
+</div>
+
+<script>
+var LANGS=['pir','es','en','fr','de','it','ru'];
+function setLang(l){
+  if(LANGS.indexOf(l)<0)l='pir';
+  document.querySelectorAll('[data-lang]').forEach(function(el){
+    el.classList.toggle('lon',el.getAttribute('data-lang')===l);
+  });
+  document.querySelectorAll('.lb').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l);});
+  document.documentElement.setAttribute('lang',l==='pir'?'en':l);
+  try{localStorage.setItem('fma_lang',l)}catch(e){}
+}
+function openD(){document.getElementById('cd').classList.add('open')}
+function closeD(){document.getElementById('cd').classList.remove('open')}
+
+function toggleTheme(){
+  var h=document.documentElement;
+  var n=(h.getAttribute('data-theme')||'dark')==='dark'?'light':'dark';
+  h.setAttribute('data-theme',n);
+  document.getElementById('themeIcon').textContent=n==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',n)}catch(e){}
+}
+(function(){
+  function apply(t){
+    document.documentElement.setAttribute('data-theme',t);
+    document.addEventListener('DOMContentLoaded',function(){
+      var i=document.getElementById('themeIcon');if(i)i.textContent=t==='dark'?'☀️':'🌙';
+    });
+  }
+  try{var s=localStorage.getItem('theme');
+    if(s){apply(s)}else{var h=new Date().getHours();apply(h>=7&&h<19?'light':'dark')}
+  }catch(e){apply('dark')}
+})();
+
+document.addEventListener('DOMContentLoaded',function(){
+  setLang('pir');
+  // scroll reveal
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+});
+</script>
+<!-- DAV CONTACT MODAL (canonical) -->
+<div class="dialog-overlay" id="davd" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="dialog-box">
+    <h4><span data-lang="pir">Hail digitalAIventures, arrr</span><span data-lang="es">Contacta con digitalAIventures</span><span data-lang="en">Contact digitalAIventures</span><span data-lang="fr">Contacter digitalAIventures</span><span data-lang="de">digitalAIventures kontaktieren</span><span data-lang="it">Contatta digitalAIventures</span><span data-lang="ru">Связаться с digitalAIventures</span></h4>
+    <a class="dialog-option dialog-bot" href="https://t.me/Juanitto_assist_bot" target="_blank" rel="noopener">🤖 AI Assist 24/7</a>
+    <a class="dialog-option dialog-tg" href="https://t.me/JuanittoCalvares" target="_blank" rel="noopener">✈ Personal</a>
+    <a class="dialog-option dialog-mail" href="mailto:digitalAIventures.LLC@gmail.com">✉ Email</a>
+    <button class="dialog-close" onclick="document.getElementById('davd').classList.remove('open')"><span data-lang="pir">Belay that!</span><span data-lang="es">Cerrar</span><span data-lang="en">Close</span><span data-lang="fr">Fermer</span><span data-lang="de">Schließen</span><span data-lang="it">Chiudi</span><span data-lang="ru">Закрыть</span></button>
+  </div>
+</div>
+</body>
+</html>

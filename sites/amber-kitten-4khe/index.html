@@ -16,16 +16,11 @@
   .stats{display:flex;gap:2rem;margin:1.5rem 0;padding:1rem 1.25rem;background:#1a1a1f;border:1px solid #2a2a35;border-radius:.75rem}
   .stat label{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:#555;display:block;margin-bottom:.2rem}
   .stat value{font-size:1.1rem;font-weight:600;color:#fff}
-  .search-row{display:flex;gap:.75rem;margin-bottom:1.25rem;align-items:center}
-  .search-wrap{position:relative;flex:1}
+  .search-wrap{margin-bottom:1.25rem;position:relative}
   .search-wrap input{width:100%;padding:.65rem 1rem .65rem 2.6rem;background:#1a1a1f;border:1px solid #2a2a35;border-radius:.6rem;color:#e2e2e7;font-size:.9rem;font-family:'Inter',sans-serif;outline:none;transition:border .2s}
   .search-wrap input:focus{border-color:#f97316}
   .search-wrap input::placeholder{color:#444}
   .search-icon{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);color:#555;font-size:1rem;pointer-events:none}
-  .sort-btn{padding:.6rem 1rem;background:#f97316;color:#fff;border:none;border-radius:.6rem;font-size:.82rem;font-weight:600;cursor:pointer;white-space:nowrap;font-family:'Inter',sans-serif}
-  .sort-btn:hover{background:#ea6c0a}
-  .az-btn{padding:.6rem .9rem;background:#1a1a1f;color:#e2e2e7;border:1px solid #2a2a35;border-radius:.6rem;font-size:.82rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
-  .az-btn:hover{border-color:#f97316;color:#f97316}
   table{width:100%;border-collapse:collapse}
   thead th{text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:#555;padding:.6rem 1rem;border-bottom:1px solid #2a2a35}
   tbody tr{border-bottom:1px solid #1e1e26;transition:background .15s}
@@ -48,296 +43,76 @@
     <h1>My Sites</h1>
     <p class="subtitle">A table of contents for everything published via Claude.</p>
     <div class="stats">
-      <div class="stat"><label>Total</label><value>37</value></div>
-      <div class="stat"><label>Active</label><value>37</value></div>
-      <div class="stat"><label>Last published</label><value>2026-05-19</value></div>
+      <div class="stat"><label>Total</label><value>38</value></div>
+      <div class="stat"><label>Active</label><value>38</value></div>
+      <div class="stat"><label>Last published</label><value>2026-05-28</value></div>
     </div>
   </header>
-
-  <div class="search-row">
-    <div class="search-wrap">
-      <span class="search-icon">🔍</span>
-      <input type="text" id="search" placeholder="Search by title or slug…" oninput="filterTable()">
-    </div>
-    <button class="sort-btn" id="sortBtn" onclick="toggleSort()">🕐 Newest first</button>
-    <button class="az-btn" onclick="sortAZ()">A→Z</button>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="search" placeholder="Search by title or slug…" oninput="filterTable()">
   </div>
-
   <table id="sites-table">
     <thead><tr><th>#</th><th>Title</th><th>Slug</th><th>Published</th></tr></thead>
-    <tbody id="tbody">
-      <tr data-search="lanjarón halal — carnicería halal certificada liminal-glider-smfx">
-        <td style="color:#555;font-size:.8rem">1</td>
-        <td><a href="https://liminal-glider-smfx.here.now/" target="_blank">Lanjarón Halal — Carnicería Halal Certificada</a></td>
-        <td class="slug">liminal-glider-smfx</td>
-        <td class="date">2026-05-19</td>
-      </tr>
-      <tr data-search="alexandru-ioan nistoroiu — arquitecto & desarrollador urban-monsoon-dt7k">
-        <td style="color:#555;font-size:.8rem">2</td>
-        <td><a href="https://urban-monsoon-dt7k.here.now/" target="_blank">Alexandru-Ioan Nistoroiu — Arquitecto & Desarrollador</a></td>
-        <td class="slug">urban-monsoon-dt7k</td>
-        <td class="date">2026-05-19</td>
-      </tr>
-      <tr data-search="la parada — website prototype orchid-crest-nra3">
-        <td style="color:#555;font-size:.8rem">3</td>
-        <td><a href="https://orchid-crest-nra3.here.now/" target="_blank">La Parada — Website Prototype</a></td>
-        <td class="slug">orchid-crest-nra3</td>
-        <td class="date">2026-05-14</td>
-      </tr>
-      <tr data-search="la parada — cold offer mellow-orbit-rqax">
-        <td style="color:#555;font-size:.8rem">4</td>
-        <td><a href="https://mellow-orbit-rqax.here.now/" target="_blank">La Parada — Cold Offer</a></td>
-        <td class="slug">mellow-orbit-rqax</td>
-        <td class="date">2026-05-14</td>
-      </tr>
-      <tr data-search="feed me again — nevera solidaria por love me again stormy-vision-rc4s">
-        <td style="color:#555;font-size:.8rem">5</td>
-        <td><a href="https://stormy-vision-rc4s.here.now/" target="_blank">Feed Me Again — Nevera Solidaria por Love Me Again</a></td>
-        <td class="slug">stormy-vision-rc4s</td>
-        <td class="date">2026-05-12</td>
-      </tr>
-      <tr data-search="don gonzález / juanittocalvares nimble-tundra-vby7">
-        <td style="color:#555;font-size:.8rem">6</td>
-        <td><a href="https://nimble-tundra-vby7.here.now/" target="_blank">don González / JuanittoCalvares</a></td>
-        <td class="slug">nimble-tundra-vby7</td>
-        <td class="date">2026-05-11</td>
-      </tr>
-      <tr data-search="foolab — prototype tester guide unfold-lagoon-rrt8">
-        <td style="color:#555;font-size:.8rem">7</td>
-        <td><a href="https://unfold-lagoon-rrt8.here.now/" target="_blank">FooLab — Prototype Tester Guide</a></td>
-        <td class="slug">unfold-lagoon-rrt8</td>
-        <td class="date">2026-05-07</td>
-      </tr>
-      <tr data-search="love me again — tester kit vowful-cosmos-d7z3">
-        <td style="color:#555;font-size:.8rem">8</td>
-        <td><a href="https://vowful-cosmos-d7z3.here.now/" target="_blank">Love Me Again — Tester Kit</a></td>
-        <td class="slug">vowful-cosmos-d7z3</td>
-        <td class="date">2026-05-07</td>
-      </tr>
-      <tr data-search="valorapp — prototype tester guide deep-aurora-6tzt">
-        <td style="color:#555;font-size:.8rem">9</td>
-        <td><a href="https://deep-aurora-6tzt.here.now/" target="_blank">ValorApp — Prototype Tester Guide</a></td>
-        <td class="slug">deep-aurora-6tzt</td>
-        <td class="date">2026-05-07</td>
-      </tr>
-      <tr data-search="ai visions & sound — mandala dreams flowing-slate-pa85">
-        <td style="color:#555;font-size:.8rem">10</td>
-        <td><a href="https://flowing-slate-pa85.here.now/" target="_blank">AI Visions & Sound — Mandala Dreams</a></td>
-        <td class="slug">flowing-slate-pa85</td>
-        <td class="date">2026-05-06</td>
-      </tr>
-      <tr data-search="digitalaiventures — partner program glacial-jubilee-wqn8">
-        <td style="color:#555;font-size:.8rem">11</td>
-        <td><a href="https://glacial-jubilee-wqn8.here.now/" target="_blank">digitalAIventures — Partner Program</a></td>
-        <td class="slug">glacial-jubilee-wqn8</td>
-        <td class="date">2026-05-02</td>
-      </tr>
-      <tr data-search="the alkaline veil — bio-remediation protocol subtle-mesa-aj6v">
-        <td style="color:#555;font-size:.8rem">12</td>
-        <td><a href="https://subtle-mesa-aj6v.here.now/" target="_blank">The Alkaline Veil — Bio-Remediation Protocol</a></td>
-        <td class="slug">subtle-mesa-aj6v</td>
-        <td class="date">2026-04-30</td>
-      </tr>
-      <tr data-search="cal viva protocol — the mummy-wrap cottage reset wander-warden-nj7q">
-        <td style="color:#555;font-size:.8rem">13</td>
-        <td><a href="https://wander-warden-nj7q.here.now/" target="_blank">Cal Viva Protocol — The Mummy-Wrap Cottage Reset</a></td>
-        <td class="slug">wander-warden-nj7q</td>
-        <td class="date">2026-04-30</td>
-      </tr>
-      <tr data-search="guardos — an ai-armored personal operating system flint-denim-q8ae">
-        <td style="color:#555;font-size:.8rem">14</td>
-        <td><a href="https://flint-denim-q8ae.here.now/" target="_blank">GuardOS — An AI-Armored Personal Operating System</a></td>
-        <td class="slug">flint-denim-q8ae</td>
-        <td class="date">2026-04-29</td>
-      </tr>
-      <tr data-search="megano mills — investment analysis report quiet-olive-ch5g">
-        <td style="color:#555;font-size:.8rem">15</td>
-        <td><a href="https://quiet-olive-ch5g.here.now/" target="_blank">Megano Mills — Investment Analysis Report</a></td>
-        <td class="slug">quiet-olive-ch5g</td>
-        <td class="date">2026-04-27</td>
-      </tr>
-      <tr data-search="mediterranean mill partners — independent olive oil mill consulting sandy-zenith-57rn">
-        <td style="color:#555;font-size:.8rem">16</td>
-        <td><a href="https://sandy-zenith-57rn.here.now/" target="_blank">Mediterranean Mill Partners — Independent Olive Oil Mill Consulting</a></td>
-        <td class="slug">sandy-zenith-57rn</td>
-        <td class="date">2026-04-27</td>
-      </tr>
-      <tr data-search="olive mill quote configurator nimble-mirage-rcj2">
-        <td style="color:#555;font-size:.8rem">17</td>
-        <td><a href="https://nimble-mirage-rcj2.here.now/" target="_blank">Olive Mill Quote Configurator</a></td>
-        <td class="slug">nimble-mirage-rcj2</td>
-        <td class="date">2026-04-26</td>
-      </tr>
-      <tr data-search="viki properties, reimagined — a proposal by digitalaiventures ember-brook-9wrf">
-        <td style="color:#555;font-size:.8rem">18</td>
-        <td><a href="https://ember-brook-9wrf.here.now/" target="_blank">Viki Properties, reimagined — a proposal by digitalAIventures</a></td>
-        <td class="slug">ember-brook-9wrf</td>
-        <td class="date">2026-04-17</td>
-      </tr>
-      <tr data-search="digitalaiventures — software product delivery onyx-opera-s9qd">
-        <td style="color:#555;font-size:.8rem">19</td>
-        <td><a href="https://onyx-opera-s9qd.here.now/" target="_blank">digitalAIventures — Software Product Delivery</a></td>
-        <td class="slug">onyx-opera-s9qd</td>
-        <td class="date">2026-04-16</td>
-      </tr>
-      <tr data-search="vacoil — partner pilot programme graceful-anchor-qynh">
-        <td style="color:#555;font-size:.8rem">20</td>
-        <td><a href="https://graceful-anchor-qynh.here.now/" target="_blank">VacOil — Partner Pilot Programme</a></td>
-        <td class="slug">graceful-anchor-qynh</td>
-        <td class="date">2026-04-10</td>
-      </tr>
-      <tr data-search="vacoil — uhp olive oil plant system — digitalaiventures silken-jungle-kpeq">
-        <td style="color:#555;font-size:.8rem">21</td>
-        <td><a href="https://silken-jungle-kpeq.here.now/" target="_blank">VacOil — UHP Olive Oil Plant System — digitalAIventures</a></td>
-        <td class="slug">silken-jungle-kpeq</td>
-        <td class="date">2026-04-09</td>
-      </tr>
-      <tr data-search="vacoil — partner pilot programme supple-silence-day2">
-        <td style="color:#555;font-size:.8rem">22</td>
-        <td><a href="https://supple-silence-day2.here.now/" target="_blank">VacOil — Partner Pilot Programme</a></td>
-        <td class="slug">supple-silence-day2</td>
-        <td class="date">2026-04-09</td>
-      </tr>
-      <tr data-search="tripolarity — the three forces within fancy-kernel-e7fn">
-        <td style="color:#555;font-size:.8rem">23</td>
-        <td><a href="https://fancy-kernel-e7fn.here.now/" target="_blank">Tripolarity — The Three Forces Within</a></td>
-        <td class="slug">fancy-kernel-e7fn</td>
-        <td class="date">2026-04-07</td>
-      </tr>
-      <tr data-search="deepdata — submersible datacenter technology silver-summit-nzq3">
-        <td style="color:#555;font-size:.8rem">24</td>
-        <td><a href="https://silver-summit-nzq3.here.now/" target="_blank">DeepData — Submersible Datacenter Technology</a></td>
-        <td class="slug">silver-summit-nzq3</td>
-        <td class="date">2026-04-07</td>
-      </tr>
-      <tr data-search="al-kahf zawiya alpujarra indigo-quartz-8d86">
-        <td style="color:#555;font-size:.8rem">25</td>
-        <td><a href="https://indigo-quartz-8d86.here.now/" target="_blank">Al-Kahf Zawiya Alpujarra</a></td>
-        <td class="slug">indigo-quartz-8d86</td>
-        <td class="date">2026-04-07</td>
-      </tr>
-      <tr data-search="deepcore power — modular underwater nuclear power plant awake-drift-nnxe">
-        <td style="color:#555;font-size:.8rem">26</td>
-        <td><a href="https://awake-drift-nnxe.here.now/" target="_blank">DeepCore Power — Modular Underwater Nuclear Power Plant</a></td>
-        <td class="slug">awake-drift-nnxe</td>
-        <td class="date">2026-04-05</td>
-      </tr>
-      <tr data-search="eco pcm insulation panels — modular diy system tawny-oasis-rm9y">
-        <td style="color:#555;font-size:.8rem">27</td>
-        <td><a href="https://tawny-oasis-rm9y.here.now/" target="_blank">ECO PCM Insulation Panels — Modular DIY System</a></td>
-        <td class="slug">tawny-oasis-rm9y</td>
-        <td class="date">2026-04-04</td>
-      </tr>
-      <tr data-search="gemma 4 local ai — why your community needs its own ai server onyx-waffle-y575">
-        <td style="color:#555;font-size:.8rem">28</td>
-        <td><a href="https://onyx-waffle-y575.here.now/" target="_blank">Gemma 4 Local AI — Why Your Community Needs Its Own AI Server</a></td>
-        <td class="slug">onyx-waffle-y575</td>
-        <td class="date">2026-04-04</td>
-      </tr>
-      <tr data-search="top — tessera open protocol silent-island-f42b">
-        <td style="color:#555;font-size:.8rem">29</td>
-        <td><a href="https://silent-island-f42b.here.now/" target="_blank">TOP — Tessera Open Protocol</a></td>
-        <td class="slug">silent-island-f42b</td>
-        <td class="date">2026-04-03</td>
-      </tr>
-      <tr data-search="f.l. wright type community — a story stellar-warden-5csk">
-        <td style="color:#555;font-size:.8rem">30</td>
-        <td><a href="https://stellar-warden-5csk.here.now/" target="_blank">F.L. Wright Type Community — A Story</a></td>
-        <td class="slug">stellar-warden-5csk</td>
-        <td class="date">2026-04-03</td>
-      </tr>
-      <tr data-search="3d fems — fractal executive management system pearly-bloom-6876">
-        <td style="color:#555;font-size:.8rem">31</td>
-        <td><a href="https://pearly-bloom-6876.here.now/" target="_blank">3D FEMS — Fractal Executive Management System</a></td>
-        <td class="slug">pearly-bloom-6876</td>
-        <td class="date">2026-04-03</td>
-      </tr>
-      <tr data-search="neuroseed by symbionic corp — the future of brain health rosy-mango-ggzz">
-        <td style="color:#555;font-size:.8rem">32</td>
-        <td><a href="https://rosy-mango-ggzz.here.now/" target="_blank">NeuroSeed by Symbionic Corp — The Future of Brain Health</a></td>
-        <td class="slug">rosy-mango-ggzz</td>
-        <td class="date">2026-04-03</td>
-      </tr>
-      <tr data-search="allvolt — universal battery backpack system mellow-opera-ef6z">
-        <td style="color:#555;font-size:.8rem">33</td>
-        <td><a href="https://mellow-opera-ef6z.here.now/" target="_blank">ALLVOLT — Universal Battery Backpack System</a></td>
-        <td class="slug">mellow-opera-ef6z</td>
-        <td class="date">2026-04-03</td>
-      </tr>
-      <tr data-search="pearlshell — rapid insulated shelter system fancy-atlas-w49b">
-        <td style="color:#555;font-size:.8rem">34</td>
-        <td><a href="https://fancy-atlas-w49b.here.now/" target="_blank">PearlShell — Rapid Insulated Shelter System</a></td>
-        <td class="slug">fancy-atlas-w49b</td>
-        <td class="date">2026-04-03</td>
-      </tr>
-      <tr data-search="🌀 spiral electric rail farm — pitch lusty-igloo-mf5b">
-        <td style="color:#555;font-size:.8rem">35</td>
-        <td><a href="https://lusty-igloo-mf5b.here.now/" target="_blank">🌀 Spiral Electric Rail Farm — Pitch</a></td>
-        <td class="slug">lusty-igloo-mf5b</td>
-        <td class="date">2026-03-28</td>
-      </tr>
-      <tr data-search="terra bonbon — teeth health chewing candy hollow-brook-p5ab">
-        <td style="color:#555;font-size:.8rem">36</td>
-        <td><a href="https://hollow-brook-p5ab.here.now/" target="_blank">Terra Bonbon — Teeth Health Chewing Candy</a></td>
-        <td class="slug">hollow-brook-p5ab</td>
-        <td class="date">2026-03-21</td>
-      </tr>
-      <tr data-search="clide — glide through your cli zippy-huckle-zwq5">
-        <td style="color:#555;font-size:.8rem">37</td>
-        <td><a href="https://zippy-huckle-zwq5.here.now/" target="_blank">Clide — Glide through your CLI</a></td>
-        <td class="slug">zippy-huckle-zwq5</td>
-        <td class="date">2026-03-19</td>
-      </tr>
+    <tbody>
+<tr data-search="feed me again — la cocina pirata · comedor social saffron-tinsel-mzg7"><td style="color:#555;font-size:.8rem">1</td><td><a href="https://saffron-tinsel-mzg7.here.now/" target="_blank">Feed Me Again — La cocina pirata · comedor social</a></td><td class="slug">saffron-tinsel-mzg7</td><td class="date">2026-05-28</td></tr>
+<tr data-search="digitalaiventures — software product delivery onyx-opera-s9qd"><td style="color:#555;font-size:.8rem">2</td><td><a href="https://onyx-opera-s9qd.here.now/" target="_blank">digitalAIventures — Software Product Delivery</a></td><td class="slug">onyx-opera-s9qd</td><td class="date">2026-05-24</td></tr>
+<tr data-search="lanjarón halal — carnicería halal certificada liminal-glider-smfx"><td style="color:#555;font-size:.8rem">3</td><td><a href="https://liminal-glider-smfx.here.now/" target="_blank">Lanjarón Halal — Carnicería Halal Certificada</a></td><td class="slug">liminal-glider-smfx</td><td class="date">2026-05-19</td></tr>
+<tr data-search="alexandru-ioan nistoroiu — arquitecto &amp; desarrollador urban-monsoon-dt7k"><td style="color:#555;font-size:.8rem">4</td><td><a href="https://urban-monsoon-dt7k.here.now/" target="_blank">Alexandru-Ioan Nistoroiu — Arquitecto &amp; Desarrollador</a></td><td class="slug">urban-monsoon-dt7k</td><td class="date">2026-05-19</td></tr>
+<tr data-search="la parada — website prototype orchid-crest-nra3"><td style="color:#555;font-size:.8rem">5</td><td><a href="https://orchid-crest-nra3.here.now/" target="_blank">La Parada — Website Prototype</a></td><td class="slug">orchid-crest-nra3</td><td class="date">2026-05-14</td></tr>
+<tr data-search="la parada — cold offer mellow-orbit-rqax"><td style="color:#555;font-size:.8rem">6</td><td><a href="https://mellow-orbit-rqax.here.now/" target="_blank">La Parada — Cold Offer</a></td><td class="slug">mellow-orbit-rqax</td><td class="date">2026-05-14</td></tr>
+<tr data-search="feed me again — nevera solidaria por love me again stormy-vision-rc4s"><td style="color:#555;font-size:.8rem">7</td><td><a href="https://stormy-vision-rc4s.here.now/" target="_blank">Feed Me Again — Nevera Solidaria por Love Me Again</a></td><td class="slug">stormy-vision-rc4s</td><td class="date">2026-05-12</td></tr>
+<tr data-search="don gonzález / juanittocalvares nimble-tundra-vby7"><td style="color:#555;font-size:.8rem">8</td><td><a href="https://nimble-tundra-vby7.here.now/" target="_blank">don González / JuanittoCalvares</a></td><td class="slug">nimble-tundra-vby7</td><td class="date">2026-05-11</td></tr>
+<tr data-search="foolab — prototype tester guide unfold-lagoon-rrt8"><td style="color:#555;font-size:.8rem">9</td><td><a href="https://unfold-lagoon-rrt8.here.now/" target="_blank">FooLab — Prototype Tester Guide</a></td><td class="slug">unfold-lagoon-rrt8</td><td class="date">2026-05-07</td></tr>
+<tr data-search="love me again — tester kit vowful-cosmos-d7z3"><td style="color:#555;font-size:.8rem">10</td><td><a href="https://vowful-cosmos-d7z3.here.now/" target="_blank">Love Me Again — Tester Kit</a></td><td class="slug">vowful-cosmos-d7z3</td><td class="date">2026-05-07</td></tr>
+<tr data-search="valorapp — prototype tester guide deep-aurora-6tzt"><td style="color:#555;font-size:.8rem">11</td><td><a href="https://deep-aurora-6tzt.here.now/" target="_blank">ValorApp — Prototype Tester Guide</a></td><td class="slug">deep-aurora-6tzt</td><td class="date">2026-05-07</td></tr>
+<tr data-search="ai visions &amp; sound — mandala dreams flowing-slate-pa85"><td style="color:#555;font-size:.8rem">12</td><td><a href="https://flowing-slate-pa85.here.now/" target="_blank">AI Visions &amp; Sound — Mandala Dreams</a></td><td class="slug">flowing-slate-pa85</td><td class="date">2026-05-06</td></tr>
+<tr data-search="digitalaiventures — partner program glacial-jubilee-wqn8"><td style="color:#555;font-size:.8rem">13</td><td><a href="https://glacial-jubilee-wqn8.here.now/" target="_blank">digitalAIventures — Partner Program</a></td><td class="slug">glacial-jubilee-wqn8</td><td class="date">2026-05-02</td></tr>
+<tr data-search="the alkaline veil — bio-remediation protocol subtle-mesa-aj6v"><td style="color:#555;font-size:.8rem">14</td><td><a href="https://subtle-mesa-aj6v.here.now/" target="_blank">The Alkaline Veil — Bio-Remediation Protocol</a></td><td class="slug">subtle-mesa-aj6v</td><td class="date">2026-04-30</td></tr>
+<tr data-search="cal viva protocol — the mummy-wrap cottage reset wander-warden-nj7q"><td style="color:#555;font-size:.8rem">15</td><td><a href="https://wander-warden-nj7q.here.now/" target="_blank">Cal Viva Protocol — The Mummy-Wrap Cottage Reset</a></td><td class="slug">wander-warden-nj7q</td><td class="date">2026-04-30</td></tr>
+<tr data-search="guardos — an ai-armored personal operating system flint-denim-q8ae"><td style="color:#555;font-size:.8rem">16</td><td><a href="https://flint-denim-q8ae.here.now/" target="_blank">GuardOS — An AI-Armored Personal Operating System</a></td><td class="slug">flint-denim-q8ae</td><td class="date">2026-04-29</td></tr>
+<tr data-search="megano mills — investment analysis report quiet-olive-ch5g"><td style="color:#555;font-size:.8rem">17</td><td><a href="https://quiet-olive-ch5g.here.now/" target="_blank">Megano Mills — Investment Analysis Report</a></td><td class="slug">quiet-olive-ch5g</td><td class="date">2026-04-27</td></tr>
+<tr data-search="mediterranean mill partners — independent olive oil mill consulting sandy-zenith-57rn"><td style="color:#555;font-size:.8rem">18</td><td><a href="https://sandy-zenith-57rn.here.now/" target="_blank">Mediterranean Mill Partners — Independent Olive Oil Mill Consulting</a></td><td class="slug">sandy-zenith-57rn</td><td class="date">2026-04-27</td></tr>
+<tr data-search="olive mill quote configurator nimble-mirage-rcj2"><td style="color:#555;font-size:.8rem">19</td><td><a href="https://nimble-mirage-rcj2.here.now/" target="_blank">Olive Mill Quote Configurator</a></td><td class="slug">nimble-mirage-rcj2</td><td class="date">2026-04-26</td></tr>
+<tr data-search="viki properties, reimagined — a proposal by digitalaiventures ember-brook-9wrf"><td style="color:#555;font-size:.8rem">20</td><td><a href="https://ember-brook-9wrf.here.now/" target="_blank">Viki Properties, reimagined — a proposal by digitalAIventures</a></td><td class="slug">ember-brook-9wrf</td><td class="date">2026-04-17</td></tr>
+<tr data-search="vacoil — partner pilot programme graceful-anchor-qynh"><td style="color:#555;font-size:.8rem">21</td><td><a href="https://graceful-anchor-qynh.here.now/" target="_blank">VacOil — Partner Pilot Programme</a></td><td class="slug">graceful-anchor-qynh</td><td class="date">2026-04-10</td></tr>
+<tr data-search="vacoil — uhp olive oil plant system — digitalaiventures silken-jungle-kpeq"><td style="color:#555;font-size:.8rem">22</td><td><a href="https://silken-jungle-kpeq.here.now/" target="_blank">VacOil — UHP Olive Oil Plant System — digitalAIventures</a></td><td class="slug">silken-jungle-kpeq</td><td class="date">2026-04-09</td></tr>
+<tr data-search="vacoil — partner pilot programme supple-silence-day2"><td style="color:#555;font-size:.8rem">23</td><td><a href="https://supple-silence-day2.here.now/" target="_blank">VacOil — Partner Pilot Programme</a></td><td class="slug">supple-silence-day2</td><td class="date">2026-04-09</td></tr>
+<tr data-search="tripolarity — the three forces within fancy-kernel-e7fn"><td style="color:#555;font-size:.8rem">24</td><td><a href="https://fancy-kernel-e7fn.here.now/" target="_blank">Tripolarity — The Three Forces Within</a></td><td class="slug">fancy-kernel-e7fn</td><td class="date">2026-04-07</td></tr>
+<tr data-search="deepdata — submersible datacenter technology silver-summit-nzq3"><td style="color:#555;font-size:.8rem">25</td><td><a href="https://silver-summit-nzq3.here.now/" target="_blank">DeepData — Submersible Datacenter Technology</a></td><td class="slug">silver-summit-nzq3</td><td class="date">2026-04-07</td></tr>
+<tr data-search="al-kahf zawiya alpujarra indigo-quartz-8d86"><td style="color:#555;font-size:.8rem">26</td><td><a href="https://indigo-quartz-8d86.here.now/" target="_blank">Al-Kahf Zawiya Alpujarra</a></td><td class="slug">indigo-quartz-8d86</td><td class="date">2026-04-07</td></tr>
+<tr data-search="deepcore power — modular underwater nuclear power plant awake-drift-nnxe"><td style="color:#555;font-size:.8rem">27</td><td><a href="https://awake-drift-nnxe.here.now/" target="_blank">DeepCore Power — Modular Underwater Nuclear Power Plant</a></td><td class="slug">awake-drift-nnxe</td><td class="date">2026-04-05</td></tr>
+<tr data-search="eco pcm insulation panels — modular diy system tawny-oasis-rm9y"><td style="color:#555;font-size:.8rem">28</td><td><a href="https://tawny-oasis-rm9y.here.now/" target="_blank">ECO PCM Insulation Panels — Modular DIY System</a></td><td class="slug">tawny-oasis-rm9y</td><td class="date">2026-04-04</td></tr>
+<tr data-search="gemma 4 local ai — why your community needs its own ai server onyx-waffle-y575"><td style="color:#555;font-size:.8rem">29</td><td><a href="https://onyx-waffle-y575.here.now/" target="_blank">Gemma 4 Local AI — Why Your Community Needs Its Own AI Server</a></td><td class="slug">onyx-waffle-y575</td><td class="date">2026-04-04</td></tr>
+<tr data-search="top — tessera open protocol silent-island-f42b"><td style="color:#555;font-size:.8rem">30</td><td><a href="https://silent-island-f42b.here.now/" target="_blank">TOP — Tessera Open Protocol</a></td><td class="slug">silent-island-f42b</td><td class="date">2026-04-03</td></tr>
+<tr data-search="f.l. wright type community — a story stellar-warden-5csk"><td style="color:#555;font-size:.8rem">31</td><td><a href="https://stellar-warden-5csk.here.now/" target="_blank">F.L. Wright Type Community — A Story</a></td><td class="slug">stellar-warden-5csk</td><td class="date">2026-04-03</td></tr>
+<tr data-search="3d fems — fractal executive management system pearly-bloom-6876"><td style="color:#555;font-size:.8rem">32</td><td><a href="https://pearly-bloom-6876.here.now/" target="_blank">3D FEMS — Fractal Executive Management System</a></td><td class="slug">pearly-bloom-6876</td><td class="date">2026-04-03</td></tr>
+<tr data-search="neuroseed by symbionic corp — the future of brain health rosy-mango-ggzz"><td style="color:#555;font-size:.8rem">33</td><td><a href="https://rosy-mango-ggzz.here.now/" target="_blank">NeuroSeed by Symbionic Corp — The Future of Brain Health</a></td><td class="slug">rosy-mango-ggzz</td><td class="date">2026-04-03</td></tr>
+<tr data-search="allvolt — universal battery backpack system mellow-opera-ef6z"><td style="color:#555;font-size:.8rem">34</td><td><a href="https://mellow-opera-ef6z.here.now/" target="_blank">ALLVOLT — Universal Battery Backpack System</a></td><td class="slug">mellow-opera-ef6z</td><td class="date">2026-04-03</td></tr>
+<tr data-search="pearlshell — rapid insulated shelter system fancy-atlas-w49b"><td style="color:#555;font-size:.8rem">35</td><td><a href="https://fancy-atlas-w49b.here.now/" target="_blank">PearlShell — Rapid Insulated Shelter System</a></td><td class="slug">fancy-atlas-w49b</td><td class="date">2026-04-03</td></tr>
+<tr data-search="🌀 spiral electric rail farm — pitch lusty-igloo-mf5b"><td style="color:#555;font-size:.8rem">36</td><td><a href="https://lusty-igloo-mf5b.here.now/" target="_blank">🌀 Spiral Electric Rail Farm — Pitch</a></td><td class="slug">lusty-igloo-mf5b</td><td class="date">2026-03-28</td></tr>
+<tr data-search="terra bonbon — teeth health chewing candy hollow-brook-p5ab"><td style="color:#555;font-size:.8rem">37</td><td><a href="https://hollow-brook-p5ab.here.now/" target="_blank">Terra Bonbon — Teeth Health Chewing Candy</a></td><td class="slug">hollow-brook-p5ab</td><td class="date">2026-03-21</td></tr>
+<tr data-search="clide — glide through your cli zippy-huckle-zwq5"><td style="color:#555;font-size:.8rem">38</td><td><a href="https://zippy-huckle-zwq5.here.now/" target="_blank">Clide — Glide through your CLI</a></td><td class="slug">zippy-huckle-zwq5</td><td class="date">2026-03-19</td></tr>
     </tbody>
   </table>
   <p class="no-results" id="no-results">No sites match your search.</p>
-
   <footer>
-    <p>here.now · juanitto · digitalAIventures LLC · updated 2026-05-20</p>
+    <p>here.now · juanitto · digitalAIventures LLC · updated 2026-05-28</p>
     <p style="margin-top:.4rem"><a href="https://here.now" target="_blank">here.now</a></p>
   </footer>
 </div>
 <script>
-let sortNewest=true;
-const originalRows=[...document.querySelectorAll('#tbody tr')];
-
 function filterTable(){
   const q=document.getElementById('search').value.toLowerCase();
-  document.querySelectorAll('#tbody tr').forEach(r=>{
+  const rows=document.querySelectorAll('#sites-table tbody tr');
+  let visible=0;
+  rows.forEach(r=>{
     const hay=r.getAttribute('data-search')||'';
-    r.classList.toggle('hidden',!(!q||hay.includes(q)));
+    const show=!q||hay.includes(q);
+    r.classList.toggle('hidden',!show);
+    if(show)visible++;
   });
-  document.getElementById('no-results').style.display=
-    [...document.querySelectorAll('#tbody tr:not(.hidden)')].length===0?'block':'none';
-}
-
-function toggleSort(){
-  sortNewest=!sortNewest;
-  document.getElementById('sortBtn').textContent=sortNewest?'🕐 Newest first':'🕐 Oldest first';
-  const tbody=document.getElementById('tbody');
-  const rows=[...tbody.querySelectorAll('tr')];
-  rows.reverse();
-  rows.forEach(r=>tbody.appendChild(r));
-  renumber();
-}
-
-function sortAZ(){
-  const tbody=document.getElementById('tbody');
-  const rows=[...tbody.querySelectorAll('tr')];
-  rows.sort((a,b)=>{
-    const ta=(a.querySelector('td:nth-child(2) a')||{}).textContent||'';
-    const tb=(b.querySelector('td:nth-child(2) a')||{}).textContent||'';
-    return ta.localeCompare(tb);
-  });
-  rows.forEach(r=>tbody.appendChild(r));
-  renumber();
-}
-
-function renumber(){
-  let n=1;
-  document.querySelectorAll('#tbody tr').forEach(r=>{
-    r.querySelector('td:first-child').textContent=n++;
-  });
+  document.getElementById('no-results').style.display=visible===0?'block':'none';
 }
 </script>
 </body>
