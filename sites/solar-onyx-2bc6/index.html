@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bagno Seco · Beneficio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root,[data-theme="light"]{
+    --bg:#f4f0e4; --bg-card:#fffdf6;
+    --bg-hero:linear-gradient(165deg,#e8e6cf 0%,#f4f0e4 55%,#eef0df 100%);
+    --bg-alt:#eceadb;
+    --text:#3a3420; --text-m:#7c7256; --text-h:#2a2410;
+    --border:#ddd8c2;
+    --accent:#6b7a2e;   /* olive */
+    --ac2:#a67048;      /* earth brown */
+    --ac3:#b8862e;      /* warm gold (compost) */
+    --leaf:#8a9b3e;
+    --olive:#6b7a2e; --muted:#7c7256;
+    --wood:#c69a6a; --wood-d:#a87c4e; --wood-top:#b98e5e;
+    --cana:#cdab63; --earth:#a67048; --earth-d:#8a5a36;
+  }
+  [data-theme="dark"]{
+    --bg:#16140d; --bg-card:#201d13;
+    --bg-hero:linear-gradient(165deg,#221f12 0%,#16140d 60%,#1a180e 100%);
+    --bg-alt:#1b190f;
+    --text:#ddd6c2; --text-m:#998d6e; --text-h:#f0ebd8;
+    --border:#322d1d;
+    --accent:#9bab4a;
+    --ac2:#c08e5e;
+    --ac3:#d4a13e;
+    --leaf:#a4b556;
+    --olive:#9bab4a; --muted:#998d6e;
+    --wood:#c69a6a; --wood-d:#a3754a; --wood-top:#b8895a;
+    --cana:#c9a85e; --earth:#a87a52; --earth-d:#7a5232;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);
+    line-height:1.6;font-weight:300;overflow-x:hidden;transition:background .3s,color .3s}
+  .shell{max-width:460px;margin:0 auto;background:var(--bg);min-height:100vh;
+    box-shadow:0 0 50px rgba(0,0,0,.08)}
+
+  /* lang bar */
+  .lbar{display:flex;justify-content:center;gap:.4rem;padding:.4rem;
+    background:var(--bg);border-bottom:1px solid var(--border);
+    position:sticky;top:0;z-index:190;backdrop-filter:blur(6px)}
+  .lb{background:none;border:1px solid var(--border);color:var(--text-m);
+    font-size:.78rem;padding:.18rem .62rem;border-radius:1rem;cursor:pointer;transition:all .2s;font-family:inherit}
+  .lb.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .tt{position:fixed;top:3.4rem;right:calc(50% - 230px + .6rem);z-index:150;
+    background:var(--bg-card);border:1px solid var(--border);
+    width:2.3rem;height:2.3rem;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 10px rgba(0,0,0,.18);cursor:pointer;font-size:1rem;transition:all .2s}
+  .tt:hover{transform:scale(1.1) rotate(12deg)}
+  @media(max-width:480px){.tt{right:.7rem}}
+
+  /* hero */
+  .hero{background:var(--bg-hero);padding:3rem 1.5rem 2.6rem;text-align:center;position:relative;overflow:hidden}
+  .hero::after{content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 80% 10%,rgba(107,122,46,.10),transparent 55%);pointer-events:none}
+  .seed{font-size:3.2rem;display:inline-block;animation:sway 5s ease-in-out infinite;filter:drop-shadow(0 4px 8px rgba(0,0,0,.12))}
+  @keyframes sway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+  .eyebrow{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ac2);font-weight:600;margin:1rem 0 .5rem}
+  h1{font-family:'Playfair Display',serif;font-weight:700;font-size:2.35rem;
+    line-height:1.08;color:var(--text-h);margin-bottom:.5rem;letter-spacing:-.01em}
+  h1 .it{font-style:italic;color:var(--accent)}
+  .htag{font-size:1.02rem;color:var(--text-m);max-width:30ch;margin:.4rem auto 0;font-style:italic;font-family:'Playfair Display',serif;font-weight:400}
+  .leaf-row{margin-top:1.3rem;font-size:1rem;letter-spacing:.5rem;opacity:.55}
+
+  /* sections */
+  section{padding:2.3rem 1.5rem}
+  section.alt{background:var(--bg-alt)}
+  .slbl{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ac2);font-weight:600;margin-bottom:.45rem}
+  h2{font-family:'Playfair Display',serif;font-weight:600;font-size:1.65rem;
+    color:var(--text-h);line-height:1.15;margin-bottom:.4rem}
+  .div{height:2px;width:2.6rem;background:var(--accent);margin:.6rem 0 1.2rem;border-radius:2px}
+  p{margin-bottom:1rem;color:var(--text)}
+  p .lead{font-size:1.06rem}
+  strong{color:var(--text-h);font-weight:600}
+  em{color:var(--accent);font-style:italic}
+
+  /* circle / meta card */
+  .meta{background:var(--bg-card);border:1px solid var(--border);border-radius:1rem;
+    padding:1.2rem 1.3rem;margin-bottom:1.2rem;box-shadow:0 2px 14px rgba(0,0,0,.05)}
+  .mrow{display:flex;gap:.7rem;align-items:baseline;padding:.32rem 0;border-bottom:1px dashed var(--border)}
+  .mrow:last-child{border-bottom:none}
+  .mk{font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ac2);font-weight:600;min-width:5.2rem}
+  .mv{color:var(--text-h);font-weight:500;font-size:.98rem}
+
+  /* steps / how */
+  .step{display:flex;gap:.9rem;align-items:flex-start;
+    background:var(--bg-card);border:1px solid var(--border);
+    border-radius:.9rem;padding:.95rem 1.05rem;margin-bottom:.7rem}
+  .step-num{background:var(--accent);color:#fff;font-weight:700;font-size:.9rem;
+    width:1.9rem;height:1.9rem;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem}
+  .step-b strong{display:block;margin-bottom:.1rem;color:var(--text-h)}
+  .step-b{font-size:.9rem;color:var(--text-m);line-height:1.5}
+
+  /* nature callout */
+  .quote{background:var(--bg-card);border-left:4px solid var(--leaf);
+    border-radius:.4rem .9rem .9rem .4rem;padding:1.2rem 1.3rem;margin:1.3rem 0;
+    box-shadow:0 2px 14px rgba(0,0,0,.05)}
+  .quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:1.12rem;
+    color:var(--text-h);margin-bottom:0;line-height:1.5}
+  .quote .qm{font-size:1.8rem;color:var(--leaf);line-height:0;vertical-align:-.4rem;margin-right:.2rem}
+
+  /* feature grid */
+  .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:1.1rem}
+  .fcard{background:var(--bg-card);border:1px solid var(--border);border-radius:.85rem;
+    padding:1rem .85rem;text-align:center}
+  .fico{font-size:1.9rem;display:block;margin-bottom:.4rem}
+  .ftit{font-weight:600;font-size:.86rem;color:var(--text-h);margin-bottom:.2rem}
+  .fdsc{font-size:.76rem;color:var(--text-m);line-height:1.4}
+
+  /* diagram */
+  .diagram-wrap{background:var(--bg-card);border:1px solid var(--border);border-radius:1rem;
+    padding:1.2rem .8rem 1rem;margin:1.2rem 0;box-shadow:0 2px 14px rgba(0,0,0,.05)}
+  .diagram-wrap svg{width:100%;height:auto;display:block}
+  .dcap{font-size:.78rem;color:var(--text-m);text-align:center;margin-top:.7rem;line-height:1.5;font-style:italic}
+
+  /* help */
+  .help-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-top:1.1rem}
+  .hcell{background:var(--bg-card);border:1px solid var(--border);border-radius:.85rem;
+    padding:1rem .5rem;text-align:center}
+  .hico{font-size:1.7rem;display:block;margin-bottom:.35rem}
+  .hlb{font-size:.78rem;color:var(--text-h);font-weight:600}
+
+  /* cta */
+  .cta{text-align:center;padding:2.6rem 1.5rem 1rem}
+  .btn{display:inline-block;padding:.8rem 1.9rem;border-radius:2rem;
+    font-size:1rem;font-weight:600;letter-spacing:.02em;font-family:inherit;
+    transition:all .2s;cursor:pointer;border:none;text-decoration:none}
+  .btn-primary{background:var(--accent);color:#fff;box-shadow:0 4px 16px rgba(107,122,46,.35)}
+  .btn-primary:hover{filter:brightness(1.08);transform:translateY(-2px)}
+  .gather{background:var(--bg-card);border:1px solid var(--border);border-radius:1rem;
+    padding:1.3rem;margin-top:1.3rem;text-align:center}
+  .gather .gw{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--text-h);margin-bottom:.3rem}
+  .ph{font-size:.74rem;color:var(--text-m);margin-top:.7rem;font-style:italic}
+
+  footer{text-align:center;padding:2rem 1.5rem 2.6rem;color:var(--text-m);font-size:.8rem;border-top:1px solid var(--border);margin-top:1.5rem}
+  footer .fseed{font-size:1.4rem;display:block;margin-bottom:.5rem}
+
+  [data-lang]{display:none!important}
+  [data-lang].show{display:revert!important}
+  .fade{animation:fadeUp .5s ease both}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="lbar">
+    <button class="lb on" data-l="en" onclick="setLang('en')">EN</button>
+    <button class="lb" data-l="es" onclick="setLang('es')">ES</button>
+    <button class="lb" data-l="de" onclick="setLang('de')">DE</button>
+  </div>
+  <button class="tt" onclick="toggleTheme()"><span id="ti">☀️</span></button>
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="seed">🌱</span>
+    <div class="eyebrow">Beneficio · Comunal Project</div>
+    <h1>
+      <span data-lang="en">The <span class="it">Bagno&nbsp;Seco</span></span>
+      <span data-lang="es">El <span class="it">Baño&nbsp;Seco</span></span>
+      <span data-lang="de">Das <span class="it">Trocken&shy;klo</span></span>
+    </h1>
+    <p class="htag">
+      <span data-lang="en">A gift to the soil — turning what we leave behind into food for the garden.</span>
+      <span data-lang="es">Un regalo para la tierra — convertir lo que dejamos en alimento para el jardín.</span>
+      <span data-lang="de">Ein Geschenk an den Boden — was wir hinterlassen wird zu Nahrung für den Garten.</span>
+    </p>
+    <div class="leaf-row">🍃 🌿 🍂</div>
+  </div>
+
+  <!-- TALKING CIRCLE -->
+  <section>
+    <div class="slbl">
+      <span data-lang="en">From the talking circle</span>
+      <span data-lang="es">Del círculo de conversación</span>
+      <span data-lang="de">Aus dem Gesprächskreis</span>
+    </div>
+    <h2>
+      <span data-lang="en">Dear residents &amp; guests</span>
+      <span data-lang="es">Queridos residentes e invitados</span>
+      <span data-lang="de">Liebe Bewohner &amp; Gäste</span>
+    </h2>
+    <div class="div"></div>
+
+    <div class="meta">
+      <div class="mrow"><span class="mk" data-lang="en">When</span><span class="mk" data-lang="es">Cuándo</span><span class="mk" data-lang="de">Wann</span>
+        <span class="mv">
+          <span data-lang="en">Mondays · Big Lodge</span>
+          <span data-lang="es">Lunes · Big Lodge</span>
+          <span data-lang="de">Montags · Big Lodge</span>
+        </span></div>
+      <div class="mrow"><span class="mk" data-lang="en">Where</span><span class="mk" data-lang="es">Dónde</span><span class="mk" data-lang="de">Wo</span>
+        <span class="mv">
+          <span data-lang="en">The communal garden</span>
+          <span data-lang="es">El jardín comunal</span>
+          <span data-lang="de">Der Gemeinschaftsgarten</span>
+        </span></div>
+      <div class="mrow"><span class="mk" data-lang="en">Why</span><span class="mk" data-lang="es">Por qué</span><span class="mk" data-lang="de">Warum</span>
+        <span class="mv">
+          <span data-lang="en">Honour our nature &amp; our garden</span>
+          <span data-lang="es">Honrar la naturaleza y el jardín</span>
+          <span data-lang="de">Natur &amp; Garten ehren</span>
+        </span></div>
+    </div>
+
+    <div data-lang="en">
+      <p class="lead">These last days we shared a beautiful and constructive <em>talking circle</em> about how we, as a community, take care of our most basic and natural necessity: <strong>defecation</strong>.</p>
+      <p>We all came to agree that the old <strong>"shitting pit"</strong> no longer serves us well for communal use. And many of the newcomers don't yet know the gentle forest way — finding a hidden spot far from the paths, digging a small hole with a hand shovel (which everyone should carry in their kit), covering it with earth and a stone, washing clean, and leaving no trace behind.</p>
+      <p>So it feels right, healthy and hygienic to build a proper <strong>bagno seco</strong> in the communal garden — easy to maintain, kind to use, and a living source of compost. A true symbiosis with the soil. 🌍</p>
+    </div>
+    <div data-lang="es">
+      <p class="lead">Estos últimos días compartimos un hermoso y constructivo <em>círculo de conversación</em> sobre cómo nosotros, como comunidad, cuidamos nuestra necesidad más básica y natural: la <strong>defecación</strong>.</p>
+      <p>Todos coincidimos en que el viejo <strong>"pozo de mierda"</strong> ya no nos sirve para el uso comunal. Y muchos de los recién llegados aún no conocen la forma suave del bosque — buscar un lugar escondido lejos de los caminos, cavar un pequeño hoyo con una pala de mano (que todos deberíamos llevar en nuestro equipo), cubrirlo con tierra y una piedra, lavarse bien y no dejar ningún rastro.</p>
+      <p>Por eso sentimos justo, sano e higiénico construir un verdadero <strong>baño seco</strong> en el jardín comunal — fácil de mantener, agradable de usar y una fuente viva de compost. Una verdadera simbiosis con la tierra. 🌍</p>
+    </div>
+    <div data-lang="de">
+      <p class="lead">In den letzten Tagen teilten wir einen schönen und konstruktiven <em>Gesprächskreis</em> darüber, wie wir als Gemeinschaft unser grundlegendstes und natürlichstes Bedürfnis pflegen: die <strong>Notdurft</strong>.</p>
+      <p>Wir waren uns einig, dass die alte <strong>"Scheißgrube"</strong> für die gemeinsame Nutzung nicht mehr taugt. Viele Neuankömmlinge kennen den sanften Wald-Weg noch nicht — einen versteckten Ort weit weg von den Wegen finden, mit einer Handschaufel (die jeder im Gepäck haben sollte) ein kleines Loch graben, mit Erde und einem Stein bedecken, sich sauberwaschen und keine Spuren hinterlassen.</p>
+      <p>Darum fühlt es sich richtig, gesund und hygienisch an, ein echtes <strong>Trockenklo</strong> im Gemeinschaftsgarten zu bauen — leicht zu pflegen, angenehm zu nutzen und eine lebendige Kompostquelle. Eine echte Symbiose mit dem Boden. 🌍</p>
+    </div>
+  </section>
+
+  <!-- THE SOLUTION -->
+  <section class="alt">
+    <div class="slbl">
+      <span data-lang="en">The solution</span>
+      <span data-lang="es">La solución</span>
+      <span data-lang="de">Die Lösung</span>
+    </div>
+    <h2>
+      <span data-lang="en">Two boxes, no digging</span>
+      <span data-lang="es">Dos cajones, sin cavar</span>
+      <span data-lang="de">Zwei Boxen, kein Graben</span>
+    </h2>
+    <div class="div"></div>
+    <div data-lang="en">
+      <p>For the least effort and the most flow, we want to build <strong>two boxes</strong> — side by side or a little apart, we'll decide together. Each one made from recycled <strong>europallets</strong>.</p>
+      <p>When the first box is <strong>full</strong>, we simply move to the second. Meanwhile the first one quietly rests and transforms — <em>no smell, no fuss</em> — until it becomes rich compost and soil, ready to be emptied with ease. Then we roll the cycle again. 🔄</p>
+    </div>
+    <div data-lang="es">
+      <p>Para el menor esfuerzo y el mejor flujo, queremos construir <strong>dos cajones</strong> — uno al lado del otro o un poco separados, lo decidiremos juntos. Cada uno hecho con <strong>europalets</strong> reciclados.</p>
+      <p>Cuando el primer cajón esté <strong>lleno</strong>, simplemente pasamos al segundo. Mientras tanto el primero descansa y se transforma en silencio — <em>sin olor, sin complicaciones</em> — hasta convertirse en compost y tierra rica, lista para vaciar con facilidad. Y volvemos a empezar el ciclo. 🔄</p>
+    </div>
+    <div data-lang="de">
+      <p>Für den geringsten Aufwand und den besten Fluss möchten wir <strong>zwei Boxen</strong> bauen — nebeneinander oder etwas getrennt, das entscheiden wir gemeinsam. Jede aus recycelten <strong>Europaletten</strong>.</p>
+      <p>Wenn die erste Box <strong>voll</strong> ist, wechseln wir einfach zur zweiten. Inzwischen ruht die erste und verwandelt sich still — <em>ohne Geruch, ohne Mühe</em> — bis sie zu reichem Kompost und Erde wird, leicht zu leeren. Dann beginnt der Kreislauf von vorn. 🔄</p>
+    </div>
+
+    <!-- DIAGRAM A — axonometric build (one box, labeled) -->
+    <div class="diagram-wrap">
+      <svg viewBox="-40 0 480 360" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans,sans-serif" role="img" aria-label="Isometric bagno seco construction">
+        <!-- ground shadow -->
+        <ellipse cx="200" cy="320" rx="150" ry="24" fill="var(--leaf)" opacity=".18"/>
+
+        <!-- caña screen standing behind (vertical reeds) -->
+        <polygon points="105,35 295,35 295,155 200,215 105,155" fill="var(--cana)" opacity=".5"/>
+        <g stroke="var(--earth-d)" stroke-width="1.2" opacity=".45">
+          <line x1="135" y1="35" x2="135" y2="170"/><line x1="170" y1="35" x2="170" y2="185"/>
+          <line x1="200" y1="35" x2="200" y2="195"/><line x1="230" y1="35" x2="230" y2="185"/>
+          <line x1="265" y1="35" x2="265" y2="170"/>
+        </g>
+
+        <!-- ===== TRUE ISOMETRIC CUBE (side ~110) ===== 
+             E top-apex(200,80) F right(295,135) G centre-front(200,190) H left(105,135)
+             walls drop 110 -> Fb(295,245) Gb(200,300) Hb(105,245) -->
+        <!-- RIGHT wall: F G Gb Fb -->
+        <polygon points="295,135 200,190 200,300 295,245" fill="var(--wood-d)" stroke="var(--earth-d)" stroke-width="2"/>
+        <!-- right horizontal deck boards (parallel to F->G dir = -95,55) -->
+        <g stroke="#5a3a20" stroke-width="2" opacity=".5">
+          <line x1="295" y1="153" x2="200" y2="208"/><line x1="295" y1="171" x2="200" y2="226"/>
+          <line x1="295" y1="189" x2="200" y2="244"/><line x1="295" y1="207" x2="200" y2="262"/>
+          <line x1="295" y1="225" x2="200" y2="280"/>
+        </g>
+
+        <!-- LEFT wall = the DOOR: H G Gb Hb -->
+        <polygon points="105,135 200,190 200,300 105,245" fill="var(--wood)" stroke="var(--olive)" stroke-width="3" stroke-dasharray="9 5"/>
+        <!-- left horizontal deck boards (parallel to H->G dir = 95,55) -->
+        <g stroke="#7a5532" stroke-width="2" opacity=".45">
+          <line x1="105" y1="153" x2="200" y2="208"/><line x1="105" y1="171" x2="200" y2="226"/>
+          <line x1="105" y1="189" x2="200" y2="244"/><line x1="105" y1="207" x2="200" y2="262"/>
+          <line x1="105" y1="225" x2="200" y2="280"/>
+        </g>
+        <circle cx="178" cy="225" r="4.5" fill="var(--olive)"/>
+
+        <!-- TOP face (seat): E F G H -->
+        <polygon points="200,80 295,135 200,190 105,135" fill="var(--wood-top)" stroke="var(--earth-d)" stroke-width="2"/>
+        <g stroke="#a8895a" stroke-width="1.5" opacity=".5">
+          <line x1="152" y1="108" x2="247" y2="163"/><line x1="247" y1="108" x2="152" y2="163"/>
+        </g>
+        <!-- seat hole -->
+        <ellipse cx="200" cy="135" rx="27" ry="15" fill="#1a1208" stroke="var(--earth-d)" stroke-width="2"/>
+
+        <!-- cover bucket beside -->
+        <polygon points="310,225 348,225 343,285 315,285" fill="var(--earth)" stroke="var(--earth-d)" stroke-width="1.5"/>
+        <ellipse cx="329" cy="225" rx="19" ry="6" fill="var(--earth-d)"/>
+        <text x="329" y="222" font-size="15" text-anchor="middle">🌿</text>
+
+        <!-- ===== labels ===== -->
+        <g font-size="11" fill="var(--text-h)" font-weight="600">
+          <line x1="200" y1="135" x2="200" y2="58" stroke="var(--muted)" stroke-width="1"/>
+          <text x="200" y="50" text-anchor="middle" data-lang="en">Top pallet + hole = seat</text>
+          <text x="200" y="50" text-anchor="middle" data-lang="es">Palet superior + agujero = asiento</text>
+          <text x="200" y="50" text-anchor="middle" data-lang="de">Obere Palette + Loch = Sitz</text>
+
+          <line x1="150" y1="250" x2="64" y2="250" stroke="var(--muted)" stroke-width="1"/>
+          <text x="60" y="246" text-anchor="end" fill="var(--olive)" data-lang="en">Front pallet</text>
+          <text x="60" y="246" text-anchor="end" fill="var(--olive)" data-lang="es">Palet frontal</text>
+          <text x="60" y="246" text-anchor="end" fill="var(--olive)" data-lang="de">Front-Palette</text>
+          <text x="60" y="259" text-anchor="end" fill="var(--olive)" data-lang="en">= opening door</text>
+          <text x="60" y="259" text-anchor="end" fill="var(--olive)" data-lang="es">= puerta que abre</text>
+          <text x="60" y="259" text-anchor="end" fill="var(--olive)" data-lang="de">= Tür zum Öffnen</text>
+
+          <line x1="270" y1="200" x2="340" y2="185" stroke="var(--muted)" stroke-width="1"/>
+          <text x="344" y="182" text-anchor="start" data-lang="en">3 pallets =</text>
+          <text x="344" y="182" text-anchor="start" data-lang="es">3 palets =</text>
+          <text x="344" y="182" text-anchor="start" data-lang="de">3 Paletten =</text>
+          <text x="344" y="195" text-anchor="start" data-lang="en">back + sides</text>
+          <text x="344" y="195" text-anchor="start" data-lang="es">fondo + lados</text>
+          <text x="344" y="195" text-anchor="start" data-lang="de">hinten + Seiten</text>
+
+          <line x1="150" y1="70" x2="70" y2="100" stroke="var(--muted)" stroke-width="1"/>
+          <text x="66" y="96" text-anchor="end" data-lang="en">Caña screen</text>
+          <text x="66" y="96" text-anchor="end" data-lang="es">Cañizo</text>
+          <text x="66" y="96" text-anchor="end" data-lang="de">Schilfwand</text>
+          <text x="66" y="109" text-anchor="end" data-lang="en">privacy + shade</text>
+          <text x="66" y="109" text-anchor="end" data-lang="es">intimidad + sombra</text>
+          <text x="66" y="109" text-anchor="end" data-lang="de">Sichtschutz + Schatten</text>
+
+          <line x1="329" y1="260" x2="352" y2="280" stroke="var(--muted)" stroke-width="1"/>
+          <text x="356" y="278" text-anchor="start" font-size="10" data-lang="en">cover:</text>
+          <text x="356" y="278" text-anchor="start" font-size="10" data-lang="es">cobertura:</text>
+          <text x="356" y="278" text-anchor="start" font-size="10" data-lang="de">Decke:</text>
+          <text x="356" y="290" text-anchor="start" font-size="10" fill="var(--text-m)" data-lang="en">leaves, pine</text>
+          <text x="356" y="290" text-anchor="start" font-size="10" fill="var(--text-m)" data-lang="es">hojas, pinaza</text>
+          <text x="356" y="290" text-anchor="start" font-size="10" fill="var(--text-m)" data-lang="de">Laub, Nadeln</text>
+        </g>
+      </svg>
+      <div class="dcap">
+        <span data-lang="en">5 recycled europallets per box · 4 standing = walls (the front one opens like a door to empty the compost) · 1 on top with a cut hole = the seat.</span>
+        <span data-lang="es">5 europalets reciclados por cajón · 4 de pie = paredes (el frontal se abre como puerta para vaciar el compost) · 1 encima con un agujero = el asiento.</span>
+        <span data-lang="de">5 recycelte Europaletten pro Box · 4 stehend = Wände (die vordere öffnet sich wie eine Tür zum Entleeren) · 1 oben mit Loch = der Sitz.</span>
+      </div>
+    </div>
+
+    <!-- DIAGRAM B — two-box cycle -->
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans,sans-serif" role="img" aria-label="Two box compost cycle">
+        <defs>
+          <marker id="bArr" markerWidth="9" markerHeight="9" refX="4.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--ac3)"/></marker>
+        </defs>
+        <ellipse cx="200" cy="210" rx="180" ry="20" fill="var(--leaf)" opacity=".15"/>
+
+        <!-- BOX 1 IN USE — cube centre apex (90,55), half-diag 48/28, height 56 -->
+        <!-- right wall -->
+        <polygon points="138,83 90,111 90,167 138,139" fill="var(--wood-d)" stroke="var(--earth-d)" stroke-width="1.5"/>
+        <!-- left wall = door -->
+        <polygon points="42,83 90,111 90,167 42,139" fill="var(--wood)" stroke="var(--olive)" stroke-width="2.5" stroke-dasharray="6 4"/>
+        <!-- top -->
+        <polygon points="90,55 138,83 90,111 42,83" fill="var(--wood-top)" stroke="var(--earth-d)" stroke-width="1.5"/>
+        <ellipse cx="90" cy="83" rx="16" ry="9" fill="#1a1208" stroke="var(--earth-d)" stroke-width="1.5"/>
+        <text x="90" y="232" font-size="13" font-weight="700" text-anchor="middle" fill="var(--olive)" data-lang="en">IN USE</text>
+        <text x="90" y="232" font-size="13" font-weight="700" text-anchor="middle" fill="var(--olive)" data-lang="es">EN USO</text>
+        <text x="90" y="232" font-size="13" font-weight="700" text-anchor="middle" fill="var(--olive)" data-lang="de">IN NUTZUNG</text>
+
+        <!-- cycle arrows -->
+        <path d="M 175 120 q 25 -16 50 0" fill="none" stroke="var(--ac3)" stroke-width="2.5" marker-end="url(#bArr)"/>
+        <path d="M 225 145 q -25 16 -50 0" fill="none" stroke="var(--ac3)" stroke-width="2.5" marker-end="url(#bArr)"/>
+
+        <!-- BOX 2 RESTING — cube centre apex (310,55) -->
+        <polygon points="358,83 310,111 310,167 358,139" fill="var(--wood-d)" stroke="var(--earth-d)" stroke-width="1.5"/>
+        <polygon points="262,83 310,111 310,167 262,139" fill="var(--wood)" stroke="var(--earth-d)" stroke-width="1.5"/>
+        <polygon points="310,55 358,83 310,111 262,83" fill="var(--wood-top)" stroke="var(--earth-d)" stroke-width="1.5"/>
+        <ellipse cx="310" cy="83" rx="16" ry="9" fill="var(--earth-d)" stroke="var(--earth-d)" stroke-width="1.5"/>
+        <text x="310" y="135" font-size="18" text-anchor="middle">🍂</text>
+        <text x="310" y="232" font-size="12" font-weight="700" text-anchor="middle" fill="var(--ac3)" data-lang="en">RESTING → COMPOST</text>
+        <text x="310" y="232" font-size="12" font-weight="700" text-anchor="middle" fill="var(--ac3)" data-lang="es">REPOSO → COMPOST</text>
+        <text x="310" y="232" font-size="12" font-weight="700" text-anchor="middle" fill="var(--ac3)" data-lang="de">RUHEND → KOMPOST</text>
+      </svg>
+      <div class="dcap">
+        <span data-lang="en">When box 1 is full, switch to box 2. Box 1 rests, becomes compost, gets emptied — then the cycle rolls again. 🔄</span>
+        <span data-lang="es">Cuando el cajón 1 está lleno, pasa al cajón 2. El 1 reposa, se vuelve compost, se vacía — y el ciclo vuelve a empezar. 🔄</span>
+        <span data-lang="de">Wenn Box 1 voll ist, wechsle zu Box 2. Box 1 ruht, wird Kompost, wird geleert — dann beginnt der Kreislauf von vorn. 🔄</span>
+      </div>
+    </div>
+
+    <!-- mini feature grid -->
+    <div class="fgrid">
+      <div class="fcard"><span class="fico">🚫💧</span>
+        <div class="ftit"><span data-lang="en">No water</span><span data-lang="es">Sin agua</span><span data-lang="de">Kein Wasser</span></div>
+        <div class="fdsc"><span data-lang="en">Never mix poop with water</span><span data-lang="es">Nunca mezclar caca con agua</span><span data-lang="de">Niemals mit Wasser mischen</span></div>
+      </div>
+      <div class="fcard"><span class="fico">🌿</span>
+        <div class="ftit"><span data-lang="en">Cover layer</span><span data-lang="es">Capa de cobertura</span><span data-lang="de">Deckschicht</span></div>
+        <div class="fdsc"><span data-lang="en">Leaves, pine needles, dry plants</span><span data-lang="es">Hojas, pinaza, plantas secas</span><span data-lang="de">Blätter, Kiefernnadeln, Pflanzen</span></div>
+      </div>
+      <div class="fcard"><span class="fico">🚫🧪</span>
+        <div class="ftit"><span data-lang="en">Nothing toxic</span><span data-lang="es">Nada tóxico</span><span data-lang="de">Nichts Giftiges</span></div>
+        <div class="fdsc"><span data-lang="en">Just nature doing its work</span><span data-lang="es">Solo la naturaleza obrando</span><span data-lang="de">Nur die Natur bei der Arbeit</span></div>
+      </div>
+      <div class="fcard"><span class="fico">👃✨</span>
+        <div class="ftit"><span data-lang="en">No smell, no flies</span><span data-lang="es">Sin olor, sin moscas</span><span data-lang="de">Kein Geruch, keine Fliegen</span></div>
+        <div class="fdsc"><span data-lang="en">The cover keeps it pleasant</span><span data-lang="es">La cobertura lo mantiene agradable</span><span data-lang="de">Die Decke hält es angenehm</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NATURE LOVES IT -->
+  <section>
+    <div class="slbl">
+      <span data-lang="en">A gentle reframe</span>
+      <span data-lang="es">Un cambio de mirada</span>
+      <span data-lang="de">Ein sanfter Perspektivwechsel</span>
+    </div>
+    <h2>
+      <span data-lang="en">The earth calls it food</span>
+      <span data-lang="es">La tierra lo llama alimento</span>
+      <span data-lang="de">Die Erde nennt es Nahrung</span>
+    </h2>
+    <div class="div"></div>
+    <div data-lang="en">
+      <p>Maybe we see our own dejection as something impure — and almost all of us carry some rejection around it. But let's not forget: the <strong>plants, the nature and the soil love it</strong>. It is their food. 🌷</p>
+    </div>
+    <div data-lang="es">
+      <p>Quizás vemos nuestra propia deyección como algo impuro — y casi todos cargamos algún rechazo hacia ello. Pero no olvidemos: las <strong>plantas, la naturaleza y la tierra lo aman</strong>. Es su alimento. 🌷</p>
+    </div>
+    <div data-lang="de">
+      <p>Vielleicht sehen wir unsere eigenen Ausscheidungen als etwas Unreines — und fast alle tragen eine Ablehnung in sich. Doch vergessen wir nicht: die <strong>Pflanzen, die Natur und der Boden lieben es</strong>. Es ist ihre Nahrung. 🌷</p>
+    </div>
+
+    <div class="quote">
+      <p data-lang="en"><span class="qm">"</span>Nothing new under the sun — permaculture farms have done this forever. We just let nature follow its course, and cover it with a handful of leaves.</p>
+      <p data-lang="es"><span class="qm">"</span>Nada nuevo bajo el sol — las granjas de permacultura lo hacen desde siempre. Solo dejamos que la naturaleza siga su curso, y lo cubrimos con un puñado de hojas.</p>
+      <p data-lang="de"><span class="qm">"</span>Nichts Neues unter der Sonne — Permakultur-Höfe tun das seit jeher. Wir lassen die Natur ihren Lauf nehmen und decken es mit einer Handvoll Blätter zu.</p>
+    </div>
+
+    <div data-lang="en"><p>So let's solve this in an <em>ecobio</em> way — so everyone can use it freely, without unpleasant smells, while the garden receives its beautiful, nourishing gift in return. A circle that feeds itself. 💚</p></div>
+    <div data-lang="es"><p>Así que resolvámoslo de manera <em>ecobio</em> — para que todos puedan usarlo libremente, sin olores desagradables, mientras el jardín recibe a cambio su hermoso regalo nutritivo. Un círculo que se alimenta a sí mismo. 💚</p></div>
+    <div data-lang="de"><p>Lösen wir es also auf <em>ökobio</em>-Weise — damit alle es frei nutzen können, ohne unangenehme Gerüche, während der Garten im Gegenzug sein schönes, nährendes Geschenk erhält. Ein Kreis, der sich selbst nährt. 💚</p></div>
+  </section>
+
+  <!-- HOW TO HELP -->
+  <section class="alt">
+    <div class="slbl">
+      <span data-lang="en">Join the making</span>
+      <span data-lang="es">Únete a la creación</span>
+      <span data-lang="de">Mach mit beim Bauen</span>
+    </div>
+    <h2>
+      <span data-lang="en">How you can help 🤲</span>
+      <span data-lang="es">Cómo puedes ayudar 🤲</span>
+      <span data-lang="de">Wie du helfen kannst 🤲</span>
+    </h2>
+    <div class="div"></div>
+    <div data-lang="en"><p>A deep thank you to everyone who joined that important talking circle and helped us leap toward the best solution. Now think — could you lend a hand to this project?</p></div>
+    <div data-lang="es"><p>Un profundo gracias a todos los que participaron en ese importante círculo de conversación y nos ayudaron a saltar hacia la mejor solución. Ahora piensa — ¿podrías echar una mano a este proyecto?</p></div>
+    <div data-lang="de"><p>Ein tiefes Dankeschön an alle, die an diesem wichtigen Gesprächskreis teilnahmen und uns zur besten Lösung verhalfen. Nun überlege — könntest du bei diesem Projekt mithelfen?</p></div>
+
+    <div class="help-grid">
+      <div class="hcell"><span class="hico">🔨</span><div class="hlb"><span data-lang="en">As volunteer</span><span data-lang="es">Voluntario</span><span data-lang="de">Freiwillig</span></div></div>
+      <div class="hcell"><span class="hico">🎁</span><div class="hlb"><span data-lang="en">As donator</span><span data-lang="es">Donante</span><span data-lang="de">Spender</span></div></div>
+      <div class="hcell"><span class="hico">💡</span><div class="hlb"><span data-lang="en">With ideas</span><span data-lang="es">Con ideas</span><span data-lang="de">Mit Ideen</span></div></div>
+    </div>
+    <div data-lang="en"><p style="text-align:center;margin-top:1rem;font-size:.92rem;color:var(--text-m)">…or whatever you feel moved to offer. Every pallet, every cane, every pair of hands counts. 🌻</p></div>
+    <div data-lang="es"><p style="text-align:center;margin-top:1rem;font-size:.92rem;color:var(--text-m)">…o lo que sientas el impulso de ofrecer. Cada palet, cada caña, cada par de manos cuenta. 🌻</p></div>
+    <div data-lang="de"><p style="text-align:center;margin-top:1rem;font-size:.92rem;color:var(--text-m)">…oder was auch immer du geben magst. Jede Palette, jedes Rohr, jedes Paar Hände zählt. 🌻</p></div>
+  </section>
+
+  <!-- GATHER / CTA -->
+  <div class="cta">
+    <h2 style="margin-bottom:.6rem">
+      <span data-lang="en">Let's gather 🌀</span>
+      <span data-lang="es">Reunámonos 🌀</span>
+      <span data-lang="de">Lass uns versammeln 🌀</span>
+    </h2>
+    <div class="gather">
+      <div class="gw">
+        <span data-lang="en">Every Monday · Big Lodge</span>
+        <span data-lang="es">Cada lunes · Big Lodge</span>
+        <span data-lang="de">Jeden Montag · Big Lodge</span>
+      </div>
+      <p style="font-size:.9rem;color:var(--text-m);margin-bottom:1.1rem">
+        <span data-lang="en">We meet to focus this project together — and we share thoughts in the Telegram group. Come, share your voice and your ideas. You are welcome. 🍃</span>
+        <span data-lang="es">Nos reunimos para enfocar este proyecto juntos — y compartimos en el grupo de Telegram. Ven, comparte tu voz y tus ideas. Eres bienvenido. 🍃</span>
+        <span data-lang="de">Wir treffen uns, um dieses Projekt gemeinsam zu gestalten — und teilen Gedanken in der Telegram-Gruppe. Komm, teile deine Stimme und Ideen. Du bist willkommen. 🍃</span>
+      </p>
+      <a href="#" class="btn btn-primary" id="tgbtn">
+        <span data-lang="en">Join the Telegram group</span>
+        <span data-lang="es">Únete al grupo de Telegram</span>
+        <span data-lang="de">Tritt der Telegram-Gruppe bei</span>
+      </a>
+      <p class="ph">
+        <span data-lang="en">↑ link coming soon — group forming</span>
+        <span data-lang="es">↑ enlace próximamente — grupo en formación</span>
+        <span data-lang="de">↑ Link folgt bald — Gruppe entsteht</span>
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    <span class="fseed">🌱</span>
+    <span data-lang="en">Made with love for Beneficio · let the cycle roll</span>
+    <span data-lang="es">Hecho con amor para Beneficio · que ruede el ciclo</span>
+    <span data-lang="de">Mit Liebe für Beneficio gemacht · lasst den Kreis sich drehen</span>
+  </footer>
+
+</div>
+
+<script>
+  function setLang(l){
+    document.querySelectorAll('[data-lang]').forEach(el=>{
+      el.classList.toggle('show', el.dataset.lang===l);
+    });
+    document.querySelectorAll('[data-l]').forEach(b=>{
+      b.classList.toggle('on', b.dataset.l===l);
+    });
+    document.documentElement.lang=l;
+    try{localStorage.setItem('lang',l)}catch(e){}
+  }
+  function toggleTheme(){
+    const h=document.documentElement;
+    const n=h.getAttribute('data-theme')==='dark'?'light':'dark';
+    h.setAttribute('data-theme',n);
+    document.getElementById('ti').textContent=n==='dark'?'☀️':'🌙';
+    try{localStorage.setItem('theme',n)}catch(e){}
+  }
+  (function(){
+    function applyT(t){
+      document.documentElement.setAttribute('data-theme',t);
+      document.addEventListener('DOMContentLoaded',()=>{
+        const i=document.getElementById('ti');if(i)i.textContent=t==='dark'?'☀️':'🌙';
+      });
+    }
+    try{
+      const s=localStorage.getItem('theme');
+      if(s)applyT(s);
+      else{const h=new Date().getHours();applyT(h>=7&&h<19?'light':'dark');}
+    }catch(e){applyT('light')}
+  })();
+  document.addEventListener('DOMContentLoaded',()=>{
+    let l='en';
+    try{l=localStorage.getItem('lang')||navigator.language.slice(0,2)||'en';}catch(e){}
+    if(!['en','es','de'].includes(l))l='en';
+    setLang(l);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,2890 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Survival Spine — Life-Safety Seismic Retrofit</title>
+<meta name="description" content="A structurally independent vertical refuge retrofitted into the dead space of old earthquake-vulnerable buildings. Save lives, not buildings — at under 10% of full consolidation cost.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="dark"]{
+  --bg:#0a0e16;--bg-card:#121826;--bg-hero:linear-gradient(160deg,#0d1424 0%,#0a0e16 60%,#070a10 100%);
+  --text:#cdd6e4;--text-muted:#7a8599;--text-heading:#f0f4fa;--border:#1e2738;
+  --accent:#2dd4bf;--accent-2:#38bdf8;--accent-bg:rgba(45,212,191,.10);
+  --link:#38bdf8;--link-hover:#7dd3fc;--overlay-bg:rgba(0,0,0,.7);
+  --dialog-bg:#121826;--blueprint-bg:#0c1322;--blueprint-line:#2dd4bf;--blueprint-faint:#1b3a44;
+}
+[data-theme="light"]{
+  --bg:#eef2f7;--bg-card:#fff;--bg-hero:linear-gradient(160deg,#dfe8f2 0%,#eef2f7 60%,#e6edf5 100%);
+  --text:#2a3340;--text-muted:#5a6678;--text-heading:#0f1722;--border:#d4dde8;
+  --accent:#0d9488;--accent-2:#0284c7;--accent-bg:rgba(13,148,136,.08);
+  --link:#0284c7;--link-hover:#0369a1;--overlay-bg:rgba(0,0,0,.45);
+  --dialog-bg:#fff;--blueprint-bg:#0c1322;--blueprint-line:#2dd4bf;--blueprint-faint:#1b3a44;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:760px;margin:0 auto;padding:0 1.25rem}
+
+/* lang bar */
+.langbar{position:fixed;top:0;left:0;right:0;z-index:120;background:var(--bg-card);
+  border-bottom:1px solid var(--border);display:flex;gap:.15rem;overflow-x:auto;
+  padding:.45rem .6rem;scrollbar-width:none}
+.langbar::-webkit-scrollbar{display:none}
+.langbar button{flex:0 0 auto;background:none;border:1px solid transparent;color:var(--text-muted);
+  font-family:inherit;font-size:.72rem;font-weight:600;letter-spacing:.04em;padding:.3rem .55rem;
+  border-radius:.4rem;cursor:pointer;white-space:nowrap;transition:all .15s}
+.langbar button:hover{color:var(--text-heading)}
+.langbar button.active{color:var(--accent);background:var(--accent-bg);border-color:var(--accent)}
+
+.theme-toggle{position:fixed;top:3.1rem;right:.75rem;z-index:150;background:var(--bg-card);
+  border:1px solid var(--border);width:2.3rem;height:2.3rem;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,.3);transition:transform .2s}
+.theme-toggle:hover{transform:scale(1.1)}
+.theme-icon{font-size:1.05rem;line-height:1}
+
+/* hero */
+.hero{background:var(--bg-hero);padding:6rem 0 3.5rem;text-align:center;border-bottom:1px solid var(--border);
+  position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;
+  background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:32px 32px;opacity:.25;mask-image:radial-gradient(ellipse 70% 60% at 50% 35%,#000 30%,transparent 75%)}
+.hero>*{position:relative;z-index:1}
+.eyebrow{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);background:var(--accent-bg);border:1px solid var(--accent);border-radius:999px;
+  padding:.3rem .9rem;margin-bottom:1.4rem}
+.hero h1{font-size:clamp(2.1rem,7vw,3.3rem);font-weight:700;color:var(--text-heading);
+  letter-spacing:-.02em;line-height:1.05;margin-bottom:.5rem}
+.hero .native{font-size:1rem;color:var(--text-muted);font-weight:500;margin-bottom:1.3rem}
+.hero .tagline{font-size:clamp(1.05rem,3.6vw,1.3rem);color:var(--text);max-width:560px;margin:0 auto 2rem;font-weight:400}
+.hero .pill-row{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
+.pill{font-size:.8rem;font-weight:600;padding:.4rem .85rem;border-radius:999px;
+  background:var(--bg-card);border:1px solid var(--border);color:var(--text)}
+.pill b{color:var(--accent)}
+
+section{padding:3.2rem 0;border-bottom:1px solid var(--border)}
+.sec-num{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--accent);letter-spacing:.1em;margin-bottom:.5rem}
+h2{font-size:clamp(1.5rem,5vw,2rem);font-weight:700;color:var(--text-heading);letter-spacing:-.01em;margin-bottom:1.1rem;line-height:1.15}
+h3{font-size:1.1rem;font-weight:600;color:var(--text-heading);margin:1.6rem 0 .6rem}
+p{margin-bottom:1rem}
+p.lead{font-size:1.12rem;color:var(--text-heading)}
+strong{color:var(--text-heading);font-weight:600}
+.accent{color:var(--accent);font-weight:600}
+
+.cards{display:grid;gap:.9rem;margin:1.4rem 0}
+@media(min-width:560px){.cards.two{grid-template-columns:1fr 1fr}}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:.8rem;padding:1.15rem 1.25rem}
+.card .ic{font-size:1.5rem;margin-bottom:.5rem;display:block}
+.card h4{font-size:.98rem;font-weight:600;color:var(--text-heading);margin-bottom:.35rem}
+.card p{font-size:.9rem;color:var(--text-muted);margin:0}
+
+.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem;margin:1.5rem 0}
+@media(min-width:560px){.metrics{grid-template-columns:repeat(4,1fr)}}
+.metric{background:var(--bg-card);border:1px solid var(--border);border-radius:.8rem;padding:1.1rem .8rem;text-align:center}
+.metric .big{font-size:1.7rem;font-weight:700;color:var(--accent);line-height:1;font-family:'JetBrains Mono',monospace}
+.metric .lbl{font-size:.72rem;color:var(--text-muted);margin-top:.4rem;text-transform:uppercase;letter-spacing:.04em}
+
+.fig{margin:1.8rem 0;background:var(--blueprint-bg);border:1px solid var(--border);border-radius:.9rem;
+  padding:1.1rem;overflow:hidden}
+.fig svg{width:100%;height:auto;display:block}
+.fig .cap{font-size:.8rem;color:#6da9b3;font-family:'JetBrains Mono',monospace;margin-top:.7rem;text-align:center;letter-spacing:.03em}
+
+.steps{counter-reset:s;margin:1.3rem 0}
+.step{position:relative;padding-left:2.6rem;margin-bottom:1.1rem}
+.step::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;
+  width:1.9rem;height:1.9rem;border-radius:50%;background:var(--accent-bg);border:1px solid var(--accent);
+  color:var(--accent);font-weight:700;font-size:.85rem;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace}
+.step h4{font-size:.98rem;font-weight:600;color:var(--text-heading);margin-bottom:.2rem}
+.step p{font-size:.9rem;color:var(--text-muted);margin:0}
+
+.note{background:var(--accent-bg);border-left:3px solid var(--accent);border-radius:.4rem;
+  padding:.9rem 1.1rem;margin:1.3rem 0;font-size:.92rem}
+.note b{color:var(--accent)}
+
+footer{text-align:center;padding:3rem 1.25rem 4rem;background:var(--bg-hero)}
+footer .ft-title{font-size:1.2rem;font-weight:700;color:var(--text-heading);margin-bottom:.4rem}
+footer .ft-sub{font-size:.88rem;color:var(--text-muted);max-width:480px;margin:0 auto 1.6rem}
+.footer-contact{background:var(--accent);color:#04201c;border:none;padding:.6rem 1.5rem;border-radius:.55rem;
+  font-size:.88rem;font-weight:700;cursor:pointer;margin-bottom:1.2rem;font-family:inherit}
+.disclaimer{font-size:.72rem;color:var(--text-muted);max-width:520px;margin:1.4rem auto 0;line-height:1.5}
+
+.dialog-overlay{display:none;position:fixed;inset:0;background:var(--overlay-bg);z-index:200;align-items:center;justify-content:center}
+.dialog-overlay.open{display:flex}
+.dialog-box{background:var(--dialog-bg);border:1px solid var(--border);border-radius:1rem;padding:1.75rem;max-width:300px;width:90%;text-align:center}
+.dialog-box h4{color:var(--text-heading);margin-bottom:1rem;font-size:1rem}
+.dialog-option{display:block;width:100%;padding:.65rem;margin-bottom:.6rem;border-radius:.5rem;text-decoration:none;font-weight:600;font-size:.9rem}
+.dialog-bot{background:#0088cc;color:#fff}.dialog-tg{background:#229ED9;color:#fff}.dialog-mail{background:#0d9488;color:#fff}
+.dialog-close{background:none;border:1px solid var(--border);color:var(--text-muted);cursor:pointer;font-size:.82rem;padding:.4rem 1.2rem;border-radius:.4rem;margin-top:.2rem;font-family:inherit}
+
+[data-lang]{display:none}
+[data-lang].active{display:block}
+.bp-label{font-family:'JetBrains Mono',monospace;font-size:11px;fill:#7fd9c9;letter-spacing:.02em}
+.bp-label-sm{font-family:'JetBrains Mono',monospace;font-size:9px;fill:#5a9aa3}
+.bp-dim{font-family:'JetBrains Mono',monospace;font-size:9px;fill:#d4a373}
+</style>
+</head>
+<body>
+<div class="langbar" id="langbar"><button data-set="en" onclick="setLang('en')">EN</button><button data-set="es" onclick="setLang('es')">ES</button><button data-set="ro" onclick="setLang('ro')">RO</button><button data-set="ja" onclick="setLang('ja')">JA</button><button data-set="tr" onclick="setLang('tr')">TR</button><button data-set="it" onclick="setLang('it')">IT</button><button data-set="zh" onclick="setLang('zh')">ZH</button><button data-set="fa" onclick="setLang('fa')">FA</button><button data-set="el" onclick="setLang('el')">EL</button><button data-set="id" onclick="setLang('id')">ID</button></div><button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme"><span class="theme-icon" id="themeIcon">☀️</span></button><div data-lang="en">
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Life-Safety Seismic Retrofit</span>
+    <h1>The Survival Spine</h1>
+    <div class="native">A vertical refuge for buildings that cannot be saved</div>
+    <p class="tagline">When full consolidation is impossible, save the people instead of the building.</p>
+    <div class="pill-row">
+      <span class="pill"><b>&lt;10%</b> of full retrofit cost</span>
+      <span class="pill"><b>1–2</b> months to build</span>
+      <span class="pill"><b>+1</b> room per unit</span>
+      <span class="pill">no relocation</span>
+    </div>
+  </div>
+</div>
+
+<section><div class="wrap">
+  <div class="sec-num">01 — THE PROBLEM</div>
+  <h2>Old buildings, an overdue earthquake, and a deadlock</h2>
+  <p class="lead">Millions live in old buildings that will not survive the next major earthquake.</p>
+  <p>Full structural consolidation is the textbook answer — but it is often impossible in practice. It costs a fortune, requires the unanimous agreement of every co-owner, forces families to move out for many months, and takes the better part of a year. In most at-risk buildings, it simply never happens.</p>
+  <p>Meanwhile the clock keeps running. Many seismic regions follow a cyclical pattern, with a strong event returning roughly every 40–60 years. Death under a collapsing building is among the cruellest outcomes — and the most preventable.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">02 — THE SHIFT</div>
+  <h2>Save lives, not buildings</h2>
+  <p>The Survival Spine changes the objective. Conventional retrofit optimizes for the building's survival. The Spine optimizes for human survival. A building that collapses but lets everyone walk out alive has, by this measure, succeeded. That single change opens a far cheaper, faster, and politically achievable path.</p>
+  <div class="note"><b>The core idea:</b> a structurally independent vertical refuge, built into the building's unused dead space, engineered to stand even if everything around it falls.</div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">03 — THE CONCEPT</div>
+  <h2>A house within the house</h2>
+  <p>The Spine is a reinforced-concrete tower of roughly 2×2 m, built in place of the dead space nobody misses — the service stair, the pantry, the storeroom. Its slabs are cut, it gets its own deep foundation (with underpinning where needed), and it is raised from the inside, flush with the existing structure but never depending on it.</p>
+  <div class="fig"><svg viewBox="0 0 540 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cutaway of a building with the Survival Spine threaded through it">
+<defs>
+<pattern id="hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<line x1="0" y1="0" x2="0" y2="6" stroke="#1b3a44" stroke-width="1"/>
+</pattern>
+</defs>
+<!-- ground -->
+<line x1="20" y1="400" x2="580" y2="400" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="20" y1="408" x2="580" y2="408" stroke="#1b3a44" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="20" y1="416" x2="580" y2="416" stroke="#1b3a44" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="30" y="430" class="bp-label-sm">EXISTING SOIL / FOUNDATION GRADE</text>
+<!-- existing building outline (left bigger block) -->
+<rect x="60" y="80" width="320" height="320" fill="none" stroke="#1b3a44" stroke-width="1.5"/>
+<!-- floor slabs of existing building -->
+<g stroke="#1b3a44" stroke-width="1">
+<line x1="60" y1="160" x2="380" y2="160"/>
+<line x1="60" y1="240" x2="380" y2="240"/>
+<line x1="60" y1="320" x2="380" y2="320"/>
+</g>
+<!-- faint cracks suggesting vulnerability -->
+<g stroke="#3a2a2a" stroke-width="1" opacity=".6">
+<path d="M120 160 l14 18 l-8 22 l16 18" fill="none"/>
+<path d="M300 240 l-12 20 l10 16" fill="none"/>
+</g>
+<text x="70" y="100" class="bp-label-sm">EXISTING VULNERABLE STRUCTURE</text>
+<!-- the spine column on the right edge, threading floors, independent -->
+<!-- gap lines showing structural separation -->
+<rect x="392" y="60" width="92" height="340" fill="url(#hatch)" stroke="#2dd4bf" stroke-width="2.5"/>
+<!-- separation gap -->
+<line x1="386" y1="60" x2="386" y2="400" stroke="#d4a373" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="386" y="74" class="bp-dim" text-anchor="middle">GAP</text>
+<!-- spine internal floor hatches -->
+<g stroke="#2dd4bf" stroke-width="1.2">
+<line x1="392" y1="160" x2="484" y2="160"/>
+<line x1="392" y1="240" x2="484" y2="240"/>
+<line x1="392" y1="320" x2="484" y2="320"/>
+</g>
+<!-- hatch openings (stacked) -->
+<g fill="#0c1322" stroke="#7fd9c9" stroke-width="1.2">
+<rect x="430" y="156" width="18" height="8"/>
+<rect x="430" y="236" width="18" height="8"/>
+<rect x="430" y="316" width="18" height="8"/>
+</g>
+<!-- cat ladder -->
+<g stroke="#7fd9c9" stroke-width="1">
+<line x1="455" y1="80" x2="455" y2="395"/>
+<line x1="463" y1="80" x2="463" y2="395"/>
+<line x1="455" y1="100" x2="463" y2="100"/><line x1="455" y1="120" x2="463" y2="120"/>
+<line x1="455" y1="140" x2="463" y2="140"/><line x1="455" y1="180" x2="463" y2="180"/>
+<line x1="455" y1="200" x2="463" y2="200"/><line x1="455" y1="220" x2="463" y2="220"/>
+<line x1="455" y1="260" x2="463" y2="260"/><line x1="455" y1="280" x2="463" y2="280"/>
+<line x1="455" y1="300" x2="463" y2="300"/><line x1="455" y1="340" x2="463" y2="340"/>
+<line x1="455" y1="360" x2="463" y2="360"/><line x1="455" y1="380" x2="463" y2="380"/>
+</g>
+<!-- independent deep foundation -->
+<rect x="388" y="400" width="100" height="34" fill="url(#hatch)" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="400" y1="434" x2="400" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<line x1="438" y1="434" x2="438" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<line x1="476" y1="434" x2="476" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="496" y="420" class="bp-label-sm" text-anchor="end">INDEPENDENT</text>
+<text x="496" y="432" class="bp-label-sm" text-anchor="end">FOUNDATION</text>
+<!-- roof hub marker -->
+<rect x="398" y="40" width="80" height="22" fill="#0c1322" stroke="#38bdf8" stroke-width="1.5"/>
+<text x="438" y="55" class="bp-label" text-anchor="middle" style="fill:#38bdf8">ROOF HUB</text>
+<!-- label for spine -->
+<text x="438" y="220" class="bp-label" text-anchor="middle" transform="rotate(-90 438 220)" style="font-size:13px;fill:#2dd4bf">SURVIVAL SPINE — RC, INDEPENDENT</text>
+<!-- dimension ~2x2m -->
+<line x1="392" y1="385" x2="484" y2="385" stroke="#d4a373" stroke-width=".8"/>
+<text x="438" y="382" class="bp-dim" text-anchor="middle">~2.0 m</text>
+</svg>
+<div class="cap">FIG.1 — The Spine threaded through an existing building, on its own independent foundation.</div></div>
+  <div class="cards two">
+    <div class="card"><span class="ic">🏛️</span><h4>Independent structure</h4><p>Its own foundation and reinforced frame. It stands even if the host building collapses around it.</p></div>
+    <div class="card"><span class="ic">🪜</span><h4>Vertical circulation</h4><p>A continuous cat ladder with stacked hatches links every level into one refuge spine.</p></div>
+    <div class="card"><span class="ic">🛏️</span><h4>Useful in normal life</h4><p>Each level is a small functional room — a closet, a bed, storage for the provisions. Cost becomes benefit.</p></div>
+    <div class="card"><span class="ic">⚓</span><h4>Lateral armoring</h4><p>Extra reinforcement lets it shrug off sideways impacts and debris pressure, like a bridge pier.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">04 — THE ROOF HUB</div>
+  <h2>Everything important lives at the top</h2>
+  <p>The least-buried point after a collapse is the roof. So the Spine concentrates its life-support there: a water tank that feeds every level by gravity and doubles as ballast mass; a vent intake raised clear of the debris; the escape hatch; and a signaling beacon for rescuers.</p>
+  <div class="fig"><svg viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Detail of the roof hub: water tank, vent intake, escape hatch, signaling and seismic isolation valve">
+<defs>
+<pattern id="hatch2" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<line x1="0" y1="0" x2="0" y2="6" stroke="#1b3a44" stroke-width="1"/>
+</pattern>
+</defs>
+<!-- spine top wall -->
+<rect x="160" y="200" width="280" height="200" fill="url(#hatch2)" stroke="#2dd4bf" stroke-width="2.5"/>
+<!-- roof slab -->
+<rect x="150" y="186" width="300" height="16" fill="#0c1322" stroke="#2dd4bf" stroke-width="2"/>
+<text x="300" y="390" class="bp-label" text-anchor="middle" style="font-size:13px">TOP OF SPINE (LEAST-BURIED POINT)</text>
+<!-- water tank on top -->
+<rect x="210" y="86" width="180" height="84" rx="8" fill="#0c1322" stroke="#38bdf8" stroke-width="2.5"/>
+<line x1="210" y1="118" x2="390" y2="118" stroke="#38bdf8" stroke-width="1" opacity=".5"/>
+<g fill="#38bdf8" opacity=".25"><rect x="212" y="120" width="176" height="48" rx="6"/></g>
+<text x="300" y="135" class="bp-label" text-anchor="middle" style="fill:#38bdf8">WATER TANK</text>
+<text x="300" y="150" class="bp-label-sm" text-anchor="middle">supply + ballast mass</text>
+<!-- vent intake stack -->
+<rect x="180" y="60" width="22" height="126" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<path d="M173 60 h36 l-8 -14 h-20 z" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<text x="125" y="80" class="bp-label-sm">VENT</text>
+<text x="120" y="92" class="bp-label-sm">INTAKE</text>
+<!-- signaling beacon -->
+<circle cx="410" cy="60" r="10" fill="none" stroke="#d4a373" stroke-width="2"/>
+<circle cx="410" cy="60" r="4" fill="#d4a373"/>
+<g stroke="#d4a373" stroke-width="1.5"><line x1="410" y1="38" x2="410" y2="46"/><line x1="430" y1="60" x2="438" y2="60"/><line x1="424" y1="46" x2="430" y2="40"/></g>
+<text x="445" y="64" class="bp-label-sm">SIGNAL /</text>
+<text x="445" y="76" class="bp-label-sm">BEACON</text>
+<!-- escape hatch in roof -->
+<rect x="300" y="186" width="44" height="16" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<text x="322" y="222" class="bp-label-sm" text-anchor="middle">ESCAPE HATCH ↑</text>
+<!-- seismic isolation valve -->
+<circle cx="300" cy="186" r="0"/>
+<rect x="284" y="168" width="0" height="0"/>
+<!-- pipe from tank down with valve -->
+<line x1="300" y1="170" x2="300" y2="186" stroke="#38bdf8" stroke-width="2"/>
+<g transform="translate(250,250)">
+<polygon points="0,0 18,9 0,18 18,0" fill="none" stroke="#d4a373" stroke-width="2"/>
+<text x="28" y="14" class="bp-label-sm">SEISMIC SHUT-OFF VALVE</text>
+<text x="28" y="26" class="bp-label-sm">(normally open → isolates on quake)</text>
+</g>
+<line x1="300" y1="202" x2="259" y2="252" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3 3"/>
+<!-- cat ladder hint inside -->
+<g stroke="#7fd9c9" stroke-width="1" opacity=".7">
+<line x1="320" y1="260" x2="320" y2="400"/><line x1="330" y1="260" x2="330" y2="400"/>
+<line x1="320" y1="280" x2="330" y2="280"/><line x1="320" y1="310" x2="330" y2="310"/>
+<line x1="320" y1="340" x2="330" y2="340"/><line x1="320" y1="370" x2="330" y2="370"/>
+</g>
+</svg>
+<div class="cap">FIG.2 — The roof hub: water tank + ballast, vent intake, escape hatch, beacon, seismic shut-off valve.</div></div>
+  <h3>The seismic shut-off valve</h3>
+  <p>The water tank is refreshed continuously in normal life, so the supply is always fresh. A seismic shut-off valve — the same proven technology as earthquake gas valves — stays open until the moment shaking is detected, then isolates the tank to seal the stored volume for the occupants. Gravity does the rest: no pump, no power, which matters when the grid is cut.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">05 — THE RESCUE SPINE</div>
+  <h2>Self-rescue up, rescue down</h2>
+  <p>Because the levels are linked by a continuous cat ladder, the Spine is not a set of isolated boxes — it is a single vertical refuge with internal circulation. If the ground exit is blocked by debris, occupants climb up to a clearer level or to the roof.</p>
+  <div class="fig"><svg viewBox="0 0 600 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rescue spine after collapse: occupants climb up, rescuers descend down through the intact vertical shaft">
+<defs>
+<pattern id="rub" width="8" height="8" patternUnits="userSpaceOnUse">
+<circle cx="2" cy="2" r="1.3" fill="#2a2018"/><circle cx="6" cy="5" r="1" fill="#2a2018"/>
+</pattern>
+</defs>
+<!-- rubble piles around -->
+<path d="M20 400 Q120 300 200 360 T 360 350 Q300 400 380 400 Z" fill="url(#rub)" stroke="#3a2e22" stroke-width="1"/>
+<path d="M460 400 Q520 330 580 380 L580 400 Z" fill="url(#rub)" stroke="#3a2e22" stroke-width="1"/>
+<line x1="20" y1="400" x2="580" y2="400" stroke="#2dd4bf" stroke-width="2"/>
+<text x="60" y="380" class="bp-label-sm" style="fill:#8a6e4e">COLLAPSED STRUCTURE / DEBRIS</text>
+<!-- intact spine standing -->
+<rect x="270" y="40" width="86" height="360" fill="#0c1322" stroke="#2dd4bf" stroke-width="2.5"/>
+<g stroke="#2dd4bf" stroke-width="1.2">
+<line x1="270" y1="120" x2="356" y2="120"/>
+<line x1="270" y1="200" x2="356" y2="200"/>
+<line x1="270" y1="280" x2="356" y2="280"/>
+</g>
+<!-- stacked hatches -->
+<g fill="#0a0e16" stroke="#7fd9c9" stroke-width="1.2">
+<rect x="304" y="116" width="18" height="8"/>
+<rect x="304" y="196" width="18" height="8"/>
+<rect x="304" y="276" width="18" height="8"/>
+<rect x="304" y="36" width="18" height="8"/>
+</g>
+<!-- cat ladder -->
+<g stroke="#7fd9c9" stroke-width="1">
+<line x1="328" y1="44" x2="328" y2="395"/><line x1="338" y1="44" x2="338" y2="395"/>
+<line x1="328" y1="70" x2="338" y2="70"/><line x1="328" y1="95" x2="338" y2="95"/>
+<line x1="328" y1="145" x2="338" y2="145"/><line x1="328" y1="170" x2="338" y2="170"/>
+<line x1="328" y1="225" x2="338" y2="225"/><line x1="328" y1="250" x2="338" y2="250"/>
+<line x1="328" y1="305" x2="338" y2="305"/><line x1="328" y1="330" x2="338" y2="330"/><line x1="328" y1="360" x2="338" y2="360"/>
+</g>
+<text x="313" y="225" class="bp-label" text-anchor="middle" transform="rotate(-90 313 225)" style="fill:#2dd4bf">SPINE — INTACT</text>
+<!-- up arrow (occupant climbs up) -->
+<g stroke="#2dd4bf" stroke-width="2.5" fill="none">
+<line x1="240" y1="360" x2="240" y2="150"/>
+<path d="M232 165 l8 -16 l8 16" />
+</g>
+<text x="150" y="260" class="bp-label" style="fill:#2dd4bf">OCCUPANTS</text>
+<text x="170" y="276" class="bp-label" style="fill:#2dd4bf">CLIMB UP ↑</text>
+<!-- down arrow (rescuers descend) -->
+<g stroke="#d4a373" stroke-width="2.5" fill="none">
+<line x1="388" y1="70" x2="388" y2="300"/>
+<path d="M380 285 l8 16 l8 -16"/>
+</g>
+<text x="405" y="150" class="bp-label" style="fill:#d4a373">RESCUERS</text>
+<text x="405" y="166" class="bp-label" style="fill:#d4a373">DESCEND ↓</text>
+<!-- roof access star -->
+<circle cx="313" cy="30" r="9" fill="none" stroke="#d4a373" stroke-width="2"/>
+<text x="313" y="20" class="bp-label-sm" text-anchor="middle">ROOF ACCESS</text>
+</svg>
+<div class="cap">FIG.3 — After collapse: occupants climb up the intact shaft, rescuers descend down it.</div></div>
+  <p>And it works in reverse. Rescue teams almost always reach the roof first. A known, mapped, structurally intact vertical route running straight through the rubble is exactly what search-and-rescue dreams of: they descend the same ladder to reach trapped people at every level. The Spine becomes the rescue spine.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">06 — WHY IT WINS</div>
+  <h2>The advantages stack up</h2>
+  <div class="metrics">
+    <div class="metric"><div class="big">&lt;10%</div><div class="lbl">of full retrofit cost</div></div>
+    <div class="metric"><div class="big">1–2</div><div class="lbl">months, not a year</div></div>
+    <div class="metric"><div class="big">+1</div><div class="lbl">extra room per unit</div></div>
+    <div class="metric"><div class="big">7d</div><div class="lbl">of provisions stored</div></div>
+  </div>
+  <div class="cards two">
+    <div class="card"><h4>No relocation</h4><p>Families stay in their homes throughout. This alone removes the single biggest reason retrofits never happen.</p></div>
+    <div class="card"><h4>No deadlock</h4><p>Work can proceed without the near-impossible unanimous agreement of every co-owner to fund and vacate.</p></div>
+    <div class="card"><h4>Cost becomes benefit</h4><p>Each unit gains a small usable room. People don't buy safety — they buy an extra room that also saves their life.</p></div>
+    <div class="card"><h4>Time-to-rescue</h4><p>Water, food, ventilation and sanitation for several days buy the survival window that urban rescue needs.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">07 — HOW IT'S BUILT</div>
+  <h2>The sequence</h2>
+  <div class="steps">
+    <div class="step"><h4>Identify the dead space</h4><p>An unused service stair, pantry or storeroom of roughly 2×2 m, reachable in under two minutes from anywhere in the home.</p></div>
+    <div class="step"><h4>Cut and underpin</h4><p>The existing slabs are cut through the footprint; an independent deep foundation is poured, with underpinning if the soil requires it.</p></div>
+    <div class="step"><h4>Raise the spine</h4><p>A hyper-reinforced concrete tower is built from the inside, level by level, flush with — but separate from — the host structure.</p></div>
+    <div class="step"><h4>Thread the circulation</h4><p>A continuous cat ladder and stacked hatches connect every level; fit-out adds the closet, bed and provision storage.</p></div>
+    <div class="step"><h4>Cap with the roof hub</h4><p>Water tank, vent intake, escape hatch, beacon and seismic shut-off valve complete the self-contained refuge.</p></div>
+  </div>
+  <div class="note"><b>Engineering note:</b> early-warning systems give many cities seconds to tens of seconds before strong shaking arrives — enough, with a refuge under two minutes away, for even elderly occupants to reach it if the route is drilled.</div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="ft-title">The Survival Spine</div>
+    <div class="ft-sub">An open concept for life-safety seismic retrofit. Applicable to most old buildings in earthquake-prone regions.</div>
+    <button class="footer-contact" onclick="document.getElementById('cd').classList.add('open')">Contact digitalAIventures</button>
+    <div class="disclaimer">This is a conceptual proposal for discussion and prior-art purposes, not a construction specification. Any real implementation must be designed, calculated and signed off by a qualified structural engineer under local seismic codes.</div>
+  </div>
+</footer>
+</div>
+<div data-lang="es">
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Refuerzo Sísmico para Salvar Vidas</span>
+    <h1>La Columna de Supervivencia</h1>
+    <div class="native">Un refugio vertical para edificios que no se pueden salvar</div>
+    <p class="tagline">Cuando la consolidación total es imposible, salva a las personas en lugar del edificio.</p>
+    <div class="pill-row">
+      <span class="pill"><b>&lt;10%</b> del coste de refuerzo total</span>
+      <span class="pill"><b>1–2</b> meses de obra</span>
+      <span class="pill"><b>+1</b> habitación por vivienda</span>
+      <span class="pill">sin realojo</span>
+    </div>
+  </div>
+</div>
+
+<section><div class="wrap">
+  <div class="sec-num">01 — EL PROBLEMA</div>
+  <h2>Edificios viejos, un terremoto pendiente y un bloqueo</h2>
+  <p class="lead">Millones viven en edificios antiguos que no resistirán el próximo gran terremoto.</p>
+  <p>La consolidación estructural completa es la respuesta de manual, pero en la práctica suele ser imposible. Cuesta una fortuna, exige el acuerdo unánime de todos los copropietarios, obliga a las familias a mudarse durante meses y se prolonga casi un año. En la mayoría de los edificios en riesgo, sencillamente nunca ocurre.</p>
+  <p>Mientras tanto el reloj avanza. Muchas regiones sísmicas siguen un patrón cíclico, con un evento fuerte que regresa cada 40–60 años. Morir bajo un edificio que colapsa es de los desenlaces más crueles, y de los más evitables.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">02 — EL CAMBIO</div>
+  <h2>Salvar vidas, no edificios</h2>
+  <p>La Columna de Supervivencia cambia el objetivo. El refuerzo convencional optimiza la supervivencia del edificio. La Columna optimiza la supervivencia humana. Un edificio que colapsa pero deja salir a todos con vida ha, según esta medida, tenido éxito. Ese solo cambio abre una vía mucho más barata, rápida y políticamente viable.</p>
+  <div class="note"><b>La idea central:</b> un refugio vertical estructuralmente independiente, construido en el espacio muerto sin uso del edificio, diseñado para mantenerse en pie aunque todo a su alrededor caiga.</div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">03 — EL CONCEPTO</div>
+  <h2>Una casa dentro de la casa</h2>
+  <p>La Columna es una torre de hormigón armado de unos 2×2 m, levantada en lugar del espacio muerto que nadie echará de menos: la escalera de servicio, la despensa, el trastero. Se cortan sus forjados, recibe su propia cimentación profunda (con recalce donde haga falta) y se eleva desde el interior, a ras de la estructura existente pero sin depender nunca de ella.</p>
+  <div class="fig"><svg viewBox="0 0 540 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cutaway of a building with the Survival Spine threaded through it">
+<defs>
+<pattern id="hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<line x1="0" y1="0" x2="0" y2="6" stroke="#1b3a44" stroke-width="1"/>
+</pattern>
+</defs>
+<!-- ground -->
+<line x1="20" y1="400" x2="580" y2="400" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="20" y1="408" x2="580" y2="408" stroke="#1b3a44" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="20" y1="416" x2="580" y2="416" stroke="#1b3a44" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="30" y="430" class="bp-label-sm">EXISTING SOIL / FOUNDATION GRADE</text>
+<!-- existing building outline (left bigger block) -->
+<rect x="60" y="80" width="320" height="320" fill="none" stroke="#1b3a44" stroke-width="1.5"/>
+<!-- floor slabs of existing building -->
+<g stroke="#1b3a44" stroke-width="1">
+<line x1="60" y1="160" x2="380" y2="160"/>
+<line x1="60" y1="240" x2="380" y2="240"/>
+<line x1="60" y1="320" x2="380" y2="320"/>
+</g>
+<!-- faint cracks suggesting vulnerability -->
+<g stroke="#3a2a2a" stroke-width="1" opacity=".6">
+<path d="M120 160 l14 18 l-8 22 l16 18" fill="none"/>
+<path d="M300 240 l-12 20 l10 16" fill="none"/>
+</g>
+<text x="70" y="100" class="bp-label-sm">EXISTING VULNERABLE STRUCTURE</text>
+<!-- the spine column on the right edge, threading floors, independent -->
+<!-- gap lines showing structural separation -->
+<rect x="392" y="60" width="92" height="340" fill="url(#hatch)" stroke="#2dd4bf" stroke-width="2.5"/>
+<!-- separation gap -->
+<line x1="386" y1="60" x2="386" y2="400" stroke="#d4a373" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="386" y="74" class="bp-dim" text-anchor="middle">GAP</text>
+<!-- spine internal floor hatches -->
+<g stroke="#2dd4bf" stroke-width="1.2">
+<line x1="392" y1="160" x2="484" y2="160"/>
+<line x1="392" y1="240" x2="484" y2="240"/>
+<line x1="392" y1="320" x2="484" y2="320"/>
+</g>
+<!-- hatch openings (stacked) -->
+<g fill="#0c1322" stroke="#7fd9c9" stroke-width="1.2">
+<rect x="430" y="156" width="18" height="8"/>
+<rect x="430" y="236" width="18" height="8"/>
+<rect x="430" y="316" width="18" height="8"/>
+</g>
+<!-- cat ladder -->
+<g stroke="#7fd9c9" stroke-width="1">
+<line x1="455" y1="80" x2="455" y2="395"/>
+<line x1="463" y1="80" x2="463" y2="395"/>
+<line x1="455" y1="100" x2="463" y2="100"/><line x1="455" y1="120" x2="463" y2="120"/>
+<line x1="455" y1="140" x2="463" y2="140"/><line x1="455" y1="180" x2="463" y2="180"/>
+<line x1="455" y1="200" x2="463" y2="200"/><line x1="455" y1="220" x2="463" y2="220"/>
+<line x1="455" y1="260" x2="463" y2="260"/><line x1="455" y1="280" x2="463" y2="280"/>
+<line x1="455" y1="300" x2="463" y2="300"/><line x1="455" y1="340" x2="463" y2="340"/>
+<line x1="455" y1="360" x2="463" y2="360"/><line x1="455" y1="380" x2="463" y2="380"/>
+</g>
+<!-- independent deep foundation -->
+<rect x="388" y="400" width="100" height="34" fill="url(#hatch)" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="400" y1="434" x2="400" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<line x1="438" y1="434" x2="438" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<line x1="476" y1="434" x2="476" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="496" y="420" class="bp-label-sm" text-anchor="end">INDEPENDENT</text>
+<text x="496" y="432" class="bp-label-sm" text-anchor="end">FOUNDATION</text>
+<!-- roof hub marker -->
+<rect x="398" y="40" width="80" height="22" fill="#0c1322" stroke="#38bdf8" stroke-width="1.5"/>
+<text x="438" y="55" class="bp-label" text-anchor="middle" style="fill:#38bdf8">ROOF HUB</text>
+<!-- label for spine -->
+<text x="438" y="220" class="bp-label" text-anchor="middle" transform="rotate(-90 438 220)" style="font-size:13px;fill:#2dd4bf">SURVIVAL SPINE — RC, INDEPENDENT</text>
+<!-- dimension ~2x2m -->
+<line x1="392" y1="385" x2="484" y2="385" stroke="#d4a373" stroke-width=".8"/>
+<text x="438" y="382" class="bp-dim" text-anchor="middle">~2.0 m</text>
+</svg>
+<div class="cap">FIG.1 — La Columna atravesando un edificio existente, sobre su propia cimentación independiente.</div></div>
+  <div class="cards two">
+    <div class="card"><span class="ic">🏛️</span><h4>Estructura independiente</h4><p>Cimentación y armazón reforzado propios. Se mantiene en pie aunque el edificio anfitrión colapse a su alrededor.</p></div>
+    <div class="card"><span class="ic">🪜</span><h4>Circulación vertical</h4><p>Una escalera de gato continua con escotillas apiladas une cada nivel en una sola columna-refugio.</p></div>
+    <div class="card"><span class="ic">🛏️</span><h4>Útil en la vida normal</h4><p>Cada nivel es una pequeña habitación funcional: armario, cama, almacén de provisiones. El coste se vuelve beneficio.</p></div>
+    <div class="card"><span class="ic">⚓</span><h4>Blindaje lateral</h4><p>El refuerzo adicional le permite resistir impactos laterales y la presión de escombros, como la pila de un puente.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">04 — EL NÚCLEO EN CUBIERTA</div>
+  <h2>Todo lo importante vive arriba</h2>
+  <p>El punto menos sepultado tras un colapso es la cubierta. Por eso la Columna concentra allí su soporte vital: un depósito de agua que alimenta cada nivel por gravedad y sirve además de lastre; una toma de ventilación elevada por encima de los escombros; la escotilla de escape; y una baliza de señalización para los rescatistas.</p>
+  <div class="fig"><svg viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Detail of the roof hub: water tank, vent intake, escape hatch, signaling and seismic isolation valve">
+<defs>
+<pattern id="hatch2" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<line x1="0" y1="0" x2="0" y2="6" stroke="#1b3a44" stroke-width="1"/>
+</pattern>
+</defs>
+<!-- spine top wall -->
+<rect x="160" y="200" width="280" height="200" fill="url(#hatch2)" stroke="#2dd4bf" stroke-width="2.5"/>
+<!-- roof slab -->
+<rect x="150" y="186" width="300" height="16" fill="#0c1322" stroke="#2dd4bf" stroke-width="2"/>
+<text x="300" y="390" class="bp-label" text-anchor="middle" style="font-size:13px">TOP OF SPINE (LEAST-BURIED POINT)</text>
+<!-- water tank on top -->
+<rect x="210" y="86" width="180" height="84" rx="8" fill="#0c1322" stroke="#38bdf8" stroke-width="2.5"/>
+<line x1="210" y1="118" x2="390" y2="118" stroke="#38bdf8" stroke-width="1" opacity=".5"/>
+<g fill="#38bdf8" opacity=".25"><rect x="212" y="120" width="176" height="48" rx="6"/></g>
+<text x="300" y="135" class="bp-label" text-anchor="middle" style="fill:#38bdf8">WATER TANK</text>
+<text x="300" y="150" class="bp-label-sm" text-anchor="middle">supply + ballast mass</text>
+<!-- vent intake stack -->
+<rect x="180" y="60" width="22" height="126" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<path d="M173 60 h36 l-8 -14 h-20 z" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<text x="125" y="80" class="bp-label-sm">VENT</text>
+<text x="120" y="92" class="bp-label-sm">INTAKE</text>
+<!-- signaling beacon -->
+<circle cx="410" cy="60" r="10" fill="none" stroke="#d4a373" stroke-width="2"/>
+<circle cx="410" cy="60" r="4" fill="#d4a373"/>
+<g stroke="#d4a373" stroke-width="1.5"><line x1="410" y1="38" x2="410" y2="46"/><line x1="430" y1="60" x2="438" y2="60"/><line x1="424" y1="46" x2="430" y2="40"/></g>
+<text x="445" y="64" class="bp-label-sm">SIGNAL /</text>
+<text x="445" y="76" class="bp-label-sm">BEACON</text>
+<!-- escape hatch in roof -->
+<rect x="300" y="186" width="44" height="16" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<text x="322" y="222" class="bp-label-sm" text-anchor="middle">ESCAPE HATCH ↑</text>
+<!-- seismic isolation valve -->
+<circle cx="300" cy="186" r="0"/>
+<rect x="284" y="168" width="0" height="0"/>
+<!-- pipe from tank down with valve -->
+<line x1="300" y1="170" x2="300" y2="186" stroke="#38bdf8" stroke-width="2"/>
+<g transform="translate(250,250)">
+<polygon points="0,0 18,9 0,18 18,0" fill="none" stroke="#d4a373" stroke-width="2"/>
+<text x="28" y="14" class="bp-label-sm">SEISMIC SHUT-OFF VALVE</text>
+<text x="28" y="26" class="bp-label-sm">(normally open → isolates on quake)</text>
+</g>
+<line x1="300" y1="202" x2="259" y2="252" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3 3"/>
+<!-- cat ladder hint inside -->
+<g stroke="#7fd9c9" stroke-width="1" opacity=".7">
+<line x1="320" y1="260" x2="320" y2="400"/><line x1="330" y1="260" x2="330" y2="400"/>
+<line x1="320" y1="280" x2="330" y2="280"/><line x1="320" y1="310" x2="330" y2="310"/>
+<line x1="320" y1="340" x2="330" y2="340"/><line x1="320" y1="370" x2="330" y2="370"/>
+</g>
+</svg>
+<div class="cap">FIG.2 — El núcleo en cubierta: depósito + lastre, toma de aire, escotilla, baliza, válvula sísmica.</div></div>
+  <h3>La válvula de corte sísmico</h3>
+  <p>El depósito se renueva continuamente en la vida normal, así que el agua siempre está fresca. Una válvula de corte sísmico —la misma tecnología probada que las válvulas de gas antisísmicas— permanece abierta hasta que se detecta el temblor, y entonces aísla el depósito para sellar el volumen almacenado para los ocupantes. La gravedad hace el resto: sin bomba, sin electricidad, lo que importa cuando la red se corta.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">05 — LA COLUMNA DE RESCATE</div>
+  <h2>Autorrescate hacia arriba, rescate hacia abajo</h2>
+  <p>Como los niveles están unidos por una escalera de gato continua, la Columna no es un conjunto de cajas aisladas: es un único refugio vertical con circulación interna. Si la salida a planta baja queda bloqueada por escombros, los ocupantes suben a un nivel más despejado o a la cubierta.</p>
+  <div class="fig"><svg viewBox="0 0 600 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rescue spine after collapse: occupants climb up, rescuers descend down through the intact vertical shaft">
+<defs>
+<pattern id="rub" width="8" height="8" patternUnits="userSpaceOnUse">
+<circle cx="2" cy="2" r="1.3" fill="#2a2018"/><circle cx="6" cy="5" r="1" fill="#2a2018"/>
+</pattern>
+</defs>
+<!-- rubble piles around -->
+<path d="M20 400 Q120 300 200 360 T 360 350 Q300 400 380 400 Z" fill="url(#rub)" stroke="#3a2e22" stroke-width="1"/>
+<path d="M460 400 Q520 330 580 380 L580 400 Z" fill="url(#rub)" stroke="#3a2e22" stroke-width="1"/>
+<line x1="20" y1="400" x2="580" y2="400" stroke="#2dd4bf" stroke-width="2"/>
+<text x="60" y="380" class="bp-label-sm" style="fill:#8a6e4e">COLLAPSED STRUCTURE / DEBRIS</text>
+<!-- intact spine standing -->
+<rect x="270" y="40" width="86" height="360" fill="#0c1322" stroke="#2dd4bf" stroke-width="2.5"/>
+<g stroke="#2dd4bf" stroke-width="1.2">
+<line x1="270" y1="120" x2="356" y2="120"/>
+<line x1="270" y1="200" x2="356" y2="200"/>
+<line x1="270" y1="280" x2="356" y2="280"/>
+</g>
+<!-- stacked hatches -->
+<g fill="#0a0e16" stroke="#7fd9c9" stroke-width="1.2">
+<rect x="304" y="116" width="18" height="8"/>
+<rect x="304" y="196" width="18" height="8"/>
+<rect x="304" y="276" width="18" height="8"/>
+<rect x="304" y="36" width="18" height="8"/>
+</g>
+<!-- cat ladder -->
+<g stroke="#7fd9c9" stroke-width="1">
+<line x1="328" y1="44" x2="328" y2="395"/><line x1="338" y1="44" x2="338" y2="395"/>
+<line x1="328" y1="70" x2="338" y2="70"/><line x1="328" y1="95" x2="338" y2="95"/>
+<line x1="328" y1="145" x2="338" y2="145"/><line x1="328" y1="170" x2="338" y2="170"/>
+<line x1="328" y1="225" x2="338" y2="225"/><line x1="328" y1="250" x2="338" y2="250"/>
+<line x1="328" y1="305" x2="338" y2="305"/><line x1="328" y1="330" x2="338" y2="330"/><line x1="328" y1="360" x2="338" y2="360"/>
+</g>
+<text x="313" y="225" class="bp-label" text-anchor="middle" transform="rotate(-90 313 225)" style="fill:#2dd4bf">SPINE — INTACT</text>
+<!-- up arrow (occupant climbs up) -->
+<g stroke="#2dd4bf" stroke-width="2.5" fill="none">
+<line x1="240" y1="360" x2="240" y2="150"/>
+<path d="M232 165 l8 -16 l8 16" />
+</g>
+<text x="150" y="260" class="bp-label" style="fill:#2dd4bf">OCCUPANTS</text>
+<text x="170" y="276" class="bp-label" style="fill:#2dd4bf">CLIMB UP ↑</text>
+<!-- down arrow (rescuers descend) -->
+<g stroke="#d4a373" stroke-width="2.5" fill="none">
+<line x1="388" y1="70" x2="388" y2="300"/>
+<path d="M380 285 l8 16 l8 -16"/>
+</g>
+<text x="405" y="150" class="bp-label" style="fill:#d4a373">RESCUERS</text>
+<text x="405" y="166" class="bp-label" style="fill:#d4a373">DESCEND ↓</text>
+<!-- roof access star -->
+<circle cx="313" cy="30" r="9" fill="none" stroke="#d4a373" stroke-width="2"/>
+<text x="313" y="20" class="bp-label-sm" text-anchor="middle">ROOF ACCESS</text>
+</svg>
+<div class="cap">FIG.3 — Tras el colapso: los ocupantes suben por el conducto intacto, los rescatistas descienden por él.</div></div>
+  <p>Y funciona a la inversa. Los equipos de rescate casi siempre llegan primero a la cubierta. Una vía vertical conocida, cartografiada y estructuralmente intacta que atraviesa los escombros es justo lo que sueña el rescate urbano: descienden por la misma escalera para alcanzar a las personas atrapadas en cada nivel. La Columna se convierte en la columna de rescate.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">06 — POR QUÉ GANA</div>
+  <h2>Las ventajas se acumulan</h2>
+  <div class="metrics">
+    <div class="metric"><div class="big">&lt;10%</div><div class="lbl">del coste de refuerzo total</div></div>
+    <div class="metric"><div class="big">1–2</div><div class="lbl">meses, no un año</div></div>
+    <div class="metric"><div class="big">+1</div><div class="lbl">habitación extra por vivienda</div></div>
+    <div class="metric"><div class="big">7d</div><div class="lbl">de provisiones almacenadas</div></div>
+  </div>
+  <div class="cards two">
+    <div class="card"><h4>Sin realojo</h4><p>Las familias permanecen en sus hogares durante toda la obra. Esto solo elimina la mayor razón por la que los refuerzos nunca se hacen.</p></div>
+    <div class="card"><h4>Sin bloqueo</h4><p>La obra puede avanzar sin el casi imposible acuerdo unánime de todos los copropietarios para financiar y desalojar.</p></div>
+    <div class="card"><h4>El coste se vuelve beneficio</h4><p>Cada vivienda gana una pequeña habitación útil. La gente no compra seguridad: compra una habitación extra que además le salva la vida.</p></div>
+    <div class="card"><h4>Tiempo hasta el rescate</h4><p>Agua, comida, ventilación y saneamiento para varios días compran la ventana de supervivencia que el rescate urbano necesita.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">07 — CÓMO SE CONSTRUYE</div>
+  <h2>La secuencia</h2>
+  <div class="steps">
+    <div class="step"><h4>Identificar el espacio muerto</h4><p>Una escalera de servicio, despensa o trastero sin uso de unos 2×2 m, accesible en menos de dos minutos desde cualquier punto de la casa.</p></div>
+    <div class="step"><h4>Cortar y recalzar</h4><p>Se cortan los forjados existentes en la huella; se vierte una cimentación profunda independiente, con recalce si el terreno lo exige.</p></div>
+    <div class="step"><h4>Levantar la columna</h4><p>Se construye una torre de hormigón hiperarmado desde el interior, nivel a nivel, a ras de la estructura anfitriona pero separada de ella.</p></div>
+    <div class="step"><h4>Enhebrar la circulación</h4><p>Una escalera de gato continua y escotillas apiladas conectan cada nivel; el acondicionamiento añade armario, cama y almacén de provisiones.</p></div>
+    <div class="step"><h4>Rematar con el núcleo en cubierta</h4><p>Depósito de agua, toma de aire, escotilla, baliza y válvula sísmica completan el refugio autónomo.</p></div>
+  </div>
+  <div class="note"><b>Nota técnica:</b> los sistemas de alerta temprana dan a muchas ciudades de segundos a decenas de segundos antes de la sacudida fuerte: suficiente, con un refugio a menos de dos minutos, para que incluso los ocupantes mayores lleguen si se ha ensayado la ruta.</div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="ft-title">La Columna de Supervivencia</div>
+    <div class="ft-sub">Un concepto abierto de refuerzo sísmico para salvar vidas. Aplicable a la mayoría de edificios antiguos en regiones sísmicas.</div>
+    <button class="footer-contact" onclick="document.getElementById('cd').classList.add('open')">Contactar con digitalAIventures</button>
+    <div class="disclaimer">Esta es una propuesta conceptual para discusión y como prior-art, no una especificación de obra. Cualquier implementación real debe ser diseñada, calculada y firmada por un ingeniero estructural cualificado conforme a la normativa sísmica local.</div>
+  </div>
+</footer>
+</div>
+<div data-lang="ro">
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Consolidare Seismică pentru Salvarea Vieților</span>
+    <h1>Coloana de Supraviețuire</h1>
+    <div class="native">Un adăpost vertical pentru clădirile care nu pot fi salvate</div>
+    <p class="tagline">Când consolidarea integrală e imposibilă, salvează oamenii, nu clădirea.</p>
+    <div class="pill-row">
+      <span class="pill"><b>&lt;10%</b> din costul consolidării totale</span>
+      <span class="pill"><b>1–2</b> luni de execuție</span>
+      <span class="pill"><b>+1</b> cameră pe apartament</span>
+      <span class="pill">fără mutare</span>
+    </div>
+  </div>
+</div>
+
+<section><div class="wrap">
+  <div class="sec-num">01 — PROBLEMA</div>
+  <h2>Clădiri vechi, un cutremur întârziat și un blocaj</h2>
+  <p class="lead">Milioane de oameni trăiesc în clădiri vechi care nu vor rezista următorului cutremur major.</p>
+  <p>Consolidarea structurală integrală este răspunsul din manuale, dar în practică este adesea imposibilă. Costă o avere, necesită acordul unanim al tuturor coproprietarilor, obligă familiile să se mute pentru multe luni și durează aproape un an. În majoritatea clădirilor la risc, pur și simplu nu se întâmplă niciodată.</p>
+  <p>Între timp ceasul ticăie. Multe zone seismice urmează un tipar ciclic, cu un eveniment puternic care revine cam la 40–60 de ani. Moartea sub o clădire prăbușită este printre cele mai cumplite sfârșituri — și printre cele mai ușor de prevenit.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">02 — SCHIMBAREA</div>
+  <h2>Salvăm vieți, nu clădiri</h2>
+  <p>Coloana de Supraviețuire schimbă obiectivul. Consolidarea clasică optimizează supraviețuirea clădirii. Coloana optimizează supraviețuirea oamenilor. O clădire care se prăbușește dar îi lasă pe toți să iasă vii a reușit, după această măsură. Această singură schimbare deschide o cale mult mai ieftină, mai rapidă și realizabilă politic.</p>
+  <div class="note"><b>Ideea centrală:</b> un adăpost vertical independent structural, construit în spațiul mort nefolosit al clădirii, proiectat să rămână în picioare chiar dacă tot ce e în jur cade.</div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">03 — CONCEPTUL</div>
+  <h2>O casă în casă</h2>
+  <p>Coloana este un turn de beton armat de circa 2×2 m, ridicat în locul spațiului mort de care nimeni nu duce dorul — scara de serviciu, cămara, debaraua. Planșeele se decupează, primește fundație proprie de adâncime (cu subzidiri unde e cazul) și se ridică din interior, la rost cu structura existentă, dar fără a depinde vreodată de ea.</p>
+  <div class="fig"><svg viewBox="0 0 540 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cutaway of a building with the Survival Spine threaded through it">
+<defs>
+<pattern id="hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<line x1="0" y1="0" x2="0" y2="6" stroke="#1b3a44" stroke-width="1"/>
+</pattern>
+</defs>
+<!-- ground -->
+<line x1="20" y1="400" x2="580" y2="400" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="20" y1="408" x2="580" y2="408" stroke="#1b3a44" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="20" y1="416" x2="580" y2="416" stroke="#1b3a44" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="30" y="430" class="bp-label-sm">EXISTING SOIL / FOUNDATION GRADE</text>
+<!-- existing building outline (left bigger block) -->
+<rect x="60" y="80" width="320" height="320" fill="none" stroke="#1b3a44" stroke-width="1.5"/>
+<!-- floor slabs of existing building -->
+<g stroke="#1b3a44" stroke-width="1">
+<line x1="60" y1="160" x2="380" y2="160"/>
+<line x1="60" y1="240" x2="380" y2="240"/>
+<line x1="60" y1="320" x2="380" y2="320"/>
+</g>
+<!-- faint cracks suggesting vulnerability -->
+<g stroke="#3a2a2a" stroke-width="1" opacity=".6">
+<path d="M120 160 l14 18 l-8 22 l16 18" fill="none"/>
+<path d="M300 240 l-12 20 l10 16" fill="none"/>
+</g>
+<text x="70" y="100" class="bp-label-sm">EXISTING VULNERABLE STRUCTURE</text>
+<!-- the spine column on the right edge, threading floors, independent -->
+<!-- gap lines showing structural separation -->
+<rect x="392" y="60" width="92" height="340" fill="url(#hatch)" stroke="#2dd4bf" stroke-width="2.5"/>
+<!-- separation gap -->
+<line x1="386" y1="60" x2="386" y2="400" stroke="#d4a373" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="386" y="74" class="bp-dim" text-anchor="middle">GAP</text>
+<!-- spine internal floor hatches -->
+<g stroke="#2dd4bf" stroke-width="1.2">
+<line x1="392" y1="160" x2="484" y2="160"/>
+<line x1="392" y1="240" x2="484" y2="240"/>
+<line x1="392" y1="320" x2="484" y2="320"/>
+</g>
+<!-- hatch openings (stacked) -->
+<g fill="#0c1322" stroke="#7fd9c9" stroke-width="1.2">
+<rect x="430" y="156" width="18" height="8"/>
+<rect x="430" y="236" width="18" height="8"/>
+<rect x="430" y="316" width="18" height="8"/>
+</g>
+<!-- cat ladder -->
+<g stroke="#7fd9c9" stroke-width="1">
+<line x1="455" y1="80" x2="455" y2="395"/>
+<line x1="463" y1="80" x2="463" y2="395"/>
+<line x1="455" y1="100" x2="463" y2="100"/><line x1="455" y1="120" x2="463" y2="120"/>
+<line x1="455" y1="140" x2="463" y2="140"/><line x1="455" y1="180" x2="463" y2="180"/>
+<line x1="455" y1="200" x2="463" y2="200"/><line x1="455" y1="220" x2="463" y2="220"/>
+<line x1="455" y1="260" x2="463" y2="260"/><line x1="455" y1="280" x2="463" y2="280"/>
+<line x1="455" y1="300" x2="463" y2="300"/><line x1="455" y1="340" x2="463" y2="340"/>
+<line x1="455" y1="360" x2="463" y2="360"/><line x1="455" y1="380" x2="463" y2="380"/>
+</g>
+<!-- independent deep foundation -->
+<rect x="388" y="400" width="100" height="34" fill="url(#hatch)" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="400" y1="434" x2="400" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<line x1="438" y1="434" x2="438" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<line x1="476" y1="434" x2="476" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="496" y="420" class="bp-label-sm" text-anchor="end">INDEPENDENT</text>
+<text x="496" y="432" class="bp-label-sm" text-anchor="end">FOUNDATION</text>
+<!-- roof hub marker -->
+<rect x="398" y="40" width="80" height="22" fill="#0c1322" stroke="#38bdf8" stroke-width="1.5"/>
+<text x="438" y="55" class="bp-label" text-anchor="middle" style="fill:#38bdf8">ROOF HUB</text>
+<!-- label for spine -->
+<text x="438" y="220" class="bp-label" text-anchor="middle" transform="rotate(-90 438 220)" style="font-size:13px;fill:#2dd4bf">SURVIVAL SPINE — RC, INDEPENDENT</text>
+<!-- dimension ~2x2m -->
+<line x1="392" y1="385" x2="484" y2="385" stroke="#d4a373" stroke-width=".8"/>
+<text x="438" y="382" class="bp-dim" text-anchor="middle">~2.0 m</text>
+</svg>
+<div class="cap">FIG.1 — Coloana trecută prin clădirea existentă, pe fundația ei independentă.</div></div>
+  <div class="cards two">
+    <div class="card"><span class="ic">🏛️</span><h4>Structură independentă</h4><p>Fundație și cadru armat proprii. Rămâne în picioare chiar dacă clădirea-gazdă se prăbușește în jur.</p></div>
+    <div class="card"><span class="ic">🪜</span><h4>Circulație verticală</h4><p>O scară de pisică continuă, cu trape suprapuse, leagă fiecare nivel într-o singură coloană-adăpost.</p></div>
+    <div class="card"><span class="ic">🛏️</span><h4>Utilă în viața normală</h4><p>Fiecare nivel e o cameră mică funcțională — dulap, pat, depozit pentru provizii. Costul devine beneficiu.</p></div>
+    <div class="card"><span class="ic">⚓</span><h4>Blindaj lateral</h4><p>Armarea suplimentară îi permite să încaseze impacturi laterale și presiunea molozului, ca un pilon de pod.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">04 — NUCLEUL DE PE ACOPERIȘ</div>
+  <h2>Tot ce e important stă sus</h2>
+  <p>Punctul cel mai puțin îngropat după o prăbușire este acoperișul. De aceea Coloana își concentrează acolo suportul vital: un rezervor de apă care alimentează fiecare nivel gravitațional și servește și ca balast; o priză de ventilație ridicată deasupra molozului; trapa de evacuare; și un far de semnalizare pentru salvatori.</p>
+  <div class="fig"><svg viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Detail of the roof hub: water tank, vent intake, escape hatch, signaling and seismic isolation valve">
+<defs>
+<pattern id="hatch2" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<line x1="0" y1="0" x2="0" y2="6" stroke="#1b3a44" stroke-width="1"/>
+</pattern>
+</defs>
+<!-- spine top wall -->
+<rect x="160" y="200" width="280" height="200" fill="url(#hatch2)" stroke="#2dd4bf" stroke-width="2.5"/>
+<!-- roof slab -->
+<rect x="150" y="186" width="300" height="16" fill="#0c1322" stroke="#2dd4bf" stroke-width="2"/>
+<text x="300" y="390" class="bp-label" text-anchor="middle" style="font-size:13px">TOP OF SPINE (LEAST-BURIED POINT)</text>
+<!-- water tank on top -->
+<rect x="210" y="86" width="180" height="84" rx="8" fill="#0c1322" stroke="#38bdf8" stroke-width="2.5"/>
+<line x1="210" y1="118" x2="390" y2="118" stroke="#38bdf8" stroke-width="1" opacity=".5"/>
+<g fill="#38bdf8" opacity=".25"><rect x="212" y="120" width="176" height="48" rx="6"/></g>
+<text x="300" y="135" class="bp-label" text-anchor="middle" style="fill:#38bdf8">WATER TANK</text>
+<text x="300" y="150" class="bp-label-sm" text-anchor="middle">supply + ballast mass</text>
+<!-- vent intake stack -->
+<rect x="180" y="60" width="22" height="126" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<path d="M173 60 h36 l-8 -14 h-20 z" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<text x="125" y="80" class="bp-label-sm">VENT</text>
+<text x="120" y="92" class="bp-label-sm">INTAKE</text>
+<!-- signaling beacon -->
+<circle cx="410" cy="60" r="10" fill="none" stroke="#d4a373" stroke-width="2"/>
+<circle cx="410" cy="60" r="4" fill="#d4a373"/>
+<g stroke="#d4a373" stroke-width="1.5"><line x1="410" y1="38" x2="410" y2="46"/><line x1="430" y1="60" x2="438" y2="60"/><line x1="424" y1="46" x2="430" y2="40"/></g>
+<text x="445" y="64" class="bp-label-sm">SIGNAL /</text>
+<text x="445" y="76" class="bp-label-sm">BEACON</text>
+<!-- escape hatch in roof -->
+<rect x="300" y="186" width="44" height="16" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<text x="322" y="222" class="bp-label-sm" text-anchor="middle">ESCAPE HATCH ↑</text>
+<!-- seismic isolation valve -->
+<circle cx="300" cy="186" r="0"/>
+<rect x="284" y="168" width="0" height="0"/>
+<!-- pipe from tank down with valve -->
+<line x1="300" y1="170" x2="300" y2="186" stroke="#38bdf8" stroke-width="2"/>
+<g transform="translate(250,250)">
+<polygon points="0,0 18,9 0,18 18,0" fill="none" stroke="#d4a373" stroke-width="2"/>
+<text x="28" y="14" class="bp-label-sm">SEISMIC SHUT-OFF VALVE</text>
+<text x="28" y="26" class="bp-label-sm">(normally open → isolates on quake)</text>
+</g>
+<line x1="300" y1="202" x2="259" y2="252" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3 3"/>
+<!-- cat ladder hint inside -->
+<g stroke="#7fd9c9" stroke-width="1" opacity=".7">
+<line x1="320" y1="260" x2="320" y2="400"/><line x1="330" y1="260" x2="330" y2="400"/>
+<line x1="320" y1="280" x2="330" y2="280"/><line x1="320" y1="310" x2="330" y2="310"/>
+<line x1="320" y1="340" x2="330" y2="340"/><line x1="320" y1="370" x2="330" y2="370"/>
+</g>
+</svg>
+<div class="cap">FIG.2 — Nucleul de pe acoperiș: rezervor + balast, priză de aer, trapă, far, vană seismică.</div></div>
+  <h3>Vana de închidere seismică</h3>
+  <p>Rezervorul se împrospătează continuu în viața normală, deci apa e mereu proaspătă. O vană de închidere seismică — aceeași tehnologie dovedită ca la vanele de gaz antiseismice — rămâne deschisă până în momentul detectării cutremurului, apoi izolează rezervorul pentru a sigila volumul stocat pentru ocupanți. Gravitația face restul: fără pompă, fără curent — esențial când rețeaua e tăiată.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">05 — COLOANA DE SALVARE</div>
+  <h2>Autosalvare în sus, salvare în jos</h2>
+  <p>Fiindcă nivelurile sunt legate printr-o scară de pisică continuă, Coloana nu e un set de cutii izolate — e un singur adăpost vertical cu circulație internă. Dacă ieșirea de la parter e blocată de moloz, ocupanții urcă la un nivel mai degajat sau pe acoperiș.</p>
+  <div class="fig"><svg viewBox="0 0 600 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rescue spine after collapse: occupants climb up, rescuers descend down through the intact vertical shaft">
+<defs>
+<pattern id="rub" width="8" height="8" patternUnits="userSpaceOnUse">
+<circle cx="2" cy="2" r="1.3" fill="#2a2018"/><circle cx="6" cy="5" r="1" fill="#2a2018"/>
+</pattern>
+</defs>
+<!-- rubble piles around -->
+<path d="M20 400 Q120 300 200 360 T 360 350 Q300 400 380 400 Z" fill="url(#rub)" stroke="#3a2e22" stroke-width="1"/>
+<path d="M460 400 Q520 330 580 380 L580 400 Z" fill="url(#rub)" stroke="#3a2e22" stroke-width="1"/>
+<line x1="20" y1="400" x2="580" y2="400" stroke="#2dd4bf" stroke-width="2"/>
+<text x="60" y="380" class="bp-label-sm" style="fill:#8a6e4e">COLLAPSED STRUCTURE / DEBRIS</text>
+<!-- intact spine standing -->
+<rect x="270" y="40" width="86" height="360" fill="#0c1322" stroke="#2dd4bf" stroke-width="2.5"/>
+<g stroke="#2dd4bf" stroke-width="1.2">
+<line x1="270" y1="120" x2="356" y2="120"/>
+<line x1="270" y1="200" x2="356" y2="200"/>
+<line x1="270" y1="280" x2="356" y2="280"/>
+</g>
+<!-- stacked hatches -->
+<g fill="#0a0e16" stroke="#7fd9c9" stroke-width="1.2">
+<rect x="304" y="116" width="18" height="8"/>
+<rect x="304" y="196" width="18" height="8"/>
+<rect x="304" y="276" width="18" height="8"/>
+<rect x="304" y="36" width="18" height="8"/>
+</g>
+<!-- cat ladder -->
+<g stroke="#7fd9c9" stroke-width="1">
+<line x1="328" y1="44" x2="328" y2="395"/><line x1="338" y1="44" x2="338" y2="395"/>
+<line x1="328" y1="70" x2="338" y2="70"/><line x1="328" y1="95" x2="338" y2="95"/>
+<line x1="328" y1="145" x2="338" y2="145"/><line x1="328" y1="170" x2="338" y2="170"/>
+<line x1="328" y1="225" x2="338" y2="225"/><line x1="328" y1="250" x2="338" y2="250"/>
+<line x1="328" y1="305" x2="338" y2="305"/><line x1="328" y1="330" x2="338" y2="330"/><line x1="328" y1="360" x2="338" y2="360"/>
+</g>
+<text x="313" y="225" class="bp-label" text-anchor="middle" transform="rotate(-90 313 225)" style="fill:#2dd4bf">SPINE — INTACT</text>
+<!-- up arrow (occupant climbs up) -->
+<g stroke="#2dd4bf" stroke-width="2.5" fill="none">
+<line x1="240" y1="360" x2="240" y2="150"/>
+<path d="M232 165 l8 -16 l8 16" />
+</g>
+<text x="150" y="260" class="bp-label" style="fill:#2dd4bf">OCCUPANTS</text>
+<text x="170" y="276" class="bp-label" style="fill:#2dd4bf">CLIMB UP ↑</text>
+<!-- down arrow (rescuers descend) -->
+<g stroke="#d4a373" stroke-width="2.5" fill="none">
+<line x1="388" y1="70" x2="388" y2="300"/>
+<path d="M380 285 l8 16 l8 -16"/>
+</g>
+<text x="405" y="150" class="bp-label" style="fill:#d4a373">RESCUERS</text>
+<text x="405" y="166" class="bp-label" style="fill:#d4a373">DESCEND ↓</text>
+<!-- roof access star -->
+<circle cx="313" cy="30" r="9" fill="none" stroke="#d4a373" stroke-width="2"/>
+<text x="313" y="20" class="bp-label-sm" text-anchor="middle">ROOF ACCESS</text>
+</svg>
+<div class="cap">FIG.3 — După prăbușire: ocupanții urcă prin puțul intact, salvatorii coboară prin el.</div></div>
+  <p>Și funcționează invers. Echipele de salvare ajung aproape întotdeauna prima dată pe acoperiș. O cale verticală cunoscută, cartografiată și intactă structural, care străbate molozul, e exact ce visează salvarea urbană: coboară pe aceeași scară pentru a ajunge la oamenii prinși pe fiecare nivel. Coloana devine coloana de salvare.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">06 — DE CE CÂȘTIGĂ</div>
+  <h2>Avantajele se adună</h2>
+  <div class="metrics">
+    <div class="metric"><div class="big">&lt;10%</div><div class="lbl">din costul consolidării</div></div>
+    <div class="metric"><div class="big">1–2</div><div class="lbl">luni, nu un an</div></div>
+    <div class="metric"><div class="big">+1</div><div class="lbl">cameră în plus / apartament</div></div>
+    <div class="metric"><div class="big">7d</div><div class="lbl">de provizii stocate</div></div>
+  </div>
+  <div class="cards two">
+    <div class="card"><h4>Fără mutare</h4><p>Familiile rămân în casele lor pe tot parcursul. Doar asta elimină cel mai mare motiv pentru care consolidările nu se fac.</p></div>
+    <div class="card"><h4>Fără blocaj</h4><p>Lucrarea poate avansa fără acordul unanim, aproape imposibil, al tuturor coproprietarilor pentru finanțare și evacuare.</p></div>
+    <div class="card"><h4>Costul devine beneficiu</h4><p>Fiecare apartament câștigă o cameră mică utilizabilă. Oamenii nu cumpără siguranță — cumpără o cameră în plus care le și salvează viața.</p></div>
+    <div class="card"><h4>Timp până la salvare</h4><p>Apă, hrană, ventilație și sanitare pentru câteva zile cumpără fereastra de supraviețuire de care are nevoie salvarea urbană.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">07 — CUM SE CONSTRUIEȘTE</div>
+  <h2>Secvența</h2>
+  <div class="steps">
+    <div class="step"><h4>Identifică spațiul mort</h4><p>O scară de serviciu, cămară sau debara nefolosită de circa 2×2 m, accesibilă în sub două minute din orice punct al casei.</p></div>
+    <div class="step"><h4>Decupează și subzidește</h4><p>Planșeele existente se decupează pe amprentă; se toarnă o fundație de adâncime independentă, cu subzidiri dacă terenul cere.</p></div>
+    <div class="step"><h4>Ridică coloana</h4><p>Un turn de beton hiperarmat se construiește din interior, nivel cu nivel, la rost cu — dar separat de — structura-gazdă.</p></div>
+    <div class="step"><h4>Înșiruie circulația</h4><p>O scară de pisică continuă și trape suprapuse leagă fiecare nivel; finisajul adaugă dulap, pat și depozit de provizii.</p></div>
+    <div class="step"><h4>Încununează cu nucleul de pe acoperiș</h4><p>Rezervor de apă, priză de aer, trapă, far și vană seismică completează adăpostul autonom.</p></div>
+  </div>
+  <div class="note"><b>Notă tehnică:</b> sistemele de avertizare timpurie oferă multor orașe de la secunde la zeci de secunde înainte de unda puternică — suficient, cu un adăpost la sub două minute, ca până și ocupanții vârstnici să ajungă dacă ruta e exersată.</div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="ft-title">Coloana de Supraviețuire</div>
+    <div class="ft-sub">Un concept deschis de consolidare seismică pentru salvarea vieților. Aplicabil majorității clădirilor vechi din zone seismice.</div>
+    <button class="footer-contact" onclick="document.getElementById('cd').classList.add('open')">Contact digitalAIventures</button>
+    <div class="disclaimer">Aceasta este o propunere conceptuală pentru discuție și ca prior-art, nu o specificație de execuție. Orice implementare reală trebuie proiectată, calculată și avizată de un inginer structurist calificat, conform normativelor seismice locale.</div>
+  </div>
+</footer>
+</div>
+<div data-lang="ja">
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">人命を守る耐震改修</span>
+    <h1>サバイバル・スパイン</h1>
+    <div class="native">救えない建物のための垂直シェルター</div>
+    <p class="tagline">全面補強が不可能なら、建物ではなく人を救う。</p>
+    <div class="pill-row">
+      <span class="pill"><b>&lt;10%</b> 全面改修費に対して</span>
+      <span class="pill"><b>1–2</b> ヶ月で施工</span>
+      <span class="pill"><b>+1</b> 住戸あたり1室</span>
+      <span class="pill">転居不要</span>
+    </div>
+  </div>
+</div>
+
+<section><div class="wrap">
+  <div class="sec-num">01 — 課題</div>
+  <h2>老朽建物、迫る地震、そして膠着</h2>
+  <p class="lead">何百万もの人々が、次の大地震に耐えられない老朽建物に暮らしています。</p>
+  <p>全面的な構造補強は教科書的な答えですが、実際にはしばしば不可能です。莫大な費用がかかり、全区分所有者の全員一致の合意を要し、家族は何ヶ月も転居を強いられ、ほぼ一年を費やします。危険な建物の多くでは、結局それは決して実現しません。</p>
+  <p>その間も時計は進みます。多くの地震地域は周期的なパターンを示し、強い地震がおよそ40〜60年ごとに戻ってきます。崩れる建物の下での死は最も残酷な結末の一つであり、最も防ぎやすいものでもあります。</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">02 — 発想の転換</div>
+  <h2>建物ではなく命を救う</h2>
+  <p>サバイバル・スパインは目的を変えます。従来の補強は建物の存続を最適化します。スパインは人命の存続を最適化します。建物が崩壊しても全員が生きて出られれば、この基準では成功です。この一点の転換が、はるかに安く、速く、政治的に実現可能な道を開きます。</p>
+  <div class="note"><b>中心となる発想：</b> 建物の使われていないデッドスペースに造られる、構造的に独立した垂直シェルター。周囲のすべてが倒れても自立するよう設計されます。</div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">03 — コンセプト</div>
+  <h2>家の中の家</h2>
+  <p>スパインは約2×2mの鉄筋コンクリートの塔で、誰も惜しまないデッドスペース——サービス階段、パントリー、物置——の代わりに建てられます。スラブを切り抜き、独自の深い基礎(必要なら下受け)を持ち、内側から立ち上げ、既存構造に接しながらも決して依存しません。</p>
+  <div class="fig"><svg viewBox="0 0 540 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cutaway of a building with the Survival Spine threaded through it">
+<defs>
+<pattern id="hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<line x1="0" y1="0" x2="0" y2="6" stroke="#1b3a44" stroke-width="1"/>
+</pattern>
+</defs>
+<!-- ground -->
+<line x1="20" y1="400" x2="580" y2="400" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="20" y1="408" x2="580" y2="408" stroke="#1b3a44" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="20" y1="416" x2="580" y2="416" stroke="#1b3a44" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="30" y="430" class="bp-label-sm">EXISTING SOIL / FOUNDATION GRADE</text>
+<!-- existing building outline (left bigger block) -->
+<rect x="60" y="80" width="320" height="320" fill="none" stroke="#1b3a44" stroke-width="1.5"/>
+<!-- floor slabs of existing building -->
+<g stroke="#1b3a44" stroke-width="1">
+<line x1="60" y1="160" x2="380" y2="160"/>
+<line x1="60" y1="240" x2="380" y2="240"/>
+<line x1="60" y1="320" x2="380" y2="320"/>
+</g>
+<!-- faint cracks suggesting vulnerability -->
+<g stroke="#3a2a2a" stroke-width="1" opacity=".6">
+<path d="M120 160 l14 18 l-8 22 l16 18" fill="none"/>
+<path d="M300 240 l-12 20 l10 16" fill="none"/>
+</g>
+<text x="70" y="100" class="bp-label-sm">EXISTING VULNERABLE STRUCTURE</text>
+<!-- the spine column on the right edge, threading floors, independent -->
+<!-- gap lines showing structural separation -->
+<rect x="392" y="60" width="92" height="340" fill="url(#hatch)" stroke="#2dd4bf" stroke-width="2.5"/>
+<!-- separation gap -->
+<line x1="386" y1="60" x2="386" y2="400" stroke="#d4a373" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="386" y="74" class="bp-dim" text-anchor="middle">GAP</text>
+<!-- spine internal floor hatches -->
+<g stroke="#2dd4bf" stroke-width="1.2">
+<line x1="392" y1="160" x2="484" y2="160"/>
+<line x1="392" y1="240" x2="484" y2="240"/>
+<line x1="392" y1="320" x2="484" y2="320"/>
+</g>
+<!-- hatch openings (stacked) -->
+<g fill="#0c1322" stroke="#7fd9c9" stroke-width="1.2">
+<rect x="430" y="156" width="18" height="8"/>
+<rect x="430" y="236" width="18" height="8"/>
+<rect x="430" y="316" width="18" height="8"/>
+</g>
+<!-- cat ladder -->
+<g stroke="#7fd9c9" stroke-width="1">
+<line x1="455" y1="80" x2="455" y2="395"/>
+<line x1="463" y1="80" x2="463" y2="395"/>
+<line x1="455" y1="100" x2="463" y2="100"/><line x1="455" y1="120" x2="463" y2="120"/>
+<line x1="455" y1="140" x2="463" y2="140"/><line x1="455" y1="180" x2="463" y2="180"/>
+<line x1="455" y1="200" x2="463" y2="200"/><line x1="455" y1="220" x2="463" y2="220"/>
+<line x1="455" y1="260" x2="463" y2="260"/><line x1="455" y1="280" x2="463" y2="280"/>
+<line x1="455" y1="300" x2="463" y2="300"/><line x1="455" y1="340" x2="463" y2="340"/>
+<line x1="455" y1="360" x2="463" y2="360"/><line x1="455" y1="380" x2="463" y2="380"/>
+</g>
+<!-- independent deep foundation -->
+<rect x="388" y="400" width="100" height="34" fill="url(#hatch)" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="400" y1="434" x2="400" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<line x1="438" y1="434" x2="438" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<line x1="476" y1="434" x2="476" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="496" y="420" class="bp-label-sm" text-anchor="end">INDEPENDENT</text>
+<text x="496" y="432" class="bp-label-sm" text-anchor="end">FOUNDATION</text>
+<!-- roof hub marker -->
+<rect x="398" y="40" width="80" height="22" fill="#0c1322" stroke="#38bdf8" stroke-width="1.5"/>
+<text x="438" y="55" class="bp-label" text-anchor="middle" style="fill:#38bdf8">ROOF HUB</text>
+<!-- label for spine -->
+<text x="438" y="220" class="bp-label" text-anchor="middle" transform="rotate(-90 438 220)" style="font-size:13px;fill:#2dd4bf">SURVIVAL SPINE — RC, INDEPENDENT</text>
+<!-- dimension ~2x2m -->
+<line x1="392" y1="385" x2="484" y2="385" stroke="#d4a373" stroke-width=".8"/>
+<text x="438" y="382" class="bp-dim" text-anchor="middle">~2.0 m</text>
+</svg>
+<div class="cap">図1 — 既存建物を貫いて建つスパイン。独立した基礎の上に。</div></div>
+  <div class="cards two">
+    <div class="card"><span class="ic">🏛️</span><h4>独立した構造</h4><p>独自の基礎と補強された骨組み。母屋が周囲で崩壊しても自立します。</p></div>
+    <div class="card"><span class="ic">🪜</span><h4>垂直動線</h4><p>連続したキャットラダーと積層ハッチが各階を一本のシェルター・スパインに繋ぎます。</p></div>
+    <div class="card"><span class="ic">🛏️</span><h4>平時にも役立つ</h4><p>各階は小さな機能的な部屋——クローゼット、ベッド、備蓄庫。コストが利益に変わります。</p></div>
+    <div class="card"><span class="ic">⚓</span><h4>側方装甲</h4><p>追加の補強により、橋脚のように側方からの衝撃やがれきの圧力を受け流します。</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">04 — 屋上ハブ</div>
+  <h2>重要なものはすべて頂部に</h2>
+  <p>崩壊後に最も埋もれにくい点は屋上です。だからスパインは生命維持装置をそこに集約します——重力で各階に給水し、同時にバラスト質量となる貯水タンク。がれきの上に突き出た換気取り入れ口。脱出ハッチ。そして救助隊のための信号ビーコン。</p>
+  <div class="fig"><svg viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Detail of the roof hub: water tank, vent intake, escape hatch, signaling and seismic isolation valve">
+<defs>
+<pattern id="hatch2" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<line x1="0" y1="0" x2="0" y2="6" stroke="#1b3a44" stroke-width="1"/>
+</pattern>
+</defs>
+<!-- spine top wall -->
+<rect x="160" y="200" width="280" height="200" fill="url(#hatch2)" stroke="#2dd4bf" stroke-width="2.5"/>
+<!-- roof slab -->
+<rect x="150" y="186" width="300" height="16" fill="#0c1322" stroke="#2dd4bf" stroke-width="2"/>
+<text x="300" y="390" class="bp-label" text-anchor="middle" style="font-size:13px">TOP OF SPINE (LEAST-BURIED POINT)</text>
+<!-- water tank on top -->
+<rect x="210" y="86" width="180" height="84" rx="8" fill="#0c1322" stroke="#38bdf8" stroke-width="2.5"/>
+<line x1="210" y1="118" x2="390" y2="118" stroke="#38bdf8" stroke-width="1" opacity=".5"/>
+<g fill="#38bdf8" opacity=".25"><rect x="212" y="120" width="176" height="48" rx="6"/></g>
+<text x="300" y="135" class="bp-label" text-anchor="middle" style="fill:#38bdf8">WATER TANK</text>
+<text x="300" y="150" class="bp-label-sm" text-anchor="middle">supply + ballast mass</text>
+<!-- vent intake stack -->
+<rect x="180" y="60" width="22" height="126" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<path d="M173 60 h36 l-8 -14 h-20 z" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<text x="125" y="80" class="bp-label-sm">VENT</text>
+<text x="120" y="92" class="bp-label-sm">INTAKE</text>
+<!-- signaling beacon -->
+<circle cx="410" cy="60" r="10" fill="none" stroke="#d4a373" stroke-width="2"/>
+<circle cx="410" cy="60" r="4" fill="#d4a373"/>
+<g stroke="#d4a373" stroke-width="1.5"><line x1="410" y1="38" x2="410" y2="46"/><line x1="430" y1="60" x2="438" y2="60"/><line x1="424" y1="46" x2="430" y2="40"/></g>
+<text x="445" y="64" class="bp-label-sm">SIGNAL /</text>
+<text x="445" y="76" class="bp-label-sm">BEACON</text>
+<!-- escape hatch in roof -->
+<rect x="300" y="186" width="44" height="16" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<text x="322" y="222" class="bp-label-sm" text-anchor="middle">ESCAPE HATCH ↑</text>
+<!-- seismic isolation valve -->
+<circle cx="300" cy="186" r="0"/>
+<rect x="284" y="168" width="0" height="0"/>
+<!-- pipe from tank down with valve -->
+<line x1="300" y1="170" x2="300" y2="186" stroke="#38bdf8" stroke-width="2"/>
+<g transform="translate(250,250)">
+<polygon points="0,0 18,9 0,18 18,0" fill="none" stroke="#d4a373" stroke-width="2"/>
+<text x="28" y="14" class="bp-label-sm">SEISMIC SHUT-OFF VALVE</text>
+<text x="28" y="26" class="bp-label-sm">(normally open → isolates on quake)</text>
+</g>
+<line x1="300" y1="202" x2="259" y2="252" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3 3"/>
+<!-- cat ladder hint inside -->
+<g stroke="#7fd9c9" stroke-width="1" opacity=".7">
+<line x1="320" y1="260" x2="320" y2="400"/><line x1="330" y1="260" x2="330" y2="400"/>
+<line x1="320" y1="280" x2="330" y2="280"/><line x1="320" y1="310" x2="330" y2="310"/>
+<line x1="320" y1="340" x2="330" y2="340"/><line x1="320" y1="370" x2="330" y2="370"/>
+</g>
+</svg>
+<div class="cap">図2 — 屋上ハブ：貯水タンク+バラスト、換気口、脱出ハッチ、ビーコン、地震遮断弁。</div></div>
+  <h3>地震遮断弁</h3>
+  <p>貯水タンクは平時に絶えず更新されるため、水は常に新鮮です。地震遮断弁——地震時ガス遮断弁と同じ実証済み技術——は揺れを検知した瞬間まで開いており、その後タンクを隔離して貯留量を居住者のために封じます。あとは重力が担う——ポンプ不要、電力不要。送電網が切れたときに重要です。</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">05 — 救助のスパイン</div>
+  <h2>上へ自力脱出、下へ救助</h2>
+  <p>各階が連続したキャットラダーで繋がっているため、スパインは孤立した箱の集まりではなく、内部動線を持つ一本の垂直シェルターです。地上の出口ががれきで塞がれても、居住者はより安全な階や屋上へ登れます。</p>
+  <div class="fig"><svg viewBox="0 0 600 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rescue spine after collapse: occupants climb up, rescuers descend down through the intact vertical shaft">
+<defs>
+<pattern id="rub" width="8" height="8" patternUnits="userSpaceOnUse">
+<circle cx="2" cy="2" r="1.3" fill="#2a2018"/><circle cx="6" cy="5" r="1" fill="#2a2018"/>
+</pattern>
+</defs>
+<!-- rubble piles around -->
+<path d="M20 400 Q120 300 200 360 T 360 350 Q300 400 380 400 Z" fill="url(#rub)" stroke="#3a2e22" stroke-width="1"/>
+<path d="M460 400 Q520 330 580 380 L580 400 Z" fill="url(#rub)" stroke="#3a2e22" stroke-width="1"/>
+<line x1="20" y1="400" x2="580" y2="400" stroke="#2dd4bf" stroke-width="2"/>
+<text x="60" y="380" class="bp-label-sm" style="fill:#8a6e4e">COLLAPSED STRUCTURE / DEBRIS</text>
+<!-- intact spine standing -->
+<rect x="270" y="40" width="86" height="360" fill="#0c1322" stroke="#2dd4bf" stroke-width="2.5"/>
+<g stroke="#2dd4bf" stroke-width="1.2">
+<line x1="270" y1="120" x2="356" y2="120"/>
+<line x1="270" y1="200" x2="356" y2="200"/>
+<line x1="270" y1="280" x2="356" y2="280"/>
+</g>
+<!-- stacked hatches -->
+<g fill="#0a0e16" stroke="#7fd9c9" stroke-width="1.2">
+<rect x="304" y="116" width="18" height="8"/>
+<rect x="304" y="196" width="18" height="8"/>
+<rect x="304" y="276" width="18" height="8"/>
+<rect x="304" y="36" width="18" height="8"/>
+</g>
+<!-- cat ladder -->
+<g stroke="#7fd9c9" stroke-width="1">
+<line x1="328" y1="44" x2="328" y2="395"/><line x1="338" y1="44" x2="338" y2="395"/>
+<line x1="328" y1="70" x2="338" y2="70"/><line x1="328" y1="95" x2="338" y2="95"/>
+<line x1="328" y1="145" x2="338" y2="145"/><line x1="328" y1="170" x2="338" y2="170"/>
+<line x1="328" y1="225" x2="338" y2="225"/><line x1="328" y1="250" x2="338" y2="250"/>
+<line x1="328" y1="305" x2="338" y2="305"/><line x1="328" y1="330" x2="338" y2="330"/><line x1="328" y1="360" x2="338" y2="360"/>
+</g>
+<text x="313" y="225" class="bp-label" text-anchor="middle" transform="rotate(-90 313 225)" style="fill:#2dd4bf">SPINE — INTACT</text>
+<!-- up arrow (occupant climbs up) -->
+<g stroke="#2dd4bf" stroke-width="2.5" fill="none">
+<line x1="240" y1="360" x2="240" y2="150"/>
+<path d="M232 165 l8 -16 l8 16" />
+</g>
+<text x="150" y="260" class="bp-label" style="fill:#2dd4bf">OCCUPANTS</text>
+<text x="170" y="276" class="bp-label" style="fill:#2dd4bf">CLIMB UP ↑</text>
+<!-- down arrow (rescuers descend) -->
+<g stroke="#d4a373" stroke-width="2.5" fill="none">
+<line x1="388" y1="70" x2="388" y2="300"/>
+<path d="M380 285 l8 16 l8 -16"/>
+</g>
+<text x="405" y="150" class="bp-label" style="fill:#d4a373">RESCUERS</text>
+<text x="405" y="166" class="bp-label" style="fill:#d4a373">DESCEND ↓</text>
+<!-- roof access star -->
+<circle cx="313" cy="30" r="9" fill="none" stroke="#d4a373" stroke-width="2"/>
+<text x="313" y="20" class="bp-label-sm" text-anchor="middle">ROOF ACCESS</text>
+</svg>
+<div class="cap">図3 — 崩壊後：居住者は無傷の竪坑を登り、救助隊はそこを降りる。</div></div>
+  <p>逆方向にも機能します。救助隊はほぼ常に最初に屋上に到達します。がれきを真っ直ぐ貫く、既知で地図化され構造的に無傷の垂直経路こそ、都市捜索救助が夢見るものです——同じ梯子を降りて各階の被災者に到達します。スパインは救助のスパインになります。</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">06 — 優位性</div>
+  <h2>利点が積み重なる</h2>
+  <div class="metrics">
+    <div class="metric"><div class="big">&lt;10%</div><div class="lbl">全面改修費に対して</div></div>
+    <div class="metric"><div class="big">1–2</div><div class="lbl">一年でなく数ヶ月</div></div>
+    <div class="metric"><div class="big">+1</div><div class="lbl">住戸あたり追加1室</div></div>
+    <div class="metric"><div class="big">7d</div><div class="lbl">日分の備蓄</div></div>
+  </div>
+  <div class="cards two">
+    <div class="card"><h4>転居不要</h4><p>家族は工事中も自宅に留まります。これだけで、補強が実現しない最大の理由が取り除かれます。</p></div>
+    <div class="card"><h4>膠着しない</h4><p>資金拠出と退去について全区分所有者のほぼ不可能な全員一致を得ずとも、工事を進められます。</p></div>
+    <div class="card"><h4>コストが利益に</h4><p>各住戸は小さな使える部屋を得ます。人は安全を買うのではなく、命も救う追加の一室を買うのです。</p></div>
+    <div class="card"><h4>救助までの時間</h4><p>数日分の水・食料・換気・衛生が、都市救助に必要な生存の窓を稼ぎます。</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">07 — 施工手順</div>
+  <h2>シーケンス</h2>
+  <div class="steps">
+    <div class="step"><h4>デッドスペースを特定</h4><p>約2×2mの使われていないサービス階段・パントリー・物置。家のどこからでも2分以内に到達できる場所。</p></div>
+    <div class="step"><h4>切断と下受け</h4><p>既存スラブをフットプリントで切り抜き、独立した深い基礎を打設。地盤が要すれば下受けを行う。</p></div>
+    <div class="step"><h4>スパインを立ち上げる</h4><p>超補強コンクリートの塔を内側から階ごとに建て、母屋に接しつつも分離して立ち上げる。</p></div>
+    <div class="step"><h4>動線を通す</h4><p>連続キャットラダーと積層ハッチで各階を接続。内装でクローゼット・ベッド・備蓄庫を加える。</p></div>
+    <div class="step"><h4>屋上ハブで仕上げる</h4><p>貯水タンク・換気口・脱出ハッチ・ビーコン・地震遮断弁が自己完結型シェルターを完成させる。</p></div>
+  </div>
+  <div class="note"><b>技術メモ：</b> 早期警報システムは多くの都市に、強い揺れの到来まで数秒〜数十秒を与えます——2分以内のシェルターがあれば、経路を訓練しておけば高齢の居住者でも到達できます。</div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="ft-title">サバイバル・スパイン</div>
+    <div class="ft-sub">人命を守る耐震改修のオープンなコンセプト。地震多発地域の大半の老朽建物に適用可能。</div>
+    <button class="footer-contact" onclick="document.getElementById('cd').classList.add('open')">digitalAIventures に連絡</button>
+    <div class="disclaimer">これは議論および先行技術(prior-art)を目的とした概念提案であり、施工仕様ではありません。実際の実装はすべて、現地の耐震基準のもとで有資格の構造技術者が設計・計算・承認する必要があります。</div>
+  </div>
+</footer>
+</div>
+<div data-lang="tr">
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Can Güvenliği Odaklı Sismik Güçlendirme</span>
+    <h1>Hayatta Kalma Omurgası</h1>
+    <div class="native">Kurtarılamayan binalar için dikey sığınak</div>
+    <p class="tagline">Tam güçlendirme imkânsızsa, binayı değil insanları kurtarın.</p>
+    <div class="pill-row">
+      <span class="pill"><b>&lt;10%</b> tam güçlendirme maliyetinin</span>
+      <span class="pill"><b>1–2</b> ayda inşa</span>
+      <span class="pill"><b>+1</b> daire başına oda</span>
+      <span class="pill">taşınma yok</span>
+    </div>
+  </div>
+</div>
+
+<section><div class="wrap">
+  <div class="sec-num">01 — SORUN</div>
+  <h2>Eski binalar, gecikmiş bir deprem ve bir kilitlenme</h2>
+  <p class="lead">Milyonlarca insan, bir sonraki büyük depremde ayakta kalamayacak eski binalarda yaşıyor.</p>
+  <p>Tam yapısal güçlendirme ders kitabı cevabıdır, ama pratikte çoğu zaman imkânsızdır. Bir servet tutar, tüm kat maliklerinin oybirliğini gerektirir, aileleri aylarca taşınmaya zorlar ve neredeyse bir yıl sürer. Riskli binaların çoğunda basitçe hiç gerçekleşmez.</p>
+  <p>Bu arada saat işlemeye devam eder. Birçok deprem bölgesi döngüsel bir desen izler; güçlü bir deprem yaklaşık 40–60 yılda bir geri döner. Çöken bir binanın altında ölmek en acımasız sonlardan biridir — ve önlenmesi en kolay olanlardan.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">02 — DEĞİŞİM</div>
+  <h2>Binaları değil canları kurtar</h2>
+  <p>Hayatta Kalma Omurgası amacı değiştirir. Geleneksel güçlendirme binanın hayatta kalmasını optimize eder. Omurga insanın hayatta kalmasını optimize eder. Çöken ama herkesin canlı çıkmasını sağlayan bir bina, bu ölçüye göre başarılı olmuştur. Bu tek değişiklik çok daha ucuz, hızlı ve siyaseten uygulanabilir bir yol açar.</p>
+  <div class="note"><b>Temel fikir:</b> binanın kullanılmayan ölü alanına inşa edilen, yapısal olarak bağımsız bir dikey sığınak; etrafındaki her şey çökse bile ayakta kalacak şekilde tasarlanır.</div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">03 — KAVRAM</div>
+  <h2>Evin içinde bir ev</h2>
+  <p>Omurga, yaklaşık 2×2 m'lik betonarme bir kuledir; kimsenin aramayacağı ölü alanın yerine inşa edilir — servis merdiveni, kiler, depo. Döşemeleri kesilir, kendi derin temelini alır (gerekirse altına alma ile) ve içeriden yükseltilir; mevcut yapıya bitişik ama ona asla bağımlı değildir.</p>
+  <div class="fig"><svg viewBox="0 0 540 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cutaway of a building with the Survival Spine threaded through it">
+<defs>
+<pattern id="hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<line x1="0" y1="0" x2="0" y2="6" stroke="#1b3a44" stroke-width="1"/>
+</pattern>
+</defs>
+<!-- ground -->
+<line x1="20" y1="400" x2="580" y2="400" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="20" y1="408" x2="580" y2="408" stroke="#1b3a44" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="20" y1="416" x2="580" y2="416" stroke="#1b3a44" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="30" y="430" class="bp-label-sm">EXISTING SOIL / FOUNDATION GRADE</text>
+<!-- existing building outline (left bigger block) -->
+<rect x="60" y="80" width="320" height="320" fill="none" stroke="#1b3a44" stroke-width="1.5"/>
+<!-- floor slabs of existing building -->
+<g stroke="#1b3a44" stroke-width="1">
+<line x1="60" y1="160" x2="380" y2="160"/>
+<line x1="60" y1="240" x2="380" y2="240"/>
+<line x1="60" y1="320" x2="380" y2="320"/>
+</g>
+<!-- faint cracks suggesting vulnerability -->
+<g stroke="#3a2a2a" stroke-width="1" opacity=".6">
+<path d="M120 160 l14 18 l-8 22 l16 18" fill="none"/>
+<path d="M300 240 l-12 20 l10 16" fill="none"/>
+</g>
+<text x="70" y="100" class="bp-label-sm">EXISTING VULNERABLE STRUCTURE</text>
+<!-- the spine column on the right edge, threading floors, independent -->
+<!-- gap lines showing structural separation -->
+<rect x="392" y="60" width="92" height="340" fill="url(#hatch)" stroke="#2dd4bf" stroke-width="2.5"/>
+<!-- separation gap -->
+<line x1="386" y1="60" x2="386" y2="400" stroke="#d4a373" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="386" y="74" class="bp-dim" text-anchor="middle">GAP</text>
+<!-- spine internal floor hatches -->
+<g stroke="#2dd4bf" stroke-width="1.2">
+<line x1="392" y1="160" x2="484" y2="160"/>
+<line x1="392" y1="240" x2="484" y2="240"/>
+<line x1="392" y1="320" x2="484" y2="320"/>
+</g>
+<!-- hatch openings (stacked) -->
+<g fill="#0c1322" stroke="#7fd9c9" stroke-width="1.2">
+<rect x="430" y="156" width="18" height="8"/>
+<rect x="430" y="236" width="18" height="8"/>
+<rect x="430" y="316" width="18" height="8"/>
+</g>
+<!-- cat ladder -->
+<g stroke="#7fd9c9" stroke-width="1">
+<line x1="455" y1="80" x2="455" y2="395"/>
+<line x1="463" y1="80" x2="463" y2="395"/>
+<line x1="455" y1="100" x2="463" y2="100"/><line x1="455" y1="120" x2="463" y2="120"/>
+<line x1="455" y1="140" x2="463" y2="140"/><line x1="455" y1="180" x2="463" y2="180"/>
+<line x1="455" y1="200" x2="463" y2="200"/><line x1="455" y1="220" x2="463" y2="220"/>
+<line x1="455" y1="260" x2="463" y2="260"/><line x1="455" y1="280" x2="463" y2="280"/>
+<line x1="455" y1="300" x2="463" y2="300"/><line x1="455" y1="340" x2="463" y2="340"/>
+<line x1="455" y1="360" x2="463" y2="360"/><line x1="455" y1="380" x2="463" y2="380"/>
+</g>
+<!-- independent deep foundation -->
+<rect x="388" y="400" width="100" height="34" fill="url(#hatch)" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="400" y1="434" x2="400" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<line x1="438" y1="434" x2="438" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<line x1="476" y1="434" x2="476" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="496" y="420" class="bp-label-sm" text-anchor="end">INDEPENDENT</text>
+<text x="496" y="432" class="bp-label-sm" text-anchor="end">FOUNDATION</text>
+<!-- roof hub marker -->
+<rect x="398" y="40" width="80" height="22" fill="#0c1322" stroke="#38bdf8" stroke-width="1.5"/>
+<text x="438" y="55" class="bp-label" text-anchor="middle" style="fill:#38bdf8">ROOF HUB</text>
+<!-- label for spine -->
+<text x="438" y="220" class="bp-label" text-anchor="middle" transform="rotate(-90 438 220)" style="font-size:13px;fill:#2dd4bf">SURVIVAL SPINE — RC, INDEPENDENT</text>
+<!-- dimension ~2x2m -->
+<line x1="392" y1="385" x2="484" y2="385" stroke="#d4a373" stroke-width=".8"/>
+<text x="438" y="382" class="bp-dim" text-anchor="middle">~2.0 m</text>
+</svg>
+<div class="cap">ŞEK.1 — Mevcut binanın içinden geçen Omurga, kendi bağımsız temeli üzerinde.</div></div>
+  <div class="cards two">
+    <div class="card"><span class="ic">🏛️</span><h4>Bağımsız yapı</h4><p>Kendi temeli ve güçlendirilmiş iskeleti. Ev sahibi bina etrafında çökse bile ayakta kalır.</p></div>
+    <div class="card"><span class="ic">🪜</span><h4>Dikey sirkülasyon</h4><p>Üst üste kapaklı sürekli bir kedi merdiveni her katı tek bir sığınak omurgasına bağlar.</p></div>
+    <div class="card"><span class="ic">🛏️</span><h4>Normal hayatta da yararlı</h4><p>Her kat küçük işlevsel bir odadır — dolap, yatak, erzak deposu. Maliyet faydaya dönüşür.</p></div>
+    <div class="card"><span class="ic">⚓</span><h4>Yanal zırh</h4><p>Ek donatı, köprü ayağı gibi yanal darbeleri ve enkaz basıncını savuşturmasını sağlar.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">04 — ÇATI MERKEZİ</div>
+  <h2>Önemli her şey tepede</h2>
+  <p>Çöküşten sonra en az gömülen nokta çatıdır. Bu yüzden Omurga yaşam desteğini orada toplar: her katı yerçekimiyle besleyen ve aynı zamanda safra kütlesi görevi gören bir su deposu; enkazın üstüne çıkan bir havalandırma girişi; kaçış kapağı; ve kurtarıcılar için bir sinyal feneri.</p>
+  <div class="fig"><svg viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Detail of the roof hub: water tank, vent intake, escape hatch, signaling and seismic isolation valve">
+<defs>
+<pattern id="hatch2" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<line x1="0" y1="0" x2="0" y2="6" stroke="#1b3a44" stroke-width="1"/>
+</pattern>
+</defs>
+<!-- spine top wall -->
+<rect x="160" y="200" width="280" height="200" fill="url(#hatch2)" stroke="#2dd4bf" stroke-width="2.5"/>
+<!-- roof slab -->
+<rect x="150" y="186" width="300" height="16" fill="#0c1322" stroke="#2dd4bf" stroke-width="2"/>
+<text x="300" y="390" class="bp-label" text-anchor="middle" style="font-size:13px">TOP OF SPINE (LEAST-BURIED POINT)</text>
+<!-- water tank on top -->
+<rect x="210" y="86" width="180" height="84" rx="8" fill="#0c1322" stroke="#38bdf8" stroke-width="2.5"/>
+<line x1="210" y1="118" x2="390" y2="118" stroke="#38bdf8" stroke-width="1" opacity=".5"/>
+<g fill="#38bdf8" opacity=".25"><rect x="212" y="120" width="176" height="48" rx="6"/></g>
+<text x="300" y="135" class="bp-label" text-anchor="middle" style="fill:#38bdf8">WATER TANK</text>
+<text x="300" y="150" class="bp-label-sm" text-anchor="middle">supply + ballast mass</text>
+<!-- vent intake stack -->
+<rect x="180" y="60" width="22" height="126" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<path d="M173 60 h36 l-8 -14 h-20 z" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<text x="125" y="80" class="bp-label-sm">VENT</text>
+<text x="120" y="92" class="bp-label-sm">INTAKE</text>
+<!-- signaling beacon -->
+<circle cx="410" cy="60" r="10" fill="none" stroke="#d4a373" stroke-width="2"/>
+<circle cx="410" cy="60" r="4" fill="#d4a373"/>
+<g stroke="#d4a373" stroke-width="1.5"><line x1="410" y1="38" x2="410" y2="46"/><line x1="430" y1="60" x2="438" y2="60"/><line x1="424" y1="46" x2="430" y2="40"/></g>
+<text x="445" y="64" class="bp-label-sm">SIGNAL /</text>
+<text x="445" y="76" class="bp-label-sm">BEACON</text>
+<!-- escape hatch in roof -->
+<rect x="300" y="186" width="44" height="16" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<text x="322" y="222" class="bp-label-sm" text-anchor="middle">ESCAPE HATCH ↑</text>
+<!-- seismic isolation valve -->
+<circle cx="300" cy="186" r="0"/>
+<rect x="284" y="168" width="0" height="0"/>
+<!-- pipe from tank down with valve -->
+<line x1="300" y1="170" x2="300" y2="186" stroke="#38bdf8" stroke-width="2"/>
+<g transform="translate(250,250)">
+<polygon points="0,0 18,9 0,18 18,0" fill="none" stroke="#d4a373" stroke-width="2"/>
+<text x="28" y="14" class="bp-label-sm">SEISMIC SHUT-OFF VALVE</text>
+<text x="28" y="26" class="bp-label-sm">(normally open → isolates on quake)</text>
+</g>
+<line x1="300" y1="202" x2="259" y2="252" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3 3"/>
+<!-- cat ladder hint inside -->
+<g stroke="#7fd9c9" stroke-width="1" opacity=".7">
+<line x1="320" y1="260" x2="320" y2="400"/><line x1="330" y1="260" x2="330" y2="400"/>
+<line x1="320" y1="280" x2="330" y2="280"/><line x1="320" y1="310" x2="330" y2="310"/>
+<line x1="320" y1="340" x2="330" y2="340"/><line x1="320" y1="370" x2="330" y2="370"/>
+</g>
+</svg>
+<div class="cap">ŞEK.2 — Çatı merkezi: su deposu + safra, hava girişi, kaçış kapağı, fener, sismik kesme vanası.</div></div>
+  <h3>Sismik kesme vanası</h3>
+  <p>Su deposu normal hayatta sürekli tazelenir, böylece su her zaman tazedir. Sismik kesme vanası — depremde gaz vanalarıyla aynı kanıtlanmış teknoloji — sarsıntı algılanana dek açık kalır, sonra depoyu izole ederek depolanan hacmi sakinler için mühürler. Gerisini yerçekimi halleder: pompa yok, elektrik yok — şebeke kesildiğinde bu önemlidir.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">05 — KURTARMA OMURGASI</div>
+  <h2>Yukarı kendini kurtar, aşağı kurtarma</h2>
+  <p>Katlar sürekli bir kedi merdiveniyle bağlı olduğundan, Omurga izole kutular dizisi değil, iç sirkülasyonlu tek bir dikey sığınaktır. Zemin çıkışı enkazla kapanırsa, sakinler daha açık bir kata veya çatıya tırmanır.</p>
+  <div class="fig"><svg viewBox="0 0 600 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rescue spine after collapse: occupants climb up, rescuers descend down through the intact vertical shaft">
+<defs>
+<pattern id="rub" width="8" height="8" patternUnits="userSpaceOnUse">
+<circle cx="2" cy="2" r="1.3" fill="#2a2018"/><circle cx="6" cy="5" r="1" fill="#2a2018"/>
+</pattern>
+</defs>
+<!-- rubble piles around -->
+<path d="M20 400 Q120 300 200 360 T 360 350 Q300 400 380 400 Z" fill="url(#rub)" stroke="#3a2e22" stroke-width="1"/>
+<path d="M460 400 Q520 330 580 380 L580 400 Z" fill="url(#rub)" stroke="#3a2e22" stroke-width="1"/>
+<line x1="20" y1="400" x2="580" y2="400" stroke="#2dd4bf" stroke-width="2"/>
+<text x="60" y="380" class="bp-label-sm" style="fill:#8a6e4e">COLLAPSED STRUCTURE / DEBRIS</text>
+<!-- intact spine standing -->
+<rect x="270" y="40" width="86" height="360" fill="#0c1322" stroke="#2dd4bf" stroke-width="2.5"/>
+<g stroke="#2dd4bf" stroke-width="1.2">
+<line x1="270" y1="120" x2="356" y2="120"/>
+<line x1="270" y1="200" x2="356" y2="200"/>
+<line x1="270" y1="280" x2="356" y2="280"/>
+</g>
+<!-- stacked hatches -->
+<g fill="#0a0e16" stroke="#7fd9c9" stroke-width="1.2">
+<rect x="304" y="116" width="18" height="8"/>
+<rect x="304" y="196" width="18" height="8"/>
+<rect x="304" y="276" width="18" height="8"/>
+<rect x="304" y="36" width="18" height="8"/>
+</g>
+<!-- cat ladder -->
+<g stroke="#7fd9c9" stroke-width="1">
+<line x1="328" y1="44" x2="328" y2="395"/><line x1="338" y1="44" x2="338" y2="395"/>
+<line x1="328" y1="70" x2="338" y2="70"/><line x1="328" y1="95" x2="338" y2="95"/>
+<line x1="328" y1="145" x2="338" y2="145"/><line x1="328" y1="170" x2="338" y2="170"/>
+<line x1="328" y1="225" x2="338" y2="225"/><line x1="328" y1="250" x2="338" y2="250"/>
+<line x1="328" y1="305" x2="338" y2="305"/><line x1="328" y1="330" x2="338" y2="330"/><line x1="328" y1="360" x2="338" y2="360"/>
+</g>
+<text x="313" y="225" class="bp-label" text-anchor="middle" transform="rotate(-90 313 225)" style="fill:#2dd4bf">SPINE — INTACT</text>
+<!-- up arrow (occupant climbs up) -->
+<g stroke="#2dd4bf" stroke-width="2.5" fill="none">
+<line x1="240" y1="360" x2="240" y2="150"/>
+<path d="M232 165 l8 -16 l8 16" />
+</g>
+<text x="150" y="260" class="bp-label" style="fill:#2dd4bf">OCCUPANTS</text>
+<text x="170" y="276" class="bp-label" style="fill:#2dd4bf">CLIMB UP ↑</text>
+<!-- down arrow (rescuers descend) -->
+<g stroke="#d4a373" stroke-width="2.5" fill="none">
+<line x1="388" y1="70" x2="388" y2="300"/>
+<path d="M380 285 l8 16 l8 -16"/>
+</g>
+<text x="405" y="150" class="bp-label" style="fill:#d4a373">RESCUERS</text>
+<text x="405" y="166" class="bp-label" style="fill:#d4a373">DESCEND ↓</text>
+<!-- roof access star -->
+<circle cx="313" cy="30" r="9" fill="none" stroke="#d4a373" stroke-width="2"/>
+<text x="313" y="20" class="bp-label-sm" text-anchor="middle">ROOF ACCESS</text>
+</svg>
+<div class="cap">ŞEK.3 — Çöküşten sonra: sakinler sağlam baca boyunca yukarı çıkar, kurtarıcılar aşağı iner.</div></div>
+  <p>Ve tersine de çalışır. Kurtarma ekipleri neredeyse her zaman önce çatıya ulaşır. Enkazın içinden dümdüz geçen, bilinen, haritalanmış ve yapısal olarak sağlam bir dikey güzergâh, kentsel arama kurtarmanın hayalidir: aynı merdivenden inerek her kattaki mahsur kalanlara ulaşırlar. Omurga, kurtarma omurgasına dönüşür.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">06 — NEDEN KAZANIR</div>
+  <h2>Avantajlar üst üste birikir</h2>
+  <div class="metrics">
+    <div class="metric"><div class="big">&lt;10%</div><div class="lbl">tam güçlendirme maliyetinin</div></div>
+    <div class="metric"><div class="big">1–2</div><div class="lbl">bir yıl değil, aylar</div></div>
+    <div class="metric"><div class="big">+1</div><div class="lbl">daire başına ek oda</div></div>
+    <div class="metric"><div class="big">7d</div><div class="lbl">günlük erzak deposu</div></div>
+  </div>
+  <div class="cards two">
+    <div class="card"><h4>Taşınma yok</h4><p>Aileler tüm süreç boyunca evlerinde kalır. Tek başına bu, güçlendirmelerin neden hiç yapılmadığının en büyük nedenini ortadan kaldırır.</p></div>
+    <div class="card"><h4>Kilitlenme yok</h4><p>İş, finansman ve tahliye için tüm kat maliklerinin neredeyse imkânsız oybirliği olmadan ilerleyebilir.</p></div>
+    <div class="card"><h4>Maliyet faydaya dönüşür</h4><p>Her daire küçük, kullanılabilir bir oda kazanır. İnsanlar güvenlik satın almaz — hayatlarını da kurtaran ekstra bir oda satın alır.</p></div>
+    <div class="card"><h4>Kurtarmaya kadar süre</h4><p>Birkaç günlük su, gıda, havalandırma ve sıhhi tesisat, kentsel kurtarmanın ihtiyaç duyduğu hayatta kalma penceresini kazandırır.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">07 — NASIL İNŞA EDİLİR</div>
+  <h2>Sıralama</h2>
+  <div class="steps">
+    <div class="step"><h4>Ölü alanı belirle</h4><p>Yaklaşık 2×2 m'lik kullanılmayan bir servis merdiveni, kiler veya depo; evin her noktasından iki dakikadan kısa sürede ulaşılabilir.</p></div>
+    <div class="step"><h4>Kes ve altına al</h4><p>Mevcut döşemeler ayak izi boyunca kesilir; bağımsız bir derin temel dökülür, zemin gerektiriyorsa altına alma yapılır.</p></div>
+    <div class="step"><h4>Omurgayı yükselt</h4><p>Aşırı donatılı betonarme kule içeriden kat kat inşa edilir; ev sahibi yapıya bitişik ama ondan ayrı.</p></div>
+    <div class="step"><h4>Sirkülasyonu geçir</h4><p>Sürekli kedi merdiveni ve üst üste kapaklar her katı bağlar; iç donanım dolap, yatak ve erzak deposu ekler.</p></div>
+    <div class="step"><h4>Çatı merkeziyle taçlandır</h4><p>Su deposu, hava girişi, kaçış kapağı, fener ve sismik vana kendine yeten sığınağı tamamlar.</p></div>
+  </div>
+  <div class="note"><b>Mühendislik notu:</b> erken uyarı sistemleri birçok kente, güçlü sarsıntı gelmeden saniyeler ila on saniyeler verir — iki dakikadan yakın bir sığınakla, rota çalışılmışsa yaşlı sakinlerin bile ulaşmasına yeter.</div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="ft-title">Hayatta Kalma Omurgası</div>
+    <div class="ft-sub">Can güvenliği odaklı sismik güçlendirme için açık bir kavram. Deprem bölgelerindeki eski binaların çoğuna uygulanabilir.</div>
+    <button class="footer-contact" onclick="document.getElementById('cd').classList.add('open')">digitalAIventures ile iletişim</button>
+    <div class="disclaimer">Bu, tartışma ve önceki teknik (prior-art) amaçlı kavramsal bir öneridir, bir yapım şartnamesi değildir. Herhangi bir gerçek uygulama, yerel deprem yönetmelikleri uyarınca yetkili bir yapı mühendisi tarafından tasarlanmalı, hesaplanmalı ve onaylanmalıdır.</div>
+  </div>
+</footer>
+</div>
+<div data-lang="it">
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Adeguamento Sismico Salvavita</span>
+    <h1>La Spina di Sopravvivenza</h1>
+    <div class="native">Un rifugio verticale per edifici che non si possono salvare</div>
+    <p class="tagline">Quando il consolidamento totale è impossibile, salva le persone invece dell'edificio.</p>
+    <div class="pill-row">
+      <span class="pill"><b>&lt;10%</b> del costo di consolidamento totale</span>
+      <span class="pill"><b>1–2</b> mesi di lavori</span>
+      <span class="pill"><b>+1</b> stanza per unità</span>
+      <span class="pill">nessun trasloco</span>
+    </div>
+  </div>
+</div>
+
+<section><div class="wrap">
+  <div class="sec-num">01 — IL PROBLEMA</div>
+  <h2>Edifici vecchi, un terremoto in ritardo e uno stallo</h2>
+  <p class="lead">Milioni di persone vivono in edifici vecchi che non sopravvivranno al prossimo grande terremoto.</p>
+  <p>Il consolidamento strutturale completo è la risposta da manuale, ma nella pratica è spesso impossibile. Costa una fortuna, richiede l'accordo unanime di tutti i condòmini, costringe le famiglie a traslocare per molti mesi e dura quasi un anno. Nella maggior parte degli edifici a rischio, semplicemente non avviene mai.</p>
+  <p>Intanto l'orologio continua a correre. Molte regioni sismiche seguono uno schema ciclico, con un evento forte che ritorna ogni 40–60 anni circa. Morire sotto un edificio che crolla è tra gli esiti più crudeli — e tra i più evitabili.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">02 — IL CAMBIAMENTO</div>
+  <h2>Salvare vite, non edifici</h2>
+  <p>La Spina di Sopravvivenza cambia l'obiettivo. Il consolidamento convenzionale ottimizza la sopravvivenza dell'edificio. La Spina ottimizza la sopravvivenza umana. Un edificio che crolla ma lascia uscire tutti vivi ha, secondo questa misura, avuto successo. Questo solo cambiamento apre una via molto più economica, rapida e politicamente realizzabile.</p>
+  <div class="note"><b>L'idea centrale:</b> un rifugio verticale strutturalmente indipendente, costruito nello spazio morto inutilizzato dell'edificio, progettato per restare in piedi anche se tutto intorno crolla.</div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">03 — IL CONCETTO</div>
+  <h2>Una casa dentro la casa</h2>
+  <p>La Spina è una torre in cemento armato di circa 2×2 m, eretta al posto dello spazio morto di cui nessuno sentirà la mancanza — la scala di servizio, la dispensa, il ripostiglio. I solai vengono tagliati, riceve una propria fondazione profonda (con sottomurazioni dove serve) e si innalza dall'interno, a filo con la struttura esistente ma senza mai dipenderne.</p>
+  <div class="fig"><svg viewBox="0 0 540 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cutaway of a building with the Survival Spine threaded through it">
+<defs>
+<pattern id="hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<line x1="0" y1="0" x2="0" y2="6" stroke="#1b3a44" stroke-width="1"/>
+</pattern>
+</defs>
+<!-- ground -->
+<line x1="20" y1="400" x2="580" y2="400" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="20" y1="408" x2="580" y2="408" stroke="#1b3a44" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="20" y1="416" x2="580" y2="416" stroke="#1b3a44" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="30" y="430" class="bp-label-sm">EXISTING SOIL / FOUNDATION GRADE</text>
+<!-- existing building outline (left bigger block) -->
+<rect x="60" y="80" width="320" height="320" fill="none" stroke="#1b3a44" stroke-width="1.5"/>
+<!-- floor slabs of existing building -->
+<g stroke="#1b3a44" stroke-width="1">
+<line x1="60" y1="160" x2="380" y2="160"/>
+<line x1="60" y1="240" x2="380" y2="240"/>
+<line x1="60" y1="320" x2="380" y2="320"/>
+</g>
+<!-- faint cracks suggesting vulnerability -->
+<g stroke="#3a2a2a" stroke-width="1" opacity=".6">
+<path d="M120 160 l14 18 l-8 22 l16 18" fill="none"/>
+<path d="M300 240 l-12 20 l10 16" fill="none"/>
+</g>
+<text x="70" y="100" class="bp-label-sm">EXISTING VULNERABLE STRUCTURE</text>
+<!-- the spine column on the right edge, threading floors, independent -->
+<!-- gap lines showing structural separation -->
+<rect x="392" y="60" width="92" height="340" fill="url(#hatch)" stroke="#2dd4bf" stroke-width="2.5"/>
+<!-- separation gap -->
+<line x1="386" y1="60" x2="386" y2="400" stroke="#d4a373" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="386" y="74" class="bp-dim" text-anchor="middle">GAP</text>
+<!-- spine internal floor hatches -->
+<g stroke="#2dd4bf" stroke-width="1.2">
+<line x1="392" y1="160" x2="484" y2="160"/>
+<line x1="392" y1="240" x2="484" y2="240"/>
+<line x1="392" y1="320" x2="484" y2="320"/>
+</g>
+<!-- hatch openings (stacked) -->
+<g fill="#0c1322" stroke="#7fd9c9" stroke-width="1.2">
+<rect x="430" y="156" width="18" height="8"/>
+<rect x="430" y="236" width="18" height="8"/>
+<rect x="430" y="316" width="18" height="8"/>
+</g>
+<!-- cat ladder -->
+<g stroke="#7fd9c9" stroke-width="1">
+<line x1="455" y1="80" x2="455" y2="395"/>
+<line x1="463" y1="80" x2="463" y2="395"/>
+<line x1="455" y1="100" x2="463" y2="100"/><line x1="455" y1="120" x2="463" y2="120"/>
+<line x1="455" y1="140" x2="463" y2="140"/><line x1="455" y1="180" x2="463" y2="180"/>
+<line x1="455" y1="200" x2="463" y2="200"/><line x1="455" y1="220" x2="463" y2="220"/>
+<line x1="455" y1="260" x2="463" y2="260"/><line x1="455" y1="280" x2="463" y2="280"/>
+<line x1="455" y1="300" x2="463" y2="300"/><line x1="455" y1="340" x2="463" y2="340"/>
+<line x1="455" y1="360" x2="463" y2="360"/><line x1="455" y1="380" x2="463" y2="380"/>
+</g>
+<!-- independent deep foundation -->
+<rect x="388" y="400" width="100" height="34" fill="url(#hatch)" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="400" y1="434" x2="400" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<line x1="438" y1="434" x2="438" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<line x1="476" y1="434" x2="476" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="496" y="420" class="bp-label-sm" text-anchor="end">INDEPENDENT</text>
+<text x="496" y="432" class="bp-label-sm" text-anchor="end">FOUNDATION</text>
+<!-- roof hub marker -->
+<rect x="398" y="40" width="80" height="22" fill="#0c1322" stroke="#38bdf8" stroke-width="1.5"/>
+<text x="438" y="55" class="bp-label" text-anchor="middle" style="fill:#38bdf8">ROOF HUB</text>
+<!-- label for spine -->
+<text x="438" y="220" class="bp-label" text-anchor="middle" transform="rotate(-90 438 220)" style="font-size:13px;fill:#2dd4bf">SURVIVAL SPINE — RC, INDEPENDENT</text>
+<!-- dimension ~2x2m -->
+<line x1="392" y1="385" x2="484" y2="385" stroke="#d4a373" stroke-width=".8"/>
+<text x="438" y="382" class="bp-dim" text-anchor="middle">~2.0 m</text>
+</svg>
+<div class="cap">FIG.1 — La Spina che attraversa un edificio esistente, sulla propria fondazione indipendente.</div></div>
+  <div class="cards two">
+    <div class="card"><span class="ic">🏛️</span><h4>Struttura indipendente</h4><p>Fondazione e telaio armato propri. Resta in piedi anche se l'edificio ospite crolla tutt'intorno.</p></div>
+    <div class="card"><span class="ic">🪜</span><h4>Circolazione verticale</h4><p>Una scala alla marinara continua con botole sovrapposte collega ogni livello in un'unica spina-rifugio.</p></div>
+    <div class="card"><span class="ic">🛏️</span><h4>Utile nella vita normale</h4><p>Ogni livello è una piccola stanza funzionale — armadio, letto, deposito per le provviste. Il costo diventa beneficio.</p></div>
+    <div class="card"><span class="ic">⚓</span><h4>Blindatura laterale</h4><p>L'armatura extra le permette di assorbire impatti laterali e la pressione delle macerie, come la pila di un ponte.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">04 — IL NUCLEO IN COPERTURA</div>
+  <h2>Tutto l'essenziale vive in cima</h2>
+  <p>Il punto meno sepolto dopo un crollo è il tetto. Per questo la Spina vi concentra il supporto vitale: un serbatoio d'acqua che alimenta ogni livello per gravità e funge anche da zavorra; una presa di ventilazione sollevata sopra le macerie; la botola di fuga; e un faro di segnalazione per i soccorritori.</p>
+  <div class="fig"><svg viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Detail of the roof hub: water tank, vent intake, escape hatch, signaling and seismic isolation valve">
+<defs>
+<pattern id="hatch2" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<line x1="0" y1="0" x2="0" y2="6" stroke="#1b3a44" stroke-width="1"/>
+</pattern>
+</defs>
+<!-- spine top wall -->
+<rect x="160" y="200" width="280" height="200" fill="url(#hatch2)" stroke="#2dd4bf" stroke-width="2.5"/>
+<!-- roof slab -->
+<rect x="150" y="186" width="300" height="16" fill="#0c1322" stroke="#2dd4bf" stroke-width="2"/>
+<text x="300" y="390" class="bp-label" text-anchor="middle" style="font-size:13px">TOP OF SPINE (LEAST-BURIED POINT)</text>
+<!-- water tank on top -->
+<rect x="210" y="86" width="180" height="84" rx="8" fill="#0c1322" stroke="#38bdf8" stroke-width="2.5"/>
+<line x1="210" y1="118" x2="390" y2="118" stroke="#38bdf8" stroke-width="1" opacity=".5"/>
+<g fill="#38bdf8" opacity=".25"><rect x="212" y="120" width="176" height="48" rx="6"/></g>
+<text x="300" y="135" class="bp-label" text-anchor="middle" style="fill:#38bdf8">WATER TANK</text>
+<text x="300" y="150" class="bp-label-sm" text-anchor="middle">supply + ballast mass</text>
+<!-- vent intake stack -->
+<rect x="180" y="60" width="22" height="126" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<path d="M173 60 h36 l-8 -14 h-20 z" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<text x="125" y="80" class="bp-label-sm">VENT</text>
+<text x="120" y="92" class="bp-label-sm">INTAKE</text>
+<!-- signaling beacon -->
+<circle cx="410" cy="60" r="10" fill="none" stroke="#d4a373" stroke-width="2"/>
+<circle cx="410" cy="60" r="4" fill="#d4a373"/>
+<g stroke="#d4a373" stroke-width="1.5"><line x1="410" y1="38" x2="410" y2="46"/><line x1="430" y1="60" x2="438" y2="60"/><line x1="424" y1="46" x2="430" y2="40"/></g>
+<text x="445" y="64" class="bp-label-sm">SIGNAL /</text>
+<text x="445" y="76" class="bp-label-sm">BEACON</text>
+<!-- escape hatch in roof -->
+<rect x="300" y="186" width="44" height="16" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<text x="322" y="222" class="bp-label-sm" text-anchor="middle">ESCAPE HATCH ↑</text>
+<!-- seismic isolation valve -->
+<circle cx="300" cy="186" r="0"/>
+<rect x="284" y="168" width="0" height="0"/>
+<!-- pipe from tank down with valve -->
+<line x1="300" y1="170" x2="300" y2="186" stroke="#38bdf8" stroke-width="2"/>
+<g transform="translate(250,250)">
+<polygon points="0,0 18,9 0,18 18,0" fill="none" stroke="#d4a373" stroke-width="2"/>
+<text x="28" y="14" class="bp-label-sm">SEISMIC SHUT-OFF VALVE</text>
+<text x="28" y="26" class="bp-label-sm">(normally open → isolates on quake)</text>
+</g>
+<line x1="300" y1="202" x2="259" y2="252" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3 3"/>
+<!-- cat ladder hint inside -->
+<g stroke="#7fd9c9" stroke-width="1" opacity=".7">
+<line x1="320" y1="260" x2="320" y2="400"/><line x1="330" y1="260" x2="330" y2="400"/>
+<line x1="320" y1="280" x2="330" y2="280"/><line x1="320" y1="310" x2="330" y2="310"/>
+<line x1="320" y1="340" x2="330" y2="340"/><line x1="320" y1="370" x2="330" y2="370"/>
+</g>
+</svg>
+<div class="cap">FIG.2 — Il nucleo in copertura: serbatoio + zavorra, presa d'aria, botola, faro, valvola sismica.</div></div>
+  <h3>La valvola di intercettazione sismica</h3>
+  <p>Il serbatoio viene rinnovato di continuo nella vita normale, così l'acqua è sempre fresca. Una valvola di intercettazione sismica — la stessa tecnologia collaudata delle valvole gas antisismiche — resta aperta fino al momento in cui viene rilevata la scossa, poi isola il serbatoio per sigillare il volume immagazzinato per gli occupanti. Al resto pensa la gravità: niente pompa, niente corrente — cosa che conta quando la rete salta.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">05 — LA SPINA DI SOCCORSO</div>
+  <h2>Autosoccorso verso l'alto, soccorso verso il basso</h2>
+  <p>Poiché i livelli sono collegati da una scala alla marinara continua, la Spina non è un insieme di scatole isolate: è un unico rifugio verticale con circolazione interna. Se l'uscita al piano terra è bloccata dalle macerie, gli occupanti salgono a un livello più libero o sul tetto.</p>
+  <div class="fig"><svg viewBox="0 0 600 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rescue spine after collapse: occupants climb up, rescuers descend down through the intact vertical shaft">
+<defs>
+<pattern id="rub" width="8" height="8" patternUnits="userSpaceOnUse">
+<circle cx="2" cy="2" r="1.3" fill="#2a2018"/><circle cx="6" cy="5" r="1" fill="#2a2018"/>
+</pattern>
+</defs>
+<!-- rubble piles around -->
+<path d="M20 400 Q120 300 200 360 T 360 350 Q300 400 380 400 Z" fill="url(#rub)" stroke="#3a2e22" stroke-width="1"/>
+<path d="M460 400 Q520 330 580 380 L580 400 Z" fill="url(#rub)" stroke="#3a2e22" stroke-width="1"/>
+<line x1="20" y1="400" x2="580" y2="400" stroke="#2dd4bf" stroke-width="2"/>
+<text x="60" y="380" class="bp-label-sm" style="fill:#8a6e4e">COLLAPSED STRUCTURE / DEBRIS</text>
+<!-- intact spine standing -->
+<rect x="270" y="40" width="86" height="360" fill="#0c1322" stroke="#2dd4bf" stroke-width="2.5"/>
+<g stroke="#2dd4bf" stroke-width="1.2">
+<line x1="270" y1="120" x2="356" y2="120"/>
+<line x1="270" y1="200" x2="356" y2="200"/>
+<line x1="270" y1="280" x2="356" y2="280"/>
+</g>
+<!-- stacked hatches -->
+<g fill="#0a0e16" stroke="#7fd9c9" stroke-width="1.2">
+<rect x="304" y="116" width="18" height="8"/>
+<rect x="304" y="196" width="18" height="8"/>
+<rect x="304" y="276" width="18" height="8"/>
+<rect x="304" y="36" width="18" height="8"/>
+</g>
+<!-- cat ladder -->
+<g stroke="#7fd9c9" stroke-width="1">
+<line x1="328" y1="44" x2="328" y2="395"/><line x1="338" y1="44" x2="338" y2="395"/>
+<line x1="328" y1="70" x2="338" y2="70"/><line x1="328" y1="95" x2="338" y2="95"/>
+<line x1="328" y1="145" x2="338" y2="145"/><line x1="328" y1="170" x2="338" y2="170"/>
+<line x1="328" y1="225" x2="338" y2="225"/><line x1="328" y1="250" x2="338" y2="250"/>
+<line x1="328" y1="305" x2="338" y2="305"/><line x1="328" y1="330" x2="338" y2="330"/><line x1="328" y1="360" x2="338" y2="360"/>
+</g>
+<text x="313" y="225" class="bp-label" text-anchor="middle" transform="rotate(-90 313 225)" style="fill:#2dd4bf">SPINE — INTACT</text>
+<!-- up arrow (occupant climbs up) -->
+<g stroke="#2dd4bf" stroke-width="2.5" fill="none">
+<line x1="240" y1="360" x2="240" y2="150"/>
+<path d="M232 165 l8 -16 l8 16" />
+</g>
+<text x="150" y="260" class="bp-label" style="fill:#2dd4bf">OCCUPANTS</text>
+<text x="170" y="276" class="bp-label" style="fill:#2dd4bf">CLIMB UP ↑</text>
+<!-- down arrow (rescuers descend) -->
+<g stroke="#d4a373" stroke-width="2.5" fill="none">
+<line x1="388" y1="70" x2="388" y2="300"/>
+<path d="M380 285 l8 16 l8 -16"/>
+</g>
+<text x="405" y="150" class="bp-label" style="fill:#d4a373">RESCUERS</text>
+<text x="405" y="166" class="bp-label" style="fill:#d4a373">DESCEND ↓</text>
+<!-- roof access star -->
+<circle cx="313" cy="30" r="9" fill="none" stroke="#d4a373" stroke-width="2"/>
+<text x="313" y="20" class="bp-label-sm" text-anchor="middle">ROOF ACCESS</text>
+</svg>
+<div class="cap">FIG.3 — Dopo il crollo: gli occupanti salgono per il pozzo intatto, i soccorritori vi scendono.</div></div>
+  <p>E funziona al contrario. Le squadre di soccorso raggiungono quasi sempre prima il tetto. Una via verticale nota, mappata e strutturalmente intatta che attraversa dritta le macerie è esattamente ciò che sogna il soccorso urbano: scendono la stessa scala per raggiungere le persone intrappolate a ogni livello. La Spina diventa la spina di soccorso.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">06 — PERCHÉ VINCE</div>
+  <h2>I vantaggi si sommano</h2>
+  <div class="metrics">
+    <div class="metric"><div class="big">&lt;10%</div><div class="lbl">del costo di consolidamento</div></div>
+    <div class="metric"><div class="big">1–2</div><div class="lbl">mesi, non un anno</div></div>
+    <div class="metric"><div class="big">+1</div><div class="lbl">stanza in più per unità</div></div>
+    <div class="metric"><div class="big">7d</div><div class="lbl">di provviste immagazzinate</div></div>
+  </div>
+  <div class="cards two">
+    <div class="card"><h4>Nessun trasloco</h4><p>Le famiglie restano nelle proprie case per tutta la durata. Già solo questo elimina la maggiore ragione per cui i consolidamenti non si fanno.</p></div>
+    <div class="card"><h4>Nessuno stallo</h4><p>I lavori possono procedere senza il quasi impossibile accordo unanime di tutti i condòmini per finanziare e sgomberare.</p></div>
+    <div class="card"><h4>Il costo diventa beneficio</h4><p>Ogni unità guadagna una piccola stanza utilizzabile. La gente non compra sicurezza — compra una stanza in più che le salva anche la vita.</p></div>
+    <div class="card"><h4>Tempo fino al soccorso</h4><p>Acqua, cibo, ventilazione e servizi igienici per più giorni comprano la finestra di sopravvivenza che il soccorso urbano richiede.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">07 — COME SI COSTRUISCE</div>
+  <h2>La sequenza</h2>
+  <div class="steps">
+    <div class="step"><h4>Individuare lo spazio morto</h4><p>Una scala di servizio, dispensa o ripostiglio inutilizzato di circa 2×2 m, raggiungibile in meno di due minuti da ogni punto della casa.</p></div>
+    <div class="step"><h4>Tagliare e sottomurare</h4><p>I solai esistenti vengono tagliati sull'impronta; si getta una fondazione profonda indipendente, con sottomurazioni se il terreno lo richiede.</p></div>
+    <div class="step"><h4>Innalzare la spina</h4><p>Una torre in cemento iper-armato viene costruita dall'interno, livello per livello, a filo con — ma separata da — la struttura ospite.</p></div>
+    <div class="step"><h4>Infilare la circolazione</h4><p>Una scala alla marinara continua e botole sovrapposte collegano ogni livello; l'allestimento aggiunge armadio, letto e deposito provviste.</p></div>
+    <div class="step"><h4>Coronare col nucleo in copertura</h4><p>Serbatoio d'acqua, presa d'aria, botola, faro e valvola sismica completano il rifugio autonomo.</p></div>
+  </div>
+  <div class="note"><b>Nota tecnica:</b> i sistemi di allerta precoce danno a molte città da secondi a decine di secondi prima della scossa forte — sufficienti, con un rifugio a meno di due minuti, perché anche gli occupanti anziani lo raggiungano se il percorso è stato provato.</div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="ft-title">La Spina di Sopravvivenza</div>
+    <div class="ft-sub">Un concetto aperto di adeguamento sismico salvavita. Applicabile alla maggior parte degli edifici vecchi in regioni sismiche.</div>
+    <button class="footer-contact" onclick="document.getElementById('cd').classList.add('open')">Contatta digitalAIventures</button>
+    <div class="disclaimer">Questa è una proposta concettuale a fini di discussione e prior-art, non una specifica di costruzione. Qualsiasi implementazione reale deve essere progettata, calcolata e firmata da un ingegnere strutturale qualificato secondo le normative sismiche locali.</div>
+  </div>
+</footer>
+</div>
+<div data-lang="zh">
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">以保命为目标的抗震加固</span>
+    <h1>生存脊柱</h1>
+    <div class="native">为无法挽救的建筑提供的垂直避难所</div>
+    <p class="tagline">当整体加固不可能时，救人，而非救楼。</p>
+    <div class="pill-row">
+      <span class="pill"><b>&lt;10%</b> 整体加固成本的</span>
+      <span class="pill"><b>1–2</b> 个月即可建成</span>
+      <span class="pill"><b>+1</b> 每户增一间房</span>
+      <span class="pill">无需搬迁</span>
+    </div>
+  </div>
+</div>
+
+<section><div class="wrap">
+  <div class="sec-num">01 — 问题</div>
+  <h2>老旧建筑、迟到的地震，与一个僵局</h2>
+  <p class="lead">数百万人居住在无法挺过下一次大地震的老旧建筑中。</p>
+  <p>整体结构加固是教科书式的答案，但在实践中往往不可能。它耗费巨资，需要全体业主一致同意，迫使家庭搬离数月，并耗时近一年。在大多数高风险建筑中，它根本从未发生。</p>
+  <p>与此同时，时钟仍在走。许多地震带遵循周期性规律，强震大约每40–60年回归一次。在倒塌的建筑下丧生，是最残酷的结局之一——也是最可预防的。</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">02 — 转变</div>
+  <h2>救人，不救楼</h2>
+  <p>生存脊柱改变了目标。常规加固以建筑的存续为优化对象。脊柱以人的存续为优化对象。一栋倒塌但让所有人活着走出来的建筑，按此标准便是成功。这一个转变，开辟出一条远更便宜、更快、且在政治上可行的道路。</p>
+  <div class="note"><b>核心理念：</b>在建筑闲置的死角中建造一个结构独立的垂直避难所，其设计使其在周围一切倒塌时仍能屹立。</div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">03 — 概念</div>
+  <h2>屋中之屋</h2>
+  <p>脊柱是一座约2×2米的钢筋混凝土塔，建在无人留恋的死角——服务楼梯、储藏室、杂物间——的位置。切开其楼板，设独立的深基础（必要时托换），自内部逐层升起，与既有结构齐平却永不依赖它。</p>
+  <div class="fig"><svg viewBox="0 0 540 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cutaway of a building with the Survival Spine threaded through it">
+<defs>
+<pattern id="hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<line x1="0" y1="0" x2="0" y2="6" stroke="#1b3a44" stroke-width="1"/>
+</pattern>
+</defs>
+<!-- ground -->
+<line x1="20" y1="400" x2="580" y2="400" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="20" y1="408" x2="580" y2="408" stroke="#1b3a44" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="20" y1="416" x2="580" y2="416" stroke="#1b3a44" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="30" y="430" class="bp-label-sm">EXISTING SOIL / FOUNDATION GRADE</text>
+<!-- existing building outline (left bigger block) -->
+<rect x="60" y="80" width="320" height="320" fill="none" stroke="#1b3a44" stroke-width="1.5"/>
+<!-- floor slabs of existing building -->
+<g stroke="#1b3a44" stroke-width="1">
+<line x1="60" y1="160" x2="380" y2="160"/>
+<line x1="60" y1="240" x2="380" y2="240"/>
+<line x1="60" y1="320" x2="380" y2="320"/>
+</g>
+<!-- faint cracks suggesting vulnerability -->
+<g stroke="#3a2a2a" stroke-width="1" opacity=".6">
+<path d="M120 160 l14 18 l-8 22 l16 18" fill="none"/>
+<path d="M300 240 l-12 20 l10 16" fill="none"/>
+</g>
+<text x="70" y="100" class="bp-label-sm">EXISTING VULNERABLE STRUCTURE</text>
+<!-- the spine column on the right edge, threading floors, independent -->
+<!-- gap lines showing structural separation -->
+<rect x="392" y="60" width="92" height="340" fill="url(#hatch)" stroke="#2dd4bf" stroke-width="2.5"/>
+<!-- separation gap -->
+<line x1="386" y1="60" x2="386" y2="400" stroke="#d4a373" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="386" y="74" class="bp-dim" text-anchor="middle">GAP</text>
+<!-- spine internal floor hatches -->
+<g stroke="#2dd4bf" stroke-width="1.2">
+<line x1="392" y1="160" x2="484" y2="160"/>
+<line x1="392" y1="240" x2="484" y2="240"/>
+<line x1="392" y1="320" x2="484" y2="320"/>
+</g>
+<!-- hatch openings (stacked) -->
+<g fill="#0c1322" stroke="#7fd9c9" stroke-width="1.2">
+<rect x="430" y="156" width="18" height="8"/>
+<rect x="430" y="236" width="18" height="8"/>
+<rect x="430" y="316" width="18" height="8"/>
+</g>
+<!-- cat ladder -->
+<g stroke="#7fd9c9" stroke-width="1">
+<line x1="455" y1="80" x2="455" y2="395"/>
+<line x1="463" y1="80" x2="463" y2="395"/>
+<line x1="455" y1="100" x2="463" y2="100"/><line x1="455" y1="120" x2="463" y2="120"/>
+<line x1="455" y1="140" x2="463" y2="140"/><line x1="455" y1="180" x2="463" y2="180"/>
+<line x1="455" y1="200" x2="463" y2="200"/><line x1="455" y1="220" x2="463" y2="220"/>
+<line x1="455" y1="260" x2="463" y2="260"/><line x1="455" y1="280" x2="463" y2="280"/>
+<line x1="455" y1="300" x2="463" y2="300"/><line x1="455" y1="340" x2="463" y2="340"/>
+<line x1="455" y1="360" x2="463" y2="360"/><line x1="455" y1="380" x2="463" y2="380"/>
+</g>
+<!-- independent deep foundation -->
+<rect x="388" y="400" width="100" height="34" fill="url(#hatch)" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="400" y1="434" x2="400" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<line x1="438" y1="434" x2="438" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<line x1="476" y1="434" x2="476" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="496" y="420" class="bp-label-sm" text-anchor="end">INDEPENDENT</text>
+<text x="496" y="432" class="bp-label-sm" text-anchor="end">FOUNDATION</text>
+<!-- roof hub marker -->
+<rect x="398" y="40" width="80" height="22" fill="#0c1322" stroke="#38bdf8" stroke-width="1.5"/>
+<text x="438" y="55" class="bp-label" text-anchor="middle" style="fill:#38bdf8">ROOF HUB</text>
+<!-- label for spine -->
+<text x="438" y="220" class="bp-label" text-anchor="middle" transform="rotate(-90 438 220)" style="font-size:13px;fill:#2dd4bf">SURVIVAL SPINE — RC, INDEPENDENT</text>
+<!-- dimension ~2x2m -->
+<line x1="392" y1="385" x2="484" y2="385" stroke="#d4a373" stroke-width=".8"/>
+<text x="438" y="382" class="bp-dim" text-anchor="middle">~2.0 m</text>
+</svg>
+<div class="cap">图1 — 脊柱贯穿既有建筑，立于自身的独立基础之上。</div></div>
+  <div class="cards two">
+    <div class="card"><span class="ic">🏛️</span><h4>独立结构</h4><p>自有的基础与加固骨架。即便主体建筑在周围倒塌，它仍屹立不倒。</p></div>
+    <div class="card"><span class="ic">🪜</span><h4>垂直交通</h4><p>连续的猫梯配以层层相叠的舱口，把每一层连成一根避难脊柱。</p></div>
+    <div class="card"><span class="ic">🛏️</span><h4>平日亦有用</h4><p>每层都是一间小而实用的房间——衣柜、床、储备物资。成本化为收益。</p></div>
+    <div class="card"><span class="ic">⚓</span><h4>侧向装甲</h4><p>额外配筋使它能像桥墩一样抵御侧向撞击与瓦砾压力。</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">04 — 屋顶枢纽</div>
+  <h2>一切要紧之物都置于顶端</h2>
+  <p>倒塌后最不易被掩埋之处是屋顶。因此脊柱将生命维持系统集中于此：一只靠重力向各层供水、同时兼作压舱质量的水箱；一处高出瓦砾的通风进气口；逃生舱口；以及供救援人员识别的信号灯标。</p>
+  <div class="fig"><svg viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Detail of the roof hub: water tank, vent intake, escape hatch, signaling and seismic isolation valve">
+<defs>
+<pattern id="hatch2" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<line x1="0" y1="0" x2="0" y2="6" stroke="#1b3a44" stroke-width="1"/>
+</pattern>
+</defs>
+<!-- spine top wall -->
+<rect x="160" y="200" width="280" height="200" fill="url(#hatch2)" stroke="#2dd4bf" stroke-width="2.5"/>
+<!-- roof slab -->
+<rect x="150" y="186" width="300" height="16" fill="#0c1322" stroke="#2dd4bf" stroke-width="2"/>
+<text x="300" y="390" class="bp-label" text-anchor="middle" style="font-size:13px">TOP OF SPINE (LEAST-BURIED POINT)</text>
+<!-- water tank on top -->
+<rect x="210" y="86" width="180" height="84" rx="8" fill="#0c1322" stroke="#38bdf8" stroke-width="2.5"/>
+<line x1="210" y1="118" x2="390" y2="118" stroke="#38bdf8" stroke-width="1" opacity=".5"/>
+<g fill="#38bdf8" opacity=".25"><rect x="212" y="120" width="176" height="48" rx="6"/></g>
+<text x="300" y="135" class="bp-label" text-anchor="middle" style="fill:#38bdf8">WATER TANK</text>
+<text x="300" y="150" class="bp-label-sm" text-anchor="middle">supply + ballast mass</text>
+<!-- vent intake stack -->
+<rect x="180" y="60" width="22" height="126" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<path d="M173 60 h36 l-8 -14 h-20 z" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<text x="125" y="80" class="bp-label-sm">VENT</text>
+<text x="120" y="92" class="bp-label-sm">INTAKE</text>
+<!-- signaling beacon -->
+<circle cx="410" cy="60" r="10" fill="none" stroke="#d4a373" stroke-width="2"/>
+<circle cx="410" cy="60" r="4" fill="#d4a373"/>
+<g stroke="#d4a373" stroke-width="1.5"><line x1="410" y1="38" x2="410" y2="46"/><line x1="430" y1="60" x2="438" y2="60"/><line x1="424" y1="46" x2="430" y2="40"/></g>
+<text x="445" y="64" class="bp-label-sm">SIGNAL /</text>
+<text x="445" y="76" class="bp-label-sm">BEACON</text>
+<!-- escape hatch in roof -->
+<rect x="300" y="186" width="44" height="16" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<text x="322" y="222" class="bp-label-sm" text-anchor="middle">ESCAPE HATCH ↑</text>
+<!-- seismic isolation valve -->
+<circle cx="300" cy="186" r="0"/>
+<rect x="284" y="168" width="0" height="0"/>
+<!-- pipe from tank down with valve -->
+<line x1="300" y1="170" x2="300" y2="186" stroke="#38bdf8" stroke-width="2"/>
+<g transform="translate(250,250)">
+<polygon points="0,0 18,9 0,18 18,0" fill="none" stroke="#d4a373" stroke-width="2"/>
+<text x="28" y="14" class="bp-label-sm">SEISMIC SHUT-OFF VALVE</text>
+<text x="28" y="26" class="bp-label-sm">(normally open → isolates on quake)</text>
+</g>
+<line x1="300" y1="202" x2="259" y2="252" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3 3"/>
+<!-- cat ladder hint inside -->
+<g stroke="#7fd9c9" stroke-width="1" opacity=".7">
+<line x1="320" y1="260" x2="320" y2="400"/><line x1="330" y1="260" x2="330" y2="400"/>
+<line x1="320" y1="280" x2="330" y2="280"/><line x1="320" y1="310" x2="330" y2="310"/>
+<line x1="320" y1="340" x2="330" y2="340"/><line x1="320" y1="370" x2="330" y2="370"/>
+</g>
+</svg>
+<div class="cap">图2 — 屋顶枢纽：水箱+压舱、进气口、逃生舱口、灯标、地震切断阀。</div></div>
+  <h3>地震切断阀</h3>
+  <p>水箱在平日持续更新，故水始终新鲜。地震切断阀——与抗震燃气阀相同的成熟技术——在检测到震动前一直开启，随后隔离水箱，将储水量封存供住户使用。其余由重力完成：无需水泵，无需电力——这在电网中断时至关重要。</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">05 — 救援脊柱</div>
+  <h2>向上自救，向下施救</h2>
+  <p>由于各层由连续的猫梯相连，脊柱并非一组孤立的盒子，而是一个具备内部交通的单一垂直避难所。若底层出口被瓦砾堵塞，住户可向上攀爬至较通畅的楼层或屋顶。</p>
+  <div class="fig"><svg viewBox="0 0 600 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rescue spine after collapse: occupants climb up, rescuers descend down through the intact vertical shaft">
+<defs>
+<pattern id="rub" width="8" height="8" patternUnits="userSpaceOnUse">
+<circle cx="2" cy="2" r="1.3" fill="#2a2018"/><circle cx="6" cy="5" r="1" fill="#2a2018"/>
+</pattern>
+</defs>
+<!-- rubble piles around -->
+<path d="M20 400 Q120 300 200 360 T 360 350 Q300 400 380 400 Z" fill="url(#rub)" stroke="#3a2e22" stroke-width="1"/>
+<path d="M460 400 Q520 330 580 380 L580 400 Z" fill="url(#rub)" stroke="#3a2e22" stroke-width="1"/>
+<line x1="20" y1="400" x2="580" y2="400" stroke="#2dd4bf" stroke-width="2"/>
+<text x="60" y="380" class="bp-label-sm" style="fill:#8a6e4e">COLLAPSED STRUCTURE / DEBRIS</text>
+<!-- intact spine standing -->
+<rect x="270" y="40" width="86" height="360" fill="#0c1322" stroke="#2dd4bf" stroke-width="2.5"/>
+<g stroke="#2dd4bf" stroke-width="1.2">
+<line x1="270" y1="120" x2="356" y2="120"/>
+<line x1="270" y1="200" x2="356" y2="200"/>
+<line x1="270" y1="280" x2="356" y2="280"/>
+</g>
+<!-- stacked hatches -->
+<g fill="#0a0e16" stroke="#7fd9c9" stroke-width="1.2">
+<rect x="304" y="116" width="18" height="8"/>
+<rect x="304" y="196" width="18" height="8"/>
+<rect x="304" y="276" width="18" height="8"/>
+<rect x="304" y="36" width="18" height="8"/>
+</g>
+<!-- cat ladder -->
+<g stroke="#7fd9c9" stroke-width="1">
+<line x1="328" y1="44" x2="328" y2="395"/><line x1="338" y1="44" x2="338" y2="395"/>
+<line x1="328" y1="70" x2="338" y2="70"/><line x1="328" y1="95" x2="338" y2="95"/>
+<line x1="328" y1="145" x2="338" y2="145"/><line x1="328" y1="170" x2="338" y2="170"/>
+<line x1="328" y1="225" x2="338" y2="225"/><line x1="328" y1="250" x2="338" y2="250"/>
+<line x1="328" y1="305" x2="338" y2="305"/><line x1="328" y1="330" x2="338" y2="330"/><line x1="328" y1="360" x2="338" y2="360"/>
+</g>
+<text x="313" y="225" class="bp-label" text-anchor="middle" transform="rotate(-90 313 225)" style="fill:#2dd4bf">SPINE — INTACT</text>
+<!-- up arrow (occupant climbs up) -->
+<g stroke="#2dd4bf" stroke-width="2.5" fill="none">
+<line x1="240" y1="360" x2="240" y2="150"/>
+<path d="M232 165 l8 -16 l8 16" />
+</g>
+<text x="150" y="260" class="bp-label" style="fill:#2dd4bf">OCCUPANTS</text>
+<text x="170" y="276" class="bp-label" style="fill:#2dd4bf">CLIMB UP ↑</text>
+<!-- down arrow (rescuers descend) -->
+<g stroke="#d4a373" stroke-width="2.5" fill="none">
+<line x1="388" y1="70" x2="388" y2="300"/>
+<path d="M380 285 l8 16 l8 -16"/>
+</g>
+<text x="405" y="150" class="bp-label" style="fill:#d4a373">RESCUERS</text>
+<text x="405" y="166" class="bp-label" style="fill:#d4a373">DESCEND ↓</text>
+<!-- roof access star -->
+<circle cx="313" cy="30" r="9" fill="none" stroke="#d4a373" stroke-width="2"/>
+<text x="313" y="20" class="bp-label-sm" text-anchor="middle">ROOF ACCESS</text>
+</svg>
+<div class="cap">图3 — 倒塌之后：住户沿完好的竖井向上攀爬，救援人员沿其向下。</div></div>
+  <p>它也反向运作。救援队几乎总是最先到达屋顶。一条已知的、已绘制的、结构完好且笔直穿过瓦砾的垂直通道，正是城市搜救梦寐以求的：他们沿同一架梯子下降，抵达每层被困者。脊柱化身为救援脊柱。</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">06 — 何以胜出</div>
+  <h2>优势层层叠加</h2>
+  <div class="metrics">
+    <div class="metric"><div class="big">&lt;10%</div><div class="lbl">整体加固成本的</div></div>
+    <div class="metric"><div class="big">1–2</div><div class="lbl">数月，而非一年</div></div>
+    <div class="metric"><div class="big">+1</div><div class="lbl">每户额外一间房</div></div>
+    <div class="metric"><div class="big">7d</div><div class="lbl">天的储备物资</div></div>
+  </div>
+  <div class="cards two">
+    <div class="card"><h4>无需搬迁</h4><p>施工全程家庭留在家中。仅此一点便消除了加固从未发生的最大原因。</p></div>
+    <div class="card"><h4>无僵局</h4><p>无需全体业主就出资与腾空达成几乎不可能的一致，工程即可推进。</p></div>
+    <div class="card"><h4>成本化为收益</h4><p>每户多得一间可用小房间。人们买的不是安全，而是一间还能救命的额外房间。</p></div>
+    <div class="card"><h4>争取救援时间</h4><p>数日的水、食物、通风与卫生设施，换来城市救援所需的生存窗口。</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">07 — 如何建造</div>
+  <h2>工序</h2>
+  <div class="steps">
+    <div class="step"><h4>确定死角空间</h4><p>一处约2×2米闲置的服务楼梯、储藏室或杂物间，从家中任意点出发两分钟内可达。</p></div>
+    <div class="step"><h4>切割与托换</h4><p>沿占地切开既有楼板；浇筑独立深基础，地基需要时进行托换。</p></div>
+    <div class="step"><h4>升起脊柱</h4><p>超强配筋的混凝土塔自内部逐层建造，与主体结构齐平却相互分离。</p></div>
+    <div class="step"><h4>贯通交通</h4><p>连续猫梯与层叠舱口连接各层；内装加入衣柜、床与物资储备。</p></div>
+    <div class="step"><h4>以屋顶枢纽收顶</h4><p>水箱、进气口、逃生舱口、灯标与地震切断阀，共同完成这一自给自足的避难所。</p></div>
+  </div>
+  <div class="note"><b>工程说明：</b>预警系统可为许多城市在强震到来前争取数秒至数十秒——配上两分钟内可达的避难所，只要演练过路线，连年长住户也能抵达。</div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="ft-title">生存脊柱</div>
+    <div class="ft-sub">一个以保命为目标的开放抗震加固概念。适用于地震多发地区的大多数老旧建筑。</div>
+    <button class="footer-contact" onclick="document.getElementById('cd').classList.add('open')">联系 digitalAIventures</button>
+    <div class="disclaimer">这是一份用于讨论与现有技术(prior-art)的概念性提案，并非施工规范。任何实际实施均须由具备资质的结构工程师依据当地抗震规范进行设计、计算与签署。</div>
+  </div>
+</footer>
+</div>
+<div data-lang="fa" dir="rtl">
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">مقاوم‌سازی لرزه‌ای جان‌محور</span>
+    <h1>ستون بقا</h1>
+    <div class="native">پناهگاهی عمودی برای ساختمان‌هایی که نمی‌توان نجاتشان داد</div>
+    <p class="tagline">وقتی مقاوم‌سازی کامل ناممکن است، به‌جای ساختمان، مردم را نجات بده.</p>
+    <div class="pill-row">
+      <span class="pill"><b>&lt;10%</b> از هزینهٔ مقاوم‌سازی کامل</span>
+      <span class="pill"><b>1–2</b> ماه برای ساخت</span>
+      <span class="pill"><b>+1</b> یک اتاق برای هر واحد</span>
+      <span class="pill">بدون جابه‌جایی</span>
+    </div>
+  </div>
+</div>
+
+<section><div class="wrap">
+  <div class="sec-num">01 — مسئله</div>
+  <h2>ساختمان‌های قدیمی، زلزله‌ای که دیر کرده، و یک بن‌بست</h2>
+  <p class="lead">میلیون‌ها نفر در ساختمان‌های قدیمی‌ای زندگی می‌کنند که از زلزلهٔ بزرگ بعدی جان سالم به‌در نخواهند برد.</p>
+  <p>مقاوم‌سازیِ کاملِ سازه‌ای پاسخِ کتاب‌هاست، اما در عمل اغلب ناممکن است. هزینه‌ای هنگفت دارد، توافق همهٔ مالکان را می‌طلبد، خانواده‌ها را ماه‌ها به جابه‌جایی وامی‌دارد و نزدیک یک سال طول می‌کشد. در بیشتر ساختمان‌های در معرض خطر، به‌سادگی هرگز رخ نمی‌دهد.</p>
+  <p>در همین حال عقربه‌ها می‌چرخند. بسیاری از مناطق لرزه‌خیز الگویی دوره‌ای دارند و رویدادی نیرومند تقریباً هر ۴۰ تا ۶۰ سال بازمی‌گردد. مرگ زیر ساختمانی فروریخته از تلخ‌ترین سرانجام‌هاست — و از قابل‌پیشگیری‌ترین‌ها.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">02 — چرخش</div>
+  <h2>نجات جان‌ها، نه ساختمان‌ها</h2>
+  <p>ستون بقا هدف را تغییر می‌دهد. مقاوم‌سازی متعارف بقای ساختمان را بهینه می‌کند. ستون بقای انسان را بهینه می‌کند. ساختمانی که فرومی‌ریزد اما همه را زنده بیرون می‌فرستد، بر پایهٔ این سنجه موفق بوده است. همین یک تغییر، راهی بسیار ارزان‌تر، سریع‌تر و از نظر سیاسی شدنی می‌گشاید.</p>
+  <div class="note"><b>ایدهٔ کانونی:</b> پناهگاهی عمودی و مستقل از نظر سازه‌ای که در فضای مردهٔ بلااستفادهٔ ساختمان ساخته می‌شود و چنان طراحی شده که حتی اگر همه‌چیز پیرامونش فروریزد، برپا بماند.</div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">03 — مفهوم</div>
+  <h2>خانه‌ای درون خانه</h2>
+  <p>ستون برجی بتنیِ مسلح به ابعاد حدود ۲×۲ متر است که به‌جای فضای مرده‌ای که کسی دلتنگش نمی‌شود ساخته می‌شود — پلهٔ خدمات، انباری، پستو. دال‌هایش بریده می‌شود، پی عمیق مستقل خود را می‌گیرد (با شمع‌بندی در صورت نیاز) و از درون بالا می‌آید؛ هم‌تراز با سازهٔ موجود اما هرگز وابسته به آن.</p>
+  <div class="fig"><svg viewBox="0 0 540 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cutaway of a building with the Survival Spine threaded through it">
+<defs>
+<pattern id="hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<line x1="0" y1="0" x2="0" y2="6" stroke="#1b3a44" stroke-width="1"/>
+</pattern>
+</defs>
+<!-- ground -->
+<line x1="20" y1="400" x2="580" y2="400" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="20" y1="408" x2="580" y2="408" stroke="#1b3a44" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="20" y1="416" x2="580" y2="416" stroke="#1b3a44" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="30" y="430" class="bp-label-sm">EXISTING SOIL / FOUNDATION GRADE</text>
+<!-- existing building outline (left bigger block) -->
+<rect x="60" y="80" width="320" height="320" fill="none" stroke="#1b3a44" stroke-width="1.5"/>
+<!-- floor slabs of existing building -->
+<g stroke="#1b3a44" stroke-width="1">
+<line x1="60" y1="160" x2="380" y2="160"/>
+<line x1="60" y1="240" x2="380" y2="240"/>
+<line x1="60" y1="320" x2="380" y2="320"/>
+</g>
+<!-- faint cracks suggesting vulnerability -->
+<g stroke="#3a2a2a" stroke-width="1" opacity=".6">
+<path d="M120 160 l14 18 l-8 22 l16 18" fill="none"/>
+<path d="M300 240 l-12 20 l10 16" fill="none"/>
+</g>
+<text x="70" y="100" class="bp-label-sm">EXISTING VULNERABLE STRUCTURE</text>
+<!-- the spine column on the right edge, threading floors, independent -->
+<!-- gap lines showing structural separation -->
+<rect x="392" y="60" width="92" height="340" fill="url(#hatch)" stroke="#2dd4bf" stroke-width="2.5"/>
+<!-- separation gap -->
+<line x1="386" y1="60" x2="386" y2="400" stroke="#d4a373" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="386" y="74" class="bp-dim" text-anchor="middle">GAP</text>
+<!-- spine internal floor hatches -->
+<g stroke="#2dd4bf" stroke-width="1.2">
+<line x1="392" y1="160" x2="484" y2="160"/>
+<line x1="392" y1="240" x2="484" y2="240"/>
+<line x1="392" y1="320" x2="484" y2="320"/>
+</g>
+<!-- hatch openings (stacked) -->
+<g fill="#0c1322" stroke="#7fd9c9" stroke-width="1.2">
+<rect x="430" y="156" width="18" height="8"/>
+<rect x="430" y="236" width="18" height="8"/>
+<rect x="430" y="316" width="18" height="8"/>
+</g>
+<!-- cat ladder -->
+<g stroke="#7fd9c9" stroke-width="1">
+<line x1="455" y1="80" x2="455" y2="395"/>
+<line x1="463" y1="80" x2="463" y2="395"/>
+<line x1="455" y1="100" x2="463" y2="100"/><line x1="455" y1="120" x2="463" y2="120"/>
+<line x1="455" y1="140" x2="463" y2="140"/><line x1="455" y1="180" x2="463" y2="180"/>
+<line x1="455" y1="200" x2="463" y2="200"/><line x1="455" y1="220" x2="463" y2="220"/>
+<line x1="455" y1="260" x2="463" y2="260"/><line x1="455" y1="280" x2="463" y2="280"/>
+<line x1="455" y1="300" x2="463" y2="300"/><line x1="455" y1="340" x2="463" y2="340"/>
+<line x1="455" y1="360" x2="463" y2="360"/><line x1="455" y1="380" x2="463" y2="380"/>
+</g>
+<!-- independent deep foundation -->
+<rect x="388" y="400" width="100" height="34" fill="url(#hatch)" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="400" y1="434" x2="400" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<line x1="438" y1="434" x2="438" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<line x1="476" y1="434" x2="476" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="496" y="420" class="bp-label-sm" text-anchor="end">INDEPENDENT</text>
+<text x="496" y="432" class="bp-label-sm" text-anchor="end">FOUNDATION</text>
+<!-- roof hub marker -->
+<rect x="398" y="40" width="80" height="22" fill="#0c1322" stroke="#38bdf8" stroke-width="1.5"/>
+<text x="438" y="55" class="bp-label" text-anchor="middle" style="fill:#38bdf8">ROOF HUB</text>
+<!-- label for spine -->
+<text x="438" y="220" class="bp-label" text-anchor="middle" transform="rotate(-90 438 220)" style="font-size:13px;fill:#2dd4bf">SURVIVAL SPINE — RC, INDEPENDENT</text>
+<!-- dimension ~2x2m -->
+<line x1="392" y1="385" x2="484" y2="385" stroke="#d4a373" stroke-width=".8"/>
+<text x="438" y="382" class="bp-dim" text-anchor="middle">~2.0 m</text>
+</svg>
+<div class="cap">شکل ۱ — ستون که از میان ساختمان موجود می‌گذرد، بر پی مستقل خود.</div></div>
+  <div class="cards two">
+    <div class="card"><span class="ic">🏛️</span><h4>سازهٔ مستقل</h4><p>پی و اسکلت مسلحِ خود. حتی اگر ساختمان میزبان پیرامونش فروریزد، برپا می‌ماند.</p></div>
+    <div class="card"><span class="ic">🪜</span><h4>گردش عمودی</h4><p>نردبان گربه‌ایِ پیوسته با دریچه‌های روی‌هم، هر طبقه را به یک ستونِ پناهگاهی واحد پیوند می‌دهد.</p></div>
+    <div class="card"><span class="ic">🛏️</span><h4>در زندگی عادی هم سودمند</h4><p>هر طبقه اتاقی کوچک و کاربردی است — کمد، تخت، انبار آذوقه. هزینه به سود بدل می‌شود.</p></div>
+    <div class="card"><span class="ic">⚓</span><h4>زرهِ جانبی</h4><p>آرماتور افزوده به آن اجازه می‌دهد ضربه‌های جانبی و فشار آوار را مانند پایهٔ پل دفع کند.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">04 — هستهٔ پشت‌بام</div>
+  <h2>هرچه مهم است، در بالا جای دارد</h2>
+  <p>کم‌دفن‌ترین نقطه پس از فروریزش، بام است. از این رو ستون پشتیبانی حیاتی را همان‌جا متمرکز می‌کند: مخزنی آب که هر طبقه را با نیروی ثقل تغذیه می‌کند و هم‌زمان نقش وزنهٔ تعادل را دارد؛ دهانهٔ تهویه‌ای که از آوار بالاتر است؛ دریچهٔ فرار؛ و چراغ علامت‌دهی برای امدادگران.</p>
+  <div class="fig"><svg viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Detail of the roof hub: water tank, vent intake, escape hatch, signaling and seismic isolation valve">
+<defs>
+<pattern id="hatch2" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<line x1="0" y1="0" x2="0" y2="6" stroke="#1b3a44" stroke-width="1"/>
+</pattern>
+</defs>
+<!-- spine top wall -->
+<rect x="160" y="200" width="280" height="200" fill="url(#hatch2)" stroke="#2dd4bf" stroke-width="2.5"/>
+<!-- roof slab -->
+<rect x="150" y="186" width="300" height="16" fill="#0c1322" stroke="#2dd4bf" stroke-width="2"/>
+<text x="300" y="390" class="bp-label" text-anchor="middle" style="font-size:13px">TOP OF SPINE (LEAST-BURIED POINT)</text>
+<!-- water tank on top -->
+<rect x="210" y="86" width="180" height="84" rx="8" fill="#0c1322" stroke="#38bdf8" stroke-width="2.5"/>
+<line x1="210" y1="118" x2="390" y2="118" stroke="#38bdf8" stroke-width="1" opacity=".5"/>
+<g fill="#38bdf8" opacity=".25"><rect x="212" y="120" width="176" height="48" rx="6"/></g>
+<text x="300" y="135" class="bp-label" text-anchor="middle" style="fill:#38bdf8">WATER TANK</text>
+<text x="300" y="150" class="bp-label-sm" text-anchor="middle">supply + ballast mass</text>
+<!-- vent intake stack -->
+<rect x="180" y="60" width="22" height="126" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<path d="M173 60 h36 l-8 -14 h-20 z" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<text x="125" y="80" class="bp-label-sm">VENT</text>
+<text x="120" y="92" class="bp-label-sm">INTAKE</text>
+<!-- signaling beacon -->
+<circle cx="410" cy="60" r="10" fill="none" stroke="#d4a373" stroke-width="2"/>
+<circle cx="410" cy="60" r="4" fill="#d4a373"/>
+<g stroke="#d4a373" stroke-width="1.5"><line x1="410" y1="38" x2="410" y2="46"/><line x1="430" y1="60" x2="438" y2="60"/><line x1="424" y1="46" x2="430" y2="40"/></g>
+<text x="445" y="64" class="bp-label-sm">SIGNAL /</text>
+<text x="445" y="76" class="bp-label-sm">BEACON</text>
+<!-- escape hatch in roof -->
+<rect x="300" y="186" width="44" height="16" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<text x="322" y="222" class="bp-label-sm" text-anchor="middle">ESCAPE HATCH ↑</text>
+<!-- seismic isolation valve -->
+<circle cx="300" cy="186" r="0"/>
+<rect x="284" y="168" width="0" height="0"/>
+<!-- pipe from tank down with valve -->
+<line x1="300" y1="170" x2="300" y2="186" stroke="#38bdf8" stroke-width="2"/>
+<g transform="translate(250,250)">
+<polygon points="0,0 18,9 0,18 18,0" fill="none" stroke="#d4a373" stroke-width="2"/>
+<text x="28" y="14" class="bp-label-sm">SEISMIC SHUT-OFF VALVE</text>
+<text x="28" y="26" class="bp-label-sm">(normally open → isolates on quake)</text>
+</g>
+<line x1="300" y1="202" x2="259" y2="252" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3 3"/>
+<!-- cat ladder hint inside -->
+<g stroke="#7fd9c9" stroke-width="1" opacity=".7">
+<line x1="320" y1="260" x2="320" y2="400"/><line x1="330" y1="260" x2="330" y2="400"/>
+<line x1="320" y1="280" x2="330" y2="280"/><line x1="320" y1="310" x2="330" y2="310"/>
+<line x1="320" y1="340" x2="330" y2="340"/><line x1="320" y1="370" x2="330" y2="370"/>
+</g>
+</svg>
+<div class="cap">شکل ۲ — هستهٔ پشت‌بام: مخزن آب + وزنه، دهانهٔ هوا، دریچهٔ فرار، چراغ، شیر قطع لرزه‌ای.</div></div>
+  <h3>شیر قطع لرزه‌ای</h3>
+  <p>مخزن آب در زندگی عادی پیوسته تازه می‌شود، پس آب همیشه تازه است. شیر قطع لرزه‌ای — همان فناوری آزموده‌شدهٔ شیرهای گازِ ضدزلزله — تا لحظهٔ آشکار شدن لرزش باز می‌ماند، سپس مخزن را جدا می‌کند تا حجم ذخیره برای ساکنان مهروموم شود. باقی را نیروی ثقل انجام می‌دهد: بی‌پمپ، بی‌برق — که هنگام قطع شبکه اهمیت دارد.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">05 — ستون نجات</div>
+  <h2>خودنجاتی به بالا، نجات به پایین</h2>
+  <p>چون طبقات با نردبان گربه‌ایِ پیوسته به‌هم متصل‌اند، ستون مجموعه‌ای از جعبه‌های جدا نیست — یک پناهگاه عمودیِ واحد با گردش درونی است. اگر خروجی همکف را آوار ببندد، ساکنان به طبقه‌ای بازتر یا به بام بالا می‌روند.</p>
+  <div class="fig"><svg viewBox="0 0 600 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rescue spine after collapse: occupants climb up, rescuers descend down through the intact vertical shaft">
+<defs>
+<pattern id="rub" width="8" height="8" patternUnits="userSpaceOnUse">
+<circle cx="2" cy="2" r="1.3" fill="#2a2018"/><circle cx="6" cy="5" r="1" fill="#2a2018"/>
+</pattern>
+</defs>
+<!-- rubble piles around -->
+<path d="M20 400 Q120 300 200 360 T 360 350 Q300 400 380 400 Z" fill="url(#rub)" stroke="#3a2e22" stroke-width="1"/>
+<path d="M460 400 Q520 330 580 380 L580 400 Z" fill="url(#rub)" stroke="#3a2e22" stroke-width="1"/>
+<line x1="20" y1="400" x2="580" y2="400" stroke="#2dd4bf" stroke-width="2"/>
+<text x="60" y="380" class="bp-label-sm" style="fill:#8a6e4e">COLLAPSED STRUCTURE / DEBRIS</text>
+<!-- intact spine standing -->
+<rect x="270" y="40" width="86" height="360" fill="#0c1322" stroke="#2dd4bf" stroke-width="2.5"/>
+<g stroke="#2dd4bf" stroke-width="1.2">
+<line x1="270" y1="120" x2="356" y2="120"/>
+<line x1="270" y1="200" x2="356" y2="200"/>
+<line x1="270" y1="280" x2="356" y2="280"/>
+</g>
+<!-- stacked hatches -->
+<g fill="#0a0e16" stroke="#7fd9c9" stroke-width="1.2">
+<rect x="304" y="116" width="18" height="8"/>
+<rect x="304" y="196" width="18" height="8"/>
+<rect x="304" y="276" width="18" height="8"/>
+<rect x="304" y="36" width="18" height="8"/>
+</g>
+<!-- cat ladder -->
+<g stroke="#7fd9c9" stroke-width="1">
+<line x1="328" y1="44" x2="328" y2="395"/><line x1="338" y1="44" x2="338" y2="395"/>
+<line x1="328" y1="70" x2="338" y2="70"/><line x1="328" y1="95" x2="338" y2="95"/>
+<line x1="328" y1="145" x2="338" y2="145"/><line x1="328" y1="170" x2="338" y2="170"/>
+<line x1="328" y1="225" x2="338" y2="225"/><line x1="328" y1="250" x2="338" y2="250"/>
+<line x1="328" y1="305" x2="338" y2="305"/><line x1="328" y1="330" x2="338" y2="330"/><line x1="328" y1="360" x2="338" y2="360"/>
+</g>
+<text x="313" y="225" class="bp-label" text-anchor="middle" transform="rotate(-90 313 225)" style="fill:#2dd4bf">SPINE — INTACT</text>
+<!-- up arrow (occupant climbs up) -->
+<g stroke="#2dd4bf" stroke-width="2.5" fill="none">
+<line x1="240" y1="360" x2="240" y2="150"/>
+<path d="M232 165 l8 -16 l8 16" />
+</g>
+<text x="150" y="260" class="bp-label" style="fill:#2dd4bf">OCCUPANTS</text>
+<text x="170" y="276" class="bp-label" style="fill:#2dd4bf">CLIMB UP ↑</text>
+<!-- down arrow (rescuers descend) -->
+<g stroke="#d4a373" stroke-width="2.5" fill="none">
+<line x1="388" y1="70" x2="388" y2="300"/>
+<path d="M380 285 l8 16 l8 -16"/>
+</g>
+<text x="405" y="150" class="bp-label" style="fill:#d4a373">RESCUERS</text>
+<text x="405" y="166" class="bp-label" style="fill:#d4a373">DESCEND ↓</text>
+<!-- roof access star -->
+<circle cx="313" cy="30" r="9" fill="none" stroke="#d4a373" stroke-width="2"/>
+<text x="313" y="20" class="bp-label-sm" text-anchor="middle">ROOF ACCESS</text>
+</svg>
+<div class="cap">شکل ۳ — پس از فروریزش: ساکنان از چاهکِ سالم بالا می‌روند، امدادگران از آن پایین می‌آیند.</div></div>
+  <p>و وارونه هم کار می‌کند. تیم‌های نجات تقریباً همیشه نخست به بام می‌رسند. مسیری عمودی، شناخته‌شده، نقشه‌برداری‌شده و از نظر سازه‌ای سالم که مستقیم از دل آوار می‌گذرد، دقیقاً همان چیزی است که جست‌وجو و نجاتِ شهری در آرزویش است: از همان نردبان پایین می‌روند تا به گرفتارانِ هر طبقه برسند. ستون به ستونِ نجات بدل می‌شود.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">06 — چرا برنده است</div>
+  <h2>مزیت‌ها روی هم انباشته می‌شوند</h2>
+  <div class="metrics">
+    <div class="metric"><div class="big">&lt;10%</div><div class="lbl">از هزینهٔ مقاوم‌سازی</div></div>
+    <div class="metric"><div class="big">1–2</div><div class="lbl">ماه، نه یک سال</div></div>
+    <div class="metric"><div class="big">+1</div><div class="lbl">اتاق افزوده برای هر واحد</div></div>
+    <div class="metric"><div class="big">7d</div><div class="lbl">روز آذوقهٔ ذخیره‌شده</div></div>
+  </div>
+  <div class="cards two">
+    <div class="card"><h4>بدون جابه‌جایی</h4><p>خانواده‌ها در سراسر کار در خانه‌های خود می‌مانند. همین یک نکته بزرگ‌ترین دلیلِ هرگز انجام‌نشدنِ مقاوم‌سازی را برمی‌دارد.</p></div>
+    <div class="card"><h4>بدون بن‌بست</h4><p>کار می‌تواند بدون توافق تقریباً ناممکنِ همهٔ مالکان برای تأمین مالی و تخلیه پیش برود.</p></div>
+    <div class="card"><h4>هزینه به سود بدل می‌شود</h4><p>هر واحد اتاقی کوچک و قابل‌استفاده به دست می‌آورد. مردم امنیت نمی‌خرند — اتاقی افزوده می‌خرند که جانشان را هم نجات می‌دهد.</p></div>
+    <div class="card"><h4>زمان تا نجات</h4><p>آب، غذا، تهویه و بهداشت برای چند روز، پنجرهٔ بقایی را که نجاتِ شهری نیاز دارد فراهم می‌کند.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">07 — چگونه ساخته می‌شود</div>
+  <h2>توالی</h2>
+  <div class="steps">
+    <div class="step"><h4>شناسایی فضای مرده</h4><p>پلهٔ خدمات، انباری یا پستوی بلااستفاده‌ای حدود ۲×۲ متر، که از هر نقطهٔ خانه در کمتر از دو دقیقه در دسترس باشد.</p></div>
+    <div class="step"><h4>برش و شمع‌بندی</h4><p>دال‌های موجود در محدودهٔ پلان بریده می‌شوند؛ پیِ عمیق مستقل ریخته می‌شود، و در صورت نیاز خاک شمع‌بندی می‌گردد.</p></div>
+    <div class="step"><h4>برافراشتن ستون</h4><p>برجی بتنی با آرماتور فراوان از درون، طبقه‌به‌طبقه ساخته می‌شود؛ هم‌تراز با سازهٔ میزبان اما جدا از آن.</p></div>
+    <div class="step"><h4>عبور دادن گردش</h4><p>نردبان گربه‌ایِ پیوسته و دریچه‌های روی‌هم هر طبقه را پیوند می‌دهند؛ تجهیز داخلی کمد، تخت و انبار آذوقه می‌افزاید.</p></div>
+    <div class="step"><h4>تاج‌گذاری با هستهٔ بام</h4><p>مخزن آب، دهانهٔ هوا، دریچهٔ فرار، چراغ و شیر لرزه‌ای، پناهگاه خودبسنده را کامل می‌کنند.</p></div>
+  </div>
+  <div class="note"><b>یادداشت مهندسی:</b> سامانه‌های هشدار زودهنگام به بسیاری از شهرها چند ثانیه تا ده‌ها ثانیه پیش از رسیدن لرزش نیرومند فرصت می‌دهند — با پناهگاهی در کمتر از دو دقیقه، همین کافی است تا حتی ساکنان سالخورده، در صورت تمرینِ مسیر، به آن برسند.</div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="ft-title">ستون بقا</div>
+    <div class="ft-sub">مفهومی باز برای مقاوم‌سازی لرزه‌ای جان‌محور. قابل‌اجرا در بیشتر ساختمان‌های قدیمی مناطق لرزه‌خیز.</div>
+    <button class="footer-contact" onclick="document.getElementById('cd').classList.add('open')">تماس با digitalAIventures</button>
+    <div class="disclaimer">این یک پیشنهاد مفهومی برای بحث و ثبت سابقهٔ فنی (prior-art) است، نه مشخصات اجرایی. هر پیاده‌سازی واقعی باید توسط مهندس سازهٔ واجد صلاحیت و بر پایهٔ آیین‌نامه‌های لرزه‌ای محلی طراحی، محاسبه و تأیید شود.</div>
+  </div>
+</footer>
+</div>
+<div data-lang="el">
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Αντισεισμική Ενίσχυση για τη Διάσωση Ζωών</span>
+    <h1>Η Σπονδυλική Στήλη Επιβίωσης</h1>
+    <div class="native">Ένα κατακόρυφο καταφύγιο για κτίρια που δεν σώζονται</div>
+    <p class="tagline">Όταν η πλήρης ενίσχυση είναι αδύνατη, σώσε τους ανθρώπους αντί για το κτίριο.</p>
+    <div class="pill-row">
+      <span class="pill"><b>&lt;10%</b> του κόστους πλήρους ενίσχυσης</span>
+      <span class="pill"><b>1–2</b> μήνες κατασκευή</span>
+      <span class="pill"><b>+1</b> δωμάτιο ανά διαμέρισμα</span>
+      <span class="pill">χωρίς μετακόμιση</span>
+    </div>
+  </div>
+</div>
+
+<section><div class="wrap">
+  <div class="sec-num">01 — ΤΟ ΠΡΟΒΛΗΜΑ</div>
+  <h2>Παλιά κτίρια, ένας καθυστερημένος σεισμός κι ένα αδιέξοδο</h2>
+  <p class="lead">Εκατομμύρια άνθρωποι ζουν σε παλιά κτίρια που δεν θα αντέξουν τον επόμενο μεγάλο σεισμό.</p>
+  <p>Η πλήρης δομική ενίσχυση είναι η σχολική απάντηση, αλλά στην πράξη συχνά είναι αδύνατη. Κοστίζει μια περιουσία, απαιτεί την ομόφωνη συμφωνία όλων των συνιδιοκτητών, αναγκάζει τις οικογένειες να μετακομίσουν για πολλούς μήνες και διαρκεί σχεδόν έναν χρόνο. Στα περισσότερα επικίνδυνα κτίρια, απλώς δεν γίνεται ποτέ.</p>
+  <p>Στο μεταξύ το ρολόι τρέχει. Πολλές σεισμικές περιοχές ακολουθούν ένα κυκλικό μοτίβο, με ένα ισχυρό γεγονός να επιστρέφει περίπου κάθε 40–60 χρόνια. Ο θάνατος κάτω από ένα κτίριο που καταρρέει είναι από τα πιο σκληρά τέλη — και από τα πιο αποτρέψιμα.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">02 — Η ΣΤΡΟΦΗ</div>
+  <h2>Σώζουμε ζωές, όχι κτίρια</h2>
+  <p>Η Σπονδυλική Στήλη Επιβίωσης αλλάζει τον στόχο. Η συμβατική ενίσχυση βελτιστοποιεί την επιβίωση του κτιρίου. Η Στήλη βελτιστοποιεί την επιβίωση του ανθρώπου. Ένα κτίριο που καταρρέει αλλά αφήνει όλους να βγουν ζωντανοί έχει, με αυτό το μέτρο, πετύχει. Αυτή η μία αλλαγή ανοίγει έναν πολύ φθηνότερο, ταχύτερο και πολιτικά εφικτό δρόμο.</p>
+  <div class="note"><b>Η κεντρική ιδέα:</b> ένα δομικά ανεξάρτητο κατακόρυφο καταφύγιο, χτισμένο στον αχρησιμοποίητο νεκρό χώρο του κτιρίου, σχεδιασμένο να στέκεται όρθιο ακόμη κι αν όλα γύρω του πέσουν.</div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">03 — Η ΙΔΕΑ</div>
+  <h2>Ένα σπίτι μέσα στο σπίτι</h2>
+  <p>Η Στήλη είναι ένας πύργος οπλισμένου σκυροδέματος περίπου 2×2 m, χτισμένος στη θέση του νεκρού χώρου που κανείς δεν θα νοσταλγήσει — η σκάλα υπηρεσίας, το κελάρι, η αποθήκη. Οι πλάκες κόβονται, αποκτά δικά του βαθιά θεμέλια (με υποθεμελίωση όπου χρειάζεται) και ανεγείρεται από μέσα, σε επαφή με την υπάρχουσα δομή αλλά χωρίς ποτέ να εξαρτάται από αυτήν.</p>
+  <div class="fig"><svg viewBox="0 0 540 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cutaway of a building with the Survival Spine threaded through it">
+<defs>
+<pattern id="hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<line x1="0" y1="0" x2="0" y2="6" stroke="#1b3a44" stroke-width="1"/>
+</pattern>
+</defs>
+<!-- ground -->
+<line x1="20" y1="400" x2="580" y2="400" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="20" y1="408" x2="580" y2="408" stroke="#1b3a44" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="20" y1="416" x2="580" y2="416" stroke="#1b3a44" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="30" y="430" class="bp-label-sm">EXISTING SOIL / FOUNDATION GRADE</text>
+<!-- existing building outline (left bigger block) -->
+<rect x="60" y="80" width="320" height="320" fill="none" stroke="#1b3a44" stroke-width="1.5"/>
+<!-- floor slabs of existing building -->
+<g stroke="#1b3a44" stroke-width="1">
+<line x1="60" y1="160" x2="380" y2="160"/>
+<line x1="60" y1="240" x2="380" y2="240"/>
+<line x1="60" y1="320" x2="380" y2="320"/>
+</g>
+<!-- faint cracks suggesting vulnerability -->
+<g stroke="#3a2a2a" stroke-width="1" opacity=".6">
+<path d="M120 160 l14 18 l-8 22 l16 18" fill="none"/>
+<path d="M300 240 l-12 20 l10 16" fill="none"/>
+</g>
+<text x="70" y="100" class="bp-label-sm">EXISTING VULNERABLE STRUCTURE</text>
+<!-- the spine column on the right edge, threading floors, independent -->
+<!-- gap lines showing structural separation -->
+<rect x="392" y="60" width="92" height="340" fill="url(#hatch)" stroke="#2dd4bf" stroke-width="2.5"/>
+<!-- separation gap -->
+<line x1="386" y1="60" x2="386" y2="400" stroke="#d4a373" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="386" y="74" class="bp-dim" text-anchor="middle">GAP</text>
+<!-- spine internal floor hatches -->
+<g stroke="#2dd4bf" stroke-width="1.2">
+<line x1="392" y1="160" x2="484" y2="160"/>
+<line x1="392" y1="240" x2="484" y2="240"/>
+<line x1="392" y1="320" x2="484" y2="320"/>
+</g>
+<!-- hatch openings (stacked) -->
+<g fill="#0c1322" stroke="#7fd9c9" stroke-width="1.2">
+<rect x="430" y="156" width="18" height="8"/>
+<rect x="430" y="236" width="18" height="8"/>
+<rect x="430" y="316" width="18" height="8"/>
+</g>
+<!-- cat ladder -->
+<g stroke="#7fd9c9" stroke-width="1">
+<line x1="455" y1="80" x2="455" y2="395"/>
+<line x1="463" y1="80" x2="463" y2="395"/>
+<line x1="455" y1="100" x2="463" y2="100"/><line x1="455" y1="120" x2="463" y2="120"/>
+<line x1="455" y1="140" x2="463" y2="140"/><line x1="455" y1="180" x2="463" y2="180"/>
+<line x1="455" y1="200" x2="463" y2="200"/><line x1="455" y1="220" x2="463" y2="220"/>
+<line x1="455" y1="260" x2="463" y2="260"/><line x1="455" y1="280" x2="463" y2="280"/>
+<line x1="455" y1="300" x2="463" y2="300"/><line x1="455" y1="340" x2="463" y2="340"/>
+<line x1="455" y1="360" x2="463" y2="360"/><line x1="455" y1="380" x2="463" y2="380"/>
+</g>
+<!-- independent deep foundation -->
+<rect x="388" y="400" width="100" height="34" fill="url(#hatch)" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="400" y1="434" x2="400" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<line x1="438" y1="434" x2="438" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<line x1="476" y1="434" x2="476" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="496" y="420" class="bp-label-sm" text-anchor="end">INDEPENDENT</text>
+<text x="496" y="432" class="bp-label-sm" text-anchor="end">FOUNDATION</text>
+<!-- roof hub marker -->
+<rect x="398" y="40" width="80" height="22" fill="#0c1322" stroke="#38bdf8" stroke-width="1.5"/>
+<text x="438" y="55" class="bp-label" text-anchor="middle" style="fill:#38bdf8">ROOF HUB</text>
+<!-- label for spine -->
+<text x="438" y="220" class="bp-label" text-anchor="middle" transform="rotate(-90 438 220)" style="font-size:13px;fill:#2dd4bf">SURVIVAL SPINE — RC, INDEPENDENT</text>
+<!-- dimension ~2x2m -->
+<line x1="392" y1="385" x2="484" y2="385" stroke="#d4a373" stroke-width=".8"/>
+<text x="438" y="382" class="bp-dim" text-anchor="middle">~2.0 m</text>
+</svg>
+<div class="cap">ΕΙΚ.1 — Η Στήλη να διαπερνά ένα υπάρχον κτίριο, πάνω στο δικό της ανεξάρτητο θεμέλιο.</div></div>
+  <div class="cards two">
+    <div class="card"><span class="ic">🏛️</span><h4>Ανεξάρτητη δομή</h4><p>Δικό της θεμέλιο και οπλισμένος σκελετός. Στέκεται όρθια ακόμη κι αν το κτίριο-ξενιστής καταρρεύσει γύρω της.</p></div>
+    <div class="card"><span class="ic">🪜</span><h4>Κατακόρυφη κυκλοφορία</h4><p>Μια συνεχής ανεμόσκαλα με στοιβαγμένες καταπακτές ενώνει κάθε επίπεδο σε μία στήλη-καταφύγιο.</p></div>
+    <div class="card"><span class="ic">🛏️</span><h4>Χρήσιμη στην καθημερινότητα</h4><p>Κάθε επίπεδο είναι ένα μικρό λειτουργικό δωμάτιο — ντουλάπα, κρεβάτι, αποθήκη προμηθειών. Το κόστος γίνεται όφελος.</p></div>
+    <div class="card"><span class="ic">⚓</span><h4>Πλευρική θωράκιση</h4><p>Ο επιπλέον οπλισμός της επιτρέπει να απορροφά πλευρικές κρούσεις και την πίεση των ερειπίων, σαν μεσόβαθρο γέφυρας.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">04 — Ο ΚΟΜΒΟΣ ΣΤΗ ΣΤΕΓΗ</div>
+  <h2>Ό,τι σημαντικό ζει στην κορυφή</h2>
+  <p>Το λιγότερο θαμμένο σημείο μετά από κατάρρευση είναι η στέγη. Γι' αυτό η Στήλη συγκεντρώνει εκεί την υποστήριξη ζωής: μια δεξαμενή νερού που τροφοδοτεί κάθε επίπεδο με βαρύτητα και λειτουργεί και ως έρμα· μια εισαγωγή αερισμού υψωμένη πάνω από τα ερείπια· την καταπακτή διαφυγής· κι έναν φάρο σηματοδότησης για τους διασώστες.</p>
+  <div class="fig"><svg viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Detail of the roof hub: water tank, vent intake, escape hatch, signaling and seismic isolation valve">
+<defs>
+<pattern id="hatch2" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<line x1="0" y1="0" x2="0" y2="6" stroke="#1b3a44" stroke-width="1"/>
+</pattern>
+</defs>
+<!-- spine top wall -->
+<rect x="160" y="200" width="280" height="200" fill="url(#hatch2)" stroke="#2dd4bf" stroke-width="2.5"/>
+<!-- roof slab -->
+<rect x="150" y="186" width="300" height="16" fill="#0c1322" stroke="#2dd4bf" stroke-width="2"/>
+<text x="300" y="390" class="bp-label" text-anchor="middle" style="font-size:13px">TOP OF SPINE (LEAST-BURIED POINT)</text>
+<!-- water tank on top -->
+<rect x="210" y="86" width="180" height="84" rx="8" fill="#0c1322" stroke="#38bdf8" stroke-width="2.5"/>
+<line x1="210" y1="118" x2="390" y2="118" stroke="#38bdf8" stroke-width="1" opacity=".5"/>
+<g fill="#38bdf8" opacity=".25"><rect x="212" y="120" width="176" height="48" rx="6"/></g>
+<text x="300" y="135" class="bp-label" text-anchor="middle" style="fill:#38bdf8">WATER TANK</text>
+<text x="300" y="150" class="bp-label-sm" text-anchor="middle">supply + ballast mass</text>
+<!-- vent intake stack -->
+<rect x="180" y="60" width="22" height="126" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<path d="M173 60 h36 l-8 -14 h-20 z" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<text x="125" y="80" class="bp-label-sm">VENT</text>
+<text x="120" y="92" class="bp-label-sm">INTAKE</text>
+<!-- signaling beacon -->
+<circle cx="410" cy="60" r="10" fill="none" stroke="#d4a373" stroke-width="2"/>
+<circle cx="410" cy="60" r="4" fill="#d4a373"/>
+<g stroke="#d4a373" stroke-width="1.5"><line x1="410" y1="38" x2="410" y2="46"/><line x1="430" y1="60" x2="438" y2="60"/><line x1="424" y1="46" x2="430" y2="40"/></g>
+<text x="445" y="64" class="bp-label-sm">SIGNAL /</text>
+<text x="445" y="76" class="bp-label-sm">BEACON</text>
+<!-- escape hatch in roof -->
+<rect x="300" y="186" width="44" height="16" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<text x="322" y="222" class="bp-label-sm" text-anchor="middle">ESCAPE HATCH ↑</text>
+<!-- seismic isolation valve -->
+<circle cx="300" cy="186" r="0"/>
+<rect x="284" y="168" width="0" height="0"/>
+<!-- pipe from tank down with valve -->
+<line x1="300" y1="170" x2="300" y2="186" stroke="#38bdf8" stroke-width="2"/>
+<g transform="translate(250,250)">
+<polygon points="0,0 18,9 0,18 18,0" fill="none" stroke="#d4a373" stroke-width="2"/>
+<text x="28" y="14" class="bp-label-sm">SEISMIC SHUT-OFF VALVE</text>
+<text x="28" y="26" class="bp-label-sm">(normally open → isolates on quake)</text>
+</g>
+<line x1="300" y1="202" x2="259" y2="252" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3 3"/>
+<!-- cat ladder hint inside -->
+<g stroke="#7fd9c9" stroke-width="1" opacity=".7">
+<line x1="320" y1="260" x2="320" y2="400"/><line x1="330" y1="260" x2="330" y2="400"/>
+<line x1="320" y1="280" x2="330" y2="280"/><line x1="320" y1="310" x2="330" y2="310"/>
+<line x1="320" y1="340" x2="330" y2="340"/><line x1="320" y1="370" x2="330" y2="370"/>
+</g>
+</svg>
+<div class="cap">ΕΙΚ.2 — Ο κόμβος στη στέγη: δεξαμενή + έρμα, εισαγωγή αέρα, καταπακτή, φάρος, σεισμική βαλβίδα.</div></div>
+  <h3>Η σεισμική βαλβίδα αποκοπής</h3>
+  <p>Η δεξαμενή ανανεώνεται συνεχώς στην καθημερινή ζωή, οπότε το νερό είναι πάντα φρέσκο. Μια σεισμική βαλβίδα αποκοπής — η ίδια δοκιμασμένη τεχνολογία με τις αντισεισμικές βαλβίδες αερίου — μένει ανοιχτή μέχρι τη στιγμή που ανιχνεύεται ο σεισμός, και μετά απομονώνει τη δεξαμενή σφραγίζοντας τον αποθηκευμένο όγκο για τους ενοίκους. Τα υπόλοιπα τα κάνει η βαρύτητα: χωρίς αντλία, χωρίς ρεύμα — που μετράει όταν κόβεται το δίκτυο.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">05 — Η ΣΤΗΛΗ ΔΙΑΣΩΣΗΣ</div>
+  <h2>Αυτοδιάσωση προς τα πάνω, διάσωση προς τα κάτω</h2>
+  <p>Επειδή τα επίπεδα συνδέονται με συνεχή ανεμόσκαλα, η Στήλη δεν είναι ένα σύνολο απομονωμένων κουτιών — είναι ένα ενιαίο κατακόρυφο καταφύγιο με εσωτερική κυκλοφορία. Αν η έξοδος του ισογείου φραχτεί από ερείπια, οι ένοικοι ανεβαίνουν σε ένα πιο ελεύθερο επίπεδο ή στη στέγη.</p>
+  <div class="fig"><svg viewBox="0 0 600 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rescue spine after collapse: occupants climb up, rescuers descend down through the intact vertical shaft">
+<defs>
+<pattern id="rub" width="8" height="8" patternUnits="userSpaceOnUse">
+<circle cx="2" cy="2" r="1.3" fill="#2a2018"/><circle cx="6" cy="5" r="1" fill="#2a2018"/>
+</pattern>
+</defs>
+<!-- rubble piles around -->
+<path d="M20 400 Q120 300 200 360 T 360 350 Q300 400 380 400 Z" fill="url(#rub)" stroke="#3a2e22" stroke-width="1"/>
+<path d="M460 400 Q520 330 580 380 L580 400 Z" fill="url(#rub)" stroke="#3a2e22" stroke-width="1"/>
+<line x1="20" y1="400" x2="580" y2="400" stroke="#2dd4bf" stroke-width="2"/>
+<text x="60" y="380" class="bp-label-sm" style="fill:#8a6e4e">COLLAPSED STRUCTURE / DEBRIS</text>
+<!-- intact spine standing -->
+<rect x="270" y="40" width="86" height="360" fill="#0c1322" stroke="#2dd4bf" stroke-width="2.5"/>
+<g stroke="#2dd4bf" stroke-width="1.2">
+<line x1="270" y1="120" x2="356" y2="120"/>
+<line x1="270" y1="200" x2="356" y2="200"/>
+<line x1="270" y1="280" x2="356" y2="280"/>
+</g>
+<!-- stacked hatches -->
+<g fill="#0a0e16" stroke="#7fd9c9" stroke-width="1.2">
+<rect x="304" y="116" width="18" height="8"/>
+<rect x="304" y="196" width="18" height="8"/>
+<rect x="304" y="276" width="18" height="8"/>
+<rect x="304" y="36" width="18" height="8"/>
+</g>
+<!-- cat ladder -->
+<g stroke="#7fd9c9" stroke-width="1">
+<line x1="328" y1="44" x2="328" y2="395"/><line x1="338" y1="44" x2="338" y2="395"/>
+<line x1="328" y1="70" x2="338" y2="70"/><line x1="328" y1="95" x2="338" y2="95"/>
+<line x1="328" y1="145" x2="338" y2="145"/><line x1="328" y1="170" x2="338" y2="170"/>
+<line x1="328" y1="225" x2="338" y2="225"/><line x1="328" y1="250" x2="338" y2="250"/>
+<line x1="328" y1="305" x2="338" y2="305"/><line x1="328" y1="330" x2="338" y2="330"/><line x1="328" y1="360" x2="338" y2="360"/>
+</g>
+<text x="313" y="225" class="bp-label" text-anchor="middle" transform="rotate(-90 313 225)" style="fill:#2dd4bf">SPINE — INTACT</text>
+<!-- up arrow (occupant climbs up) -->
+<g stroke="#2dd4bf" stroke-width="2.5" fill="none">
+<line x1="240" y1="360" x2="240" y2="150"/>
+<path d="M232 165 l8 -16 l8 16" />
+</g>
+<text x="150" y="260" class="bp-label" style="fill:#2dd4bf">OCCUPANTS</text>
+<text x="170" y="276" class="bp-label" style="fill:#2dd4bf">CLIMB UP ↑</text>
+<!-- down arrow (rescuers descend) -->
+<g stroke="#d4a373" stroke-width="2.5" fill="none">
+<line x1="388" y1="70" x2="388" y2="300"/>
+<path d="M380 285 l8 16 l8 -16"/>
+</g>
+<text x="405" y="150" class="bp-label" style="fill:#d4a373">RESCUERS</text>
+<text x="405" y="166" class="bp-label" style="fill:#d4a373">DESCEND ↓</text>
+<!-- roof access star -->
+<circle cx="313" cy="30" r="9" fill="none" stroke="#d4a373" stroke-width="2"/>
+<text x="313" y="20" class="bp-label-sm" text-anchor="middle">ROOF ACCESS</text>
+</svg>
+<div class="cap">ΕΙΚ.3 — Μετά την κατάρρευση: οι ένοικοι ανεβαίνουν το άθικτο φρεάτιο, οι διασώστες κατεβαίνουν από αυτό.</div></div>
+  <p>Και λειτουργεί κι αντίστροφα. Οι ομάδες διάσωσης φτάνουν σχεδόν πάντα πρώτα στη στέγη. Μια γνωστή, χαρτογραφημένη και δομικά άθικτη κατακόρυφη διαδρομή που διαπερνά ίσια τα ερείπια είναι ακριβώς αυτό που ονειρεύεται η αστική έρευνα-διάσωση: κατεβαίνουν την ίδια σκάλα για να φτάσουν τους εγκλωβισμένους σε κάθε επίπεδο. Η Στήλη γίνεται η στήλη διάσωσης.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">06 — ΓΙΑΤΙ ΚΕΡΔΙΖΕΙ</div>
+  <h2>Τα πλεονεκτήματα συσσωρεύονται</h2>
+  <div class="metrics">
+    <div class="metric"><div class="big">&lt;10%</div><div class="lbl">του κόστους ενίσχυσης</div></div>
+    <div class="metric"><div class="big">1–2</div><div class="lbl">μήνες, όχι έναν χρόνο</div></div>
+    <div class="metric"><div class="big">+1</div><div class="lbl">επιπλέον δωμάτιο ανά διαμέρισμα</div></div>
+    <div class="metric"><div class="big">7d</div><div class="lbl">ημερών προμήθειες</div></div>
+  </div>
+  <div class="cards two">
+    <div class="card"><h4>Χωρίς μετακόμιση</h4><p>Οι οικογένειες μένουν στα σπίτια τους καθ' όλη τη διάρκεια. Μόνο αυτό αφαιρεί τον μεγαλύτερο λόγο που οι ενισχύσεις δεν γίνονται ποτέ.</p></div>
+    <div class="card"><h4>Χωρίς αδιέξοδο</h4><p>Η εργασία προχωρά χωρίς τη σχεδόν αδύνατη ομόφωνη συμφωνία όλων των συνιδιοκτητών για χρηματοδότηση και εκκένωση.</p></div>
+    <div class="card"><h4>Το κόστος γίνεται όφελος</h4><p>Κάθε διαμέρισμα κερδίζει ένα μικρό αξιοποιήσιμο δωμάτιο. Οι άνθρωποι δεν αγοράζουν ασφάλεια — αγοράζουν ένα επιπλέον δωμάτιο που τους σώζει και τη ζωή.</p></div>
+    <div class="card"><h4>Χρόνος μέχρι τη διάσωση</h4><p>Νερό, τροφή, αερισμός και υγιεινή για αρκετές ημέρες αγοράζουν το παράθυρο επιβίωσης που χρειάζεται η αστική διάσωση.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">07 — ΠΩΣ ΧΤΙΖΕΤΑΙ</div>
+  <h2>Η ακολουθία</h2>
+  <div class="steps">
+    <div class="step"><h4>Εντόπισε τον νεκρό χώρο</h4><p>Μια αχρησιμοποίητη σκάλα υπηρεσίας, κελάρι ή αποθήκη περίπου 2×2 m, προσβάσιμη σε λιγότερο από δύο λεπτά από οποιοδήποτε σημείο του σπιτιού.</p></div>
+    <div class="step"><h4>Κόψε και υποθεμελίωσε</h4><p>Οι υπάρχουσες πλάκες κόβονται στο αποτύπωμα· χυτεύεται ανεξάρτητο βαθύ θεμέλιο, με υποθεμελίωση αν το απαιτεί το έδαφος.</p></div>
+    <div class="step"><h4>Ανέγειρε τη στήλη</h4><p>Ένας πύργος υπερ-οπλισμένου σκυροδέματος χτίζεται από μέσα, επίπεδο προς επίπεδο, σε επαφή αλλά χωριστά από τη δομή-ξενιστή.</p></div>
+    <div class="step"><h4>Πέρασε την κυκλοφορία</h4><p>Συνεχής ανεμόσκαλα και στοιβαγμένες καταπακτές συνδέουν κάθε επίπεδο· ο εξοπλισμός προσθέτει ντουλάπα, κρεβάτι κι αποθήκη προμηθειών.</p></div>
+    <div class="step"><h4>Στέψε με τον κόμβο στέγης</h4><p>Δεξαμενή νερού, εισαγωγή αέρα, καταπακτή, φάρος και σεισμική βαλβίδα ολοκληρώνουν το αυτόνομο καταφύγιο.</p></div>
+  </div>
+  <div class="note"><b>Τεχνική σημείωση:</b> τα συστήματα έγκαιρης προειδοποίησης δίνουν σε πολλές πόλεις δευτερόλεπτα έως δεκάδες δευτερόλεπτα πριν φτάσει η ισχυρή δόνηση — αρκετά, με καταφύγιο σε λιγότερο από δύο λεπτά, ώστε ακόμη κι οι ηλικιωμένοι ένοικοι να το φτάσουν αν η διαδρομή έχει προβαριστεί.</div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="ft-title">Η Σπονδυλική Στήλη Επιβίωσης</div>
+    <div class="ft-sub">Μια ανοιχτή ιδέα αντισεισμικής ενίσχυσης για τη διάσωση ζωών. Εφαρμόσιμη στα περισσότερα παλιά κτίρια σε σεισμογενείς περιοχές.</div>
+    <button class="footer-contact" onclick="document.getElementById('cd').classList.add('open')">Επικοινωνία με digitalAIventures</button>
+    <div class="disclaimer">Πρόκειται για εννοιολογική πρόταση για συζήτηση και σκοπούς prior-art, όχι για προδιαγραφή κατασκευής. Κάθε πραγματική υλοποίηση πρέπει να σχεδιάζεται, να υπολογίζεται και να υπογράφεται από εξειδικευμένο μηχανικό δομών σύμφωνα με τους τοπικούς αντισεισμικούς κανονισμούς.</div>
+  </div>
+</footer>
+</div>
+<div data-lang="id">
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Perkuatan Seismik Penyelamat Jiwa</span>
+    <h1>Tulang Punggung Bertahan Hidup</h1>
+    <div class="native">Tempat berlindung vertikal untuk bangunan yang tak dapat diselamatkan</div>
+    <p class="tagline">Ketika perkuatan menyeluruh mustahil, selamatkan manusia, bukan bangunannya.</p>
+    <div class="pill-row">
+      <span class="pill"><b>&lt;10%</b> dari biaya perkuatan penuh</span>
+      <span class="pill"><b>1–2</b> bulan pembangunan</span>
+      <span class="pill"><b>+1</b> ruang per unit</span>
+      <span class="pill">tanpa pindah</span>
+    </div>
+  </div>
+</div>
+
+<section><div class="wrap">
+  <div class="sec-num">01 — MASALAH</div>
+  <h2>Bangunan tua, gempa yang tertunda, dan jalan buntu</h2>
+  <p class="lead">Jutaan orang tinggal di bangunan tua yang tidak akan bertahan dari gempa besar berikutnya.</p>
+  <p>Perkuatan struktur menyeluruh adalah jawaban buku teks, tetapi dalam praktik sering kali mustahil. Biayanya selangit, menuntut persetujuan bulat semua pemilik, memaksa keluarga pindah berbulan-bulan, dan memakan waktu hampir setahun. Di sebagian besar bangunan berisiko, hal itu memang tak pernah terjadi.</p>
+  <p>Sementara itu jam terus berdetak. Banyak wilayah seismik mengikuti pola siklis, dengan gempa kuat kembali kira-kira setiap 40–60 tahun. Mati tertimbun bangunan runtuh termasuk akhir yang paling kejam — dan paling dapat dicegah.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">02 — PERGESERAN</div>
+  <h2>Menyelamatkan jiwa, bukan bangunan</h2>
+  <p>Tulang Punggung Bertahan Hidup mengubah tujuannya. Perkuatan konvensional mengoptimalkan kelangsungan bangunan. Tulang punggung ini mengoptimalkan kelangsungan manusia. Bangunan yang runtuh tetapi membiarkan semua keluar hidup-hidup, menurut ukuran ini, telah berhasil. Satu perubahan itu membuka jalan yang jauh lebih murah, cepat, dan layak secara politik.</p>
+  <div class="note"><b>Gagasan inti:</b> sebuah tempat berlindung vertikal yang mandiri secara struktural, dibangun di ruang mati bangunan yang tak terpakai, dirancang untuk tetap berdiri meski segala sesuatu di sekelilingnya runtuh.</div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">03 — KONSEP</div>
+  <h2>Rumah di dalam rumah</h2>
+  <p>Tulang punggung ini adalah menara beton bertulang berukuran sekitar 2×2 m, dibangun menggantikan ruang mati yang takkan dirindukan siapa pun — tangga servis, dapur kecil, gudang. Pelatnya dipotong, ia memperoleh fondasi dalam tersendiri (dengan penopangan bila perlu), dan didirikan dari dalam, rata dengan struktur lama namun tak pernah bergantung padanya.</p>
+  <div class="fig"><svg viewBox="0 0 540 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cutaway of a building with the Survival Spine threaded through it">
+<defs>
+<pattern id="hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<line x1="0" y1="0" x2="0" y2="6" stroke="#1b3a44" stroke-width="1"/>
+</pattern>
+</defs>
+<!-- ground -->
+<line x1="20" y1="400" x2="580" y2="400" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="20" y1="408" x2="580" y2="408" stroke="#1b3a44" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="20" y1="416" x2="580" y2="416" stroke="#1b3a44" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="30" y="430" class="bp-label-sm">EXISTING SOIL / FOUNDATION GRADE</text>
+<!-- existing building outline (left bigger block) -->
+<rect x="60" y="80" width="320" height="320" fill="none" stroke="#1b3a44" stroke-width="1.5"/>
+<!-- floor slabs of existing building -->
+<g stroke="#1b3a44" stroke-width="1">
+<line x1="60" y1="160" x2="380" y2="160"/>
+<line x1="60" y1="240" x2="380" y2="240"/>
+<line x1="60" y1="320" x2="380" y2="320"/>
+</g>
+<!-- faint cracks suggesting vulnerability -->
+<g stroke="#3a2a2a" stroke-width="1" opacity=".6">
+<path d="M120 160 l14 18 l-8 22 l16 18" fill="none"/>
+<path d="M300 240 l-12 20 l10 16" fill="none"/>
+</g>
+<text x="70" y="100" class="bp-label-sm">EXISTING VULNERABLE STRUCTURE</text>
+<!-- the spine column on the right edge, threading floors, independent -->
+<!-- gap lines showing structural separation -->
+<rect x="392" y="60" width="92" height="340" fill="url(#hatch)" stroke="#2dd4bf" stroke-width="2.5"/>
+<!-- separation gap -->
+<line x1="386" y1="60" x2="386" y2="400" stroke="#d4a373" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="386" y="74" class="bp-dim" text-anchor="middle">GAP</text>
+<!-- spine internal floor hatches -->
+<g stroke="#2dd4bf" stroke-width="1.2">
+<line x1="392" y1="160" x2="484" y2="160"/>
+<line x1="392" y1="240" x2="484" y2="240"/>
+<line x1="392" y1="320" x2="484" y2="320"/>
+</g>
+<!-- hatch openings (stacked) -->
+<g fill="#0c1322" stroke="#7fd9c9" stroke-width="1.2">
+<rect x="430" y="156" width="18" height="8"/>
+<rect x="430" y="236" width="18" height="8"/>
+<rect x="430" y="316" width="18" height="8"/>
+</g>
+<!-- cat ladder -->
+<g stroke="#7fd9c9" stroke-width="1">
+<line x1="455" y1="80" x2="455" y2="395"/>
+<line x1="463" y1="80" x2="463" y2="395"/>
+<line x1="455" y1="100" x2="463" y2="100"/><line x1="455" y1="120" x2="463" y2="120"/>
+<line x1="455" y1="140" x2="463" y2="140"/><line x1="455" y1="180" x2="463" y2="180"/>
+<line x1="455" y1="200" x2="463" y2="200"/><line x1="455" y1="220" x2="463" y2="220"/>
+<line x1="455" y1="260" x2="463" y2="260"/><line x1="455" y1="280" x2="463" y2="280"/>
+<line x1="455" y1="300" x2="463" y2="300"/><line x1="455" y1="340" x2="463" y2="340"/>
+<line x1="455" y1="360" x2="463" y2="360"/><line x1="455" y1="380" x2="463" y2="380"/>
+</g>
+<!-- independent deep foundation -->
+<rect x="388" y="400" width="100" height="34" fill="url(#hatch)" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="400" y1="434" x2="400" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<line x1="438" y1="434" x2="438" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<line x1="476" y1="434" x2="476" y2="448" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="496" y="420" class="bp-label-sm" text-anchor="end">INDEPENDENT</text>
+<text x="496" y="432" class="bp-label-sm" text-anchor="end">FOUNDATION</text>
+<!-- roof hub marker -->
+<rect x="398" y="40" width="80" height="22" fill="#0c1322" stroke="#38bdf8" stroke-width="1.5"/>
+<text x="438" y="55" class="bp-label" text-anchor="middle" style="fill:#38bdf8">ROOF HUB</text>
+<!-- label for spine -->
+<text x="438" y="220" class="bp-label" text-anchor="middle" transform="rotate(-90 438 220)" style="font-size:13px;fill:#2dd4bf">SURVIVAL SPINE — RC, INDEPENDENT</text>
+<!-- dimension ~2x2m -->
+<line x1="392" y1="385" x2="484" y2="385" stroke="#d4a373" stroke-width=".8"/>
+<text x="438" y="382" class="bp-dim" text-anchor="middle">~2.0 m</text>
+</svg>
+<div class="cap">GMB.1 — Tulang punggung menembus bangunan yang ada, di atas fondasi mandirinya sendiri.</div></div>
+  <div class="cards two">
+    <div class="card"><span class="ic">🏛️</span><h4>Struktur mandiri</h4><p>Fondasi dan rangka bertulang sendiri. Tetap berdiri meski bangunan induk runtuh di sekelilingnya.</p></div>
+    <div class="card"><span class="ic">🪜</span><h4>Sirkulasi vertikal</h4><p>Tangga monyet menerus dengan palka bertumpuk menyatukan setiap lantai menjadi satu tulang punggung perlindungan.</p></div>
+    <div class="card"><span class="ic">🛏️</span><h4>Berguna dalam keseharian</h4><p>Tiap lantai adalah ruang kecil yang fungsional — lemari, ranjang, gudang perbekalan. Biaya berubah menjadi manfaat.</p></div>
+    <div class="card"><span class="ic">⚓</span><h4>Lapis baja lateral</h4><p>Tulangan tambahan membuatnya mampu menahan benturan samping dan tekanan reruntuhan, seperti pilar jembatan.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">04 — PUSAT ATAP</div>
+  <h2>Segala yang penting berada di puncak</h2>
+  <p>Titik yang paling sedikit tertimbun setelah runtuh adalah atap. Maka tulang punggung memusatkan penunjang hidupnya di sana: tangki air yang memasok tiap lantai secara gravitasi dan sekaligus menjadi massa pemberat; saluran masuk ventilasi yang menjulang di atas reruntuhan; palka pelarian; dan suar penanda bagi penyelamat.</p>
+  <div class="fig"><svg viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Detail of the roof hub: water tank, vent intake, escape hatch, signaling and seismic isolation valve">
+<defs>
+<pattern id="hatch2" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<line x1="0" y1="0" x2="0" y2="6" stroke="#1b3a44" stroke-width="1"/>
+</pattern>
+</defs>
+<!-- spine top wall -->
+<rect x="160" y="200" width="280" height="200" fill="url(#hatch2)" stroke="#2dd4bf" stroke-width="2.5"/>
+<!-- roof slab -->
+<rect x="150" y="186" width="300" height="16" fill="#0c1322" stroke="#2dd4bf" stroke-width="2"/>
+<text x="300" y="390" class="bp-label" text-anchor="middle" style="font-size:13px">TOP OF SPINE (LEAST-BURIED POINT)</text>
+<!-- water tank on top -->
+<rect x="210" y="86" width="180" height="84" rx="8" fill="#0c1322" stroke="#38bdf8" stroke-width="2.5"/>
+<line x1="210" y1="118" x2="390" y2="118" stroke="#38bdf8" stroke-width="1" opacity=".5"/>
+<g fill="#38bdf8" opacity=".25"><rect x="212" y="120" width="176" height="48" rx="6"/></g>
+<text x="300" y="135" class="bp-label" text-anchor="middle" style="fill:#38bdf8">WATER TANK</text>
+<text x="300" y="150" class="bp-label-sm" text-anchor="middle">supply + ballast mass</text>
+<!-- vent intake stack -->
+<rect x="180" y="60" width="22" height="126" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<path d="M173 60 h36 l-8 -14 h-20 z" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<text x="125" y="80" class="bp-label-sm">VENT</text>
+<text x="120" y="92" class="bp-label-sm">INTAKE</text>
+<!-- signaling beacon -->
+<circle cx="410" cy="60" r="10" fill="none" stroke="#d4a373" stroke-width="2"/>
+<circle cx="410" cy="60" r="4" fill="#d4a373"/>
+<g stroke="#d4a373" stroke-width="1.5"><line x1="410" y1="38" x2="410" y2="46"/><line x1="430" y1="60" x2="438" y2="60"/><line x1="424" y1="46" x2="430" y2="40"/></g>
+<text x="445" y="64" class="bp-label-sm">SIGNAL /</text>
+<text x="445" y="76" class="bp-label-sm">BEACON</text>
+<!-- escape hatch in roof -->
+<rect x="300" y="186" width="44" height="16" fill="#0c1322" stroke="#7fd9c9" stroke-width="2"/>
+<text x="322" y="222" class="bp-label-sm" text-anchor="middle">ESCAPE HATCH ↑</text>
+<!-- seismic isolation valve -->
+<circle cx="300" cy="186" r="0"/>
+<rect x="284" y="168" width="0" height="0"/>
+<!-- pipe from tank down with valve -->
+<line x1="300" y1="170" x2="300" y2="186" stroke="#38bdf8" stroke-width="2"/>
+<g transform="translate(250,250)">
+<polygon points="0,0 18,9 0,18 18,0" fill="none" stroke="#d4a373" stroke-width="2"/>
+<text x="28" y="14" class="bp-label-sm">SEISMIC SHUT-OFF VALVE</text>
+<text x="28" y="26" class="bp-label-sm">(normally open → isolates on quake)</text>
+</g>
+<line x1="300" y1="202" x2="259" y2="252" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3 3"/>
+<!-- cat ladder hint inside -->
+<g stroke="#7fd9c9" stroke-width="1" opacity=".7">
+<line x1="320" y1="260" x2="320" y2="400"/><line x1="330" y1="260" x2="330" y2="400"/>
+<line x1="320" y1="280" x2="330" y2="280"/><line x1="320" y1="310" x2="330" y2="310"/>
+<line x1="320" y1="340" x2="330" y2="340"/><line x1="320" y1="370" x2="330" y2="370"/>
+</g>
+</svg>
+<div class="cap">GMB.2 — Pusat atap: tangki air + pemberat, masuk udara, palka, suar, katup putus seismik.</div></div>
+  <h3>Katup putus seismik</h3>
+  <p>Tangki air diperbarui terus-menerus dalam keseharian, sehingga airnya selalu segar. Katup putus seismik — teknologi teruji yang sama dengan katup gas antigempa — tetap terbuka hingga getaran terdeteksi, lalu mengisolasi tangki untuk menyegel volume simpanan bagi penghuni. Selebihnya dikerjakan gravitasi: tanpa pompa, tanpa listrik — yang penting saat jaringan terputus.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">05 — TULANG PUNGGUNG PENYELAMAT</div>
+  <h2>Menyelamatkan diri ke atas, penyelamatan ke bawah</h2>
+  <p>Karena lantai-lantai terhubung oleh tangga monyet menerus, tulang punggung ini bukan kumpulan kotak terpisah — melainkan satu tempat berlindung vertikal dengan sirkulasi internal. Jika pintu keluar lantai dasar tertutup reruntuhan, penghuni memanjat ke lantai yang lebih lapang atau ke atap.</p>
+  <div class="fig"><svg viewBox="0 0 600 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rescue spine after collapse: occupants climb up, rescuers descend down through the intact vertical shaft">
+<defs>
+<pattern id="rub" width="8" height="8" patternUnits="userSpaceOnUse">
+<circle cx="2" cy="2" r="1.3" fill="#2a2018"/><circle cx="6" cy="5" r="1" fill="#2a2018"/>
+</pattern>
+</defs>
+<!-- rubble piles around -->
+<path d="M20 400 Q120 300 200 360 T 360 350 Q300 400 380 400 Z" fill="url(#rub)" stroke="#3a2e22" stroke-width="1"/>
+<path d="M460 400 Q520 330 580 380 L580 400 Z" fill="url(#rub)" stroke="#3a2e22" stroke-width="1"/>
+<line x1="20" y1="400" x2="580" y2="400" stroke="#2dd4bf" stroke-width="2"/>
+<text x="60" y="380" class="bp-label-sm" style="fill:#8a6e4e">COLLAPSED STRUCTURE / DEBRIS</text>
+<!-- intact spine standing -->
+<rect x="270" y="40" width="86" height="360" fill="#0c1322" stroke="#2dd4bf" stroke-width="2.5"/>
+<g stroke="#2dd4bf" stroke-width="1.2">
+<line x1="270" y1="120" x2="356" y2="120"/>
+<line x1="270" y1="200" x2="356" y2="200"/>
+<line x1="270" y1="280" x2="356" y2="280"/>
+</g>
+<!-- stacked hatches -->
+<g fill="#0a0e16" stroke="#7fd9c9" stroke-width="1.2">
+<rect x="304" y="116" width="18" height="8"/>
+<rect x="304" y="196" width="18" height="8"/>
+<rect x="304" y="276" width="18" height="8"/>
+<rect x="304" y="36" width="18" height="8"/>
+</g>
+<!-- cat ladder -->
+<g stroke="#7fd9c9" stroke-width="1">
+<line x1="328" y1="44" x2="328" y2="395"/><line x1="338" y1="44" x2="338" y2="395"/>
+<line x1="328" y1="70" x2="338" y2="70"/><line x1="328" y1="95" x2="338" y2="95"/>
+<line x1="328" y1="145" x2="338" y2="145"/><line x1="328" y1="170" x2="338" y2="170"/>
+<line x1="328" y1="225" x2="338" y2="225"/><line x1="328" y1="250" x2="338" y2="250"/>
+<line x1="328" y1="305" x2="338" y2="305"/><line x1="328" y1="330" x2="338" y2="330"/><line x1="328" y1="360" x2="338" y2="360"/>
+</g>
+<text x="313" y="225" class="bp-label" text-anchor="middle" transform="rotate(-90 313 225)" style="fill:#2dd4bf">SPINE — INTACT</text>
+<!-- up arrow (occupant climbs up) -->
+<g stroke="#2dd4bf" stroke-width="2.5" fill="none">
+<line x1="240" y1="360" x2="240" y2="150"/>
+<path d="M232 165 l8 -16 l8 16" />
+</g>
+<text x="150" y="260" class="bp-label" style="fill:#2dd4bf">OCCUPANTS</text>
+<text x="170" y="276" class="bp-label" style="fill:#2dd4bf">CLIMB UP ↑</text>
+<!-- down arrow (rescuers descend) -->
+<g stroke="#d4a373" stroke-width="2.5" fill="none">
+<line x1="388" y1="70" x2="388" y2="300"/>
+<path d="M380 285 l8 16 l8 -16"/>
+</g>
+<text x="405" y="150" class="bp-label" style="fill:#d4a373">RESCUERS</text>
+<text x="405" y="166" class="bp-label" style="fill:#d4a373">DESCEND ↓</text>
+<!-- roof access star -->
+<circle cx="313" cy="30" r="9" fill="none" stroke="#d4a373" stroke-width="2"/>
+<text x="313" y="20" class="bp-label-sm" text-anchor="middle">ROOF ACCESS</text>
+</svg>
+<div class="cap">GMB.3 — Setelah runtuh: penghuni memanjat naik lewat selubung yang utuh, penyelamat turun melaluinya.</div></div>
+  <p>Dan bekerja sebaliknya. Tim penyelamat hampir selalu mencapai atap lebih dulu. Jalur vertikal yang dikenal, terpetakan, dan utuh secara struktural yang menembus lurus reruntuhan adalah persis yang diidamkan pencarian-pertolongan perkotaan: mereka menuruni tangga yang sama untuk menjangkau orang yang terjebak di setiap lantai. Tulang punggung menjadi tulang punggung penyelamat.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">06 — MENGAPA UNGGUL</div>
+  <h2>Keunggulan menumpuk</h2>
+  <div class="metrics">
+    <div class="metric"><div class="big">&lt;10%</div><div class="lbl">dari biaya perkuatan</div></div>
+    <div class="metric"><div class="big">1–2</div><div class="lbl">bulan, bukan setahun</div></div>
+    <div class="metric"><div class="big">+1</div><div class="lbl">ruang ekstra per unit</div></div>
+    <div class="metric"><div class="big">7d</div><div class="lbl">hari perbekalan tersimpan</div></div>
+  </div>
+  <div class="cards two">
+    <div class="card"><h4>Tanpa pindah</h4><p>Keluarga tetap tinggal di rumah selama pengerjaan. Ini saja menghapus alasan terbesar mengapa perkuatan tak pernah dilakukan.</p></div>
+    <div class="card"><h4>Tanpa jalan buntu</h4><p>Pekerjaan dapat berjalan tanpa persetujuan bulat yang nyaris mustahil dari semua pemilik untuk mendanai dan mengosongkan.</p></div>
+    <div class="card"><h4>Biaya menjadi manfaat</h4><p>Tiap unit memperoleh satu ruang kecil yang berguna. Orang tidak membeli keamanan — mereka membeli ruang tambahan yang juga menyelamatkan nyawa.</p></div>
+    <div class="card"><h4>Waktu hingga diselamatkan</h4><p>Air, makanan, ventilasi, dan sanitasi untuk beberapa hari membeli jendela bertahan hidup yang dibutuhkan penyelamatan perkotaan.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-num">07 — CARA MEMBANGUN</div>
+  <h2>Urutannya</h2>
+  <div class="steps">
+    <div class="step"><h4>Kenali ruang mati</h4><p>Tangga servis, dapur kecil, atau gudang tak terpakai berukuran sekitar 2×2 m, terjangkau dalam kurang dari dua menit dari titik mana pun di rumah.</p></div>
+    <div class="step"><h4>Potong dan topang</h4><p>Pelat lama dipotong sepanjang tapak; fondasi dalam mandiri dicor, dengan penopangan bila tanah memerlukannya.</p></div>
+    <div class="step"><h4>Dirikan tulang punggung</h4><p>Menara beton bertulang rapat dibangun dari dalam, lantai demi lantai, rata dengan namun terpisah dari struktur induk.</p></div>
+    <div class="step"><h4>Rangkai sirkulasi</h4><p>Tangga monyet menerus dan palka bertumpuk menghubungkan tiap lantai; penyelesaian interior menambah lemari, ranjang, dan gudang perbekalan.</p></div>
+    <div class="step"><h4>Mahkotai dengan pusat atap</h4><p>Tangki air, masuk udara, palka, suar, dan katup seismik melengkapi tempat berlindung swasembada.</p></div>
+  </div>
+  <div class="note"><b>Catatan teknik:</b> sistem peringatan dini memberi banyak kota beberapa detik hingga puluhan detik sebelum guncangan kuat tiba — cukup, dengan tempat berlindung kurang dari dua menit, agar bahkan penghuni lanjut usia dapat mencapainya bila rutenya telah dilatih.</div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="ft-title">Tulang Punggung Bertahan Hidup</div>
+    <div class="ft-sub">Konsep terbuka untuk perkuatan seismik penyelamat jiwa. Berlaku untuk sebagian besar bangunan tua di wilayah rawan gempa.</div>
+    <button class="footer-contact" onclick="document.getElementById('cd').classList.add('open')">Hubungi digitalAIventures</button>
+    <div class="disclaimer">Ini adalah usulan konseptual untuk diskusi dan tujuan prior-art, bukan spesifikasi konstruksi. Setiap penerapan nyata harus dirancang, dihitung, dan disahkan oleh insinyur struktur bersertifikat sesuai peraturan seismik setempat.</div>
+  </div>
+</footer>
+</div>
+
+<div class="dialog-overlay" id="cd" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="dialog-box">
+    <h4>Get in Touch</h4>
+    <a class="dialog-option dialog-bot"  href="https://t.me/Juanitto_assist_bot" target="_blank" rel="noopener">🤖 AI Assist 24/7</a>
+    <a class="dialog-option dialog-tg"   href="https://t.me/JuanittoCalvares"     target="_blank" rel="noopener">✈ Personal</a>
+    <a class="dialog-option dialog-mail" href="mailto:digitalAIventures.LLC@gmail.com">✉ Email</a>
+    <button class="dialog-close" onclick="document.getElementById('cd').classList.remove('open')">Close</button>
+  </div>
+</div>
+
+<script>
+function toggleTheme(){
+  var html=document.documentElement;
+  var cur=html.getAttribute('data-theme')||'dark';
+  var nxt=cur==='dark'?'light':'dark';
+  html.setAttribute('data-theme',nxt);
+  document.getElementById('themeIcon').textContent=nxt==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',nxt)}catch(e){}
+}
+(function(){
+  function apply(t){
+    document.documentElement.setAttribute('data-theme',t);
+    document.addEventListener('DOMContentLoaded',function(){
+      var i=document.getElementById('themeIcon'); if(i)i.textContent=t==='dark'?'☀️':'🌙';
+    });
+  }
+  try{var s=localStorage.getItem('theme'); if(s){apply(s)} else {var h=new Date().getHours(); apply(h>=7&&h<19?'light':'dark')}}catch(e){apply('dark')}
+})();
+
+var SUPPORTED=['en', 'es', 'ro', 'ja', 'tr', 'it', 'zh', 'fa', 'el', 'id'];
+function setLang(code){
+  document.querySelectorAll('[data-lang]').forEach(function(el){el.classList.remove('active')});
+  var el=document.querySelector('[data-lang="'+code+'"]'); if(el)el.classList.add('active');
+  document.querySelectorAll('#langbar button').forEach(function(b){
+    b.classList.toggle('active', b.getAttribute('data-set')===code);
+  });
+  document.documentElement.setAttribute('lang',code);
+  document.documentElement.setAttribute('dir', code==='fa'?'rtl':'ltr');
+  try{localStorage.setItem('spine_lang',code)}catch(e){}
+  window.scrollTo(0,0);
+}
+(function(){
+  var pick='en';
+  try{var saved=localStorage.getItem('spine_lang'); if(saved&&SUPPORTED.indexOf(saved)>=0){pick=saved}
+    else{var nav=(navigator.language||'en').slice(0,2).toLowerCase(); if(SUPPORTED.indexOf(nav)>=0)pick=nav;}
+  }catch(e){}
+  document.addEventListener('DOMContentLoaded',function(){setLang(pick)});
+})();
+</script>
+
+</body>
+</html>
