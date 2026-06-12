@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cúpula Aircrete NHL — Estudio de Viabilidad · digitalAIventures</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root, [data-theme="light"] {
+  --bg:#f5f0e6; --bg-card:#fffdf8; --bg-hero:linear-gradient(135deg,#ece3d2 0%,#f5f0e6 100%);
+  --text:#3a352c; --text-muted:#7a7264; --text-heading:#2a241a;
+  --border:#e2d9c8; --accent:#a8743a; --accent-bg:rgba(168,116,58,.08);
+  --link:#7a5230; --link-hover:#5a3a1f; --overlay-bg:rgba(0,0,0,.4);
+  --dialog-bg:#fffdf8; --code-bg:#efe8da; --opt1:#5a7a4a; --opt2:#9a6b3a;
+}
+[data-theme="dark"] {
+  --bg:#16140f; --bg-card:#1f1c15; --bg-hero:linear-gradient(135deg,#221d14 0%,#16140f 100%);
+  --text:#e6ddcc; --text-muted:#9a9180; --text-heading:#fff;
+  --border:#33302a; --accent:#d49a5a; --accent-bg:rgba(212,154,90,.12);
+  --link:#d4a86a; --link-hover:#e8c690; --overlay-bg:rgba(0,0,0,.6);
+  --dialog-bg:#1f1c15; --code-bg:#13110d; --opt1:#7fa86a; --opt2:#c89255;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:15px}
+.wrap{max-width:840px;margin:0 auto;padding:1.25rem}
+.hero{background:var(--bg-hero);border:1px solid var(--border);border-radius:1rem;padding:2rem 1.5rem;margin-bottom:1.5rem;text-align:center}
+.badge{display:inline-block;font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-bg);border:1px solid var(--border);border-radius:999px;padding:.2rem .8rem;margin-bottom:.9rem}
+h1{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:600;color:var(--text-heading);line-height:1.2;margin-bottom:.5rem}
+.hero .sub{color:var(--text-muted);font-size:.9rem}
+h2{font-family:'Fraunces',serif;font-size:1.3rem;color:var(--text-heading);margin:2rem 0 .8rem;padding-bottom:.4rem;border-bottom:2px solid var(--accent);display:inline-block}
+h3{font-size:1.02rem;color:var(--text-heading);margin:1.4rem 0 .5rem;font-weight:600}
+p{margin-bottom:.8rem}
+.lead{color:var(--text-muted);font-size:.92rem}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:.8rem;padding:1.2rem;margin-bottom:1rem}
+.card.opt1{border-left:4px solid var(--opt1)}
+.card.opt2{border-left:4px solid var(--opt2)}
+.card.water{border-left:4px solid #4a90a4}
+.subvar{background:var(--accent-bg);border:1px solid var(--border);border-radius:.6rem;padding:.9rem 1rem;margin:.7rem 0}
+.subvar h3{margin-top:0}
+table{width:100%;border-collapse:collapse;margin:.8rem 0;font-size:.84rem;display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+table th,table td{min-width:5.5rem}
+th,td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--border);vertical-align:top}
+th{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);font-weight:600}
+td.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+tr.total td{font-weight:700;color:var(--text-heading);border-top:2px solid var(--accent);border-bottom:none}
+.pill{display:inline-block;font-size:.7rem;font-weight:600;padding:.12rem .5rem;border-radius:999px;background:var(--accent-bg);color:var(--accent)}
+.warn{background:var(--accent-bg);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:.5rem;padding:.8rem 1rem;margin:1rem 0;font-size:.86rem}
+.warn strong{color:var(--accent)}
+ul{margin:.4rem 0 .8rem 1.2rem}
+li{margin-bottom:.3rem;font-size:.88rem}
+.k{font-family:monospace;font-size:.82rem;background:var(--code-bg);padding:.08rem .35rem;border-radius:.3rem}
+.sqm{background:var(--bg-hero);border:1px solid var(--border);border-radius:.8rem;padding:1.2rem;margin:1rem 0}
+.sqm .big{font-family:'Fraunces',serif;font-size:1.5rem;color:var(--text-heading);font-weight:600}
+.lang-bar{position:fixed;top:.75rem;left:.75rem;z-index:160;display:flex;gap:.3rem;background:var(--bg-card);border:1px solid var(--border);border-radius:999px;padding:.2rem}
+.lang-bar button{border:none;background:none;color:var(--text-muted);font-size:.78rem;font-weight:600;padding:.25rem .6rem;border-radius:999px;cursor:pointer}
+.lang-bar button.active{background:var(--accent);color:#fff}
+.theme-toggle{position:fixed;top:.75rem;right:.75rem;z-index:150;background:var(--bg-card);border:1px solid var(--border);width:2.4rem;height:2.4rem;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.theme-icon{font-size:1.1rem;line-height:1}
+[data-lang]{display:none}
+[data-lang].show{display:block}
+.footer-contact{background:var(--accent);color:#fff;border:none;padding:.55rem 1.4rem;border-radius:.5rem;font-size:.85rem;font-weight:600;cursor:pointer;margin-bottom:1rem}
+.dialog-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--overlay-bg);z-index:200;align-items:center;justify-content:center}
+.dialog-overlay.open{display:flex}
+.dialog-box{background:var(--dialog-bg);border-radius:1rem;padding:1.75rem;max-width:300px;width:90%;text-align:center}
+.dialog-box h4{color:var(--text-heading);margin-bottom:1rem;font-size:1rem}
+.dialog-option{display:block;width:100%;padding:.65rem;margin-bottom:.6rem;border-radius:.5rem;text-decoration:none;font-weight:600;font-size:.9rem;text-align:center}
+.dialog-bot{background:#0088cc;color:#fff}
+.dialog-tg{background:#229ED9;color:#fff}
+.dialog-mail{background:#4a6741;color:#fff}
+.dialog-close{background:none;border:1px solid var(--border);color:var(--text-muted);cursor:pointer;font-size:.82rem;padding:.4rem 1.2rem;border-radius:.4rem;margin-top:.2rem}
+footer{margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);text-align:center;color:var(--text-muted);font-size:.78rem}
+.author{color:var(--text-heading);font-weight:600;margin-bottom:.3rem}
+.disclaimer{font-size:.76rem;color:var(--text-muted);font-style:italic;margin-top:1rem}
+</style>
+</head>
+<body>
+<div class="lang-bar">
+  <button id="btn-es" class="active" onclick="setLang('es')">ES</button>
+  <button id="btn-en" onclick="setLang('en')">EN</button>
+</div>
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme"><span class="theme-icon" id="themeIcon">☀️</span></button>
+
+<div class="wrap">
+
+<!-- ============ ES ============ -->
+<div data-lang="es" class="show">
+  <div class="hero">
+    <div class="badge">Estudio de viabilidad · fase conceptual</div>
+    <h1>Cúpula aislada en aircrete de cal NHL</h1>
+    <p class="sub">Cúpula existente Ø 12 m · altura 6,5 m · Las Alpujarras, Granada</p>
+  </div>
+
+  <p class="lead">Comparación de dos soluciones para convertir la cúpula geodésica (estructura de acero + lona) en un cierre sólido, aislado y transpirable usando aircrete de cal NHL reforzado con fibra de esparto. Cifras de orden de magnitud, solo para estimación de costes.</p>
+
+  <div class="sqm">
+    <p style="margin-bottom:.3rem"><strong>Geometría base</strong></p>
+    <p style="font-size:.86rem;margin-bottom:.5rem">Superficie de envolvente ≈ <strong>250 m²</strong> · neto a revestir (menos huecos) ≈ <strong>230 m²</strong>. Esta es la cifra maestra de ambas opciones.</p>
+  </div>
+
+  <h2>Opción 1 — Paneles triangulares armados sobre la cúpula existente</h2>
+  <div class="card opt1">
+    <p><strong>Concepto:</strong> un <strong>panel triangular monolítico por cara</strong> (lado ~2,5–3 m), igual a la abertura estructural existente. Dentro de cada panel, una <strong>retícula de armado metálico</strong> (perímetro + miembros intermedios formando triángulos de ~1 m) actúa como armadura embebida — como el hierro en una losa — rigidizando el gran panel sin trocearlo. Malla + aircrete rellenan la retícula → un único panel triangular armado.</p>
+    <p style="font-size:.86rem"><strong>Producción in situ:</strong> cada panel se fabrica y manipula en obra, en/junto a su cara → sin problema de transporte ni de izado a distancia. <strong>Las juntas solo existen en las aristas</strong> (líneas de los montantes), coincidiendo con la estructura de acero a la que se fija → mínimas juntas.</p>
+
+    <div class="subvar">
+      <h3>1A · Armado metálico (acero galvanizado)</h3>
+      <p style="font-size:.85rem;margin-bottom:0">Tubo de pared fina o perfil conformado en frío (CFS). Soldable casi en cualquier sitio, barato, <strong>compatible con la cal</strong> (como la armadura). <em>Aluminio descartado: lo ataca el álcali de la cal/cemento, es difícil de soldar in situ y flexa 3× más (menor módulo E).</em></p>
+    </div>
+
+    <div class="subvar">
+      <h3>1B · Armado de madera (castaño / pino local)</h3>
+      <p style="font-size:.85rem;margin-bottom:0">La cal es muy compatible con la madera (opción ecobio). Ligera, se corta y fija con herramienta manual, local. Ideal para los miembros <strong>intermedios</strong>. Híbrido recomendado: perímetro de acero (toma la carga real + atornilla a los nudos de la cúpula) + retícula interna de madera.</p>
+    </div>
+
+    <table>
+      <thead><tr><th>Material</th><th>Cantidad</th><th class="num">Coste (€)</th></tr></thead>
+      <tbody>
+        <tr><td>Retícula de armado — acero CFS / tubo (1A) o madera (1B)</td><td>~150 m lin.</td><td class="num">600 – 4.500</td></tr>
+        <tr><td>Conexiones (tornillos, placas/cartelas o consumibles soldadura)</td><td>—</td><td class="num">300 – 900</td></tr>
+        <tr><td>Malla fina — basalto (ecobio) / fibra de vidrio</td><td>~255 m²</td><td class="num">500 – 1.200</td></tr>
+        <tr><td>Aglomerante NHL 3,5 (capa ~6 cm → ~14 m³)</td><td>~4,2 t</td><td class="num">1.300 – 2.500</td></tr>
+        <tr><td>Espumante + esparto + agua</td><td>—</td><td class="num">150 – 400</td></tr>
+        <tr class="total"><td>Subtotal materiales (concepto)</td><td></td><td class="num">~2.850 – 9.500</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.84rem"><span class="pill">+</span> Reutiliza cúpula y cimentación · producción in situ · mínimas juntas (solo aristas) · panel rígido (armado interno) · <span class="pill">−</span> aislamiento moderato (~6 cm) · IP productizable débil. Madera (1B) abarata y es más ecobio; acero (1A) más rígido y duradero.</p>
+    <p style="font-size:.84rem;color:var(--text-muted)">Rango bajo ≈ retícula de madera; rango alto ≈ todo acero CFS.</p>
+  </div>
+
+  <div class="warn">
+    <strong>Caveat clave (Opción 1):</strong> los paneles + el aircrete transfieren todo su peso a los <strong>nudos/hubs originales</strong> de la cúpula de acero, no diseñados para esa carga. La <strong>capacidad de los nudos</strong> es la cuestión gobernante — es el dato de resistencia del marco que hay que recuperar antes de dimensionar.
+  </div>
+
+  <h2>Opción 2 — Cúpula autoportante de ladrillos aircrete</h2>
+  <div class="card opt2">
+    <p><strong>Concepto:</strong> cúpula lisa esférica (no facetada) de ladrillos-cuña huecos en aircrete NHL. <em>Ignora</em> la estructura de acero; requiere anillo de tracción en la base. Versión productizable mediante molde ajustable.</p>
+
+    <h3>Molde ajustable — el corazón del sistema</h3>
+    <p style="font-size:.88rem">En una esfera de radio constante (R≈6 m), la <strong>curvatura es igual en todo el cascarón</strong> → se fija una sola vez en el molde. Solo cambian <strong>ancho y conicidad</strong> por hilada. Un <strong>molde-batería ajustable (~8–12 cavidades)</strong> se reconfigura una vez por hilada y vierte toda la hilada de golpe. Más una tabla de ajustes (hilada → ancho/conicidad) y un compás/trama de colocación.</p>
+
+    <table>
+      <thead><tr><th>Material</th><th>Cantidad</th><th class="num">Coste (€)</th></tr></thead>
+      <tbody>
+        <tr><td>Aglomerante NHL 5</td><td>~12 t</td><td class="num">4.200 – 7.800</td></tr>
+        <tr><td>Adición de cemento (~12 %)</td><td>~1,5 t</td><td class="num">225 – 450</td></tr>
+        <tr><td>Árido ligero ecobio (puzolana / perlita)</td><td>~20–25 m³</td><td class="num">800 – 2.250</td></tr>
+        <tr><td>Fibra de esparto (&lt;2 cm)</td><td>~150–250 kg</td><td class="num">0 – 300</td></tr>
+        <tr><td>Espumante (si se usa)</td><td>—</td><td class="num">100 – 400</td></tr>
+        <tr><td><strong>Anillo de tracción base</strong> (obligatorio)</td><td>~38 m perímetro</td><td class="num">1.000 – 3.000</td></tr>
+        <tr><td>Cimentación / zapata perimetral</td><td>~38 m</td><td class="num">800 – 2.500</td></tr>
+        <tr><td>Molde-batería ajustable (8–12 cav.)</td><td>1 ud</td><td class="num">3.500 – 8.000</td></tr>
+        <tr><td>Molde de clave/cierre</td><td>1 ud</td><td class="num">150 – 400</td></tr>
+        <tr class="total"><td>Subtotal materiales + utillaje (concepto)</td><td></td><td class="num">~10.800 – 25.100</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.84rem">~2.400 ladrillos (cara 40×25 cm, espesor 20 cm, ~30 % huecos) → ~34 m³ de aircrete. <span class="pill">+</span> aislamiento excelente (~20 cm) · construible a mano, ladrillo a ladrillo · <strong>IP productizable fuerte</strong> · <span class="pill">−</span> no aprovecha la cúpula · base de ingeniería real (anillo + zapata).</p>
+  </div>
+
+  <div class="warn">
+    <strong>Economía del utillaje:</strong> el molde es un coste único amortizable en ~2.400 ladrillos (una cúpula) y gratis en todas las siguientes. Incluso el molde-batería grande (8.000 €) ÷ 2.400 = ~3,33 €/ladrillo en la primera cúpula, luego 0. Un solo cliente lo amortiza. El multi-cavidad no es lujo: es obligatorio para que el plazo (curado/desmolde) sea viable en solitario.
+  </div>
+
+  <h2>Impermeabilización y juntas (concepto)</h2>
+  <div class="card water">
+    <p><strong>Regla de oro de la cal:</strong> el aircrete de cal es <strong>transpirable</strong> — esa es su virtud. Nunca encerrarlo bajo una membrana impermeable (betún, plástico, pintura acrílica, mortero de cemento): el vapor interior condensaría contra la barrera, saturaría la cal y produciría desconchados por hielo-deshielo y lixiviación. La estrategia correcta es <strong>evacuar el agua líquida por fuera dejando salir el vapor</strong>, como un edificio tradicional de cal.</p>
+    <p style="font-size:.88rem"><strong>Tres capas conceptuales (de fuera a dentro):</strong></p>
+    <ul>
+      <li><strong>Superficie / campo</strong> — revoco de acabado a base de cal (NHL o cal-puzolana), transpirable y resistente a la intemperie; opcionalmente un hidrofugante transpirable mineral (silicato potásico / siloxano) que repele líquido y deja pasar vapor. Nunca un film.</li>
+      <li><strong>Geometría</strong> — la curvatura de la cúpula evacúa el agua rápido; ninguna junta mira hacia arriba. La forma es la mayor aliada.</li>
+      <li><strong>Detalles críticos</strong> — clave/ápice (remate que evacúe), base (vierteaguas + corte capilar), y todas las penetraciones (puerta, ventanas, montantes de acero).</li>
+    </ul>
+    <p style="font-size:.88rem"><strong>Juntas, por opción:</strong></p>
+    <ul>
+      <li><strong>Opción 1</strong> — el campo de cada panel es aircrete monolítico continuo (sin juntas en la cara). Las juntas se reducen a <strong>una línea por arista</strong> (sobre los montantes). Solución: una <strong>banda de revoco armada con malla de basalto continua que puentea cada arista</strong>, de modo que el plano de acabado sea continuo aunque el sustrato esté segmentado. Esa banda flexible resuelve a la vez estanqueidad y movimiento sísmico. El detalle más delicado: la interfaz panel-acero (movimiento diferencial).</li>
+      <li><strong>Opción 2</strong> — las juntas son las llagas de mortero entre ladrillos: mortero de cal + llaga matada/enrasada hacia fuera (perfil que evacúa). Problema históricamente resuelto en cúpulas mediterráneas/persas; bajo riesgo.</li>
+    </ul>
+    <p style="font-size:.84rem;color:var(--text-muted)"><strong>Acoplamiento sísmico:</strong> en zona sísmica la envolvente se mueve; un revoco rígido continuo fisura y la fisura deja entrar agua. La misma flexibilidad que sobrevive al sismo es la que mantiene la estanqueidad. La banda de revoco armada con basalto atiende ambos a la vez — por eso ancla el concepto.</p>
+  </div>
+
+  <h2>Comparación</h2>
+  <table>
+    <thead><tr><th></th><th>Opción 1</th><th>Opción 2</th></tr></thead>
+    <tbody>
+      <tr><td>Usa la cúpula de acero</td><td>Sí (es la estructura)</td><td>No</td></tr>
+      <tr><td>Anillo de tracción</td><td>No necesario</td><td>Obligatorio</td></tr>
+      <tr><td>Cimentación nueva</td><td>Mínima</td><td>Necesaria</td></tr>
+      <tr><td>Juntas</td><td>Solo aristas (mínimas)</td><td>Llagas entre ladrillos</td></tr>
+      <tr><td>Aislamiento</td><td>Moderato (~6 cm)</td><td>Excelente (~20 cm)</td></tr>
+      <tr><td>Construible en solitario</td><td>Sí (producción in situ)</td><td>Sí</td></tr>
+      <tr><td>IP / "proiect tip"</td><td>Débil</td><td>Fuerte</td></tr>
+      <tr><td>Materiales (concepto)</td><td>~3–9,5 k€</td><td>~11–25 k€</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Coste por m²</h2>
+  <div class="sqm">
+    <p style="margin-bottom:.6rem;font-size:.86rem">Sobre 230 m² de envolvente neta (solo materiales/utillaje, sin mano de obra, andamios, transporte ni acabados; el revoco de acabado y los detalles de juntas se estiman aparte):</p>
+    <table>
+      <tbody>
+        <tr><td><strong>Opción 1</strong> — paneles armados + aircrete</td><td class="num"><span class="big">12 – 41 €/m²</span></td></tr>
+        <tr><td><strong>Opción 2</strong> — cúpula de ladrillos</td><td class="num"><span class="big">47 – 109 €/m²</span></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.8rem;margin-top:.6rem;color:var(--text-muted)">Opción 1: 2.850–9.500 € ÷ 230 (rango bajo = retícula de madera; alto = todo acero). Opción 2: 10.800–25.100 € ÷ 230. La Opción 2 es un edificio completo y autónomo; la Opción 1 mejora un activo ya construido (estructura + cimentación ya pagadas).</p>
+  </div>
+
+  <div class="warn">
+    <strong>Lectura del consultor:</strong> el cliente con la cúpula preferirá la Opción 1 (mejora un activo existente, mucho menor coste/m², producción in situ, mínimas juntas). Para producto/IP, gana la Opción 2 (molde ajustable + tabla = "proiect tip" licenciable). El dimensionado final, la capacidad de los nudos, el anillo de tracción, los detalles de junta/impermeabilización y el detallado sísmico (NCSE-02) los verifica y firma un ingeniero/arquitecto colegiado.
+  </div>
+
+  <p class="disclaimer">Cifras preliminares e indicativas, solo para estudio de viabilidad y estimación de costes. No constituyen cálculo estructural firmado ni base de ejecución. Excluyen mano de obra, andamios, fijaciones, transporte y acabados — en obra de montaña, en solitario, pueden igualar o superar los materiales.</p>
+</div>
+
+<!-- ============ EN ============ -->
+<div data-lang="en">
+  <div class="hero">
+    <div class="badge">Feasibility study · concept stage</div>
+    <h1>Insulated NHL lime-aircrete dome</h1>
+    <p class="sub">Existing dome Ø 12 m · height 6.5 m · Las Alpujarras, Granada</p>
+  </div>
+
+  <p class="lead">Comparison of two routes to turn the geodesic dome (steel frame + tarp) into a solid, insulated, breathable envelope using NHL lime aircrete reinforced with esparto fibre. Order-of-magnitude figures, for cost estimation only.</p>
+
+  <div class="sqm">
+    <p style="margin-bottom:.3rem"><strong>Base geometry</strong></p>
+    <p style="font-size:.86rem;margin-bottom:.5rem">Envelope surface ≈ <strong>250 m²</strong> · net to clad (less openings) ≈ <strong>230 m²</strong>. This is the master number for both options.</p>
+  </div>
+
+  <h2>Option 1 — Reinforced triangular panels on the existing dome</h2>
+  <div class="card opt1">
+    <p><strong>Concept:</strong> one <strong>monolithic triangular panel per face</strong> (~2.5–3 m edge), matching the existing structural opening. Inside each panel, a <strong>metal framing lattice</strong> (perimeter + intermediate members forming ~1 m triangles) acts as embedded reinforcement — like rebar in a slab — stiffening the large panel without splitting it into pieces. Mesh + aircrete fill the lattice → a single reinforced triangular panel.</p>
+    <p style="font-size:.86rem"><strong>On-site production:</strong> each panel is made and handled on site, at/next to its face → no transport or long-distance lifting problem. <strong>Seams exist only at the edges</strong> (strut lines), coinciding with the steel structure it fixes to → minimal seams.</p>
+
+    <div class="subvar">
+      <h3>1A · Metal framing (galvanized steel)</h3>
+      <p style="font-size:.85rem;margin-bottom:0">Thin-wall tube or cold-formed steel (CFS). Weldable almost anywhere, cheap, <strong>lime-compatible</strong> (like rebar). <em>Aluminium ruled out: attacked by the alkali in lime/cement, hard to weld on site, and flexes 3× more (lower E-modulus).</em></p>
+    </div>
+
+    <div class="subvar">
+      <h3>1B · Timber framing (chestnut / local pine)</h3>
+      <p style="font-size:.85rem;margin-bottom:0">Lime is highly compatible with timber (ecobio choice). Light, cut and fixed with hand tools, local. Ideal for the <strong>intermediate</strong> members. Recommended hybrid: steel perimeter (carries the real load + bolts to the dome nodes) + timber internal lattice.</p>
+    </div>
+
+    <table>
+      <thead><tr><th>Material</th><th>Qty</th><th class="num">Cost (€)</th></tr></thead>
+      <tbody>
+        <tr><td>Framing lattice — steel CFS/tube (1A) or timber (1B)</td><td>~150 lin. m</td><td class="num">600 – 4,500</td></tr>
+        <tr><td>Connections (bolts, plates/gussets or weld consumables)</td><td>—</td><td class="num">300 – 900</td></tr>
+        <tr><td>Fine mesh — basalt (ecobio) / fibreglass</td><td>~255 m²</td><td class="num">500 – 1,200</td></tr>
+        <tr><td>NHL 3.5 binder (~6 cm layer → ~14 m³)</td><td>~4.2 t</td><td class="num">1,300 – 2,500</td></tr>
+        <tr><td>Foaming agent + esparto + water</td><td>—</td><td class="num">150 – 400</td></tr>
+        <tr class="total"><td>Materials subtotal (concept)</td><td></td><td class="num">~2,850 – 9,500</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.84rem"><span class="pill">+</span> Reuses dome & foundation · on-site production · minimal seams (edges only) · rigid panel (internal reinforcement) · <span class="pill">−</span> moderate insulation (~6 cm) · weak productizable IP. Timber (1B) cheaper & more ecobio; steel (1A) stiffer & more durable.</p>
+    <p style="font-size:.84rem;color:var(--text-muted)">Low end ≈ timber lattice; high end ≈ all-steel CFS.</p>
+  </div>
+
+  <div class="warn">
+    <strong>Key caveat (Option 1):</strong> the panels + aircrete transfer all their weight into the <strong>original steel nodes/hubs</strong>, not designed for that load. <strong>Node capacity</strong> is the governing question — it's the frame resistance data to retrieve before any dimensioning.
+  </div>
+
+  <h2>Option 2 — Standalone aircrete-brick dome</h2>
+  <div class="card opt2">
+    <p><strong>Concept:</strong> smooth spherical dome (not faceted) of hollow wedge-bricks in NHL aircrete. <em>Ignores</em> the steel frame; needs a base tension ring. Productizable via one adjustable mold.</p>
+
+    <h3>Adjustable mold — the heart of the system</h3>
+    <p style="font-size:.88rem">In a constant-radius sphere (R≈6 m), <strong>curvature is identical across the whole shell</strong> → set once in the mold. Only <strong>width and taper</strong> change per course. One <strong>adjustable gang mold (~8–12 cavities)</strong> is reset once per course and pours a whole course at once. Plus a setting chart (course → width/taper) and a laying trammel.</p>
+
+    <table>
+      <thead><tr><th>Material</th><th>Qty</th><th class="num">Cost (€)</th></tr></thead>
+      <tbody>
+        <tr><td>NHL 5 binder</td><td>~12 t</td><td class="num">4,200 – 7,800</td></tr>
+        <tr><td>Cement addition (~12%)</td><td>~1.5 t</td><td class="num">225 – 450</td></tr>
+        <tr><td>Ecobio lightweight aggregate (pumice / perlite)</td><td>~20–25 m³</td><td class="num">800 – 2,250</td></tr>
+        <tr><td>Esparto fibre (&lt;2 cm)</td><td>~150–250 kg</td><td class="num">0 – 300</td></tr>
+        <tr><td>Foaming agent (if used)</td><td>—</td><td class="num">100 – 400</td></tr>
+        <tr><td><strong>Base tension ring</strong> (mandatory)</td><td>~38 m perimeter</td><td class="num">1,000 – 3,000</td></tr>
+        <tr><td>Foundation / perimeter footing</td><td>~38 m</td><td class="num">800 – 2,500</td></tr>
+        <tr><td>Adjustable gang mold (8–12 cav.)</td><td>1 unit</td><td class="num">3,500 – 8,000</td></tr>
+        <tr><td>Keystone / closure mold</td><td>1 unit</td><td class="num">150 – 400</td></tr>
+        <tr class="total"><td>Materials + tooling subtotal (concept)</td><td></td><td class="num">~10,800 – 25,100</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.84rem">~2,400 bricks (face 40×25 cm, 20 cm thick, ~30% hollow) → ~34 m³ aircrete. <span class="pill">+</span> excellent insulation (~20 cm) · buildable by hand, brick by brick · <strong>strong productizable IP</strong> · <span class="pill">−</span> doesn't use the dome · real base engineering (ring + footing).</p>
+  </div>
+
+  <div class="warn">
+    <strong>Tooling economics:</strong> the mold is a one-off cost amortized over ~2,400 bricks (one dome) and free on every dome after. Even the big gang mold (€8,000) ÷ 2,400 = ~€3.33/brick on the first dome, then €0. A single paying client absorbs it. Multi-cavity isn't a luxury — it's mandatory for the cure/demold timeline to be feasible solo.
+  </div>
+
+  <h2>Waterproofing & seams (concept)</h2>
+  <div class="card water">
+    <p><strong>The lime golden rule:</strong> lime aircrete is <strong>breathable</strong> — that's its virtue. Never seal it under an impermeable membrane (bitumen, plastic, acrylic paint, cement render): interior vapour would condense against the barrier, saturate the lime and cause freeze-thaw spalling and leaching. The right strategy is to <strong>shed liquid water on the outside while letting vapour escape</strong>, like a traditional lime building.</p>
+    <p style="font-size:.88rem"><strong>Three conceptual layers (outer to inner):</strong></p>
+    <ul>
+      <li><strong>Field surface</strong> — a lime-based finish render (NHL or lime-pozzolan), breathable and weather-resistant; optionally a breathable mineral water-repellent (potassium silicate / siloxane) that repels liquid but passes vapour. Never a film-former.</li>
+      <li><strong>Geometry</strong> — the dome curvature sheds water fast; no seam faces upward. The shape is the biggest ally.</li>
+      <li><strong>Critical details</strong> — crown/apex (shedding cap), base (drip edge + capillary break), and all penetrations (door, windows, steel members).</li>
+    </ul>
+    <p style="font-size:.88rem"><strong>Seams, by option:</strong></p>
+    <ul>
+      <li><strong>Option 1</strong> — each panel field is continuous monolithic aircrete (no joints across the face). Seams reduce to <strong>one line per edge</strong> (over the struts). Fix: a <strong>continuous basalt-mesh-reinforced render band bridging each edge</strong>, so the finish plane is continuous even though the substrate is segmented. That flexible band handles watertightness and seismic movement at once. The most delicate detail: the panel-to-steel interface (differential movement).</li>
+      <li><strong>Option 2</strong> — seams are the mortar joints between bricks: lime bedding mortar + raked/weatherstruck joints (profile sheds outward). Historically solved in Mediterranean/Persian domes; low risk.</li>
+    </ul>
+    <p style="font-size:.84rem;color:var(--text-muted)"><strong>Seismic coupling:</strong> in a seismic zone the envelope moves; a rigid continuous render cracks, and the crack lets water in. The same flexibility that survives shaking is what keeps it watertight. The basalt-reinforced render band addresses both at once — which is why the concept anchors there.</p>
+  </div>
+
+  <h2>Comparison</h2>
+  <table>
+    <thead><tr><th></th><th>Option 1</th><th>Option 2</th></tr></thead>
+    <tbody>
+      <tr><td>Uses the steel dome</td><td>Yes (it's the structure)</td><td>No</td></tr>
+      <tr><td>Tension ring</td><td>Not needed</td><td>Mandatory</td></tr>
+      <tr><td>New foundation</td><td>Minimal</td><td>Needed</td></tr>
+      <tr><td>Seams</td><td>Edges only (minimal)</td><td>Joints between bricks</td></tr>
+      <tr><td>Insulation</td><td>Moderate (~6 cm)</td><td>Excellent (~20 cm)</td></tr>
+      <tr><td>Buildable solo</td><td>Yes (on-site production)</td><td>Yes</td></tr>
+      <tr><td>IP / "type design"</td><td>Weak</td><td>Strong</td></tr>
+      <tr><td>Materials (concept)</td><td>~€3–9.5k</td><td>~€11–25k</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Cost per m²</h2>
+  <div class="sqm">
+    <p style="margin-bottom:.6rem;font-size:.86rem">Over 230 m² net envelope (materials/tooling only — no labour, scaffolding, transport or finishes; finish render and joint details estimated separately):</p>
+    <table>
+      <tbody>
+        <tr><td><strong>Option 1</strong> — reinforced panels + aircrete</td><td class="num"><span class="big">€12 – 41 /m²</span></td></tr>
+        <tr><td><strong>Option 2</strong> — brick dome</td><td class="num"><span class="big">€47 – 109 /m²</span></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.8rem;margin-top:.6rem;color:var(--text-muted)">Option 1: €2,850–9,500 ÷ 230 (low = timber lattice; high = all-steel). Option 2: €10,800–25,100 ÷ 230. Option 2 is a complete standalone building; Option 1 upgrades an asset already built (structure + foundation already paid for).</p>
+  </div>
+
+  <div class="warn">
+    <strong>Consultant's read:</strong> the client who owns the dome will prefer Option 1 (upgrades an existing asset, much lower €/m², on-site production, minimal seams). For a product/IP, Option 2 wins (adjustable mold + chart = licensable "type design"). Final dimensioning, node capacity, the tension ring, joint/waterproofing details and seismic detailing (NCSE-02) get verified and stamped by a licensed engineer/architect.
+  </div>
+
+  <p class="disclaimer">Preliminary, indicative figures, for feasibility study and cost estimation only. Not a stamped structural calculation nor a basis for construction. Excludes labour, scaffolding, fixings, transport and finishes — on a solo mountain site these can equal or exceed materials.</p>
+</div>
+
+<!-- Contact button + author -->
+<div style="text-align:center">
+  <button class="footer-contact" onclick="document.getElementById('cd').classList.add('open')">
+    <span data-lang="es" class="show">Contactar digitalAIventures</span>
+    <span data-lang="en">Contact digitalAIventures</span>
+  </button>
+</div>
+
+<div class="dialog-overlay" id="cd" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="dialog-box">
+    <h4>Get in Touch</h4>
+    <a class="dialog-option dialog-bot"  href="https://t.me/Juanitto_assist_bot" target="_blank">🤖 AI Assist 24/7</a>
+    <a class="dialog-option dialog-tg"   href="https://t.me/JuanittoCalvares"     target="_blank">✈ Personal</a>
+    <a class="dialog-option dialog-mail" href="mailto:digitalAIventures.LLC@gmail.com">✉ Email</a>
+    <button class="dialog-close" onclick="document.getElementById('cd').classList.remove('open')">Close</button>
+  </div>
+</div>
+
+<footer>
+  <p class="author">Autor / Author: arch. Alexandru-Ioan Nistoroiu</p>
+  digitalAIventures LLC · Las Alpujarras, Granada · Estudio conceptual / Concept study
+</footer>
+</div>
+
+<script>
+function setLang(l){
+  document.querySelectorAll('[data-lang]').forEach(e=>e.classList.toggle('show',e.getAttribute('data-lang')===l));
+  document.getElementById('btn-es').classList.toggle('active',l==='es');
+  document.getElementById('btn-en').classList.toggle('active',l==='en');
+  document.documentElement.lang=l;
+  try{localStorage.setItem('lang',l)}catch(e){}
+}
+function toggleTheme(){
+  const html=document.documentElement;
+  const next=(html.getAttribute('data-theme')||'light')==='light'?'dark':'light';
+  html.setAttribute('data-theme',next);
+  document.getElementById('themeIcon').textContent=next==='dark'?'🌙':'☀️';
+  try{localStorage.setItem('theme',next)}catch(e){}
+}
+(function(){
+  try{
+    const t=localStorage.getItem('theme');
+    if(t){document.documentElement.setAttribute('data-theme',t);}
+    else{const h=new Date().getHours();document.documentElement.setAttribute('data-theme',h>=7&&h<19?'light':'dark');}
+  }catch(e){}
+  try{const l=localStorage.getItem('lang');if(l)setLang(l);}catch(e){}
+  document.addEventListener('DOMContentLoaded',()=>{
+    const t=document.documentElement.getAttribute('data-theme');
+    document.getElementById('themeIcon').textContent=t==='dark'?'🌙':'☀️';
+  });
+})();
+</script>
+</body>
+</html>
