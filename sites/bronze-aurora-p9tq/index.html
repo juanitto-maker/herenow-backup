@@ -99,6 +99,8 @@ main{max-width:560px;margin:0 auto;padding:1rem}
   max-height:88svh;overflow-y:auto}
 .sheet h3{color:var(--text-h);font-size:1rem;margin-bottom:1rem}
 .field{margin-bottom:.85rem}
+.field-row{display:flex;gap:.7rem}
+.field-row .field{flex:1;margin-bottom:.85rem}
 .field label{display:block;font-size:.78rem;color:var(--text-m);margin-bottom:.3rem}
 .field input,.field textarea{width:100%;background:var(--bg-input);border:1px solid var(--border);
   border-radius:.5rem;color:var(--text);padding:.6rem .7rem;font-size:.95rem;font-family:inherit}
@@ -135,6 +137,7 @@ footer{text-align:center;font-size:.72rem;color:var(--text-m);padding:1.5rem 1re
   <div class="sheet">
     <h3 id="sheetTitle">New project</h3>
     <div class="field"><label>Project name *</label><input id="fName" maxlength="60" autocomplete="off"></div>
+    <div class="field-row"><div class="field"><label>Task</label><input id="fTask" maxlength="40" autocomplete="off"></div><div class="field"><label>Session</label><input id="fSession" maxlength="40" autocomplete="off"></div></div>
     <div class="field"><label>Client</label><input id="fClient" maxlength="60" autocomplete="off"></div>
     <div class="field"><label>Rate (€/h)</label><input id="fRate" inputmode="decimal" autocomplete="off"></div>
     <div class="field"><label>Credentials / links</label><textarea id="fCreds" placeholder="repo URL, login, dashboard link…"></textarea></div>
@@ -179,7 +182,7 @@ function render(){
     const since=run?`running since ${new Date(p.runningSince).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}`:'';
     return `<div class="card ${run?'running':''}" data-id="${p.id}">
       <div class="card-top">
-        <div><h2>${esc(p.name)}</h2><div class="client">${esc(p.client)||'&nbsp;'}</div></div>
+        <div><h2>${esc(p.name)}</h2><div class="client">${[esc(p.client),p.task?'· '+esc(p.task):'',p.session?'· '+esc(p.session):''].filter(Boolean).join(' ')||'&nbsp;'}</div></div>
         <button class="meta-btn" data-act="toggle-details">ⓘ</button>
       </div>
       <div class="timer-row">
@@ -247,6 +250,8 @@ function downloadReport(p){
   t.push(L,'  TIME REPORT',L,'');
   t.push('Project    : '+p.name);
   if(p.client)t.push('Client     : '+p.client);
+  if(p.task)t.push('Task       : '+p.task);
+  if(p.session)t.push('Session    : '+p.session);
   t.push('Period     : since '+dstr(p.created)+' (tracking start)');
   t.push('Generated  : '+dstr(now)+' '+pad2(now.getHours())+':'+pad2(now.getMinutes()));
   if(p.runningSince)t.push('Status     : timer still running (included up to generation time)');
@@ -290,7 +295,7 @@ document.getElementById('list').addEventListener('click',e=>{
   }else if(act==='edit'){
     editId=p.id;
     document.getElementById('sheetTitle').textContent='Edit project';
-    fName.value=p.name;fClient.value=p.client||'';fRate.value=p.rate||'';
+    fName.value=p.name;fClient.value=p.client||'';fTask.value=p.task||'';fSession.value=p.session||'';fRate.value=p.rate||'';
     fCreds.value=p.creds||'';fNotes.value=p.notes||'';
     document.getElementById('modal').classList.add('open');
   }else if(act==='report'){
@@ -315,12 +320,13 @@ document.getElementById('list').addEventListener('click',e=>{
 /* add / modal */
 const modal=document.getElementById('modal');
 const fName=document.getElementById('fName'),fClient=document.getElementById('fClient'),
+      fTask=document.getElementById('fTask'),fSession=document.getElementById('fSession'),
       fRate=document.getElementById('fRate'),fCreds=document.getElementById('fCreds'),
       fNotes=document.getElementById('fNotes');
 document.getElementById('addBtn').onclick=()=>{
   editId=null;
   document.getElementById('sheetTitle').textContent='New project';
-  fName.value=fClient.value=fRate.value=fCreds.value=fNotes.value='';
+  fName.value=fClient.value=fTask.value=fSession.value=fRate.value=fCreds.value=fNotes.value='';
   modal.classList.add('open');fName.focus();
 };
 document.getElementById('cancelBtn').onclick=()=>modal.classList.remove('open');
@@ -330,11 +336,11 @@ document.getElementById('saveBtn').onclick=()=>{
   if(!name){fName.style.borderColor='var(--red)';return;}
   if(editId){
     const p=projects.find(x=>x.id===editId);
-    Object.assign(p,{name,client:fClient.value.trim(),rate:fRate.value.trim(),
+    Object.assign(p,{name,client:fClient.value.trim(),task:fTask.value.trim(),session:fSession.value.trim(),rate:fRate.value.trim(),
       creds:fCreds.value.trim(),notes:fNotes.value.trim()});
   }else{
     projects.unshift({id:'p'+Date.now().toString(36),name,client:fClient.value.trim(),
-      rate:fRate.value.trim(),creds:fCreds.value.trim(),notes:fNotes.value.trim(),
+      task:fTask.value.trim(),session:fSession.value.trim(),rate:fRate.value.trim(),creds:fCreds.value.trim(),notes:fNotes.value.trim(),
       total:0,runningSince:null,created:Date.now()});
   }
   save();render();modal.classList.remove('open');

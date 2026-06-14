@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PearlShell — Un hogar para una familia · Campaña solidaria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root,[data-theme="light"]{
+  --bg:#fbf4ea; --bg-card:#fffdf8;
+  --bg-hero:linear-gradient(165deg,#f6e7d4 0%,#fbf4ea 55%,#f3ead9 100%);
+  --bg-alt:#f4ead9;
+  --text:#3a2c1e; --text-m:#7d6a55; --text-h:#2a1d10;
+  --border:#e7d8c2;
+  --accent:#b84c28; --accent-h:#9e3d1d;
+  --ac2:#c9923e; --ac3:#7a8b3a;
+  --warm-glow:#f9d9b8;
+  --overlay-bg:rgba(40,25,10,.5); --dialog-bg:#fffdf8;
+  --link:#b84c28; --link-hover:#9e3d1d;
+}
+[data-theme="dark"]{
+  --bg:#1b140d; --bg-card:#241a11;
+  --bg-hero:linear-gradient(165deg,#2a1c10 0%,#1b140d 60%,#221710 100%);
+  --bg-alt:#211810;
+  --text:#e8dccb; --text-m:#a8927a; --text-h:#f5ead8;
+  --border:#3a2c1d;
+  --accent:#e06a3e; --accent-h:#f07d50;
+  --ac2:#d9a857; --ac3:#9fb056;
+  --warm-glow:#3a2616;
+  --overlay-bg:rgba(0,0,0,.65); --dialog-bg:#241a11;
+  --link:#e06a3e; --link-hover:#f07d50;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);
+  line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+img,svg,video{max-width:100%;height:auto}
+h1,h2,h3{font-family:'Playfair Display',serif;color:var(--text-h);line-height:1.15}
+
+/* lang bar + theme */
+.lbar{display:flex;justify-content:center;gap:.4rem;padding:.34rem;
+  background:var(--bg);border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:190}
+.lb{background:none;border:1px solid var(--border);color:var(--text-m);
+  font-size:.78rem;padding:.16rem .62rem;border-radius:1rem;cursor:pointer;
+  font-family:'DM Sans',sans-serif;transition:all .2s}
+.lb.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tt{position:fixed;top:3rem;right:.6rem;z-index:150;background:var(--bg-card);
+  border:1px solid var(--border);width:2.2rem;height:2.2rem;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 10px rgba(80,40,10,.18);cursor:pointer;font-size:.9rem;transition:transform .2s}
+.tt:hover{transform:scale(1.1)}
+
+.wrap{max-width:760px;margin:0 auto;padding:0 1.15rem}
+section{padding:2.6rem 0}
+.div{height:3px;width:3rem;background:var(--accent);margin:.55rem 0 1.2rem;border-radius:2px}
+.slbl{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:.35rem}
+.alt{background:var(--bg-alt)}
+
+/* hero */
+.hero{background:var(--bg-hero);padding:2.8rem 0 3rem;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;width:220px;height:220px;background:radial-gradient(circle,var(--warm-glow),transparent 70%);top:-40px;right:-40px;opacity:.6;pointer-events:none}
+.hbadge{display:inline-block;font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--accent);background:rgba(184,76,40,.08);border:1px solid rgba(184,76,40,.22);
+  border-radius:999px;padding:.28rem .9rem;margin-bottom:1.1rem;font-weight:600}
+.hero h1{font-size:3rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.2rem}
+.hero .sub{font-family:'Playfair Display',serif;font-style:italic;font-size:1.05rem;color:var(--accent);margin-bottom:1.3rem}
+.htag{font-size:1.32rem;font-weight:600;color:var(--text-h);max-width:30ch;margin:0 auto 1rem;line-height:1.32}
+.hdesc{font-size:1rem;color:var(--text-m);max-width:42ch;margin:0 auto 1.7rem}
+.btn{display:inline-block;padding:.85rem 2.2rem;border-radius:2rem;font-size:1.05rem;font-weight:700;
+  letter-spacing:.02em;cursor:pointer;border:none;text-decoration:none;transition:all .2s;font-family:'DM Sans',sans-serif}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 6px 20px rgba(184,76,40,.3)}
+.btn-primary:hover{background:var(--accent-h);transform:translateY(-2px);box-shadow:0 10px 26px rgba(184,76,40,.38)}
+.htrust{margin-top:1.2rem;font-size:.8rem;color:var(--text-m);display:flex;flex-wrap:wrap;gap:.4rem .9rem;justify-content:center}
+.htrust span{white-space:nowrap}
+
+h2{font-size:1.85rem;font-weight:700}
+.lead{font-size:1.05rem;color:var(--text);margin-bottom:.6rem}
+p{margin-bottom:.75rem}
+.muted{color:var(--text-m)}
+
+/* placeholder marker */
+.ph{position:relative;border:1.5px dashed var(--ac2);background:rgba(201,146,62,.07);
+  border-radius:.8rem;padding:1.3rem 1.15rem 1.15rem;margin-top:.5rem}
+.ph-tag{position:absolute;top:-.7rem;left:1rem;background:var(--ac2);color:#fff;font-size:.62rem;
+  letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:.16rem .6rem;border-radius:.6rem}
+.ph .note{font-size:.8rem;color:var(--text-m);margin-top:.7rem;margin-bottom:0;font-style:italic}
+
+/* cards */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:.9rem;
+  padding:1.1rem 1.2rem;box-shadow:0 2px 12px rgba(80,40,10,.06);transition:transform .18s,box-shadow .18s}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(80,40,10,.11)}
+
+/* components grid */
+.comp{display:grid;grid-template-columns:1fr;gap:.7rem;margin-top:1.1rem}
+@media(min-width:560px){.comp{grid-template-columns:1fr 1fr}}
+.ccard{background:var(--bg-card);border:1px solid var(--border);border-radius:.85rem;padding:1rem 1.05rem}
+.cico{font-size:1.7rem;display:block;margin-bottom:.4rem}
+.ctit{font-weight:700;font-size:.98rem;color:var(--text-h);margin-bottom:.25rem;font-family:'DM Sans',sans-serif}
+.cdsc{font-size:.85rem;color:var(--text-m);line-height:1.5}
+
+/* wall anatomy */
+.wall{margin-top:1.2rem;border-radius:.85rem;overflow:hidden;border:1px solid var(--border)}
+.layer{padding:.85rem 1.05rem;border-bottom:1px solid var(--border)}
+.layer:last-child{border-bottom:none}
+.l1{background:linear-gradient(90deg,rgba(122,139,58,.14),transparent)}
+.l2{background:linear-gradient(90deg,rgba(201,146,62,.14),transparent)}
+.l3{background:linear-gradient(90deg,rgba(184,76,40,.14),transparent)}
+.l4{background:linear-gradient(90deg,rgba(125,106,85,.16),transparent)}
+.l5{background:linear-gradient(90deg,rgba(201,146,62,.10),transparent)}
+.layer .lt{font-weight:700;color:var(--text-h);font-size:.92rem}
+.layer .ls{font-size:.8rem;color:var(--text-m)}
+.layer .lm{font-size:.74rem;color:var(--text-m);margin-top:.15rem}
+.factoid{margin-top:1rem;font-size:.85rem;color:var(--ac3);font-weight:600;background:rgba(122,139,58,.1);border-radius:.6rem;padding:.7rem .9rem}
+
+/* money */
+.money{margin-top:1.1rem;background:var(--bg-card);border:1px solid var(--border);border-radius:.9rem;overflow:hidden}
+.mgroup{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;
+  padding:.7rem 1.1rem .25rem}
+.mrow{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.5rem 1.1rem;border-bottom:1px solid var(--border)}
+.mrow .mn{font-size:.9rem;color:var(--text)}
+.mrow .mc{font-weight:700;color:var(--text-h);white-space:nowrap;font-variant-numeric:tabular-nums}
+.mrow.free .mc{color:var(--ac3)}
+.mtotal{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
+  padding:.95rem 1.1rem;background:rgba(184,76,40,.07)}
+.mtotal .mn{font-weight:700;font-size:1rem;color:var(--text-h)}
+.mtotal .mc{font-family:'Playfair Display',serif;font-weight:700;font-size:1.6rem;color:var(--accent)}
+.targetline{margin-top:1rem;text-align:center;font-size:1.05rem;font-weight:600;color:var(--text-h)}
+.targetline b{color:var(--accent);font-family:'Playfair Display',serif;font-size:1.3rem}
+
+/* timeline */
+.tl{margin-top:1.1rem;position:relative;padding-left:1.4rem}
+.tl::before{content:'';position:absolute;left:.35rem;top:.4rem;bottom:.4rem;width:2px;background:var(--border)}
+.tlrow{position:relative;padding:.5rem 0 .5rem .3rem}
+.tlrow::before{content:'';position:absolute;left:-1.13rem;top:.85rem;width:.7rem;height:.7rem;border-radius:50%;
+  background:var(--accent);border:2px solid var(--bg)}
+.tlt{font-weight:700;color:var(--text-h);font-size:.92rem}
+.tls{font-size:.8rem;color:var(--text-m)}
+.tldone{margin-top:1rem;background:rgba(122,139,58,.12);border-radius:.7rem;padding:.85rem 1rem;
+  font-weight:600;color:var(--ac3);font-size:.92rem}
+
+/* stretch */
+.stretch{display:grid;grid-template-columns:1fr;gap:.7rem;margin-top:1.1rem}
+.scard{background:var(--bg-card);border:1px solid var(--border);border-radius:.85rem;padding:1rem 1.1rem;
+  display:flex;gap:.85rem;align-items:flex-start}
+.sico{font-size:1.6rem;flex-shrink:0}
+.stit{font-weight:700;color:var(--text-h);font-size:.96rem}
+.sdsc{font-size:.84rem;color:var(--text-m);line-height:1.45}
+.samt{font-weight:700;color:var(--ac2);font-size:.9rem;margin-top:.2rem}
+
+/* who */
+.who-photos{margin-top:1rem;border:1.5px dashed var(--border);border-radius:.8rem;padding:1.4rem 1rem;text-align:center;color:var(--text-m);font-size:.85rem;font-style:italic}
+
+/* donate */
+.donate{background:var(--bg-hero);position:relative;overflow:hidden}
+.donate::before{content:'';position:absolute;width:260px;height:260px;background:radial-gradient(circle,var(--warm-glow),transparent 70%);bottom:-60px;left:-60px;opacity:.5;pointer-events:none}
+.dchan{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:1.1rem}
+@media(min-width:520px){.dchan{grid-template-columns:repeat(2,1fr)}}
+.dbtn{display:flex;flex-direction:column;align-items:center;gap:.25rem;padding:.9rem .7rem;border-radius:.8rem;
+  background:var(--bg-card);border:1.5px dashed var(--ac2);color:var(--text);text-decoration:none;
+  font-size:.85rem;font-weight:600;text-align:center;transition:all .2s}
+.dbtn .dbico{font-size:1.5rem}
+.dbtn .dbsub{font-size:.66rem;color:var(--ac2);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.dbtn.live{border-style:solid;border-color:#229ED9;background:#229ED9;color:#fff}
+.dbtn.live .dbsub{color:rgba(255,255,255,.85)}
+.dbtn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(80,40,10,.12)}
+.footcta{text-align:center;margin-top:1.6rem}
+
+footer{background:var(--bg-alt);text-align:center;padding:2rem 1.15rem;border-top:1px solid var(--border)}
+.fname{font-family:'Playfair Display',serif;font-weight:700;color:var(--text-h);font-size:1.05rem}
+.floc{font-size:.82rem;color:var(--text-m);margin-top:.2rem}
+.fcontact{margin-top:1rem;font-size:.85rem}
+.fcontact a{color:var(--link);text-decoration:none;font-weight:600}
+.fcontact a:hover{text-decoration:underline}
+.fnote{font-size:.72rem;color:var(--text-m);margin-top:1.1rem;line-height:1.5}
+
+@media(min-width:560px){.hero h1{font-size:3.6rem}.htag{font-size:1.5rem}}
+</style>
+</head>
+<body>
+
+<div class="lbar">
+  <button class="lb" data-l="en" onclick="setLang('en')">EN</button>
+  <button class="lb on" data-l="es" onclick="setLang('es')">ES</button>
+</div>
+<button class="tt" onclick="toggleTheme()"><span id="ti">🌙</span></button>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap">
+    <span class="hbadge" data-lang="es">Campaña solidaria · Alpujarras · 2026</span>
+    <span class="hbadge" data-lang="en">Solidarity campaign · Alpujarras · 2026</span>
+    <h1>PearlShell</h1>
+    <div class="sub" data-lang="es">Un hogar para una familia</div>
+    <div class="sub" data-lang="en">A home for one family</div>
+    <p class="htag" data-lang="es">Financia un hogar en un día — y demuestra un modelo que puede dar cobijo a muchas familias más.</p>
+    <p class="htag" data-lang="en">Fund a home in a day — and prove a model that can shelter many more.</p>
+    <p class="hdesc" data-lang="es">Una sola donación hace dos cosas: da a esta familia un hogar aislado <em>ahora</em>, y valida un refugio de ~€380 que cualquier equipo formado podrá replicar para la siguiente familia.</p>
+    <p class="hdesc" data-lang="en">One donation does two things: it gives this family an insulated home <em>now</em>, and it validates a ~€380 shelter that any trained team can then replicate for the next family.</p>
+    <a class="btn btn-primary" href="#donar" data-lang="es">Donar ahora</a>
+    <a class="btn btn-primary" href="#donar" data-lang="en">Donate now</a>
+    <div class="htrust">
+      <span data-lang="es">🌿 Materiales naturales</span><span data-lang="en">🌿 Natural materials</span>
+      <span data-lang="es">🛠️ Mano de obra donada</span><span data-lang="en">🛠️ Donated labour</span>
+      <span data-lang="es">🔍 Cuentas transparentes</span><span data-lang="en">🔍 Transparent accounts</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ THE FAMILY ============ -->
+<section>
+  <div class="wrap">
+    <div class="slbl" data-lang="es">La familia</div>
+    <div class="slbl" data-lang="en">The family</div>
+    <h2 data-lang="es">Quién recibe este hogar</h2>
+    <h2 data-lang="en">Who this home is for</h2>
+    <div class="div"></div>
+    <div class="ph">
+      <span class="ph-tag">Placeholder · editar</span>
+      <p data-lang="es" style="margin-bottom:0">Una familia de [N] personas que llegó a Andalucía en 2025, tras un largo viaje desde Mauritania, busca ahora un lugar digno y cálido donde volver a empezar. Han encontrado tierra y acogida en una finca vecina de las Alpujarras; lo que les falta es un techo aislado que resista el invierno de montaña.</p>
+      <p data-lang="en" style="margin-bottom:0">A family of [N] who arrived in Andalucía in 2025, after a long journey from Mauritania, is now looking for a dignified, warm place to start again. They have found land and welcome on a neighbouring finca in the Alpujarras; what they lack is an insulated roof that can hold up to a mountain winter.</p>
+      <p class="note" data-lang="es">✏️ Texto provisional, anonimizado a propósito. Reemplázalo por la historia real cuando la tengas. <b>No publiques nombres ni fotos reales sin el consentimiento explícito de la familia.</b> Marco sugerido: número de personas, año de llegada, una frase sobre la esperanza — sin datos identificativos.</p>
+      <p class="note" data-lang="en">✏️ Draft text, deliberately anonymised. Replace with the real story when you have it. <b>Do not publish real names or photos without the family's explicit consent.</b> Suggested frame: number of people, year of arrival, one line about hope — no identifying details.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT WE BUILD ============ -->
+<section class="alt">
+  <div class="wrap">
+    <div class="slbl" data-lang="es">Qué construimos</div>
+    <div class="slbl" data-lang="en">What we build</div>
+    <h2 data-lang="es">Un refugio aislado, de materiales nobles</h2>
+    <h2 data-lang="en">An insulated shelter, made of honest materials</h2>
+    <div class="div"></div>
+    <p class="lead" data-lang="es">9 m² de suelo, 2 m de altura. Cuatro componentes sencillos que dos personas levantan en un solo día.</p>
+    <p class="lead" data-lang="en">9 m² of floor, 2 m at the peak. Four simple components that two people raise in a single day.</p>
+
+    <div class="comp">
+      <div class="ccard">
+        <span class="cico">🏗️</span>
+        <div class="ctit" data-lang="es">Arco de acero galvanizado</div>
+        <div class="ctit" data-lang="en">Galvanised steel arch</div>
+        <div class="cdsc" data-lang="es">Kit túnel de 3×3×2 m. Se monta en menos de una hora con una sola llave. Anclado al suelo, sin hormigón.</div>
+        <div class="cdsc" data-lang="en">3×3×2 m tunnel kit. Assembles in under an hour with one spanner. Ground-staked, no concrete.</div>
+      </div>
+      <div class="ccard">
+        <span class="cico">🌿</span>
+        <div class="ctit" data-lang="es">Sacos de yute con perlita</div>
+        <div class="ctit" data-lang="en">Perlite-filled jute bags</div>
+        <div class="cdsc" data-lang="es">Sacos de yute natural rellenos de perlita volcánica — el aislante mineral más ligero. Llegan listos para apilar.</div>
+        <div class="cdsc" data-lang="en">Natural jute sacks filled with volcanic perlite — the lightest mineral insulator there is. They arrive ready to stack.</div>
+      </div>
+      <div class="ccard">
+        <span class="cico">🎋</span>
+        <div class="ctit" data-lang="es">Cámara separadora de bambú</div>
+        <div class="ctit" data-lang="en">Bamboo spacer cavity</div>
+        <div class="cdsc" data-lang="es">Cañas de bambú atadas al arco mantienen la lona separada del aislante, creando una cámara ventilada que lo protege.</div>
+        <div class="cdsc" data-lang="en">Bamboo poles lashed to the arch hold the tarp clear of the insulation, creating a ventilated cavity that protects it.</div>
+      </div>
+      <div class="ccard">
+        <span class="cico">🏕️</span>
+        <div class="ctit" data-lang="es">Cubierta de lona PVC</div>
+        <div class="ctit" data-lang="en">PVC tarp roof</div>
+        <div class="cdsc" data-lang="es">Lona de 650 g/m² sobre el arco. Resistente a los rayos UV, totalmente impermeable, 10–15 años de vida.</div>
+        <div class="cdsc" data-lang="en">650 g/m² tarp over the arch. UV-resistant, fully waterproof, a 10–15 year lifespan.</div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.15rem" data-lang="es">Anatomía de la pared</h3>
+    <h3 style="margin-top:1.8rem;font-size:1.15rem" data-lang="en">Wall anatomy</h3>
+    <p class="muted" style="font-size:.82rem" data-lang="es">Cada capa tiene una función · de fuera hacia dentro</p>
+    <p class="muted" style="font-size:.82rem" data-lang="en">Every layer has a purpose · outside → inside</p>
+    <div class="wall">
+      <div class="layer l3">
+        <div class="lt" data-lang="es">Piel exterior — lona PVC 650 g/m²</div>
+        <div class="lt" data-lang="en">Exterior skin — PVC tarp 650 g/m²</div>
+        <div class="lm" data-lang="es">Resistente a UV · impermeable · 10–15 años</div>
+        <div class="lm" data-lang="en">UV resistant · waterproof · 10–15 years</div>
+      </div>
+      <div class="layer l5">
+        <div class="lt" data-lang="es">Cámara ventilada — 5–8 cm de aire</div>
+        <div class="lt" data-lang="en">Ventilated cavity — 5–8 cm air gap</div>
+        <div class="lm" data-lang="es">Separadores de bambú · la humedad drena hacia abajo</div>
+        <div class="lm" data-lang="en">Bamboo spacers · moisture drains freely downward</div>
+      </div>
+      <div class="layer l2">
+        <div class="lt" data-lang="es">Núcleo aislante — sacos de perlita, ~30 cm</div>
+        <div class="lt" data-lang="en">Insulation core — perlite bags, ~30 cm thick</div>
+        <div class="lm" data-lang="es">Mineral volcánico · permanente · no se comprime ni se pudre</div>
+        <div class="lm" data-lang="en">Volcanic mineral · permanent · never compresses, never rots</div>
+      </div>
+      <div class="layer l4">
+        <div class="lt" data-lang="es">Estructura — pata de arco de acero galvanizado</div>
+        <div class="lt" data-lang="en">Structure — galvanised steel arch leg</div>
+        <div class="lm" data-lang="es">Tubo de 32 mm · anticorrosión · 15–20 años</div>
+        <div class="lm" data-lang="en">32 mm tube · anti-corrosion · 15–20 years</div>
+      </div>
+      <div class="layer l1">
+        <div class="lt" data-lang="es">Interior — espacio habitable</div>
+        <div class="lt" data-lang="en">Interior — habitable living space</div>
+        <div class="lm" data-lang="es">9 m² · 2 m de altura · temperatura naturalmente regulada</div>
+        <div class="lm" data-lang="en">9 m² · 2 m peak · naturally regulated temperature</div>
+      </div>
+    </div>
+    <div class="factoid" data-lang="es">🌿 La perlita es 90 % aire — aísla mejor que la bala de paja por kilo, y nunca se degrada.</div>
+    <div class="factoid" data-lang="en">🌿 Perlite is 90% air by volume — it out-insulates straw bale per kilo, and never degrades.</div>
+  </div>
+</section>
+
+<!-- ============ WHERE THE MONEY GOES ============ -->
+<section>
+  <div class="wrap">
+    <div class="slbl" data-lang="es">A dónde va el dinero</div>
+    <div class="slbl" data-lang="en">Where the money goes</div>
+    <h2 data-lang="es">Cuentas abiertas, hasta el último euro</h2>
+    <h2 data-lang="en">Open books, down to the last euro</h2>
+    <div class="div"></div>
+    <p class="lead" data-lang="es">Cada donación cubre materiales. La mano de obra está donada: la pone digitalAIventures junto a la finca vecina. No hay margen, ni beneficio, ni intermediarios.</p>
+    <p class="lead" data-lang="en">Every donation pays for materials. The labour is donated — by digitalAIventures together with the neighbouring finca. No margin, no profit, no middlemen.</p>
+
+    <div class="money">
+      <div class="mgroup" data-lang="es">Estructura y cubierta</div>
+      <div class="mgroup" data-lang="en">Structure & roof</div>
+      <div class="mrow"><span class="mn" data-lang="es">Arco de acero + cubierta</span><span class="mn" data-lang="en">Steel arch + cover</span><span class="mc">€91</span></div>
+      <div class="mrow"><span class="mn" data-lang="es">Mejora cubierta — lona PVC 650 g/m²</span><span class="mn" data-lang="en">Roof upgrade — PVC tarp 650 g/m²</span><span class="mc">€90</span></div>
+
+      <div class="mgroup" data-lang="es">Aislamiento</div>
+      <div class="mgroup" data-lang="en">Insulation</div>
+      <div class="mrow"><span class="mn" data-lang="es">125 sacos de yute (90×60 cm)</span><span class="mn" data-lang="en">125 jute bags (90×60 cm)</span><span class="mc">€125</span></div>
+      <div class="mrow"><span class="mn" data-lang="es">375 kg de perlita expandida</span><span class="mn" data-lang="en">375 kg expanded perlite</span><span class="mc">€30</span></div>
+      <div class="mrow"><span class="mn" data-lang="es">Tratamiento de sacos — cal, linaza, bórax</span><span class="mn" data-lang="en">Bag treatment — lime, linseed, borax</span><span class="mc">€13</span></div>
+
+      <div class="mgroup" data-lang="es">Acabado</div>
+      <div class="mgroup" data-lang="en">Finishing</div>
+      <div class="mrow"><span class="mn" data-lang="es">Cañas separadoras de bambú ×10</span><span class="mn" data-lang="en">Bamboo spacer poles ×10</span><span class="mc">€10</span></div>
+      <div class="mrow"><span class="mn" data-lang="es">Cuerda de yute + vientos</span><span class="mn" data-lang="en">Jute cord + guy lines</span><span class="mc">€22</span></div>
+
+      <div class="mgroup" data-lang="es">Mano de obra</div>
+      <div class="mgroup" data-lang="en">Labour</div>
+      <div class="mrow free"><span class="mn" data-lang="es">2 personas × 1 día — donada</span><span class="mn" data-lang="en">2 people × 1 day — donated</span><span class="mc">€0</span></div>
+
+      <div class="mtotal"><span class="mn" data-lang="es">Total materiales</span><span class="mn" data-lang="en">Materials total</span><span class="mc">€381</span></div>
+    </div>
+    <p class="targetline" data-lang="es"><b>€381</b> financian un hogar completo.</p>
+    <p class="targetline" data-lang="en"><b>€381</b> funds one complete home.</p>
+  </div>
+</section>
+
+<!-- ============ THE BUILD ============ -->
+<section class="alt">
+  <div class="wrap">
+    <div class="slbl" data-lang="es">La construcción</div>
+    <div class="slbl" data-lang="en">The build</div>
+    <h2 data-lang="es">Cómo tu donación se convierte en un hogar</h2>
+    <h2 data-lang="en">How your donation becomes a home</h2>
+    <div class="div"></div>
+    <p class="lead" data-lang="es">Un refugio, un día. Equipo de dos personas; los sacos llegan ya rellenos desde fuera del sitio.</p>
+    <p class="lead" data-lang="en">One shelter, one day. A two-person crew; the bags arrive pre-filled from off-site.</p>
+
+    <div class="tl">
+      <div class="tlrow"><div class="tlt" data-lang="es">07:00 · Marcado del terreno</div><div class="tlt" data-lang="en">07:00 · Site marking</div><div class="tls">30 min</div></div>
+      <div class="tlrow"><div class="tlt" data-lang="es">07:30 · Nivelación del suelo</div><div class="tlt" data-lang="en">07:30 · Ground levelling</div><div class="tls">2,5 h</div></div>
+      <div class="tlrow"><div class="tlt" data-lang="es">10:00 · Base de grava</div><div class="tlt" data-lang="en">10:00 · Gravel base</div><div class="tls">1 h</div></div>
+      <div class="tlrow"><div class="tlt" data-lang="es">11:15 · Montaje del arco</div><div class="tlt" data-lang="en">11:15 · Erect the arch frame</div><div class="tls">1 h</div></div>
+      <div class="tlrow"><div class="tlt" data-lang="es">12:15 · Separadores de bambú</div><div class="tlt" data-lang="en">12:15 · Bamboo spacers</div><div class="tls">30 min</div></div>
+      <div class="tlrow"><div class="tlt" data-lang="es">12:45 · Apilado de sacos de perlita</div><div class="tlt" data-lang="en">12:45 · Stack the perlite bags</div><div class="tls">2 h</div></div>
+      <div class="tlrow"><div class="tlt" data-lang="es">14:45 · Colocar y tensar la lona</div><div class="tlt" data-lang="en">14:45 · Drape & tension the tarp</div><div class="tls">30 min</div></div>
+      <div class="tlrow"><div class="tlt" data-lang="es">15:15 · Vientos y revisión final</div><div class="tlt" data-lang="en">15:15 · Guy lines & final check</div><div class="tls">30 min</div></div>
+    </div>
+    <div class="tldone" data-lang="es">🏠 Refugio aislado y a prueba de intemperie — listo a las 16:00.</div>
+    <div class="tldone" data-lang="en">🏠 A weatherproof, insulated shelter — ready by 16:00.</div>
+  </div>
+</section>
+
+<!-- ============ STRETCH GOALS ============ -->
+<section>
+  <div class="wrap">
+    <div class="slbl" data-lang="es">Más allá del primer hogar</div>
+    <div class="slbl" data-lang="en">Beyond the first home</div>
+    <h2 data-lang="es">Si llegamos más lejos</h2>
+    <h2 data-lang="en">If we reach further</h2>
+    <div class="div"></div>
+    <p class="lead" data-lang="es">Si la campaña supera su meta, cada tramo añade dignidad — y acerca un segundo hogar para la siguiente familia.</p>
+    <p class="lead" data-lang="en">If the campaign passes its goal, each tier adds dignity — and brings a second home for the next family within reach.</p>
+
+    <div class="stretch">
+      <div class="scard">
+        <span class="sico">🛏️</span>
+        <div>
+          <div class="stit" data-lang="es">Equipamiento básico</div>
+          <div class="stit" data-lang="en">Basic furnishing</div>
+          <div class="sdsc" data-lang="es">Cama, almacenaje, suelo aislado y enseres de cocina para que el refugio sea un hogar de verdad.</div>
+          <div class="sdsc" data-lang="en">Bed, storage, insulated flooring and basic kitchen items so the shelter becomes a real home.</div>
+          <div class="samt">+ €[150] <span style="font-weight:400;color:var(--text-m);font-size:.78rem">· placeholder</span></div>
+        </div>
+      </div>
+      <div class="scard">
+        <span class="sico">☀️</span>
+        <div>
+          <div class="stit" data-lang="es">Pequeño kit solar</div>
+          <div class="stit" data-lang="en">Small solar kit</div>
+          <div class="sdsc" data-lang="es">Panel, batería y luces LED — luz, carga de móvil y autonomía desde la primera noche.</div>
+          <div class="sdsc" data-lang="en">Panel, battery and LED lights — light, phone charging and autonomy from the first night.</div>
+          <div class="samt">+ €[300] <span style="font-weight:400;color:var(--text-m);font-size:.78rem">· placeholder</span></div>
+        </div>
+      </div>
+      <div class="scard">
+        <span class="sico">🏘️</span>
+        <div>
+          <div class="stit" data-lang="es">Un segundo hogar</div>
+          <div class="stit" data-lang="en">A second home</div>
+          <div class="sdsc" data-lang="es">El verdadero objetivo: financiar el siguiente PearlShell completo para otra familia recién llegada.</div>
+          <div class="sdsc" data-lang="en">The real goal: fund the next complete PearlShell for another newly arrived family.</div>
+          <div class="samt">+ €381</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHO'S BEHIND IT ============ -->
+<section class="alt">
+  <div class="wrap">
+    <div class="slbl" data-lang="es">Quién está detrás</div>
+    <div class="slbl" data-lang="en">Who's behind it</div>
+    <h2 data-lang="es">Gente real, tierra real</h2>
+    <h2 data-lang="en">Real people, real land</h2>
+    <div class="div"></div>
+    <p data-lang="es"><b>digitalAIventures LLC</b> y una finca vecina de las Alpujarras unimos manos para construir este primer PearlShell sobre tierra real, en Andalucía.</p>
+    <p data-lang="en"><b>digitalAIventures LLC</b> and a neighbouring finca in the Alpujarras are joining hands to build this first PearlShell on real land, in Andalucía.</p>
+    <p class="muted" data-lang="es">Somos honestos sobre la etapa: este es el primer prototipo construido del sistema. Por eso tu donación cuenta doble — levanta este hogar y demuestra el modelo. Iremos publicando fotos de la obra a medida que avance.</p>
+    <p class="muted" data-lang="en">We're honest about the stage: this is the first built prototype of the system. That's why your donation counts twice — it raises this home and it proves the model. We'll post build photos here as the work progresses.</p>
+    <div class="who-photos" data-lang="es">📷 Fotos de la construcción — próximamente</div>
+    <div class="who-photos" data-lang="en">📷 Build photos — coming soon</div>
+  </div>
+</section>
+
+<!-- ============ DONATE ============ -->
+<section class="donate" id="donar">
+  <div class="wrap" style="text-align:center;position:relative;z-index:1">
+    <div class="slbl" data-lang="es" style="text-align:left">Donar</div>
+    <div class="slbl" data-lang="en" style="text-align:left">Donate</div>
+    <h2 data-lang="es" style="text-align:left">Financia este hogar</h2>
+    <h2 data-lang="en" style="text-align:left">Fund this home</h2>
+    <div class="div"></div>
+    <p class="lead" data-lang="es" style="text-align:left">Elige el canal que prefieras. Cualquier cantidad ayuda — y se suma hacia los €381 de un hogar completo.</p>
+    <p class="lead" data-lang="en" style="text-align:left">Pick whichever channel suits you. Any amount helps — and adds up toward the €381 of one complete home.</p>
+
+    <div class="dchan">
+      <a class="dbtn" href="#" data-lang="es"><span class="dbico">☕</span>Ko-fi<span class="dbsub">Placeholder</span></a>
+      <a class="dbtn" href="#" data-lang="en"><span class="dbico">☕</span>Ko-fi<span class="dbsub">Placeholder</span></a>
+      <a class="dbtn" href="#" data-lang="es"><span class="dbico">💳</span>PayPal<span class="dbsub">Placeholder</span></a>
+      <a class="dbtn" href="#" data-lang="en"><span class="dbico">💳</span>PayPal<span class="dbsub">Placeholder</span></a>
+      <a class="dbtn" href="#" data-lang="es"><span class="dbico">🏦</span>Transferencia / IBAN<span class="dbsub">Placeholder</span></a>
+      <a class="dbtn" href="#" data-lang="en"><span class="dbico">🏦</span>Bank / IBAN<span class="dbsub">Placeholder</span></a>
+      <a class="dbtn live" href="https://t.me/JuanittoCalvares" target="_blank" rel="noopener" data-lang="es"><span class="dbico">✈️</span>Telegram<span class="dbsub">Contacto directo</span></a>
+      <a class="dbtn live" href="https://t.me/JuanittoCalvares" target="_blank" rel="noopener" data-lang="en"><span class="dbico">✈️</span>Telegram<span class="dbsub">Direct contact</span></a>
+    </div>
+    <p class="note" data-lang="es" style="font-size:.78rem;color:var(--text-m);font-style:italic;margin-top:1rem;text-align:left">✏️ Sustituye los enlaces de Ko-fi, PayPal e IBAN por los reales antes de difundir. El contacto de Telegram ya está activo.</p>
+    <p class="note" data-lang="en" style="font-size:.78rem;color:var(--text-m);font-style:italic;margin-top:1rem;text-align:left">✏️ Replace the Ko-fi, PayPal and IBAN links with the real ones before sharing. The Telegram contact is already live.</p>
+
+    <div class="footcta">
+      <a class="btn btn-primary" href="https://t.me/JuanittoCalvares" target="_blank" rel="noopener" data-lang="es">Hablar con una persona</a>
+      <a class="btn btn-primary" href="https://t.me/JuanittoCalvares" target="_blank" rel="noopener" data-lang="en">Talk to a human</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fname">digitalAIventures LLC</div>
+  <div class="floc" data-lang="es">Alpujarras · Andalucía</div>
+  <div class="floc" data-lang="en">Alpujarras · Andalucía</div>
+  <div class="fcontact">
+    <a href="https://t.me/JuanittoCalvares" target="_blank" rel="noopener">✈️ t.me/JuanittoCalvares</a>
+  </div>
+  <p class="fnote" data-lang="es">Campaña solidaria para construir el primer hogar PearlShell. Las cifras de coste son reales; la historia de la familia y los canales de donación marcados como <em>placeholder</em> deben completarse antes de difundir. No se publicarán nombres ni fotos de la familia sin su consentimiento.</p>
+  <p class="fnote" data-lang="en">Solidarity campaign to build the first PearlShell home. The cost figures are real; the family story and the donation channels marked <em>placeholder</em> must be completed before sharing. No family names or photos will be published without consent.</p>
+</footer>
+
+<script>
+function setLang(l){
+  document.querySelectorAll('[data-lang]').forEach(el=>{el.style.display=el.dataset.lang===l?'':'none';});
+  document.querySelectorAll('[data-l]').forEach(b=>{b.classList.toggle('on',b.dataset.l===l);});
+  document.documentElement.lang=l;
+  try{localStorage.setItem('lang',l)}catch(e){}
+}
+function toggleTheme(){
+  const h=document.documentElement;
+  const n=h.getAttribute('data-theme')==='dark'?'light':'dark';
+  h.setAttribute('data-theme',n);
+  document.getElementById('ti').textContent=n==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',n)}catch(e){}
+}
+(function(){
+  try{
+    const s=localStorage.getItem('theme');
+    if(s){document.documentElement.setAttribute('data-theme',s);}
+    else{const hr=new Date().getHours();document.documentElement.setAttribute('data-theme',hr>=7&&hr<19?'light':'dark');}
+  }catch(e){}
+})();
+document.addEventListener('DOMContentLoaded',()=>{
+  const t=document.documentElement.getAttribute('data-theme');
+  const i=document.getElementById('ti');if(i)i.textContent=t==='dark'?'☀️':'🌙';
+  let l='es';
+  try{
+    const q=new URLSearchParams(location.search).get('lang');
+    l=q||localStorage.getItem('lang')||navigator.language.slice(0,2)||'es';
+  }catch(e){}
+  if(!['en','es'].includes(l))l='es';
+  setLang(l);
+});
+</script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bagno Seco · Beneficio</title>
+<title>Baño Seco · Beneficio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -149,29 +149,36 @@
   .mission-box{background:var(--bg-card);border:1px solid var(--border);border-radius:1rem;padding:1.3rem 1.2rem;margin-top:.4rem}
   .mission-box p{font-size:.94rem;line-height:1.6;margin:0}
   .mission-box a{color:var(--ac3);text-decoration:underline;text-underline-offset:2px}
-  /* poll */
-  .poll{background:var(--bg-card);border:1px solid var(--border);border-radius:1rem;padding:1.3rem 1.2rem;margin-top:1rem;text-align:left}
-  .poll .pq{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--text-h);margin-bottom:.2rem;text-align:center}
-  .poll .psub{font-size:.82rem;color:var(--text-m);text-align:center;margin-bottom:1rem}
-  .poll input[type=text]{width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:.55rem;padding:.6rem .7rem;font-size:.9rem;font-family:inherit;margin-bottom:.7rem}
-  .poll input[type=text]:focus{outline:none;border-color:var(--accent)}
-  .poll .prow{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem}
-  .poll .pbtn{flex:1;min-width:130px;border:none;border-radius:.55rem;padding:.65rem;font-size:.88rem;font-weight:600;cursor:pointer;font-family:inherit}
-  .poll .pagree{background:var(--accent);color:#fff}
-  .poll .ppropose{background:var(--ac2);color:#fff}
-  .poll .pother{display:flex;gap:.5rem;margin-top:.3rem}
-  .poll .pother input{margin-bottom:0}
-  .poll .psend{background:var(--ac3);color:#fff;border:none;border-radius:.55rem;padding:0 1rem;font-size:.85rem;font-weight:600;cursor:pointer;white-space:nowrap}
-  .poll .pmsg{font-size:.8rem;color:var(--ac3);text-align:center;min-height:1.1rem;margin:.5rem 0}
-  .poll .presults{margin-top:1rem;border-top:1px solid var(--border);padding-top:.9rem}
-  .poll .prtitle{font-size:.78rem;color:var(--text-m);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.6rem}
-  .poll .pitem{display:flex;align-items:flex-start;gap:.5rem;font-size:.86rem;padding:.4rem 0;border-bottom:1px solid var(--border)}
-  .poll .pitem:last-child{border-bottom:none}
-  .poll .pico{flex-shrink:0}
-  .poll .pname{font-weight:600;color:var(--text-h)}
-  .poll .ptxt{color:var(--text-m)}
-  .poll .pempty{font-size:.84rem;color:var(--text-m);text-align:center;font-style:italic}
-  .poll .pwarn{font-size:.72rem;color:var(--text-m);text-align:center;margin-top:.8rem;opacity:.8}
+  /* journal */
+  .journal{background:var(--bg-card);border:1px solid var(--border);border-radius:1rem;padding:1.3rem 1.2rem;margin-top:1rem;text-align:left}
+  .journal .jq{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--text-h);margin-bottom:.2rem;text-align:center}
+  .journal .jsub{font-size:.82rem;color:var(--text-m);text-align:center;margin-bottom:1rem}
+  .week{border:1px solid var(--border);border-radius:.7rem;margin-bottom:.8rem;overflow:hidden}
+  .week summary{cursor:pointer;padding:.7rem .9rem;font-weight:600;color:var(--text-h);font-size:.92rem;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  .week summary::-webkit-details-marker{display:none}
+  .week summary::after{content:'\25BE';color:var(--text-m);transition:transform .2s}
+  .week[open] summary::after{transform:rotate(180deg)}
+  .wbody{padding:0 .9rem .9rem}
+  .wsummary{font-size:.88rem;color:var(--text);line-height:1.55;margin-bottom:.9rem}
+  .wsummary p{margin:0 0 .6rem}
+  .wsummary ul{margin:0 0 .6rem;padding-left:1.1rem}
+  .wsummary li{margin-bottom:.5rem}
+  .clist{border-top:1px solid var(--border);padding-top:.7rem;margin-bottom:.7rem}
+  .citem{font-size:.85rem;padding:.45rem 0;border-bottom:1px solid var(--border)}
+  .citem:last-child{border-bottom:none}
+  .chead{display:flex;align-items:baseline;gap:.45rem;flex-wrap:wrap}
+  .cnick{font-weight:600;color:var(--text-h)}
+  .cdate{font-size:.72rem;color:var(--text-m)}
+  .creply{margin-left:auto;background:none;border:none;color:var(--accent);cursor:pointer;font-size:.78rem;padding:0}
+  .ctxt{color:var(--text);margin-top:.15rem;white-space:pre-wrap;word-break:break-word}
+  .cempty{font-size:.84rem;color:var(--text-m);text-align:center;font-style:italic;padding:.3rem 0}
+  .cform input[type=text],.cform textarea{width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:.55rem;padding:.6rem .7rem;font-size:.9rem;font-family:inherit;margin-bottom:.55rem}
+  .cform textarea{min-height:70px;resize:vertical}
+  .cform input:focus,.cform textarea:focus{outline:none;border-color:var(--accent)}
+  .csend{background:var(--ac3);color:#fff;border:none;border-radius:.55rem;padding:.6rem 1.2rem;font-size:.86rem;font-weight:600;cursor:pointer;width:100%}
+  .cmsg{font-size:.8rem;color:var(--ac3);text-align:center;min-height:1.1rem;margin-top:.45rem}
+  .jwarn{font-size:.72rem;color:var(--text-m);text-align:center;margin-top:.8rem;opacity:.8}
+  .hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
   /* talking-circle poster link + overlay */
   .tc-link{color:var(--ac3);text-decoration:underline;text-underline-offset:2px;cursor:pointer;white-space:nowrap}
   .tc-link em{font-style:italic}
@@ -206,7 +213,7 @@
     <span class="seed">🌱</span>
     <div class="eyebrow">Beneficio · Comunal Project</div>
     <h1>
-      <span data-lang="en">The <span class="it">Bagno&nbsp;Seco</span></span>
+      <span data-lang="en">The <span class="it">Composting&nbsp;Toilet</span></span>
       <span data-lang="es">El <span class="it">Baño&nbsp;Seco</span></span>
       <span data-lang="de">Das <span class="it">Trocken&shy;klo</span></span>
     </h1>
@@ -235,9 +242,9 @@
     <div class="meta">
       <div class="mrow"><span class="mk" data-lang="en">When</span><span class="mk" data-lang="es">Cuándo</span><span class="mk" data-lang="de">Wann</span>
         <span class="mv">
-          <span data-lang="en">Friday 12 June · Big Lodge</span>
-          <span data-lang="es">Viernes 12 junio · Big Lodge</span>
-          <span data-lang="de">Freitag 12. Juni · Big Lodge</span>
+          <span data-lang="en">Every Friday · 18:00 · Big Lodge</span>
+          <span data-lang="es">Cada viernes · 18:00 · Big Lodge</span>
+          <span data-lang="de">Jeden Freitag · 18:00 · Big Lodge</span>
         </span></div>
       <div class="mrow"><span class="mk" data-lang="en">Where</span><span class="mk" data-lang="es">Dónde</span><span class="mk" data-lang="de">Wo</span>
         <span class="mv">
@@ -256,7 +263,7 @@
     <div data-lang="en">
       <p class="lead">These last days we shared a beautiful and constructive <a href="#" class="tc-link" onclick="openPoster(event)"><em>talking circle</em> 📷</a> about how we, as a community, take care of our most basic and natural necessity: <strong>defecation</strong>.</p>
       <p>We all came to agree that the old <strong>"shitting pit"</strong> no longer serves us well for communal use. And many of the newcomers don't yet know the gentle forest way — finding a hidden spot far from the paths, digging a small hole with a hand shovel (which everyone should carry in their kit), covering it with earth and a stone, washing clean, and leaving no trace behind.</p>
-      <p>So it feels right, healthy and hygienic to build a proper <strong>bagno seco</strong> in the communal garden — easy to maintain, kind to use, and a living source of compost. A true symbiosis with the soil. 🌍</p>
+      <p>So it feels right, healthy and hygienic to build a proper <strong>composting toilet</strong> in the communal garden — easy to maintain, kind to use, and a living source of compost. A true symbiosis with the soil. 🌍</p>
     </div>
     <div data-lang="es">
       <p class="lead">Estos últimos días compartimos un hermoso y constructivo <a href="#" class="tc-link" onclick="openPoster(event)"><em>círculo de conversación</em> 📷</a> sobre cómo nosotros, como comunidad, cuidamos nuestra necesidad más básica y natural: la <strong>defecación</strong>.</p>
@@ -298,7 +305,7 @@
 
     <!-- DIAGRAM A — axonometric build (one box, labeled) -->
     <div class="diagram-wrap">
-      <svg viewBox="-40 0 480 360" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans,sans-serif" role="img" aria-label="Isometric bagno seco construction">
+      <svg viewBox="-40 0 480 360" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans,sans-serif" role="img" aria-label="Isometric composting toilet construction">
         <!-- ground shadow -->
         <ellipse cx="200" cy="320" rx="150" ry="24" fill="var(--leaf)" opacity=".18"/>
 
@@ -541,81 +548,110 @@
     </h2>
     <div class="gather">
       <div class="gw">
-        <span data-lang="en">Friday 12 June · 18:00 · Big Lodge</span>
-        <span data-lang="es">Viernes 12 junio · 18:00 · Big Lodge</span>
-        <span data-lang="de">Freitag 12. Juni · 18:00 · Big Lodge</span>
+        <span data-lang="en">Every Friday · 18:00 · Big Lodge</span>
+        <span data-lang="es">Cada viernes · 18:00 · Big Lodge</span>
+        <span data-lang="de">Jeden Freitag · 18:00 · Big Lodge</span>
       </div>
       <p style="font-size:.9rem;color:var(--text-m);margin-bottom:1.1rem">
-        <span data-lang="en">Our first meeting for this project. There we'll talk through the details together — the build day, materials, and whether we open a chat group for the project. Come, share your voice and your ideas. You are welcome. 🍃</span>
-        <span data-lang="es">Nuestra primera reunión para este proyecto. Allí hablaremos juntos los detalles — el día de construcción, los materiales, y si abrimos un grupo de chat para el proyecto. Ven, comparte tu voz y tus ideas. Eres bienvenido. 🍃</span>
-        <span data-lang="de">Unser erstes Treffen für dieses Projekt. Dort besprechen wir gemeinsam die Details — den Bautag, das Material, und ob wir eine Chat-Gruppe für das Projekt eröffnen. Komm, teile deine Stimme und Ideen. Du bist willkommen. 🍃</span>
+        <span data-lang="en">We gather every week in the talking circle. What we discuss lands in the project journal below — and there you can add your ideas, comments and critiques anytime, no phone or chat group needed. 🍃</span>
+        <span data-lang="es">Nos reunimos cada semana en el círculo de conversación. Lo que hablamos queda en el diario del proyecto, abajo — y allí puedes añadir tus ideas, comentarios y críticas cuando quieras, sin teléfono ni grupo de chat. 🍃</span>
+        <span data-lang="de">Wir treffen uns jede Woche im Gesprächskreis. Was wir besprechen, landet im Projekt-Tagebuch unten — dort kannst du jederzeit deine Ideen, Kommentare und Kritik hinzufügen, ganz ohne Telefon oder Chat-Gruppe. 🍃</span>
       </p>
-      <a href="#" class="btn btn-primary" id="tgbtn">
-        <span data-lang="en">Join the Telegram group</span>
-        <span data-lang="es">Únete al grupo de Telegram</span>
-        <span data-lang="de">Tritt der Telegram-Gruppe bei</span>
-      </a>
-      <p class="ph">
-        <span data-lang="en">↑ link coming soon — group forming</span>
-        <span data-lang="es">↑ enlace próximamente — grupo en formación</span>
-        <span data-lang="de">↑ Link folgt bald — Gruppe entsteht</span>
-      </p>
-
-      <!-- DATE POLL -->
-      <div class="poll">
-        <div class="pq">
-          <span data-lang="en">Does Friday 12 June · 18:00 work for you?</span>
-          <span data-lang="es">¿Te va bien el viernes 12 junio · 18:00?</span>
-          <span data-lang="de">Passt dir Freitag 12. Juni · 18:00?</span>
+      <!-- PROJECT JOURNAL -->
+      <div class="journal">
+        <div class="jq">
+          <span data-lang="en">📖 Project Journal</span>
+          <span data-lang="es">📖 Diario del proyecto</span>
+          <span data-lang="de">📖 Projekt-Tagebuch</span>
         </div>
-        <div class="psub">
-          <span data-lang="en">Add your nickname, then agree or propose another time.</span>
-          <span data-lang="es">Añade tu apodo, luego acepta o propón otra hora.</span>
-          <span data-lang="de">Gib deinen Spitznamen ein, dann zustimmen oder eine andere Zeit vorschlagen.</span>
+        <div class="jsub">
+          <span data-lang="en">What we discuss each week — and a space for your ideas, comments and critiques.</span>
+          <span data-lang="es">Lo que hablamos cada semana — y un espacio para tus ideas, comentarios y críticas.</span>
+          <span data-lang="de">Was wir jede Woche besprechen — und Platz für deine Ideen, Kommentare und Kritik.</span>
         </div>
 
-        <input type="text" id="pollNick" maxlength="24"
-          data-ph-en="Your nickname" data-ph-es="Tu apodo" data-ph-de="Dein Spitzname">
-
-        <div class="prow">
-          <button class="pbtn pagree" onclick="pollAgree()">
-            <span data-lang="en">✅ I agree</span>
-            <span data-lang="es">✅ De acuerdo</span>
-            <span data-lang="de">✅ Einverstanden</span>
-          </button>
-        </div>
-
-        <div class="pother">
-          <input type="text" id="pollOther" maxlength="60"
-            data-ph-en="Propose another date/time" data-ph-es="Propón otra fecha/hora" data-ph-de="Andere Zeit vorschlagen">
-          <button class="psend" onclick="pollPropose()">
-            <span data-lang="en">Send</span>
-            <span data-lang="es">Enviar</span>
-            <span data-lang="de">Senden</span>
-          </button>
-        </div>
-
-        <div class="pmsg" id="pollMsg"></div>
-
-        <div class="presults">
-          <div class="prtitle">
-            <span data-lang="en">Responses</span>
-            <span data-lang="es">Respuestas</span>
-            <span data-lang="de">Antworten</span>
-          </div>
-          <div id="pollResults">
-            <div class="pempty">
-              <span data-lang="en">Loading…</span>
-              <span data-lang="es">Cargando…</span>
-              <span data-lang="de">Lädt…</span>
+        <details class="week" open>
+          <summary>
+            <span>
+              <span data-lang="en">Week 1 · Fri 12 June</span>
+              <span data-lang="es">Semana 1 · Vie 12 junio</span>
+              <span data-lang="de">Woche 1 · Fr 12. Juni</span>
+            </span>
+          </summary>
+          <div class="wbody">
+            <div class="wsummary">
+              <span data-lang="en"><p>First circle held at the Big Lodge — thank you to everyone who came! 🌿</p>
+<p>Some discussions were loud enough for everyone to follow, others stayed more informal, since not everyone was equally interested. So the proposal is to gather next time inside the Big Lodge itself, away from the cooking, fire and music.</p>
+<ul>
+<li>Most participants felt that the <strong>placement</strong> of the new dry toilets matters most. Many rejected placing them near the communal garden, preferring a spot next to the existing one, which will be decommissioned afterwards.</li>
+<li><strong>Pallets</strong> will be collected at the Love Me Again shop. Reaching 10 will take a while, but we could start with the first toilet once 5 are available — splitting the build into a "two-day mission". Thoughts on this are welcome.</li>
+<li>Besides pallets we'll also need <strong>wood screws, caña</strong>, and a few other things. A very good idea from Raúl: solar lighting made from modified garden solar lights, found second-hand or repaired/recycled.</li>
+<li>The <strong>cañas</strong> can be harvested not far from here (Raúl &amp; Antonio know the spot). Next Friday a small team could meet earlier (16:00–17:00) to go cut them and leave them to dry.</li>
+<li>We'll check the <strong>wood screw</strong> price and quantity — probably ~60 screws, ~10 cm long.</li>
+<li>Raúl suggested that on mission day we bring everything <strong>early in the morning</strong> and work in two sessions, avoiding the midday heat.</li>
+<li>We'll need a proper <strong>vehicle</strong> to bring the materials right to the build site: a pickup or a van.</li>
+<li><strong>Costs:</strong> the materials will come to at least 25 € for the pallets, plus transport (maybe 5 €, possibly 10 € — we still need to find the right car &amp; driver to settle that), so 30–35 € for sure, plus the wood screws and whatever other expenses come up. The proposal is to set up a donations <strong>"magic hat"</strong>, kept by Alak (Turtle).</li>
+<li>Any other ideas, considerations, recommendations — even constructive criticism — are welcome! Write them just below (this page works as a project journal) or bring them to the next meeting.</li>
+</ul>
+<p>Thank you again — I hope many of us find this project useful. 🌿</p></span>
+              <span data-lang="es"><p>Primer círculo celebrado en el Big Lodge — ¡gracias a todos los que vinieron! 🌿</p>
+<p>Algunas conversaciones fueron lo bastante audibles para que todos pudieran seguirlas, otras quedaron más informales, porque no todos tenían el mismo interés. Por eso la propuesta es reunirnos la próxima vez dentro del propio Big Lodge, lejos de la cocina, el fuego y la música.</p>
+<ul>
+<li>La mayoría de los participantes consideró que la <strong>ubicación</strong> de los nuevos baños secos es lo más importante. Muchos rechazaron colocarlos cerca del huerto comunal, prefiriendo un lugar junto al existente, que se retirará después.</li>
+<li>Los <strong>palets</strong> se irán juntando en la tienda Love Me Again. Llegar a 10 tardará, pero podríamos empezar el primer baño cuando haya 5 — dividiendo la construcción en una "misión de dos días". Se agradecen opiniones sobre esto.</li>
+<li>Además de los palets necesitaremos <strong>tornillos para madera, caña</strong> y algunas cosas más. Una muy buena idea de Raúl: iluminación solar hecha con luces solares de jardín modificadas, conseguidas de segunda mano o reparadas/recicladas.</li>
+<li>Las <strong>cañas</strong> se pueden cosechar no muy lejos de aquí (Raúl y Antonio conocen el sitio). El próximo viernes un pequeño equipo podría quedar antes (16:00–17:00) para ir a cortarlas y dejarlas secar.</li>
+<li>Revisaremos el precio y la cantidad de los <strong>tornillos</strong> — probablemente unos 60, de ~10 cm.</li>
+<li>Raúl sugirió que el día de la misión llevemos todo <strong>temprano por la mañana</strong> y trabajemos en dos sesiones, evitando el calor del mediodía.</li>
+<li>Necesitaremos un <strong>vehículo</strong> adecuado para llevar el material hasta el lugar de montaje: una pickup o una furgoneta.</li>
+<li><strong>Costes:</strong> los materiales costarán al menos 25 € por los palets, más el transporte (quizá 5 €, puede que 10 € — aún falta encontrar coche y conductor para concretarlo), así que 30–35 € seguro, más los tornillos y otros gastos que surjan. La propuesta es montar un <strong>"sombrero mágico"</strong> de donaciones, guardado por Alak (Turtle).</li>
+<li>¡Cualquier otra idea, consideración, recomendación — incluso crítica constructiva — es bienvenida! Escríbelas aquí abajo (esta página funciona como diario del proyecto) o tráelas a la próxima reunión.</li>
+</ul>
+<p>Gracias de nuevo — espero que muchos consideremos útil este proyecto. 🌿</p></span>
+              <span data-lang="de"><p>Erster Kreis im Big Lodge — danke an alle, die gekommen sind! 🌿</p>
+<p>Einige Gespräche waren laut genug, dass alle folgen konnten, andere blieben informeller, weil nicht alle gleich interessiert waren. Deshalb der Vorschlag, uns nächstes Mal im Big Lodge selbst zu treffen, weg von Kochen, Feuer und Musik.</p>
+<ul>
+<li>Die meisten Teilnehmenden fanden, dass der <strong>Standort</strong> der neuen Trockentoiletten am wichtigsten ist. Viele lehnten einen Platz nahe dem Gemeinschaftsgarten ab und bevorzugen einen Ort neben der bestehenden, die danach stillgelegt wird.</li>
+<li><strong>Paletten</strong> werden im Love-Me-Again-Laden gesammelt. Bis 10 zusammen sind, dauert es, aber wir könnten mit der ersten Toilette beginnen, sobald 5 da sind — der Bau würde in eine „Zwei-Tage-Mission" geteilt. Meinungen dazu sind willkommen.</li>
+<li>Neben Paletten brauchen wir auch <strong>Holzschrauben, Caña (Schilfrohr)</strong> und einiges mehr. Eine sehr gute Idee von Raúl: Solarbeleuchtung aus umgebauten Garten-Solarlampen, gebraucht gekauft oder repariert/recycelt.</li>
+<li>Die <strong>Cañas</strong> können wir nicht weit von hier ernten (Raúl &amp; Antonio kennen die Stelle). Nächsten Freitag könnte sich ein kleines Team früher treffen (16:00–17:00), um sie zu schneiden und trocknen zu lassen.</li>
+<li>Wir prüfen Preis und Menge der <strong>Holzschrauben</strong> — wahrscheinlich ~60 Stück, ~10 cm lang.</li>
+<li>Raúl schlug vor, am Missionstag alles <strong>früh am Morgen</strong> zu bringen und in zwei Sessions zu arbeiten, um die Mittagshitze zu vermeiden.</li>
+<li>Wir brauchen ein geeignetes <strong>Fahrzeug</strong>, um das Material direkt zum Bauplatz zu bringen: einen Pickup oder einen Van.</li>
+<li><strong>Kosten:</strong> Das Material kostet mindestens 25 € für die Paletten, plus Transport (vielleicht 5 €, eventuell 10 € — Auto &amp; Fahrer müssen noch gefunden werden), also sicher 30–35 €, plus Schrauben und weitere Ausgaben. Der Vorschlag: ein Spenden-<strong>„Magic Hat"</strong>, verwahrt von Alak (Turtle).</li>
+<li>Alle weiteren Ideen, Überlegungen, Empfehlungen — auch konstruktive Kritik — sind willkommen! Schreibt sie direkt hier unten (diese Seite dient als Projekt-Tagebuch) oder bringt sie zum nächsten Treffen mit.</li>
+</ul>
+<p>Nochmals danke — ich hoffe, viele von uns finden dieses Projekt sinnvoll. 🌿</p></span>
+            </div>
+            <div class="clist" id="clist-1">
+              <div class="cempty">
+                <span data-lang="en">Loading…</span>
+                <span data-lang="es">Cargando…</span>
+                <span data-lang="de">Lädt…</span>
+              </div>
+            </div>
+            <div class="cform">
+              <input type="text" id="cnick-1" maxlength="24"
+                data-ph-en="Your nickname" data-ph-es="Tu apodo" data-ph-de="Dein Spitzname">
+              <textarea id="ctext-1" maxlength="500"
+                data-ph-en="Your idea, comment or critique…" data-ph-es="Tu idea, comentario o crítica…" data-ph-de="Deine Idee, Kommentar oder Kritik…"></textarea>
+              <input type="text" class="hp" id="chp-1" tabindex="-1" autocomplete="off" aria-hidden="true">
+              <button class="csend" onclick="cPost('1')">
+                <span data-lang="en">Post</span>
+                <span data-lang="es">Publicar</span>
+                <span data-lang="de">Senden</span>
+              </button>
+              <div class="cmsg" id="cmsg-1"></div>
             </div>
           </div>
-        </div>
+        </details>
 
-        <div class="pwarn">
-          <span data-lang="en">⚠ Responses are public — everyone visiting this page can see them.</span>
-          <span data-lang="es">⚠ Las respuestas son públicas — todos los que visiten esta página pueden verlas.</span>
-          <span data-lang="de">⚠ Antworten sind öffentlich — alle Besucher dieser Seite können sie sehen.</span>
+        <div class="jwarn">
+          <span data-lang="en">⚠ Comments are public — everyone visiting this page can read them.</span>
+          <span data-lang="es">⚠ Los comentarios son públicos — todos los que visiten esta página pueden leerlos.</span>
+          <span data-lang="de">⚠ Kommentare sind öffentlich — alle Besucher dieser Seite können sie lesen.</span>
+        </div>
+      </div>
         </div>
       </div>
     </div>
@@ -654,7 +690,7 @@
       b.classList.toggle('on', b.dataset.l===l);
     });
     document.documentElement.lang=l;
-    document.querySelectorAll('input[data-ph-'+l+']').forEach(inp=>{
+    document.querySelectorAll('input[data-ph-'+l+'],textarea[data-ph-'+l+']').forEach(inp=>{
       const v=inp.getAttribute('data-ph-'+l); if(v)inp.placeholder=v;
     });
     try{localStorage.setItem('lang',l)}catch(e){}
@@ -681,10 +717,13 @@
   })();
   document.addEventListener('DOMContentLoaded',()=>{
     let l='en';
-    try{l=localStorage.getItem('lang')||navigator.language.slice(0,2)||'en';}catch(e){}
+    try{
+      const q=new URLSearchParams(location.search).get('lang');
+      l=q||localStorage.getItem('lang')||navigator.language.slice(0,2)||'en';
+    }catch(e){}
     if(!['en','es','de'].includes(l))l='en';
     setLang(l);
-    pollLoad();
+    jInit();
   });
 
   /* ---- TALKING CIRCLE POSTER OVERLAY ---- */
@@ -699,78 +738,73 @@
   }
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closePoster();});
 
-  /* ---- DATE POLL (here.now Site Data, public collection 'poll') ---- */
-  const POLL_URL='/.herenow/data/poll';
-  function pollMsg(t,err){
-    const m=document.getElementById('pollMsg');
+  /* ---- PROJECT JOURNAL COMMENTS (here.now Site Data, public collection 'comments') ---- */
+  const C_URL='/.herenow/data/comments';
+  function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function unesc(s){const t=document.createElement('textarea');t.innerHTML=s;return t.value;}
+  function jLang(){let l='en';try{l=localStorage.getItem('lang')||'en';}catch(e){}return ['en','es','de'].includes(l)?l:'en';}
+  function cMsg(w,t,err){
+    const m=document.getElementById('cmsg-'+w);
     if(m){m.textContent=t;m.style.color=err?'#c0563e':'var(--ac3)';}
   }
-  function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-  async function pollFetch(){
+  async function cFetch(){
     try{
-      const r=await fetch(POLL_URL+'?limit=100',{headers:{'Accept':'application/json'}});
+      const r=await fetch(C_URL+'?limit=200',{headers:{'Accept':'application/json'}});
       if(!r.ok)return [];
       const j=await r.json();
-      const recs=(j.records||[]).map(x=>({...(x.data||{}),_ts:x.createdAt||x.updatedAt||''}));
-      // keep only the latest record per nickname (case-insensitive)
-      const byNick={};
-      for(const rec of recs){
-        const k=(rec.nick||'').toLowerCase();
-        if(!k)continue;
-        if(!byNick[k]||(rec._ts>byNick[k]._ts))byNick[k]=rec;
-      }
-      return Object.values(byNick).sort((a,b)=>(a._ts<b._ts?-1:1));
+      return (j.records||[]).map(x=>({...(x.data||{}),_ts:x.createdAt||''}))
+        .filter(c=>c.nick&&c.text&&!c.web)
+        .sort((a,b)=>(a._ts<b._ts?-1:1));
     }catch(e){return [];}
   }
-  async function pollPost(entry){
+  function cRender(all){
+    document.querySelectorAll('.clist').forEach(box=>{
+      const w=box.id.replace('clist-','');
+      const list=all.filter(c=>String(c.week)===w);
+      if(!list.length){
+        const t={en:'No comments yet — be the first!',es:'Aún no hay comentarios — ¡sé el primero!',de:'Noch keine Kommentare — sei der Erste!'}[jLang()];
+        box.innerHTML='<div class="cempty">'+t+'</div>';return;
+      }
+      box.innerHTML=list.map(c=>{
+        let d='';
+        try{d=new Date(c._ts).toLocaleDateString(jLang(),{day:'numeric',month:'short'});}catch(e){}
+        return '<div class="citem"><div class="chead">'+
+          '<span class="cnick">'+esc(c.nick)+'</span>'+
+          '<span class="cdate">'+esc(d)+'</span>'+
+          '<button class="creply" title="Reply" onclick="cReply(\''+w+'\',\''+esc(c.nick)+'\')">↩</button>'+
+          '</div><div class="ctxt">'+esc(c.text)+'</div></div>';
+      }).join('');
+    });
+  }
+  function cReply(w,nick){
+    const t=document.getElementById('ctext-'+w);
+    if(t){t.value='@'+unesc(nick)+': '+t.value;t.focus();}
+  }
+  async function cPost(w){
+    const nick=(document.getElementById('cnick-'+w).value||'').trim().slice(0,24);
+    const text=(document.getElementById('ctext-'+w).value||'').trim().slice(0,500);
+    const hp=(document.getElementById('chp-'+w).value||'').trim();
+    const L=jLang();
+    if(!nick){cMsg(w,{en:'Please add a nickname first.',es:'Añade un apodo primero.',de:'Bitte zuerst einen Spitznamen.'}[L],true);return;}
+    if(!text){cMsg(w,{en:'Write something first.',es:'Escribe algo primero.',de:'Schreib zuerst etwas.'}[L],true);return;}
+    if(hp){cMsg(w,{en:'Thanks! 🌿',es:'¡Gracias! 🌿',de:'Danke! 🌿'}[L]);return;}
+    cMsg(w,{en:'Saving…',es:'Guardando…',de:'Speichern…'}[L]);
+    let ok=false;
     try{
-      const r=await fetch(POLL_URL,{
+      const r=await fetch(C_URL,{
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify(entry)
+        body:JSON.stringify({week:String(w),nick,text,web:''})
       });
-      return r.ok;
-    }catch(e){return false;}
+      ok=r.ok;
+    }catch(e){}
+    if(ok){
+      document.getElementById('ctext-'+w).value='';
+      await jInit();
+      cMsg(w,{en:'Thanks, posted! 🌿',es:'¡Gracias, publicado! 🌿',de:'Danke, veröffentlicht! 🌿'}[L]);
+    }else cMsg(w,{en:'Could not save, try again.',es:'No se pudo guardar, reintenta.',de:'Speichern fehlgeschlagen.'}[L],true);
   }
-  function pollLang(){let l='en';try{l=localStorage.getItem('lang')||'en';}catch(e){}return ['en','es','de'].includes(l)?l:'en';}
-  function pollRender(list){
-    const box=document.getElementById('pollResults');
-    if(!box)return;
-    if(!list.length){
-      const t={en:'No responses yet — be the first!',es:'Aún no hay respuestas — ¡sé el primero!',de:'Noch keine Antworten — sei der Erste!'}[pollLang()];
-      box.innerHTML='<div class="pempty">'+t+'</div>';return;
-    }
-    box.innerHTML=list.map(p=>{
-      const ico=p.agree?'✅':'📅';
-      const txt=p.agree
-        ?{en:'agrees',es:'de acuerdo',de:'einverstanden'}[pollLang()]
-        :esc(p.other||'');
-      return '<div class="pitem"><span class="pico">'+ico+'</span>'+
-        '<span><span class="pname">'+esc(p.nick)+'</span> <span class="ptxt">'+txt+'</span></span></div>';
-    }).join('');
-  }
-  async function pollLoad(){pollRender(await pollFetch());}
-  function pollNick(){
-    const n=(document.getElementById('pollNick').value||'').trim();
-    if(!n){pollMsg({en:'Please add a nickname first.',es:'Añade un apodo primero.',de:'Bitte zuerst einen Spitznamen.'}[pollLang()],true);return null;}
-    return n.slice(0,24);
-  }
-  async function pollAgree(){
-    const nick=pollNick();if(!nick)return;
-    pollMsg({en:'Saving…',es:'Guardando…',de:'Speichern…'}[pollLang()]);
-    const ok=await pollPost({nick,agree:true,other:''});
-    if(ok){await pollLoad();pollMsg({en:'Thanks, recorded! ✅',es:'¡Gracias, registrado! ✅',de:'Danke, gespeichert! ✅'}[pollLang()]);}
-    else pollMsg({en:'Could not save, try again.',es:'No se pudo guardar, reintenta.',de:'Speichern fehlgeschlagen.'}[pollLang()],true);
-  }
-  async function pollPropose(){
-    const nick=pollNick();if(!nick)return;
-    const other=(document.getElementById('pollOther').value||'').trim();
-    if(!other){pollMsg({en:'Type your proposed date/time.',es:'Escribe tu fecha/hora propuesta.',de:'Gib deine Zeit ein.'}[pollLang()],true);return;}
-    pollMsg({en:'Saving…',es:'Guardando…',de:'Speichern…'}[pollLang()]);
-    const ok=await pollPost({nick,agree:false,other:other.slice(0,60)});
-    if(ok){document.getElementById('pollOther').value='';await pollLoad();pollMsg({en:'Thanks, recorded! 📅',es:'¡Gracias, registrado! 📅',de:'Danke, gespeichert! 📅'}[pollLang()]);}
-    else pollMsg({en:'Could not save, try again.',es:'No se pudo guardar, reintenta.',de:'Speichern fehlgeschlagen.'}[pollLang()],true);
-  }
+  async function jInit(){cRender(await cFetch());}
 </script>
 </body>
 </html>
