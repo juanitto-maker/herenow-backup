@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en" data-theme="dark" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dar — Your family's private bridge home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="dark"]{
+  --bg:#1a1612; --bg-card:#2a2520; --bg-alt:#211d18;
+  --bg-hero:linear-gradient(160deg,#241d14 0%,#1a1612 70%);
+  --text:#e8dcc8; --text-m:#a89070; --text-h:#f5e8d0;
+  --border:#3d3530; --accent:#c9a84c; --ac2:#8b6f47;
+}
+[data-theme="light"]{
+  --bg:#fdf8ee; --bg-card:#fff; --bg-alt:#f6efe0;
+  --bg-hero:linear-gradient(160deg,#f3ecdb,#fdf8ee);
+  --text:#3a2f1f; --text-m:#7a6a52; --text-h:#2a1f10;
+  --border:#e8dcc4; --accent:#a8862e; --ac2:#8b6f47;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+img,svg,video{max-width:100%;height:auto}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;
+  line-height:1.6;font-weight:400;-webkit-font-smoothing:antialiased;overflow-wrap:anywhere}
+[data-lang="ar"]{font-family:'Amiri',serif;line-height:1.9}
+h1,h2,h3{font-family:'Playfair Display',serif;color:var(--text-h);line-height:1.2}
+h2[data-lang="ar"],h3[data-lang="ar"]{font-family:'Amiri',serif}
+.wrap{max-width:680px;margin:0 auto;padding:0 1.25rem}
+.lbar{display:flex;justify-content:center;gap:.35rem;padding:.34rem;flex-wrap:wrap;
+  background:var(--bg);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:190}
+.lb{background:none;border:1px solid var(--border);color:var(--text-m);
+  font-size:.76rem;padding:.14rem .58rem;border-radius:1rem;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.lb.on{background:var(--accent);color:#1a1612;border-color:var(--accent);font-weight:700}
+.tt{position:fixed;top:3.1rem;right:.6rem;z-index:150;background:var(--bg-card);
+  border:1px solid var(--border);width:2.2rem;height:2.2rem;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.25);
+  cursor:pointer;font-size:.9rem;transition:transform .2s}
+.tt:hover{transform:scale(1.1)}
+.hero{background:var(--bg-hero);padding:3.4rem 0 3rem;text-align:center;border-bottom:1px solid var(--border)}
+.badge{display:inline-block;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);border:1px solid var(--accent);border-radius:1rem;padding:.2rem .8rem;margin-bottom:1.1rem;font-weight:600}
+.brand{font-size:3.4rem;font-weight:700;color:var(--accent);letter-spacing:.02em;line-height:1}
+.vline{font-size:1rem;color:var(--accent);font-weight:600;margin-top:.55rem;letter-spacing:.01em}
+.tag{font-size:1.18rem;color:var(--text-h);margin-top:.5rem;font-weight:500}
+.sub{font-size:.97rem;color:var(--text-m);margin-top:.9rem;max-width:34rem;margin-left:auto;margin-right:auto}
+.cta-row{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin-top:1.5rem}
+.btn{display:inline-block;padding:.66rem 1.5rem;border-radius:2rem;font-size:.95rem;font-weight:600;
+  letter-spacing:.02em;transition:all .2s;cursor:pointer;border:none;text-decoration:none;font-family:'DM Sans',sans-serif}
+.btn-p{background:var(--accent);color:#1a1612}
+.btn-p:hover{filter:brightness(1.08);transform:translateY(-2px)}
+.btn-o{background:none;border:2px solid var(--accent);color:var(--accent)}
+.btn-o:hover{background:var(--accent);color:#1a1612;transform:translateY(-2px)}
+section{padding:2.6rem 0}
+section.alt{background:var(--bg-alt)}
+.slbl{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ac2);font-weight:700;margin-bottom:.35rem}
+.div{height:2px;width:3rem;background:var(--accent);margin:.5rem 0 1.2rem;border-radius:1px}
+h2.sec{font-size:1.7rem;margin-bottom:.3rem}
+.lead{color:var(--text-m);font-size:.98rem;margin-bottom:1.2rem}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:1rem}
+.fcard{background:var(--bg-card);border:1px solid var(--border);border-radius:.85rem;padding:1rem .9rem;text-align:center}
+.fico{font-size:1.9rem;display:block;margin-bottom:.45rem}
+.ftit{font-weight:700;font-size:.9rem;color:var(--text-h);margin-bottom:.3rem;font-family:'DM Sans',sans-serif}
+.fdsc{font-size:.79rem;color:var(--text-m);line-height:1.5}
+.steps{margin-top:1rem}
+.step{display:flex;gap:.9rem;align-items:flex-start;background:var(--bg-card);border:1px solid var(--border);border-radius:.85rem;padding:.9rem 1rem;margin-bottom:.6rem}
+.step-num{background:var(--accent);color:#1a1612;font-weight:700;font-size:.85rem;width:1.8rem;height:1.8rem;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-t{font-weight:700;color:var(--text-h);font-size:.92rem;margin-bottom:.2rem;font-family:'DM Sans',sans-serif}
+.step-d{font-size:.83rem;color:var(--text-m);line-height:1.5}
+.exp{background:var(--bg-card);border:1px solid var(--border);border-radius:.8rem;margin-bottom:.65rem;overflow:hidden}
+.exp-h{width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;
+  justify-content:space-between;gap:.8rem;padding:1rem 1.1rem;text-align:start;color:var(--text-h);
+  font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;line-height:1.35}
+.exp-ico{flex-shrink:0;width:1.5rem;height:1.5rem;border-radius:50%;background:var(--accent);color:#1a1612;
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;transition:transform .25s;line-height:1}
+.exp.open .exp-ico{transform:rotate(45deg)}
+.exp-body{display:none;padding:0 1.1rem 1.05rem;color:var(--text-m);font-size:.88rem;line-height:1.62}
+.exp.open .exp-body{display:block}
+.exp-body .why{color:var(--text);display:block;margin-bottom:.5rem}
+.exp-body .fix{display:block;color:var(--accent);font-weight:600;font-size:.83rem}
+.tech{display:block;margin-top:.75rem;padding-top:.6rem;border-top:1px dashed var(--border);
+  font-family:ui-monospace,'Cascadia Code',Menlo,Consolas,monospace;font-size:.72rem;
+  color:var(--text-m);line-height:1.55;text-align:left;direction:ltr}
+.trust{background:var(--bg-card);border:1px solid var(--accent);border-radius:.9rem;padding:1.3rem 1.2rem}
+.trust p{color:var(--text-m);font-size:.9rem;margin-top:.4rem}
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300;align-items:center;justify-content:center;padding:1.2rem}
+.ov.open{display:flex}
+.ob{background:var(--bg-card);border:1px solid var(--border);border-radius:1rem;padding:1.6rem;max-width:310px;width:100%;text-align:center;animation:su .22s ease-out}
+@keyframes su{from{transform:translateY(28px);opacity:0}to{transform:none;opacity:1}}
+.ob h4{font-size:1.05rem;margin-bottom:.9rem;color:var(--text-h)}
+.opt{display:block;width:100%;padding:.62rem;margin-bottom:.55rem;border-radius:.55rem;text-decoration:none;font-weight:600;font-size:.88rem;color:#fff}
+.o-bot{background:#0088cc}.o-tg{background:#229ED9}.o-mail{background:var(--ac2)}
+.ocl{background:none;border:1px solid var(--border);color:var(--text-m);cursor:pointer;font-size:.82rem;padding:.4rem 1.2rem;border-radius:.4rem;margin-top:.2rem;font-family:'DM Sans',sans-serif}
+footer{text-align:center;padding:2.2rem 1.25rem 2.6rem;border-top:1px solid var(--border);background:var(--bg-alt)}
+.fnote{color:var(--text-m);font-size:.74rem;line-height:1.5}
+.anim{animation:fadeUp .6s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<div class="lbar">
+  <button class="lb" data-l="en" onclick="setLang('en')">EN</button>
+  <button class="lb" data-l="es" onclick="setLang('es')">ES</button>
+  <button class="lb" data-l="de" onclick="setLang('de')">DE</button>
+  <button class="lb" data-l="fr" onclick="setLang('fr')">FR</button>
+  <button class="lb" data-l="ro" onclick="setLang('ro')">RO</button>
+  <button class="lb" data-l="ar" onclick="setLang('ar')">عربي</button>
+</div>
+<button class="tt" onclick="toggleTheme()"><span id="ti">☀️</span></button>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <span class="badge" data-lang="en">Early access</span>
+    <span class="badge" data-lang="es">Acceso anticipado</span>
+    <span class="badge" data-lang="de">Früher Zugang</span>
+    <span class="badge" data-lang="fr">Accès anticipé</span>
+    <span class="badge" data-lang="ro">Acces timpuriu</span>
+    <span class="badge" data-lang="ar">وصول مبكر</span>
+    <div class="brand">Dar</div>
+    <p class="vline" data-lang="en">📦 Your private VPN — in a box.</p>
+    <p class="vline" data-lang="es">📦 Tu VPN privado — en una caja.</p>
+    <p class="vline" data-lang="de">📦 Dein privates VPN — in einer Box.</p>
+    <p class="vline" data-lang="fr">📦 Ton VPN privé — dans une boîte.</p>
+    <p class="vline" data-lang="ro">📦 VPN-ul tău privat — într-o cutie.</p>
+    <p class="vline" data-lang="ar">📦 شبكتك الخاصّة VPN — في صندوق.</p>
+    <p class="tag" data-lang="en">Your family's private bridge home.</p>
+    <p class="tag" data-lang="es">El puente privado de tu familia a casa.</p>
+    <p class="tag" data-lang="de">Die private Brücke deiner Familie nach Hause.</p>
+    <p class="tag" data-lang="fr">Le pont privé de ta famille vers la maison.</p>
+    <p class="tag" data-lang="ro">Puntea privată a familiei tale spre casă.</p>
+    <p class="tag" data-lang="ar">جسر عائلتك الخاص إلى البيت.</p>
+    <p class="sub" data-lang="en">A small box you plug in at the family home back in your country. Your phone in Europe connects to it — and you're home from anywhere. No one, not even us, can see your traffic.</p>
+    <p class="sub" data-lang="es">Una pequeña caja que enchufas en el hogar familiar de tu país. Tu móvil en Europa se conecta a ella y estás en casa desde cualquier lugar. Nadie, ni siquiera nosotros, puede ver tu tráfico.</p>
+    <p class="sub" data-lang="de">Eine kleine Box, die du im Familienhaus in deiner Heimat einsteckst. Dein Handy in Europa verbindet sich damit — und du bist von überall zu Hause. Niemand, nicht einmal wir, kann deinen Datenverkehr sehen.</p>
+    <p class="sub" data-lang="fr">Un petit boîtier que tu branches au domicile familial dans ton pays. Ton téléphone en Europe s'y connecte — et tu es chez toi depuis partout. Personne, pas même nous, ne peut voir ton trafic.</p>
+    <p class="sub" data-lang="ro">O cutie mică pe care o conectezi la casa familiei din țara ta. Telefonul tău din Europa se conectează la ea — și ești acasă de oriunde. Nimeni, nici măcar noi, nu-ți poate vedea traficul.</p>
+    <p class="sub" data-lang="ar">صندوق صغير تضعه في بيت العائلة في بلدك، وهاتفك في أوروبا يتّصل به — فتصبح في بيتك من أيّ مكان. ولا أحد، ولا حتى نحن، يستطيع رؤية بياناتك.</p>
+    <div class="cta-row">
+      <a class="btn btn-p" href="#why"><span data-lang="en">How it works</span><span data-lang="es">Cómo funciona</span><span data-lang="de">So funktioniert's</span><span data-lang="fr">Comment ça marche</span><span data-lang="ro">Cum funcționează</span><span data-lang="ar">كيف يعمل</span></a>
+      <button class="btn btn-o" onclick="openC()"><span data-lang="en">Be first to get one</span><span data-lang="es">Sé el primero</span><span data-lang="de">Sei der Erste</span><span data-lang="fr">Sois le premier</span><span data-lang="ro">Fii primul</span><span data-lang="ar">كن أوّل من يحصل عليه</span></button>
+    </div>
+  </div>
+</header>
+
+<!-- WHY / USE CASES -->
+<section id="why">
+  <div class="wrap anim">
+    <div class="slbl" data-lang="en">Why families use Dar</div>
+    <div class="slbl" data-lang="es">Por qué las familias usan Dar</div>
+    <div class="slbl" data-lang="de">Warum Familien Dar nutzen</div>
+    <div class="slbl" data-lang="fr">Pourquoi les familles utilisent Dar</div>
+    <div class="slbl" data-lang="ro">De ce familiile aleg Dar</div>
+    <div class="slbl" data-lang="ar">لماذا تختار العائلات Dar</div>
+    <h2 class="sec" data-lang="en">Stay tied to home — safely</h2>
+    <h2 class="sec" data-lang="es">Sigue ligado a casa — con seguridad</h2>
+    <h2 class="sec" data-lang="de">Mit der Heimat verbunden — sicher</h2>
+    <h2 class="sec" data-lang="fr">Reste lié à la maison — en sécurité</h2>
+    <h2 class="sec" data-lang="ro">Rămâi legat de casă — în siguranță</h2>
+    <h2 class="sec" data-lang="ar">ابقَ على صلة ببيتك — بأمان</h2>
+    <div class="div"></div>
+    <div class="fgrid">
+      <div class="fcard">
+        <span class="fico">🏦</span>
+        <div class="ftit"><span data-lang="en">Banking, no lockouts</span><span data-lang="es">Banca sin bloqueos</span><span data-lang="de">Bank ohne Sperren</span><span data-lang="fr">Banque sans blocage</span><span data-lang="ro">Bancă fără blocaje</span><span data-lang="ar">بنوك بلا حظر</span></div>
+        <div class="fdsc"><span data-lang="en">Use your home-country banking apps without fraud alerts blocking you.</span><span data-lang="es">Usa las apps de tu banco sin que las alertas de fraude te bloqueen.</span><span data-lang="de">Nutze die Bank-Apps deiner Heimat ohne Betrugssperren.</span><span data-lang="fr">Utilise les applis bancaires de ton pays sans alertes de fraude.</span><span data-lang="ro">Folosește aplicațiile bancare din țara ta fără alerte de fraudă.</span><span data-lang="ar">ادخل تطبيقات بنكك في بلدك دون إنذارات الاحتيال.</span></div>
+      </div>
+      <div class="fcard">
+        <span class="fico">📺</span>
+        <div class="ftit"><span data-lang="en">Home TV &amp; services</span><span data-lang="es">TV y servicios de casa</span><span data-lang="de">Heimat-TV &amp; Dienste</span><span data-lang="fr">TV &amp; services du pays</span><span data-lang="ro">TV și servicii de acasă</span><span data-lang="ar">قنوات وخدمات بلدك</span></div>
+        <div class="fdsc"><span data-lang="en">Watch hometown channels and reach services that only work from home.</span><span data-lang="es">Ve los canales de tu tierra y servicios que solo funcionan desde casa.</span><span data-lang="de">Schau Heimatsender und erreiche Dienste, die nur dort funktionieren.</span><span data-lang="fr">Regarde les chaînes du pays et accède aux services locaux.</span><span data-lang="ro">Vezi canalele de acasă și accesează servicii care funcționează doar local.</span><span data-lang="ar">شاهد قنوات بلدك واستعمل الخدمات المتاحة محليًا فقط.</span></div>
+      </div>
+      <div class="fcard">
+        <span class="fico">🛡️</span>
+        <div class="ftit"><span data-lang="en">Family-safe internet</span><span data-lang="es">Internet seguro</span><span data-lang="de">Sicheres Internet</span><span data-lang="fr">Internet protégé</span><span data-lang="ro">Internet sigur</span><span data-lang="ar">إنترنت آمن للعائلة</span></div>
+        <div class="fdsc"><span data-lang="en">Blocks ads, trackers and adult content across the whole house.</span><span data-lang="es">Bloquea anuncios, rastreadores y contenido adulto en toda la casa.</span><span data-lang="de">Blockt Werbung, Tracker und nicht jugendfreie Inhalte im ganzen Haus.</span><span data-lang="fr">Bloque pubs, traqueurs et contenu adulte dans toute la maison.</span><span data-lang="ro">Blochează reclame, urmăritoare și conținut pentru adulți în toată casa.</span><span data-lang="ar">يحجب الإعلانات والتعقّب والمحتوى غير اللائق لكلّ أجهزة البيت.</span></div>
+      </div>
+      <div class="fcard">
+        <span class="fico">🔗</span>
+        <div class="ftit"><span data-lang="en">Always connected</span><span data-lang="es">Siempre conectado</span><span data-lang="de">Immer verbunden</span><span data-lang="fr">Toujours connecté</span><span data-lang="ro">Mereu conectat</span><span data-lang="ar">متّصل دائمًا</span></div>
+        <div class="fdsc"><span data-lang="en">A permanent private link between you and the family home.</span><span data-lang="es">Un enlace privado permanente entre tú y el hogar familiar.</span><span data-lang="de">Eine dauerhafte private Verbindung zwischen dir und dem Zuhause.</span><span data-lang="fr">Un lien privé permanent entre toi et le foyer familial.</span><span data-lang="ro">O legătură privată permanentă între tine și casa familiei.</span><span data-lang="ar">رابط خاصّ دائم بينك وبين بيت العائلة.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT REACHES HOME -->
+<section class="alt" id="reach">
+  <div class="wrap anim">
+    <div class="slbl" data-lang="en">How it reaches home</div>
+    <div class="slbl" data-lang="es">Cómo llega a casa</div>
+    <div class="slbl" data-lang="de">So kommt es nach Hause</div>
+    <div class="slbl" data-lang="fr">Comment il arrive à la maison</div>
+    <div class="slbl" data-lang="ro">Cum ajunge acasă</div>
+    <div class="slbl" data-lang="ar">كيف يصل إلى البيت</div>
+    <h2 class="sec" data-lang="en">Three steps, and you're home</h2>
+    <h2 class="sec" data-lang="es">Tres pasos y estás en casa</h2>
+    <h2 class="sec" data-lang="de">Drei Schritte, und du bist zu Hause</h2>
+    <h2 class="sec" data-lang="fr">Trois étapes, et tu es chez toi</h2>
+    <h2 class="sec" data-lang="ro">Trei pași și ești acasă</h2>
+    <h2 class="sec" data-lang="ar">ثلاث خطوات وتصبح في بيتك</h2>
+    <div class="div"></div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-t"><span data-lang="en">We mail it to you</span><span data-lang="es">Te la enviamos</span><span data-lang="de">Wir schicken sie dir</span><span data-lang="fr">On te l'envoie</span><span data-lang="ro">Ți-o trimitem</span><span data-lang="ar">نرسله إليك</span></div>
+          <div class="step-d"><span data-lang="en">A small box arrives, ready to go, with a simple code card inside.</span><span data-lang="es">Llega una caja pequeña, lista para usar, con una tarjeta de código dentro.</span><span data-lang="de">Eine kleine, fertige Box kommt an — mit einer einfachen Code-Karte.</span><span data-lang="fr">Un petit boîtier arrive, prêt à l'emploi, avec une carte-code à l'intérieur.</span><span data-lang="ro">Primești o cutie mică, gata de folosit, cu un card cu cod înăuntru.</span><span data-lang="ar">يصلك صندوق صغير جاهز، مع بطاقة رمز بسيطة بداخله.</span></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-t"><span data-lang="en">Send it home</span><span data-lang="es">Mándala a casa</span><span data-lang="de">Schick sie heim</span><span data-lang="fr">Envoie-le au pays</span><span data-lang="ro">Trimite-o acasă</span><span data-lang="ar">أرسله إلى البيت</span></div>
+          <div class="step-d"><span data-lang="en">Post it to your family in your home country — or simply take it on your next visit.</span><span data-lang="es">Envíala a tu familia en tu país de origen — o llévala en tu próxima visita.</span><span data-lang="de">Schick sie deiner Familie in der Heimat — oder nimm sie beim nächsten Besuch mit.</span><span data-lang="fr">Envoie-le à ta famille dans ton pays — ou emporte-le lors de ta prochaine visite.</span><span data-lang="ro">Trimite-o familiei în țara ta — sau ia-o cu tine la următoarea vizită.</span><span data-lang="ar">أرسله إلى عائلتك في بلدك — أو خذه معك في زيارتك القادمة.</span></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-t"><span data-lang="en">A relative plugs it in</span><span data-lang="es">Un familiar la enchufa</span><span data-lang="de">Ein Verwandter steckt sie ein</span><span data-lang="fr">Un proche la branche</span><span data-lang="ro">O conectează un membru al familiei</span><span data-lang="ar">يوصّله أحد الأقارب</span></div>
+          <div class="step-d"><span data-lang="en">Into a power socket — and into the router if there is one. No router? It joins the home Wi-Fi instead (we set that up before mailing). Then just wait for the green light.</span><span data-lang="es">A la corriente — y al router si lo hay. ¿Sin router? Se une al wifi de casa (lo configuramos antes de enviarla). Luego solo esperar la luz verde.</span><span data-lang="de">In die Steckdose — und in den Router, falls vorhanden. Kein Router? Sie klinkt sich ins Heim-WLAN ein (richten wir vor dem Versand ein). Dann nur auf das grüne Licht warten.</span><span data-lang="fr">Sur une prise — et sur le routeur s'il y en a un. Pas de routeur ? Il rejoint le wifi de la maison (réglé avant l'envoi). Puis attendre le voyant vert.</span><span data-lang="ro">La priză — și la router, dacă există. Fără router? Se conectează la wifi-ul casei (configurat înainte de expediere). Apoi doar aștepți lumina verde.</span><span data-lang="ar">بمقبس الكهرباء — وبالراوتر إن وُجد. لا راوتر؟ يتّصل بشبكة واي‑فاي البيت (نُعدّ ذلك قبل الإرسال). ثم انتظر الضوء الأخضر فقط.</span></div>
+        </div>
+      </div>
+    </div>
+    <span class="tech">⚙ Uplink options: Ethernet to the home router/modem, or Wi-Fi-as-WAN (pre-provisioned SSID) so power is the only on-site action; optional cellular (USB-LTE/SIM) where there's no fixed line. Needs power + any working home internet.</span>
+  </div>
+</section>
+
+<!-- DIFFERENT FROM MAINSTREAM VPN -->
+<section id="diff">
+  <div class="wrap anim">
+    <div class="slbl" data-lang="en">Not another VPN</div>
+    <div class="slbl" data-lang="es">No es otro VPN</div>
+    <div class="slbl" data-lang="de">Kein gewöhnliches VPN</div>
+    <div class="slbl" data-lang="fr">Pas un VPN comme les autres</div>
+    <div class="slbl" data-lang="ro">Nu e un VPN obișnuit</div>
+    <div class="slbl" data-lang="ar">ليس مجرّد VPN آخر</div>
+    <h2 class="sec" data-lang="en">More private than a normal VPN</h2>
+    <h2 class="sec" data-lang="es">Más privado que un VPN normal</h2>
+    <h2 class="sec" data-lang="de">Privater als ein normales VPN</h2>
+    <h2 class="sec" data-lang="fr">Plus privé qu'un VPN classique</h2>
+    <h2 class="sec" data-lang="ro">Mai privat decât un VPN obișnuit</h2>
+    <h2 class="sec" data-lang="ar">أكثر خصوصية من VPN عادي</h2>
+    <div class="div"></div>
+    <p class="lead" data-lang="en">Tap any line to see why — in plain words, or the technical detail.</p>
+    <p class="lead" data-lang="es">Toca cualquier línea para ver por qué — en palabras simples o en detalle técnico.</p>
+    <p class="lead" data-lang="de">Tippe auf eine Zeile, um zu sehen warum — einfach erklärt oder technisch.</p>
+    <p class="lead" data-lang="fr">Touche une ligne pour voir pourquoi — en clair ou en détail technique.</p>
+    <p class="lead" data-lang="ro">Atinge orice rând ca să vezi de ce — pe scurt sau în detaliu tehnic.</p>
+    <p class="lead" data-lang="ar">انقر أيّ سطر لترى السبب — بكلمات بسيطة أو بالتفصيل التقني.</p>
+
+    <div class="exp">
+      <button class="exp-h" onclick="tx(this)"><span><span data-lang="en">Your real home — not a rented server.</span><span data-lang="es">Tu hogar real — no un servidor alquilado.</span><span data-lang="de">Dein echtes Zuhause — kein Mietserver.</span><span data-lang="fr">Ta vraie maison — pas un serveur loué.</span><span data-lang="ro">Casa ta reală — nu un server închiriat.</span><span data-lang="ar">بيتك الحقيقي — لا خادم مستأجَر.</span></span><span class="exp-ico">+</span></button>
+      <div class="exp-body">
+        <span data-lang="en">You go online from your family home's real address, so banks trust it. Mainstream VPNs use data-center addresses that are easy to detect and block.</span>
+        <span data-lang="es">Sales a internet desde la dirección real del hogar familiar, así que los bancos confían. Los VPN normales usan direcciones de centros de datos, fáciles de detectar y bloquear.</span>
+        <span data-lang="de">Du gehst über die echte Adresse des Familienhauses online — Banken vertrauen ihr. Übliche VPNs nutzen Rechenzentrums-Adressen, die leicht erkannt und gesperrt werden.</span>
+        <span data-lang="fr">Tu navigues depuis l'adresse réelle du domicile familial, donc les banques font confiance. Les VPN classiques utilisent des adresses de centres de données, faciles à repérer et bloquer.</span>
+        <span data-lang="ro">Ieși online de la adresa reală a casei familiei, așa că băncile au încredere. VPN-urile obișnuite folosesc adrese de centre de date, ușor de detectat și blocat.</span>
+        <span data-lang="ar">تخرج إلى الإنترنت من عنوان بيت عائلتك الحقيقي فتثق به البنوك. أمّا شبكات VPN التقليدية فتستعمل عناوين مراكز بيانات يسهل كشفها وحظرها.</span>
+        <span class="tech">⚙ Residential-IP egress: WireGuard exit node on an OpenWrt pocket router at the home. Banks see a consumer ISP IP, not a flagged datacenter ASN.</span>
+      </div>
+    </div>
+
+    <div class="exp">
+      <button class="exp-h" onclick="tx(this)"><span><span data-lang="en">Your own private network — we're not in it.</span><span data-lang="es">Tu propia red privada — no estamos dentro.</span><span data-lang="de">Dein eigenes privates Netz — wir sind nicht drin.</span><span data-lang="fr">Ton réseau privé — nous n'y sommes pas.</span><span data-lang="ro">Rețeaua ta privată — noi nu suntem în ea.</span><span data-lang="ar">شبكتك الخاصّة — نحن لسنا داخلها.</span></span><span class="exp-ico">+</span></button>
+      <div class="exp-body">
+        <span data-lang="en">Your data goes from your phone straight to your box at home, over your own encrypted network. Mainstream VPNs route everything through their servers.</span>
+        <span data-lang="es">Tus datos van de tu móvil directo a tu caja en casa, por tu propia red cifrada. Los VPN normales pasan todo por sus servidores.</span>
+        <span data-lang="de">Deine Daten gehen vom Handy direkt zu deiner Box zu Hause, über dein eigenes verschlüsseltes Netz. Übliche VPNs leiten alles über ihre Server.</span>
+        <span data-lang="fr">Tes données vont de ton téléphone directement à ton boîtier à la maison, par ton propre réseau chiffré. Les VPN classiques font tout transiter par leurs serveurs.</span>
+        <span data-lang="ro">Datele tale merg de la telefon direct la cutia de acasă, prin propria ta rețea criptată. VPN-urile obișnuite trec totul prin serverele lor.</span>
+        <span data-lang="ar">تنتقل بياناتك من هاتفك إلى صندوقك في البيت مباشرة عبر شبكتك المشفّرة. أمّا شبكات VPN التقليدية فتمرّر كلّ شيء عبر خوادمها.</span>
+        <span class="tech">⚙ Phone ↔ home box are peers on the user's own Tailscale tailnet (WireGuard transport). E2E encrypted, device-to-device; no vendor server in the data path.</span>
+      </div>
+    </div>
+
+    <div class="exp">
+      <button class="exp-h" onclick="tx(this)"><span><span data-lang="en">We can't see you. By design.</span><span data-lang="es">No podemos verte. Por diseño.</span><span data-lang="de">Wir können dich nicht sehen. Bewusst so gebaut.</span><span data-lang="fr">Nous ne pouvons pas te voir. Par conception.</span><span data-lang="ro">Nu te putem vedea. Prin concepție.</span><span data-lang="ar">لا نستطيع رؤيتك. بالتصميم.</span></span><span class="exp-ico">+</span></button>
+      <div class="exp-body">
+        <span data-lang="en">The box contains no remote access for us — and the software is open-source, so you can verify it yourself. No logs, because there's nowhere to log.</span>
+        <span data-lang="es">La caja no tiene ningún acceso remoto para nosotros — y el software es de código abierto, así que puedes verificarlo. Sin registros, porque no hay dónde guardarlos.</span>
+        <span data-lang="de">Die Box enthält keinen Fernzugriff für uns — und die Software ist Open Source, du kannst es selbst prüfen. Keine Logs, weil es keinen Ort dafür gibt.</span>
+        <span data-lang="fr">Le boîtier ne contient aucun accès distant pour nous — et le logiciel est open-source, tu peux le vérifier toi-même. Aucun journal, car il n'y a nulle part où l'enregistrer.</span>
+        <span data-lang="ro">Cutia nu conține niciun acces la distanță pentru noi — iar software-ul e open-source, ca să verifici singur. Fără jurnale, fiindcă nu există unde să fie salvate.</span>
+        <span data-lang="ar">لا يحتوي الصندوق على أيّ وصول عن بُعد لنا، والبرنامج مفتوح المصدر لتتحقّق بنفسك. ولا سجلّات، لأنّه لا مكان لتسجيلها.</span>
+        <span class="tech">⚙ Open-source OpenWrt firmware · no inbound admin path · report-only outbound heartbeat (no command polling) · no traffic logging.</span>
+      </div>
+    </div>
+
+    <div class="exp">
+      <button class="exp-h" onclick="tx(this)"><span><span data-lang="en">You own it — no endless subscription to a faceless company.</span><span data-lang="es">Es tuyo — sin suscripción eterna a una empresa anónima.</span><span data-lang="de">Es gehört dir — kein ewiges Abo bei einer anonymen Firma.</span><span data-lang="fr">Il t'appartient — pas d'abonnement sans fin à une société anonyme.</span><span data-lang="ro">Îți aparține — fără abonament etern la o companie anonimă.</span><span data-lang="ar">أنت تملكه — لا اشتراك أبديّ لشركة مجهولة.</span></span><span class="exp-ico">+</span></button>
+      <div class="exp-body">
+        <span data-lang="en">A box you own, plus your own free personal network account. An optional small care plan only if you want help and monitoring.</span>
+        <span data-lang="es">Una caja tuya, más tu propia cuenta de red personal gratuita. Un pequeño plan de cuidado opcional solo si quieres ayuda y monitoreo.</span>
+        <span data-lang="de">Eine Box, die dir gehört, plus dein eigenes kostenloses Netzwerkkonto. Ein optionaler kleiner Service-Plan nur, wenn du Hilfe und Überwachung möchtest.</span>
+        <span data-lang="fr">Un boîtier qui t'appartient, plus ton propre compte réseau personnel gratuit. Un petit forfait d'assistance optionnel seulement si tu veux aide et suivi.</span>
+        <span data-lang="ro">O cutie a ta, plus contul tău personal de rețea, gratuit. Un mic plan de îngrijire opțional doar dacă vrei ajutor și monitorizare.</span>
+        <span data-lang="ar">صندوق تملكه أنت، مع حساب شبكتك الشخصي المجاني. وباقة دعم اختيارية صغيرة فقط إن أردت المساعدة والمتابعة.</span>
+        <span class="tech">⚙ User owns the hardware; connectivity runs on their own free Tailscale Personal account. Optional managed plan = monitoring/support only.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HONEST: cons as advantages -->
+<section class="alt" id="honest">
+  <div class="wrap anim">
+    <div class="slbl" data-lang="en">We'll be honest with you</div>
+    <div class="slbl" data-lang="es">Vamos a ser honestos</div>
+    <div class="slbl" data-lang="de">Wir sind ehrlich zu dir</div>
+    <div class="slbl" data-lang="fr">Soyons honnêtes</div>
+    <div class="slbl" data-lang="ro">Vom fi sinceri cu tine</div>
+    <div class="slbl" data-lang="ar">سنكون صادقين معك</div>
+    <h2 class="sec" data-lang="en">The "downsides" are the proof</h2>
+    <h2 class="sec" data-lang="es">Las "desventajas" son la prueba</h2>
+    <h2 class="sec" data-lang="de">Die „Nachteile" sind der Beweis</h2>
+    <h2 class="sec" data-lang="fr">Les « inconvénients » sont la preuve</h2>
+    <h2 class="sec" data-lang="ro">«Dezavantajele» sunt dovada</h2>
+    <h2 class="sec" data-lang="ar">«العيوب» هي الدليل</h2>
+    <div class="div"></div>
+    <p class="lead" data-lang="en">Every limit below exists because we built privacy in — and each one has a solution.</p>
+    <p class="lead" data-lang="es">Cada límite existe porque la privacidad está integrada — y cada uno tiene solución.</p>
+    <p class="lead" data-lang="de">Jede Grenze unten existiert, weil Privatsphäre eingebaut ist — und jede hat eine Lösung.</p>
+    <p class="lead" data-lang="fr">Chaque limite existe parce que la confidentialité est intégrée — et chacune a une solution.</p>
+    <p class="lead" data-lang="ro">Fiecare limită de mai jos există fiindcă am integrat confidențialitatea — și fiecare are o soluție.</p>
+    <p class="lead" data-lang="ar">كلّ قيد هنا موجود لأنّ الخصوصية مدمجة في التصميم — ولكلٍّ منها حلّ.</p>
+
+    <div class="exp">
+      <button class="exp-h" onclick="tx(this)"><span><span data-lang="en">We can't fix your box remotely.</span><span data-lang="es">No podemos arreglar tu caja a distancia.</span><span data-lang="de">Wir können deine Box nicht aus der Ferne reparieren.</span><span data-lang="fr">Nous ne pouvons pas réparer ton boîtier à distance.</span><span data-lang="ro">Nu îți putem repara cutia de la distanță.</span><span data-lang="ar">لا نستطيع إصلاح صندوقك عن بُعد.</span></span><span class="exp-ico">+</span></button>
+      <div class="exp-body">
+        <span class="why" data-lang="en">Because we built it so we literally cannot reach into it — the very same reason we can never spy on you.</span><span class="why" data-lang="es">Porque lo construimos de modo que no podemos entrar — la misma razón por la que nunca podemos espiarte.</span><span class="why" data-lang="de">Weil wir es so gebaut haben, dass wir buchstäblich nicht hineinkommen — genau der Grund, warum wir dich nie ausspionieren können.</span><span class="why" data-lang="fr">Parce que nous l'avons conçu pour ne jamais pouvoir y entrer — la raison même pour laquelle nous ne pouvons jamais t'espionner.</span><span class="why" data-lang="ro">Pentru că am construit-o astfel încât chiar nu putem intra în ea — exact motivul pentru care nu te putem spiona niciodată.</span><span class="why" data-lang="ar">لأنّنا صمّمناه بحيث لا نستطيع الوصول إليه إطلاقًا — وهو نفس السبب الذي يمنعنا من التجسّس عليك.</span>
+        <span class="fix" data-lang="en">→ It heals itself on restart. If it ever truly fails, we replace it.</span><span class="fix" data-lang="es">→ Se repara al reiniciar. Si alguna vez falla de verdad, la reemplazamos.</span><span class="fix" data-lang="de">→ Sie repariert sich beim Neustart. Fällt sie je wirklich aus, ersetzen wir sie.</span><span class="fix" data-lang="fr">→ Il se répare au redémarrage. S'il tombe vraiment en panne, on le remplace.</span><span class="fix" data-lang="ro">→ Se repară singură la repornire. Dacă chiar se strică, o înlocuim.</span><span class="fix" data-lang="ar">← يُصلح نفسه عند إعادة التشغيل، وإن تعطّل فعلًا نستبدله لك.</span>
+        <span class="tech">⚙ No remote-admin code path in firmware (verifiable in source). Recovery = self-heal on reboot → guided local re-provision → RMA.</span>
+      </div>
+    </div>
+
+    <div class="exp">
+      <button class="exp-h" onclick="tx(this)"><span><span data-lang="en">Setup takes a few taps on your phone.</span><span data-lang="es">La instalación lleva unos toques en tu móvil.</span><span data-lang="de">Die Einrichtung braucht ein paar Tipps am Handy.</span><span data-lang="fr">L'installation prend quelques tapotements sur ton téléphone.</span><span data-lang="ro">Configurarea cere câteva atingeri pe telefon.</span><span data-lang="ar">الإعداد يحتاج بضع نقرات على هاتفك.</span></span><span class="exp-ico">+</span></button>
+      <div class="exp-body">
+        <span class="why" data-lang="en">Because nobody else sets up your private network — which means there's no installer's backdoor either.</span><span class="why" data-lang="es">Porque nadie más configura tu red privada — lo que significa que tampoco hay una puerta trasera de un instalador.</span><span class="why" data-lang="de">Weil niemand sonst dein privates Netz einrichtet — also gibt es auch keine Hintertür eines Installateurs.</span><span class="why" data-lang="fr">Parce que personne d'autre ne configure ton réseau privé — donc aucune porte dérobée d'installateur non plus.</span><span class="why" data-lang="ro">Pentru că nimeni altcineva nu-ți configurează rețeaua privată — deci nu există nici ușă din spate a vreunui instalator.</span><span class="why" data-lang="ar">لأنّ لا أحد غيرك يُعدّ شبكتك الخاصّة — أي لا باب خلفيّ حتى لمُركِّب.</span>
+        <span class="fix" data-lang="en">→ A picture-by-picture guide walks you through it. At the family home, it's just plug in and wait for the green light.</span><span class="fix" data-lang="es">→ Una guía con imágenes te acompaña. En casa familiar, solo se enchufa y se espera la luz verde.</span><span class="fix" data-lang="de">→ Eine Schritt-für-Schritt-Bildanleitung führt dich. Zu Hause: einfach einstecken und auf das grüne Licht warten.</span><span class="fix" data-lang="fr">→ Un guide en images t'accompagne. Au domicile, il suffit de brancher et d'attendre le voyant vert.</span><span class="fix" data-lang="ro">→ Un ghid pas cu pas cu imagini te însoțește. Acasă, doar conectezi și aștepți lumina verde.</span><span class="fix" data-lang="ar">← دليل بالصور خطوة بخطوة يرافقك. وفي بيت العائلة يكفي توصيل الصندوق وانتظار الضوء الأخضر.</span>
+        <span class="tech">⚙ One-time onboarding: install Tailscale → social SSO → approve the box device → enable exit node → disable node-key expiry.</span>
+      </div>
+    </div>
+
+    <div class="exp">
+      <button class="exp-h" onclick="tx(this)"><span><span data-lang="en">You sign in with your own account.</span><span data-lang="es">Inicias sesión con tu propia cuenta.</span><span data-lang="de">Du meldest dich mit deinem eigenen Konto an.</span><span data-lang="fr">Tu te connectes avec ton propre compte.</span><span data-lang="ro">Te conectezi cu propriul cont.</span><span data-lang="ar">تسجّل الدخول بحسابك أنت.</span></span><span class="exp-ico">+</span></button>
+      <div class="exp-body">
+        <span class="why" data-lang="en">Because the network is yours, not ours — we never hold your keys.</span><span class="why" data-lang="es">Porque la red es tuya, no nuestra — nunca tenemos tus llaves.</span><span class="why" data-lang="de">Weil das Netz dir gehört, nicht uns — wir halten nie deine Schlüssel.</span><span class="why" data-lang="fr">Parce que le réseau est le tien, pas le nôtre — nous ne détenons jamais tes clés.</span><span class="why" data-lang="ro">Pentru că rețeaua e a ta, nu a noastră — nu îți deținem niciodată cheile.</span><span class="why" data-lang="ar">لأنّ الشبكة شبكتك لا شبكتنا؛ لا نملك مفاتيحك أبدًا.</span>
+        <span class="fix" data-lang="en">→ Sign in with Google or Apple in two taps. Use an account you'll keep.</span><span class="fix" data-lang="es">→ Inicia con Google o Apple en dos toques. Usa una cuenta que conservarás.</span><span class="fix" data-lang="de">→ Mit Google oder Apple in zwei Tipps anmelden. Nutze ein Konto, das du behältst.</span><span class="fix" data-lang="fr">→ Connecte-toi avec Google ou Apple en deux tapotements. Utilise un compte que tu garderas.</span><span class="fix" data-lang="ro">→ Conectează-te cu Google sau Apple în două atingeri. Folosește un cont pe care îl păstrezi.</span><span class="fix" data-lang="ar">← سجّل الدخول بحساب Google أو Apple بنقرتين، واستعمل حسابًا تحتفظ به.</span>
+        <span class="tech">⚙ Box joins as a user-owned device (not a tagged node). Keypair generated on-device; vendor never holds private keys.</span>
+      </div>
+    </div>
+
+    <div class="exp">
+      <button class="exp-h" onclick="tx(this)"><span><span data-lang="en">If you lose that account, we can't recover your network.</span><span data-lang="es">Si pierdes esa cuenta, no podemos recuperar tu red.</span><span data-lang="de">Verlierst du das Konto, können wir dein Netz nicht wiederherstellen.</span><span data-lang="fr">Si tu perds ce compte, nous ne pouvons pas récupérer ton réseau.</span><span data-lang="ro">Dacă pierzi acel cont, nu îți putem recupera rețeaua.</span><span data-lang="ar">إن فقدت ذلك الحساب لا نستطيع استعادة شبكتك.</span></span><span class="exp-ico">+</span></button>
+      <div class="exp-body">
+        <span class="why" data-lang="en">Because we hold no master key — that's what true zero-access means.</span><span class="why" data-lang="es">Porque no guardamos ninguna llave maestra — eso es acceso cero de verdad.</span><span class="why" data-lang="de">Weil wir keinen Generalschlüssel haben — das bedeutet echter Null-Zugriff.</span><span class="why" data-lang="fr">Parce que nous ne détenons aucune clé maîtresse — c'est ça le vrai zéro-accès.</span><span class="why" data-lang="ro">Pentru că nu deținem nicio cheie principală — asta înseamnă acces zero, cu adevărat.</span><span class="why" data-lang="ar">لأنّنا لا نملك مفتاحًا رئيسيًّا — هذا معنى انعدام الوصول الحقيقي.</span>
+        <span class="fix" data-lang="en">→ We tell you upfront to use a permanent account. Rebuilding is quick with a fresh box pairing.</span><span class="fix" data-lang="es">→ Te avisamos desde el inicio de usar una cuenta permanente. Rehacerlo es rápido con un nuevo emparejamiento.</span><span class="fix" data-lang="de">→ Wir sagen dir gleich: nutze ein dauerhaftes Konto. Der Neuaufbau geht schnell mit einer frischen Kopplung.</span><span class="fix" data-lang="fr">→ On te dit dès le départ d'utiliser un compte permanent. Tout reconstruire est rapide avec un nouveau jumelage.</span><span class="fix" data-lang="ro">→ Îți spunem de la început să folosești un cont permanent. Refacerea e rapidă cu o nouă împerechere.</span><span class="fix" data-lang="ar">← ننبّهك من البداية لاستعمال حساب دائم، وإعادة الإعداد سريعة بصندوق جديد.</span>
+        <span class="tech">⚙ No vendor-held master credential. The account is the sole control plane; loss → re-pair a new box to a fresh tailnet.</span>
+      </div>
+    </div>
+
+    <div class="exp">
+      <button class="exp-h" onclick="tx(this)"><span><span data-lang="en">It's only as fast as the family's home internet.</span><span data-lang="es">Es tan rápido como el internet del hogar familiar.</span><span data-lang="de">So schnell wie das Internet im Familienhaus.</span><span data-lang="fr">Aussi rapide que l'internet du domicile familial.</span><span data-lang="ro">E rapid cât internetul de acasă al familiei.</span><span data-lang="ar">سرعته بسرعة إنترنت بيت العائلة.</span></span><span class="exp-ico">+</span></button>
+      <div class="exp-body">
+        <span class="why" data-lang="en">Because your traffic really does go to your real home — not to a fast data center pretending to be home.</span><span class="why" data-lang="es">Porque tu tráfico va de verdad a tu hogar real — no a un centro de datos rápido que finge serlo.</span><span class="why" data-lang="de">Weil dein Verkehr wirklich zu deinem echten Zuhause geht — nicht zu einem schnellen Rechenzentrum, das vorgibt, dein Zuhause zu sein.</span><span class="why" data-lang="fr">Parce que ton trafic va vraiment vers ta vraie maison — pas vers un centre de données rapide qui fait semblant.</span><span class="why" data-lang="ro">Pentru că traficul tău chiar merge la casa ta reală — nu la un centru de date rapid care se preface că e casa ta.</span><span class="why" data-lang="ar">لأنّ بياناتك تذهب فعلًا إلى بيتك الحقيقي، لا إلى مركز بيانات سريع يتظاهر بأنّه بيتك.</span>
+        <span class="fix" data-lang="en">→ Perfect for banking, messaging, browsing and calls. We tell you honestly if the home line suits streaming.</span><span class="fix" data-lang="es">→ Perfecto para banca, mensajería, navegación y llamadas. Te decimos con honestidad si la línea sirve para streaming.</span><span class="fix" data-lang="de">→ Perfekt für Banking, Nachrichten, Surfen und Anrufe. Wir sagen ehrlich, ob die Leitung fürs Streaming taugt.</span><span class="fix" data-lang="fr">→ Parfait pour la banque, la messagerie, la navigation et les appels. On te dit honnêtement si la ligne convient au streaming.</span><span class="fix" data-lang="ro">→ Perfect pentru bancă, mesaje, navigare și apeluri. Îți spunem sincer dacă linia de acasă e bună pentru streaming.</span><span class="fix" data-lang="ar">← مثاليّ للبنوك والمراسلة والتصفّح والمكالمات، ونخبرك بصدق إن كان خطّ البيت يصلح للبثّ.</span>
+        <span class="tech">⚙ Throughput bound = home upstream/upload, not router crypto (ChaCha20 &gt; typical home upload). CGNAT homes traverse via Tailscale DERP / hole-punching.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section id="trust">
+  <div class="wrap anim">
+    <div class="trust">
+      <h2 style="font-size:1.4rem" data-lang="en">Don't trust us. Verify.</h2>
+      <h2 style="font-size:1.4rem" data-lang="es">No nos creas. Verifica.</h2>
+      <h2 style="font-size:1.4rem" data-lang="de">Vertrau uns nicht. Prüf es.</h2>
+      <h2 style="font-size:1.4rem" data-lang="fr">Ne nous crois pas. Vérifie.</h2>
+      <h2 style="font-size:1.4rem" data-lang="ro">Nu ne crede. Verifică.</h2>
+      <h2 style="font-size:1.4rem" data-lang="ar">لا تثق بنا. تحقّق.</h2>
+      <p data-lang="en">The box's software is open-source — read it and confirm: no remote access, no logs, no backdoors. Here, privacy is something you can prove, not just a promise.</p>
+      <p data-lang="es">El software de la caja es de código abierto — léelo y comprueba: sin acceso remoto, sin registros, sin puertas traseras. Aquí la privacidad se demuestra, no solo se promete.</p>
+      <p data-lang="de">Die Software der Box ist Open Source — lies sie und bestätige: kein Fernzugriff, keine Logs, keine Hintertüren. Hier ist Privatsphäre beweisbar, nicht nur ein Versprechen.</p>
+      <p data-lang="fr">Le logiciel du boîtier est open-source — lis-le et confirme : aucun accès distant, aucun journal, aucune porte dérobée. Ici, la confidentialité se prouve, elle n'est pas qu'une promesse.</p>
+      <p data-lang="ro">Software-ul cutiei e open-source — citește-l și confirmă: fără acces la distanță, fără jurnale, fără uși din spate. Aici, confidențialitatea se dovedește, nu e doar o promisiune.</p>
+      <p data-lang="ar">برنامج الصندوق مفتوح المصدر — اقرأه وتأكّد: لا وصول عن بُعد، لا سجلّات، لا أبواب خلفية. الخصوصية هنا قابلة للإثبات، لا مجرّد وعد.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="get">
+  <div class="wrap anim" style="text-align:center">
+    <h2 class="sec" data-lang="en">Be first to get a Dar</h2>
+    <h2 class="sec" data-lang="es">Sé el primero en tener un Dar</h2>
+    <h2 class="sec" data-lang="de">Sichere dir als Erster ein Dar</h2>
+    <h2 class="sec" data-lang="fr">Sois le premier à avoir un Dar</h2>
+    <h2 class="sec" data-lang="ro">Fii primul care primește un Dar</h2>
+    <h2 class="sec" data-lang="ar">كن أوّل من يحصل على Dar</h2>
+    <p class="lead" style="margin:.6rem auto 1.3rem;max-width:32rem" data-lang="en">It's early days. If you want a private bridge to your family home, talk to us — we're choosing the first families now.</p>
+    <p class="lead" style="margin:.6rem auto 1.3rem;max-width:32rem" data-lang="es">Estamos empezando. Si quieres un puente privado a tu hogar familiar, habla con nosotros — elegimos las primeras familias ahora.</p>
+    <p class="lead" style="margin:.6rem auto 1.3rem;max-width:32rem" data-lang="de">Wir stehen am Anfang. Wenn du eine private Brücke zum Familienhaus willst, sprich mit uns — wir wählen jetzt die ersten Familien.</p>
+    <p class="lead" style="margin:.6rem auto 1.3rem;max-width:32rem" data-lang="fr">C'est le tout début. Si tu veux un pont privé vers le foyer familial, parle-nous — nous choisissons les premières familles.</p>
+    <p class="lead" style="margin:.6rem auto 1.3rem;max-width:32rem" data-lang="ro">Suntem la început. Dacă vrei o punte privată spre casa familiei, vorbește cu noi — alegem primele familii acum.</p>
+    <p class="lead" style="margin:.6rem auto 1.3rem;max-width:32rem" data-lang="ar">نحن في البداية. إن أردت جسرًا خاصًّا إلى بيت عائلتك فتحدّث إلينا — نختار العائلات الأولى الآن.</p>
+    <button class="btn btn-p" onclick="openC()"><span data-lang="en">Talk to us</span><span data-lang="es">Habla con nosotros</span><span data-lang="de">Sprich mit uns</span><span data-lang="fr">Parle-nous</span><span data-lang="ro">Vorbește cu noi</span><span data-lang="ar">تحدّث إلينا</span></button>
+  </div>
+</section>
+
+<footer>
+  <p class="fnote">Dar · digitalAIventures · <span data-lang="en">Private by design — built in the Alpujarras.</span><span data-lang="es">Privado por diseño — hecho en la Alpujarra.</span><span data-lang="de">Privat durch Design — gebaut in den Alpujarras.</span><span data-lang="fr">Privé par conception — conçu dans les Alpujarras.</span><span data-lang="ro">Privat prin concepție — construit în Alpujarras.</span><span data-lang="ar">خاصّ بالتصميم — صُنع في جبال ألبوخاراس.</span></p>
+</footer>
+
+<!-- contact modal -->
+<div class="ov" id="cov" onclick="if(event.target===this)closeC()">
+  <div class="ob">
+    <h4><span data-lang="en">Get in touch</span><span data-lang="es">Contáctanos</span><span data-lang="de">Kontakt aufnehmen</span><span data-lang="fr">Nous contacter</span><span data-lang="ro">Ia legătura</span><span data-lang="ar">تواصل معنا</span></h4>
+    <a class="opt o-bot" href="https://t.me/Juanitto_assist_bot" target="_blank" rel="noopener">🤖 AI Assist 24/7</a>
+    <a class="opt o-tg" href="https://t.me/JuanittoCalvares" target="_blank" rel="noopener">✈ Personal</a>
+    <a class="opt o-mail" href="mailto:digitalAIventures.LLC@gmail.com">✉ Email</a>
+    <button class="ocl" onclick="closeC()"><span data-lang="en">Close</span><span data-lang="es">Cerrar</span><span data-lang="de">Schließen</span><span data-lang="fr">Fermer</span><span data-lang="ro">Închide</span><span data-lang="ar">إغلاق</span></button>
+  </div>
+</div>
+
+<script>
+var LANGS=['en','es','de','fr','ro','ar'];
+function setLang(l){
+  if(LANGS.indexOf(l)<0)l='en';
+  document.querySelectorAll('[data-lang]').forEach(function(el){
+    el.style.display=el.getAttribute('data-lang')===l?'':'none';
+  });
+  document.querySelectorAll('.lb').forEach(function(b){
+    b.classList.toggle('on',b.getAttribute('data-l')===l);
+  });
+  document.documentElement.setAttribute('dir',l==='ar'?'rtl':'ltr');
+  document.documentElement.setAttribute('lang',l);
+  try{localStorage.setItem('darlang',l)}catch(e){}
+}
+function tx(btn){btn.parentNode.classList.toggle('open');}
+function openC(){document.getElementById('cov').classList.add('open')}
+function closeC(){document.getElementById('cov').classList.remove('open')}
+function toggleTheme(){
+  var h=document.documentElement;
+  var n=h.getAttribute('data-theme')==='dark'?'light':'dark';
+  h.setAttribute('data-theme',n);
+  document.getElementById('ti').textContent=n==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',n)}catch(e){}
+}
+(function(){
+  function applyT(t){
+    document.documentElement.setAttribute('data-theme',t);
+    document.addEventListener('DOMContentLoaded',function(){
+      var i=document.getElementById('ti');if(i)i.textContent=t==='dark'?'☀️':'🌙';
+    });
+  }
+  try{var s=localStorage.getItem('theme');
+    if(s)applyT(s);else{var h=new Date().getHours();applyT(h>=7&&h<19?'light':'dark');}
+  }catch(e){applyT('dark')}
+})();
+document.addEventListener('DOMContentLoaded',function(){
+  var l='en';
+  try{
+    var q=new URLSearchParams(location.search).get('lang');
+    l=q||localStorage.getItem('darlang')||(navigator.language||'en').slice(0,2);
+  }catch(e){}
+  if(LANGS.indexOf(l)<0)l='en';
+  setLang(l);
+});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeC();});
+</script>
+</body>
+</html>
