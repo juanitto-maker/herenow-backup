@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Juanitto Assist Bot — Tester Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root,[data-theme="dark"]{
+  --bg:#0f0f11;
+  --bg-card:#1a1a1f;
+  --bg-hero:linear-gradient(135deg,#1a1018 0%,#0f0f11 100%);
+  --text:#e2e2e7;
+  --text-muted:#888;
+  --text-heading:#fff;
+  --border:#2a2a35;
+  --accent:#a855f7;
+  --accent-bg:rgba(168,85,247,.10);
+  --accent-text:#fff;
+  --overlay-bg:rgba(0,0,0,.65);
+  --dialog-bg:#1a1a1f;
+  --step-bg:#17171c;
+  --warn-bg:rgba(239,68,68,.10);
+  --warn-border:#ef4444;
+  --tip-bg:rgba(168,85,247,.08);
+  --tip-border:#a855f7;
+}
+[data-theme="light"]{
+  --bg:#fafaf7;
+  --bg-card:#fff;
+  --bg-hero:linear-gradient(135deg,#f3eeff 0%,#fafaf7 100%);
+  --text:#2a2a28;
+  --text-muted:#6a6a62;
+  --text-heading:#0f0f11;
+  --border:#e6e6df;
+  --accent:#7c3aed;
+  --accent-bg:rgba(124,58,237,.08);
+  --accent-text:#fff;
+  --overlay-bg:rgba(0,0,0,.4);
+  --dialog-bg:#fff;
+  --step-bg:#f8f4ff;
+  --warn-bg:rgba(239,68,68,.07);
+  --warn-border:#dc2626;
+  --tip-bg:rgba(124,58,237,.07);
+  --tip-border:#7c3aed;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:16px}
+h1,h2,h3{font-family:'Playfair Display',serif;color:var(--text-heading)}
+
+/* lang bar */
+.lbar{display:flex;justify-content:center;gap:.4rem;padding:.32rem;background:var(--bg);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:190}
+.lb{background:none;border:1px solid var(--border);color:var(--text-muted);font-size:.78rem;padding:.14rem .58rem;border-radius:1rem;cursor:pointer;transition:all .2s;font-family:inherit}
+.lb.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* theme toggle */
+.tt{position:fixed;top:3.3rem;right:.6rem;z-index:150;background:var(--bg-card);border:1px solid var(--border);width:2.2rem;height:2.2rem;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.2);cursor:pointer;font-size:.9rem;transition:all .2s}
+.tt:hover{transform:scale(1.1)}
+
+/* hero */
+.hero{background:var(--bg-hero);padding:3.5rem 1.25rem 2.5rem;text-align:center;border-bottom:1px solid var(--border)}
+.badge{display:inline-block;background:var(--accent-bg);color:var(--accent);border:1px solid var(--tip-border);font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .75rem;border-radius:1rem;margin-bottom:1.1rem}
+.hero h1{font-size:clamp(2rem,8vw,3rem);line-height:1.15;margin-bottom:.85rem}
+.hero h1 span{color:var(--accent)}
+.hero-pitch{font-size:1rem;color:var(--text-muted);max-width:480px;margin:0 auto 1.8rem}
+.cta-btn{display:inline-flex;align-items:center;gap:.55rem;background:var(--accent);color:#fff;padding:.95rem 2rem;border-radius:2rem;font-weight:700;font-size:1.05rem;text-decoration:none;transition:all .2s;border:none;cursor:pointer;font-family:inherit}
+.cta-btn:hover{filter:brightness(1.12);transform:translateY(-2px)}
+.cta-note{font-size:.78rem;color:var(--text-muted);margin-top:.75rem}
+
+/* sections */
+section{padding:2.5rem 1.25rem}
+section:nth-child(even){background:var(--bg-card)}
+.sec-label{font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:.4rem}
+.div{height:2px;width:3rem;background:var(--accent);margin:.5rem 0 1.2rem;border-radius:1px}
+h2{font-size:1.5rem;margin-bottom:.35rem}
+
+/* features grid */
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.1rem}
+@media(min-width:640px){.fgrid{grid-template-columns:repeat(3,1fr)}}
+.fcard{background:var(--bg-card);border:1px solid var(--border);border-radius:.85rem;padding:1rem .85rem;text-align:center;transition:transform .18s,box-shadow .18s}
+.fcard:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.12)}
+.fico{font-size:1.9rem;display:block;margin-bottom:.45rem}
+.ftit{font-family:'Playfair Display',serif;font-weight:700;font-size:.88rem;color:var(--text-heading);margin-bottom:.25rem}
+.fdsc{font-size:.77rem;color:var(--text-muted);line-height:1.45}
+
+/* big steps */
+.steps{display:flex;flex-direction:column;gap:.85rem;margin-top:1.2rem}
+.step{display:flex;gap:.9rem;align-items:flex-start;background:var(--step-bg);border:1px solid var(--border);border-radius:.85rem;padding:1rem 1.1rem}
+.step-num{background:var(--accent);color:#fff;font-weight:700;font-size:.95rem;width:2.1rem;height:2.1rem;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem}
+.step-title{font-weight:700;font-size:.95rem;color:var(--text-heading);margin-bottom:.25rem}
+.step-desc{font-size:.85rem;color:var(--text-muted);line-height:1.5}
+.step-code{display:inline-block;background:var(--accent-bg);border:1px solid var(--tip-border);color:var(--accent);font-family:monospace;font-size:.88rem;padding:.15rem .55rem;border-radius:.35rem;margin:.2rem 0;font-weight:700}
+.step-link{color:var(--accent);font-weight:700;text-decoration:none;word-break:break-all}
+.step-link:hover{text-decoration:underline}
+
+/* tip box */
+.tip{display:flex;gap:.7rem;align-items:flex-start;background:var(--tip-bg);border:1px solid var(--tip-border);border-radius:.75rem;padding:.85rem 1rem;margin:1rem 0;font-size:.87rem;line-height:1.5}
+.tip-ico{font-size:1.3rem;flex-shrink:0}
+
+/* warn box */
+.warn{display:flex;gap:.7rem;align-items:flex-start;background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:.75rem;padding:.85rem 1rem;margin:1rem 0;font-size:.87rem;line-height:1.5}
+.warn-ico{font-size:1.3rem;flex-shrink:0}
+
+/* cache */
+.cache-list{display:flex;flex-direction:column;gap:.5rem;margin-top:1.1rem}
+.cache-item{background:var(--bg-card);border:1px solid var(--border);border-radius:.8rem;overflow:hidden}
+.cache-item summary{display:flex;align-items:center;gap:.65rem;padding:.85rem 1rem;cursor:pointer;list-style:none;font-weight:600;font-size:.9rem;color:var(--text-heading)}
+.cache-item summary::-webkit-details-marker{display:none}
+.cache-item[open] summary{border-bottom:1px solid var(--border);color:var(--accent)}
+.ci-ico{font-size:1.2rem;flex-shrink:0}
+.ci-arr{margin-left:auto;font-size:.75rem;color:var(--text-muted);transition:transform .2s}
+.cache-item[open] .ci-arr{transform:rotate(180deg)}
+.cache-item ol{padding:.85rem 1rem .85rem 2.2rem;display:flex;flex-direction:column;gap:.45rem}
+.cache-item li{font-size:.83rem;color:var(--text-muted);line-height:1.5}
+.cache-item em{color:var(--text);font-style:normal;font-weight:600}
+
+/* feedback */
+.feedback-sec{text-align:center;padding:2rem 1.25rem}
+.feedback-sec p{color:var(--text-muted);font-size:.92rem;margin-bottom:1.1rem}
+.feedback-btn{display:inline-flex;align-items:center;gap:.55rem;background:var(--accent);color:var(--accent-text);padding:.85rem 1.65rem;border-radius:.65rem;text-decoration:none;font-weight:700;font-size:1rem;box-shadow:0 4px 18px var(--accent-bg);transition:transform .18s,box-shadow .18s}
+.feedback-btn:hover{transform:translateY(-2px)}
+.contact-toggle{display:inline-flex;align-items:center;gap:.4rem;margin-top:.85rem;background:transparent;color:var(--text-muted);border:1px solid var(--border);padding:.5rem 1.1rem;border-radius:.5rem;font-weight:600;font-size:.85rem;cursor:pointer;font-family:inherit;transition:all .18s}
+.contact-toggle:hover{background:var(--accent-bg);color:var(--accent);border-color:var(--accent)}
+
+/* modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:var(--overlay-bg);z-index:200;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--dialog-bg);border-radius:1rem;padding:1.5rem;max-width:340px;width:100%;border:1px solid var(--border);animation:mf .2s ease}
+@keyframes mf{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.modal-title{font-size:1.05rem;font-weight:700;color:var(--text-heading);text-align:center;margin-bottom:1.1rem}
+.modal-row{display:flex;align-items:center;gap:.85rem;padding:.75rem .85rem;margin-bottom:.55rem;border:1px solid var(--border);border-radius:.6rem;text-decoration:none;color:var(--text);transition:all .18s}
+.modal-row:hover{background:var(--accent-bg);border-color:var(--accent)}
+.mico{font-size:1.3rem;flex-shrink:0}
+.mlabel{font-size:.93rem;font-weight:600;display:block;color:var(--text-heading)}
+.msub{display:block;font-size:.7rem;color:var(--text-muted);margin-top:.15rem}
+.modal-cancel{display:block;width:100%;background:none;border:1px solid var(--border);color:var(--text-muted);cursor:pointer;font-size:.82rem;padding:.5rem;border-radius:.4rem;margin-top:.5rem;font-family:inherit;transition:all .18s}
+.modal-cancel:hover{border-color:var(--text-muted);color:var(--text-heading)}
+
+/* footer */
+footer{text-align:center;padding:1.5rem 1rem;font-size:.75rem;color:var(--text-muted);border-top:1px solid var(--border)}
+
+/* reveals */
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}.reveal{opacity:1!important;transform:none!important}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal[data-d="1"]{transition-delay:.08s}
+.reveal[data-d="2"]{transition-delay:.16s}
+.reveal[data-d="3"]{transition-delay:.24s}
+</style>
+</head>
+<body>
+
+<!-- Lang bar -->
+<div class="lbar">
+  <button class="lb on" data-l="en" onclick="setLang('en')">EN</button>
+  <button class="lb" data-l="es" onclick="setLang('es')">ES</button>
+  <button class="lb" data-l="de" onclick="setLang('de')">DE</button>
+</div>
+
+<!-- Theme toggle -->
+<button class="tt" onclick="toggleTheme()"><span id="ti">☀️</span></button>
+
+<!-- ① HERO -->
+<div class="hero">
+  <div class="badge">
+    <span data-lang="en">🧪 Private Beta · Tester Kit</span>
+    <span data-lang="es">🧪 Beta Privada · Kit de Tester</span>
+    <span data-lang="de">🧪 Private Beta · Tester-Kit</span>
+  </div>
+  <h1>
+    <span data-lang="en">Your AI web studio,<br><span>on Telegram.</span></span>
+    <span data-lang="es">Tu estudio web con IA,<br><span>en Telegram.</span></span>
+    <span data-lang="de">Dein KI-Webstudio,<br><span>auf Telegram.</span></span>
+  </h1>
+  <p class="hero-pitch">
+    <span data-lang="en">Chat with Juanitto's AI assistant — or generate a real, live website in under 60 seconds. You're one of the first to try this.</span>
+    <span data-lang="es">Chatea con el asistente IA de Juanitto — o genera un sitio web real y publicado en menos de 60 segundos. Eres de los primeros en probarlo.</span>
+    <span data-lang="de">Chatte mit Juanittos KI-Assistenten — oder erstelle in unter 60 Sekunden eine echte, veröffentlichte Website. Du gehörst zu den Ersten.</span>
+  </p>
+  <a href="https://t.me/Juanitto_assist_bot?start=web" target="_blank" rel="noopener" class="cta-btn">
+    <span>✈️</span>
+    <span data-lang="en">Open on Telegram →</span>
+    <span data-lang="es">Abrir en Telegram →</span>
+    <span data-lang="de">Auf Telegram öffnen →</span>
+  </a>
+  <p class="cta-note">
+    <span data-lang="en">No account needed beyond Telegram. Free for testers.</span>
+    <span data-lang="es">Solo necesitas Telegram. Gratis para testers.</span>
+    <span data-lang="de">Nur Telegram nötig. Kostenlos für Tester.</span>
+  </p>
+</div>
+
+<!-- ② WHAT IS IT -->
+<section class="reveal">
+  <div class="sec-label">
+    <span data-lang="en">💡 What is this</span>
+    <span data-lang="es">💡 Qué es esto</span>
+    <span data-lang="de">💡 Was ist das</span>
+  </div>
+  <div class="div"></div>
+  <h2>
+    <span data-lang="en">Two things in one bot</span>
+    <span data-lang="es">Dos cosas en un bot</span>
+    <span data-lang="de">Zwei Dinge in einem Bot</span>
+  </h2>
+  <div class="fgrid">
+    <div class="fcard reveal" data-d="1">
+      <span class="fico">🤖</span>
+      <div class="ftit" data-lang="en">AI Sales Assistant</div>
+      <div class="ftit" data-lang="es">Asistente IA de Ventas</div>
+      <div class="ftit" data-lang="de">KI-Verkaufsassistent</div>
+      <div class="fdsc" data-lang="en">Chat in any language. Asks about your project, quotes prices, answers questions 24/7.</div>
+      <div class="fdsc" data-lang="es">Chatea en cualquier idioma. Pregunta por tu proyecto, da precios, responde 24/7.</div>
+      <div class="fdsc" data-lang="de">Chatte auf Deutsch. Fragt nach deinem Projekt, nennt Preise, antwortet 24/7.</div>
+    </div>
+    <div class="fcard reveal" data-d="2">
+      <span class="fico">🌐</span>
+      <div class="ftit" data-lang="en">1-Minute Website</div>
+      <div class="ftit" data-lang="es">Web en 1 Minuto</div>
+      <div class="ftit" data-lang="de">1-Minuten-Website</div>
+      <div class="fdsc" data-lang="en">Send your content → choose language & style → get a live URL in ~60 seconds.</div>
+      <div class="fdsc" data-lang="es">Envía tu contenido → elige idioma y estilo → URL en vivo en ~60 segundos.</div>
+      <div class="fdsc" data-lang="de">Inhalt senden → Sprache & Stil wählen → Live-URL in ~60 Sekunden.</div>
+    </div>
+    <div class="fcard reveal" data-d="3">
+      <span class="fico">✏️</span>
+      <div class="ftit" data-lang="en">Tweak & Redo</div>
+      <div class="ftit" data-lang="es">Retoca y Rehaz</div>
+      <div class="ftit" data-lang="de">Anpassen & Neu</div>
+      <div class="fdsc" data-lang="en">Not happy? Ask for changes in plain language or tap Redo for a fresh variation.</div>
+      <div class="fdsc" data-lang="es">¿No convence? Pide cambios en lenguaje natural o toca Rehacer para una variación nueva.</div>
+      <div class="fdsc" data-lang="de">Nicht zufrieden? Änderungen in Sprache anfordern oder Neu tippen für eine frische Variante.</div>
+    </div>
+    <div class="fcard reveal" data-d="1">
+      <span class="fico">🌍</span>
+      <div class="ftit" data-lang="en">Any Language</div>
+      <div class="ftit" data-lang="es">Cualquier Idioma</div>
+      <div class="ftit" data-lang="de">Jede Sprache</div>
+      <div class="fdsc" data-lang="en">Chat and websites in EN, ES, DE, FR, AR, RU — or whatever you need.</div>
+      <div class="fdsc" data-lang="es">Chat y webs en ES, EN, DE, FR, AR, RU — o lo que necesites.</div>
+      <div class="fdsc" data-lang="de">Chat und Websites auf DE, EN, ES, FR, AR, RU — oder was du brauchst.</div>
+    </div>
+    <div class="fcard reveal" data-d="2">
+      <span class="fico">👁️</span>
+      <div class="ftit" data-lang="en">Live Preview</div>
+      <div class="ftit" data-lang="es">Vista Previa en Vivo</div>
+      <div class="ftit" data-lang="de">Live-Vorschau</div>
+      <div class="fdsc" data-lang="en">You get a real public URL instantly. Share it, open it on any device.</div>
+      <div class="fdsc" data-lang="es">Recibes una URL pública real al instante. Compártela, ábrela en cualquier dispositivo.</div>
+      <div class="fdsc" data-lang="de">Du bekommst sofort eine echte öffentliche URL. Teile sie, öffne sie auf jedem Gerät.</div>
+    </div>
+    <div class="fcard reveal" data-d="3">
+      <span class="fico">🔓</span>
+      <div class="ftit" data-lang="en">Clean Delivery</div>
+      <div class="ftit" data-lang="es">Entrega Limpia</div>
+      <div class="ftit" data-lang="de">Saubere Lieferung</div>
+      <div class="fdsc" data-lang="en">Preview has a watermark. Tap Unlock to receive the clean HTML file — yours to keep.</div>
+      <div class="fdsc" data-lang="es">La vista previa tiene marca de agua. Toca Desbloquear para recibir el HTML limpio.</div>
+      <div class="fdsc" data-lang="de">Vorschau hat Wasserzeichen. Entsperren tippen → saubere HTML-Datei gehört dir.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ③ HOW TO TEST -->
+<section class="reveal">
+  <div class="sec-label">
+    <span data-lang="en">🚀 How to test it</span>
+    <span data-lang="es">🚀 Cómo probarlo</span>
+    <span data-lang="de">🚀 So testest du es</span>
+  </div>
+  <div class="div"></div>
+  <h2>
+    <span data-lang="en">4 steps, that's it</span>
+    <span data-lang="es">4 pasos, nada más</span>
+    <span data-lang="de">4 Schritte, das war's</span>
+  </h2>
+
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <div>
+        <div class="step-title" data-lang="en">Open the bot on Telegram</div>
+        <div class="step-title" data-lang="es">Abre el bot en Telegram</div>
+        <div class="step-title" data-lang="de">Bot auf Telegram öffnen</div>
+        <div class="step-desc" data-lang="en">Tap the button above — it opens the bot and launches the website generator directly.</div>
+        <div class="step-desc" data-lang="es">Pulsa el botón de arriba — abre el bot y lanza el generador de webs directamente.</div>
+        <div class="step-desc" data-lang="de">Tippe den Button oben — er öffnet den Bot und startet den Website-Generator direkt.</div>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">2</div>
+      <div>
+        <div class="step-title" data-lang="en">Enter your tester code</div>
+        <div class="step-title" data-lang="es">Introduce tu código de tester</div>
+        <div class="step-title" data-lang="de">Tester-Code eingeben</div>
+        <div class="step-desc" data-lang="en">Type <span class="step-code">/tester YOUR_CODE</span> and send it. You'll get 3 free website credits.</div>
+        <div class="step-desc" data-lang="es">Escribe <span class="step-code">/tester TU_CÓDIGO</span> y envía. Recibirás 3 créditos gratuitos de web.</div>
+        <div class="step-desc" data-lang="de">Tippe <span class="step-code">/tester DEIN_CODE</span> und sende. Du bekommst 3 kostenlose Website-Credits.</div>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">3</div>
+      <div>
+        <div class="step-title" data-lang="en">Try the chat — or generate a site</div>
+        <div class="step-title" data-lang="es">Prueba el chat — o genera una web</div>
+        <div class="step-title" data-lang="de">Chat ausprobieren — oder Website erstellen</div>
+        <div class="step-desc" data-lang="en"><strong>Chat:</strong> just write anything — ask about services, prices, or say hello.<br><strong>Website:</strong> tap ✨ 1-min website in the menu or type <span class="step-code">/web</span> — then follow the 3 questions.</div>
+        <div class="step-desc" data-lang="es"><strong>Chat:</strong> escribe lo que quieras — pregunta por servicios, precios, o saluda.<br><strong>Web:</strong> toca ✨ Web en 1 min en el menú o escribe <span class="step-code">/web</span> — luego responde 3 preguntas.</div>
+        <div class="step-desc" data-lang="de"><strong>Chat:</strong> schreib einfach etwas — frag nach Diensten, Preisen oder sag Hallo.<br><strong>Website:</strong> tippe ✨ 1-Min-Website im Menü oder <span class="step-code">/web</span> — dann 3 Fragen beantworten.</div>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">4</div>
+      <div>
+        <div class="step-title" data-lang="en">Send us your feedback</div>
+        <div class="step-title" data-lang="es">Envíanos tu feedback</div>
+        <div class="step-title" data-lang="de">Feedback senden</div>
+        <div class="step-desc" data-lang="en">Use the feedback button below, or just reply directly to @JuanittoCalvares on Telegram. Anything helps — bugs, ideas, impressions.</div>
+        <div class="step-desc" data-lang="es">Usa el botón de feedback abajo, o responde directamente a @JuanittoCalvares en Telegram. Todo ayuda — bugs, ideas, impresiones.</div>
+        <div class="step-desc" data-lang="de">Nutze den Feedback-Button unten oder antworte direkt an @JuanittoCalvares auf Telegram. Alles hilft — Bugs, Ideen, Eindrücke.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip reveal">
+    <span class="tip-ico">⏱️</span>
+    <div>
+      <span data-lang="en"><strong>The /web generation takes ~30–60 seconds.</strong> Don't tap again — just wait. You'll get a message when it's ready.</span>
+      <span data-lang="es"><strong>La generación con /web tarda ~30–60 segundos.</strong> No toques de nuevo — espera. Recibirás un mensaje cuando esté listo.</span>
+      <span data-lang="de"><strong>Die /web-Generierung dauert ~30–60 Sekunden.</strong> Nicht nochmal tippen — einfach warten. Du bekommst eine Nachricht wenn es fertig ist.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ④ WHAT TO TEST -->
+<section class="reveal">
+  <div class="sec-label">
+    <span data-lang="en">🎯 What to focus on</span>
+    <span data-lang="es">🎯 En qué enfocarte</span>
+    <span data-lang="de">🎯 Worauf du achten solltest</span>
+  </div>
+  <div class="div"></div>
+  <h2>
+    <span data-lang="en">Your honest take matters</span>
+    <span data-lang="es">Tu opinión honesta importa</span>
+    <span data-lang="de">Deine ehrliche Meinung zählt</span>
+  </h2>
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">💬</div>
+      <div>
+        <div class="step-title" data-lang="en">Does the chat feel natural?</div>
+        <div class="step-title" data-lang="es">¿El chat se siente natural?</div>
+        <div class="step-title" data-lang="de">Fühlt sich der Chat natürlich an?</div>
+        <div class="step-desc" data-lang="en">Does it answer your questions well? Does it switch languages correctly? Does it sound like a real assistant or like a robot?</div>
+        <div class="step-desc" data-lang="es">¿Responde bien tus preguntas? ¿Cambia de idioma correctamente? ¿Suena como un asistente real o como un robot?</div>
+        <div class="step-desc" data-lang="de">Beantwortet es deine Fragen gut? Wechselt es die Sprache korrekt? Klingt es wie ein echter Assistent?</div>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">🌐</div>
+      <div>
+        <div class="step-title" data-lang="en">Does the website look good?</div>
+        <div class="step-title" data-lang="es">¿El sitio web se ve bien?</div>
+        <div class="step-title" data-lang="de">Sieht die Website gut aus?</div>
+        <div class="step-desc" data-lang="en">Generate a site with your own content (a business, a project, anything). Is the result good enough to show a client? What's missing?</div>
+        <div class="step-desc" data-lang="es">Genera una web con tu propio contenido (un negocio, proyecto, lo que sea). ¿El resultado es suficientemente bueno para enseñar a un cliente? ¿Qué falta?</div>
+        <div class="step-desc" data-lang="de">Erstelle eine Website mit deinen eigenen Inhalten. Ist das Ergebnis gut genug für einen Kunden? Was fehlt?</div>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">🐛</div>
+      <div>
+        <div class="step-title" data-lang="en">Anything broken or confusing?</div>
+        <div class="step-title" data-lang="es">¿Algo roto o confuso?</div>
+        <div class="step-title" data-lang="de">Etwas kaputt oder verwirrend?</div>
+        <div class="step-desc" data-lang="en">Error messages, weird replies, buttons that don't work, layout that looks bad on your phone — report everything.</div>
+        <div class="step-desc" data-lang="es">Mensajes de error, respuestas raras, botones que no funcionan, layout mal en tu móvil — reporta todo.</div>
+        <div class="step-desc" data-lang="de">Fehlermeldungen, seltsame Antworten, Schaltflächen die nicht funktionieren, schlechtes Layout — alles melden.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑤ CAVEAT -->
+<section class="reveal">
+  <div class="warn">
+    <span class="warn-ico">⚠️</span>
+    <div>
+      <span data-lang="en"><strong>You have 3 credits.</strong> Generating and tweaking sites is free — a credit is only used when you <strong>unlock a clean site</strong> (your reward for testing — yours to keep, no payment). The chat assistant is unlimited.</span>
+      <span data-lang="es"><strong>Tienes 3 créditos.</strong> Generar y ajustar webs es gratis — solo se usa un crédito cuando <strong>desbloqueas una web limpia</strong> (tu recompensa por testear — tuya para siempre, sin pago). El chat es ilimitado.</span>
+      <span data-lang="de"><strong>Du hast 3 Credits.</strong> Erstellen und Anpassen ist kostenlos — ein Credit wird nur verwendet, wenn du eine <strong>saubere Website freischaltest</strong> (deine Belohnung fürs Testen — für immer deine, ohne Zahlung). Der Chat ist unbegrenzt.</span>
+    </div>
+  </div>
+  <div class="tip">
+    <span class="tip-ico">💡</span>
+    <div>
+      <span data-lang="en"><strong>The preview has a watermark — that's intentional.</strong> It's a prototype. The clean file is what paying clients receive. You can see exactly what they'd get.</span>
+      <span data-lang="es"><strong>La vista previa tiene marca de agua — es intencional.</strong> Es un prototipo. El archivo limpio es lo que reciben los clientes. Puedes ver exactamente qué obtendrían.</span>
+      <span data-lang="de"><strong>Die Vorschau hat ein Wasserzeichen — das ist Absicht.</strong> Es ist ein Prototyp. Die saubere Datei erhalten zahlende Kunden. Du siehst genau was sie bekommen würden.</span>
+    </div>
+  </div>
+  <div class="tip reveal">
+    <span class="tip-ico">🎁</span>
+    <div>
+      <span data-lang="en"><strong>Invite friends, earn free credits.</strong> Type <span class="step-code">/invite</span> in the bot to get your personal link. Every friend who joins as a tester earns you <strong>+1 credit</strong> — up to 3 extra (6 free sites total).</span>
+      <span data-lang="es"><strong>Invita amigos, gana créditos gratis.</strong> Escribe <span class="step-code">/invite</span> en el bot para obtener tu enlace personal. Cada amigo que entre como tester te da <strong>+1 crédito</strong> — hasta 3 extra (6 webs gratis en total).</span>
+      <span data-lang="de"><strong>Lade Freunde ein, verdiene Gratis-Credits.</strong> Tippe <span class="step-code">/invite</span> im Bot für deinen persönlichen Link. Jeder Freund der als Tester beitritt bringt dir <strong>+1 Credit</strong> — bis zu 3 extra (6 Gratis-Websites insgesamt).</span>
+    </div>
+  </div>
+</section>
+<section class="reveal">
+  <div class="sec-label">
+    <span data-lang="en">🧹 If something looks wrong</span>
+    <span data-lang="es">🧹 Si algo se ve mal</span>
+    <span data-lang="de">🧹 Wenn etwas falsch aussieht</span>
+  </div>
+  <div class="div"></div>
+  <h2>
+    <span data-lang="en">Clear your cache</span>
+    <span data-lang="es">Limpia tu caché</span>
+    <span data-lang="de">Cache leeren</span>
+  </h2>
+  <p style="font-size:.88rem;color:var(--text-muted);margin-top:.5rem">
+    <span data-lang="en">This applies to the generated preview sites, not to Telegram itself.</span>
+    <span data-lang="es">Esto aplica a los sitios de vista previa generados, no a Telegram.</span>
+    <span data-lang="de">Das gilt für die generierten Vorschau-Seiten, nicht für Telegram.</span>
+  </p>
+  <div class="cache-list">
+    <details class="cache-item">
+      <summary>
+        <span class="ci-ico">🤖</span>
+        <span data-lang="en">Android Chrome</span>
+        <span data-lang="es">Android Chrome</span>
+        <span data-lang="de">Android Chrome</span>
+        <span class="ci-arr">▼</span>
+      </summary>
+      <ol>
+        <li data-lang="en">Open Chrome → ⋮ menu → Settings → Privacy → Clear browsing data</li>
+        <li data-lang="es">Abre Chrome → ⋮ menú → Ajustes → Privacidad → Borrar datos</li>
+        <li data-lang="de">Chrome → ⋮ Menü → Einstellungen → Datenschutz → Browserdaten löschen</li>
+        <li data-lang="en">Select <em>Cached images</em> + <em>Cookies</em> → Clear</li>
+        <li data-lang="es">Selecciona <em>Caché</em> + <em>Cookies</em> → Borrar</li>
+        <li data-lang="de">Wähle <em>Cache</em> + <em>Cookies</em> → Löschen</li>
+      </ol>
+    </details>
+    <details class="cache-item">
+      <summary>
+        <span class="ci-ico">🍎</span>
+        <span data-lang="en">iOS Safari</span>
+        <span data-lang="es">iOS Safari</span>
+        <span data-lang="de">iOS Safari</span>
+        <span class="ci-arr">▼</span>
+      </summary>
+      <ol>
+        <li data-lang="en">Settings → Apps → Safari → Clear History and Website Data</li>
+        <li data-lang="es">Ajustes → Apps → Safari → Borrar historial y datos</li>
+        <li data-lang="de">Einstellungen → Apps → Safari → Verlauf und Daten löschen</li>
+      </ol>
+    </details>
+    <details class="cache-item">
+      <summary>
+        <span class="ci-ico">🖥️</span>
+        <span data-lang="en">Desktop Chrome / Brave</span>
+        <span data-lang="es">Chrome / Brave escritorio</span>
+        <span data-lang="de">Desktop Chrome / Brave</span>
+        <span class="ci-arr">▼</span>
+      </summary>
+      <ol>
+        <li data-lang="en">Press F12 → Application → Storage → Clear site data → Reload</li>
+        <li data-lang="es">F12 → Application → Storage → Clear site data → Recargar</li>
+        <li data-lang="de">F12 → Anwendung → Speicher → Website-Daten löschen → Neu laden</li>
+      </ol>
+    </details>
+  </div>
+</section>
+
+<!-- ⑦ FEEDBACK -->
+<section class="feedback-sec reveal">
+  <h2>
+    <span data-lang="en">💬 Send feedback</span>
+    <span data-lang="es">💬 Cuéntanos qué tal</span>
+    <span data-lang="de">💬 Feedback senden</span>
+  </h2>
+  <p>
+    <span data-lang="en">Bug? Idea? Something felt off? Your notes are gold at this stage.</span>
+    <span data-lang="es">¿Bug? ¿Idea? ¿Algo raro? Tus notas son oro en esta fase.</span>
+    <span data-lang="de">Bug? Idee? Etwas seltsam? Deine Notizen sind in dieser Phase Gold wert.</span>
+  </p>
+  <a href="https://t.me/Juanittos_feedback_bot?start=assist_bot" target="_blank" rel="noopener" class="feedback-btn">
+    <span>🐛</span>
+    <span data-lang="en">Send feedback</span>
+    <span data-lang="es">Enviar feedback</span>
+    <span data-lang="de">Feedback senden</span>
+  </a>
+  <br>
+  <button class="contact-toggle" onclick="openModal()">
+    <span>✉️</span>
+    <span data-lang="en">Contact ▾</span>
+    <span data-lang="es">Contacto ▾</span>
+    <span data-lang="de">Kontakt ▾</span>
+  </button>
+</section>
+
+<!-- Contact modal -->
+<div class="modal-overlay" id="cmodal" onclick="closeMOut(event)">
+  <div class="modal-box">
+    <div class="modal-title" id="mT">Contact</div>
+    <a href="mailto:digitalAIventures.LLC+AssistBot@gmail.com" class="modal-row" onclick="closeModal()">
+      <span class="mico">📧</span>
+      <span><span class="mlabel" id="mEmail">Send email</span></span>
+    </a>
+    <a href="https://t.me/Juanitto_assist_bot" target="_blank" class="modal-row" onclick="closeModal()">
+      <span class="mico">🤖</span>
+      <span>
+        <span class="mlabel" id="mAsst">AI Assistant</span>
+        <span class="msub" id="mAsstSub">services, portfolio, questions</span>
+      </span>
+    </a>
+    <a href="https://t.me/JuanittoCalvares" target="_blank" class="modal-row" onclick="closeModal()">
+      <span class="mico">✈️</span>
+      <span><span class="mlabel" id="mPers">Personal</span></span>
+    </a>
+    <button class="modal-cancel" id="mCan" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <span data-lang="en">Juanitto Assist Bot · Prototype · digitalAIventures LLC · Alpujarras, Spain</span>
+  <span data-lang="es">Juanitto Assist Bot · Prototipo · digitalAIventures LLC · Alpujarras, España</span>
+  <span data-lang="de">Juanitto Assist Bot · Prototyp · digitalAIventures LLC · Alpujarras, Spanien</span>
+</footer>
+
+<script>
+// Lang
+const LANGS=['en','es','de'];
+function setLang(l){
+  document.querySelectorAll('[data-lang]').forEach(el=>{
+    el.style.display=el.dataset.lang===l?'':'none';
+  });
+  document.querySelectorAll('.lb').forEach(b=>b.classList.toggle('on',b.dataset.l===l));
+  updateModalLang(l);
+  try{localStorage.setItem('lang',l)}catch(e){}
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  let l='en';
+  try{
+    const q=new URLSearchParams(location.search).get('lang');
+    l=q||localStorage.getItem('lang')||navigator.language.slice(0,2)||'en';
+  }catch(e){}
+  if(!LANGS.includes(l))l='en';
+  setLang(l);
+});
+
+// Theme
+function toggleTheme(){
+  const h=document.documentElement;
+  const n=h.getAttribute('data-theme')==='dark'?'light':'dark';
+  h.setAttribute('data-theme',n);
+  document.getElementById('ti').textContent=n==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',n)}catch(e){}
+}
+(function(){
+  function applyT(t){
+    document.documentElement.setAttribute('data-theme',t);
+    document.addEventListener('DOMContentLoaded',()=>{
+      const i=document.getElementById('ti');if(i)i.textContent=t==='dark'?'☀️':'🌙';
+    });
+  }
+  try{
+    const s=localStorage.getItem('theme');
+    if(s)applyT(s);
+    else{const h=new Date().getHours();applyT(h>=7&&h<19?'light':'dark');}
+  }catch(e){applyT('dark')}
+})();
+
+// Modal
+const MT={
+  en:{t:'Contact',email:'Send email',asst:'AI Assistant',sub:'services, portfolio, questions',pers:'Personal',can:'Cancel'},
+  es:{t:'Contacto',email:'Enviar email',asst:'Asistente IA',sub:'servicios, portafolio, preguntas',pers:'Personal',can:'Cancelar'},
+  de:{t:'Kontakt',email:'E-Mail senden',asst:'KI-Assistent',sub:'Dienste, Portfolio, Fragen',pers:'Persönlich',can:'Abbrechen'}
+};
+function updateModalLang(l){
+  const t=MT[l]||MT.en;
+  const s=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v};
+  s('mT',t.t);s('mEmail',t.email);s('mAsst',t.asst);s('mAsstSub',t.sub);s('mPers',t.pers);s('mCan',t.can);
+}
+function openModal(){document.getElementById('cmodal').classList.add('open');document.body.style.overflow='hidden';}
+function closeModal(){document.getElementById('cmodal').classList.remove('open');document.body.style.overflow='';}
+function closeMOut(e){if(e.target===document.getElementById('cmodal'))closeModal();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+// Scroll reveals
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:0.01,rootMargin:'0px 0px -10% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

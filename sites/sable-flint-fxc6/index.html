@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shieldly — Driver Safety Reimagined</title>
+<script>
+// Run before render — pick lang and inject a scoped style
+(function(){
+  var l='en';
+  try{
+    var q=new URLSearchParams(location.search).get('lang');
+    l=q||localStorage.getItem('lang')||navigator.language.slice(0,2)||'en';
+  }catch(e){}
+  if(!['en','es','de','ro'].includes(l))l='en';
+  window._lang=l;
+  // Hide all non-active lang spans before paint
+  var s=document.createElement('style');
+  s.id='lang-pre';
+  s.textContent='[data-lang]:not([data-lang="'+l+'"]){display:none}';
+  document.head.appendChild(s);
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root,[data-theme="dark"]{
+  --bg:#0c0d10;--bg-card:#13141a;--bg-alt:#0f1015;
+  --bg-hero:linear-gradient(135deg,#0f1520 0%,#0c0d10 60%,#10080f 100%);
+  --text:#dde2ec;--text-m:#8892a4;--text-h:#fff;
+  --border:#1e2130;--border-accent:#2a3050;
+  --accent:#e63a5a;--accent2:#4f8ef7;--accent3:#34d399;
+  --accent-dim:rgba(230,58,90,.15);
+  --overlay-bg:rgba(0,0,0,.8);--dialog-bg:#1a1b24;
+  --shield-glow:0 0 60px rgba(230,58,90,.18);
+}
+[data-theme="light"]{
+  --bg:#f6f7fb;--bg-card:#fff;--bg-alt:#eef0f6;
+  --bg-hero:linear-gradient(135deg,#e8eaf5 0%,#f6f7fb 60%,#f5eaf0 100%);
+  --text:#2a2d3a;--text-m:#666e86;--text-h:#0f1020;
+  --border:#dde0ea;--border-accent:#c4c8dc;
+  --accent:#c4243e;--accent2:#2563eb;--accent3:#059669;
+  --accent-dim:rgba(196,36,62,.1);
+  --overlay-bg:rgba(0,0,0,.6);--dialog-bg:#fff;
+  --shield-glow:0 0 60px rgba(196,36,62,.1);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+img,svg,video{max-width:100%;height:auto}
+
+.concept-banner{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.35);border-radius:.65rem;padding:.7rem 1rem;font-size:.8rem;color:#f59e0b;line-height:1.5;max-width:480px;margin-top:1.5rem;text-align:left;position:relative;z-index:1}
+.concept-dot{display:inline-block;width:.55rem;height:.55rem;background:#f59e0b;border-radius:50%;margin-right:.4rem;vertical-align:middle;animation:pulse 1.8s ease-in-out infinite}
+
+/* TOP BAR */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:.5rem 1rem;background:rgba(12,13,16,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+[data-theme="light"] .topbar{background:rgba(246,247,251,.92)}
+.lang-row{display:flex;gap:.3rem}
+.lang-btn{background:none;border:1px solid var(--border);color:var(--text-m);font-size:.72rem;font-weight:600;padding:.2rem .5rem;border-radius:.35rem;cursor:pointer;font-family:inherit}
+.lang-btn.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.theme-btn{background:none;border:1px solid var(--border);color:var(--text-m);font-size:.8rem;padding:.25rem .55rem;border-radius:.35rem;cursor:pointer;font-family:inherit}
+.logo-small{font-family:'DM Serif Display',serif;font-size:1rem;color:var(--accent);letter-spacing:.02em}
+
+/* HERO */
+.hero{min-height:100svh;background:var(--bg-hero);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 1.5rem 3rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 40%,rgba(230,58,90,.08) 0%,transparent 70%);pointer-events:none}
+.shield-icon{font-size:4.5rem;margin-bottom:1rem;filter:drop-shadow(0 0 20px rgba(230,58,90,.4));animation:pulse-glow 3s ease-in-out infinite}
+@keyframes pulse-glow{0%,100%{filter:drop-shadow(0 0 20px rgba(230,58,90,.4))}50%{filter:drop-shadow(0 0 40px rgba(230,58,90,.7))}}
+.hero-brand{font-family:'DM Serif Display',serif;font-size:3.2rem;color:var(--text-h);line-height:1;margin-bottom:.4rem}
+.hero-brand span{color:var(--accent)}
+.hero-tagline{font-size:1.1rem;color:var(--text-m);margin-bottom:.5rem;max-width:460px}
+.hero-sub{font-size:.85rem;color:var(--text-m);opacity:.7;margin-bottom:2.2rem;max-width:400px}
+.btn-primary{background:var(--accent);color:#fff;border:none;padding:.75rem 2rem;border-radius:.6rem;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block;transition:opacity .2s}
+.btn-primary:hover{opacity:.88}
+.btn-ghost{background:none;border:1.5px solid var(--border-accent);color:var(--text);padding:.65rem 1.5rem;border-radius:.6rem;font-size:.9rem;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block;transition:border-color .2s,color .2s}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.hero-btns{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center}
+.scroll-hint{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);font-size:.75rem;color:var(--text-m);opacity:.5;animation:bounce .2s ease-in-out infinite alternate}
+@keyframes bounce{from{transform:translateX(-50%) translateY(0)}to{transform:translateX(-50%) translateY(4px)}}
+
+/* SECTIONS */
+section{padding:3.5rem 1.25rem}
+.section-label{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem}
+.section-title{font-family:'DM Serif Display',serif;font-size:2rem;color:var(--text-h);line-height:1.15;margin-bottom:.75rem}
+.section-body{color:var(--text-m);line-height:1.65;font-size:.95rem;max-width:560px}
+.alt-bg{background:var(--bg-alt)}
+.container{max-width:680px;margin:0 auto}
+
+/* PROBLEM */
+.problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-top:1.5rem}
+.problem-chip{background:var(--bg-card);border:1px solid var(--border);border-radius:.6rem;padding:.75rem .9rem;font-size:.85rem;font-weight:500;color:var(--text);display:flex;align-items:center;gap:.5rem}
+.problem-chip .ic{font-size:1.1rem}
+
+/* HOW IT WORKS */
+.mode-cards{display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem}
+.mode-card{background:var(--bg-card);border:1px solid var(--border);border-radius:.85rem;padding:1.1rem 1.2rem;position:relative;overflow:hidden}
+.mode-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--card-accent,var(--accent))}
+.mode-card.silent{--card-accent:#4f8ef7}
+.mode-card.loud{--card-accent:#e63a5a}
+.mode-card.hold{--card-accent:#f59e0b}
+.mode-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--card-accent,var(--accent));margin-bottom:.25rem}
+.mode-title{font-weight:700;color:var(--text-h);margin-bottom:.4rem;font-size:1rem}
+.mode-desc{font-size:.85rem;color:var(--text-m);line-height:1.55}
+.mode-chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem}
+.mode-chip{background:rgba(79,142,247,.1);border:1px solid rgba(79,142,247,.2);color:var(--accent2);font-size:.72rem;font-weight:600;padding:.2rem .5rem;border-radius:.3rem}
+.mode-card.loud .mode-chip{background:rgba(230,58,90,.1);border-color:rgba(230,58,90,.2);color:var(--accent)}
+.mode-card.hold .mode-chip{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.2);color:#f59e0b}
+
+/* RESPONSE CHAIN */
+.chain{display:flex;flex-direction:column;gap:0;margin-top:1.5rem}
+.chain-step{display:flex;align-items:flex-start;gap:.9rem;padding:.8rem 0}
+.chain-step+.chain-step{border-top:1px solid var(--border)}
+.chain-num{width:2rem;height:2rem;min-width:2rem;background:var(--accent-dim);border:1.5px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:var(--accent)}
+.chain-content{}
+.chain-title{font-weight:600;color:var(--text-h);font-size:.9rem;margin-bottom:.15rem}
+.chain-desc{font-size:.82rem;color:var(--text-m);line-height:1.5}
+
+/* FEATURES */
+.features-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.5rem}
+.feat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:.75rem;padding:1rem}
+.feat-icon{font-size:1.5rem;margin-bottom:.5rem}
+.feat-title{font-weight:700;font-size:.88rem;color:var(--text-h);margin-bottom:.3rem}
+.feat-desc{font-size:.78rem;color:var(--text-m);line-height:1.5}
+
+/* COMPETITORS */
+.comp-table-wrap{margin-top:1.5rem;display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:.75rem;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;display:block;overflow-x:auto}
+th,td{padding:.65rem .75rem;text-align:left;font-size:.8rem;border-bottom:1px solid var(--border);min-width:90px;white-space:normal;vertical-align:top}
+th{background:var(--bg-alt);color:var(--text-h);font-weight:700;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em}
+td{color:var(--text-m)}
+td:first-child{color:var(--text-h);font-weight:600}
+.yes{color:var(--accent3)}
+.no{color:var(--accent)}
+.partial{color:#f59e0b}
+tr:last-child td{border-bottom:none}
+
+/* TIERS */
+.tiers{display:flex;flex-direction:column;gap:.9rem;margin-top:1.5rem}
+.tier-card{background:var(--bg-card);border:1px solid var(--border);border-radius:.85rem;padding:1.1rem 1.2rem;position:relative}
+.tier-card.featured{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),var(--shield-glow)}
+.tier-badge{position:absolute;top:-.6rem;right:1rem;background:var(--accent);color:#fff;font-size:.65rem;font-weight:700;padding:.2rem .6rem;border-radius:1rem;letter-spacing:.07em;text-transform:uppercase}
+.tier-name{font-weight:700;color:var(--text-h);font-size:1rem;margin-bottom:.1rem}
+.tier-price{font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--accent);line-height:1;margin-bottom:.1rem}
+.tier-price span{font-family:'DM Sans',sans-serif;font-size:.85rem;color:var(--text-m);font-weight:400}
+.tier-desc{font-size:.8rem;color:var(--text-m);margin-bottom:.75rem}
+.tier-features{list-style:none;display:flex;flex-direction:column;gap:.3rem}
+.tier-features li{font-size:.82rem;color:var(--text);display:flex;align-items:flex-start;gap:.4rem}
+.tier-features li::before{content:'✓';color:var(--accent3);font-weight:700;flex-shrink:0;margin-top:.05rem}
+.hardware-note{margin-top:1.5rem;background:var(--accent-dim);border:1px solid rgba(230,58,90,.2);border-radius:.75rem;padding:1rem 1.1rem;font-size:.85rem;color:var(--text);line-height:1.6}
+.hardware-note strong{color:var(--accent)}
+
+/* POLL */
+.poll-wrap{background:var(--bg-card);border:1px solid var(--border-accent);border-radius:1rem;padding:1.4rem 1.2rem;margin-top:1.5rem}
+.poll-intro{font-size:.85rem;color:var(--text-m);margin-bottom:1.25rem;line-height:1.55}
+.poll-q{margin-bottom:1.2rem}
+.poll-q-label{font-weight:600;color:var(--text-h);font-size:.9rem;margin-bottom:.5rem;display:block}
+.poll-q-hint{font-size:.75rem;color:var(--text-m);margin-bottom:.5rem;display:block;font-style:italic}
+.options-grid{display:flex;flex-wrap:wrap;gap:.4rem}
+.opt-btn{background:var(--bg-alt);border:1.5px solid var(--border);color:var(--text);font-size:.8rem;font-weight:500;padding:.4rem .75rem;border-radius:.45rem;cursor:pointer;font-family:inherit;transition:all .15s;text-align:left}
+.opt-btn.sel{background:var(--accent-dim);border-color:var(--accent);color:var(--text-h);font-weight:600}
+.poll-text{width:100%;background:var(--bg-alt);border:1.5px solid var(--border);color:var(--text);font-family:inherit;font-size:.85rem;padding:.55rem .75rem;border-radius:.5rem;resize:vertical;min-height:70px;margin-top:.25rem}
+.poll-text:focus{outline:none;border-color:var(--accent2)}
+.poll-submit{background:var(--accent);color:#fff;border:none;padding:.75rem 2rem;border-radius:.6rem;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;width:100%;margin-top:1rem;transition:opacity .2s}
+.poll-submit:hover{opacity:.88}
+.poll-submit:disabled{opacity:.4;cursor:not-allowed}
+.poll-success{text-align:center;padding:1.5rem;display:none}
+.poll-success-icon{font-size:2.5rem;margin-bottom:.5rem}
+.poll-success-title{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--text-h);margin-bottom:.4rem}
+.poll-success-body{font-size:.85rem;color:var(--text-m);line-height:1.55}
+.poll-count{font-size:.75rem;color:var(--text-m);text-align:center;margin-top:.75rem;opacity:.7}
+
+/* FOOTER */
+footer{background:var(--bg-alt);border-top:1px solid var(--border);padding:2rem 1.25rem;text-align:center}
+.footer-note{font-size:.78rem;color:var(--text-m);margin-bottom:1rem;line-height:1.6}
+.footer-brand{font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--accent);margin-bottom:.25rem}
+
+/* CONTACT MODAL */
+.footer-contact{background:none;color:var(--text-m);border:1px solid var(--border);padding:.4rem 1rem;border-radius:.4rem;font-size:.75rem;font-weight:500;cursor:pointer;margin-bottom:1rem;font-family:inherit;transition:border-color .2s,color .2s}.footer-contact:hover{border-color:var(--accent);color:var(--accent)}
+.dialog-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--overlay-bg);z-index:200;align-items:center;justify-content:center}
+.dialog-overlay.open{display:flex}
+.dialog-box{background:var(--dialog-bg);border-radius:1rem;padding:1.75rem;max-width:300px;width:90%;text-align:center}
+.dialog-box h4{color:var(--text-h);margin-bottom:1rem;font-size:1rem}
+.dialog-option{display:block;width:100%;padding:.65rem;margin-bottom:.6rem;border-radius:.5rem;text-decoration:none;font-weight:600;font-size:.9rem;text-align:center}
+.dialog-bot{background:#0088cc;color:#fff}
+.dialog-tg{background:#229ED9;color:#fff}
+.dialog-mail{background:#4a6741;color:#fff}
+.dialog-close{background:none;border:1px solid var(--border);color:var(--text-m);cursor:pointer;font-size:.82rem;padding:.4rem 1.2rem;border-radius:.4rem;margin-top:.2rem;font-family:inherit}
+</style>
+<style id="pres-css">
+/* ===== Presentation mode (design v8) ===== */
+.pres-wrap{max-width:1100px;margin:0 auto;padding:4.2rem 1rem 0}
+.stage-wrap{position:relative;width:100%;overflow:hidden;border-radius:16px;
+  border:1px solid var(--border-accent);background:#0a0b0e;box-shadow:0 24px 70px rgba(0,0,0,.5)}
+#stage{position:relative;width:100%}
+#stage svg{display:block;width:100%;height:auto}
+/* corner overlays only */
+.ov{position:absolute;inset:0;pointer-events:none}
+.ov-timer{position:absolute;top:.7rem;left:.8rem;font:600 .8rem/1 'DM Sans',sans-serif;
+  color:var(--text-m);background:rgba(8,9,12,.6);padding:.32rem .5rem;border-radius:8px;
+  border:1px solid var(--border);letter-spacing:.02em}
+.ov-replay{position:absolute;top:.6rem;right:.7rem;pointer-events:auto;cursor:pointer;
+  width:2.3rem;height:2.3rem;border-radius:50%;border:1px solid var(--border-accent);
+  background:rgba(8,9,12,.65);color:var(--text);font-size:1.2rem;line-height:1;
+  display:flex;align-items:center;justify-content:center;transition:transform .2s,border-color .2s}
+.ov-replay:hover{transform:translateY(-2px);border-color:var(--accent)}
+.ov-stamp{position:absolute;left:0;right:0;bottom:8%;text-align:center;opacity:0}
+.ov-stamp-brand{font:700 2.4rem/1 'DM Serif Display',serif;color:var(--text-h);letter-spacing:-.01em}
+.ov-stamp-sub{font:500 1rem/1.3 'DM Sans',sans-serif;color:var(--text-m);margin-top:.35rem}
+/* subtitle bar under the frame */
+.cap-bar{position:relative;background:#0b0908;border:1px solid var(--border);border-top:none;
+  border-radius:0 0 16px 16px;min-height:4.4rem;padding:.6rem .8rem .65rem;
+  max-width:1100px;margin:0 auto}
+.ov-caps{position:absolute;left:.8rem;right:.8rem;top:.6rem;bottom:.65rem}
+.cap{position:absolute;left:0;right:0;top:0;opacity:0;
+  font:500 1.02rem/1.35 'DM Sans',sans-serif;color:var(--text);text-align:center}
+.pres-hint{max-width:1100px;margin:.55rem auto 0;text-align:center;
+  font:500 .8rem/1 'DM Sans',sans-serif;color:var(--text-m);opacity:.8}
+
+/* ===== Tier-1 ambient reveals ===== */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1!important;transform:none!important;transition:none!important}
+}
+@media (max-width:640px){
+  .ov-stamp-brand{font-size:1.7rem}
+  .ov-stamp-sub{font-size:.82rem}
+  .cap{font-size:.92rem}
+  .ov-timer{font-size:.72rem}
+}
+</style>
+
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="logo-small">Shieldly</div>
+  <div class="lang-row">
+    <button class="lang-btn" data-l="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-l="es" onclick="setLang('es')">ES</button>
+    <button class="lang-btn" data-l="de" onclick="setLang('de')">DE</button>
+    <button class="lang-btn" data-l="ro" onclick="setLang('ro')">RO</button>
+  </div>
+  <button class="theme-btn" onclick="toggleTheme()">☀︎</button>
+</div>
+
+<!-- ===== PRESENTATION MODE HERO (design v8 / motion-grammar) ===== -->
+<div class="pres-wrap">
+  <div class="stage-wrap">
+    <div id="stage" data-composition-id="shieldly-hero" data-width="1920" data-height="1080">
+      <svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="pg-bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#0f1520"/>
+            <stop offset="0.6" stop-color="#0c0d10"/>
+            <stop offset="1" stop-color="#10080f"/>
+          </linearGradient>
+          <radialGradient id="pg-vig" cx="0.5" cy="0.42" r="0.75">
+            <stop offset="0" stop-color="#000" stop-opacity="0"/>
+            <stop offset="1" stop-color="#000" stop-opacity="0.55"/>
+          </radialGradient>
+          <filter id="pg-glow" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="14" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <radialGradient id="pg-acc" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#e63a5a" stop-opacity="0.9"/>
+            <stop offset="1" stop-color="#e63a5a" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <!-- backdrop -->
+        <rect x="0" y="0" width="1920" height="1080" fill="url(#pg-bg)"/>
+        <g id="pg-stars" opacity="0.0">
+          <circle cx="240" cy="170" r="2.2" fill="#9fb0cc"/><circle cx="520" cy="120" r="1.6" fill="#7f8aa6"/>
+          <circle cx="900" cy="200" r="2.4" fill="#aebbd6"/><circle cx="1340" cy="140" r="1.8" fill="#8893ad"/>
+          <circle cx="1660" cy="230" r="2.1" fill="#9fb0cc"/><circle cx="1500" cy="90" r="1.4" fill="#6f7a96"/>
+          <circle cx="360" cy="300" r="1.5" fill="#7f8aa6"/><circle cx="1120" cy="110" r="1.7" fill="#9fb0cc"/>
+        </g>
+        <rect x="0" y="0" width="1920" height="1080" fill="url(#pg-vig)"/>
+
+        <!-- SCENE A — alone, every shift -->
+        <g id="sA" opacity="0">
+          <ellipse cx="960" cy="760" rx="430" ry="120" fill="#11141d"/>
+          <!-- car (side, minimal) -->
+          <g transform="translate(0,0)">
+            <path d="M700 720 q40 -150 200 -160 l180 0 q120 6 180 80 l120 18 q40 8 44 50 l4 78 q0 18 -22 18 l-740 0 q-22 0 -22 -22 z"
+                  fill="#161a24" stroke="#2a3050" stroke-width="3"/>
+            <path d="M905 575 l165 0 q70 4 104 56 l-410 0 q22 -50 141 -56 z" fill="#0e1622" stroke="#2a3050" stroke-width="2.5"/>
+            <line x1="900" y1="575" x2="864" y2="631" stroke="#2a3050" stroke-width="2.5"/>
+            <circle cx="820" cy="784" r="58" fill="#0b0d12" stroke="#2a3050" stroke-width="6"/>
+            <circle cx="820" cy="784" r="22" fill="#171b26"/>
+            <circle cx="1180" cy="784" r="58" fill="#0b0d12" stroke="#2a3050" stroke-width="6"/>
+            <circle cx="1180" cy="784" r="22" fill="#171b26"/>
+          </g>
+          <!-- lone driver -->
+          <circle id="pg-driver" cx="975" cy="612" r="22" fill="#e63a5a" filter="url(#pg-glow)"/>
+        </g>
+
+        <!-- SCENE B — seconds matter, screen too slow -->
+        <g id="sB" opacity="0">
+          <!-- phone -->
+          <g transform="translate(700 300)">
+            <rect x="0" y="0" width="320" height="600" rx="40" fill="#13141a" stroke="#2a3050" stroke-width="4"/>
+            <rect x="22" y="60" width="276" height="480" rx="18" fill="#0c0d10" stroke="#1e2130" stroke-width="2"/>
+            <circle cx="160" cy="300" r="46" fill="none" stroke="#2a3050" stroke-width="8"/>
+            <path id="pg-spin" d="M160 254 a46 46 0 0 1 40 23" fill="none" stroke="#8892a4" stroke-width="8" stroke-linecap="round"/>
+            <rect x="120" y="500" width="80" height="14" rx="7" fill="#1e2130"/>
+          </g>
+          <!-- clock -->
+          <g transform="translate(1180 470)">
+            <circle cx="0" cy="0" r="120" fill="#11141d" stroke="#e63a5a" stroke-width="6"/>
+            <line x1="0" y1="0" x2="0" y2="-78" stroke="#dde2ec" stroke-width="8" stroke-linecap="round" transform-origin="0 0" id="pg-hand-m"/>
+            <line x1="0" y1="0" x2="58" y2="0" stroke="#e63a5a" stroke-width="9" stroke-linecap="round" transform-origin="0 0" id="pg-hand-s"/>
+            <circle cx="0" cy="0" r="9" fill="#dde2ec"/>
+          </g>
+        </g>
+
+        <!-- SCENE C — one hidden press -->
+        <g id="sC" opacity="0">
+          <!-- steering wheel arc -->
+          <path d="M620 940 a380 380 0 0 1 680 0" fill="none" stroke="#222838" stroke-width="40" stroke-linecap="round"/>
+          <path d="M620 940 a380 380 0 0 1 680 0" fill="none" stroke="#2a3050" stroke-width="6" stroke-linecap="round"/>
+          <!-- hidden button -->
+          <circle id="pg-halo" cx="960" cy="612" r="120" fill="url(#pg-acc)" opacity="0"/>
+          <circle id="pg-btn" cx="960" cy="612" r="54" fill="#181b26" stroke="#e63a5a" stroke-width="6"/>
+          <path d="M960 588 v48 M936 612 h48" stroke="#e63a5a" stroke-width="8" stroke-linecap="round"/>
+          <!-- thumb -->
+          <g id="pg-thumb" transform="translate(0 220)">
+            <path d="M1030 760 q-30 -120 40 -150 q34 -14 40 26 q4 30 -14 70 q40 -6 70 8 q34 14 18 44 q-10 18 -54 22 q22 22 6 46 q-14 22 -60 18 l-86 -8 q-44 -6 -40 -54 z"
+                  fill="#caa17e" stroke="#9c7858" stroke-width="3"/>
+          </g>
+        </g>
+
+        <!-- SCENE D — record, encrypt, dispatch -->
+        <g id="sD" opacity="0">
+          <g id="pg-rings" stroke-width="4" fill="none">
+            <circle cx="960" cy="540" r="80"  stroke="#e63a5a" opacity="0.9"/>
+            <circle cx="960" cy="540" r="80"  stroke="#4f8ef7" opacity="0.6" id="pg-r2"/>
+            <circle cx="960" cy="540" r="80"  stroke="#34d399" opacity="0.4" id="pg-r3"/>
+          </g>
+          <circle cx="960" cy="540" r="46" fill="#181b26" stroke="#e63a5a" stroke-width="5"/>
+          <circle cx="960" cy="540" r="15" fill="#e63a5a" filter="url(#pg-glow)"/>
+          <!-- record dot -->
+          <g id="pg-rec" transform="translate(560 360)" opacity="0">
+            <rect x="-92" y="-34" width="184" height="68" rx="34" fill="#13141a" stroke="#2a3050" stroke-width="3"/>
+            <circle cx="-52" cy="0" r="13" fill="#e63a5a"/>
+            <text x="-26" y="8" font-family="DM Sans,sans-serif" font-size="30" font-weight="600" fill="#dde2ec">REC</text>
+          </g>
+          <!-- lock / encrypted -->
+          <g id="pg-lock" transform="translate(1300 360)" opacity="0">
+            <rect x="-40" y="-6" width="80" height="64" rx="12" fill="#13141a" stroke="#34d399" stroke-width="4"/>
+            <path d="M-24 -6 v-18 a24 24 0 0 1 48 0 v18" fill="none" stroke="#34d399" stroke-width="6"/>
+            <circle cx="0" cy="22" r="9" fill="#34d399"/>
+          </g>
+          <!-- dispatch beacon -->
+          <g id="pg-disp" transform="translate(960 880)" opacity="0">
+            <path d="M-30 0 l30 -44 l30 44 z" fill="#4f8ef7"/>
+            <rect x="-10" y="0" width="20" height="40" fill="#4f8ef7"/>
+            <text x="0" y="86" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="28" font-weight="600" fill="#8aa6dd">DISPATCH</text>
+          </g>
+        </g>
+
+        <!-- SCENE E — shield resolve -->
+        <g id="sE" opacity="0">
+          <path id="pg-shield" d="M960 360 l210 70 v150 q0 210 -210 320 q-210 -110 -210 -320 v-150 z"
+                fill="#13141a" stroke="#e63a5a" stroke-width="8" filter="url(#pg-glow)"/>
+          <path d="M880 600 l55 60 l120 -135" fill="none" stroke="#34d399" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" id="pg-check"/>
+        </g>
+      </svg>
+
+      <!-- on-canvas overlays: timer, replay, end-stamp (corners only) -->
+      <div class="ov">
+        <div class="ov-timer"><span id="pg-time">0.0</span>s</div>
+        <button class="ov-replay" id="pg-replay" aria-label="Replay">↺</button>
+        <div class="ov-stamp" id="pg-stamp">
+          <div class="ov-stamp-brand"><span style="color:var(--accent)">Shield</span>ly</div>
+          <div class="ov-stamp-sub">
+            <span data-lang="en">Driver safety, reimagined.</span>
+            <span data-lang="es">Seguridad para conductores, reimaginada.</span>
+            <span data-lang="de">Fahrersicherheit neu gedacht.</span>
+            <span data-lang="ro">Siguranța șoferilor, reinventată.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- subtitle bar BELOW the frame (never overlaid) -->
+  <div class="cap-bar">
+    <div class="ov-caps">
+      <div class="cap" id="cap0">
+        <span data-lang="en">You work alone. With strangers. Every single shift.</span>
+        <span data-lang="es">Trabajas solo. Con desconocidos. En cada turno.</span>
+        <span data-lang="de">Du arbeitest allein. Mit Fremden. In jeder Schicht.</span>
+        <span data-lang="ro">Lucrezi singur. Cu necunoscuți. În fiecare tură.</span>
+      </div>
+      <div class="cap" id="cap1">
+        <span data-lang="en">When seconds matter, unlocking a screen is too slow.</span>
+        <span data-lang="es">Cuando cada segundo cuenta, desbloquear la pantalla es demasiado lento.</span>
+        <span data-lang="de">Wenn Sekunden zählen, ist das Entsperren des Bildschirms zu langsam.</span>
+        <span data-lang="ro">Când fiecare secundă contează, deblocarea ecranului e prea lentă.</span>
+      </div>
+      <div class="cap" id="cap2">
+        <span data-lang="en">One hidden press. No screen. No hesitation.</span>
+        <span data-lang="es">Un toque oculto. Sin pantalla. Sin dudar.</span>
+        <span data-lang="de">Ein versteckter Druck. Kein Bildschirm. Kein Zögern.</span>
+        <span data-lang="ro">O apăsare ascunsă. Fără ecran. Fără ezitare.</span>
+      </div>
+      <div class="cap" id="cap3">
+        <span data-lang="en">Pre-buffer recording starts. Encrypted. Dispatch alerted instantly.</span>
+        <span data-lang="es">Empieza la grabación con pre-buffer. Cifrada. Central alertada al instante.</span>
+        <span data-lang="de">Pre-Buffer-Aufnahme startet. Verschlüsselt. Leitstelle sofort alarmiert.</span>
+        <span data-lang="ro">Începe înregistrarea cu pre-buffer. Criptată. Dispecerat alertat instant.</span>
+      </div>
+      <div class="cap" id="cap4">
+        <span data-lang="en">Shieldly — driver safety, reimagined.</span>
+        <span data-lang="es">Shieldly — seguridad para conductores, reimaginada.</span>
+        <span data-lang="de">Shieldly — Fahrersicherheit neu gedacht.</span>
+        <span data-lang="ro">Shieldly — siguranța șoferilor, reinventată.</span>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ===== /PRESENTATION MODE HERO ===== -->
+
+<!-- HERO -->
+<div class="hero">
+  <div class="shield-icon">🛡️</div>
+  <div class="hero-brand"><span style="color:var(--accent)">Shield</span>ly</div>
+  <p class="hero-tagline">
+    <span data-lang="en">Driver safety, reimagined. One press. No hesitation.</span>
+    <span data-lang="es">Seguridad para conductores, reimaginada. Un toque. Sin dudar.</span>
+    <span data-lang="de">Fahrersicherheit neu gedacht. Ein Druck. Kein Zögern.</span>
+    <span data-lang="ro">Siguranța șoferilor, reinventată. O apăsare. Fără ezitare.</span>
+  </p>
+  <p class="hero-sub">
+    <span data-lang="en">A hidden panic button system designed specifically for rideshare, taxi, and delivery drivers.</span>
+    <span data-lang="es">Un sistema de botón de pánico oculto diseñado específicamente para conductores de rideshare, taxi y reparto.</span>
+    <span data-lang="de">Ein verstecktes Paniktastersystem, speziell für Rideshare-, Taxi- und Lieferfahrer entwickelt.</span>
+    <span data-lang="ro">Un sistem de buton de panică ascuns, conceput special pentru șoferii de rideshare, taxi și curierat.</span>
+  </p>
+  <div class="hero-btns">
+    <a href="#poll" class="btn-primary">
+      <span data-lang="en">Take the survey →</span>
+      <span data-lang="es">Participar en la encuesta →</span>
+      <span data-lang="de">Zur Umfrage →</span>
+      <span data-lang="ro">Completează sondajul →</span>
+    </a>
+    <a href="#how" class="btn-ghost">
+      <span data-lang="en">How it works</span>
+      <span data-lang="es">Cómo funciona</span>
+      <span data-lang="de">Wie es funktioniert</span>
+      <span data-lang="ro">Cum funcționează</span>
+    </a>
+  </div>
+  <div class="concept-banner">
+    <span class="concept-dot"></span>
+    <span data-lang="en">🔬 Concept in validation — this product doesn't exist yet. We're talking to drivers to decide whether and how to build it. Your answers matter.</span>
+    <span data-lang="es">🔬 Concepto en validación — este producto aún no existe. Hablamos con conductores para decidir si y cómo construirlo. Tus respuestas importan.</span>
+    <span data-lang="de">🔬 Konzept in Validierung — dieses Produkt existiert noch nicht. Wir befragen Fahrer, um zu entscheiden, ob und wie wir es bauen. Deine Antworten zählen.</span>
+    <span data-lang="ro">🔬 Concept în validare — acest produs nu există încă. Discutăm cu șoferii pentru a decide dacă și cum să-l construim. Răspunsurile tale contează.</span>
+  </div>
+  <div class="scroll-hint">▼</div>
+</div>
+
+<!-- PROBLEM -->
+<section class="reveal">
+<div class="container">
+  <div class="section-label">
+    <span data-lang="en">The Reality</span><span data-lang="es">La Realidad</span><span data-lang="de">Die Realität</span><span data-lang="ro">Realitatea</span>
+  </div>
+  <h2 class="section-title">
+    <span data-lang="en">Drivers face real dangers. Every shift.</span>
+    <span data-lang="es">Los conductores enfrentan peligros reales. Cada turno.</span>
+    <span data-lang="de">Fahrer stehen täglich vor realen Gefahren.</span>
+    <span data-lang="ro">Șoferii se confruntă cu pericole reale. În fiecare tură.</span>
+  </h2>
+  <p class="section-body">
+    <span data-lang="en">You work alone, in a confined space, with strangers. Current tools — dashcams, in-app SOS, phone panic buttons — require unlocking a screen when seconds matter. And they do nothing to protect you against false accusations.</span>
+    <span data-lang="es">Trabajas solo, en un espacio cerrado, con desconocidos. Las herramientas actuales —cámaras, SOS en la app, botones en el teléfono— requieren desbloquear la pantalla cuando cada segundo importa. Y no te protegen de falsas acusaciones.</span>
+    <span data-lang="de">Du arbeitest allein, in einem engen Raum, mit Fremden. Aktuelle Tools — Dashcams, In-App-SOS, Handy-Paniktasten — erfordern das Entsperren eines Bildschirms, wenn Sekunden zählen. Und sie schützen nicht vor falschen Anschuldigungen.</span>
+    <span data-lang="ro">Lucrezi singur, într-un spațiu închis, cu necunoscuți. Instrumentele actuale — camere de bord, SOS în aplicație, butoane pe telefon — necesită deblocarea ecranului când fiecare secundă contează. Și nu te protejează de acuzații false.</span>
+  </p>
+  <div class="problem-grid">
+    <div class="problem-chip"><span class="ic">👊</span><span data-lang="en">Physical assault</span><span data-lang="es">Agresión física</span><span data-lang="de">Körperliche Gewalt</span><span data-lang="ro">Agresiune fizică</span></div>
+    <div class="problem-chip"><span class="ic">🔫</span><span data-lang="en">Robbery & carjacking</span><span data-lang="es">Robo y carjacking</span><span data-lang="de">Raub & Autodiebstahl</span><span data-lang="ro">Jaf & furt auto</span></div>
+    <div class="problem-chip"><span class="ic">😰</span><span data-lang="en">Kidnapping threat</span><span data-lang="es">Amenaza de secuestro</span><span data-lang="de">Entführungsgefahr</span><span data-lang="ro">Amenințare de răpire</span></div>
+    <div class="problem-chip"><span class="ic">⚖️</span><span data-lang="en">False accusations</span><span data-lang="es">Falsas acusaciones</span><span data-lang="de">Falsche Beschuldigungen</span><span data-lang="ro">Acuzații false</span></div>
+    <div class="problem-chip"><span class="ic">😤</span><span data-lang="en">Harassment</span><span data-lang="es">Acoso</span><span data-lang="de">Belästigung</span><span data-lang="ro">Hărțuire</span></div>
+    <div class="problem-chip"><span class="ic">🗡️</span><span data-lang="en">Weapon threats</span><span data-lang="es">Amenazas con armas</span><span data-lang="de">Waffendrohungen</span><span data-lang="ro">Amenințări cu arme</span></div>
+  </div>
+</div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="alt-bg reveal" id="how">
+<div class="container">
+  <div class="section-label">
+    <span data-lang="en">How It Works</span><span data-lang="es">Cómo Funciona</span><span data-lang="de">Wie Es Funktioniert</span><span data-lang="ro">Cum Funcționează</span>
+  </div>
+  <h2 class="section-title">
+    <span data-lang="en">A hidden button. Three press patterns. Instant response.</span>
+    <span data-lang="es">Un botón oculto. Tres patrones de pulsación. Respuesta inmediata.</span>
+    <span data-lang="de">Ein versteckter Knopf. Drei Druckmuster. Sofortige Reaktion.</span>
+    <span data-lang="ro">Un buton ascuns. Trei tipare de apăsare. Răspuns imediat.</span>
+  </h2>
+  <p class="section-body">
+    <span data-lang="en">A small BLE wireless button — hidden under the dash, near the gear selector, in the door panel — anywhere you know, anywhere a passenger won't look. No screen to unlock. No app to find.</span>
+    <span data-lang="es">Un pequeño botón inalámbrico BLE — oculto bajo el salpicadero, cerca del selector de marchas, en el panel de la puerta — donde tú sabes, donde un pasajero no mirará. Sin pantalla que desbloquear. Sin app que buscar.</span>
+    <span data-lang="de">Ein kleiner kabelloser BLE-Knopf — versteckt unter dem Armaturenbrett, nahe dem Gangschalter, in der Türverkleidung — wo du es weißt, wo ein Fahrgast nicht nachschaut. Kein Bildschirm zu entsperren. Keine App zu suchen.</span>
+    <span data-lang="ro">Un mic buton wireless BLE — ascuns sub bord, lângă selector, în panoul ușii — unde știi tu, unde un pasager nu se uită. Niciun ecran de deblocat. Nicio aplicație de găsit.</span>
+  </p>
+  <div class="mode-cards">
+    <div class="mode-card">
+      <div class="mode-label"><span data-lang="en">Single press</span><span data-lang="es">Un toque</span><span data-lang="de">Einmaliger Druck</span><span data-lang="ro">O apăsare</span></div>
+      <div class="mode-title">
+        <span data-lang="en">👆 Nothing — by design</span><span data-lang="es">👆 Nada — por diseño</span><span data-lang="de">👆 Nichts — bewusst so</span><span data-lang="ro">👆 Nimic — intenționat</span>
+      </div>
+      <div class="mode-desc">
+        <span data-lang="en">Accidental brushes from clothing, vibration, or cleaning trigger nothing. Anti-false-alarm by default.</span>
+        <span data-lang="es">Los toques accidentales de la ropa, vibración o limpieza no activan nada. Contra falsas alarmas por defecto.</span>
+        <span data-lang="de">Versehentliches Berühren durch Kleidung, Vibration oder Reinigung löst nichts aus. Standardmäßig falschalarmsicher.</span>
+        <span data-lang="ro">Atingerile accidentale din haine, vibrații sau curățare nu declanșează nimic. Anti-alarmă falsă implicit.</span>
+      </div>
+    </div>
+    <div class="mode-card silent">
+      <div class="mode-label"><span data-lang="en">Double press — SILENT mode</span><span data-lang="es">Doble toque — modo SILENCIOSO</span><span data-lang="de">Doppeldruck — STILLER Modus</span><span data-lang="ro">Dublu apăsat — mod SILENȚIOS</span></div>
+      <div class="mode-title">
+        <span data-lang="en">✌️ Covert emergency — passenger unaware</span>
+        <span data-lang="es">✌️ Emergencia encubierta — el pasajero no se entera</span>
+        <span data-lang="de">✌️ Verdeckter Notruf — Fahrgast merkt nichts</span>
+        <span data-lang="ro">✌️ Urgență secretă — pasagerul nu știe</span>
+      </div>
+      <div class="mode-desc">
+        <span data-lang="en">For kidnapping, hostage situations, or when drawing attention increases danger. No sound, no light, no sign anything happened.</span>
+        <span data-lang="es">Para secuestros, situaciones de rehén, o cuando llamar la atención aumenta el peligro. Sin sonido, sin luz, sin señal de que algo ocurrió.</span>
+        <span data-lang="de">Für Entführungen, Geiselnahmen oder wenn Aufmerksamkeit die Gefahr erhöht. Kein Ton, kein Licht, kein Zeichen.</span>
+        <span data-lang="ro">Pentru răpiri, situații de ostatic sau când a atrage atenția crește pericolul. Niciun sunet, nicio lumină, niciun semn.</span>
+      </div>
+      <div class="mode-chips">
+        <span class="mode-chip"><span data-lang="en">📹 All cameras ON</span><span data-lang="es">📹 Cámaras encendidas</span><span data-lang="de">📹 Alle Kameras AN</span><span data-lang="ro">📹 Toate camerele pornite</span></span>
+        <span class="mode-chip"><span data-lang="en">📍 Live GPS</span><span data-lang="es">📍 GPS en vivo</span><span data-lang="de">📍 Live-GPS</span><span data-lang="ro">📍 GPS live</span></span>
+        <span class="mode-chip"><span data-lang="en">☁️ Cloud upload</span><span data-lang="es">☁️ Subida a nube</span><span data-lang="de">☁️ Cloud-Upload</span><span data-lang="ro">☁️ Upload cloud</span></span>
+        <span class="mode-chip"><span data-lang="en">🔔 Contacts alerted</span><span data-lang="es">🔔 Contactos alertados</span><span data-lang="de">🔔 Kontakte benachrichtigt</span><span data-lang="ro">🔔 Contacte alertate</span></span>
+      </div>
+    </div>
+    <div class="mode-card loud">
+      <div class="mode-label"><span data-lang="en">Triple press — LOUD mode</span><span data-lang="es">Triple toque — modo RUIDOSO</span><span data-lang="de">Dreifachdruck — LAUTER Modus</span><span data-lang="ro">Triplu apăsat — mod SONOR</span></div>
+      <div class="mode-title">
+        <span data-lang="en">🚨 Active assault — maximum deterrence</span>
+        <span data-lang="es">🚨 Ataque activo — disuasión máxima</span>
+        <span data-lang="de">🚨 Aktiver Angriff — maximale Abschreckung</span>
+        <span data-lang="ro">🚨 Atac activ — descurajare maximă</span>
+      </div>
+      <div class="mode-desc">
+        <span data-lang="en">For robbery, carjacking, or violent attack in progress. Loud siren, flashing hazard lights, full recording, and immediate alert to contacts and monitoring center.</span>
+        <span data-lang="es">Para robo, carjacking o ataque violento en curso. Sirena fuerte, luces de emergencia parpadeantes, grabación completa y alerta inmediata a contactos y central.</span>
+        <span data-lang="de">Bei Raub, Carjacking oder laufendem Angriff. Laute Sirene, blinkende Warnleuchten, Vollaufzeichnung und sofortige Benachrichtigung.</span>
+        <span data-lang="ro">Pentru jaf, furt auto sau atac violent în curs. Sirenă puternică, lumini de avarie, înregistrare completă și alertă imediată la contacte și dispecerat.</span>
+      </div>
+      <div class="mode-chips">
+        <span class="mode-chip"><span data-lang="en">📢 Loud siren</span><span data-lang="es">📢 Sirena fuerte</span><span data-lang="de">📢 Laute Sirene</span><span data-lang="ro">📢 Sirenă puternică</span></span>
+        <span class="mode-chip"><span data-lang="en">⚡ Hazard lights</span><span data-lang="es">⚡ Luces emergencia</span><span data-lang="de">⚡ Warnleuchten</span><span data-lang="ro">⚡ Lumini avarie</span></span>
+        <span class="mode-chip"><span data-lang="en">📡 Live stream</span><span data-lang="es">📡 Streaming en vivo</span><span data-lang="de">📡 Livestream</span><span data-lang="ro">📡 Streaming live</span></span>
+        <span class="mode-chip"><span data-lang="en">🆘 Dispatch alerted</span><span data-lang="es">🆘 Central alertada</span><span data-lang="de">🆘 Leitstelle alarmiert</span><span data-lang="ro">🆘 Dispecerat alertat</span></span>
+      </div>
+    </div>
+    <div class="mode-card hold">
+      <div class="mode-label"><span data-lang="en">Hold 3 sec — fallback trigger</span><span data-lang="es">Mantener 3 seg — activación de emergencia</span><span data-lang="de">3 Sek. halten — Notfall-Auslöser</span><span data-lang="ro">Ținut 3 sec — declanșare de rezervă</span></div>
+      <div class="mode-title">
+        <span data-lang="en">✊ Can't do rapid presses? Hold instead.</span>
+        <span data-lang="es">✊ ¿No puedes hacer pulsaciones rápidas? Mantén pulsado.</span>
+        <span data-lang="de">✊ Schnelles Drücken nicht möglich? Einfach halten.</span>
+        <span data-lang="ro">✊ Nu poți apăsa rapid? Ține apăsat în schimb.</span>
+      </div>
+      <div class="mode-desc">
+        <span data-lang="en">If you're restrained, injured, or stress has killed your fine motor control — hold the button for 3 seconds. In the app settings you pre-configure which mode it activates: <strong>silent</strong> (same as double press, no sound) or <strong>loud</strong> (same as triple press, siren + lights). One decision made calmly in advance; one held press in the moment.</span>
+        <span data-lang="es">Si estás inmovilizado, herido o el estrés impide hacer pulsaciones precisas — mantén el botón 3 segundos. En la app configuras con anticipación qué modo activa: <strong>silencioso</strong> (igual que doble pulsación, sin sonido) o <strong>ruidoso</strong> (igual que triple pulsación, sirena + luces). Una decisión tomada en calma; una sola presión prolongada en el momento.</span>
+        <span data-lang="de">Wenn du festgehalten, verletzt bist oder der Stress die Feinmotorik blockiert — Knopf 3 Sekunden halten. In der App legst du vorab fest, welcher Modus ausgelöst wird: <strong>still</strong> (wie Doppeldruck, kein Ton) oder <strong>laut</strong> (wie Dreifachdruck, Sirene + Lichter). Eine ruhige Entscheidung im Voraus; ein gehaltener Druck im Notfall.</span>
+        <span data-lang="ro">Dacă ești imobilizat, rănit sau stresul blochează motricitatea fină — ține butonul apăsat 3 secunde. În aplicație configurezi dinainte ce mod activează: <strong>silențios</strong> (la fel ca dublu apăsat, fără sunet) sau <strong>sonor</strong> (la fel ca triplu apăsat, sirenă + lumini). O decizie luată calm în avans; o singură apăsare lungă în momentul critic.</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- RESPONSE CHAIN -->
+<section class="reveal">
+<div class="container">
+  <div class="section-label">
+    <span data-lang="en">What Happens Next</span><span data-lang="es">Qué Ocurre Después</span><span data-lang="de">Was Dann Passiert</span><span data-lang="ro">Ce Se Întâmplă Apoi</span>
+  </div>
+  <h2 class="section-title">
+    <span data-lang="en">From button press to police — automatically.</span>
+    <span data-lang="es">Del botón a la policía — automáticamente.</span>
+    <span data-lang="de">Vom Tastendruck zur Polizei — automatisch.</span>
+    <span data-lang="ro">De la buton la poliție — automat.</span>
+  </h2>
+  <div class="chain">
+    <div class="chain-step">
+      <div class="chain-num">1</div>
+      <div class="chain-content">
+        <div class="chain-title"><span data-lang="en">Button pressed</span><span data-lang="es">Botón activado</span><span data-lang="de">Taste gedrückt</span><span data-lang="ro">Buton apăsat</span></div>
+        <div class="chain-desc"><span data-lang="en">BLE signal reaches your phone app in under 1 second. No unlock required.</span><span data-lang="es">La señal BLE llega a tu app en menos de 1 segundo. Sin desbloqueo.</span><span data-lang="de">BLE-Signal erreicht die App in unter 1 Sekunde. Kein Entsperren nötig.</span><span data-lang="ro">Semnalul BLE ajunge la aplicație în sub 1 secundă. Fără deblocare.</span></div>
+      </div>
+    </div>
+    <div class="chain-step">
+      <div class="chain-num">2</div>
+      <div class="chain-content">
+        <div class="chain-title"><span data-lang="en">Pre-buffer saved</span><span data-lang="es">Pre-buffer guardado</span><span data-lang="de">Pre-Buffer gespeichert</span><span data-lang="ro">Pre-buffer salvat</span></div>
+        <div class="chain-desc"><span data-lang="en">The last 30 seconds of audio/video — the escalation before the incident — is captured automatically. This is what police and lawyers need most.</span><span data-lang="es">Los últimos 30 segundos de audio/vídeo — la escalada antes del incidente — se capturan automáticamente. Eso es lo que más necesitan policías y abogados.</span><span data-lang="de">Die letzten 30 Sekunden Audio/Video — die Eskalation vor dem Vorfall — werden automatisch gespeichert.</span><span data-lang="ro">Ultimele 30 de secunde de audio/video — escaladarea dinaintea incidentului — sunt capturate automat.</span></div>
+      </div>
+    </div>
+    <div class="chain-step">
+      <div class="chain-num">3</div>
+      <div class="chain-content">
+        <div class="chain-title"><span data-lang="en">Live GPS + stream to cloud</span><span data-lang="es">GPS en vivo + stream a la nube</span><span data-lang="de">Live-GPS + Stream in die Cloud</span><span data-lang="ro">GPS live + stream în cloud</span></div>
+        <div class="chain-desc"><span data-lang="en">Your location, all camera feeds, and audio stream to encrypted cloud storage and to your trusted contacts simultaneously.</span><span data-lang="es">Tu ubicación, todas las cámaras y el audio se envían a almacenamiento cifrado en la nube y a tus contactos de confianza simultáneamente.</span><span data-lang="de">Dein Standort, alle Kamerafeeds und Audio werden gleichzeitig verschlüsselt in die Cloud und an deine Vertrauenskontakte gestreamt.</span><span data-lang="ro">Locația ta, toate camerele și audio sunt transmise simultan în cloud criptat și la contactele de încredere.</span></div>
+      </div>
+    </div>
+    <div class="chain-step">
+      <div class="chain-num">4</div>
+      <div class="chain-content">
+        <div class="chain-title"><span data-lang="en">Dispatch operator receives alert (Pro)</span><span data-lang="es">Operador de central recibe la alerta (Pro)</span><span data-lang="de">Leitstellenoperator erhält Alarm (Pro)</span><span data-lang="ro">Operatorul dispeceratului primește alerta (Pro)</span></div>
+        <div class="chain-desc"><span data-lang="en">A licensed partner dispatch center sees your location, live stream, and driver profile. A human operator assesses the situation — avoiding false emergency calls.</span><span data-lang="es">Una central asociada con licencia ve tu ubicación, stream en vivo y perfil. Un operador humano evalúa la situación — evitando falsas llamadas de emergencia.</span><span data-lang="de">Eine lizenzierte Partner-Leitstelle sieht Standort, Livestream und Fahrerprofil. Ein Mensch bewertet die Lage — vermeidet Fehlalarme.</span><span data-lang="ro">Un dispecerat partener autorizat vede locația, streaming live și profilul șoferului. Un operator uman evaluează situația — evitând apelurile false.</span></div>
+      </div>
+    </div>
+    <div class="chain-step">
+      <div class="chain-num">5</div>
+      <div class="chain-content">
+        <div class="chain-title"><span data-lang="en">Emergency services called with full context</span><span data-lang="es">Servicios de emergencia con contexto completo</span><span data-lang="de">Notfall mit vollem Kontext gemeldet</span><span data-lang="ro">Servicii de urgență apelate cu context complet</span></div>
+        <div class="chain-desc"><span data-lang="en">The operator calls 112 with your exact GPS coordinates, vehicle info, and a description of the incident — not just "a driver pressed a button."</span><span data-lang="es">El operador llama al 112 con tus coordenadas exactas, datos del vehículo y descripción del incidente — no solo "un conductor pulsó un botón."</span><span data-lang="de">Der Operator ruft 112 mit genauen GPS-Koordinaten, Fahrzeugdaten und Vorfallbeschreibung an.</span><span data-lang="ro">Operatorul sună la 112 cu coordonatele GPS exacte, datele vehiculului și descrierea incidentului.</span></div>
+      </div>
+    </div>
+    <div class="chain-step">
+      <div class="chain-num">6</div>
+      <div class="chain-content">
+        <div class="chain-title"><span data-lang="en">Evidence package generated</span><span data-lang="es">Paquete de evidencia generado</span><span data-lang="de">Beweispaket erstellt</span><span data-lang="ro">Pachet de dovezi generat</span></div>
+        <div class="chain-desc"><span data-lang="en">After the incident: a sealed, timestamped archive of all video, audio, GPS logs, and metadata — ready for police reports, insurance claims, or legal defense.</span><span data-lang="es">Tras el incidente: un archivo sellado con fecha/hora de todo el vídeo, audio, GPS y metadatos — listo para denuncias, seguros o defensa legal.</span><span data-lang="de">Nach dem Vorfall: ein versiegeltes Archiv aller Video-, Audio-, GPS- und Metadaten — bereit für Polizei, Versicherung oder rechtliche Verteidigung.</span><span data-lang="ro">După incident: o arhivă sigilată cu marcaj temporal cu tot video, audio, GPS și metadate — gata pentru poliție, asigurări sau apărare juridică.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- KEY FEATURES -->
+<section class="alt-bg reveal">
+<div class="container">
+  <div class="section-label">
+    <span data-lang="en">Key Features</span><span data-lang="es">Características Clave</span><span data-lang="de">Hauptmerkmale</span><span data-lang="ro">Caracteristici Cheie</span>
+  </div>
+  <h2 class="section-title">
+    <span data-lang="en">Built for extreme stress. Works when it matters.</span>
+    <span data-lang="es">Diseñado para el estrés extremo. Funciona cuando importa.</span>
+    <span data-lang="de">Entwickelt für extremen Stress. Funktioniert wenn es darauf ankommt.</span>
+    <span data-lang="ro">Construit pentru stres extrem. Funcționează când contează.</span>
+  </h2>
+  <div class="features-grid">
+    <div class="feat-card">
+      <div class="feat-icon">🕵️</div>
+      <div class="feat-title"><span data-lang="en">Hidden placement</span><span data-lang="es">Colocación oculta</span><span data-lang="de">Versteckte Platzierung</span><span data-lang="ro">Plasare ascunsă</span></div>
+      <div class="feat-desc"><span data-lang="en">Adhesive, magnetic, clip, or velcro. Anywhere in the vehicle, relocatable at any time. Trunk coverage possible with additional buttons.</span><span data-lang="es">Adhesivo, magnético, clip o velcro. En cualquier lugar del vehículo, reubicable en cualquier momento. Cobertura en el maletero con botones adicionales.</span><span data-lang="de">Kleber, Magnet, Clip oder Klett. Überall im Fahrzeug, jederzeit versetzbar.</span><span data-lang="ro">Adeziv, magnetic, clip sau velcro. Oriunde în vehicul, repoziționabil oricând. Acoperire portbagaj cu butoane suplimentare.</span></div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">⏪</div>
+      <div class="feat-title"><span data-lang="en">30s pre-buffer</span><span data-lang="es">Pre-buffer de 30s</span><span data-lang="de">30s Vorpuffer</span><span data-lang="ro">Pre-buffer 30s</span></div>
+      <div class="feat-desc"><span data-lang="en">The system always stores the last 30 seconds. The moment you press, what happened before is already saved — threats, verbal escalation, initial aggression.</span><span data-lang="es">El sistema siempre guarda los últimos 30 segundos. Al pulsar, lo que pasó antes ya está guardado.</span><span data-lang="de">Das System speichert stets die letzten 30 Sekunden. Beim Drücken ist das Vorher bereits gesichert.</span><span data-lang="ro">Sistemul stochează mereu ultimele 30 de secunde. La apăsare, ce s-a întâmplat înainte este deja salvat.</span></div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">⚖️</div>
+      <div class="feat-title"><span data-lang="en">False accusation shield</span><span data-lang="es">Escudo contra falsas acusaciones</span><span data-lang="de">Schutz vor Falschaussagen</span><span data-lang="ro">Scut împotriva acuzațiilor false</span></div>
+      <div class="feat-desc"><span data-lang="en">A passenger claims something that didn't happen? Your sealed evidence package — video, audio, GPS — is your defense. Always on, not just in emergencies.</span><span data-lang="es">¿Un pasajero alega algo que no ocurrió? Tu paquete de evidencia sellada es tu defensa. Siempre activo, no solo en emergencias.</span><span data-lang="de">Behauptet ein Fahrgast etwas, das nicht passierte? Dein versiegeltes Beweispaket ist deine Verteidigung.</span><span data-lang="ro">Un pasager susține ceva ce nu s-a întâmplat? Pachetul tău de dovezi sigilate este apărarea ta.</span></div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🧪</div>
+      <div class="feat-title"><span data-lang="en">Test mode</span><span data-lang="es">Modo prueba</span><span data-lang="de">Testmodus</span><span data-lang="ro">Mod test</span></div>
+      <div class="feat-desc"><span data-lang="en">Practice until activating is muscle memory. Test mode lets you rehearse every scenario without triggering real alerts.</span><span data-lang="es">Practica hasta que la activación sea memoria muscular. El modo prueba te permite ensayar sin alertas reales.</span><span data-lang="de">Übe, bis die Aktivierung Muskelgedächtnis ist. Testmodus ermöglicht Proben ohne echte Alarme.</span><span data-lang="ro">Exersează până activarea devine memorie musculară. Modul test permite simularea fără alerte reale.</span></div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🔒</div>
+      <div class="feat-title"><span data-lang="en">Encrypted cloud</span><span data-lang="es">Nube cifrada</span><span data-lang="de">Verschlüsselte Cloud</span><span data-lang="ro">Cloud criptat</span></div>
+      <div class="feat-desc"><span data-lang="en">All recordings uploaded immediately. Even if your phone is destroyed or stolen, the evidence is already secured in the cloud.</span><span data-lang="es">Todas las grabaciones se suben de inmediato. Aunque destruyan o roben tu teléfono, la evidencia ya está segura.</span><span data-lang="de">Alle Aufnahmen sofort hochgeladen. Auch wenn dein Handy zerstört wird — die Beweise sind gesichert.</span><span data-lang="ro">Toate înregistrările urcate imediat. Chiar dacă telefonul e distrus, dovezile sunt deja în siguranță.</span></div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">📞</div>
+      <div class="feat-title"><span data-lang="en">Fake call feature</span><span data-lang="es">Llamada falsa</span><span data-lang="de">Anruf-Simulation</span><span data-lang="ro">Apel fals</span></div>
+      <div class="feat-desc"><span data-lang="en">A simulated incoming call gives you a natural excuse to stop, change route, or end a ride early — before a situation escalates.</span><span data-lang="es">Una llamada entrante simulada te da una excusa natural para parar, cambiar de ruta o terminar el viaje antes de que la situación escale.</span><span data-lang="de">Ein simulierter Anruf gibt dir einen natürlichen Vorwand zum Anhalten oder zur Routenänderung.</span><span data-lang="ro">Un apel simulat îți oferă un pretext natural pentru a opri, schimba ruta sau termina cursa devreme.</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- COMPETITORS -->
+<section class="reveal">
+<div class="container">
+  <div class="section-label">
+    <span data-lang="en">vs. Current Solutions</span><span data-lang="es">vs. Soluciones Actuales</span><span data-lang="de">vs. Aktuelle Lösungen</span><span data-lang="ro">vs. Soluții Actuale</span>
+  </div>
+  <h2 class="section-title">
+    <span data-lang="en">Why existing tools fall short.</span>
+    <span data-lang="es">Por qué las herramientas actuales no son suficientes.</span>
+    <span data-lang="de">Warum bestehende Tools nicht ausreichen.</span>
+    <span data-lang="ro">De ce instrumentele existente nu sunt suficiente.</span>
+  </h2>
+  <div class="comp-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th><span data-lang="en">Feature</span><span data-lang="es">Función</span><span data-lang="de">Funktion</span><span data-lang="ro">Funcție</span></th>
+          <th>Shieldly</th>
+          <th><span data-lang="en">Dashcam</span><span data-lang="es">Dashcam</span><span data-lang="de">Dashcam</span><span data-lang="ro">Dashcam</span></th>
+          <th><span data-lang="en">Uber/Bolt SOS</span><span data-lang="es">SOS Uber/Bolt</span><span data-lang="de">Uber/Bolt SOS</span><span data-lang="ro">SOS Uber/Bolt</span></th>
+          <th><span data-lang="en">Phone app (bSafe etc)</span><span data-lang="es">App móvil</span><span data-lang="de">Handy-App</span><span data-lang="ro">Aplicație mobilă</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span data-lang="en">Physical hidden button</span><span data-lang="es">Botón físico oculto</span><span data-lang="de">Versteckter physischer Knopf</span><span data-lang="ro">Buton fizic ascuns</span></td>
+          <td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td>
+        </tr>
+        <tr>
+          <td><span data-lang="en">No screen unlock needed</span><span data-lang="es">Sin desbloqueo</span><span data-lang="de">Kein Entsperren nötig</span><span data-lang="ro">Fără deblocare ecran</span></td>
+          <td class="yes">✓</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td>
+        </tr>
+        <tr>
+          <td><span data-lang="en">Silent covert mode</span><span data-lang="es">Modo silencioso encubierto</span><span data-lang="de">Stiller verdeckter Modus</span><span data-lang="ro">Mod silențios secret</span></td>
+          <td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="partial">~</td>
+        </tr>
+        <tr>
+          <td><span data-lang="en">30s pre-buffer recording</span><span data-lang="es">Pre-buffer 30s</span><span data-lang="de">30s Vorpuffer</span><span data-lang="ro">Pre-buffer 30s</span></td>
+          <td class="yes">✓</td><td class="partial">~</td><td class="no">✗</td><td class="no">✗</td>
+        </tr>
+        <tr>
+          <td><span data-lang="en">Live GPS tracking</span><span data-lang="es">GPS en vivo</span><span data-lang="de">Live-GPS</span><span data-lang="ro">GPS live</span></td>
+          <td class="yes">✓</td><td class="no">✗</td><td class="partial">~</td><td class="yes">✓</td>
+        </tr>
+        <tr>
+          <td><span data-lang="en">Human dispatch center</span><span data-lang="es">Central humana</span><span data-lang="de">Menschliche Leitstelle</span><span data-lang="ro">Dispecerat uman</span></td>
+          <td class="yes">✓ <span style="font-size:.72rem;opacity:.7">(Pro)</span></td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td>
+        </tr>
+        <tr>
+          <td><span data-lang="en">Sealed evidence package</span><span data-lang="es">Paquete de evidencia</span><span data-lang="de">Beweispaket</span><span data-lang="ro">Pachet de dovezi</span></td>
+          <td class="yes">✓</td><td class="partial">~</td><td class="no">✗</td><td class="no">✗</td>
+        </tr>
+        <tr>
+          <td><span data-lang="en">False accusation protection</span><span data-lang="es">Protección acusaciones falsas</span><span data-lang="de">Schutz vor Falschaussagen</span><span data-lang="ro">Protecție acuzații false</span></td>
+          <td class="yes">✓</td><td class="partial">~</td><td class="no">✗</td><td class="no">✗</td>
+        </tr>
+        <tr>
+          <td><span data-lang="en">Works if phone is grabbed</span><span data-lang="es">Funciona si te roban el móvil</span><span data-lang="de">Funktioniert wenn Handy weggenommen</span><span data-lang="ro">Funcționează dacă telefonul e furat</span></td>
+          <td class="yes">✓</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:.72rem;color:var(--text-m);margin-top:.5rem">✓ <span data-lang="en">Full</span><span data-lang="es">Completo</span><span data-lang="de">Voll</span><span data-lang="ro">Complet</span> &nbsp;~ <span data-lang="en">Partial</span><span data-lang="es">Parcial</span><span data-lang="de">Teilweise</span><span data-lang="ro">Parțial</span> &nbsp;✗ <span data-lang="en">None</span><span data-lang="es">No</span><span data-lang="de">Keine</span><span data-lang="ro">Nu</span></p>
+</div>
+</section>
+
+<!-- PRICING -->
+<section class="alt-bg reveal">
+<div class="container">
+  <div class="section-label">
+    <span data-lang="en">Pricing</span><span data-lang="es">Precios</span><span data-lang="de">Preise</span><span data-lang="ro">Prețuri</span>
+  </div>
+  <h2 class="section-title">
+    <span data-lang="en">Straightforward. No hidden fees.</span>
+    <span data-lang="es">Transparente. Sin cargos ocultos.</span>
+    <span data-lang="de">Transparent. Keine versteckten Gebühren.</span>
+    <span data-lang="ro">Transparent. Fără taxe ascunse.</span>
+  </h2>
+  <div class="tiers">
+    <div class="tier-card">
+      <div class="tier-name">Basic</div>
+      <div class="tier-price">€4.99<span>/mo</span></div>
+      <div class="tier-desc"><span data-lang="en">For independent drivers who want a safety net</span><span data-lang="es">Para conductores independientes que quieren una red de seguridad</span><span data-lang="de">Für selbstständige Fahrer, die ein Sicherheitsnetz wollen</span><span data-lang="ro">Pentru șoferi independenți care vor o plasă de siguranță</span></div>
+      <ul class="tier-features">
+        <li><span data-lang="en">Panic button app — <em style="color:var(--text-m);font-style:normal">hardware purchased separately</em></span><span data-lang="es">App botón de pánico — <em style="color:var(--text-m);font-style:normal">hardware comprado por separado</em></span><span data-lang="de">Paniktasten-App — <em style="color:var(--text-m);font-style:normal">Hardware separat kaufen</em></span><span data-lang="ro">Aplicație buton panică — <em style="color:var(--text-m);font-style:normal">hardware cumpărat separat</em></span></li>
+        <li><span data-lang="en">Silent + loud modes <span style="color:var(--accent);font-size:.8em">(*)</span></span><span data-lang="es">Modos silencioso + sonoro <span style="color:var(--accent);font-size:.8em">(*)</span></span><span data-lang="de">Stiller + lauter Modus <span style="color:var(--accent);font-size:.8em">(*)</span></span><span data-lang="ro">Moduri silențios + sonor <span style="color:var(--accent);font-size:.8em">(*)</span></span></li>
+        <li><span data-lang="en">Local recording</span><span data-lang="es">Grabación local</span><span data-lang="de">Lokale Aufzeichnung</span><span data-lang="ro">Înregistrare locală</span></li>
+        <li><span data-lang="en">Trusted contact notifications (SMS)</span><span data-lang="es">Notificaciones a contactos de confianza</span><span data-lang="de">Vertrauenskontakt-Benachrichtigungen</span><span data-lang="ro">Notificări contacte de încredere (SMS)</span></li>
+        <li><span data-lang="en">Test mode</span><span data-lang="es">Modo prueba</span><span data-lang="de">Testmodus</span><span data-lang="ro">Mod test</span></li>
+      </ul>
+      <p style="font-size:.75rem;color:var(--text-m);margin-top:.65rem;line-height:1.5">
+        <span style="color:var(--accent)">(*)</span>
+        <span data-lang="en">Loud mode = phone speaker siren. Car alarm mode (horn + strobe lights) requires the <strong>Relay Module</strong>.</span>
+        <span data-lang="es">Modo sonoro = sirena del altavoz del teléfono. El modo alarma de coche (claxon + luces estroboscópicas) requiere el <strong>Módulo Relé</strong>.</span>
+        <span data-lang="de">Lauter Modus = Handy-Lautsprecher-Sirene. Fahrzeugalarm-Modus (Hupe + Stroboskop) erfordert das <strong>Relais-Modul</strong>.</span>
+        <span data-lang="ro">Mod sonor = sirenă difuzor telefon. Modul alarmă auto (claxon + lumini strobo) necesită <strong>Modulul Releu</strong>.</span>
+      </p>
+    </div>
+    <div class="tier-card featured">
+      <div class="tier-badge"><span data-lang="en">Most popular</span><span data-lang="es">Más popular</span><span data-lang="de">Beliebteste</span><span data-lang="ro">Cel mai popular</span></div>
+      <div class="tier-name">Plus</div>
+      <div class="tier-price">€9.99<span>/mo</span></div>
+      <div class="tier-desc"><span data-lang="en">Cloud protection + legal-grade evidence</span><span data-lang="es">Protección en nube + evidencia de grado legal</span><span data-lang="de">Cloud-Schutz + rechtssichere Beweise</span><span data-lang="ro">Protecție cloud + dovezi de calitate juridică</span></div>
+      <ul class="tier-features">
+        <li><span data-lang="en">Everything in Basic</span><span data-lang="es">Todo lo de Basic</span><span data-lang="de">Alles aus Basic</span><span data-lang="ro">Tot din Basic</span></li>
+        <li><span data-lang="en">30s pre-buffer recording</span><span data-lang="es">Pre-buffer de 30s</span><span data-lang="de">30s Vorpuffer</span><span data-lang="ro">Pre-buffer 30s</span></li>
+        <li><span data-lang="en">Encrypted cloud backup</span><span data-lang="es">Copia de seguridad cifrada en nube</span><span data-lang="de">Verschlüsseltes Cloud-Backup</span><span data-lang="ro">Backup cloud criptat</span></li>
+        <li><span data-lang="en">Live GPS tracking</span><span data-lang="es">GPS en vivo</span><span data-lang="de">Live-GPS-Tracking</span><span data-lang="ro">GPS live</span></li>
+        <li><span data-lang="en">Sealed evidence package</span><span data-lang="es">Paquete de evidencia sellada</span><span data-lang="de">Versiegeltes Beweispaket</span><span data-lang="ro">Pachet dovezi sigilat</span></li>
+        <li><span data-lang="en">Fake call feature</span><span data-lang="es">Llamada falsa</span><span data-lang="de">Anruf-Simulation</span><span data-lang="ro">Apel simulat</span></li>
+      </ul>
+    </div>
+    <div class="tier-card">
+      <div class="tier-name">Pro</div>
+      <div class="tier-price">€19.99<span>/mo</span></div>
+      <div class="tier-desc"><span data-lang="en">24/7 human monitoring + priority response</span><span data-lang="es">Monitorización humana 24/7 + respuesta prioritaria</span><span data-lang="de">24/7 menschliche Überwachung + Prioritätsreaktion</span><span data-lang="ro">Monitorizare umană 24/7 + răspuns prioritar</span></div>
+      <ul class="tier-features">
+        <li><span data-lang="en">Everything in Plus</span><span data-lang="es">Todo lo de Plus</span><span data-lang="de">Alles aus Plus</span><span data-lang="ro">Tot din Plus</span></li>
+        <li><span data-lang="en">Live video/audio streaming to dispatch center</span><span data-lang="es">Streaming en vivo a central de monitorización</span><span data-lang="de">Live-Stream zur Leitstelle</span><span data-lang="ro">Streaming live la dispecerat</span></li>
+        <li><span data-lang="en">Human operator assesses every alert</span><span data-lang="es">Operador humano evalúa cada alerta</span><span data-lang="de">Menschlicher Operator bewertet jeden Alarm</span><span data-lang="ro">Operator uman evaluează fiecare alertă</span></li>
+        <li><span data-lang="en">Operator calls 112 with full context</span><span data-lang="es">Operador llama al 112 con contexto completo</span><span data-lang="de">Operator ruft 112 mit vollem Kontext</span><span data-lang="ro">Operatorul sună 112 cu context complet</span></li>
+        <li><span data-lang="en">Priority police coordination</span><span data-lang="es">Coordinación policial prioritaria</span><span data-lang="de">Prioritäre Polizeikoordination</span><span data-lang="ro">Coordonare prioritară cu poliția</span></li>
+        <li><span data-lang="en">Founding members lock in this price forever</span><span data-lang="es">Miembros fundadores mantienen este precio</span><span data-lang="de">Gründungsmitglieder behalten diesen Preis</span><span data-lang="ro">Membrii fondatori blochează acest preț permanent</span></li>
+      </ul>
+    </div>
+    <div class="tier-card">
+      <div class="tier-name">Fleet</div>
+      <div class="tier-price">€12<span>/vehicle/mo</span></div>
+      <div class="tier-desc"><span data-lang="en">For taxi companies, delivery fleets, security firms</span><span data-lang="es">Para empresas de taxi, flotas de reparto, seguridad</span><span data-lang="de">Für Taxiunternehmen, Lieferflotten, Sicherheitsfirmen</span><span data-lang="ro">Pentru firme de taxi, flote de curierat, securitate</span></div>
+      <ul class="tier-features">
+        <li><span data-lang="en">Min. 5 vehicles</span><span data-lang="es">Mínimo 5 vehículos</span><span data-lang="de">Mind. 5 Fahrzeuge</span><span data-lang="ro">Min. 5 vehicule</span></li>
+        <li><span data-lang="en">Central fleet dashboard</span><span data-lang="es">Panel de gestión de flota</span><span data-lang="de">Zentrales Flotten-Dashboard</span><span data-lang="ro">Tablou de bord flotă centralizat</span></li>
+        <li><span data-lang="en">All Pro features per vehicle</span><span data-lang="es">Todas las funciones Pro por vehículo</span><span data-lang="de">Alle Pro-Funktionen pro Fahrzeug</span><span data-lang="ro">Toate funcțiile Pro per vehicul</span></li>
+        <li><span data-lang="en">Incident analytics (dangerous routes/times)</span><span data-lang="es">Analíticas de incidentes (rutas/horas peligrosas)</span><span data-lang="de">Vorfallsanalyse (gefährliche Routen/Zeiten)</span><span data-lang="ro">Analitica incidentelor (rute/ore periculoase)</span></li>
+        <li><span data-lang="en">Dedicated account manager</span><span data-lang="es">Gestor de cuenta dedicado</span><span data-lang="de">Dedizierter Account-Manager</span><span data-lang="ro">Manager de cont dedicat</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="hardware-note">
+    <span data-lang="en">💡 <strong>Hardware summary:</strong> Basic = purchase separately. Plus = button + OBD reader included. Pro &amp; Fleet = all 4 devices included (button + webcam + OBD reader + relay module). <strong>Car alarm panic mode requires the Relay Module.</strong></span>
+    <span data-lang="es">💡 <strong>Resumen hardware:</strong> Basic = compra por separado. Plus = botón + lector OBD incluidos. Pro y Fleet = los 4 dispositivos incluidos. <strong>El modo pánico alarma de coche requiere el Módulo Relé.</strong></span>
+    <span data-lang="de">💡 <strong>Hardware-Übersicht:</strong> Basic = separat. Plus = Knopf + OBD-Lesegerät inklusive. Pro &amp; Fleet = alle 4 Geräte inklusive. <strong>Fahrzeugalarm-Modus erfordert das Relais-Modul.</strong></span>
+    <span data-lang="ro">💡 <strong>Sumar hardware:</strong> Basic = separat. Plus = buton + cititor OBD incluse. Pro și Fleet = toate 4 dispozitive incluse. <strong>Modul alarmă auto necesită Modulul Releu.</strong></span>
+  </div>
+</div>
+</section>
+
+<!-- HARDWARE -->
+<section id="hardware" class="reveal">
+<div class="container">
+  <div class="section-label">
+    <span data-lang="en">Hardware</span><span data-lang="es">Hardware</span><span data-lang="de">Hardware</span><span data-lang="ro">Hardware</span>
+  </div>
+  <h2 class="section-title">
+    <span data-lang="en">Three devices. One ecosystem.</span>
+    <span data-lang="es">Tres dispositivos. Un ecosistema.</span>
+    <span data-lang="de">Drei Geräte. Ein Ökosystem.</span>
+    <span data-lang="ro">Trei dispozitive. Un ecosistem.</span>
+  </h2>
+  <p class="section-body" style="margin-bottom:1.25rem">
+    <span data-lang="en">Each device works independently — or together as a complete protection system. Tap any device to see what it does and what it enables.</span>
+    <span data-lang="es">Cada dispositivo funciona de forma independiente — o juntos como un sistema de protección completo. Toca cualquiera para ver qué hace y qué activa.</span>
+    <span data-lang="de">Jedes Gerät funktioniert einzeln — oder zusammen als vollständiges Schutzsystem. Tippe für Details.</span>
+    <span data-lang="ro">Fiecare dispozitiv funcționează independent — sau împreună ca sistem complet de protecție. Atinge oricare pentru detalii.</span>
+  </p>
+
+  <div class="hw-cards">
+
+    <!-- BUTTON -->
+    <div class="hw-card" onclick="toggleHw('hw1')">
+      <div class="hw-header">
+        <div class="hw-icon">🔴</div>
+        <div class="hw-info">
+          <div class="hw-name"><span data-lang="en">Panic Button</span><span data-lang="es">Botón de Pánico</span><span data-lang="de">Paniktaste</span><span data-lang="ro">Buton de Panică</span></div>
+          <div class="hw-price-row">
+            <span class="hw-price">€29</span>
+            <span class="hw-incl"><span data-lang="en">included from Plus</span><span data-lang="es">incluido desde Plus</span><span data-lang="de">ab Plus inklusive</span><span data-lang="ro">inclus din Plus</span></span>
+          </div>
+        </div>
+        <div class="hw-chevron" id="hw1-chev">▼</div>
+      </div>
+      <div class="hw-body" id="hw1" style="display:none">
+        <p class="hw-desc"><span data-lang="en">Small wireless BLE button. Hidden anywhere in the vehicle — under the dash, behind the wheel, door panel, trunk. Adhesive, magnetic, clip or velcro mount. Relocate anytime. Additional buttons €25 each (for trunk, second position, etc).</span><span data-lang="es">Pequeño botón inalámbrico BLE. Oculto en cualquier lugar del vehículo. Montura adhesiva, magnética, clip o velcro. Reubicable en cualquier momento. Botones adicionales €25 c/u.</span><span data-lang="de">Kleiner kabelloser BLE-Knopf. Überall im Fahrzeug versteckt. Kleber, Magnet, Clip oder Klett. Jederzeit versetzbar. Zusätzliche Knöpfe je €25.</span><span data-lang="ro">Mic buton wireless BLE. Ascuns oriunde în vehicul. Montaj adeziv, magnetic, clip sau velcro. Repoziționabil oricând. Butoane suplimentare €25 fiecare.</span></p>
+        <div class="hw-enables-title"><span data-lang="en">✦ Enables</span><span data-lang="es">✦ Activa</span><span data-lang="de">✦ Ermöglicht</span><span data-lang="ro">✦ Activează</span></div>
+        <ul class="hw-enables">
+          <li><span data-lang="en">Silent covert mode (double press)</span><span data-lang="es">Modo silencioso encubierto (doble toque)</span><span data-lang="de">Stiller Modus (Doppeldruck)</span><span data-lang="ro">Mod silențios (dublu apăsat)</span></li>
+          <li><span data-lang="en">Loud deterrence mode (triple press)</span><span data-lang="es">Modo disuasión ruidosa (triple toque)</span><span data-lang="de">Lauter Abschreckungsmodus (Dreifachdruck)</span><span data-lang="ro">Mod sonor (triplu apăsat)</span></li>
+          <li><span data-lang="en">Fallback hold trigger (3 sec hold)</span><span data-lang="es">Activación de emergencia (mantener 3 seg)</span><span data-lang="de">Notfall-Halteauslöser (3 Sek. halten)</span><span data-lang="ro">Declanșare de rezervă (ținut 3 sec)</span></li>
+          <li><span data-lang="en">All recording + alert chains</span><span data-lang="es">Toda la grabación + cadenas de alerta</span><span data-lang="de">Alle Aufnahmen + Benachrichtigungsketten</span><span data-lang="ro">Toate înregistrările + lanțuri de alertă</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- WEBCAM -->
+    <div class="hw-card" onclick="toggleHw('hw2')">
+      <div class="hw-header">
+        <div class="hw-icon">📷</div>
+        <div class="hw-info">
+          <div class="hw-name"><span data-lang="en">Cabin Webcam + Mic</span><span data-lang="es">Webcam de Cabina + Micrófono</span><span data-lang="de">Kabinen-Webcam + Mikrofon</span><span data-lang="ro">Webcam Cabină + Microfon</span></div>
+          <div class="hw-price-row">
+            <span class="hw-price">€49</span>
+            <span class="hw-incl"><span data-lang="en">included from Pro · optional Basic/Plus</span><span data-lang="es">incluido desde Pro · opcional Basic/Plus</span><span data-lang="de">ab Pro inklusive · optional Basic/Plus</span><span data-lang="ro">inclus din Pro · opțional Basic/Plus</span></span>
+          </div>
+        </div>
+        <div class="hw-chevron" id="hw2-chev">▼</div>
+      </div>
+      <div class="hw-body" id="hw2" style="display:none">
+        <p class="hw-desc"><span data-lang="en">Small dedicated cabin camera with built-in microphone. Discreet, fixed mount. Captures the passenger area clearly for legal-grade evidence. Basic and Plus users can also link an existing dashcam or use their phone camera as fallback.</span><span data-lang="es">Pequeña cámara de cabina dedicada con micrófono integrado. Discreta, montaje fijo. Capta claramente el área del pasajero para evidencia de grado legal. Los usuarios Basic y Plus también pueden vincular una dashcam existente o usar la cámara del teléfono.</span><span data-lang="de">Kleine dedizierte Kabinenkamera mit eingebautem Mikrofon. Dezent, Festmontage. Erfasst den Fahrgastraum klar für rechtssichere Beweise. Basic/Plus-Nutzer können auch eine vorhandene Dashcam oder das Handy verwenden.</span><span data-lang="ro">Cameră mică dedicată pentru cabină cu microfon integrat. Discretă, montaj fix. Captează clar zona pasagerilor pentru dovezi de calitate juridică. Utilizatorii Basic și Plus pot conecta și o dashcam existentă sau camera telefonului.</span></p>
+        <div class="hw-enables-title"><span data-lang="en">✦ Enables</span><span data-lang="es">✦ Activa</span><span data-lang="de">✦ Ermöglicht</span><span data-lang="ro">✦ Activează</span></div>
+        <ul class="hw-enables">
+          <li><span data-lang="en">30s pre-buffer video + audio of the cabin</span><span data-lang="es">Pre-buffer 30s de vídeo + audio de cabina</span><span data-lang="de">30s Vorpuffer Video + Audio der Kabine</span><span data-lang="ro">Pre-buffer 30s video + audio cabină</span></li>
+          <li><span data-lang="en">Live cabin stream to dispatch center</span><span data-lang="es">Stream en vivo de cabina a central</span><span data-lang="de">Live-Kabinenstream zur Leitstelle</span><span data-lang="ro">Stream live cabină la dispecerat</span></li>
+          <li><span data-lang="en">Sealed video evidence of passenger behavior</span><span data-lang="es">Evidencia sellada del comportamiento del pasajero</span><span data-lang="de">Versiegelter Videobeweis des Fahrgastverhaltens</span><span data-lang="ro">Dovezi video sigilate ale comportamentului pasagerului</span></li>
+          <li><span data-lang="en">False accusation protection (always recording)</span><span data-lang="es">Protección contra falsas acusaciones (siempre grabando)</span><span data-lang="de">Schutz vor Falschaussagen (immer aufzeichnend)</span><span data-lang="ro">Protecție acuzații false (înregistrare continuă)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- OBD READER -->
+    <div class="hw-card" onclick="toggleHw('hw3')">
+      <div class="hw-header">
+        <div class="hw-icon">🔌</div>
+        <div class="hw-info">
+          <div class="hw-name"><span data-lang="en">OBD Reader</span><span data-lang="es">Lector OBD</span><span data-lang="de">OBD-Lesegerät</span><span data-lang="ro">Cititor OBD</span></div>
+          <div class="hw-price-row">
+            <span class="hw-price">€35</span>
+            <span class="hw-incl"><span data-lang="en">included from Plus · plug-in, self-install</span><span data-lang="es">incluido desde Plus · plug-in, autoinstalable</span><span data-lang="de">ab Plus inklusive · Plug-in, Selbsteinbau</span><span data-lang="ro">inclus din Plus · plug-in, auto-instalare</span></span>
+          </div>
+        </div>
+        <div class="hw-chevron" id="hw3-chev">▼</div>
+      </div>
+      <div class="hw-body" id="hw3" style="display:none">
+        <p class="hw-desc"><span data-lang="en">Plugs into the OBD-II port under your dashboard — takes 5 seconds, no tools, no electrician. Continuously reads vehicle state and sends data to the Shieldly app.</span><span data-lang="es">Se conecta al puerto OBD-II bajo el salpicadero — 5 segundos, sin herramientas ni electricista. Lee continuamente el estado del vehículo y envía datos a la app.</span><span data-lang="de">Steckt in den OBD-II-Anschluss unter dem Armaturenbrett — 5 Sekunden, kein Werkzeug, kein Elektriker. Liest kontinuierlich den Fahrzeugzustand.</span><span data-lang="ro">Se conectează la portul OBD-II de sub bord — 5 secunde, fără unelte, fără electrician. Citește continuu starea vehiculului.</span></p>
+        <div class="hw-enables-title"><span data-lang="en">✦ Enables</span><span data-lang="es">✦ Activa</span><span data-lang="de">✦ Ermöglicht</span><span data-lang="ro">✦ Activează</span></div>
+        <ul class="hw-enables">
+          <li>📍 <span data-lang="en"><strong>Speed + vehicle state stamped to evidence</strong> — was car moving? stopped? legally critical</span><span data-lang="es"><strong>Velocidad + estado del vehículo en la evidencia</strong> — ¿en movimiento? ¿parado? crítico legalmente</span><span data-lang="de"><strong>Geschwindigkeit + Fahrzeugzustand im Beweis</strong> — fuhr das Auto? Stand es? Rechtlich entscheidend</span><span data-lang="ro"><strong>Viteză + stare vehicul în dovezi</strong> — mergea mașina? era oprită? critic legal</span></li>
+          <li>💥 <span data-lang="en"><strong>Crash auto-trigger</strong> — sudden deceleration activates silent mode automatically, no button press needed</span><span data-lang="es"><strong>Auto-activación por impacto</strong> — desaceleración brusca activa el modo silencioso automáticamente</span><span data-lang="de"><strong>Crash-Auslöser</strong> — plötzliche Verzögerung aktiviert automatisch den stillen Modus</span><span data-lang="ro"><strong>Declanșare automată la impact</strong> — decelerare bruscă activează automat modul silențios</span></li>
+          <li>🗺️ <span data-lang="en"><strong>Route deviation alert</strong> — driver goes off expected route → contacts notified (kidnapping indicator)</span><span data-lang="es"><strong>Alerta de desvío de ruta</strong> — conductor se desvía → contactos notificados</span><span data-lang="de"><strong>Routenabweichungsalarm</strong> — Abweichung → Kontakte benachrichtigt</span><span data-lang="ro"><strong>Alertă deviere rută</strong> — șoferul se abate → contactele notificate</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- RELAY MODULE -->
+    <div class="hw-card hw-card-featured" onclick="toggleHw('hw4')">
+      <div class="hw-header">
+        <div class="hw-icon">⚡</div>
+        <div class="hw-info">
+          <div class="hw-name"><span data-lang="en">Relay Module</span><span data-lang="es">Módulo Relé</span><span data-lang="de">Relais-Modul</span><span data-lang="ro">Modul Releu</span></div>
+          <div class="hw-price-row">
+            <span class="hw-price">€59</span>
+            <span class="hw-incl"><span data-lang="en">included from Pro · installed by car electrician ~45min</span><span data-lang="es">incluido desde Pro · instalado por electricista ~45min</span><span data-lang="de">ab Pro inklusive · KFZ-Elektriker ~45min</span><span data-lang="ro">inclus din Pro · electrician auto ~45min</span></span>
+          </div>
+        </div>
+        <div class="hw-chevron" id="hw4-chev">▼</div>
+      </div>
+      <div class="hw-body" id="hw4" style="display:none">
+        <p class="hw-desc"><span data-lang="en">A BLE relay wired into the vehicle's horn, hazard light, and interior light circuits by a car electrician. This is the device that turns the car itself into an active deterrent during a panic event — making noise, flashing lights, and drawing witnesses from a distance.</span><span data-lang="es">Un relé BLE cableado en los circuitos del claxon, luces de emergencia e interiores por un electricista. Este dispositivo convierte el coche en un elemento disuasorio activo durante el pánico — haciendo ruido, destellando luces y atrayendo testigos.</span><span data-lang="de">Ein BLE-Relais, das von einem KFZ-Elektriker in die Hupe, Warnblinker und Innenbeleuchtung eingebaut wird. Dieses Gerät macht das Fahrzeug selbst zur aktiven Abschreckung — Lärm, Blitze, Zeugen anlocken.</span><span data-lang="ro">Un releu BLE cablat în circuitele claxonului, luminilor de avarie și luminilor interioare de un electrician auto. Acest dispozitiv transformă mașina în element de descurajare activ — zgomot, lumini, atrage martori.</span></p>
+        <div class="hw-enables-title">
+          <span data-lang="en">✦ Unlocks car alarm panic mode</span>
+          <span data-lang="es">✦ Desbloquea el modo pánico alarma de coche</span>
+          <span data-lang="de">✦ Schaltet Fahrzeugalarm-Panikmodus frei</span>
+          <span data-lang="ro">✦ Deblochează modul panică alarmă auto</span>
+        </div>
+        <ul class="hw-enables">
+          <li>🔊 <span data-lang="en"><strong>Loud car horn siren</strong> — continuous or pulsed, up to 110dB, heard from 200m</span><span data-lang="es"><strong>Sirena de claxon</strong> — continua o pulsada, hasta 110dB, audible a 200m</span><span data-lang="de"><strong>Laute Hupensirene</strong> — dauerhaft oder gepulst, bis 110dB, 200m hörbar</span><span data-lang="ro"><strong>Sirenă claxon puternică</strong> — continuă sau pulsată, până la 110dB, audibilă la 200m</span></li>
+          <li>🚨 <span data-lang="en"><strong>Strobe hazard lights</strong> — rapid flash pattern, visible from distance, unmistakably distress signal</span><span data-lang="es"><strong>Luces de emergencia estroboscópicas</strong> — destello rápido visible a distancia, señal de peligro inequívoca</span><span data-lang="de"><strong>Stroboskop-Warnblinker</strong> — schnelles Blitzmuster, weithin sichtbar</span><span data-lang="ro"><strong>Lumini de avarie strobo</strong> — clipire rapidă vizibilă de departe, semnal de pericol inconfundabil</span></li>
+          <li>💡 <span data-lang="en"><strong>Interior lights full on</strong> — floods cabin with light, makes attacker visible to passers-by</span><span data-lang="es"><strong>Luces interiores al máximo</strong> — ilumina cabina, hace visible al atacante a los transeúntes</span><span data-lang="de"><strong>Innenbeleuchtung voll an</strong> — Kabine beleuchtet, Angreifer für Passanten sichtbar</span><span data-lang="ro"><strong>Lumini interioare la maxim</strong> — cabina iluminată, atacatorul vizibil trecătorilor</span></li>
+          <li>🔒 <span data-lang="en"><strong>Door lock control</strong> — configurable: lock to contain attacker or unlock to let driver escape</span><span data-lang="es"><strong>Control cierre de puertas</strong> — configurable: bloquear al atacante o desbloquear para escapar</span><span data-lang="de"><strong>Türschloss-Steuerung</strong> — konfigurierbar: sperren oder öffnen</span><span data-lang="ro"><strong>Control blocare uși</strong> — configurabil: blocare sau deblocare pentru evacuare</span></li>
+        </ul>
+        <div class="hw-install-note">
+          <span data-lang="en">⚙️ Requires installation by a car electrician (~45 min). Connects to horn, hazard light, and interior light circuits. No engine access required. Works on any 12V vehicle.</span>
+          <span data-lang="es">⚙️ Requiere instalación por electricista de automóviles (~45 min). Se conecta a claxon, luces de emergencia e interiores. No requiere acceso al motor. Funciona en cualquier vehículo de 12V.</span>
+          <span data-lang="de">⚙️ Einbau durch KFZ-Elektriker erforderlich (~45 Min.). Anschluss an Hupe, Warnblinker und Innenbeleuchtung. Kein Motorenzugang. Für alle 12V-Fahrzeuge.</span>
+          <span data-lang="ro">⚙️ Necesită instalare de electrician auto (~45 min). Conectat la claxon, lumini avarie și lumini interioare. Fără acces la motor. Funcționează pe orice vehicul de 12V.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUNDLE -->
+    <div class="hw-bundle">
+      <div class="hw-bundle-title">
+        <span data-lang="en">🎁 Full hardware bundle</span>
+        <span data-lang="es">🎁 Bundle completo de hardware</span>
+        <span data-lang="de">🎁 Komplettes Hardware-Bundle</span>
+        <span data-lang="ro">🎁 Bundle hardware complet</span>
+      </div>
+      <div class="hw-bundle-price">
+        <span class="hw-bundle-was">€178</span>
+        <span class="hw-bundle-now">€149</span>
+        <span class="hw-bundle-save"><span data-lang="en">save €29</span><span data-lang="es">ahorra €29</span><span data-lang="de">spare €29</span><span data-lang="ro">economisești €29</span></span>
+      </div>
+      <div class="hw-bundle-items">
+        <span data-lang="en">Button + Webcam + OBD Reader + Relay Module</span>
+        <span data-lang="es">Botón + Webcam + Lector OBD + Módulo Relé</span>
+        <span data-lang="de">Knopf + Webcam + OBD-Lesegerät + Relais-Modul</span>
+        <span data-lang="ro">Buton + Webcam + Cititor OBD + Modul Releu</span>
+      </div>
+      <div class="hw-bundle-note">
+        <span data-lang="en">Included automatically with Pro &amp; Fleet subscriptions.</span>
+        <span data-lang="es">Incluido automáticamente en suscripciones Pro y Fleet.</span>
+        <span data-lang="de">Automatisch in Pro- und Fleet-Abonnements enthalten.</span>
+        <span data-lang="ro">Inclus automat cu abonamentele Pro și Fleet.</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- POLL -->
+<section id="poll" class="reveal">
+<div class="container">
+  <div class="section-label">
+    <span data-lang="en">Your Voice</span><span data-lang="es">Tu Opinión</span><span data-lang="de">Deine Meinung</span><span data-lang="ro">Opinia Ta</span>
+  </div>
+  <h2 class="section-title">
+    <span data-lang="en">We're building this for you. Tell us what matters.</span>
+    <span data-lang="es">Lo estamos construyendo para ti. Dinos qué importa.</span>
+    <span data-lang="de">Wir bauen das für euch. Sagt uns, was wichtig ist.</span>
+    <span data-lang="ro">Construim asta pentru voi. Spuneți-ne ce contează.</span>
+  </h2>
+
+  <div class="poll-wrap">
+    <p class="poll-intro">
+      <span data-lang="en">All questions are optional — answer what you want, skip what you don't. Takes under 2 minutes. Your answers directly shape what we build first.</span>
+      <span data-lang="es">Todas las preguntas son opcionales — responde lo que quieras, omite lo que no. Menos de 2 minutos. Tus respuestas deciden qué construimos primero.</span>
+      <span data-lang="de">Alle Fragen sind optional — beantworte, was du möchtest, überspringe den Rest. Unter 2 Minuten. Deine Antworten formen direkt, was wir zuerst bauen.</span>
+      <span data-lang="ro">Toate întrebările sunt opționale — răspunde la ce vrei, sari peste ce nu vrei. Sub 2 minute. Răspunsurile tale modelează direct ce construim mai întâi.</span>
+    </p>
+
+    <div id="poll-form">
+
+      <!-- Q1 -->
+      <div class="poll-q">
+        <span class="poll-q-label">
+          <span data-lang="en">1. How often do you feel unsafe while driving?</span>
+          <span data-lang="es">1. ¿Con qué frecuencia te sientes inseguro/a mientras conduces?</span>
+          <span data-lang="de">1. Wie oft fühlst du dich beim Fahren unsicher?</span>
+          <span data-lang="ro">1. Cât de des te simți nesigur/ă în timp ce conduci?</span>
+        </span>
+        <span class="poll-q-hint">
+          <span data-lang="en">choose one</span><span data-lang="es">elige una</span><span data-lang="de">eine wählen</span><span data-lang="ro">alege una</span>
+        </span>
+        <div class="options-grid" id="q1">
+          <button class="opt-btn" data-val="never" onclick="pick('q1',this)"><span data-lang="en">Never</span><span data-lang="es">Nunca</span><span data-lang="de">Nie</span><span data-lang="ro">Niciodată</span></button>
+          <button class="opt-btn" data-val="rarely" onclick="pick('q1',this)"><span data-lang="en">Rarely</span><span data-lang="es">Raramente</span><span data-lang="de">Selten</span><span data-lang="ro">Rar</span></button>
+          <button class="opt-btn" data-val="monthly" onclick="pick('q1',this)"><span data-lang="en">Monthly</span><span data-lang="es">Mensual</span><span data-lang="de">Monatlich</span><span data-lang="ro">Lunar</span></button>
+          <button class="opt-btn" data-val="weekly" onclick="pick('q1',this)"><span data-lang="en">Weekly</span><span data-lang="es">Semanal</span><span data-lang="de">Wöchentlich</span><span data-lang="ro">Săptămânal</span></button>
+          <button class="opt-btn" data-val="daily" onclick="pick('q1',this)"><span data-lang="en">Daily</span><span data-lang="es">Diariamente</span><span data-lang="de">Täglich</span><span data-lang="ro">Zilnic</span></button>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="poll-q">
+        <span class="poll-q-label">
+          <span data-lang="en">2. What's your biggest worry while driving?</span>
+          <span data-lang="es">2. ¿Cuál es tu mayor preocupación mientras conduces?</span>
+          <span data-lang="de">2. Was bereitet dir beim Fahren die größten Sorgen?</span>
+          <span data-lang="ro">2. Care este cea mai mare îngrijorare a ta în timp ce conduci?</span>
+        </span>
+        <span class="poll-q-hint">
+          <span data-lang="en">choose all that apply</span><span data-lang="es">elige todas las que apliquen</span><span data-lang="de">alle zutreffenden wählen</span><span data-lang="ro">alege toate care se aplică</span>
+        </span>
+        <div class="options-grid" id="q2">
+          <button class="opt-btn" data-val="assault" onclick="multi('q2',this)"><span data-lang="en">Physical assault</span><span data-lang="es">Agresión física</span><span data-lang="de">Körperliche Gewalt</span><span data-lang="ro">Agresiune fizică</span></button>
+          <button class="opt-btn" data-val="robbery" onclick="multi('q2',this)"><span data-lang="en">Robbery</span><span data-lang="es">Robo</span><span data-lang="de">Raub</span><span data-lang="ro">Jaf</span></button>
+          <button class="opt-btn" data-val="false_acc" onclick="multi('q2',this)"><span data-lang="en">False accusations</span><span data-lang="es">Falsas acusaciones</span><span data-lang="de">Falsche Beschuldigungen</span><span data-lang="ro">Acuzații false</span></button>
+          <button class="opt-btn" data-val="kidnap" onclick="multi('q2',this)"><span data-lang="en">Kidnapping</span><span data-lang="es">Secuestro</span><span data-lang="de">Entführung</span><span data-lang="ro">Răpire</span></button>
+          <button class="opt-btn" data-val="harassment" onclick="multi('q2',this)"><span data-lang="en">Harassment</span><span data-lang="es">Acoso</span><span data-lang="de">Belästigung</span><span data-lang="ro">Hărțuire</span></button>
+          <button class="opt-btn" data-val="weapons" onclick="multi('q2',this)"><span data-lang="en">Weapon threats</span><span data-lang="es">Amenazas con armas</span><span data-lang="de">Waffendrohungen</span><span data-lang="ro">Amenințări armate</span></button>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="poll-q">
+        <span class="poll-q-label">
+          <span data-lang="en">3. What do you currently use for safety?</span>
+          <span data-lang="es">3. ¿Qué usas actualmente para tu seguridad?</span>
+          <span data-lang="de">3. Was nutzt du aktuell für deine Sicherheit?</span>
+          <span data-lang="ro">3. Ce folosești în prezent pentru siguranță?</span>
+        </span>
+        <span class="poll-q-hint">
+          <span data-lang="en">choose all that apply</span><span data-lang="es">elige todas las que apliquen</span><span data-lang="de">alle zutreffenden wählen</span><span data-lang="ro">alege toate care se aplică</span>
+        </span>
+        <div class="options-grid" id="q3">
+          <button class="opt-btn" data-val="nothing" onclick="multi('q3',this)"><span data-lang="en">Nothing</span><span data-lang="es">Nada</span><span data-lang="de">Nichts</span><span data-lang="ro">Nimic</span></button>
+          <button class="opt-btn" data-val="dashcam" onclick="multi('q3',this)"><span data-lang="en">Dashcam</span><span data-lang="es">Dashcam</span><span data-lang="de">Dashcam</span><span data-lang="ro">Dashcam</span></button>
+          <button class="opt-btn" data-val="app_sos" onclick="multi('q3',this)"><span data-lang="en">Uber/Bolt SOS</span><span data-lang="es">SOS Uber/Bolt</span><span data-lang="de">Uber/Bolt SOS</span><span data-lang="ro">SOS Uber/Bolt</span></button>
+          <button class="opt-btn" data-val="phone_app" onclick="multi('q3',this)"><span data-lang="en">Safety app</span><span data-lang="es">App de seguridad</span><span data-lang="de">Sicherheits-App</span><span data-lang="ro">Aplicație siguranță</span></button>
+          <button class="opt-btn" data-val="other" onclick="multi('q3',this)"><span data-lang="en">Other</span><span data-lang="es">Otro</span><span data-lang="de">Anderes</span><span data-lang="ro">Altceva</span></button>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="poll-q">
+        <span class="poll-q-label">
+          <span data-lang="en">4. How interested are you in Shieldly?</span>
+          <span data-lang="es">4. ¿Cuánto te interesa Shieldly?</span>
+          <span data-lang="de">4. Wie interessiert bist du an Shieldly?</span>
+          <span data-lang="ro">4. Cât de interesat/ă ești de Shieldly?</span>
+        </span>
+        <span class="poll-q-hint">
+          <span data-lang="en">choose one</span><span data-lang="es">elige una</span><span data-lang="de">eine wählen</span><span data-lang="ro">alege una</span>
+        </span>
+        <div class="options-grid" id="q4">
+          <button class="opt-btn" data-val="not_interested" onclick="pick('q4',this)"><span data-lang="en">Not for me</span><span data-lang="es">No es para mí</span><span data-lang="de">Nicht für mich</span><span data-lang="ro">Nu pentru mine</span></button>
+          <button class="opt-btn" data-val="curious" onclick="pick('q4',this)"><span data-lang="en">Curious, want to know more</span><span data-lang="es">Curioso/a, quiero saber más</span><span data-lang="de">Neugierig, mehr erfahren</span><span data-lang="ro">Curios/ă, vreau să știu mai mult</span></button>
+          <button class="opt-btn" data-val="would_try" onclick="pick('q4',this)"><span data-lang="en">Would try it</span><span data-lang="es">Lo probaría</span><span data-lang="de">Würde es ausprobieren</span><span data-lang="ro">L-aș încerca</span></button>
+          <button class="opt-btn" data-val="pay_now" onclick="pick('q4',this)"><span data-lang="en">Would pay today</span><span data-lang="es">Pagaría hoy mismo</span><span data-lang="de">Würde heute zahlen</span><span data-lang="ro">Aș plăti azi</span></button>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="poll-q">
+        <span class="poll-q-label">
+          <span data-lang="en">5. Which plan would you choose?</span>
+          <span data-lang="es">5. ¿Qué plan elegirías?</span>
+          <span data-lang="de">5. Welchen Plan würdest du wählen?</span>
+          <span data-lang="ro">5. Ce plan ai alege?</span>
+        </span>
+        <span class="poll-q-hint">
+          <span data-lang="en">choose one</span><span data-lang="es">elige una</span><span data-lang="de">eine wählen</span><span data-lang="ro">alege una</span>
+        </span>
+        <div class="options-grid" id="q5">
+          <button class="opt-btn" data-val="basic" onclick="pick('q5',this)">Basic — €4.99</button>
+          <button class="opt-btn" data-val="plus" onclick="pick('q5',this)">Plus — €9.99</button>
+          <button class="opt-btn" data-val="pro" onclick="pick('q5',this)">Pro — €19.99</button>
+          <button class="opt-btn" data-val="fleet" onclick="pick('q5',this)">Fleet — €12/vehicle</button>
+          <button class="opt-btn" data-val="none" onclick="pick('q5',this)"><span data-lang="en">None, too expensive</span><span data-lang="es">Ninguno, muy caro</span><span data-lang="de">Keiner, zu teuer</span><span data-lang="ro">Niciunul, prea scump</span></button>
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="poll-q">
+        <span class="poll-q-label">
+          <span data-lang="en">6. Is €9.99/month fair for Plus?</span>
+          <span data-lang="es">6. ¿Es justo €9,99/mes para Plus?</span>
+          <span data-lang="de">6. Ist €9,99/Monat für Plus fair?</span>
+          <span data-lang="ro">6. Este €9,99/lună corect pentru Plus?</span>
+        </span>
+        <span class="poll-q-hint">
+          <span data-lang="en">choose one</span><span data-lang="es">elige una</span><span data-lang="de">eine wählen</span><span data-lang="ro">alege una</span>
+        </span>
+        <div class="options-grid" id="q6">
+          <button class="opt-btn" data-val="too_exp" onclick="pick('q6',this)"><span data-lang="en">Too expensive</span><span data-lang="es">Muy caro</span><span data-lang="de">Zu teuer</span><span data-lang="ro">Prea scump</span></button>
+          <button class="opt-btn" data-val="fair" onclick="pick('q6',this)"><span data-lang="en">Fair price</span><span data-lang="es">Precio justo</span><span data-lang="de">Faire Preis</span><span data-lang="ro">Preț corect</span></button>
+          <button class="opt-btn" data-val="pay_more" onclick="pick('q6',this)"><span data-lang="en">Would pay more for better features</span><span data-lang="es">Pagaría más por mejores funciones</span><span data-lang="de">Würde für bessere Funktionen mehr zahlen</span><span data-lang="ro">Aș plăti mai mult pentru funcții mai bune</span></button>
+        </div>
+      </div>
+
+      <!-- Q7 -->
+      <div class="poll-q">
+        <span class="poll-q-label">
+          <span data-lang="en">7. Hardware preference?</span>
+          <span data-lang="es">7. ¿Preferencia de hardware?</span>
+          <span data-lang="de">7. Hardware-Präferenz?</span>
+          <span data-lang="ro">7. Preferință hardware?</span>
+        </span>
+        <span class="poll-q-hint">
+          <span data-lang="en">choose one</span><span data-lang="es">elige una</span><span data-lang="de">eine wählen</span><span data-lang="ro">alege una</span>
+        </span>
+        <div class="options-grid" id="q7">
+          <button class="opt-btn" data-val="buy_outright" onclick="pick('q7',this)"><span data-lang="en">Buy button outright (€29, no commitment)</span><span data-lang="es">Comprar el botón (€29, sin compromiso)</span><span data-lang="de">Knopf kaufen (€29, keine Bindung)</span><span data-lang="ro">Cumpăr butonul (€29, fără angajament)</span></button>
+          <button class="opt-btn" data-val="free_6mo" onclick="pick('q7',this)"><span data-lang="en">Free button with 6-month subscription</span><span data-lang="es">Botón gratis con suscripción de 6 meses</span><span data-lang="de">Gratis-Knopf mit 6-Monats-Abo</span><span data-lang="ro">Buton gratuit cu abonament 6 luni</span></button>
+        </div>
+      </div>
+
+      <!-- Q8 -->
+      <div class="poll-q">
+        <span class="poll-q-label">
+          <span data-lang="en">8. What feature matters most to you?</span>
+          <span data-lang="es">8. ¿Qué función te importa más?</span>
+          <span data-lang="de">8. Welches Merkmal ist dir am wichtigsten?</span>
+          <span data-lang="ro">8. Ce funcție contează cel mai mult pentru tine?</span>
+        </span>
+        <span class="poll-q-hint">
+          <span data-lang="en">choose one</span><span data-lang="es">elige una</span><span data-lang="de">eine wählen</span><span data-lang="ro">alege una</span>
+        </span>
+        <div class="options-grid" id="q8">
+          <button class="opt-btn" data-val="silent_mode" onclick="pick('q8',this)"><span data-lang="en">Silent covert mode</span><span data-lang="es">Modo silencioso encubierto</span><span data-lang="de">Stiller verdeckter Modus</span><span data-lang="ro">Mod silențios secret</span></button>
+          <button class="opt-btn" data-val="evidence" onclick="pick('q8',this)"><span data-lang="en">Evidence package</span><span data-lang="es">Paquete de evidencia</span><span data-lang="de">Beweispaket</span><span data-lang="ro">Pachet dovezi</span></button>
+          <button class="opt-btn" data-val="monitoring" onclick="pick('q8',this)"><span data-lang="en">Human monitoring center</span><span data-lang="es">Central humana de monitorización</span><span data-lang="de">Menschliche Überwachungszentrale</span><span data-lang="ro">Dispecerat uman</span></button>
+          <button class="opt-btn" data-val="gps" onclick="pick('q8',this)"><span data-lang="en">Live GPS tracking</span><span data-lang="es">GPS en vivo</span><span data-lang="de">Live-GPS</span><span data-lang="ro">GPS live</span></button>
+          <button class="opt-btn" data-val="false_acc" onclick="pick('q8',this)"><span data-lang="en">False accusation protection</span><span data-lang="es">Protección contra falsas acusaciones</span><span data-lang="de">Schutz vor Falschaussagen</span><span data-lang="ro">Protecție acuzații false</span></button>
+        </div>
+      </div>
+
+      <!-- Q_PRICE -->
+      <div class="poll-q">
+        <span class="poll-q-label">
+          <span data-lang="en">9. What's the maximum you'd pay per month for a service like this?</span>
+          <span data-lang="es">9. ¿Cuánto pagarías como máximo al mes por un servicio así?</span>
+          <span data-lang="de">9. Was würdest du maximal pro Monat für so einen Dienst zahlen?</span>
+          <span data-lang="ro">9. Cât ai plăti maxim pe lună pentru un astfel de serviciu?</span>
+        </span>
+        <span class="poll-q-hint">
+          <span data-lang="en">choose one</span><span data-lang="es">elige una</span><span data-lang="de">eine wählen</span><span data-lang="ro">alege una</span>
+        </span>
+        <div class="options-grid" id="q_price">
+          <button class="opt-btn" data-val="0" onclick="pick('q_price',this)"><span data-lang="en">Nothing — wouldn't pay</span><span data-lang="es">Nada — no pagaría</span><span data-lang="de">Nichts — würde nicht zahlen</span><span data-lang="ro">Nimic — nu aș plăti</span></button>
+          <button class="opt-btn" data-val="u5" onclick="pick('q_price',this)"><span data-lang="en">Up to €5/mo</span><span data-lang="es">Hasta €5/mes</span><span data-lang="de">Bis zu €5/Mo.</span><span data-lang="ro">Până la €5/lună</span></button>
+          <button class="opt-btn" data-val="5_10" onclick="pick('q_price',this)"><span data-lang="en">€5–€10/mo</span><span data-lang="es">€5–€10/mes</span><span data-lang="de">€5–€10/Mo.</span><span data-lang="ro">€5–€10/lună</span></button>
+          <button class="opt-btn" data-val="10_20" onclick="pick('q_price',this)"><span data-lang="en">€10–€20/mo</span><span data-lang="es">€10–€20/mes</span><span data-lang="de">€10–€20/Mo.</span><span data-lang="ro">€10–€20/lună</span></button>
+          <button class="opt-btn" data-val="o20" onclick="pick('q_price',this)"><span data-lang="en">Over €20/mo — if the service is solid</span><span data-lang="es">Más de €20/mes — si el servicio es bueno</span><span data-lang="de">Über €20/Mo. — wenn der Dienst gut ist</span><span data-lang="ro">Peste €20/lună — dacă serviciul e serios</span></button>
+        </div>
+      </div>
+
+      <!-- Q9 -->
+      <div class="poll-q">
+        <span class="poll-q-label">
+          <span data-lang="en">10. What would make you subscribe immediately?</span>
+          <span data-lang="es">10. ¿Qué te haría suscribirte inmediatamente?</span>
+          <span data-lang="de">10. Was würde dich sofort zum Abonnieren bringen?</span>
+          <span data-lang="ro">10. Ce te-ar face să te abonezi imediat?</span>
+        </span>
+        <span class="poll-q-hint">
+          <span data-lang="en">optional — your words, in any language</span>
+          <span data-lang="es">opcional — tus palabras, en cualquier idioma</span>
+          <span data-lang="de">optional — deine Worte, in jeder Sprache</span>
+          <span data-lang="ro">opțional — cuvintele tale, în orice limbă</span>
+        </span>
+        <textarea class="poll-text" id="q9text" placeholder="..." rows="3"></textarea>
+      </div>
+
+      <button class="poll-submit" id="poll-submit-btn" onclick="submitPoll()">
+        <span data-lang="en">Submit my answers</span>
+        <span data-lang="es">Enviar mis respuestas</span>
+        <span data-lang="de">Antworten absenden</span>
+        <span data-lang="ro">Trimite răspunsurile mele</span>
+      </button>
+      <p class="poll-count" id="poll-count"></p>
+    </div>
+
+    <div class="poll-success" id="poll-success">
+      <div class="poll-success-icon">🛡️</div>
+      <div class="poll-success-title"><span data-lang="en">Thank you!</span><span data-lang="es">¡Gracias!</span><span data-lang="de">Danke!</span><span data-lang="ro">Mulțumim!</span></div>
+      <div class="poll-success-body">
+        <span data-lang="en">Your input will directly shape what we build. We'll be in touch as Shieldly moves toward launch.</span>
+        <span data-lang="es">Tu opinión dará forma directamente a lo que construimos. Te contactaremos cuando Shieldly avance hacia el lanzamiento.</span>
+        <span data-lang="de">Deine Eingabe gestaltet direkt, was wir entwickeln. Wir melden uns, wenn Shieldly auf den Launch zusteuert.</span>
+        <span data-lang="ro">Opinia ta va modela direct ce construim. Te vom contacta pe măsură ce Shieldly avansează spre lansare.</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- LIVE RESULTS -->
+<section class="alt-bg reveal" id="results">
+<div class="container">
+  <div class="section-label">
+    <span data-lang="en">Live Results</span><span data-lang="es">Resultados en Vivo</span><span data-lang="de">Live-Ergebnisse</span><span data-lang="ro">Rezultate Live</span>
+  </div>
+  <h2 class="section-title" style="font-size:1.5rem">
+    <span data-lang="en">What drivers are saying</span>
+    <span data-lang="es">Lo que dicen los conductores</span>
+    <span data-lang="de">Was Fahrer sagen</span>
+    <span data-lang="ro">Ce spun șoferii</span>
+  </h2>
+  <div id="results-loading" style="color:var(--text-m);font-size:.85rem;margin-top:1rem">
+    <span data-lang="en">Loading responses…</span><span data-lang="es">Cargando respuestas…</span><span data-lang="de">Lade Antworten…</span><span data-lang="ro">Se încarcă răspunsurile…</span>
+  </div>
+  <div id="results-empty" style="display:none;color:var(--text-m);font-size:.85rem;margin-top:1rem">
+    <span data-lang="en">No responses yet — be the first!</span><span data-lang="es">Aún no hay respuestas — ¡sé el primero!</span><span data-lang="de">Noch keine Antworten — sei der Erste!</span><span data-lang="ro">Niciun răspuns încă — fii primul!</span>
+  </div>
+  <div id="results-grid" style="display:none;margin-top:1.25rem;display:none">
+    <div class="results-total" id="results-total"></div>
+    <div class="results-cards" id="results-cards"></div>
+  </div>
+</div>
+</section>
+
+<!-- INVEST -->
+<section class="alt-bg reveal">
+<div class="container" style="text-align:center">
+  <div class="section-label" style="justify-content:center;display:flex">
+    <span data-lang="en">For Investors</span><span data-lang="es">Para Inversores</span><span data-lang="de">Für Investoren</span><span data-lang="ro">Pentru Investitori</span>
+  </div>
+  <h2 class="section-title" style="margin-left:auto;margin-right:auto;max-width:480px">
+    <span data-lang="en">Interested in backing Shieldly?</span>
+    <span data-lang="es">¿Interesado en invertir en Shieldly?</span>
+    <span data-lang="de">Interesse daran, Shieldly zu unterstützen?</span>
+    <span data-lang="ro">Interesat să investești în Shieldly?</span>
+  </h2>
+  <p class="section-body" style="margin:0 auto 1.75rem;text-align:center">
+    <span data-lang="en">Shieldly is currently in market validation. We're looking for early-stage investors, angel backers, and strategic partners who believe driver safety is an underserved market. If that's you, let's talk.</span>
+    <span data-lang="es">Shieldly está actualmente en validación de mercado. Buscamos inversores en etapa inicial, business angels y socios estratégicos que crean que la seguridad de los conductores es un mercado desatendido. Si eres uno de ellos, hablemos.</span>
+    <span data-lang="de">Shieldly befindet sich derzeit in der Marktvalidierung. Wir suchen Frühphasen-Investoren, Angel-Investoren und strategische Partner, die glauben, dass Fahrersicherheit ein unterversorgter Markt ist. Wenn das auf dich zutrifft, lass uns reden.</span>
+    <span data-lang="ro">Shieldly se află în prezent în faza de validare de piață. Căutăm investitori în stadiu incipient, investitori angel și parteneri strategici care cred că siguranța șoferilor este o piață insuficient deservită. Dacă ești unul dintre ei, hai să vorbim.</span>
+  </p>
+  <div class="invest-stats">
+    <div class="invest-stat">
+      <div class="invest-stat-num">~4M</div>
+      <div class="invest-stat-label"><span data-lang="en">rideshare + taxi drivers in EU</span><span data-lang="es">conductores de rideshare + taxi en la UE</span><span data-lang="de">Rideshare + Taxi-Fahrer in der EU</span><span data-lang="ro">șoferi rideshare + taxi în UE</span></div>
+    </div>
+    <div class="invest-stat">
+      <div class="invest-stat-num">€120</div>
+      <div class="invest-stat-label"><span data-lang="en">avg annual revenue per driver (Plus)</span><span data-lang="es">ingreso anual medio por conductor (Plus)</span><span data-lang="de">Ø Jahresumsatz pro Fahrer (Plus)</span><span data-lang="ro">venit anual mediu per șofer (Plus)</span></div>
+    </div>
+    <div class="invest-stat">
+      <div class="invest-stat-num">0</div>
+      <div class="invest-stat-label"><span data-lang="en">direct competitors with physical hidden button</span><span data-lang="es">competidores directos con botón oculto físico</span><span data-lang="de">direkte Konkurrenten mit verstecktem physischen Knopf</span><span data-lang="ro">competitori direcți cu buton fizic ascuns</span></div>
+    </div>
+  </div>
+  <button class="btn-ghost" onclick="document.getElementById('cd').classList.add('open')" style="margin-top:1.5rem">
+    <span data-lang="en">Contact the project author →</span>
+    <span data-lang="es">Contactar al autor del proyecto →</span>
+    <span data-lang="de">Projektautor kontaktieren →</span>
+    <span data-lang="ro">Contactează autorul proiectului →</span>
+  </button>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Shieldly</div>
+  <p class="footer-note">
+    <span data-lang="en">A digitalAIventures concept. Currently in validation phase.<br>Interested in early access, partnerships, or fleet pricing? Get in touch.</span>
+    <span data-lang="es">Un concepto de digitalAIventures. Actualmente en fase de validación.<br>¿Interesado en acceso anticipado, colaboraciones o precios para flotas? Contáctanos.</span>
+    <span data-lang="de">Ein digitalAIventures-Konzept. Aktuell in der Validierungsphase.<br>Interesse an Early Access, Partnerschaften oder Flottenpreisen? Meld dich.</span>
+    <span data-lang="ro">Un concept digitalAIventures. Momentan în faza de validare.<br>Interesat de acces timpuriu, parteneriate sau prețuri pentru flotă? Ia legătura.</span>
+  </p>
+  <button class="footer-contact" onclick="document.getElementById('cd').classList.add('open')">Contact digitalAIventures</button>
+</footer>
+
+<div class="dialog-overlay" id="cd" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="dialog-box">
+    <h4>Get in Touch</h4>
+    <a class="dialog-option dialog-bot" href="https://t.me/Juanitto_assist_bot" target="_blank">🤖 AI Assist 24/7</a>
+    <a class="dialog-option dialog-tg" href="https://t.me/JuanittoCalvares" target="_blank">✈ Personal</a>
+    <a class="dialog-option dialog-mail" href="mailto:digitalAIventures.LLC@gmail.com">✉ Email</a>
+    <button class="dialog-close" onclick="document.getElementById('cd').classList.remove('open')">Close</button>
+  </div>
+</div>
+
+<style>
+.results-total{font-size:.85rem;color:var(--text-m);margin-bottom:1rem}
+/* HARDWARE CARDS */
+.hw-cards{display:flex;flex-direction:column;gap:.85rem}
+.hw-card{background:var(--bg-card);border:1px solid var(--border);border-radius:.85rem;overflow:hidden;cursor:pointer;transition:border-color .2s}
+.hw-card:hover{border-color:var(--border-accent)}
+.hw-card-featured{border-color:rgba(230,58,90,.3)}
+.hw-header{display:flex;align-items:center;gap:.85rem;padding:1rem 1.1rem}
+.hw-icon{font-size:1.8rem;flex-shrink:0}
+.hw-info{flex:1;min-width:0}
+.hw-name{font-weight:700;color:var(--text-h);font-size:.95rem;margin-bottom:.2rem}
+.hw-price-row{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.hw-price{font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--accent)}
+.hw-incl{font-size:.72rem;color:var(--text-m)}
+.hw-chevron{font-size:.7rem;color:var(--text-m);flex-shrink:0;transition:transform .2s}
+.hw-chevron.open{transform:rotate(180deg)}
+.hw-body{padding:0 1.1rem 1rem;border-top:1px solid var(--border)}
+.hw-desc{font-size:.83rem;color:var(--text-m);line-height:1.6;margin:.75rem 0}
+.hw-enables-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:.5rem}
+.hw-enables{list-style:none;display:flex;flex-direction:column;gap:.35rem}
+.hw-enables li{font-size:.82rem;color:var(--text);line-height:1.5}
+.hw-install-note{margin-top:.85rem;background:rgba(79,142,247,.08);border:1px solid rgba(79,142,247,.2);border-radius:.5rem;padding:.65rem .85rem;font-size:.78rem;color:var(--accent2);line-height:1.5}
+.hw-bundle{background:var(--accent-dim);border:1.5px solid var(--accent);border-radius:.85rem;padding:1.1rem 1.2rem;text-align:center;margin-top:.5rem}
+.hw-bundle-title{font-weight:700;color:var(--text-h);font-size:.95rem;margin-bottom:.5rem}
+.hw-bundle-price{display:flex;align-items:baseline;gap:.5rem;justify-content:center;margin-bottom:.3rem}
+.hw-bundle-was{font-size:1rem;color:var(--text-m);text-decoration:line-through}
+.hw-bundle-now{font-family:'DM Serif Display',serif;font-size:2rem;color:var(--accent)}
+.hw-bundle-save{background:var(--accent);color:#fff;font-size:.7rem;font-weight:700;padding:.15rem .5rem;border-radius:1rem}
+.hw-bundle-items{font-size:.8rem;color:var(--text-m);margin-bottom:.4rem}
+.hw-bundle-note{font-size:.78rem;color:var(--text-m)}
+/* INVESTOR */
+.invest-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;margin-top:1.5rem}
+@media(max-width:480px){.invest-stats{grid-template-columns:1fr}}
+.invest-stat{background:var(--bg-card);border:1px solid var(--border);border-radius:.75rem;padding:.85rem .75rem;text-align:center}
+.invest-stat-num{font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--accent);line-height:1;margin-bottom:.25rem}
+.invest-stat-label{font-size:.72rem;color:var(--text-m);line-height:1.4}
+/* RESULTS */
+.results-total strong{color:var(--text-h)}
+.results-cards{display:flex;flex-direction:column;gap:.85rem}
+.result-card{background:var(--bg-card);border:1px solid var(--border);border-radius:.75rem;padding:1rem 1.1rem}
+.result-card-title{font-size:.78rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.6rem}
+.bar-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.35rem}
+.bar-label{font-size:.78rem;color:var(--text);min-width:110px;flex-shrink:0}
+.bar-wrap{flex:1;background:var(--bg-alt);border-radius:1rem;height:.55rem;overflow:hidden}
+.bar-fill{height:100%;background:var(--accent);border-radius:1rem;transition:width .5s ease}
+.bar-count{font-size:.72rem;color:var(--text-m);min-width:2rem;text-align:right}
+.open-answers{margin-top:.5rem;display:flex;flex-direction:column;gap:.4rem}
+.open-ans{font-size:.82rem;color:var(--text);background:var(--bg-alt);border-radius:.45rem;padding:.4rem .65rem;line-height:1.5;border-left:2px solid var(--accent)}
+</style>
+<script>
+// HARDWARE ACCORDION
+function toggleHw(id){
+  const body=document.getElementById(id);
+  const chev=document.getElementById(id+'-chev');
+  const open=body.style.display==='none';
+  body.style.display=open?'block':'none';
+  if(chev) chev.classList.toggle('open',open);
+}
+
+// THEME
+function toggleTheme(){
+  const d=document.documentElement;
+  const t=d.getAttribute('data-theme')==='dark'?'light':'dark';
+  d.setAttribute('data-theme',t);
+  try{localStorage.setItem('theme',t)}catch(e){}
+}
+(function(){
+  try{
+    const t=localStorage.getItem('theme');
+    if(t)document.documentElement.setAttribute('data-theme',t);
+  }catch(e){}
+})();
+
+// LANG
+function setLang(l){
+  window._lang=l;
+  // Update the pre-render style rule
+  var pre=document.getElementById('lang-pre');
+  if(pre) pre.textContent='[data-lang]:not([data-lang="'+l+'"]){display:none}';
+  document.querySelectorAll('[data-l]').forEach(b=>{
+    b.classList.toggle('on',b.dataset.l===l);
+  });
+  try{localStorage.setItem('lang',l)}catch(e){}
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  setLang(window._lang||'en');
+  loadCount();
+});
+
+// POLL STATE
+const state={q1:null,q2:[],q3:[],q4:null,q5:null,q6:null,q7:null,q8:null,q_price:null};
+
+function pick(qid,btn){
+  const grp=document.getElementById(qid);
+  grp.querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  state[qid]=btn.dataset.val;
+}
+
+function multi(qid,btn){
+  btn.classList.toggle('sel');
+  const vals=[];
+  document.getElementById(qid).querySelectorAll('.opt-btn.sel').forEach(b=>vals.push(b.dataset.val));
+  state[qid]=vals;
+}
+
+async function submitPoll(){
+  const btn=document.getElementById('poll-submit-btn');
+  const q9=document.getElementById('q9text').value.trim();
+  const payload={...state,q9:q9||null,ts:new Date().toISOString()};
+  // Check at least one answer
+  const hasAny=Object.values(state).some(v=>v&&(Array.isArray(v)?v.length>0:true))||q9;
+  if(!hasAny){
+    // Still allow empty submit — just post a blank entry with ts
+  }
+  btn.disabled=true;
+  try{
+    const r=await fetch('/.herenow/data/poll',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
+    });
+    if(r.ok){
+      document.getElementById('poll-form').style.display='none';
+      document.getElementById('poll-success').style.display='block';
+      setLang(localStorage.getItem('lang')||'en');
+    } else {
+      btn.disabled=false;
+      alert('Submission error. Please try again.');
+    }
+  }catch(e){
+    btn.disabled=false;
+    alert('Network error. Please try again.');
+  }
+}
+
+async function loadCount(){
+  try{
+    const r=await fetch('/.herenow/data/poll');
+    if(r.ok){
+      const d=await r.json();
+      const recs=d.records||[];
+      const c=recs.length;
+      if(c>0) document.getElementById('poll-count').textContent=c+' response'+(c===1?'':'s')+' so far';
+      renderResults(recs);
+    }
+  }catch(e){}
+}
+
+function renderResults(recs){
+  const loading=document.getElementById('results-loading');
+  const empty=document.getElementById('results-empty');
+  const grid=document.getElementById('results-grid');
+  loading.style.display='none';
+  if(!recs.length){empty.style.display='block';return;}
+  grid.style.display='block';
+
+  const n=recs.length;
+  document.getElementById('results-total').innerHTML=
+    '<strong>'+n+'</strong> driver'+(n===1?'':'s')+' responded so far.';
+
+  const cards=document.getElementById('results-cards');
+  cards.innerHTML='';
+
+  function barCard(titleEN,titleES,titleDE,titleRO,field,labels){
+    const counts={};
+    labels.forEach(l=>counts[l.val]=0);
+    recs.forEach(r=>{
+      const v=r.data&&r.data[field];
+      if(!v)return;
+      const vals=Array.isArray(v)?v:[v];
+      vals.forEach(vv=>{if(counts[vv]!==undefined)counts[vv]++;});
+    });
+    const max=Math.max(...Object.values(counts),1);
+    const rows=labels.map(l=>{
+      const c=counts[l.val]||0;
+      const pct=Math.round(c/max*100);
+      return `<div class="bar-row">
+        <div class="bar-label">${l.en}</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:${pct}%"></div></div>
+        <div class="bar-count">${c}</div>
+      </div>`;
+    }).join('');
+    return `<div class="result-card">
+      <div class="result-card-title">
+        <span data-lang="en">${titleEN}</span>
+        <span data-lang="es">${titleES}</span>
+        <span data-lang="de">${titleDE}</span>
+        <span data-lang="ro">${titleRO}</span>
+      </div>${rows}</div>`;
+  }
+
+  cards.innerHTML+=barCard(
+    'How often drivers feel unsafe','¿Con qué frecuencia?','Wie oft unsicher?','Cât de des nesigur?',
+    'q1',[
+      {val:'never',en:'Never'},{val:'rarely',en:'Rarely'},{val:'monthly',en:'Monthly'},
+      {val:'weekly',en:'Weekly'},{val:'daily',en:'Daily'}
+    ]
+  );
+  cards.innerHTML+=barCard(
+    'Biggest worry','Mayor preocupación','Größte Sorge','Cea mai mare îngrijorare',
+    'q2',[
+      {val:'assault',en:'Physical assault'},{val:'robbery',en:'Robbery'},
+      {val:'false_acc',en:'False accusations'},{val:'kidnap',en:'Kidnapping'},
+      {val:'harassment',en:'Harassment'},{val:'weapons',en:'Weapon threats'}
+    ]
+  );
+  cards.innerHTML+=barCard(
+    'Interest level','Nivel de interés','Interesse','Nivel de interes',
+    'q4',[
+      {val:'not_interested',en:'Not for me'},{val:'curious',en:'Curious'},
+      {val:'would_try',en:'Would try it'},{val:'pay_now',en:'Would pay today'}
+    ]
+  );
+  cards.innerHTML+=barCard(
+    'Plan preference','Plan preferido','Plan-Präferenz','Preferință plan',
+    'q5',[
+      {val:'basic',en:'Basic €4.99'},{val:'plus',en:'Plus €9.99'},
+      {val:'pro',en:'Pro €19.99'},{val:'fleet',en:'Fleet €12/veh'},
+      {val:'none',en:'None / too expensive'}
+    ]
+  );
+  cards.innerHTML+=barCard(
+    'Max price willing to pay','Precio máximo a pagar','Maximaler Preis','Preț maxim acceptat',
+    'q_price',[
+      {val:'0',en:'Nothing'},{val:'u5',en:'Up to €5'},
+      {val:'5_10',en:'€5–€10'},{val:'10_20',en:'€10–€20'},
+      {val:'o20',en:'Over €20'}
+    ]
+  );
+  cards.innerHTML+=barCard(
+    'Most important feature','Función más importante','Wichtigstes Merkmal','Funcție importantă',
+    'q8',[
+      {val:'silent_mode',en:'Silent mode'},{val:'evidence',en:'Evidence package'},
+      {val:'monitoring',en:'Monitoring center'},{val:'gps',en:'Live GPS'},
+      {val:'false_acc',en:'False accusation protection'}
+    ]
+  );
+
+  // Open answers
+  const openAnswers=recs.map(r=>r.data&&r.data.q9).filter(Boolean);
+  if(openAnswers.length){
+    const ansHtml=openAnswers.map(a=>`<div class="open-ans">"${a.replace(/</g,'&lt;')}"</div>`).join('');
+    cards.innerHTML+=`<div class="result-card">
+      <div class="result-card-title">
+        <span data-lang="en">What would make drivers subscribe immediately</span>
+        <span data-lang="es">Qué haría suscribirse inmediatamente</span>
+        <span data-lang="de">Was würde sofort zum Abonnieren bringen</span>
+        <span data-lang="ro">Ce i-ar face să se aboneze imediat</span>
+      </div>
+      <div class="open-answers">${ansHtml}</div>
+    </div>`;
+  }
+
+  // Re-apply lang to newly added elements
+  try{const l=localStorage.getItem('lang')||'en';setLang(l);}catch(e){}
+}
+</script>
+<!-- GSAP via SRI (supply-chain-safety) -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"
+        integrity="sha384-HOvlOYPIs/zjoIkWUGXkVmXsjr8GuZLV+Q+rcPwmJOVZVpvTSXQChiN4t9Euv9Vc"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+/* ===== Shieldly presentation timeline ===== */
+(function(){
+  if(typeof gsap==='undefined')return;
+  var id='shieldly-hero';
+  var tl=gsap.timeline({paused:true});
+  var RATE=0.63;          // slow the whole arc (~19s -> ~30s) so captions are readable
+  tl.timeScale(RATE);
+  var $=function(s){return document.querySelector(s);};
+
+  // backdrop
+  tl.to('#pg-stars',{opacity:1,duration:1.2,ease:'power1.out'},0);
+
+  // ---- SCENE A : alone ----
+  tl.to('#sA',{opacity:1,duration:.8,ease:'power2.out'},.2);
+  tl.fromTo('#pg-driver',{scale:.7,transformOrigin:'975px 612px'},{scale:1,duration:.8,ease:'back.out(2)'},.4);
+  tl.to('#pg-driver',{opacity:.45,duration:.7,yoyo:true,repeat:3,ease:'sine.inOut'},1.0);
+  tl.to('#sA',{opacity:0,duration:.6,ease:'power1.in'},3.9);
+
+  // ---- SCENE B : seconds too slow ----
+  tl.to('#sB',{opacity:1,duration:.6,ease:'power2.out'},4.5);
+  tl.to('#pg-spin',{rotation:540,svgOrigin:'860 600',duration:3.4,ease:'none'},4.6);
+  tl.to('#pg-hand-s',{rotation:300,svgOrigin:'1180 470',duration:3.2,ease:'none'},4.6);
+  tl.to('#pg-hand-m',{rotation:60,svgOrigin:'1180 470',duration:3.2,ease:'none'},4.6);
+  tl.to('#sB g circle[stroke="#e63a5a"]',{opacity:.5,duration:.5,yoyo:true,repeat:4,ease:'sine.inOut'},5.2);
+  tl.to('#sB',{opacity:0,duration:.6,ease:'power1.in'},8.0);
+
+  // ---- SCENE C : hidden press ----
+  tl.to('#sC',{opacity:1,duration:.6,ease:'power2.out'},8.5);
+  tl.to('#pg-thumb',{y:0,duration:1.0,ease:'power3.in'},8.9);
+  tl.to('#pg-halo',{opacity:1,duration:.18,ease:'power2.out'},9.8);
+  tl.to('#pg-btn',{scale:.86,transformOrigin:'960px 612px',duration:.14,ease:'power2.in'},9.8);
+  tl.to('#pg-btn',{scale:1,duration:.3,ease:'back.out(3)'},9.94);
+  tl.to('#pg-halo',{opacity:0,scale:1.8,transformOrigin:'960px 612px',duration:.8,ease:'power2.out'},10.0);
+  tl.to('#pg-thumb',{y:80,duration:.6,ease:'power2.out'},10.4);
+  tl.to('#sC',{opacity:0,duration:.6,ease:'power1.in'},11.9);
+
+  // ---- SCENE D : record / encrypt / dispatch ----
+  tl.to('#sD',{opacity:1,duration:.6,ease:'power2.out'},12.5);
+  var rings=gsap.timeline({repeat:2});
+  rings.fromTo('#sD #pg-rings circle',
+    {attr:{r:60},opacity:.0},
+    {attr:{r:300},opacity:.8,duration:1.6,ease:'power1.out',stagger:.18,
+     onStart:function(){gsap.set('#sD #pg-rings circle',{opacity:.0});}},0);
+  rings.to('#sD #pg-rings circle',{opacity:0,duration:.4},1.6);
+  tl.add(rings,12.7);
+  tl.to('#pg-rec',{opacity:1,y:'-=10',duration:.5,ease:'back.out(2)'},13.3);
+  tl.to('#pg-lock',{opacity:1,y:'-=10',duration:.5,ease:'back.out(2)'},13.9);
+  tl.to('#pg-disp',{opacity:1,y:'-=10',duration:.5,ease:'back.out(2)'},14.5);
+  tl.to('#sD',{opacity:0,duration:.6,ease:'power1.in'},16.2);
+
+  // ---- SCENE E : shield resolve ----
+  tl.to('#sE',{opacity:1,duration:.5,ease:'power2.out'},16.8);
+  tl.fromTo('#pg-shield',{scale:.82,transformOrigin:'960px 600px',opacity:.2},
+    {scale:1,opacity:1,duration:.9,ease:'back.out(1.6)'},16.9);
+  var ck=$('#pg-check');
+  if(ck){var L=ck.getTotalLength();ck.style.strokeDasharray=L;ck.style.strokeDashoffset=L;
+    tl.to(ck,{strokeDashoffset:0,duration:.6,ease:'power2.out'},17.7);}
+  tl.to('#pg-stamp',{opacity:1,duration:.7,ease:'power2.out'},18.2);
+
+  // ---- captions cross-fade ----
+  function cap(sel,inAt,outAt){
+    tl.to(sel,{opacity:1,duration:.4,ease:'power1.out'},inAt);
+    if(outAt)tl.to(sel,{opacity:0,duration:.4,ease:'power1.in'},outAt);
+  }
+  cap('#cap0',.5,4.0);
+  cap('#cap1',4.7,8.0);
+  cap('#cap2',8.7,12.0);
+  cap('#cap3',12.7,16.2);
+  cap('#cap4',17.2,null);
+
+  // ---- live timer ----
+  var t=$('#pg-time');
+  tl.eventCallback('onUpdate',function(){ if(t)t.textContent=(tl.time()/RATE).toFixed(1); });
+
+  window.__timelines=window.__timelines||{};
+  window.__timelines[id]=tl;
+
+  var replay=$('#pg-replay');
+  if(replay)replay.addEventListener('click',function(){tl.restart();});
+
+  var stage=document.getElementById('stage');
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+    tl.progress(1);
+  }else if(stage){
+    new IntersectionObserver(function(es,o){
+      es.forEach(function(e){if(e.isIntersecting){tl.play();o.disconnect();}});
+    },{threshold:.35}).observe(stage);
+  }
+})();
+
+/* ===== Tier-1 ambient reveals on existing sections ===== */
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!els.length)return;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+    els.forEach(function(el){el.classList.add('in');});return;
+  }
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:0.01,rootMargin:'0px 0px -10% 0px'});
+  els.forEach(function(el){io.observe(el);});
+})();
+</script>
+
+</body>
+</html>

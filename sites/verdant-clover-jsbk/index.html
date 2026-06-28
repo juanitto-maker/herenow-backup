@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Retama — Claudia Agent Workflow Guide</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1e2e;
+    --surface2: #242840;
+    --border: #2e3450;
+    --accent: #7c6af7;
+    --accent2: #4ade80;
+    --accent3: #f59e0b;
+    --accent4: #f472b6;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --done: #4ade80;
+    --pending: #f59e0b;
+    --future: #7c6af7;
+    --suggested: #f472b6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 15px; line-height: 1.65; }
+
+  /* Header */
+  .hero {
+    background: linear-gradient(135deg, #1a1e2e 0%, #0f1117 60%, #1a1230 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 24px 40px;
+    text-align: center;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(124,106,247,0.15);
+    border: 1px solid rgba(124,106,247,0.4);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+  }
+  .hero h1 { font-size: clamp(1.6rem, 5vw, 2.6rem); font-weight: 800; letter-spacing: -0.5px; margin-bottom: 10px; }
+  .hero h1 span { color: var(--accent); }
+  .hero p { color: var(--muted); max-width: 560px; margin: 0 auto 24px; font-size: 14px; }
+  .stats-row { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-top: 24px; }
+  .stat { text-align: center; }
+  .stat-val { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+  .stat-lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* Layout */
+  .container { max-width: 860px; margin: 0 auto; padding: 0 16px 80px; }
+
+  /* Nav */
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 28px 0;
+  }
+  .toc h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 12px; }
+  .toc ol { padding-left: 20px; }
+  .toc li { margin-bottom: 6px; }
+  .toc a { color: var(--accent); text-decoration: none; font-size: 13px; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* Section headings */
+  .section { margin-top: 44px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .section-header h2 { font-size: 1.2rem; font-weight: 700; }
+  .section-header .session-tag {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+    background: var(--surface2);
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  /* Status legend */
+  .legend {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-done { background: var(--done); }
+  .dot-pending { background: var(--pending); }
+  .dot-future { background: var(--future); }
+  .dot-suggested { background: var(--suggested); }
+
+  /* Step cards */
+  .steps { display: flex; flex-direction: column; gap: 10px; }
+  .step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: grid;
+    grid-template-columns: 20px 1fr auto;
+    gap: 12px;
+    align-items: start;
+  }
+  .step.done { border-left: 3px solid var(--done); }
+  .step.pending { border-left: 3px solid var(--pending); }
+  .step.future { border-left: 3px solid var(--future); }
+  .step.suggested { border-left: 3px solid var(--suggested); }
+
+  .step-bullet { width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; }
+  .step.done .step-bullet { background: var(--done); color: #000; }
+  .step.pending .step-bullet { background: var(--pending); color: #000; }
+  .step.future .step-bullet { background: var(--future); color: #fff; }
+  .step.suggested .step-bullet { background: var(--suggested); color: #fff; }
+
+  .step-content {}
+  .step-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+  .step-desc { font-size: 13px; color: var(--muted); }
+  .step-desc strong { color: var(--text); }
+
+  .step-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+    align-self: start;
+    margin-top: 2px;
+  }
+  .badge-done { background: rgba(74,222,128,0.15); color: var(--done); }
+  .badge-pending { background: rgba(245,158,11,0.15); color: var(--pending); }
+  .badge-future { background: rgba(124,106,247,0.15); color: var(--future); }
+  .badge-suggested { background: rgba(244,114,182,0.15); color: var(--suggested); }
+
+  /* Sub-steps */
+  .substeps { margin-top: 8px; padding-left: 4px; display: flex; flex-direction: column; gap: 4px; }
+  .substep { font-size: 12px; color: var(--muted); padding-left: 12px; border-left: 2px solid var(--border); }
+
+  /* Info boxes */
+  .info-box {
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .info-box.warn { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.25); }
+  .info-box.info { background: rgba(124,106,247,0.08); border: 1px solid rgba(124,106,247,0.25); }
+  .info-box.tip { background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.25); }
+  .info-box.note { background: rgba(244,114,182,0.08); border: 1px solid rgba(244,114,182,0.25); }
+  .info-box strong { display: block; margin-bottom: 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+
+  /* Architecture block */
+  .arch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  @media (max-width: 560px) { .arch-grid { grid-template-columns: 1fr; } }
+  .arch-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .arch-card h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 8px; }
+  .arch-card ul { list-style: none; padding: 0; }
+  .arch-card li { font-size: 12px; color: var(--text); padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .arch-card li:last-child { border-bottom: none; }
+  .arch-card li::before { content: "›  "; color: var(--accent); }
+
+  /* Timeline */
+  .timeline { margin: 16px 0; }
+  .tl-item { display: flex; gap: 14px; margin-bottom: 18px; }
+  .tl-left { display: flex; flex-direction: column; align-items: center; }
+  .tl-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; }
+  .tl-line { width: 2px; background: var(--border); flex: 1; margin-top: 4px; }
+  .tl-body { flex: 1; padding-bottom: 8px; }
+  .tl-title { font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+  .tl-meta { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+  .tl-content { font-size: 12px; color: var(--muted); }
+
+  /* Progress bar */
+  .progress-wrap { margin: 24px 0; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  .progress-bar { height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%); }
+
+  /* Code block */
+  .code-block {
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: #a6e3a1;
+    margin: 10px 0;
+    overflow-x: auto;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 32px 16px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  /* Responsive tweaks */
+  @media (max-width: 480px) {
+    .stats-row { gap: 20px; }
+    .step { grid-template-columns: 18px 1fr; }
+    .step-badge { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">La Retama · digitalAIventures</div>
+  <h1>Claudia <span>Calvares</span> — Agent Guide</h1>
+  <p>Complete workflow: infrastructure, identity, capabilities, roadmap, and future enhancements for the La Retama AI shop manager.</p>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-val">5</div><div class="stat-lbl">Sessions done</div></div>
+    <div class="stat"><div class="stat-val">17h 21m</div><div class="stat-lbl">Time invested</div></div>
+    <div class="stat"><div class="stat-val">v0.16.0</div><div class="stat-lbl">Hermes Agent</div></div>
+    <div class="stat"><div class="stat-val">€136.60</div><div class="stat-lbl">Billed so far</div></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <ol>
+      <li><a href="#arch">System Architecture</a></li>
+      <li><a href="#timeline">Session History</a></li>
+      <li><a href="#infra">Layer 1 — Infrastructure</a></li>
+      <li><a href="#agent">Layer 2 — Agent Core</a></li>
+      <li><a href="#identity">Layer 3 — Identity & Persona</a></li>
+      <li><a href="#integrations">Layer 4 — Integrations</a></li>
+      <li><a href="#owner">Layer 5 — Owner Experience</a></li>
+      <li><a href="#roadmap">Roadmap — What's Next</a></li>
+      <li><a href="#suggestions">Suggested Enhancements</a></li>
+      <li><a href="#ops">Ops & Maintenance Reference</a></li>
+    </ol>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="dot dot-done"></div> Done</div>
+    <div class="legend-item"><div class="dot dot-pending"></div> Pending / In progress</div>
+    <div class="legend-item"><div class="dot dot-future"></div> Planned future</div>
+    <div class="legend-item"><div class="dot dot-suggested"></div> Suggested (new idea)</div>
+  </div>
+
+  <!-- ARCHITECTURE -->
+  <div class="section" id="arch">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(124,106,247,0.15);">🏗️</div>
+      <h2>System Architecture</h2>
+    </div>
+
+    <div class="arch-grid">
+      <div class="arch-card">
+        <h4>Hardware</h4>
+        <ul>
+          <li>Lenovo laptop — Ubuntu 24.04 server</li>
+          <li>Lid-closed operation (AC power)</li>
+          <li>On-site at La Retama shop</li>
+          <li>Wi-Fi auto-reconnect configured</li>
+        </ul>
+
+      </div>
+      <div class="arch-card">
+        <h4>Remote Access</h4>
+        <ul>
+          <li>Tailscale — dedicated client tailnet</li>
+          <li>SSH key-only, UFW tailnet-bound</li>
+          <li>Portainer (Docker management)</li>
+          <li>Fail2ban, auto-updates</li>
+        </ul>
+      </div>
+      <div class="arch-card">
+        <h4>Agent Stack</h4>
+        <ul>
+          <li>Hermes Agent v0.16.0</li>
+          <li>Python 3.11 venv, unprivileged "hermes" user</li>
+          <li>Docker sandbox terminal backend</li>
+          <li>systemd user service (boot persistent)</li>
+        </ul>
+      </div>
+      <div class="arch-card">
+        <h4>AI Models</h4>
+        <ul>
+          <li>Primary: economical free-tier model</li>
+          <li>Delegate: stronger paid model (owner key)</li>
+          <li>TTS: Gemini voice (warm voice selected)</li>
+          <li>STT: on-device speech-to-text</li>
+        </ul>
+      </div>
+      <div class="arch-card">
+        <h4>Tools Enabled</h4>
+        <ul>
+          <li>DuckDuckGo web search</li>
+          <li>Gemini TTS (voice output)</li>
+          <li>Docker sandbox (code execution)</li>
+          <li>Read-only Odoo/ERP connector (built, parked)</li>
+        </ul>
+      </div>
+      <div class="arch-card">
+        <h4>Security Posture</h4>
+        <ul>
+          <li>Lynis hardening index: 76</li>
+          <li>No docker.sock, read-only mounts</li>
+          <li>Manual approval policy (fail-closed)</li>
+          <li>Env file mode 600, no key forwarding</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="info-box info">
+      <strong>Gateway pattern</strong>
+      Claudia only knows users who have written to her <em>in the current run</em> — her contact directory rebuilds on restart. Proactive outbound messages to the owner must be triggered via the Telegram Bot API directly (not via the agent's own list). This is documented and worked around.
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="section" id="timeline">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(74,222,128,0.15);">📋</div>
+      <h2>Session History</h2>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Task 1 overall progress</span><span>~45% complete</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:45%"></div></div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-dot" style="background:var(--done);color:#000;">S1</div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-body">
+          <div class="tl-title">Session 1 — Server Build</div>
+          <div class="tl-meta">10 Jun 2026 · on-site · 5h 20m · €46.33</div>
+          <div class="tl-content">BIOS config, Ubuntu 24.04 install, SSH key chain, security hardening (UFW/fail2ban/auto-updates), lid/sleep immunity, Wi-Fi resilience, Docker + Portainer. Server delivered: hardened, sleep/reboot/Wi-Fi-resilient, remotely administrable.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-dot" style="background:var(--done);color:#000;">S2</div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-body">
+          <div class="tl-title">Session 2 — Security Audit + Agent Install</div>
+          <div class="tl-meta">11 Jun 2026 · remote · 3h 05m · €24.67</div>
+          <div class="tl-content">Lynis audit (index 69→76), dead-man heartbeat monitor (healthchecks.io + Telegram alerts + email fallback), @laretama_manager_bot created, Hermes installed under unprivileged "hermes" user, Gemini TTS + DuckDuckGo tools configured, Telegram single-user allowlist, full unattended reboot test PASSED.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-dot" style="background:var(--done);color:#000;">S3</div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-body">
+          <div class="tl-title">Session 3 — Identity + Capability Tests</div>
+          <div class="tl-meta">12 Jun 2026 · remote · 1h 30m · €12.00</div>
+          <div class="tl-content">SOUL.md written: "Claudia Calvares", shop manager persona with scope, hard boundaries, escalation rules, language policy (Spanish-first), shop facts. Supplier research test: 8 web searches, 3 distributors found, propose-then-confirm behaviour verified. Shop audio unlocked (PipeWire fix). Welcome serenade generated and cron-scheduled. Gemini free-tier rate limits identified as bottleneck.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-dot" style="background:var(--done);color:#000;">S4</div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-body">
+          <div class="tl-title">Session 4 — Credentials + Persona + Voice</div>
+          <div class="tl-meta">13–14 Jun 2026 · remote · 4h 12m · €33.60</div>
+          <div class="tl-content">Zero-knowledge SETUP key intake (owner pastes key → auto-deleted from chat → stored in env 600). Two-model architecture finalised (economical primary + paid delegate). Owner Telegram ID added to allowlist. Safety boundary re-tests PASSED on new model. Andalusian portrait avatar generated on Replicate. Voice round-trip verified: owner voice note → STT → in-character spoken reply. PASSED.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-dot" style="background:var(--done);color:#000;">S5</div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-body">
+          <div class="tl-title">Session 5 — Incident Triage + Owner Channel + ERP Prep</div>
+          <div class="tl-meta">15 Jun 2026 · remote · 2h 44m · €21.86</div>
+          <div class="tl-content">Internet outage incident diagnosed (server fine, dead-man worked). Owner proactive messaging fixed (API path confirmed). Developer auto-notification rule added (summary on owner message). Capability-honesty safeguard added (no overstating unbuilt features). Invalid delegate key discovered — re-supply deferred to setup day. Read-only Odoo stock connector built and parked. Email assessed: draft-only design agreed.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-dot" style="background:var(--pending);color:#000;">S6</div>
+        </div>
+        <div class="tl-body">
+          <div class="tl-title">Session 6 — Owner Setup Day</div>
+          <div class="tl-meta">~2 weeks out · ~3h estimated · pending owner availability</div>
+          <div class="tl-content">Owner supplies valid paid AI key → delegate activated. Owner self-serves ERP staging copy + read-only API key → stock connector activated. Signed-email draft test. Owner home channel first guided chat. Remove one-shot serenade cron.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER 1 INFRA -->
+  <div class="section" id="infra">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(74,222,128,0.15);">🖥️</div>
+      <h2>Layer 1 — Infrastructure</h2>
+      <span class="session-tag">Sessions 1–2</span>
+    </div>
+
+    <div class="steps">
+      <div class="step done">
+        <div class="step-bullet">✓</div>
+        <div class="step-content">
+          <div class="step-title">Ubuntu 24.04 server install</div>
+          <div class="step-desc">BIOS AC-restore, lid-close immunity via systemd+GNOME+GDM, Wi-Fi auto-reconnect, battery conservation. Zero on-site visits required after delivery.</div>
+        </div>
+        <span class="step-badge badge-done">DONE</span>
+      </div>
+      <div class="step done">
+        <div class="step-bullet">✓</div>
+        <div class="step-content">
+          <div class="step-title">Tailscale + SSH hardening</div>
+          <div class="step-desc">Dedicated client tailnet, SSH key-only auth, UFW tailnet-only policy, fail2ban (with self-ban fix), unattended upgrades.</div>
+        </div>
+        <span class="step-badge badge-done">DONE</span>
+      </div>
+      <div class="step done">
+        <div class="step-bullet">✓</div>
+        <div class="step-content">
+          <div class="step-title">Docker + Portainer</div>
+          <div class="step-desc">Docker daemon hardened, Portainer on tailnet-bound port. Docker sandbox backend used by Hermes for safe code execution (no docker.sock, read-only mounts).</div>
+        </div>
+        <span class="step-badge badge-done">DONE</span>
+      </div>
+      <div class="step done">
+        <div class="step-bullet">✓</div>
+        <div class="step-content">
+          <div class="step-title">Lynis security hardening</div>
+          <div class="step-desc">Full Lynis audit cycle: index 69→76. SSH batch hardening, unused kernel protocols blacklisted, sysctl hardening applied. Zero warnings.</div>
+        </div>
+        <span class="step-badge badge-done">DONE</span>
+      </div>
+      <div class="step done">
+        <div class="step-bullet">✓</div>
+        <div class="step-content">
+          <div class="step-title">Dead-man heartbeat monitor</div>
+          <div class="step-desc">healthchecks.io (5 min period / 10 min grace), server heartbeat cron, Telegram "DAV Infra Alerts" group + email fallback. Validated in real incident (S5): short internet outage correctly diagnosed as non-server event.</div>
+        </div>
+        <span class="step-badge badge-done">DONE</span>
+      </div>
+      <div class="step done">
+        <div class="step-bullet">✓</div>
+        <div class="step-content">
+          <div class="step-title">Shop audio (PipeWire)</div>
+          <div class="step-desc">Triple PipeWire instance issue diagnosed (login screen held sound card). Agent user granted audio device access. Microphone + speakers confirmed available to agent.</div>
+        </div>
+        <span class="step-badge badge-done">DONE</span>
+      </div>
+      <div class="step suggested">
+        <div class="step-bullet">+</div>
+        <div class="step-content">
+          <div class="step-title">Lynis re-audit to push index above 80</div>
+          <div class="step-desc">One more hardening pass targeting remaining quick wins (AppArmor profiles, auditd, PAM hardening). Goal: Lynis ≥80 as a milestone for "production-ready" sign-off.</div>
+        </div>
+        <span class="step-badge badge-suggested">IDEA</span>
+      </div>
+      <div class="step suggested">
+        <div class="step-bullet">+</div>
+        <div class="step-content">
+          <div class="step-title">Automated nightly backup snapshot</div>
+          <div class="step-desc">Rsync or borgbackup cron to a remote target (e.g. Backblaze B2 or another Tailscale node). Backs up SOUL.md, env file, Hermes config, logs. Recovery time from scratch: currently ~2h; backup reduces it to ~15m.</div>
+        </div>
+        <span class="step-badge badge-suggested">IDEA</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER 2 AGENT CORE -->
+  <div class="section" id="agent">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(124,106,247,0.15);">🤖</div>
+      <h2>Layer 2 — Agent Core</h2>
+      <span class="session-tag">Sessions 2–4</span>
+    </div>
+
+    <div class="steps">
+      <div class="step done">
+        <div class="step-bullet">✓</div>
+        <div class="step-content">
+          <div class="step-title">Hermes v0.16.0 install</div>
+          <div class="step-desc">Installed under unprivileged "hermes" user (no sudo, no vault access). Python 3.11 venv, hash-verified. Optional browser engine deliberately skipped. PATH wired. systemd user service with lingering → boot persistent.</div>
+        </div>
+        <span class="step-badge badge-done">DONE</span>
+      </div>
+      <div class="step done">
+        <div class="step-bullet">✓</div>
+        <div class="step-content">
+          <div class="step-title">Two-model architecture</div>
+          <div class="step-desc"><strong>Primary:</strong> economical free-tier (stable, no throttling). <strong>Delegate:</strong> stronger paid model, funded via owner's own key through zero-knowledge intake. Top-tier unavailable (export controls June 2026).</div>
+        </div>
+        <span class="step-badge badge-done">DONE</span>
+      </div>
+      <div class="step done">
+        <div class="step-bullet">✓</div>
+        <div class="step-content">
+          <div class="step-title">Tool set configured</div>
+          <div class="step-desc">DuckDuckGo web search (live, tested), Gemini TTS voice output (warm voice selected by owner), Docker sandbox terminal execution, STT (on-device). Browser and image-gen deliberately disabled.</div>
+        </div>
+        <span class="step-badge badge-done">DONE</span>
+      </div>
+      <div class="step done">
+        <div class="step-bullet">✓</div>
+        <div class="step-content">
+          <div class="step-title">Safety sandbox verified</div>
+          <div class="step-desc">Manual approval policy (fail-closed), no cron auto-approval. No docker.sock, read-only mounts, no env forwarding into sandbox. Secret-disclosure and destructive-command refusals verified on live model.</div>
+        </div>
+        <span class="step-badge badge-done">DONE</span>
+      </div>
+      <div class="step done">
+        <div class="step-bullet">✓</div>
+        <div class="step-content">
+          <div class="step-title">Zero-knowledge credential intake</div>
+          <div class="step-desc">Owner sends <code>SETUP &lt;KEY&gt; &lt;value&gt;</code> via Telegram. Intercepted before AI processes it, written to env file (mode 600), source message auto-deleted, confirmation replied. Developer never sees the key. Installed as a proper Hermes plugin.</div>
+        </div>
+        <span class="step-badge badge-done">DONE</span>
+      </div>
+      <div class="step done">
+        <div class="step-bullet">✓</div>
+        <div class="step-content">
+          <div class="step-title">Capability-honesty safeguard</div>
+          <div class="step-desc">Explicit rule added: Claudia must state clearly what integrations are NOT yet active rather than implying they work. Triggered after she overstated stock-reading ability to the owner (S5). Correction was issued.</div>
+        </div>
+        <span class="step-badge badge-done">DONE</span>
+      </div>
+      <div class="step pending">
+        <div class="step-bullet">!</div>
+        <div class="step-content">
+          <div class="step-title">Delegate AI key — activate stronger model</div>
+          <div class="step-desc">The key on file from S4 was invalid (mistyped entry). Owner must re-supply a valid key via SETUP command at the setup day. Until then, only the primary model is active.</div>
+        </div>
+        <span class="step-badge badge-pending">PENDING</span>
+      </div>
+      <div class="step suggested">
+        <div class="step-bullet">+</div>
+        <div class="step-content">
+          <div class="step-title">Model auto-router (smart delegate)</div>
+          <div class="step-desc">Add a routing rule so Claudia automatically escalates to the delegate model for: complex multi-step tasks, legal/supplier negotiations, anything with financial impact. Falls back to primary for simple Q&A and routine lookups. Saves owner's delegate quota.</div>
+        </div>
+        <span class="step-badge badge-suggested">IDEA</span>
+      </div>
+      <div class="step suggested">
+        <div class="step-bullet">+</div>
+        <div class="step-content">
+          <div class="step-title">Persistent memory / context across restarts</div>
+          <div class="step-desc">Currently the contact directory resets on restart. Consider a lightweight SQLite log of: (a) recent conversation summaries, (b) known contacts, (c) pending tasks. Claudia reads this on boot and "remembers" she was talking to the owner. Hermes has a memory plugin — check if it supports custom storage backends.</div>
+        </div>
+        <span class="step-badge badge-suggested">IDEA</span>
+      </div>
+      <div class="step suggested">
+        <div class="step-bullet">+</div>
+        <div class="step-content">
+          <div class="step-title">Daily usage digest to developer</div>
+          <div class="step-desc">Nightly cron: Claudia summarises the day's conversations (topic categories, owner query count, tool calls made, errors) and sends a brief report to the developer Telegram. Early warning for misuse, bugs, or capability gaps without reading every message.</div>
+        </div>
+        <span class="step-badge badge-suggested">IDEA</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER 3 IDENTITY -->
+  <div class="section" id="identity">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(244,114,182,0.15);">🎭</div>
+      <h2>Layer 3 — Identity & Persona</h2>
+      <span class="session-tag">Sessions 3–4</span>
+    </div>
+
+    <div class="info-box tip">
+      <strong>Current persona</strong>
+      "Claudia Calvares" — general business manager for La Retama. Spanish-first (mirrors sender language). Warm-professional tone, respectful Andalusian cultural warmth. Warm portrait avatar set. Voice: owner-preferred warm Gemini neural voice.
+    </div>
+
+    <div class="steps">
+      <div class="step done">
+        <div class="step-bullet">✓</div>
+        <div class="step-content">
+          <div class="step-title">SOUL.md — full identity document</div>
+          <div class="step-desc">Scope of duties: stock/Odoo, suppliers, sales advice, email, customer service. Hard boundaries: propose-then-confirm for payments/prices/orders, no secrets disclosure, no destructive commands, no real third-party contact in testing. Escalation rules: technical → developer, business → owner.</div>
+          <div class="substeps">
+            <div class="substep">Language policy: Spanish first, mirror sender</div>
+            <div class="substep">Shop facts: opening hours, location, product categories, values (ecobio/local)</div>
+            <div class="substep">Testing-mode awareness: knows it's in testing, behaves accordingly</div>
+          </div>
+        </div>
+        <span class="step-badge badge-done">DONE</span>
+      </div>
+      <div class="step done">
+        <div class="step-bullet">✓</div>
+        <div class="step-content">
+          <div class="step-title">Avatar — Andalusian portrait</div>
+          <div class="step-desc">Generated via Replicate (multiple prompt/image iterations), warm and culturally appropriate. Set as @laretama_manager_bot Telegram avatar.</div>
+        </div>
+        <span class="step-badge badge-done">DONE</span>
+      </div>
+      <div class="step done">
+        <div class="step-bullet">✓</div>
+        <div class="step-content">
+          <div class="step-title">Voice round-trip verified</div>
+          <div class="step-desc">Owner sends voice note → on-device STT → Claudia processes → Gemini TTS warm voice → reply as voice note. Full voice conversation flow confirmed working end-to-end.</div>
+        </div>
+        <span class="step-badge badge-done">DONE</span>
+      </div>
+      <div class="step suggested">
+        <div class="step-bullet">+</div>
+        <div class="step-content">
+          <div class="step-title">Seasonal + event-aware personality layer</div>
+          <div class="step-desc">Add a lightweight calendar awareness: Claudia knows current month/season and adapts greetings. Ramadan greetings for Yacub, local Spanish fiestas awareness, harvest season context for ecobio products. Adds warmth with minimal complexity.</div>
+        </div>
+        <span class="step-badge badge-suggested">IDEA</span>
+      </div>
+      <div class="step suggested">
+        <div class="step-bullet">+</div>
+        <div class="step-content">
+          <div class="step-title">Arabic language support</div>
+          <div class="step-desc">The S3 serenade included an Arabic greeting. Claudia's language policy should explicitly include Arabic as a supported language for owner communications (Yacub is likely Arabic-speaking). Test that the TTS voice handles Arabic well or select an appropriate Arabic voice option.</div>
+        </div>
+        <span class="step-badge badge-suggested">IDEA</span>
+      </div>
+      <div class="step suggested">
+        <div class="step-bullet">+</div>
+        <div class="step-content">
+          <div class="step-title">Shop opening hours automation</div>
+          <div class="step-desc">SOUL.md knows the hours. Add a rule: if a customer (future: multi-user) asks "are you open?", Claudia checks the current time and answers factually. Can also trigger a "shop opens in X hours" audio announcement via the shop speakers via cron.</div>
+        </div>
+        <span class="step-badge badge-suggested">IDEA</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER 4 INTEGRATIONS -->
+  <div class="section" id="integrations">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(245,158,11,0.15);">🔌</div>
+      <h2>Layer 4 — Integrations</h2>
+      <span class="session-tag">Sessions 5–6+</span>
+    </div>
+
+    <div class="steps">
+      <div class="step done">
+        <div class="step-bullet">✓</div>
+        <div class="step-content">
+          <div class="step-title">DuckDuckGo web search</div>
+          <div class="step-desc">Live and tested. Supplier research scenario passed: 8 searches, 3 relevant Andalucían organic distributors returned with shop-fit reasoning. No real contact attempted (testing mode).</div>
+        </div>
+        <span class="step-badge badge-done">DONE</span>
+      </div>
+      <div class="step done">
+        <div class="step-bullet">✓</div>
+        <div class="step-content">
+          <div class="step-title">Read-only Odoo stock connector (built, parked)</div>
+          <div class="step-desc">Structurally read-only — can query product and stock data, never modify. Built in S5, syntax-validated, dormant until staging credentials are added. Safe to ship now.</div>
+        </div>
+        <span class="step-badge badge-done">DONE</span>
+      </div>
+      <div class="step pending">
+        <div class="step-bullet">!</div>
+        <div class="step-content">
+          <div class="step-title">Odoo staging credentials + connector activation</div>
+          <div class="step-desc">Owner must self-serve a staging Odoo copy and generate a read-only API key. Developer activates the parked connector with staging creds. First tests: product lookup by name, stock level query, low-stock alert. <strong>Blocked on owner setup day.</strong></div>
+        </div>
+        <span class="step-badge badge-pending">PENDING S6</span>
+      </div>
+      <div class="step pending">
+        <div class="step-bullet">!</div>
+        <div class="step-content">
+          <div class="step-title">Email — draft-only integration</div>
+          <div class="step-desc">Design agreed: Claudia drafts emails, owner reviews and sends. Email currently unwired (safe by default). Needs: SMTP credentials (owner-supplied), draft-email plugin installed in Hermes, proposed template tested (supplier enquiry). <strong>Pending S6.</strong></div>
+        </div>
+        <span class="step-badge badge-pending">PENDING S6</span>
+      </div>
+      <div class="step future">
+        <div class="step-bullet">→</div>
+        <div class="step-content">
+          <div class="step-title">Odoo write access (price edits, stock adjustments)</div>
+          <div class="step-desc">After read-only is stable and trusted: expand connector to allow Claudia to propose price changes or stock adjustments via the propose-then-confirm flow. Owner confirms in Telegram → Claudia writes to Odoo. Requires separate approval gate in SOUL.md.</div>
+        </div>
+        <span class="step-badge badge-future">FUTURE</span>
+      </div>
+      <div class="step future">
+        <div class="step-bullet">→</div>
+        <div class="step-content">
+          <div class="step-title">Supplier contact (email send)</div>
+          <div class="step-desc">After draft-only email is proven: add a send capability gated behind explicit owner confirmation per message. Claudia drafts → owner says "send it" → email dispatched. Confirm real third-party contact rules in SOUL.md updated before activating.</div>
+        </div>
+        <span class="step-badge badge-future">FUTURE</span>
+      </div>
+      <div class="step suggested">
+        <div class="step-bullet">+</div>
+        <div class="step-content">
+          <div class="step-title">WhatsApp Business integration</div>
+          <div class="step-desc">Many Andalucían suppliers and customers use WhatsApp. Hermes supports multiple gateways. A WhatsApp Business channel (Twilio or Meta Cloud API) would let Claudia handle customer enquiries at scale. Pilot: customer-facing FAQ bot, then supplier communication.</div>
+        </div>
+        <span class="step-badge badge-suggested">IDEA</span>
+      </div>
+      <div class="step suggested">
+        <div class="step-bullet">+</div>
+        <div class="step-content">
+          <div class="step-title">Low-stock proactive alert</div>
+          <div class="step-desc">Once Odoo connector is live: add a cron that checks stock levels each morning and sends Yacub a Telegram message listing products below reorder threshold. Claudia frames it as "Good morning, here's what needs ordering today:" with suggested quantities.</div>
+        </div>
+        <span class="step-badge badge-suggested">IDEA</span>
+      </div>
+      <div class="step suggested">
+        <div class="step-bullet">+</div>
+        <div class="step-content">
+          <div class="step-title">Price-comparison web research</div>
+          <div class="step-desc">Extend the existing DuckDuckGo tool: Claudia can research competitor prices for key products (e.g. aceite ecológico, miel de la Alpujarra) and report them to the owner weekly. Uses existing search capability, just needs a scheduled trigger and a report format.</div>
+        </div>
+        <span class="step-badge badge-suggested">IDEA</span>
+      </div>
+      <div class="step suggested">
+        <div class="step-bullet">+</div>
+        <div class="step-content">
+          <div class="step-title">Shop camera / door sensor input</div>
+          <div class="step-desc">If the shop has or gets a camera or door sensor: pipe a simple motion/open event into Hermes. Claudia could log shop open/close times, alert Yacub if the shop is still open past closing time, or trigger a welcome announcement when someone enters.</div>
+        </div>
+        <span class="step-badge badge-suggested">IDEA</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER 5 OWNER EXPERIENCE -->
+  <div class="section" id="owner">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(245,158,11,0.15);">👤</div>
+      <h2>Layer 5 — Owner Experience</h2>
+      <span class="session-tag">Sessions 4–6</span>
+    </div>
+
+    <div class="steps">
+      <div class="step done">
+        <div class="step-bullet">✓</div>
+        <div class="step-content">
+          <div class="step-title">Owner Telegram onboarding</div>
+          <div class="step-desc">Owner Telegram ID recovered from gateway rejection logs, added to chat allowlist and SETUP key intake authorized list. Two-way channel confirmed working.</div>
+        </div>
+        <span class="step-badge badge-done">DONE</span>
+      </div>
+      <div class="step done">
+        <div class="step-bullet">✓</div>
+        <div class="step-content">
+          <div class="step-title">Developer auto-notification</div>
+          <div class="step-desc">Standing rule: whenever the owner writes, Claudia alerts the developer with a short summary. Verified firing live on real owner messages. Allows developer to monitor without reading every conversation.</div>
+        </div>
+        <span class="step-badge badge-done">DONE</span>
+      </div>
+      <div class="step done">
+        <div class="step-bullet">✓</div>
+        <div class="step-content">
+          <div class="step-title">Welcome voice greeting delivered</div>
+          <div class="step-desc">Spanish + Arabic greeting TTS generated, delivered via Telegram. Owner replied and engaged. One-shot serenade cron still active — remove at S6.</div>
+        </div>
+        <span class="step-badge badge-done">DONE</span>
+      </div>
+      <div class="step pending">
+        <div class="step-bullet">!</div>
+        <div class="step-content">
+          <div class="step-title">Remove one-shot serenade cron</div>
+          <div class="step-desc">The welcome cron is a one-shot that fires at 20:30. Confirm it has fired, then remove to keep the crontab clean.</div>
+        </div>
+        <span class="step-badge badge-pending">PENDING S6</span>
+      </div>
+      <div class="step pending">
+        <div class="step-bullet">!</div>
+        <div class="step-content">
+          <div class="step-title">Owner home channel + first guided chat session</div>
+          <div class="step-desc">Dedicated session where Yacub gets hands-on time with Claudia guided by the developer. Cover: how to ask for stock info, how to trigger a supplier email draft, voice message flow, what to do if something breaks.</div>
+        </div>
+        <span class="step-badge badge-pending">PENDING S6</span>
+      </div>
+      <div class="step future">
+        <div class="step-bullet">→</div>
+        <div class="step-content">
+          <div class="step-title">Owner runbook (self-service guide)</div>
+          <div class="step-desc">A simple PDF or Telegram-pinned message the owner can reference: how to supply a new key, how to restart the agent if needed (via Portainer), what the dead-man alerts mean, who to contact. Reduces developer call-outs.</div>
+        </div>
+        <span class="step-badge badge-future">FUTURE</span>
+      </div>
+      <div class="step suggested">
+        <div class="step-bullet">+</div>
+        <div class="step-content">
+          <div class="step-title">Shop morning briefing</div>
+          <div class="step-desc">Each morning at a configured time (e.g. 8:30), Claudia sends Yacub a voice or text message: today's date, any low-stock alerts from Odoo, any pending supplier replies, any scheduled deliveries (if calendar integration added). Makes Claudia feel like a real business manager starting the day.</div>
+        </div>
+        <span class="step-badge badge-suggested">IDEA</span>
+      </div>
+      <div class="step suggested">
+        <div class="step-bullet">+</div>
+        <div class="step-content">
+          <div class="step-title">Multi-user allowlist (staff / family)</div>
+          <div class="step-desc">Hermes supports a user allowlist. Add a family member or shop assistant as a secondary user with a more restricted role (e.g. can query stock, cannot modify anything). Claudia already knows to escalate business decisions to the owner.</div>
+        </div>
+        <span class="step-badge badge-suggested">IDEA</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROADMAP -->
+  <div class="section" id="roadmap">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(124,106,247,0.15);">🗺️</div>
+      <h2>Roadmap — What's Next</h2>
+    </div>
+
+    <div class="info-box warn">
+      <strong>Gate condition</strong>
+      Strongly advised: keep read-only / staging / draft-only testing phase before any live-shop hook-up. No live Odoo writes, no real email sends until staging is proven stable for at least 2 weeks.
+    </div>
+
+    <div class="steps">
+      <div class="step pending">
+        <div class="step-bullet">1</div>
+        <div class="step-content">
+          <div class="step-title">Session 6 — Owner Setup Day</div>
+          <div class="step-desc"><strong>Blockers on owner:</strong> valid paid AI key (SETUP command), Odoo staging copy + read-only API key.</div>
+          <div class="substeps">
+            <div class="substep">Owner supplies valid delegate key → activate stronger model</div>
+            <div class="substep">Odoo staging creds → activate read-only stock connector</div>
+            <div class="substep">Test: "Claudia, how many kilos of garbanzos do we have?"</div>
+            <div class="substep">Draft email test: "Claudia, write to Distribuidor X asking for prices"</div>
+            <div class="substep">Owner guided chat session (first real use)</div>
+            <div class="substep">Remove one-shot serenade cron</div>
+          </div>
+        </div>
+        <span class="step-badge badge-pending">NEXT</span>
+      </div>
+      <div class="step future">
+        <div class="step-bullet">2</div>
+        <div class="step-content">
+          <div class="step-title">Phase: Read-Only Stable (2–4 weeks after S6)</div>
+          <div class="step-desc">Monitor real usage. Validate that stock queries work reliably, email drafts are useful, no false capability claims. Fix any bugs. Gather owner feedback on what else Claudia should know or do.</div>
+        </div>
+        <span class="step-badge badge-future">FUTURE</span>
+      </div>
+      <div class="step future">
+        <div class="step-bullet">3</div>
+        <div class="step-content">
+          <div class="step-title">Phase: Write Access + Email Send</div>
+          <div class="step-desc">After stable: Odoo write access (propose-then-confirm flow for price edits, stock adjustments). Email send capability (per-message owner confirmation). Possibly WhatsApp gateway for supplier reach.</div>
+        </div>
+        <span class="step-badge badge-future">FUTURE</span>
+      </div>
+      <div class="step future">
+        <div class="step-bullet">4</div>
+        <div class="step-content">
+          <div class="step-title">Phase: Autonomous Shop Manager</div>
+          <div class="step-desc">After write access proven: add daily briefings, low-stock auto-alerts, price comparison research, supplier shortlist maintenance. Claudia becomes a genuine daily co-manager rather than an on-demand assistant.</div>
+        </div>
+        <span class="step-badge badge-future">FUTURE</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUGGESTIONS -->
+  <div class="section" id="suggestions">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(244,114,182,0.15);">💡</div>
+      <h2>Suggested Enhancements — Full Hermes Capabilities</h2>
+    </div>
+
+    <div class="info-box note">
+      <strong>What Hermes can do that we haven't used yet</strong>
+      These are capabilities native to Hermes that are not yet wired for Claudia. Each would make her meaningfully smarter or more autonomous.
+    </div>
+
+    <div class="steps">
+      <div class="step suggested">
+        <div class="step-bullet">+</div>
+        <div class="step-content">
+          <div class="step-title">File ingestion — supplier pricelists, invoices</div>
+          <div class="step-desc">Hermes can accept file uploads via Telegram. Yacub could forward a supplier PDF pricelist → Claudia reads it, extracts product/price table, compares to current Odoo prices, flags discrepancies. Huge time saver for a shop with many suppliers.</div>
+        </div>
+        <span class="step-badge badge-suggested">HIGH VALUE</span>
+      </div>
+      <div class="step suggested">
+        <div class="step-bullet">+</div>
+        <div class="step-content">
+          <div class="step-title">Photo-to-product lookup</div>
+          <div class="step-desc">Hermes supports image input. Yacub photographs a product label → Claudia identifies it (web search + image analysis) and tells him: current stock level in Odoo, supplier, last purchase price. Useful at the market, in the stockroom, or when a customer asks about something.</div>
+        </div>
+        <span class="step-badge badge-suggested">HIGH VALUE</span>
+      </div>
+      <div class="step suggested">
+        <div class="step-bullet">+</div>
+        <div class="step-content">
+          <div class="step-title">Structured task / to-do tracking</div>
+          <div class="step-desc">Claudia maintains a lightweight task list in a local JSON file (or simple Odoo note). Yacub says "remind me to call Distribuidor X on Friday" → Claudia adds it, sends a Telegram reminder at the right time. Uses Hermes scheduling + local state.</div>
+        </div>
+        <span class="step-badge badge-suggested">IDEA</span>
+      </div>
+      <div class="step suggested">
+        <div class="step-bullet">+</div>
+        <div class="step-content">
+          <div class="step-title">Sales reporting from Odoo</div>
+          <div class="step-desc">Once Odoo connector is live: weekly sales summary (top products, revenue, slow movers). Claudia sends it every Monday morning as a voice note or Telegram message. Uses existing read-only access — no new permissions needed.</div>
+        </div>
+        <span class="step-badge badge-suggested">IDEA</span>
+      </div>
+      <div class="step suggested">
+        <div class="step-bullet">+</div>
+        <div class="step-content">
+          <div class="step-title">Competitor / market monitoring</div>
+          <div class="step-desc">Weekly cron: Claudia searches for prices of La Retama's top 10 products at competing local shops (web search). Sends Yacub a "market pulse" summary. Helps pricing decisions without Yacub needing to do the legwork.</div>
+        </div>
+        <span class="step-badge badge-suggested">IDEA</span>
+      </div>
+      <div class="step suggested">
+        <div class="step-bullet">+</div>
+        <div class="step-content">
+          <div class="step-title">Shop ambient announcement (TTS to speakers)</div>
+          <div class="step-desc">Audio is already wired. Claudia can play announcements through the shop speakers on demand or on a schedule. E.g. "Buenos días, bienvenidos a La Retama, hoy tenemos aceite nuevo de la cosecha 2025..." Triggered by Yacub's Telegram command or automatically at opening time.</div>
+        </div>
+        <span class="step-badge badge-suggested">IDEA</span>
+      </div>
+      <div class="step suggested">
+        <div class="step-bullet">+</div>
+        <div class="step-content">
+          <div class="step-title">Hermes plugin: custom reorder calculator</div>
+          <div class="step-desc">A small Hermes plugin that: pulls current stock from Odoo, applies a simple reorder formula (days of stock remaining = stock / avg_daily_sales), and outputs a prioritised "order now" list. Claudia presents this to Yacub with suggested quantities. Requires 30–60 days of Odoo sales history.</div>
+        </div>
+        <span class="step-badge badge-suggested">IDEA</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPS REFERENCE -->
+  <div class="section" id="ops">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(74,222,128,0.15);">⚙️</div>
+      <h2>Ops & Maintenance Reference</h2>
+    </div>
+
+    <div class="arch-grid">
+      <div class="arch-card">
+        <h4>Remote access</h4>
+        <ul>
+          <li>SSH via Tailscale (key auth only)</li>
+          <li>Portainer on tailnet port</li>
+          <li>No direct internet SSH exposure</li>
+          <li>Android → Termux/JuiceSSH</li>
+        </ul>
+      </div>
+      <div class="arch-card">
+        <h4>Agent service</h4>
+        <ul>
+          <li>systemd user service, lingering</li>
+          <li>Restarts automatically on crash</li>
+          <li>Contact dir rebuilds on restart</li>
+          <li>Check: journalctl --user -u hermes</li>
+        </ul>
+      </div>
+      <div class="arch-card">
+        <h4>Monitoring</h4>
+        <ul>
+          <li>healthchecks.io dead-man (5/10 min)</li>
+          <li>Telegram "DAV Infra Alerts" group</li>
+          <li>Email fallback alert</li>
+          <li>Brief internet outage = expected (self-recovers)</li>
+        </ul>
+      </div>
+      <div class="arch-card">
+        <h4>Key management</h4>
+        <ul>
+          <li>All keys in KeePassDX</li>
+          <li>Agent env file: mode 600</li>
+          <li>Owner keys: SETUP command (never seen by dev)</li>
+          <li>Bot token: KeePassDX entry</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="info-box info">
+      <strong>Internet outage protocol</strong>
+      If "server down" alert fires: (1) wait 15 minutes — most outages are brief shop internet blips and the server self-recovers. (2) If alert persists: SSH in via Tailscale, check <code>systemctl --user status hermes</code>. (3) If SSH unreachable: physical visit or ask Yacub to reboot the laptop. The dead-man has a 10-min grace so short outages don't page.
+    </div>
+
+    <div class="info-box warn">
+      <strong>Before any Odoo write access goes live</strong>
+      Full staging + read-only phase required (minimum 2 weeks). Update SOUL.md approval gates. Test propose-then-confirm flow on staging Odoo before touching production. Get explicit owner sign-off.
+    </div>
+
+    <div class="code-block">
+# Useful quick commands (via Tailscale SSH)
+systemctl --user status hermes          # Agent status
+journalctl --user -u hermes -f          # Live logs
+systemctl --user restart hermes         # Restart agent
+crontab -l                              # Check crons (remove serenade after S6)
+cat ~/.config/hermes/env               # Verify key stored (do NOT print value)
+lynis audit system                      # Re-run security audit
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>La Retama — Claudia Calvares Agent Guide · digitalAIventures LLC · Generated 27 Jun 2026</p>
+</footer>
+
+</body>
+</html>

@@ -196,7 +196,18 @@
   [data-lang].show{display:revert!important}
   .fade{animation:fadeUp .5s ease both}
   @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  /* v7 ambient scroll reveals */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  .reveal[data-d="1"]{transition-delay:.08s}
+  .reveal[data-d="2"]{transition-delay:.16s}
+  .reveal[data-d="3"]{transition-delay:.24s}
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+    .reveal{opacity:1!important;transform:none!important}
+  }
 </style>
+  <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
 </head>
 <body>
 <div class="shell">
@@ -226,7 +237,7 @@
   </div>
 
   <!-- TALKING CIRCLE -->
-  <section>
+  <section class="reveal">
     <div class="slbl">
       <span data-lang="en">From the talking circle</span>
       <span data-lang="es">Del círculo de conversación</span>
@@ -278,7 +289,7 @@
   </section>
 
   <!-- THE SOLUTION -->
-  <section class="alt">
+  <section class="alt reveal">
     <div class="slbl">
       <span data-lang="en">The solution</span>
       <span data-lang="es">La solución</span>
@@ -442,19 +453,19 @@
 
     <!-- mini feature grid -->
     <div class="fgrid">
-      <div class="fcard"><span class="fico">🚫💧</span>
+      <div class="fcard reveal" data-d="1"><span class="fico">🚫💧</span>
         <div class="ftit"><span data-lang="en">No water</span><span data-lang="es">Sin agua</span><span data-lang="de">Kein Wasser</span></div>
         <div class="fdsc"><span data-lang="en">Never mix poop with water</span><span data-lang="es">Nunca mezclar caca con agua</span><span data-lang="de">Niemals mit Wasser mischen</span></div>
       </div>
-      <div class="fcard"><span class="fico">🌿</span>
+      <div class="fcard reveal" data-d="2"><span class="fico">🌿</span>
         <div class="ftit"><span data-lang="en">Cover layer</span><span data-lang="es">Capa de cobertura</span><span data-lang="de">Deckschicht</span></div>
         <div class="fdsc"><span data-lang="en">Leaves, pine needles, dry plants</span><span data-lang="es">Hojas, pinaza, plantas secas</span><span data-lang="de">Blätter, Kiefernnadeln, Pflanzen</span></div>
       </div>
-      <div class="fcard"><span class="fico">🚫🧪</span>
+      <div class="fcard reveal" data-d="3"><span class="fico">🚫🧪</span>
         <div class="ftit"><span data-lang="en">Nothing toxic</span><span data-lang="es">Nada tóxico</span><span data-lang="de">Nichts Giftiges</span></div>
         <div class="fdsc"><span data-lang="en">Just nature doing its work</span><span data-lang="es">Solo la naturaleza obrando</span><span data-lang="de">Nur die Natur bei der Arbeit</span></div>
       </div>
-      <div class="fcard"><span class="fico">👃✨</span>
+      <div class="fcard reveal" data-d="1"><span class="fico">👃✨</span>
         <div class="ftit"><span data-lang="en">No smell, no flies</span><span data-lang="es">Sin olor, sin moscas</span><span data-lang="de">Kein Geruch, keine Fliegen</span></div>
         <div class="fdsc"><span data-lang="en">The cover keeps it pleasant</span><span data-lang="es">La cobertura lo mantiene agradable</span><span data-lang="de">Die Decke hält es angenehm</span></div>
       </div>
@@ -462,7 +473,7 @@
   </section>
 
   <!-- NATURE LOVES IT -->
-  <section>
+  <section class="reveal">
     <div class="slbl">
       <span data-lang="en">A gentle reframe</span>
       <span data-lang="es">Un cambio de mirada</span>
@@ -496,7 +507,7 @@
   </section>
 
   <!-- HOW TO HELP -->
-  <section class="alt">
+  <section class="alt reveal">
     <div class="slbl">
       <span data-lang="en">Join the making</span>
       <span data-lang="es">Únete a la creación</span>
@@ -513,9 +524,9 @@
     <div data-lang="de"><p>Ein tiefes Dankeschön an alle, die an diesem wichtigen Gesprächskreis teilnahmen und uns zur besten Lösung verhalfen. Nun überlege — könntest du bei diesem Projekt mithelfen?</p></div>
 
     <div class="help-grid">
-      <div class="hcell"><span class="hico">🔨</span><div class="hlb"><span data-lang="en">As volunteer</span><span data-lang="es">Voluntario</span><span data-lang="de">Freiwillig</span></div></div>
-      <div class="hcell"><span class="hico">🎁</span><div class="hlb"><span data-lang="en">As donator</span><span data-lang="es">Donante</span><span data-lang="de">Spender</span></div></div>
-      <div class="hcell"><span class="hico">💡</span><div class="hlb"><span data-lang="en">With ideas</span><span data-lang="es">Con ideas</span><span data-lang="de">Mit Ideen</span></div></div>
+      <div class="hcell reveal" data-d="1"><span class="hico">🔨</span><div class="hlb"><span data-lang="en">As volunteer</span><span data-lang="es">Voluntario</span><span data-lang="de">Freiwillig</span></div></div>
+      <div class="hcell reveal" data-d="2"><span class="hico">🎁</span><div class="hlb"><span data-lang="en">As donator</span><span data-lang="es">Donante</span><span data-lang="de">Spender</span></div></div>
+      <div class="hcell reveal" data-d="3"><span class="hico">💡</span><div class="hlb"><span data-lang="en">With ideas</span><span data-lang="es">Con ideas</span><span data-lang="de">Mit Ideen</span></div></div>
     </div>
     <div data-lang="en"><p style="text-align:center;margin-top:1rem;font-size:.92rem;color:var(--text-m)">…or whatever you feel moved to offer. Every pallet, every cane, every pair of hands counts. 🌻</p></div>
     <div data-lang="es"><p style="text-align:center;margin-top:1rem;font-size:.92rem;color:var(--text-m)">…o lo que sientas el impulso de ofrecer. Cada palet, cada caña, cada par de manos cuenta. 🌻</p></div>
@@ -523,7 +534,7 @@
   </section>
 
   <!-- MISSION PROPOSAL -->
-  <div class="cta">
+  <div class="cta reveal">
     <h2 style="margin-bottom:.6rem">
       <span data-lang="en">A one-day mission 🛠️</span>
       <span data-lang="es">Una misión de un día 🛠️</span>
@@ -540,7 +551,7 @@
   </div>
 
   <!-- GATHER / CTA -->
-  <div class="cta">
+  <div class="cta reveal">
     <h2 style="margin-bottom:.6rem">
       <span data-lang="en">Let's gather 🌀</span>
       <span data-lang="es">Reunámonos 🌀</span>
@@ -570,7 +581,7 @@
           <span data-lang="de">Was wir jede Woche besprechen — und Platz für deine Ideen, Kommentare und Kritik.</span>
         </div>
 
-        <details class="week" open>
+        <details class="week reveal" data-d="1">
           <summary>
             <span>
               <span data-lang="en">Week 1 · Fri 12 June</span>
@@ -642,6 +653,64 @@
                 <span data-lang="de">Senden</span>
               </button>
               <div class="cmsg" id="cmsg-1"></div>
+            </div>
+          </div>
+                </details>
+
+        <details class="week reveal" data-d="2">
+          <summary>
+            <span>
+              <span data-lang="en">Week 2 · Fri 19 June</span>
+              <span data-lang="es">Semana 2 · Vie 19 junio</span>
+              <span data-lang="de">Woche 2 · Fr 19. Juni</span>
+            </span>
+          </summary>
+          <div class="wbody">
+            <div class="wsummary">
+              <span data-lang="en"><p>Greetings to all those interested in our project, and to the participants in the circle. Here is the summary of the second meeting:</p>
+<p>The placement of the new baño seco was still the main issue discussed.</p>
+<ul>
+<li>Alak told us a story about how Fabian dug a huge hole next to the existing one, and we went to see it — an idea had arisen to use it as a new permanent (non-compost) toilet, since the hole is so big it could last for years. Seeing it in the end, it isn't that deep, but it is quite large, so it would still take some effort to build a deck to cover it.</li>
+<li>Meanwhile, roaming around and inspecting the existing toilet, we had another idea: simply <strong>extend the existing one</strong> with the new build! We'd keep it as it is, cover the holes, and then extend it on the forest side with the pallet cubicles. There's a change in level there (about a pallet's height) that would fit well with a bit of digging, and a stone wall already in place — we can build on its exterior, on the ground, so the floor level for users stays the same as the interior.</li>
+<li>We'd just split the existing toilet's caña wall in half and swivel it to form the side walls of the new one (continuous), so we'd only need to extend the roof somehow and add one wall/sill towards the forest.</li>
+<li>This solution needs <strong>fewer pallets — only 7 instead of 10</strong> <em>(this updates last week's estimate)</em>, since we reuse the existing toilet's external stone sill, and with the two side by side, only one pallet wall is needed between them.</li>
+</ul></span>
+              <span data-lang="es"><p>Saludos a todos los interesados en nuestro proyecto y a los participantes del círculo. Aquí está el resumen de la segunda reunión:</p>
+<p>La ubicación del nuevo baño seco siguió siendo el tema principal.</p>
+<ul>
+<li>Alak nos contó cómo Fabián cavó un hoyo enorme junto al existente, y fuimos a verlo — había surgido la idea de usarlo como nuevo baño permanente (sin compost), ya que el hoyo es tan grande que podría durar años. Al verlo, no es tan profundo, pero sí bastante amplio, así que aún costaría esfuerzo construir una tarima para cubrirlo.</li>
+<li>Mientras tanto, dando vueltas e inspeccionando el baño existente, tuvimos otra idea: simplemente <strong>ampliar el existente</strong> con la nueva construcción. Lo dejaríamos como está, cubriríamos los hoyos y luego lo extenderíamos por el lado del bosque con los cubículos de palets. Allí hay un desnivel (de aproximadamente la altura de un palet) que encajaría bien con un poco de excavación, y ya hay un muro de piedra — podemos construir sobre su exterior, a ras de suelo, para que el nivel del piso para los usuarios quede igual que el interior.</li>
+<li>Solo tendríamos que partir por la mitad la pared de caña del baño existente y girarla para formar las paredes laterales del nuevo (continuas), así que únicamente habría que extender el techo de algún modo y añadir una pared/umbral hacia el bosque.</li>
+<li>Esta solución necesita <strong>menos palets — solo 7 en vez de 10</strong> <em>(esto actualiza la estimación de la semana pasada)</em>, ya que reutilizamos el umbral de piedra exterior del baño existente, y al estar uno junto al otro basta con una sola pared de palets entre ambos.</li>
+</ul></span>
+              <span data-lang="de"><p>Grüße an alle, die sich für unser Projekt interessieren, und an die Teilnehmenden des Kreises. Hier die Zusammenfassung des zweiten Treffens:</p>
+<p>Der Standort der neuen Trockentoilette war weiterhin das Hauptthema.</p>
+<ul>
+<li>Alak erzählte, wie Fabian neben der bestehenden ein riesiges Loch grub, und wir gingen es ansehen — es war die Idee aufgekommen, es als neue dauerhafte (Nicht-Kompost-)Toilette zu nutzen, da das Loch so groß ist, dass es Jahre halten könnte. Beim Ansehen ist es gar nicht so tief, aber recht breit, sodass es trotzdem Mühe kostet, eine Abdeckung darüber zu bauen.</li>
+<li>Währenddessen, beim Umhergehen und Begutachten der bestehenden Toilette, kam uns eine andere Idee: die bestehende einfach <strong>erweitern</strong>! Wir würden sie so lassen, die Löcher abdecken und sie dann zur Waldseite hin mit den Paletten-Kabinen verlängern. Dort gibt es einen Höhenunterschied (etwa eine Palettenhöhe), der mit etwas Graben gut passen würde, und eine Steinmauer ist bereits da — wir können auf ihrer Außenseite ebenerdig bauen, sodass die Bodenhöhe für die Nutzer gleich der des Innenraums bleibt.</li>
+<li>Wir müssten nur die Caña-Wand der bestehenden Toilette halbieren und drehen, um die Seitenwände der neuen (durchgehend) zu bilden, sodass nur noch das Dach irgendwie verlängert und eine Wand/Schwelle zum Wald hin ergänzt werden müsste.</li>
+<li>Diese Lösung braucht <strong>weniger Paletten — nur 7 statt 10</strong> <em>(dies aktualisiert die Schätzung der letzten Woche)</em>, da wir die äußere Steinschwelle der bestehenden Toilette wiederverwenden und, da beide nebeneinander stehen, nur eine Palettenwand dazwischen nötig ist.</li>
+</ul></span>
+            </div>
+            <div class="clist" id="clist-2">
+              <div class="cempty">
+                <span data-lang="en">Loading…</span>
+                <span data-lang="es">Cargando…</span>
+                <span data-lang="de">Lädt…</span>
+              </div>
+            </div>
+            <div class="cform">
+              <input type="text" id="cnick-2" maxlength="24"
+                data-ph-en="Your nickname" data-ph-es="Tu apodo" data-ph-de="Dein Spitzname">
+              <textarea id="ctext-2" maxlength="500"
+                data-ph-en="Your idea, comment or critique…" data-ph-es="Tu idea, comentario o crítica…" data-ph-de="Deine Idee, Kommentar oder Kritik…"></textarea>
+              <input type="text" class="hp" id="chp-2" tabindex="-1" autocomplete="off" aria-hidden="true">
+              <button class="csend" onclick="cPost('2')">
+                <span data-lang="en">Post</span>
+                <span data-lang="es">Publicar</span>
+                <span data-lang="de">Senden</span>
+              </button>
+              <div class="cmsg" id="cmsg-2"></div>
             </div>
           </div>
         </details>
@@ -804,7 +873,21 @@
       cMsg(w,{en:'Thanks, posted! 🌿',es:'¡Gracias, publicado! 🌿',de:'Danke, veröffentlicht! 🌿'}[L]);
     }else cMsg(w,{en:'Could not save, try again.',es:'No se pudo guardar, reintenta.',de:'Speichern fehlgeschlagen.'}[L],true);
   }
-  async function jInit(){cRender(await cFetch());}
+  function jOpenLast(){
+    const weeks=document.querySelectorAll('.journal .week');
+    weeks.forEach((w,i)=>{ w.open = (i===weeks.length-1); });
+  }
+  async function jInit(){jOpenLast();cRender(await cFetch());}
+</script>
+<script>
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in');});return;}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:.12,rootMargin:'0px 0px -10% 0px'});
+  els.forEach(function(el){io.observe(el);});
+})();
 </script>
 </body>
 </html>

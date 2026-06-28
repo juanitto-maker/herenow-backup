@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aegis Forest Sentinel Network</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+img,svg,video{max-width:100%;height:auto}
+
+:root{
+  --bg:#0c0a08;--bg-card:#181410;--bg-alt:#111009;
+  --bg-hero:linear-gradient(150deg,#1c0d03 0%,#0c0a08 55%,#080a10 100%);
+  --text:#d6ccbf;--text-m:#756a5e;--text-h:#f0e8de;
+  --border:#231d17;--border-l:#2e2520;
+  --accent:#e8500a;--ac2:#c43800;--ac3:#f59e0b;
+  --overlay:rgba(0,0,0,.78);--dialog-bg:#1c1710;
+}
+[data-theme="light"]{
+  --bg:#f9f5f0;--bg-card:#ffffff;--bg-alt:#f1ece5;
+  --bg-hero:linear-gradient(150deg,#fde8d8 0%,#f9f5f0 55%,#eef0f8 100%);
+  --text:#2e2418;--text-m:#7a6a58;--text-h:#18100a;
+  --border:#e2d8ce;--border-l:#ccc2b4;
+  --accent:#c43800;--ac2:#a02e00;--ac3:#b07800;
+  --overlay:rgba(0,0,0,.6);--dialog-bg:#ffffff;
+}
+
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+
+/* LANG BAR */
+.lbar{display:flex;justify-content:center;gap:.4rem;padding:.38rem;
+  background:var(--bg);border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:190}
+.lb{background:none;border:1px solid var(--border-l);color:var(--text-m);
+  font-size:.78rem;padding:.18rem .62rem;border-radius:1rem;cursor:pointer;
+  transition:all .2s;font-family:inherit}
+.lb.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* THEME */
+.tt{position:fixed;top:2.7rem;right:.65rem;z-index:200;
+  background:var(--bg-card);border:1px solid var(--border);
+  width:2.1rem;height:2.1rem;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.25);cursor:pointer;font-size:.88rem;
+  transition:transform .2s}
+.tt:hover{transform:scale(1.1)}
+
+/* LAYOUT */
+.wrap{max-width:520px;margin:0 auto;padding:0 1.25rem}
+section{padding:3.5rem 0}
+section.alt{background:var(--bg-alt)}
+section.hero-s{background:var(--bg-hero);padding:4.5rem 0 3.5rem}
+
+/* TYPE */
+h1,h2,h3{font-family:'Libre Baskerville',serif;color:var(--text-h);line-height:1.15}
+h1{font-size:clamp(2rem,9vw,2.9rem);margin-bottom:.5rem}
+h2{font-size:clamp(1.45rem,6vw,1.9rem);margin-bottom:.5rem}
+h3{font-size:1rem;margin-bottom:.3rem}
+.eyebrow{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-bottom:.5rem}
+.div{height:2px;width:2.5rem;background:var(--accent);margin:.55rem 0 1.25rem;border-radius:1px}
+.lede{font-size:.97rem;color:var(--text-m);line-height:1.7;margin-bottom:1.1rem}
+.lede strong{color:var(--text)}
+em.hero-i{font-style:italic;color:var(--ac3)}
+
+/* HERO */
+.hero-icon{font-size:2.8rem;display:block;margin-bottom:.7rem;
+  animation:flicker 4s ease-in-out infinite}
+@keyframes flicker{0%,100%{opacity:1}42%{opacity:.6}45%{opacity:1}62%{opacity:.75}65%{opacity:1}}
+.badge{display:inline-block;border:1px solid var(--border-l);color:var(--text-m);
+  font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:.22rem .8rem;border-radius:2rem;margin-bottom:1.1rem}
+
+/* STAT ROW */
+.srow{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin:1rem 0}
+.scel{background:var(--bg-card);border:1px solid var(--border);border-radius:.7rem;
+  padding:.75rem .5rem;text-align:center}
+.snum{font-family:'Libre Baskerville',serif;font-size:1.45rem;color:var(--accent);line-height:1}
+.slb{font-size:.67rem;color:var(--text-m);line-height:1.3;margin-top:.15rem}
+
+/* CARDS */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:.85rem;
+  padding:1rem 1.1rem;box-shadow:0 2px 12px rgba(0,0,0,.07);
+  transition:transform .18s,box-shadow .18s;margin-bottom:.7rem}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.13)}
+.card-ico{font-size:1.4rem;margin-bottom:.35rem}
+.card-t{font-weight:600;font-size:.9rem;color:var(--text-h);margin-bottom:.2rem}
+.card-b{font-size:.83rem;color:var(--text-m);line-height:1.55}
+.card-b strong{color:var(--text)}
+
+/* FEATURE GRID */
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin:1rem 0}
+.fcard{background:var(--bg-card);border:1px solid var(--border);border-radius:.8rem;padding:.9rem .8rem}
+.fico{font-size:1.4rem;margin-bottom:.3rem}
+.ftit{font-weight:600;font-size:.82rem;color:var(--text-h);margin-bottom:.18rem}
+.fdsc{font-size:.76rem;color:var(--text-m);line-height:1.5}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:.55rem;margin:1rem 0}
+.step{display:flex;gap:.8rem;align-items:flex-start;
+  background:var(--bg-card);border:1px solid var(--border);border-radius:.8rem;padding:.85rem}
+.step-n{background:var(--accent);color:#fff;font-weight:700;font-size:.75rem;
+  min-width:1.7rem;height:1.7rem;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem}
+.step-b{font-size:.85rem;color:var(--text-m);line-height:1.6}
+.step-b strong{color:var(--text)}
+.step-lbl{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:.12rem}
+
+/* ECON TABLE */
+.etab{width:100%;border-collapse:collapse;margin:.9rem 0;display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.etab th,.etab td{min-width:5rem;padding:.55rem .7rem;text-align:left;
+  border-bottom:1px solid var(--border);font-size:.83rem}
+.etab th{color:var(--text-m);font-weight:600;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase}
+.etab tr:last-child td{border:none}
+.vg{color:#4ade80;font-weight:700}
+.vr{color:#f87171;font-weight:700}
+
+/* PITCH CARDS */
+.pcard{background:var(--bg-card);border:1px solid var(--border);border-radius:.8rem;padding:1rem;margin-bottom:.65rem}
+.pcard h4{font-size:.78rem;font-weight:700;color:var(--ac3);letter-spacing:.07em;
+  text-transform:uppercase;margin-bottom:.4rem}
+.pcard p{font-size:.84rem;color:var(--text-m);line-height:1.6}
+
+/* FOOTER */
+footer{background:var(--bg-alt);border-top:1px solid var(--border);padding:2.5rem 0}
+.clink{color:var(--accent);text-underline-offset:2px;cursor:pointer;font-size:.92rem;font-weight:600}
+.clink:hover{color:var(--ac3)}
+.foot-meta{font-size:.74rem;color:var(--text-m);margin-top:1.2rem;line-height:1.7}
+
+/* BOTTOM SHEET */
+.dov{position:fixed;inset:0;background:var(--overlay);z-index:500;
+  display:none;align-items:flex-end;justify-content:center;padding:1rem}
+.dov.open{display:flex}
+.dob{background:var(--dialog-bg);border-radius:1.2rem 1.2rem 1rem 1rem;padding:1.6rem;
+  width:100%;max-width:370px;text-align:center;
+  animation:su .22s ease-out;border:1px solid var(--border-l)}
+@keyframes su{from{transform:translateY(36px);opacity:0}to{transform:none;opacity:1}}
+.dot-h{width:2.2rem;height:.28rem;background:var(--border-l);border-radius:2px;margin:0 auto .9rem}
+.dob-t{font-family:'Libre Baskerville',serif;font-size:1rem;color:var(--text-h);margin-bottom:.2rem}
+.dob-s{font-size:.78rem;color:var(--text-m);margin-bottom:1rem}
+.dopt{display:block;width:100%;padding:.65rem;margin-bottom:.5rem;
+  border-radius:.58rem;font-weight:600;font-size:.88rem;text-align:center;
+  text-decoration:none;transition:filter .18s}
+.dopt:hover{filter:brightness(1.12)}
+.d-bot{background:#0088cc;color:#fff}
+.d-tg{background:#229ED9;color:#fff}
+.d-mail{background:#5a6e44;color:#fff}
+.dcl{background:none;border:1px solid var(--border-l);color:var(--text-m);
+  font-size:.8rem;padding:.38rem 1.1rem;border-radius:.4rem;cursor:pointer;
+  margin-top:.15rem;font-family:inherit}
+
+/* WARN BOX */
+.warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);
+  border-radius:.75rem;padding:.85rem 1rem;margin-top:.85rem}
+.warn p{font-size:.82rem;color:var(--text-m);line-height:1.6}
+.warn strong{color:var(--ac3)}
+</style>
+<style>
+/* ===== PRESENTATION MODE (design v7 · Tier 2) ===== */
+.present-s{background:#070605;padding:1.4rem 0 1.1rem;border-bottom:1px solid var(--border)}
+.present-eyebrow{text-align:center;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent);font-weight:700;padding:.7rem 0 .2rem}
+.stage-wrap{position:relative;width:100%;overflow:hidden;background:#070605;border-radius:0}
+#stage{width:100%}
+#stage svg{display:block;width:100%;height:auto}
+/* overlay rendered at real CSS sizes (NOT scaled with the stage) for legibility */
+.ov{position:absolute;inset:0;pointer-events:none}
+.ov-timer{position:absolute;top:.6rem;left:.7rem;font-family:'Libre Baskerville',serif;
+  font-size:1.05rem;color:var(--ac3);letter-spacing:.02em;
+  text-shadow:0 1px 6px rgba(0,0,0,.8);font-variant-numeric:tabular-nums}
+.cap-bar{position:relative;background:#0b0908;border-top:1px solid var(--border);
+  min-height:4.3rem;padding:.55rem .7rem .6rem}
+.ov-caps{position:absolute;left:.7rem;right:.7rem;top:.55rem}
+.cap{position:absolute;left:0;right:0;top:0;opacity:0;font-size:.74rem;line-height:1.4;color:#f0e8de;
+  background:rgba(8,6,4,.62);border:1px solid var(--border-l);border-left:3px solid var(--accent);
+  border-radius:.55rem;padding:.5rem .65rem;text-shadow:0 1px 4px rgba(0,0,0,.7);
+  backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+.cap b{color:var(--ac3)}
+.cap.show{opacity:1}
+.ov-stamp{position:absolute;left:0;right:0;top:38%;transform:translateY(-50%);
+  text-align:center;opacity:0;font-family:'Libre Baskerville',serif;
+  font-size:clamp(1rem,4.4vw,1.5rem);color:#fff;letter-spacing:.01em;
+  text-shadow:0 2px 14px rgba(232,80,10,.55),0 1px 4px rgba(0,0,0,.9);padding:0 1rem}
+.ov-replay{position:absolute;top:.55rem;right:.7rem;pointer-events:auto;
+  background:rgba(8,6,4,.7);border:1px solid var(--border-l);color:var(--ac3);
+  font-family:inherit;font-size:.72rem;font-weight:600;padding:.3rem .7rem;border-radius:1rem;
+  cursor:pointer;transition:all .2s}
+.ov-replay:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+/* ===== TIER 1 — ambient reveals ===== */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+.reveal[data-d="1"]{transition-delay:.08s}
+.reveal[data-d="2"]{transition-delay:.16s}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important}
+  .reveal{opacity:1!important;transform:none!important}
+  .cap,.ov-timer{opacity:1}
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"
+        integrity="sha384-HOvlOYPIs/zjoIkWUGXkVmXsjr8GuZLV+Q+rcPwmJOVZVpvTSXQChiN4t9Euv9Vc"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</head>
+<body>
+
+<div class="lbar">
+  <button class="lb on" data-l="en" onclick="setLang('en')">EN</button>
+  <button class="lb" data-l="es" onclick="setLang('es')">ES</button>
+  <button class="lb" data-l="de" onclick="setLang('de')">DE</button>
+</div>
+<button class="tt" onclick="toggleTheme()"><span id="ti">☀️</span></button>
+<!-- ===== PRESENTATION STAGE (design v7 · Tier 2) ===== -->
+<div class="present-eyebrow" data-lang="en">▶ Live concept sequence — spark to strike in 60 seconds</div>
+<div class="present-eyebrow" data-lang="es">▶ Secuencia conceptual en vivo — de la chispa al impacto en 60 segundos</div>
+<div class="present-eyebrow" data-lang="de">▶ Konzept-Sequenz live — von der Zündung zum Einschlag in 60 Sekunden</div>
+<section class="present-s">
+<div class="stage-wrap">
+  <div id="stage" data-composition-id="aegis-hero" data-width="1920" data-height="1080">
+    <svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#1a0d04"/><stop offset="45%" stop-color="#0c0a08"/>
+          <stop offset="100%" stop-color="#06080e"/>
+        </linearGradient>
+        <radialGradient id="emberG" cx="50%" cy="50%" r="50%">
+          <stop offset="0" stop-color="#fff3c0"/><stop offset="35%" stop-color="#f59e0b"/>
+          <stop offset="70%" stop-color="#e8500a"/><stop offset="100%" stop-color="#e8500a" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="cloudG" cx="50%" cy="50%" r="50%">
+          <stop offset="0" stop-color="#eae2d4" stop-opacity=".95"/>
+          <stop offset="70%" stop-color="#cdbfa6" stop-opacity=".5"/>
+          <stop offset="100%" stop-color="#cdbfa6" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="beamG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#f59e0b" stop-opacity=".0"/>
+          <stop offset="100%" stop-color="#f59e0b" stop-opacity=".28"/>
+        </linearGradient>
+      </defs>
+
+      <rect width="1920" height="1080" fill="url(#sky)"/>
+      <!-- distant ridge -->
+      <path d="M0,720 L260,650 L520,700 L820,620 L1140,690 L1480,630 L1920,700 L1920,1080 L0,1080 Z"
+            fill="#0a0c12" opacity=".7"/>
+      <!-- forest canopy -->
+      <path d="M0,830 L120,760 L240,820 L360,750 L480,810 L620,745 L760,815 L900,755 L1040,815
+               L1180,748 L1320,812 L1480,752 L1640,818 L1800,758 L1920,820 L1920,1080 L0,1080 Z"
+            fill="#0d120c"/>
+      <rect y="930" width="1920" height="150" fill="#080a06"/>
+
+      <!-- ghost balloon -->
+      <g id="balloon" opacity="0">
+        <line x1="1500" y1="300" x2="1440" y2="690" stroke="#3a3228" stroke-width="2"/>
+        <ellipse cx="1500" cy="195" rx="150" ry="115" fill="#bfe0ff" fill-opacity=".10"
+                 stroke="#8fb8e0" stroke-opacity=".55" stroke-width="2.5"/>
+        <ellipse cx="1452" cy="150" rx="42" ry="26" fill="#ffffff" fill-opacity=".10"/>
+        <circle id="eye" cx="1500" cy="300" r="13" fill="#00d4ff" fill-opacity=".0"/>
+      </g>
+
+      <!-- scan beam -->
+      <path id="beam" d="M1500,300 L900,910 L980,910 Z" fill="url(#beamG)" opacity="0"/>
+
+      <!-- sentinel poles -->
+      <g id="pole1" opacity="0"><rect x="472" y="690" width="16" height="215" rx="4" fill="#2a2620"/>
+        <g id="head1" transform="rotate(0 480 690)"><rect x="456" y="668" width="48" height="26" rx="6" fill="#3a342a"/>
+          <rect x="494" y="676" width="22" height="9" rx="3" fill="#e8500a"/></g></g>
+      <g id="pole2" opacity="0"><rect x="952" y="690" width="16" height="215" rx="4" fill="#2a2620"/>
+        <g id="head2" transform="rotate(0 960 690)"><rect x="936" y="668" width="48" height="26" rx="6" fill="#3a342a"/>
+          <rect x="974" y="676" width="22" height="9" rx="3" fill="#e8500a"/></g></g>
+      <g id="pole3" opacity="0"><rect x="1432" y="690" width="16" height="215" rx="4" fill="#2a2620"/>
+        <g id="head3" transform="rotate(0 1440 690)"><rect x="1416" y="668" width="48" height="26" rx="6" fill="#3a342a"/>
+          <rect x="1392" y="676" width="22" height="9" rx="3" fill="#e8500a"/></g></g>
+
+      <!-- ignition ember -->
+      <g id="spark" opacity="0">
+        <circle id="sparkGlow" cx="940" cy="902" r="60" fill="url(#emberG)"/>
+        <circle cx="940" cy="902" r="10" fill="#fff7d6"/>
+      </g>
+
+      <!-- suppressant cloud + burst -->
+      <circle id="cloud" cx="940" cy="902" r="120" fill="url(#cloudG)" opacity="0"/>
+      <circle id="burst" cx="940" cy="902" r="20" fill="none" stroke="#fff3c0" stroke-width="8" opacity="0"/>
+      <circle id="flash" cx="940" cy="902" r="40" fill="#fff7d6" opacity="0"/>
+
+      <!-- cubs (one per pole) -->
+      <g id="cub1" transform="translate(0 0)" opacity="0"><g transform="translate(480 686)">
+        <rect x="-7" y="-22" width="14" height="44" rx="6" fill="#cdbfa6"/><polygon points="0,-30 -7,-20 7,-20" fill="#e8500a"/>
+        <line id="rotor1" x1="-16" y1="-26" x2="16" y2="-26" stroke="#9a8a72" stroke-width="3" opacity="0"/></g></g>
+      <g id="cub2" transform="translate(0 0)" opacity="0"><g transform="translate(960 686)">
+        <rect x="-7" y="-22" width="14" height="44" rx="6" fill="#cdbfa6"/><polygon points="0,-30 -7,-20 7,-20" fill="#e8500a"/>
+        <line id="rotor2" x1="-16" y1="-26" x2="16" y2="-26" stroke="#9a8a72" stroke-width="3" opacity="0"/></g></g>
+      <g id="cub3" transform="translate(0 0)" opacity="0"><g transform="translate(1440 686)">
+        <rect x="-7" y="-22" width="14" height="44" rx="6" fill="#cdbfa6"/><polygon points="0,-30 -7,-20 7,-20" fill="#e8500a"/>
+        <line id="rotor3" x1="-16" y1="-26" x2="16" y2="-26" stroke="#9a8a72" stroke-width="3" opacity="0"/></g></g>
+    </svg>
+  </div>
+
+  <div class="ov">
+    <div class="ov-timer" id="ovTimer">T+0s</div>
+    <button class="ov-replay" id="ovReplay" onclick="window.__aegisReplay&&window.__aegisReplay()">
+      <span data-lang="en">↻ Replay</span><span data-lang="es">↻ Repetir</span><span data-lang="de">↻ Wiederholen</span></button>
+    <div class="ov-stamp" id="ovStamp">
+      <span data-lang="en">Fire neutralised in under 60 seconds.</span>
+      <span data-lang="es">Fuego neutralizado en menos de 60 segundos.</span>
+      <span data-lang="de">Brand in unter 60 Sekunden neutralisiert.</span></div>
+  </div>
+</div>
+<div class="cap-bar">
+  <div class="ov-caps">
+      <div class="cap" id="cap0">
+        <span data-lang="en"><b>T+0 · Detection</b> — Ghost Balloon registers a single heat pixel and locks coordinates over un-jammable fibre.</span>
+        <span data-lang="es"><b>T+0 · Detección</b> — el Globo Fantasma registra un solo píxel de calor y fija coordenadas por fibra inviolable.</span>
+        <span data-lang="de"><b>T+0 · Erkennung</b> — der Geisterballon registriert einen Wärmepixel und fixiert Koordinaten über störsichere Glasfaser.</span></div>
+      <div class="cap" id="cap1">
+        <span data-lang="en"><b>T+3 · Aim</b> — Sentinel poles rotate to bearing and elevate to the calculated angle.</span>
+        <span data-lang="es"><b>T+3 · Apuntado</b> — los postes Centinela giran al rumbo y elevan al ángulo calculado.</span>
+        <span data-lang="de"><b>T+3 · Ausrichten</b> — Sentinel-Masten drehen zum Lager und heben auf den berechneten Winkel.</span></div>
+      <div class="cap" id="cap2">
+        <span data-lang="en"><b>T+8 · Launch at 45°</b> — swarm fired simultaneously; solid fuel burns out 50 m short of target.</span>
+        <span data-lang="es"><b>T+8 · Lanzamiento a 45°</b> — enjambre disparado a la vez; el combustible se agota 50 m antes del objetivo.</span>
+        <span data-lang="de"><b>T+8 · Start bei 45°</b> — Schwarm gleichzeitig abgefeuert; Treibsatz erlischt 50 m vor dem Ziel.</span></div>
+      <div class="cap" id="cap3">
+        <span data-lang="en"><b>T+30 · Phase switch</b> — nose rotor deploys; Cubs bleed speed and descend through the canopy.</span>
+        <span data-lang="es"><b>T+30 · Cambio de fase</b> — la hélice se despliega; los Cubs frenan y descienden por el dosel.</span>
+        <span data-lang="de"><b>T+30 · Phasenwechsel</b> — Nasenrotor entfaltet sich; Cubs bremsen und sinken durchs Kronendach.</span></div>
+      <div class="cap" id="cap4">
+        <span data-lang="en"><b>T+50 · Root-level impact</b> — ~30 kg of suppressant at the ignition point from every direction.</span>
+        <span data-lang="es"><b>T+50 · Impacto a nivel raíz</b> — ~30 kg de supresor en el punto de ignición desde todas direcciones.</span>
+        <span data-lang="de"><b>T+50 · Einschlag auf Wurzelniveau</b> — ~30 kg Löschmittel am Zündpunkt aus allen Richtungen.</span></div>
+    </div>
+</div>
+</section>
+
+
+<!-- HERO -->
+<section class="reveal hero-s">
+<div class="wrap">
+  <span class="hero-icon">🔥</span>
+  <div class="badge" data-lang="en">Defensive Concept · digitalAIventures LLC</div>
+  <div class="badge" data-lang="es">Concepto Defensivo · digitalAIventures LLC</div>
+  <div class="badge" data-lang="de">Defensives Konzept · digitalAIventures LLC</div>
+  <h1 data-lang="en">Aegis Forest<br><em class="hero-i">Sentinel Network</em></h1>
+  <h1 data-lang="es">Red Centinela<br><em class="hero-i">Aegis Forestal</em></h1>
+  <h1 data-lang="de">Aegis Wald-<br><em class="hero-i">Sentinel-Netzwerk</em></h1>
+  <div class="div"></div>
+  <p class="lede" data-lang="en">Autonomous wildfire suppression from ignition to chemical strike in under <strong>60 seconds</strong>. The Golden Minute — the window no aircraft can reach.</p>
+  <p class="lede" data-lang="es">Supresión autónoma de incendios desde la ignición hasta el impacto químico en menos de <strong>60 segundos</strong>. El Minuto de Oro — la ventana que ningún avión puede alcanzar.</p>
+  <p class="lede" data-lang="de">Autonome Waldbrandbekämpfung von der Zündung bis zum Einschlag in unter <strong>60 Sekunden</strong>. Die Goldene Minute — das Zeitfenster, das kein Flugzeug erreicht.</p>
+  <div class="srow">
+    <div class="scel"><div class="snum">60s</div><div class="slb" data-lang="en">Response time</div><div class="slb" data-lang="es">Tiempo respuesta</div><div class="slb" data-lang="de">Reaktionszeit</div></div>
+    <div class="scel"><div class="snum">3 km</div><div class="slb" data-lang="en">Strike radius</div><div class="slb" data-lang="es">Radio de ataque</div><div class="slb" data-lang="de">Schlagradius</div></div>
+    <div class="scel"><div class="snum">30×</div><div class="slb" data-lang="en">Cheaper than one Canadair</div><div class="slb" data-lang="es">Más barato que un Canadair</div><div class="slb" data-lang="de">Günstiger als ein Canadair</div></div>
+  </div>
+</div>
+</section>
+
+<!-- THE PROBLEM -->
+<section class="reveal">
+<div class="wrap">
+  <div class="eyebrow" data-lang="en">The Problem</div>
+  <div class="eyebrow" data-lang="es">El Problema</div>
+  <div class="eyebrow" data-lang="de">Das Problem</div>
+  <h2 data-lang="en">Reactive firefighting always loses</h2>
+  <h2 data-lang="es">La lucha reactiva siempre llega tarde</h2>
+  <h2 data-lang="de">Reaktive Brandbekämpfung verliert immer</h2>
+  <div class="div"></div>
+  <p class="lede" data-lang="en">At <strong>Minute 1</strong> a fire is centimetres. By Minute 30 it is uncontrollable. No aviation system in the world can act in Minute 1 — the physics simply do not allow it.</p>
+  <p class="lede" data-lang="es">En el <strong>Minuto 1</strong> el fuego mide centímetros. En el minuto 30 es incontrolable. Ningún sistema de aviación puede actuar en el Minuto 1 — la física no lo permite.</p>
+  <p class="lede" data-lang="de">In <strong>Minute 1</strong> misst ein Brand Zentimeter. In Minute 30 ist er unkontrollierbar. Kein Luftfahrtsystem der Welt kann in Minute 1 handeln — die Physik erlaubt es nicht.</p>
+  <div class="fgrid">
+    <div class="fcard"><div class="fico">🛩️</div><div class="ftit" data-lang="en">90-minute lag</div><div class="ftit" data-lang="es">90 min de retraso</div><div class="ftit" data-lang="de">90 Min. Verzögerung</div><div class="fdsc" data-lang="en">Detection + scramble + transit = fire already established before any aircraft arrives</div><div class="fdsc" data-lang="es">Detección + alerta + tránsito = fuego establecido antes de que llegue ningún avión</div><div class="fdsc" data-lang="de">Erkennung + Alarm + Transit = Brand etabliert bevor ein Flugzeug eintrifft</div></div>
+    <div class="fcard"><div class="fico">💧</div><div class="ftit" data-lang="en">Water evaporates</div><div class="ftit" data-lang="es">El agua se evapora</div><div class="ftit" data-lang="de">Wasser verdunstet</div><div class="fdsc" data-lang="en">Aerial drops frequently evaporate in the thermal column before reaching the flames</div><div class="fdsc" data-lang="es">Las descargas aéreas frecuentemente se evaporan en la columna térmica antes de llegar al fuego</div><div class="fdsc" data-lang="de">Luftabwürfe verdunsten oft in der Thermik bevor sie die Flammen erreichen</div></div>
+    <div class="fcard"><div class="fico">👨‍✈️</div><div class="ftit" data-lang="en">Pilot risk</div><div class="ftit" data-lang="es">Riesgo del piloto</div><div class="ftit" data-lang="de">Pilotenrisiko</div><div class="fdsc" data-lang="en">Scooping runs in violent thermal updrafts — historically high accident rates</div><div class="fdsc" data-lang="es">Pasadas de carga en turbulencias térmicas violentas — históricamente alta tasa de accidentes</div><div class="fdsc" data-lang="de">Schöpfläufe in gewalttätigen Thermikaufwinden — historisch hohe Unfallraten</div></div>
+    <div class="fcard"><div class="fico">💶</div><div class="ftit" data-lang="en">€50M per aircraft</div><div class="ftit" data-lang="es">€50M por avión</div><div class="ftit" data-lang="de">50 Mio. € pro Flugzeug</div><div class="fdsc" data-lang="en">Canadair DHC-515 purchase price — plus thousands per flight hour in fuel and maintenance</div><div class="fdsc" data-lang="es">Precio de compra del Canadair DHC-515 — más miles por hora de vuelo en combustible y mantenimiento</div><div class="fdsc" data-lang="de">Kaufpreis Canadair DHC-515 — plus Tausende pro Flugstunde für Treibstoff und Wartung</div></div>
+  </div>
+</div>
+</section>
+
+<!-- GHOST BALLOON -->
+<section class="reveal alt">
+<div class="wrap">
+  <div class="eyebrow" data-lang="en">Layer 1 — Sky</div>
+  <div class="eyebrow" data-lang="es">Capa 1 — Cielo</div>
+  <div class="eyebrow" data-lang="de">Schicht 1 — Himmel</div>
+  <h2 data-lang="en">The Ghost Balloon</h2>
+  <h2 data-lang="es">El Globo Fantasma</h2>
+  <h2 data-lang="de">Der Geisterballon</h2>
+  <div class="div"></div>
+  <p class="lede" data-lang="en">A transparent helium aerostat tethered at <strong>300–500 m altitude</strong> by a hair-thin fibre-optic cable. Passive buoyancy — <strong>zero watts for lift</strong>. Floats autonomously for months.</p>
+  <p class="lede" data-lang="es">Un aeróstato de helio transparente anclado a <strong>300–500 m de altitud</strong> por un cable de fibra óptica ultrafino. Flotabilidad pasiva — <strong>cero vatios de sustentación</strong>. Flota autónomamente durante meses.</p>
+  <p class="lede" data-lang="de">Ein transparenter Heliumaerostat, mit hauchdünnem Glasfaserkabel bei <strong>300–500 m Höhe</strong> verankert. Passive Auftriebskraft — <strong>null Watt für den Auftrieb</strong>. Schwebt monatelang autonom.</p>
+  <div class="card">
+    <div class="card-ico">👁️</div>
+    <div class="card-t" data-lang="en">Thermal + multispectral sensor</div>
+    <div class="card-t" data-lang="es">Sensor térmico + multiespectral</div>
+    <div class="card-t" data-lang="de">Wärme- + Multispektralsensor</div>
+    <div class="card-b" data-lang="en">Altitude removes all terrain blinding. A single heat pixel — a lightning strike or discarded match — triggers a ground alert in under 1 second via the fibre tether. Un-jammable. No wireless link, no GPS dependency.</div>
+    <div class="card-b" data-lang="es">La altitud elimina todos los puntos ciegos del terreno. Un único píxel térmico — un rayo o una cerilla tirada — activa la alerta terrestre en menos de 1 segundo por la fibra. Imposible de interferir. Sin enlace inalámbrico, sin dependencia de GPS.</div>
+    <div class="card-b" data-lang="de">Die Höhe beseitigt alle Geländesichtblockaden. Ein einzelner Wärmepixel — Blitzeinschlag oder weggeworfenes Streichholz — löst in unter 1 Sekunde Bodenalarm über die Glasfaser aus. Nicht störbar. Keine Funkverbindung, keine GPS-Abhängigkeit.</div>
+  </div>
+  <div class="srow">
+    <div class="scel"><div class="snum">80 km²</div><div class="slb" data-lang="en">Coverage per balloon</div><div class="slb" data-lang="es">Cobertura por globo</div><div class="slb" data-lang="de">Abdeckung/Ballon</div></div>
+    <div class="scel"><div class="snum">€2k</div><div class="slb" data-lang="en">Total installed cost</div><div class="slb" data-lang="es">Coste instalado total</div><div class="slb" data-lang="de">Gesamtinstallationskosten</div></div>
+    <div class="scel"><div class="snum">0 W</div><div class="slb" data-lang="en">Power for lift</div><div class="slb" data-lang="es">Potencia de sustentación</div><div class="slb" data-lang="de">Energie für Auftrieb</div></div>
+  </div>
+</div>
+</section>
+
+<!-- SENTINEL POLE -->
+<section class="reveal">
+<div class="wrap">
+  <div class="eyebrow" data-lang="en">Layer 2 — Canopy</div>
+  <div class="eyebrow" data-lang="es">Capa 2 — Dosel</div>
+  <div class="eyebrow" data-lang="de">Schicht 2 — Kronendach</div>
+  <h2 data-lang="en">The Sentinel Pole</h2>
+  <h2 data-lang="es">El Poste Centinela</h2>
+  <h2 data-lang="de">Der Sentinel-Mast</h2>
+  <div class="div"></div>
+  <p class="lede" data-lang="en">A fixed steel pole rising just above the tree canopy. Permanent, weatherproof, no moving parts except the launcher head — which descends by elevator rail to ground level for robotic reload.</p>
+  <p class="lede" data-lang="es">Un poste de acero fijo que sobresale justo por encima del dosel forestal. Permanente, resistente a la intemperie, sin piezas móviles excepto la cabeza lanzadora — que desciende por carril elevador al nivel del suelo para recarga robótica.</p>
+  <p class="lede" data-lang="de">Ein fester Stahlmast, der knapp über das Baumdach ragt. Dauerhaft, wetterfest, keine beweglichen Teile außer dem Werferkopf — der per Aufzugsschiene zur Bodenebene für robotische Nachladung abfährt.</p>
+  <div class="card">
+    <div class="card-ico">🔄</div>
+    <div class="card-t" data-lang="en">Rotary launcher head</div>
+    <div class="card-t" data-lang="es">Cabeza lanzadora giratoria</div>
+    <div class="card-t" data-lang="de">Rotierender Werferkopf</div>
+    <div class="card-b" data-lang="en">Auto-rotates 360° to target bearing. Adjusts elevation angle for distance. Same stepper-motor technology as satellite dish auto-pointing — cheap, proven, weatherproof for decades.</div>
+    <div class="card-b" data-lang="es">Gira automáticamente 360° hacia el rumbo del objetivo. Ajusta el ángulo de elevación según la distancia. Misma tecnología de motor paso a paso que el apuntado automático de antenas parabólicas — barata, probada y resistente durante décadas.</div>
+    <div class="card-b" data-lang="de">Dreht automatisch 360° zum Ziellager. Passt Elevationswinkel nach Distanz an. Gleiche Schrittmotortechnik wie bei Satellitenschüsseln — günstig, bewährt, jahrzehntelang wetterfest.</div>
+  </div>
+  <div class="card">
+    <div class="card-ico">⬇️</div>
+    <div class="card-t" data-lang="en">Elevator rail + robotic reload</div>
+    <div class="card-t" data-lang="es">Carril elevador + recarga robótica</div>
+    <div class="card-t" data-lang="de">Aufzugsschiene + Robotic-Nachladung</div>
+    <div class="card-b" data-lang="en">Launcher descends to ground for autonomous reload — no climbing, no aerial work. One technician services 50–100 poles per route restocking the Cub magazine. Like a vending machine run.</div>
+    <div class="card-b" data-lang="es">El lanzador desciende al suelo para recarga autónoma — sin escalada, sin trabajos en altura. Un técnico atiende 50–100 postes por ruta reponiendo el cargador de Cubs. Como reponer máquinas expendedoras.</div>
+    <div class="card-b" data-lang="de">Werfer fährt zur Bodenebene für autonome Nachladung — kein Klettern, keine Höhenarbeit. Ein Techniker betreut 50–100 Masten pro Route beim Auffüllen des Cub-Magazins. Wie eine Automaten-Servicefahrt.</div>
+  </div>
+  <div class="srow">
+    <div class="scel"><div class="snum">3 km</div><div class="slb" data-lang="en">Strike radius</div><div class="slb" data-lang="es">Radio de ataque</div><div class="slb" data-lang="de">Schlagradius</div></div>
+    <div class="scel"><div class="snum">28 km²</div><div class="slb" data-lang="en">Area per pole</div><div class="slb" data-lang="es">Área por poste</div><div class="slb" data-lang="de">Fläche pro Mast</div></div>
+    <div class="scel"><div class="snum">€4k</div><div class="slb" data-lang="en">Per pole installed</div><div class="slb" data-lang="es">Por poste instalado</div><div class="slb" data-lang="de">Pro Mast installiert</div></div>
+  </div>
+</div>
+</section>
+
+<!-- THE CUB -->
+<section class="reveal alt">
+<div class="wrap">
+  <div class="eyebrow" data-lang="en">Layer 3 — The Strike Unit</div>
+  <div class="eyebrow" data-lang="es">Capa 3 — La Unidad de Impacto</div>
+  <div class="eyebrow" data-lang="de">Schicht 3 — Die Schlageinheit</div>
+  <h2 data-lang="en">The Cub — a self-destroying suppressant missile</h2>
+  <h2 data-lang="es">El Cub — un misil supresor autodestructivo</h2>
+  <h2 data-lang="de">Der Cub — eine selbstzerstörende Löschrakete</h2>
+  <div class="div"></div>
+  <p class="lede" data-lang="en">Milan anti-tank class size (~10 kg, ~1.2 m). The entire airframe <em>is</em> the suppressant — compressed MAP powder body with a CO₂ burst charge. <strong>Zero flammable material</strong> enters the fire zone.</p>
+  <p class="lede" data-lang="es">Tamaño clase misil anti-tanque Milan (~10 kg, ~1,2 m). La célula completa <em>es</em> el supresor — cuerpo de polvo MAP comprimido con carga de ráfaga CO₂. <strong>Cero material inflamable</strong> entra en la zona de fuego.</p>
+  <p class="lede" data-lang="de">Größenklasse Panzerabwehrrakete Milan (~10 kg, ~1,2 m). Die gesamte Zelle <em>ist</em> das Löschmittel — gepresster MAP-Pulverkörper mit CO₂-Burst-Ladung. <strong>Kein brennbares Material</strong> gelangt in die Feuerzone.</p>
+  <div class="fgrid">
+    <div class="fcard"><div class="fico">🔴</div><div class="ftit" data-lang="en">Nose cone</div><div class="ftit" data-lang="es">Cono frontal</div><div class="ftit" data-lang="de">Nasenkonus</div><div class="fdsc" data-lang="en">Compressed MAP powder — aerodynamic shape, becomes suppressant cloud on impact</div><div class="fdsc" data-lang="es">Polvo MAP comprimido — forma aerodinámica, se convierte en nube supresora al impactar</div><div class="fdsc" data-lang="de">Gepresstes MAP-Pulver — aerodynamische Form, wird beim Aufprall zur Löschmittelwolke</div></div>
+    <div class="fcard"><div class="fico">🟠</div><div class="ftit" data-lang="en">Body shell</div><div class="ftit" data-lang="es">Cuerpo</div><div class="ftit" data-lang="de">Rumpf</div><div class="fdsc" data-lang="en">Suppressant composite — structural in flight, shatters radially on CO₂ detonation</div><div class="fdsc" data-lang="es">Composite supresor — estructural en vuelo, se fragmenta radialmente con la detonación CO₂</div><div class="fdsc" data-lang="de">Löschkomposit — strukturtragend im Flug, zersplittert radial bei CO₂-Detonation</div></div>
+    <div class="fcard"><div class="fico">⚪</div><div class="ftit" data-lang="en">CO₂ canister</div><div class="ftit" data-lang="es">Cartucho CO₂</div><div class="ftit" data-lang="de">CO₂-Kartusche</div><div class="fdsc" data-lang="en">Powers helicopter descent phase + internal burst + supplemental suppressant gas</div><div class="fdsc" data-lang="es">Impulsa la fase de descenso + detonación interna + gas supresor adicional</div><div class="fdsc" data-lang="de">Treibt Helikopterabstieg + internen Burst + zusätzliches Löschgas an</div></div>
+    <div class="fcard"><div class="fico">⚙️</div><div class="ftit" data-lang="en">Solid fuel motor</div><div class="ftit" data-lang="es">Motor combustible sólido</div><div class="ftit" data-lang="de">Feststoffmotor</div><div class="fdsc" data-lang="en">Variable charge, auto-loaded per mission distance. Burns out completely 50 m before target</div><div class="fdsc" data-lang="es">Carga variable, cargada automáticamente según la distancia. Se agota completamente 50 m antes del objetivo</div><div class="fdsc" data-lang="de">Variabler Treibsatz, automatisch distanzberechnet. Erschöpft sich vollständig 50 m vor dem Ziel</div></div>
+  </div>
+  <div class="srow">
+    <div class="scel"><div class="snum">6–7 kg</div><div class="slb" data-lang="en">Suppressant payload</div><div class="slb" data-lang="es">Carga supresora</div><div class="slb" data-lang="de">Löschmittelanteil</div></div>
+    <div class="scel"><div class="snum">~30 kg</div><div class="slb" data-lang="en">5-pole swarm delivery</div><div class="slb" data-lang="es">Entrega enjambre 5 postes</div><div class="slb" data-lang="de">5-Mast-Schwarm-Lieferung</div></div>
+    <div class="scel"><div class="snum">0</div><div class="slb" data-lang="en">Flammable parts in fire zone</div><div class="slb" data-lang="es">Partes inflamables en zona</div><div class="slb" data-lang="de">Brennbare Teile in Feuerzone</div></div>
+  </div>
+</div>
+</section>
+
+<!-- FLIGHT SEQUENCE -->
+<section class="reveal">
+<div class="wrap">
+  <div class="eyebrow" data-lang="en">Flight Sequence</div>
+  <div class="eyebrow" data-lang="es">Secuencia de Vuelo</div>
+  <div class="eyebrow" data-lang="de">Flugsequenz</div>
+  <h2 data-lang="en">Spark to strike in 60 seconds</h2>
+  <h2 data-lang="es">De la chispa al impacto en 60 segundos</h2>
+  <h2 data-lang="de">Von der Zündung zum Einschlag in 60 Sekunden</h2>
+  <div class="div"></div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">T+0</div>
+      <div><div class="step-lbl" data-lang="en">Detection</div><div class="step-lbl" data-lang="es">Detección</div><div class="step-lbl" data-lang="de">Erkennung</div>
+      <div class="step-b" data-lang="en"><strong>Ghost Balloon</strong> registers heat pixel. Fibre tether transmits coordinates to ground network. AI classifies terrain, calculates exact fuel charge, selects swarm size.</div>
+      <div class="step-b" data-lang="es"><strong>Globo Fantasma</strong> registra el píxel térmico. La fibra transmite coordenadas a la red terrestre. La IA clasifica el terreno, calcula la carga exacta y selecciona el tamaño del enjambre.</div>
+      <div class="step-b" data-lang="de"><strong>Geisterballon</strong> registriert Wärmepixel. Glasfaser übermittelt Koordinaten ans Bodennetz. KI klassifiziert Gelände, berechnet Treibladung, wählt Schwarmgröße.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-n">T+3</div>
+      <div><div class="step-lbl" data-lang="en">Aim</div><div class="step-lbl" data-lang="es">Apuntado</div><div class="step-lbl" data-lang="de">Ausrichten</div>
+      <div class="step-b" data-lang="en"><strong>Sentinel poles</strong> rotate to bearing and elevate to calculated angle. Robotic magazine loads exact fuel charge for the mission distance.</div>
+      <div class="step-b" data-lang="es"><strong>Postes Centinela</strong> giran al rumbo y elevan al ángulo calculado. El cargador robótico carga la carga exacta de combustible para la distancia de la misión.</div>
+      <div class="step-b" data-lang="de"><strong>Sentinel-Masten</strong> drehen zum Lager und heben auf berechneten Winkel. Robotmagazin lädt exakten Treibsatz für die Missionsdistanz.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-n">T+8</div>
+      <div><div class="step-lbl" data-lang="en">Launch at 45°</div><div class="step-lbl" data-lang="es">Lanzamiento a 45°</div><div class="step-lbl" data-lang="de">Start bei 45°</div>
+      <div class="step-b" data-lang="en">Swarm fired simultaneously from multiple poles. Solid fuel exhausts completely <strong>50 m before target</strong> — no combustion enters the fire zone. Cubs arrive fast and inert.</div>
+      <div class="step-b" data-lang="es">Enjambre disparado simultáneamente desde múltiples postes. El combustible sólido se agota completamente <strong>50 m antes del objetivo</strong> — ninguna combustión entra en la zona de fuego. Los Cubs llegan rápido e inertes.</div>
+      <div class="step-b" data-lang="de">Schwarm gleichzeitig von mehreren Masten abgefeuert. Feststoff erschöpft sich vollständig <strong>50 m vor dem Ziel</strong> — keine Verbrennung gelangt in die Feuerzone. Cubs kommen schnell und inert an.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-n">T+30</div>
+      <div><div class="step-lbl" data-lang="en">Phase switch</div><div class="step-lbl" data-lang="es">Cambio de fase</div><div class="step-lbl" data-lang="de">Phasenwechsel</div>
+      <div class="step-b" data-lang="en">CO₂ activates. Nose propeller deploys upward as a <strong>helicopter rotor</strong>. Cub bleeds speed, descends slowly through canopy gaps. Thermal optics lock on fire signature for precise root-level approach.</div>
+      <div class="step-b" data-lang="es">CO₂ activa. La hélice frontal se despliega hacia arriba como <strong>rotor de helicóptero</strong>. El Cub pierde velocidad y desciende lentamente por los huecos del dosel. La óptica térmica fija la firma del fuego para el enfoque preciso a nivel raíz.</div>
+      <div class="step-b" data-lang="de">CO₂ aktiviert. Nasenrotor entfaltet sich nach oben als <strong>Helikopterrotor</strong>. Cub bremst und sinkt langsam durch Kronenlücken. Wärmeoptik fixiert Brandsignatur für präzise Wurzelniveau-Annäherung.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-n">T+50</div>
+      <div><div class="step-lbl" data-lang="en">Root-level impact</div><div class="step-lbl" data-lang="es">Impacto a nivel raíz</div><div class="step-lbl" data-lang="de">Einschlag auf Wurzelniveau</div>
+      <div class="step-b" data-lang="en">CO₂ burst shatters the MAP body radially. <strong>5-pole swarm delivers ~30 kg of suppressant</strong> at the ignition point simultaneously from multiple directions. Fire at ignition stage: statistically extinguished.</div>
+      <div class="step-b" data-lang="es">La ráfaga CO₂ fragmenta el cuerpo MAP radialmente. <strong>El enjambre de 5 postes entrega ~30 kg de supresor</strong> en el punto de ignición simultáneamente desde múltiples direcciones. Fuego en etapa de ignición: estadísticamente extinguido.</div>
+      <div class="step-b" data-lang="de">CO₂-Burst zersplittert den MAP-Körper radial. <strong>5-Mast-Schwarm liefert ~30 kg Löschmittel</strong> am Zündpunkt gleichzeitig aus mehreren Richtungen. Brand in Zündphase: statistisch gelöscht.</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ECONOMICS -->
+<section class="reveal alt">
+<div class="wrap">
+  <div class="eyebrow" data-lang="en">Economics</div>
+  <div class="eyebrow" data-lang="es">Economía</div>
+  <div class="eyebrow" data-lang="de">Wirtschaftlichkeit</div>
+  <h2 data-lang="en">Cover all Andalucía for less than one aircraft</h2>
+  <h2 data-lang="es">Cubrir toda Andalucía por menos que un avión</h2>
+  <h2 data-lang="de">Ganz Andalusien abdecken für weniger als ein Flugzeug</h2>
+  <div class="div"></div>
+  <table class="etab">
+    <thead><tr>
+      <th data-lang="en">Item</th><th data-lang="es">Elemento</th><th data-lang="de">Posten</th>
+      <th data-lang="en">Cost</th><th data-lang="es">Coste</th><th data-lang="de">Kosten</th>
+    </tr></thead>
+    <tbody>
+      <tr><td data-lang="en">350 Sentinel poles × €4k</td><td data-lang="es">350 postes × €4k</td><td data-lang="de">350 Masten × €4k</td><td class="vg">€1.4 M</td></tr>
+      <tr><td data-lang="en">125 Ghost Balloons × €2k</td><td data-lang="es">125 Globos × €2k</td><td data-lang="de">125 Ballons × €2k</td><td class="vg">€250 k</td></tr>
+      <tr><td data-lang="en"><strong>Total Aegis — Andalucía</strong></td><td data-lang="es"><strong>Total Aegis — Andalucía</strong></td><td data-lang="de"><strong>Gesamt Aegis — Andalusien</strong></td><td class="vg"><strong>~€1.7 M</strong></td></tr>
+      <tr><td data-lang="en">One Canadair DHC-515</td><td data-lang="es">Un Canadair DHC-515</td><td data-lang="de">Ein Canadair DHC-515</td><td class="vr">€50 M</td></tr>
+    </tbody>
+  </table>
+  <div class="srow">
+    <div class="scel"><div class="snum">30×</div><div class="slb" data-lang="en">Cheaper than one aircraft</div><div class="slb" data-lang="es">Más barato que un avión</div><div class="slb" data-lang="de">Günstiger als ein Flugzeug</div></div>
+    <div class="scel"><div class="snum">24/7</div><div class="slb" data-lang="en">Permanent coverage</div><div class="slb" data-lang="es">Cobertura permanente</div><div class="slb" data-lang="de">Dauerabdeckung</div></div>
+    <div class="scel"><div class="snum">0</div><div class="slb" data-lang="en">Pilots at risk</div><div class="slb" data-lang="es">Pilotos en riesgo</div><div class="slb" data-lang="de">Piloten in Gefahr</div></div>
+  </div>
+  <div class="card">
+    <div class="card-ico">🤝</div>
+    <div class="card-t" data-lang="en">Complementary — not replacement</div>
+    <div class="card-t" data-lang="es">Complementario — no sustitutivo</div>
+    <div class="card-t" data-lang="de">Ergänzend — kein Ersatz</div>
+    <div class="card-b" data-lang="en">Aegis owns <strong>minutes 0–30</strong>: the ignition window no aircraft can reach economically. Aircraft own <strong>hours 1+</strong>: established fires requiring water volume. Aegis also feeds live thermal maps to ground crew tablets — making aircraft operations safer and more targeted when they do fly.</div>
+    <div class="card-b" data-lang="es">Aegis domina los <strong>minutos 0–30</strong>: la ventana de ignición que ningún avión puede alcanzar económicamente. Los aviones dominan las <strong>horas 1+</strong>: incendios establecidos que requieren volumen de agua. Aegis también alimenta mapas térmicos en vivo a las tabletas de los equipos terrestres — haciendo las operaciones aéreas más seguras y precisas cuando vuelan.</div>
+    <div class="card-b" data-lang="de">Aegis deckt <strong>Minuten 0–30</strong> ab: das Zündfenster, das kein Flugzeug wirtschaftlich erreicht. Flugzeuge decken <strong>Stunden 1+</strong> ab: etablierte Brände mit Wasserbedarf. Aegis liefert auch Live-Wärmekarten auf Bodenteam-Tablets — macht Luftoperationen sicherer und gezielter wenn sie fliegen.</div>
+  </div>
+</div>
+</section>
+
+<!-- PITCH TARGETS -->
+<section class="reveal">
+<div class="wrap">
+  <div class="eyebrow" data-lang="en">Who to Approach</div>
+  <div class="eyebrow" data-lang="es">Con Quién Hablar</div>
+  <div class="eyebrow" data-lang="de">An wen wenden</div>
+  <h2 data-lang="en">Pitch targets</h2>
+  <h2 data-lang="es">Objetivos de presentación</h2>
+  <h2 data-lang="de">Pitch-Zielgruppen</h2>
+  <div class="div"></div>
+  <div class="pcard">
+    <h4>🏦 AGROSEGURO</h4>
+    <p data-lang="en">Spain's agricultural insurance consortium. Pays out forest fire losses directly — pure financial incentive for prevention. Every suppressed minute-1 fire directly reduces claims.</p>
+    <p data-lang="es">El consorcio de seguros agrícolas de España. Paga directamente las pérdidas por incendios forestales — incentivo financiero puro para la prevención. Cada incendio sofocado en el minuto 1 reduce directamente las reclamaciones.</p>
+    <p data-lang="de">Spaniens landwirtschaftliches Versicherungskonsortium. Zahlt Waldbrandschäden direkt — rein finanzieller Anreiz zur Prävention. Jeder in Minute 1 gelöschte Brand reduziert direkt Ansprüche.</p>
+  </div>
+  <div class="pcard">
+    <h4>🌿 EU LIFE Programme</h4>
+    <p data-lang="en">EU funding for ecological innovation and fire resilience. No institutional turf to protect. Pilot project funding available. Complementary framing fits perfectly with programme objectives.</p>
+    <p data-lang="es">Financiación de la UE para innovación ecológica y resiliencia ante incendios. Sin intereses institucionales que defender. Financiación de proyectos piloto disponible. El enfoque complementario encaja perfectamente con los objetivos del programa.</p>
+    <p data-lang="de">EU-Förderung für ökologische Innovation und Brandfestigkeit. Keine institutionellen Interessen zu schützen. Pilotprojektfinanzierung verfügbar. Ergänzende Positionierung passt perfekt zu Programmzielen.</p>
+  </div>
+  <div class="pcard">
+    <h4>🏛️ Junta de Andalucía</h4>
+    <p data-lang="en">Regional government controls forest management budgets independently from aviation procurement. Direct beneficiary of wildfire damage reduction and rural property protection.</p>
+    <p data-lang="es">El gobierno regional controla los presupuestos de gestión forestal independientemente de la contratación de aviación. Beneficiario directo de la reducción de daños por incendios y la protección de propiedades rurales.</p>
+    <p data-lang="de">Regionalregierung kontrolliert Forstwirtschaftsbudgets unabhängig von Luftfahrtbeschaffung. Direkter Nutznießer von Waldbrandschadenreduktion und Schutz ländlicher Immobilien.</p>
+  </div>
+  <div class="warn">
+    <p data-lang="en">⚠️ <strong>Avoid pitching directly to UME or aviation operators</strong> — Aegis is perceived as a threat to their procurement ecosystem. Always frame as a <em>complementary gap-filler</em> that makes their aircraft more effective, never as a replacement.</p>
+    <p data-lang="es">⚠️ <strong>Evita presentar directamente a la UME u operadores de aviación</strong> — Aegis se percibe como una amenaza a su ecosistema de contratación. Presenta siempre como <em>complemento que llena un vacío</em> y hace sus aviones más eficaces, nunca como sustitución.</p>
+    <p data-lang="de">⚠️ <strong>Pitche nicht direkt an UME oder Luftfahrtbetreiber</strong> — Aegis wird als Bedrohung für ihr Beschaffungsökosystem wahrgenommen. Immer als <em>ergänzenden Lückenfüller</em> positionieren, der ihre Flugzeuge effektiver macht, niemals als Ersatz.</p>
+  </div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<div class="wrap" style="text-align:center">
+  <div style="font-size:2rem;margin-bottom:.6rem">🛡️</div>
+  <h2 data-lang="en">Interested in Aegis?</h2>
+  <h2 data-lang="es">¿Interesado en Aegis?</h2>
+  <h2 data-lang="de">Interesse an Aegis?</h2>
+  <div class="div" style="margin:.6rem auto 1rem"></div>
+  <p class="lede" style="max-width:22rem;margin:0 auto .9rem" data-lang="en">An open defensive publication by <strong>digitalAIventures LLC</strong>. Open to partnership, pilot programmes, research collaboration and licensing discussions.</p>
+  <p class="lede" style="max-width:22rem;margin:0 auto .9rem" data-lang="es">Una publicación defensiva abierta de <strong>digitalAIventures LLC</strong>. Abiertos a asociaciones, programas piloto, colaboración en investigación y discusiones de licencia.</p>
+  <p class="lede" style="max-width:22rem;margin:0 auto .9rem" data-lang="de">Eine offene Defensive-Veröffentlichung von <strong>digitalAIventures LLC</strong>. Offen für Partnerschaften, Pilotprogramme, Forschungskooperation und Lizenzgespräche.</p>
+  <p>
+    <span data-lang="en"><a class="clink" onclick="openD()">Contact digitalAIventures →</a></span>
+    <span data-lang="es"><a class="clink" onclick="openD()">Contactar digitalAIventures →</a></span>
+    <span data-lang="de"><a class="clink" onclick="openD()">digitalAIventures kontaktieren →</a></span>
+  </p>
+  <p class="foot-meta" data-lang="en">Concept by Alexandru-Ioan Nistoroiu · digitalAIventures LLC · Wyoming, USA<br>Operating in Andalucía, Spain · 2026</p>
+  <p class="foot-meta" data-lang="es">Concepto de Alexandru-Ioan Nistoroiu · digitalAIventures LLC · Wyoming, EE.UU.<br>Operando en Andalucía, España · 2026</p>
+  <p class="foot-meta" data-lang="de">Konzept von Alexandru-Ioan Nistoroiu · digitalAIventures LLC · Wyoming, USA<br>Tätig in Andalusien, Spanien · 2026</p>
+</div>
+</footer>
+
+<!-- BOTTOM SHEET -->
+<div class="dov" id="dov" onclick="closeDout(event)">
+  <div class="dob">
+    <div class="dot-h"></div>
+    <div class="dob-t" data-lang="en">Get in Touch</div>
+    <div class="dob-t" data-lang="es">Ponerse en Contacto</div>
+    <div class="dob-t" data-lang="de">Kontakt aufnehmen</div>
+    <div class="dob-s">digitalAIventures LLC</div>
+    <a class="dopt d-bot" href="https://t.me/Juanitto_assist_bot" target="_blank">🤖 AI Assist 24/7</a>
+    <a class="dopt d-tg" href="https://t.me/JuanittoCalvares" target="_blank">✈️ Personal</a>
+    <a class="dopt d-mail" href="mailto:digitalAIventures.LLC@gmail.com">✉️ Email</a>
+    <button class="dcl" onclick="closeD()">Close</button>
+  </div>
+</div>
+
+<script>
+function openD(){document.getElementById('dov').classList.add('open')}
+function closeD(){document.getElementById('dov').classList.remove('open')}
+function closeDout(e){if(e.target===document.getElementById('dov'))closeD()}
+
+function toggleTheme(){
+  const h=document.documentElement;
+  const n=h.getAttribute('data-theme')==='dark'?'light':'dark';
+  h.setAttribute('data-theme',n);
+  document.getElementById('ti').textContent=n==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',n)}catch(e){}
+}
+(function(){
+  function applyT(t){
+    document.documentElement.setAttribute('data-theme',t);
+    document.addEventListener('DOMContentLoaded',()=>{
+      const i=document.getElementById('ti');if(i)i.textContent=t==='dark'?'☀️':'🌙';
+    });
+  }
+  try{
+    const s=localStorage.getItem('theme');
+    if(s)applyT(s);
+    else{const h=new Date().getHours();applyT(h>=7&&h<19?'light':'dark');}
+  }catch(e){applyT('dark')}
+})();
+
+function setLang(l){
+  document.querySelectorAll('[data-lang]').forEach(el=>{
+    el.style.display=el.dataset.lang===l?'':'none';
+  });
+  document.querySelectorAll('[data-l]').forEach(b=>{
+    b.classList.toggle('on',b.dataset.l===l);
+  });
+  try{localStorage.setItem('lang',l)}catch(e){}
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  let l='en';
+  try{
+    const q=new URLSearchParams(location.search).get('lang');
+    l=q||localStorage.getItem('lang')||navigator.language.slice(0,2)||'en';
+  }catch(e){}
+  if(!['en','es','de'].includes(l))l='en';
+  setLang(l);
+});
+</script>
+<script>
+/* ===== PRESENTATION MODE driver (design v7 · Tier 2) ===== */
+(function(){
+  var stage=document.getElementById('stage');
+  if(!stage)return;
+  // SVG scales to 100% width via its viewBox — no JS sizing needed.
+
+  var ovTimer=document.getElementById('ovTimer');
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function staticFinal(){
+    ['#balloon','#pole1','#pole2','#pole3','#cloud'].forEach(function(id){
+      var e=document.querySelector(id); if(e)e.style.opacity=1;});
+    var sp=document.getElementById('spark'); if(sp)sp.style.opacity=0;
+    var st=document.getElementById('ovStamp'); if(st)st.style.opacity=1;
+    if(ovTimer)ovTimer.textContent='T+60s';
+  }
+
+  if(typeof gsap==='undefined'){ staticFinal(); return; }
+
+  function cap(tl,sel,start,dur){
+    tl.fromTo(sel,{opacity:0},{opacity:1,duration:.35},start);
+    tl.to(sel,{opacity:0,duration:.35},start+dur);
+  }
+
+  var tl=gsap.timeline({paused:true});
+
+  // scene set
+  tl.fromTo('#balloon',{opacity:0,y:-20},{opacity:1,y:0,duration:1.1,ease:'power2.out'},0);
+  tl.fromTo(['#pole1','#pole2','#pole3'],{opacity:0,y:26},{opacity:1,y:0,duration:.9,stagger:.12,ease:'power2.out'},.3);
+
+  // T+0 detection
+  tl.fromTo('#spark',{opacity:0,scale:.4,transformOrigin:'940px 902px'},{opacity:1,scale:1,duration:.5,ease:'back.out(2)'},1.2);
+  tl.to('#sparkGlow',{attr:{r:80},repeat:-1,yoyo:true,duration:.55,ease:'sine.inOut'},1.4);
+  tl.fromTo('#eye',{fillOpacity:0},{fillOpacity:.9,duration:.4},1.3);
+  tl.fromTo('#beam',{opacity:0,rotation:-12,svgOrigin:'1500 300'},{opacity:1,rotation:0,duration:1,ease:'power1.inOut'},1.4);
+  // timer 0->60
+  var ctr={v:0};
+  tl.to(ctr,{v:60,duration:8.4,ease:'none',onUpdate:function(){if(ovTimer)ovTimer.textContent='T+'+Math.round(ctr.v)+'s';}},1.2);
+  cap(tl,'#cap0',1.5,1.9);
+
+  // T+3 aim
+  tl.to('#head1',{rotation:16,svgOrigin:'480 690',duration:.6,ease:'power2.inOut'},3.5);
+  tl.to('#head2',{rotation:-2,svgOrigin:'960 690',duration:.6,ease:'power2.inOut'},3.5);
+  tl.to('#head3',{rotation:-18,svgOrigin:'1440 690',duration:.6,ease:'power2.inOut'},3.5);
+  cap(tl,'#cap1',3.5,1.2);
+
+  // T+8 launch (two-stage arcs)
+  tl.set(['#cub1','#cub2','#cub3'],{opacity:1},4.85);
+  // rise
+  tl.to('#cub1',{x:207,y:-150,duration:.55,ease:'power1.out'},4.9);
+  tl.to('#cub2',{x:-10,y:-150,duration:.55,ease:'power1.out'},4.98);
+  tl.to('#cub3',{x:-225,y:-150,duration:.55,ease:'power1.out'},5.06);
+  cap(tl,'#cap2',4.9,1.4);
+
+  // T+30 phase switch — rotors + descend
+  tl.to(['#rotor1','#rotor2','#rotor3'],{opacity:1,duration:.3},6.4);
+  tl.to('#cub1',{x:460,y:216,duration:1.4,ease:'power1.in'},6.5);
+  tl.to('#cub2',{x:-20,y:216,duration:1.4,ease:'power1.in'},6.58);
+  tl.to('#cub3',{x:-500,y:216,duration:1.4,ease:'power1.in'},6.66);
+  cap(tl,'#cap3',6.5,1.6);
+
+  // T+50 impact
+  tl.to(['#cub1','#cub2','#cub3'],{opacity:0,duration:.15},8.05);
+  tl.fromTo('#flash',{opacity:0,attr:{r:40}},{opacity:1,attr:{r:130},duration:.18,ease:'power2.out'},8.0);
+  tl.to('#flash',{opacity:0,duration:.35},8.2);
+  tl.fromTo('#burst',{opacity:1,attr:{r:20}},{opacity:0,attr:{r:260},duration:.85,ease:'power2.out'},8.05);
+  tl.to('#spark',{opacity:0,duration:.4},8.2);
+  tl.fromTo('#cloud',{opacity:0,attr:{r:120}},{opacity:.92,attr:{r:210},duration:.7,ease:'power2.out'},8.1);
+  tl.to('#cloud',{opacity:.5,duration:1.2},8.9);
+  cap(tl,'#cap4',8.1,1.7);
+
+  // stamp
+  tl.fromTo('#ovStamp',{opacity:0,y:10},{opacity:1,y:0,duration:.6,ease:'power2.out'},9.7);
+
+  // v9 pacing — single RATE knob (lower = slower). Diegetic T+ counter rides the
+  // timeline so timeScale keeps it correct; do NOT divide the timer by RATE here.
+  var RATE=0.6;            // ~10s native arc -> ~17s played, captions readable
+  tl.timeScale(RATE);
+
+  window.__aegisReplay=function(){tl.restart();};
+
+  if(reduce){ tl.progress(1); }
+  else{
+    new IntersectionObserver(function(es,o){
+      es.forEach(function(e){if(e.isIntersecting){tl.play();o.disconnect();}});
+    },{threshold:.35}).observe(stage);
+  }
+})();
+
+/* ===== TIER 1 ambient reveals ===== */
+(function(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:0.01,rootMargin:'0px 0px -10% 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+})();
+</script>
+
+</body>
+</html>

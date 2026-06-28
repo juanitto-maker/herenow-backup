@@ -94,8 +94,16 @@ h2.sec{font-size:1.7rem;margin-bottom:.3rem}
 .ocl{background:none;border:1px solid var(--border);color:var(--text-m);cursor:pointer;font-size:.82rem;padding:.4rem 1.2rem;border-radius:.4rem;margin-top:.2rem;font-family:'DM Sans',sans-serif}
 footer{text-align:center;padding:2.2rem 1.25rem 2.6rem;border-top:1px solid var(--border);background:var(--bg-alt)}
 .fnote{color:var(--text-m);font-size:.74rem;line-height:1.5}
-.anim{animation:fadeUp .6s ease both}
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal[data-d="1"]{transition-delay:.08s}
+.reveal[data-d="2"]{transition-delay:.16s}
+.reveal[data-d="3"]{transition-delay:.24s}
+.denom{display:inline-block;margin-top:.7rem;padding:.3rem .8rem;border:1px solid var(--accent);border-radius:2rem;font-size:.74rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--accent)}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .reveal{opacity:1!important;transform:none!important}
+}
 </style>
 </head>
 <body>
@@ -120,6 +128,12 @@ footer{text-align:center;padding:2.2rem 1.25rem 2.6rem;border-top:1px solid var(
     <span class="badge" data-lang="ro">Acces timpuriu</span>
     <span class="badge" data-lang="ar">وصول مبكر</span>
     <div class="brand">Dar</div>
+    <div class="denom" data-lang="en">RPN — Real Private Network</div>
+    <div class="denom" data-lang="es">RPN — Red Privada Real</div>
+    <div class="denom" data-lang="de">RPN — Echtes Privates Netzwerk</div>
+    <div class="denom" data-lang="fr">RPN — Réseau Privé Réel</div>
+    <div class="denom" data-lang="ro">RPN — Rețea Privată Reală</div>
+    <div class="denom" data-lang="ar">RPN — شبكة خاصّة حقيقيّة</div>
     <p class="vline" data-lang="en">📦 Your private VPN — in a box.</p>
     <p class="vline" data-lang="es">📦 Tu VPN privado — en una caja.</p>
     <p class="vline" data-lang="de">📦 Dein privates VPN — in einer Box.</p>
@@ -147,7 +161,7 @@ footer{text-align:center;padding:2.2rem 1.25rem 2.6rem;border-top:1px solid var(
 
 <!-- WHY / USE CASES -->
 <section id="why">
-  <div class="wrap anim">
+  <div class="wrap reveal">
     <div class="slbl" data-lang="en">Why families use Dar</div>
     <div class="slbl" data-lang="es">Por qué las familias usan Dar</div>
     <div class="slbl" data-lang="de">Warum Familien Dar nutzen</div>
@@ -188,7 +202,7 @@ footer{text-align:center;padding:2.2rem 1.25rem 2.6rem;border-top:1px solid var(
 
 <!-- HOW IT REACHES HOME -->
 <section class="alt" id="reach">
-  <div class="wrap anim">
+  <div class="wrap reveal">
     <div class="slbl" data-lang="en">How it reaches home</div>
     <div class="slbl" data-lang="es">Cómo llega a casa</div>
     <div class="slbl" data-lang="de">So kommt es nach Hause</div>
@@ -231,7 +245,7 @@ footer{text-align:center;padding:2.2rem 1.25rem 2.6rem;border-top:1px solid var(
 
 <!-- DIFFERENT FROM MAINSTREAM VPN -->
 <section id="diff">
-  <div class="wrap anim">
+  <div class="wrap reveal">
     <div class="slbl" data-lang="en">Not another VPN</div>
     <div class="slbl" data-lang="es">No es otro VPN</div>
     <div class="slbl" data-lang="de">Kein gewöhnliches VPN</div>
@@ -308,7 +322,7 @@ footer{text-align:center;padding:2.2rem 1.25rem 2.6rem;border-top:1px solid var(
 
 <!-- HONEST: cons as advantages -->
 <section class="alt" id="honest">
-  <div class="wrap anim">
+  <div class="wrap reveal">
     <div class="slbl" data-lang="en">We'll be honest with you</div>
     <div class="slbl" data-lang="es">Vamos a ser honestos</div>
     <div class="slbl" data-lang="de">Wir sind ehrlich zu dir</div>
@@ -378,7 +392,7 @@ footer{text-align:center;padding:2.2rem 1.25rem 2.6rem;border-top:1px solid var(
 
 <!-- TRUST -->
 <section id="trust">
-  <div class="wrap anim">
+  <div class="wrap reveal">
     <div class="trust">
       <h2 style="font-size:1.4rem" data-lang="en">Don't trust us. Verify.</h2>
       <h2 style="font-size:1.4rem" data-lang="es">No nos creas. Verifica.</h2>
@@ -398,7 +412,7 @@ footer{text-align:center;padding:2.2rem 1.25rem 2.6rem;border-top:1px solid var(
 
 <!-- CTA -->
 <section id="get">
-  <div class="wrap anim" style="text-align:center">
+  <div class="wrap reveal" style="text-align:center">
     <h2 class="sec" data-lang="en">Be first to get a Dar</h2>
     <h2 class="sec" data-lang="es">Sé el primero en tener un Dar</h2>
     <h2 class="sec" data-lang="de">Sichere dir als Erster ein Dar</h2>
@@ -473,6 +487,10 @@ document.addEventListener('DOMContentLoaded',function(){
   }catch(e){}
   if(LANGS.indexOf(l)<0)l='en';
   setLang(l);
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:0.01,rootMargin:'0px 0px -10% 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
 });
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeC();});
 </script>

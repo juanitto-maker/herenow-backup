@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hempcrete Block Lab — Hemp · Lime · Gypsum sample plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="light"]{
+  --bg:#faf6ef; --bg-card:#fff; --bg-alt:#f3ede1;
+  --bg-hero:linear-gradient(160deg,#f0ebe0,#faf6ef);
+  --text:#3a2f1f; --text-m:#7a6a52; --text-h:#2a1f10;
+  --border:#e6ddcd; --accent:#b84c28; --ac2:#a67048; --ac3:#6b7a2e;
+  --overlay-bg:rgba(40,30,16,.55); --code:#f0e9da;
+}
+[data-theme="dark"]{
+  --bg:#1a1510; --bg-card:#252015; --bg-alt:#201a12;
+  --bg-hero:linear-gradient(160deg,#241d12,#1a1510);
+  --text:#e2d8c8; --text-m:#9a8a72; --text-h:#f0e8d8;
+  --border:#3a3025; --accent:#d9663d; --ac2:#c0925f; --ac3:#9fb24a;
+  --overlay-bg:rgba(0,0,0,.6); --code:#2c2418;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+img,svg,video{max-width:100%;height:auto}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);
+  line-height:1.6;-webkit-font-smoothing:antialiased;overflow-wrap:break-word}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;color:var(--text-h);line-height:1.2;font-weight:600}
+.wrap{max-width:760px;margin:0 auto;padding:0 1.25rem}
+.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--border);display:flex;
+  justify-content:space-between;align-items:center;padding:.5rem 1rem;gap:.5rem}
+.langs{display:flex;gap:.3rem}
+.langs button{background:none;border:1px solid var(--border);color:var(--text-m);
+  font-family:inherit;font-size:.72rem;font-weight:600;padding:.25rem .55rem;border-radius:.4rem;cursor:pointer;text-transform:uppercase}
+.langs button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.theme-btn{background:none;border:1px solid var(--border);border-radius:.4rem;
+  font-size:.95rem;padding:.2rem .5rem;cursor:pointer;line-height:1}
+.hero{background:var(--bg-hero);padding:3rem 0 2.5rem;border-bottom:1px solid var(--border)}
+.tag{display:inline-block;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--accent);border:1px solid var(--accent);border-radius:1rem;padding:.2rem .7rem;margin-bottom:1rem}
+.hero h1{font-size:2rem;margin-bottom:.6rem}
+.hero p{color:var(--text-m);font-size:1.02rem;max-width:38rem}
+section{padding:2.2rem 0;border-bottom:1px solid var(--border)}
+section:nth-of-type(even){background:var(--bg-alt)}
+section h2{font-size:1.4rem;margin-bottom:.4rem;display:flex;align-items:center;gap:.5rem}
+section h2 .n{font-size:.8rem;color:var(--accent);border:1px solid var(--accent);border-radius:50%;
+  width:1.5rem;height:1.5rem;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Sans'}
+.lead{color:var(--text-m);margin-bottom:1rem}
+ul.clean{list-style:none;display:flex;flex-direction:column;gap:.45rem;margin:.6rem 0}
+ul.clean li{padding-left:1.1rem;position:relative}
+ul.clean li::before{content:'·';position:absolute;left:.2rem;color:var(--accent);font-weight:700}
+.grp{margin:1rem 0}
+.grp h4{font-size:.82rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ac2);margin-bottom:.4rem}
+.have{color:var(--ac3);font-weight:600;font-size:.82rem}
+.get{color:var(--accent);font-weight:600;font-size:.82rem}
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.8rem 0;border:1px solid var(--border);border-radius:.6rem}
+table{border-collapse:collapse;width:100%;font-size:.86rem;min-width:30rem}
+th,td{text-align:left;padding:.55rem .7rem;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--bg-card);color:var(--text-h);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.03em}
+tr:last-child td{border-bottom:none}
+.rx{font-weight:600;color:var(--text-h)}
+.qty{font-variant-numeric:tabular-nums}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:.7rem;padding:1rem 1.1rem;margin:.7rem 0}
+.card h4{font-size:.95rem;margin-bottom:.3rem;color:var(--text-h)}
+.steps{counter-reset:s;list-style:none;display:flex;flex-direction:column;gap:.7rem;margin:.6rem 0}
+.steps li{counter-increment:s;padding-left:2rem;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;background:var(--accent);color:#fff;
+  width:1.4rem;height:1.4rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600}
+code{background:var(--code);padding:.08rem .35rem;border-radius:.3rem;font-size:.85em;font-family:ui-monospace,monospace}
+details{background:var(--bg-card);border:1px solid var(--border);border-radius:.7rem;margin:.8rem 0;overflow:hidden}
+details[open]{border-color:var(--accent)}
+summary{padding:.9rem 1.1rem;cursor:pointer;font-weight:600;color:var(--text-h);font-family:'Fraunces',serif;
+  display:flex;align-items:center;gap:.5rem;list-style:none;font-size:1.02rem}
+summary::-webkit-details-marker{display:none}
+summary::before{content:'+';color:var(--accent);font-size:1.3rem;font-weight:700;transition:transform .2s}
+details[open] summary::before{transform:rotate(45deg)}
+.details-body{padding:0 1.1rem 1.1rem}
+.warn{background:color-mix(in srgb,var(--accent) 10%,transparent);border-left:3px solid var(--accent);
+  border-radius:.4rem;padding:.7rem .9rem;font-size:.88rem;margin:.8rem 0}
+.foot{padding:2rem 0 3rem;text-align:center;color:var(--text-m);font-size:.82rem}
+.foot .disc{font-size:.76rem;max-width:34rem;margin:0 auto 1rem;opacity:.85}
+.dav-link{color:var(--accent);cursor:pointer;text-decoration:underline;text-decoration-style:dotted;
+  text-underline-offset:2px;font-weight:600}
+.dialog-overlay{display:none;position:fixed;inset:0;background:var(--overlay-bg);z-index:200;align-items:center;justify-content:center;padding:1rem}
+.dialog-overlay.open{display:flex}
+.dialog-box{background:var(--bg-card);border:1px solid var(--border);border-radius:1rem;padding:1.6rem;max-width:300px;width:90%;text-align:center}
+.dialog-box h4{color:var(--text-h);margin-bottom:1rem;font-size:1rem}
+.dialog-option{display:block;width:100%;padding:.65rem;margin-bottom:.6rem;border-radius:.5rem;text-decoration:none;font-weight:600;font-size:.9rem}
+.dialog-bot{background:#0088cc;color:#fff}
+.dialog-tg{background:#229ED9;color:#fff}
+.dialog-mail{background:#4a6741;color:#fff}
+.dialog-close{background:none;border:1px solid var(--border);color:var(--text-m);cursor:pointer;font-size:.82rem;padding:.4rem 1.2rem;border-radius:.4rem;margin-top:.2rem}
+@media(max-width:480px){.hero h1{font-size:1.6rem}.wrap{padding:0 1rem}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="langs">
+    <button data-l="en" onclick="setLang('en')">EN</button>
+    <button data-l="es" onclick="setLang('es')">ES</button>
+    <button data-l="de" onclick="setLang('de')">DE</button>
+  </div>
+  <button class="theme-btn" onclick="toggleTheme()" id="tbtn">🌙</button>
+</div>
+
+<div class="hero">
+  <div class="wrap">
+    <span class="tag" data-lang="en">Field lab · bioconstruction</span>
+    <span class="tag" data-lang="es">Laboratorio de campo · bioconstrucción</span>
+    <span class="tag" data-lang="de">Feldlabor · Biobau</span>
+    <h1 data-lang="en">Hempcrete Block Lab</h1>
+    <h1 data-lang="es">Laboratorio de bloques de cáñamo-cal</h1>
+    <h1 data-lang="de">Hanfkalk-Block-Labor</h1>
+    <p data-lang="en">A small, honest test plan: turn hemp shiv + lime (and gypsum, and local esparto fibre) into cast sample blocks, find the recipe that holds shape and cures reliably, then scale the winner for wall blocks.</p>
+    <p data-lang="es">Un plan de pruebas pequeño y honesto: convertir cáñamo (chénevotte) + cal (y yeso, y fibra de esparto local) en bloques de muestra moldeados, encontrar la receta que mantiene la forma y fragua de forma fiable, y luego escalar la ganadora para bloques de muro.</p>
+    <p data-lang="de">Ein kleiner, ehrlicher Versuchsplan: Hanfschäben + Kalk (und Gips, und lokale Esparto-Faser) zu gegossenen Probeblöcken verarbeiten, das Rezept finden, das formstabil ist und zuverlässig aushärtet, und den Sieger dann für Wandblöcke hochskalieren.</p>
+  </div>
+</div>
+
+<!-- 1 PURPOSE -->
+<section><div class="wrap">
+  <h2><span class="n">1</span><span data-lang="en">Purpose &amp; scope</span><span data-lang="es">Propósito y alcance</span><span data-lang="de">Zweck &amp; Umfang</span></h2>
+  <div data-lang="en">
+    <p class="lead">Find a hemp-shiv + lime block recipe that holds its shape, cures reliably, and can be cast in a hole-cored mould — then scale the best one.</p>
+    <ul class="clean">
+      <li>This lab tests <strong>denser, binder-richer</strong> mixes cast as small blocks, and compares them fairly.</li>
+      <li><strong>In scope:</strong> hand-mixed sample blocks, cast in 1&nbsp;L cartons, compared by cure speed and crush resistance.</li>
+      <li><strong>Out of scope:</strong> structural certification. Hempcrete is insulating infill, not load-bearing — blocks are non-structural infill.</li>
+    </ul>
+  </div>
+  <div data-lang="es">
+    <p class="lead">Encontrar una receta de bloque cáñamo + cal que mantenga la forma, fragüe de forma fiable y se pueda moldear con huecos — y luego escalar la mejor.</p>
+    <ul class="clean">
+      <li>Este laboratorio prueba mezclas <strong>más densas y con más aglomerante</strong>, moldeadas como bloques pequeños, y las compara de forma justa.</li>
+      <li><strong>Dentro del alcance:</strong> bloques de muestra amasados a mano, moldeados en cartones de 1&nbsp;L, comparados por velocidad de fraguado y resistencia al aplastamiento.</li>
+      <li><strong>Fuera del alcance:</strong> certificación estructural. El cáñamo-cal es relleno aislante, no portante — los bloques son relleno no estructural.</li>
+    </ul>
+  </div>
+  <div data-lang="de">
+    <p class="lead">Ein Hanf-Kalk-Block-Rezept finden, das formstabil ist, zuverlässig aushärtet und mit Hohlkernen gegossen werden kann — und dann das beste hochskalieren.</p>
+    <ul class="clean">
+      <li>Dieses Labor testet <strong>dichtere, bindemittelreichere</strong> Mischungen als kleine Blöcke und vergleicht sie fair.</li>
+      <li><strong>Im Umfang:</strong> handgemischte Probeblöcke, in 1-L-Kartons gegossen, verglichen nach Aushärtegeschwindigkeit und Druckfestigkeit.</li>
+      <li><strong>Nicht im Umfang:</strong> statische Zertifizierung. Hanfkalk ist dämmendes Füllmaterial, nicht tragend — die Blöcke sind nicht-tragende Füllung.</li>
+    </ul>
+  </div>
+</div></section>
+
+<!-- 2 MATERIALS -->
+<section><div class="wrap">
+  <h2><span class="n">2</span><span data-lang="en">Materials &amp; tools</span><span data-lang="es">Materiales y herramientas</span><span data-lang="de">Material &amp; Werkzeug</span></h2>
+
+  <div data-lang="en">
+    <div class="grp"><h4>Binders &amp; aggregate</h4><ul class="clean">
+      <li>Hemp shiv (cáñamo / Kanabat) <span class="have">— have</span></li>
+      <li>Esparto grass (local, abundant) <span class="have">— free, gather locally</span> · chop short + soak before use</li>
+      <li>Hydrated air lime (hidróxido cálcico) <span class="have">— have</span></li>
+      <li>Fast gypsum (yeso rápido) <span class="have">— have</span></li>
+      <li>Pozzolan — ground fired-brick/tile dust, or puzolana molida <span class="get">— to source / DIY (see §6)</span></li>
+      <li>Portland cement (CEM II) <span class="get">— to source (widely available)</span></li>
+      <li>NHL 3.5 natural hydraulic lime <span class="get">— optional, see §8</span></li>
+      <li>Water</li>
+    </ul></div>
+    <div class="grp"><h4>Moulds &amp; formers</h4><ul class="clean">
+      <li>1&nbsp;L Tetra Pak cartons (2 per recipe), tops cut open — poly lining releases &amp; is waterproof; tear off after set</li>
+      <li>Hole-formers — greased bolt / dowel / broomstick / PVC offcut ~1.5–2&nbsp;cm (optional per block)</li>
+      <li>Grease — used motor oil, veg oil or soap (formers only, not the carton)</li>
+    </ul></div>
+    <div class="grp"><h4>Mixing, measuring, safety</h4><ul class="clean">
+      <li>Kitchen scale (grams) — essential, recipes are by weight</li>
+      <li>Bucket / tub + trowel or stick (hand-mix the samples; save the pan mixer for full batches)</li>
+      <li>Secateurs / shears to chop esparto short</li>
+      <li>Measuring jug + spray bottle (pre-wet dusty hemp; keep lime samples damp while curing)</li>
+      <li>Gloves, P2/P3 dust mask, eye protection — lime &amp; cement are caustic, gypsum dust irritates</li>
+      <li>Light tamping stick</li>
+    </ul></div>
+    <div class="grp"><h4>Recording &amp; cure</h4><ul class="clean">
+      <li>Marker + masking tape (label each carton: recipe + date)</li>
+      <li>Notebook for the log</li>
+      <li>Shaded cure spot — lime kept slightly damp with airflow; gypsum kept dry</li>
+    </ul></div>
+  </div>
+
+  <div data-lang="es">
+    <div class="grp"><h4>Aglomerantes y árido</h4><ul class="clean">
+      <li>Cáñamo (chénevotte / Kanabat) <span class="have">— lo tienes</span></li>
+      <li>Esparto (local, abundante) <span class="have">— gratis, recógelo</span> · picar corto + remojar antes de usar</li>
+      <li>Cal aérea apagada (hidróxido cálcico) <span class="have">— lo tienes</span></li>
+      <li>Yeso rápido <span class="have">— lo tienes</span></li>
+      <li>Puzolana — polvo de ladrillo/teja cocida molido, o puzolana molida <span class="get">— conseguir / DIY (ver §6)</span></li>
+      <li>Cemento Portland (CEM II) <span class="get">— conseguir (muy disponible)</span></li>
+      <li>Cal hidráulica natural NHL 3.5 <span class="get">— opcional, ver §8</span></li>
+      <li>Agua</li>
+    </ul></div>
+    <div class="grp"><h4>Moldes y formadores</h4><ul class="clean">
+      <li>Cartones Tetra Pak de 1&nbsp;L (2 por receta), abiertos por arriba — el forro plástico desmolda y es impermeable; se rasga tras fraguar</li>
+      <li>Formadores de hueco — perno / espiga / palo de escoba / trozo de PVC engrasado ~1,5–2&nbsp;cm (opcional por bloque)</li>
+      <li>Grasa — aceite de motor usado, aceite vegetal o jabón (solo el formador, no el cartón)</li>
+    </ul></div>
+    <div class="grp"><h4>Mezcla, medida, seguridad</h4><ul class="clean">
+      <li>Báscula de cocina (gramos) — esencial, las recetas son por peso</li>
+      <li>Cubo / barreño + paleta o palo (amasa las muestras a mano; reserva la amasadora para tandas grandes)</li>
+      <li>Tijeras de podar para picar el esparto corto</li>
+      <li>Jarra medidora + pulverizador (pre-humedecer cáñamo polvoriento; mantener húmedas las muestras de cal)</li>
+      <li>Guantes, mascarilla P2/P3, gafas — la cal y el cemento son cáusticos, el polvo de yeso irrita</li>
+      <li>Palo para compactar suave</li>
+    </ul></div>
+    <div class="grp"><h4>Registro y curado</h4><ul class="clean">
+      <li>Rotulador + cinta de carrocero (etiqueta cada cartón: receta + fecha)</li>
+      <li>Cuaderno para el registro</li>
+      <li>Lugar de curado a la sombra — cal ligeramente húmeda con aire; yeso en seco</li>
+    </ul></div>
+  </div>
+
+  <div data-lang="de">
+    <div class="grp"><h4>Bindemittel &amp; Zuschlag</h4><ul class="clean">
+      <li>Hanfschäben (Chénevotte / Kanabat) <span class="have">— vorhanden</span></li>
+      <li>Esparto-Gras (lokal, reichlich) <span class="have">— gratis, vor Ort sammeln</span> · kurz schneiden + einweichen</li>
+      <li>Gelöschter Luftkalk (Calciumhydroxid) <span class="have">— vorhanden</span></li>
+      <li>Schnellgips (yeso rápido) <span class="have">— vorhanden</span></li>
+      <li>Puzzolan — gemahlener Ziegel-/Tonziegelstaub, oder gemahlenes Puzzolan <span class="get">— besorgen / DIY (siehe §6)</span></li>
+      <li>Portlandzement (CEM II) <span class="get">— besorgen (weit verfügbar)</span></li>
+      <li>NHL 3.5 natürlicher hydraulischer Kalk <span class="get">— optional, siehe §8</span></li>
+      <li>Wasser</li>
+    </ul></div>
+    <div class="grp"><h4>Formen &amp; Kernbildner</h4><ul class="clean">
+      <li>1-L-Tetra-Pak-Kartons (2 pro Rezept), oben aufgeschnitten — die Kunststoffbeschichtung löst sich gut &amp; ist wasserdicht; nach dem Abbinden abreißen</li>
+      <li>Kernbildner — gefetteter Bolzen / Dübel / Besenstiel / PVC-Rest ~1,5–2&nbsp;cm (optional pro Block)</li>
+      <li>Fett — Altöl, Pflanzenöl oder Seife (nur der Bildner, nicht der Karton)</li>
+    </ul></div>
+    <div class="grp"><h4>Mischen, Messen, Sicherheit</h4><ul class="clean">
+      <li>Küchenwaage (Gramm) — wesentlich, die Rezepte sind nach Gewicht</li>
+      <li>Eimer / Wanne + Kelle oder Stock (Proben von Hand mischen; den Zwangsmischer für volle Chargen aufheben)</li>
+      <li>Gartenschere zum Kurzschneiden des Espartos</li>
+      <li>Messbecher + Sprühflasche (staubige Schäben vornässen; Kalkproben beim Aushärten feucht halten)</li>
+      <li>Handschuhe, P2/P3-Staubmaske, Augenschutz — Kalk &amp; Zement sind ätzend, Gipsstaub reizt</li>
+      <li>Stock zum leichten Verdichten</li>
+    </ul></div>
+    <div class="grp"><h4>Protokoll &amp; Aushärtung</h4><ul class="clean">
+      <li>Marker + Kreppband (jeden Karton beschriften: Rezept + Datum)</li>
+      <li>Notizbuch für das Protokoll</li>
+      <li>Schattiger Aushärteplatz — Kalk leicht feucht mit Luftzug; Gips trocken</li>
+    </ul></div>
+  </div>
+</div></section>
+
+<!-- 3 RECIPES -->
+<section><div class="wrap">
+  <h2><span class="n">3</span><span data-lang="en">Recipes to try</span><span data-lang="es">Recetas a probar</span><span data-lang="de">Rezepte zum Ausprobieren</span></h2>
+
+  <p class="lead" data-lang="en">All <strong>by weight</strong>, per ~2 cartons. Hemp stays constant; only the binder changes, so the comparison is fair. <strong>Water = ball test:</strong> add gradually (start ~half the binder weight in ml), stop when a squeezed fistful holds without dripping.</p>
+  <p class="lead" data-lang="es">Todo <strong>por peso</strong>, por ~2 cartones. El cáñamo se mantiene constante; solo cambia el aglomerante, así la comparación es justa. <strong>Agua = prueba de la bola:</strong> añade poco a poco (empieza con ~la mitad del peso del aglomerante en ml), para cuando un puñado apretado mantiene la forma sin gotear.</p>
+  <p class="lead" data-lang="de">Alles <strong>nach Gewicht</strong>, pro ~2 Kartons. Hanf bleibt konstant; nur das Bindemittel ändert sich, so ist der Vergleich fair. <strong>Wasser = Balltest:</strong> nach und nach zugeben (Start ~halbes Bindemittelgewicht in ml), stoppen, wenn eine gepresste Handvoll formstabil bleibt, ohne zu tropfen.</p>
+
+  <div data-lang="en"><div class="tbl-scroll"><table>
+    <tr><th>#</th><th>Binder / mix</th><th>Quantities</th><th>Character</th></tr>
+    <tr><td class="rx">1</td><td>Pure air lime (control)</td><td class="qty">200 g hemp + 360 g lime</td><td>Breathable, slowest cure, weakest. Baseline.</td></tr>
+    <tr><td class="rx">2</td><td>Lime + pozzolan</td><td class="qty">200 g hemp + 300 g lime + 60 g pozzolan</td><td>Hydraulic set, breathable, water-resistant. "NHL without NHL".</td></tr>
+    <tr><td class="rx">3</td><td>NHL</td><td class="qty">200 g hemp + 360 g NHL 3.5</td><td>Cleanest hydraulic option, no DIY. See §8.</td></tr>
+    <tr><td class="rx">4</td><td>Lime + cement</td><td class="qty">200 g hemp + 300 g lime + 60 g cement</td><td>Most available booster; strongest, some water resistance. <strong>No gypsum in this one.</strong></td></tr>
+    <tr><td class="rx">5</td><td>Gypsum</td><td class="qty">200 g hemp + 300 g gypsum</td><td>Fast (demould 30–60 min), interior/dry only, not water-resistant.</td></tr>
+    <tr><td class="rx">6</td><td>Hemp + esparto (reinforced)</td><td class="qty">180 g hemp + 20 g chopped soaked esparto + 300 g lime + 60 g pozzolan</td><td>Hemp body for insulation + esparto fibre for crack/tensile reinforcement. Best of both.</td></tr>
+    <tr><td class="rx">7</td><td>Esparto-lime (no hemp)</td><td class="qty">150 g chopped soaked esparto + 350 g lime + 60 g pozzolan</td><td>Free local fibre as main aggregate. Heavier, less insulating — tests if esparto can stand alone.</td></tr>
+  </table></div></div>
+
+  <div data-lang="es"><div class="tbl-scroll"><table>
+    <tr><th>#</th><th>Aglomerante / mezcla</th><th>Cantidades</th><th>Carácter</th></tr>
+    <tr><td class="rx">1</td><td>Cal aérea pura (control)</td><td class="qty">200 g cáñamo + 360 g cal</td><td>Transpirable, fraguado más lento, más débil. Referencia.</td></tr>
+    <tr><td class="rx">2</td><td>Cal + puzolana</td><td class="qty">200 g cáñamo + 300 g cal + 60 g puzolana</td><td>Fraguado hidráulico, transpirable, resistente al agua. "NHL sin NHL".</td></tr>
+    <tr><td class="rx">3</td><td>NHL</td><td class="qty">200 g cáñamo + 360 g NHL 3.5</td><td>Opción hidráulica más limpia, sin DIY. Ver §8.</td></tr>
+    <tr><td class="rx">4</td><td>Cal + cemento</td><td class="qty">200 g cáñamo + 300 g cal + 60 g cemento</td><td>Refuerzo más disponible; más fuerte, algo resistente al agua. <strong>Sin yeso en esta.</strong></td></tr>
+    <tr><td class="rx">5</td><td>Yeso</td><td class="qty">200 g cáñamo + 300 g yeso</td><td>Rápido (desmolde 30–60 min), solo interior/seco, no resiste agua.</td></tr>
+    <tr><td class="rx">6</td><td>Cáñamo + esparto (reforzado)</td><td class="qty">180 g cáñamo + 20 g esparto picado y remojado + 300 g cal + 60 g puzolana</td><td>Cuerpo de cáñamo para aislar + fibra de esparto para reforzar (tracción/fisuras). Lo mejor de ambos.</td></tr>
+    <tr><td class="rx">7</td><td>Esparto-cal (sin cáñamo)</td><td class="qty">150 g esparto picado y remojado + 350 g cal + 60 g puzolana</td><td>Fibra local gratis como árido principal. Más pesado, menos aislante — prueba si el esparto vale solo.</td></tr>
+  </table></div></div>
+
+  <div data-lang="de"><div class="tbl-scroll"><table>
+    <tr><th>#</th><th>Bindemittel / Mischung</th><th>Mengen</th><th>Charakter</th></tr>
+    <tr><td class="rx">1</td><td>Reiner Luftkalk (Kontrolle)</td><td class="qty">200 g Hanf + 360 g Kalk</td><td>Atmungsaktiv, langsamste Aushärtung, schwächste. Referenz.</td></tr>
+    <tr><td class="rx">2</td><td>Kalk + Puzzolan</td><td class="qty">200 g Hanf + 300 g Kalk + 60 g Puzzolan</td><td>Hydraulische Abbindung, atmungsaktiv, wasserfest. „NHL ohne NHL".</td></tr>
+    <tr><td class="rx">3</td><td>NHL</td><td class="qty">200 g Hanf + 360 g NHL 3.5</td><td>Sauberste hydraulische Option, kein DIY. Siehe §8.</td></tr>
+    <tr><td class="rx">4</td><td>Kalk + Zement</td><td class="qty">200 g Hanf + 300 g Kalk + 60 g Zement</td><td>Verfügbarster Verstärker; am festesten, etwas wasserfest. <strong>Hier kein Gips.</strong></td></tr>
+    <tr><td class="rx">5</td><td>Gips</td><td class="qty">200 g Hanf + 300 g Gips</td><td>Schnell (Entformen 30–60 min), nur innen/trocken, nicht wasserfest.</td></tr>
+    <tr><td class="rx">6</td><td>Hanf + Esparto (verstärkt)</td><td class="qty">180 g Hanf + 20 g gehäckseltes, eingeweichtes Esparto + 300 g Kalk + 60 g Puzzolan</td><td>Hanfkörper zur Dämmung + Esparto-Faser zur Zug-/Rissbewehrung. Das Beste aus beidem.</td></tr>
+    <tr><td class="rx">7</td><td>Esparto-Kalk (ohne Hanf)</td><td class="qty">150 g gehäckseltes, eingeweichtes Esparto + 350 g Kalk + 60 g Puzzolan</td><td>Kostenlose lokale Faser als Hauptzuschlag. Schwerer, weniger dämmend — testet, ob Esparto allein taugt.</td></tr>
+  </table></div></div>
+
+  <p class="lead" style="margin-top:.4rem" data-lang="en"><strong>Esparto prep (recipes 6–7):</strong> chop short (2–4&nbsp;cm) and pre-soak — or boil — before mixing. Dry esparto is tough, waxy and water-repellent, and long strands tangle and foul the mixer. Drain, then add it last like hemp. More in §7.</p>
+  <p class="lead" style="margin-top:.4rem" data-lang="es"><strong>Preparación del esparto (recetas 6–7):</strong> pícalo corto (2–4&nbsp;cm) y remójalo — o cuécelo — antes de mezclar. El esparto seco es duro, ceroso y repele el agua, y las hebras largas se enredan y atascan la amasadora. Escúrrelo y añádelo al final, como el cáñamo. Más en §7.</p>
+  <p class="lead" style="margin-top:.4rem" data-lang="de"><strong>Esparto-Vorbereitung (Rezepte 6–7):</strong> kurz schneiden (2–4&nbsp;cm) und vorwässern — oder kochen — vor dem Mischen. Trockenes Esparto ist zäh, wachsig und wasserabweisend, und lange Halme verheddern sich und verstopfen den Mischer. Abtropfen lassen, dann zuletzt zugeben wie Hanf. Mehr in §7.</p>
+
+  <div class="warn">
+    <span data-lang="en">⚠️ Never mix gypsum with cement or NHL in the same batch — sulfate + aluminate → ettringite expansion &amp; cracking. Keep gypsum to recipe 5 (or with plain air lime only).</span>
+    <span data-lang="es">⚠️ Nunca mezcles yeso con cemento o NHL en la misma tanda — sulfato + aluminato → expansión por etringita y fisuras. Reserva el yeso a la receta 5 (o solo con cal aérea pura).</span>
+    <span data-lang="de">⚠️ Gips nie mit Zement oder NHL in derselben Charge mischen — Sulfat + Aluminat → Ettringit-Treiben &amp; Risse. Gips nur in Rezept 5 (oder nur mit reinem Luftkalk).</span>
+  </div>
+</div></section>
+
+<!-- 4 TEST -->
+<section><div class="wrap">
+  <h2><span class="n">4</span><span data-lang="en">How to test</span><span data-lang="es">Cómo probarlas</span><span data-lang="de">Wie testen</span></h2>
+
+  <div data-lang="en">
+    <p class="lead">Same process for all of them, so only the binder/aggregate varies:</p>
+    <ol class="steps">
+      <li>Binder + water to a paste first. Fold the hemp (and soaked esparto) in <strong>last</strong>, mix only until coated — don't over-mix (it breaks the shiv).</li>
+      <li>Light tamp into the carton. One greased former down the middle if you want the hole.</li>
+      <li>Label + date each carton. Log recipe, water used, demould time.</li>
+      <li>Demould &amp; cure: gypsum dry; lime kept slightly damp in shade with airflow.</li>
+      <li>Test by hand-crush / drop from ~1&nbsp;m: <strong>gypsum at 1–2 days</strong>, <strong>lime ones at 7 and 28 days</strong>.</li>
+    </ol>
+    <p>The <strong>28-day</strong> result is the real verdict — air lime is near-useless at 7 days and decent by 28. Judge each on: holds an edge, doesn't crumble under thumb pressure, survives the drop, feels light but solid.</p>
+    <p class="lead" style="margin-top:.8rem">Likely outcome: <strong>#2 or #4</strong> wins for a usable block, <strong>#6</strong> is toughest (least cracking), <strong>#5</strong> wins for speed, <strong>#1</strong> stays crumbly, <strong>#7</strong> tells you whether free esparto alone is good enough. But run them all — that's the point of samples.</p>
+  </div>
+  <div data-lang="es">
+    <p class="lead">Mismo proceso para todas, así solo varía el aglomerante/árido:</p>
+    <ol class="steps">
+      <li>Aglomerante + agua hasta pasta primero. Incorpora el cáñamo (y el esparto remojado) <strong>al final</strong>, mezcla solo hasta cubrirlo — no amases de más (rompe la chénevotte).</li>
+      <li>Compacta suave en el cartón. Un formador engrasado en el centro si quieres el hueco.</li>
+      <li>Etiqueta + fecha cada cartón. Anota receta, agua usada, tiempo de desmolde.</li>
+      <li>Desmolda y cura: yeso en seco; cal ligeramente húmeda a la sombra con aire.</li>
+      <li>Prueba por aplastamiento a mano / caída desde ~1&nbsp;m: <strong>yeso a 1–2 días</strong>, <strong>las de cal a 7 y 28 días</strong>.</li>
+    </ol>
+    <p>El resultado a <strong>28 días</strong> es el veredicto real — la cal aérea es casi inútil a 7 días y decente a 28. Juzga cada una por: mantiene la arista, no se desmenuza con el pulgar, sobrevive la caída, ligera pero sólida.</p>
+    <p class="lead" style="margin-top:.8rem">Resultado probable: gana <strong>#2 o #4</strong> para un bloque usable, <strong>#6</strong> es la más tenaz (menos fisuras), <strong>#5</strong> para velocidad, <strong>#1</strong> sigue desmenuzable, <strong>#7</strong> te dice si el esparto gratis vale solo. Pero haz todas — ese es el sentido de las muestras.</p>
+  </div>
+  <div data-lang="de">
+    <p class="lead">Gleicher Ablauf für alle, so variiert nur Bindemittel/Zuschlag:</p>
+    <ol class="steps">
+      <li>Erst Bindemittel + Wasser zur Paste. Den Hanf (und das eingeweichte Esparto) <strong>zuletzt</strong> einarbeiten, nur bis benetzt mischen — nicht übermischen (zerbricht die Schäben).</li>
+      <li>Leicht in den Karton verdichten. Ein gefetteter Bildner mittig, falls du das Loch willst.</li>
+      <li>Jeden Karton beschriften + datieren. Rezept, Wassermenge, Entformzeit protokollieren.</li>
+      <li>Entformen &amp; aushärten: Gips trocken; Kalk leicht feucht im Schatten mit Luftzug.</li>
+      <li>Test durch Hand-Quetschen / Fall aus ~1&nbsp;m: <strong>Gips bei 1–2 Tagen</strong>, <strong>Kalk bei 7 und 28 Tagen</strong>.</li>
+    </ol>
+    <p>Das <strong>28-Tage</strong>-Ergebnis ist das echte Urteil — Luftkalk ist bei 7 Tagen fast nutzlos und bei 28 brauchbar. Bewerte jede nach: hält eine Kante, bröckelt nicht unter Daumendruck, übersteht den Fall, leicht aber fest.</p>
+    <p class="lead" style="margin-top:.8rem">Wahrscheinliches Ergebnis: <strong>#2 oder #4</strong> gewinnt als brauchbarer Block, <strong>#6</strong> ist am zähesten (am wenigsten Risse), <strong>#5</strong> bei Geschwindigkeit, <strong>#1</strong> bleibt bröckelig, <strong>#7</strong> zeigt, ob freies Esparto allein reicht. Aber mach alle — das ist der Sinn der Proben.</p>
+  </div>
+</div></section>
+
+<!-- 5 SCALE -->
+<section><div class="wrap">
+  <h2><span class="n">5</span><span data-lang="en">If it works — how to scale</span><span data-lang="es">Si funciona — cómo escalar</span><span data-lang="de">Wenn es klappt — wie skalieren</span></h2>
+
+  <div data-lang="en">
+    <ol class="steps">
+      <li>Pick the winner from the 28-day test. Lock its exact ratio and water.</li>
+      <li>Scale ×10+ in the green pan mixer — it's the <strong>right</strong> tool for hemp (a drum mixer just floats the fluffy shiv). Binder + water to paste, hemp last, rinse the pan immediately after every batch so nothing sets inside. <strong>Chop esparto short</strong> or long strands wrap the paddles.</li>
+      <li>Build a timber gang-mould (he has wood) with greased PVC core-tubes. Holes = lighter, less material, faster carbonation, keyed joints. <strong>Tamp lightly only</strong> — compressing kills the insulation.</li>
+      <li>Cure full blocks the same way; make many moulds since lime cure is slow (throughput = number of moulds).</li>
+      <li>Lay them as non-structural infill. <strong>Breathability rule:</strong> finish with lime render only — never seal hemp-lime under cement, plastic or acrylic (traps moisture → rot).</li>
+    </ol>
+  </div>
+  <div data-lang="es">
+    <ol class="steps">
+      <li>Elige la ganadora del test de 28 días. Fija su proporción exacta y el agua.</li>
+      <li>Escala ×10+ en la amasadora verde — es la herramienta <strong>correcta</strong> para el cáñamo (una hormigonera de tambor solo lo hace flotar). Aglomerante + agua a pasta, cáñamo al final, enjuaga la cuba justo tras cada tanda para que nada fragüe dentro. <strong>Pica el esparto corto</strong> o las hebras largas enredan las palas.</li>
+      <li>Haz un molde múltiple de madera (tienes madera) con tubos de PVC engrasados para los huecos. Huecos = más ligero, menos material, carbonatación más rápida, juntas trabadas. <strong>Compacta solo suave</strong> — comprimir mata el aislamiento.</li>
+      <li>Cura los bloques enteros igual; haz muchos moldes porque la cal cura lento (producción = nº de moldes).</li>
+      <li>Colócalos como relleno no estructural. <strong>Regla de transpirabilidad:</strong> acaba solo con revoco de cal — nunca selles el cáñamo-cal bajo cemento, plástico o acrílico (atrapa humedad → pudrición).</li>
+    </ol>
+  </div>
+  <div data-lang="de">
+    <ol class="steps">
+      <li>Den Sieger aus dem 28-Tage-Test wählen. Genaues Verhältnis und Wasser festlegen.</li>
+      <li>×10+ im grünen Zwangsmischer skalieren — das <strong>richtige</strong> Werkzeug für Hanf (ein Trommelmischer lässt die leichten Schäben nur aufschwimmen). Bindemittel + Wasser zur Paste, Hanf zuletzt, die Wanne sofort nach jeder Charge ausspülen, damit nichts darin abbindet. <strong>Esparto kurz schneiden</strong>, sonst umwickeln lange Halme die Mischwerkzeuge.</li>
+      <li>Eine Holz-Mehrfachform bauen (Holz ist da) mit gefetteten PVC-Kernrohren. Löcher = leichter, weniger Material, schnellere Karbonatisierung, verzahnte Fugen. <strong>Nur leicht verdichten</strong> — Verdichten tötet die Dämmung.</li>
+      <li>Volle Blöcke gleich aushärten; viele Formen bauen, da Kalk langsam härtet (Durchsatz = Zahl der Formen).</li>
+      <li>Als nicht-tragende Füllung vermauern. <strong>Atmungsregel:</strong> nur mit Kalkputz verputzen — Hanfkalk nie unter Zement, Plastik oder Acryl versiegeln (staut Feuchte → Fäulnis).</li>
+    </ol>
+  </div>
+</div></section>
+
+<!-- 6 POZZOLAN EXPANDABLE -->
+<section><div class="wrap">
+  <h2><span class="n">6</span><span data-lang="en">Pozzolan — buy or DIY</span><span data-lang="es">Puzolana — comprar o DIY</span><span data-lang="de">Puzzolan — kaufen oder DIY</span></h2>
+  <p class="lead" data-lang="en">Pozzolan turns your cheap air lime into a hydraulic, water-resistant binder (recipe 2). Two routes:</p>
+  <p class="lead" data-lang="es">La puzolana convierte tu cal aérea barata en un aglomerante hidráulico y resistente al agua (receta 2). Dos vías:</p>
+  <p class="lead" data-lang="de">Puzzolan macht aus deinem günstigen Luftkalk ein hydraulisches, wasserfestes Bindemittel (Rezept 2). Zwei Wege:</p>
+
+  <details>
+    <summary><span data-lang="en">🛒 Buy ready-made</span><span data-lang="es">🛒 Comprar hecho</span><span data-lang="de">🛒 Fertig kaufen</span></summary>
+    <div class="details-body">
+      <div data-lang="en"><ul class="clean">
+        <li><strong>Metakaolin</strong> — sold as a fine powder, ready to use, very reactive. The easiest if you can find it (concrete/lime suppliers).</li>
+        <li><strong>Puzolana volcánica molida</strong> — natural volcanic pozzolan, pre-ground. In Spain often sold as áridos / for green roofs; ask for the <em>milled</em> grade, not gravel — lump volcanic stone is far less reactive.</li>
+        <li>Dose ~15–20% of the lime weight (recipe 2: 60 g per 300 g lime).</li>
+      </ul></div>
+      <div data-lang="es"><ul class="clean">
+        <li><strong>Metacaolín</strong> — se vende como polvo fino, listo para usar, muy reactivo. Lo más fácil si lo encuentras (proveedores de cal/hormigón).</li>
+        <li><strong>Puzolana volcánica molida</strong> — puzolana volcánica natural, pre-molida. En España a menudo se vende como áridos / para cubiertas verdes; pide la calidad <em>molida</em>, no grava — la piedra volcánica en trozos es mucho menos reactiva.</li>
+        <li>Dosis ~15–20% del peso de la cal (receta 2: 60 g por 300 g de cal).</li>
+      </ul></div>
+      <div data-lang="de"><ul class="clean">
+        <li><strong>Metakaolin</strong> — als feines Pulver verkauft, gebrauchsfertig, sehr reaktiv. Am einfachsten, falls auffindbar (Kalk-/Beton-Händler).</li>
+        <li><strong>Gemahlenes vulkanisches Puzzolan</strong> — natürliches Vulkanpuzzolan, vorgemahlen. In Spanien oft als áridos / für Gründächer verkauft; nach der <em>gemahlenen</em> Qualität fragen, nicht Kies — stückiges Vulkangestein ist viel weniger reaktiv.</li>
+        <li>Dosierung ~15–20% des Kalkgewichts (Rezept 2: 60 g pro 300 g Kalk).</li>
+      </ul></div>
+    </div>
+  </details>
+
+  <details>
+    <summary><span data-lang="en">🧱 DIY from brick/tile (cocciopesto)</span><span data-lang="es">🧱 DIY de ladrillo/teja (cocciopesto)</span><span data-lang="de">🧱 DIY aus Ziegel/Tonziegel (Cocciopesto)</span></summary>
+    <div class="details-body">
+      <div data-lang="en">
+        <p style="margin-bottom:.6rem">The original Roman pozzolan. Two conditions decide if it works:</p>
+        <div class="grp"><h4>Which brick / tile</h4><ul class="clean">
+          <li>✅ <strong>Low-fired soft clay</strong> brick or terracotta roof tile (teja). Fired ~600–900°C — old traditional red brick &amp; clay tile.</li>
+          <li>✅ Quick test: soft-ish, terracotta-orange, crushes without a fight = good.</li>
+          <li>❌ Modern engineering/face brick (hard, vitrified, rings like glass), glazed or porcelain tiles, anything concrete — inert, useless.</li>
+        </ul></div>
+        <div class="grp"><h4>Fineness is the whole game</h4>
+          <p>The reaction is surface-area driven — it must be <strong>flour-fine</strong>, passing a fine sieve. Coarse grit just sits there as inert aggregate.</p>
+        </div>
+        <div class="grp"><h4>Tools — two stages</h4><ul class="clean">
+          <li><strong>Break to gravel:</strong> sledgehammer on a steel plate / concrete slab; wrap in a sack to contain shards.</li>
+          <li><strong>Grind to flour:</strong> heavy mortar-and-pestle, or fastest — <strong>angle grinder with a masonry/diamond cup wheel</strong>, and collect the dust it throws (already fine). Then sieve; oversize goes back.</li>
+          <li>For samples you need only 60 g — an afternoon. For production: a DIY ball mill (brick chunks + steel balls tumbled for hours) or just buy ready-ground.</li>
+        </ul></div>
+        <div class="warn">⚠️ Crushing fired clay throws <strong>respirable silica dust</strong> — genuinely harmful. Work outdoors, wet the brick to suppress dust, wear a proper P2/P3 mask (not paper).</div>
+      </div>
+      <div data-lang="es">
+        <p style="margin-bottom:.6rem">La puzolana romana original. Dos condiciones deciden si funciona:</p>
+        <div class="grp"><h4>Qué ladrillo / teja</h4><ul class="clean">
+          <li>✅ <strong>Arcilla blanda poco cocida</strong>: ladrillo o teja de barro (cocidos ~600–900°C) — ladrillo rojo tradicional y teja de barro viejos.</li>
+          <li>✅ Prueba rápida: blando-ish, naranja terracota, se rompe sin esfuerzo = bueno.</li>
+          <li>❌ Ladrillo moderno prensado/clinker (duro, vitrificado, suena a vidrio), azulejos esmaltados o porcelánicos, cualquier cosa de hormigón — inerte, inútil.</li>
+        </ul></div>
+        <div class="grp"><h4>La finura lo es todo</h4>
+          <p>La reacción depende de la superficie — debe quedar <strong>fino como harina</strong>, que pase un tamiz fino. El grano grueso solo actúa de árido inerte.</p>
+        </div>
+        <div class="grp"><h4>Herramientas — dos fases</h4><ul class="clean">
+          <li><strong>Romper a grava:</strong> mazo sobre placa de acero / losa de hormigón; envuelto en saco para contener las esquirlas.</li>
+          <li><strong>Moler a harina:</strong> mortero pesado, o lo más rápido — <strong>amoladora con disco/copa de diamante</strong>, y recoge el polvo que lanza (ya es fino). Luego tamiza; lo grueso vuelve.</li>
+          <li>Para muestras bastan 60 g — una tarde. Para producción: molino de bolas DIY (trozos de ladrillo + bolas de acero volteados horas) o comprar ya molido.</li>
+        </ul></div>
+        <div class="warn">⚠️ Triturar arcilla cocida lanza <strong>polvo de sílice respirable</strong> — realmente dañino. Trabaja al aire libre, moja el ladrillo para reducir polvo, usa mascarilla P2/P3 (no de papel).</div>
+      </div>
+      <div data-lang="de">
+        <p style="margin-bottom:.6rem">Das ursprüngliche römische Puzzolan. Zwei Bedingungen entscheiden, ob es funktioniert:</p>
+        <div class="grp"><h4>Welcher Ziegel / Tonziegel</h4><ul class="clean">
+          <li>✅ <strong>Niedrig gebrannter weicher Ton</strong>: Ziegel oder Tondachziegel (gebrannt ~600–900°C) — alter traditioneller roter Ziegel &amp; Tonziegel.</li>
+          <li>✅ Schnelltest: eher weich, terrakotta-orange, bricht ohne Mühe = gut.</li>
+          <li>❌ Moderner Hart-/Klinkerziegel (hart, verglast, klingt wie Glas), glasierte oder Porzellanfliesen, alles aus Beton — inert, nutzlos.</li>
+        </ul></div>
+        <div class="grp"><h4>Feinheit ist alles</h4>
+          <p>Die Reaktion hängt von der Oberfläche ab — es muss <strong>mehlfein</strong> sein, durch ein feines Sieb. Grober Grit liegt nur als inerter Zuschlag herum.</p>
+        </div>
+        <div class="grp"><h4>Werkzeuge — zwei Stufen</h4><ul class="clean">
+          <li><strong>Zu Kies brechen:</strong> Vorschlaghammer auf Stahlplatte / Betonplatte; in einen Sack wickeln, um Splitter zu fangen.</li>
+          <li><strong>Zu Mehl mahlen:</strong> schwerer Mörser, oder am schnellsten — <strong>Winkelschleifer mit Mauerwerks-/Diamant-Topfscheibe</strong>, und den aufgewirbelten Staub sammeln (bereits fein). Dann sieben; Überkorn zurück.</li>
+          <li>Für Proben reichen 60 g — ein Nachmittag. Für Produktion: DIY-Kugelmühle (Ziegelstücke + Stahlkugeln stundenlang gewälzt) oder fertig gemahlen kaufen.</li>
+        </ul></div>
+        <div class="warn">⚠️ Das Zerkleinern von gebranntem Ton wirbelt <strong>einatembaren Silikatstaub</strong> auf — wirklich schädlich. Draußen arbeiten, den Ziegel nässen, eine richtige P2/P3-Maske tragen (nicht Papier).</div>
+      </div>
+    </div>
+  </details>
+</div></section>
+
+<!-- 7 HEMP VS ESPARTO -->
+<section><div class="wrap">
+  <h2><span class="n">7</span><span data-lang="en">Hemp vs esparto</span><span data-lang="es">Cáñamo vs esparto</span><span data-lang="de">Hanf vs Esparto</span></h2>
+  <p class="lead" data-lang="en">Esparto is free and abundant in the mountains here — worth using. But it behaves differently from hemp: it's a <strong>reinforcing fibre</strong>, not an insulating aggregate.</p>
+  <p class="lead" data-lang="es">El esparto es gratis y abundante en estos montes — vale la pena usarlo. Pero se comporta distinto al cáñamo: es una <strong>fibra de refuerzo</strong>, no un árido aislante.</p>
+  <p class="lead" data-lang="de">Esparto ist hier in den Bergen gratis und reichlich — lohnt sich. Aber es verhält sich anders als Hanf: es ist eine <strong>Bewehrungsfaser</strong>, kein dämmender Zuschlag.</p>
+
+  <details>
+    <summary><span data-lang="en">🌾 Hemp vs esparto — what each one does</span><span data-lang="es">🌾 Cáñamo vs esparto — qué hace cada uno</span><span data-lang="de">🌾 Hanf vs Esparto — was jedes leistet</span></summary>
+    <div class="details-body">
+      <div data-lang="en">
+        <div class="tbl-scroll"><table>
+          <tr><th>Property</th><th>Hemp shiv</th><th>Esparto</th></tr>
+          <tr><td>Role</td><td>Bulk aggregate + insulation</td><td>Reinforcing fibre (tensile / crack)</td></tr>
+          <tr><td>Form</td><td>Light, porous woody chips</td><td>Long, tough, waxy grass fibre</td></tr>
+          <tr><td>Insulation</td><td>High (porous, lots of air)</td><td>Low (dense, fibrous)</td></tr>
+          <tr><td>Weight</td><td>Very light</td><td>Heavier</td></tr>
+          <tr><td>Prep</td><td>Ready from the bag</td><td>Chop short 2–4 cm + soak / boil</td></tr>
+          <tr><td>Cost</td><td>Bought (Kanabat)</td><td>Free, gathered locally</td></tr>
+          <tr><td>In the mixer</td><td>Mixes easily</td><td>Long strands tangle / wrap paddles</td></tr>
+          <tr><td>Best use</td><td>The insulating body</td><td>Reinforcement; or denser non-insulating blocks &amp; renders</td></tr>
+        </table></div>
+        <p style="margin-top:.6rem">They do different jobs — hemp fills and insulates, esparto reinforces. The smartest use is <strong>together</strong> (recipe 6): a hemp body plus a little esparto fibre, exactly as your dome aircrete uses lime + esparto. Esparto <strong>alone</strong> (recipe 7) makes a heavier, less insulating but <strong>free</strong> local block — good where insulation isn't the priority (dense blocks, renders, the dome panels).</p>
+        <p style="margin-top:.5rem">In lime, plant fibres last well — lime is mild (pH ~12.4 vs cement's higher) and slowly mineralises the fibre, protecting it. Soaking esparto in <em>limewater</em> before mixing helps both bonding and durability.</p>
+      </div>
+      <div data-lang="es">
+        <div class="tbl-scroll"><table>
+          <tr><th>Propiedad</th><th>Cáñamo (chénevotte)</th><th>Esparto</th></tr>
+          <tr><td>Papel</td><td>Árido de relleno + aislamiento</td><td>Fibra de refuerzo (tracción / fisuras)</td></tr>
+          <tr><td>Forma</td><td>Astillas leñosas ligeras y porosas</td><td>Fibra de hierba larga, dura, cerosa</td></tr>
+          <tr><td>Aislamiento</td><td>Alto (poroso, mucho aire)</td><td>Bajo (denso, fibroso)</td></tr>
+          <tr><td>Peso</td><td>Muy ligero</td><td>Más pesado</td></tr>
+          <tr><td>Preparación</td><td>Listo del saco</td><td>Picar corto 2–4 cm + remojar / cocer</td></tr>
+          <tr><td>Coste</td><td>Comprado (Kanabat)</td><td>Gratis, recogido aquí</td></tr>
+          <tr><td>En la amasadora</td><td>Se mezcla fácil</td><td>Las hebras largas se enredan / lían las palas</td></tr>
+          <tr><td>Mejor uso</td><td>El cuerpo aislante</td><td>Refuerzo; o bloques &amp; revocos densos no aislantes</td></tr>
+        </table></div>
+        <p style="margin-top:.6rem">Hacen trabajos distintos — el cáñamo rellena y aísla, el esparto refuerza. Lo más listo es usarlos <strong>juntos</strong> (receta 6): cuerpo de cáñamo más algo de fibra de esparto, igual que tu aircrete de la cúpula usa cal + esparto. El esparto <strong>solo</strong> (receta 7) da un bloque más pesado, menos aislante pero <strong>gratis</strong> — bueno donde el aislamiento no es lo prioritario (bloques densos, revocos, los paneles de la cúpula).</p>
+        <p style="margin-top:.5rem">En cal, las fibras vegetales duran bien — la cal es suave (pH ~12,4 frente al cemento, más alto) y mineraliza poco a poco la fibra, protegiéndola. Remojar el esparto en <em>agua de cal</em> antes de mezclar mejora la adherencia y la durabilidad.</p>
+      </div>
+      <div data-lang="de">
+        <div class="tbl-scroll"><table>
+          <tr><th>Eigenschaft</th><th>Hanfschäben</th><th>Esparto</th></tr>
+          <tr><td>Rolle</td><td>Füllzuschlag + Dämmung</td><td>Bewehrungsfaser (Zug / Riss)</td></tr>
+          <tr><td>Form</td><td>Leichte, poröse Holzspäne</td><td>Lange, zähe, wachsige Grasfaser</td></tr>
+          <tr><td>Dämmung</td><td>Hoch (porös, viel Luft)</td><td>Gering (dicht, faserig)</td></tr>
+          <tr><td>Gewicht</td><td>Sehr leicht</td><td>Schwerer</td></tr>
+          <tr><td>Vorbereitung</td><td>Fertig aus dem Sack</td><td>Kurz schneiden 2–4 cm + einweichen / kochen</td></tr>
+          <tr><td>Kosten</td><td>Gekauft (Kanabat)</td><td>Gratis, vor Ort gesammelt</td></tr>
+          <tr><td>Im Mischer</td><td>Mischt leicht</td><td>Lange Halme verheddern / umwickeln Werkzeuge</td></tr>
+          <tr><td>Beste Nutzung</td><td>Der dämmende Körper</td><td>Bewehrung; oder dichtere, nicht-dämmende Blöcke &amp; Putze</td></tr>
+        </table></div>
+        <p style="margin-top:.6rem">Sie erfüllen verschiedene Aufgaben — Hanf füllt und dämmt, Esparto bewehrt. Am klügsten ist die Nutzung <strong>zusammen</strong> (Rezept 6): ein Hanfkörper plus etwas Esparto-Faser, genau wie dein Kuppel-Aircrete Kalk + Esparto nutzt. Esparto <strong>allein</strong> (Rezept 7) ergibt einen schwereren, weniger dämmenden, aber <strong>kostenlosen</strong> lokalen Block — gut, wo Dämmung nicht im Vordergrund steht (dichte Blöcke, Putze, die Kuppelpaneele).</p>
+        <p style="margin-top:.5rem">In Kalk halten Pflanzenfasern gut — Kalk ist mild (pH ~12,4 gegenüber höherem Zement) und mineralisiert die Faser langsam, was sie schützt. Esparto vor dem Mischen in <em>Kalkwasser</em> einweichen verbessert Haftung und Haltbarkeit.</p>
+      </div>
+    </div>
+  </details>
+</div></section>
+
+<!-- 8 NHL -->
+<section><div class="wrap">
+  <h2><span class="n">8</span><span data-lang="en">NHL — natural hydraulic lime</span><span data-lang="es">NHL — cal hidráulica natural</span><span data-lang="de">NHL — natürlicher hydraulischer Kalk</span></h2>
+  <p class="lead" data-lang="en">NHL is limestone that contains natural clay, so it sets <strong>two ways</strong>: hydraulically (reacting with water, like cement) and by carbonation (absorbing CO₂, like air lime). That dual set makes it faster, stronger and water-resistant — yet still breathable and flexible. It's the clean, bag-ready version of recipe 2.</p>
+  <p class="lead" data-lang="es">La NHL es caliza con arcilla natural, así que fragua de <strong>dos formas</strong>: hidráulica (reacciona con agua, como el cemento) y por carbonatación (absorbe CO₂, como la cal aérea). Ese doble fraguado la hace más rápida, fuerte y resistente al agua — pero sigue siendo transpirable y flexible. Es la versión limpia y lista en saco de la receta 2.</p>
+  <p class="lead" data-lang="de">NHL ist Kalkstein mit natürlichem Tonanteil, daher bindet er auf <strong>zwei Wegen</strong> ab: hydraulisch (Reaktion mit Wasser, wie Zement) und durch Karbonatisierung (CO₂-Aufnahme, wie Luftkalk). Diese Doppel-Abbindung macht ihn schneller, fester und wasserfest — und doch atmungsaktiv und flexibel. Es ist die saubere, sackfertige Version von Rezept 2.</p>
+
+  <details>
+    <summary><span data-lang="en">📋 Grades on the market (NHL 2 / 3.5 / 5)</span><span data-lang="es">📋 Tipos en el mercado (NHL 2 / 3.5 / 5)</span><span data-lang="de">📋 Sorten am Markt (NHL 2 / 3.5 / 5)</span></summary>
+    <div class="details-body">
+      <div data-lang="en">
+        <p style="margin-bottom:.4rem">Graded by 28-day strength under EN 459-1. Higher number = stronger but less breathable/flexible.</p>
+        <div class="tbl-scroll"><table>
+          <tr><th>Grade</th><th>~28-day strength</th><th>Character</th><th>Typical use</th></tr>
+          <tr><td class="rx">NHL 2</td><td class="qty">~2 MPa</td><td>Softest, most breathable &amp; flexible</td><td>Internal plasters, soft/historic masonry, fragile substrates</td></tr>
+          <tr><td class="rx">NHL 3.5</td><td class="qty">~3.5 MPa</td><td>The all-rounder</td><td>Bedding mortars, renders, general masonry, <strong>hemp-lime walls &amp; blocks</strong></td></tr>
+          <tr><td class="rx">NHL 5</td><td class="qty">~5 MPa</td><td>Strongest, fastest, most water-resistant</td><td>Exterior renders, wet/exposed spots, below-ground, floors, denser blocks</td></tr>
+        </table></div>
+        <div class="grp"><h4>Widely available</h4><ul class="clean">
+          <li><strong>Saint-Astier</strong> (FR) — the reference NHL, distributed across Europe.</li>
+          <li><strong>Secil</strong> (PT) — common in Spain, NHL 3.5 / 5.</li>
+          <li>Spanish "cal hidráulica natural NHL" from bioconstruction shops.</li>
+        </ul></div>
+        <div class="warn">⚠️ Buy <strong>genuine NHL</strong> — the bag must say EN 459-1 "NHL 2 / 3.5 / 5". Avoid "HL" or "FL" grades: they may contain Portland cement (cheaper, but less breathable and less eco). For bioconstruction, NHL only.</div>
+      </div>
+      <div data-lang="es">
+        <p style="margin-bottom:.4rem">Clasificada por resistencia a 28 días según EN 459-1. Mayor número = más fuerte pero menos transpirable/flexible.</p>
+        <div class="tbl-scroll"><table>
+          <tr><th>Tipo</th><th>Resist. ~28 días</th><th>Carácter</th><th>Uso típico</th></tr>
+          <tr><td class="rx">NHL 2</td><td class="qty">~2 MPa</td><td>La más blanda, transpirable y flexible</td><td>Revocos interiores, fábrica blanda/histórica, soportes frágiles</td></tr>
+          <tr><td class="rx">NHL 3.5</td><td class="qty">~3,5 MPa</td><td>La polivalente</td><td>Morteros de agarre, revocos, fábrica general, <strong>muros y bloques de cáñamo-cal</strong></td></tr>
+          <tr><td class="rx">NHL 5</td><td class="qty">~5 MPa</td><td>La más fuerte, rápida y resistente al agua</td><td>Revocos exteriores, zonas húmedas/expuestas, bajo rasante, suelos, bloques densos</td></tr>
+        </table></div>
+        <div class="grp"><h4>Muy disponibles</h4><ul class="clean">
+          <li><strong>Saint-Astier</strong> (FR) — la NHL de referencia, distribuida por Europa.</li>
+          <li><strong>Secil</strong> (PT) — común en España, NHL 3.5 / 5.</li>
+          <li>"Cal hidráulica natural NHL" española en tiendas de bioconstrucción.</li>
+        </ul></div>
+        <div class="warn">⚠️ Compra <strong>NHL genuina</strong> — el saco debe decir EN 459-1 "NHL 2 / 3.5 / 5". Evita los tipos "HL" o "FL": pueden llevar cemento Portland (más baratos, pero menos transpirables y menos ecológicos). Para bioconstrucción, solo NHL.</div>
+      </div>
+      <div data-lang="de">
+        <p style="margin-bottom:.4rem">Eingestuft nach 28-Tage-Festigkeit gemäß EN 459-1. Höhere Zahl = fester, aber weniger atmungsaktiv/flexibel.</p>
+        <div class="tbl-scroll"><table>
+          <tr><th>Sorte</th><th>~28-Tage-Festigkeit</th><th>Charakter</th><th>Typische Nutzung</th></tr>
+          <tr><td class="rx">NHL 2</td><td class="qty">~2 MPa</td><td>Weichste, atmungsaktivste &amp; flexibelste</td><td>Innenputze, weiches/historisches Mauerwerk, fragile Untergründe</td></tr>
+          <tr><td class="rx">NHL 3.5</td><td class="qty">~3,5 MPa</td><td>Der Allrounder</td><td>Mauer-/Setzmörtel, Putze, allg. Mauerwerk, <strong>Hanfkalk-Wände &amp; -Blöcke</strong></td></tr>
+          <tr><td class="rx">NHL 5</td><td class="qty">~5 MPa</td><td>Am festesten, schnellsten, wasserfestesten</td><td>Außenputze, nasse/exponierte Stellen, erdberührt, Böden, dichtere Blöcke</td></tr>
+        </table></div>
+        <div class="grp"><h4>Weit verfügbar</h4><ul class="clean">
+          <li><strong>Saint-Astier</strong> (FR) — der NHL-Referenzhersteller, europaweit vertrieben.</li>
+          <li><strong>Secil</strong> (PT) — in Spanien verbreitet, NHL 3.5 / 5.</li>
+          <li>Spanischer „cal hidráulica natural NHL" aus Biobau-Läden.</li>
+        </ul></div>
+        <div class="warn">⚠️ Kaufe <strong>echtes NHL</strong> — der Sack muss EN 459-1 „NHL 2 / 3.5 / 5" angeben. Meide „HL"- oder „FL"-Sorten: sie können Portlandzement enthalten (billiger, aber weniger atmungsaktiv und weniger ökologisch). Für Biobau nur NHL.</div>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary><span data-lang="en">🆚 vs your air lime + how it helps us</span><span data-lang="es">🆚 frente a tu cal aérea + cómo nos ayuda</span><span data-lang="de">🆚 vs deinen Luftkalk + wie es uns hilft</span></summary>
+    <div class="details-body">
+      <div data-lang="en">
+        <div class="tbl-scroll"><table>
+          <tr><th>Property</th><th>Your air lime (CL, hidróxido cálcico)</th><th>NHL</th></tr>
+          <tr><td>Sets by</td><td>Carbonation only (needs air / CO₂)</td><td>Hydration + carbonation</td></tr>
+          <tr><td>Set speed</td><td>Weeks–months, surface inward</td><td>Hours to set, days–weeks to strength</td></tr>
+          <tr><td>In a thick block</td><td>Core carbonates very slowly</td><td>Sets throughout, reliably</td></tr>
+          <tr><td>Strength</td><td>Low (&lt;~1 MPa)</td><td>2–5 MPa</td></tr>
+          <tr><td>Water resistance</td><td>Poor until carbonated</td><td>Good once set</td></tr>
+          <tr><td>Breathability</td><td>Highest</td><td>High (slightly less)</td></tr>
+          <tr><td>Cost</td><td>Cheapest</td><td>More expensive</td></tr>
+        </table></div>
+        <div class="grp"><h4>How it helps our project</h4><ul class="clean">
+          <li>It's <strong>recipe 3</strong> — the clean hydraulic binder. It fixes the two weak points of your cheap air lime: slow set, and the fact that a thick cast block barely carbonates in the core. NHL sets hydraulically all the way through → reliable strength, faster demould, water resistance — with no pozzolan to grind.</li>
+          <li>Recipe 2 (lime + pozzolan) and recipe 3 (NHL) reach the same goal two ways: <strong>DIY-cheap vs bag-convenient</strong>. If you can source NHL 3.5, it's the easiest reliable block.</li>
+          <li>For the dome: <strong>NHL 3.5</strong> for the insulating panels (more flexible/breathable — better for seismic movement), <strong>NHL 5</strong> where strength &amp; water matter (brick dome, base ring, exposed faces) — exactly as your aircrete study splits them.</li>
+        </ul></div>
+        <div class="warn">⚠️ Don't add cement to NHL (defeats the purpose), and never mix NHL with gypsum (ettringite). Store it dry/sealed — NHL loses reactivity once it takes up moisture — and keep curing it damp like all limes.</div>
+      </div>
+      <div data-lang="es">
+        <div class="tbl-scroll"><table>
+          <tr><th>Propiedad</th><th>Tu cal aérea (CL, hidróxido cálcico)</th><th>NHL</th></tr>
+          <tr><td>Fragua por</td><td>Solo carbonatación (necesita aire / CO₂)</td><td>Hidratación + carbonatación</td></tr>
+          <tr><td>Velocidad</td><td>Semanas–meses, de fuera adentro</td><td>Fragua en horas, resistencia en días–semanas</td></tr>
+          <tr><td>En bloque grueso</td><td>El núcleo carbonata muy lento</td><td>Fragua en todo el grosor, fiable</td></tr>
+          <tr><td>Resistencia</td><td>Baja (&lt;~1 MPa)</td><td>2–5 MPa</td></tr>
+          <tr><td>Resist. al agua</td><td>Pobre hasta carbonatar</td><td>Buena una vez fraguada</td></tr>
+          <tr><td>Transpirabilidad</td><td>La más alta</td><td>Alta (algo menos)</td></tr>
+          <tr><td>Coste</td><td>La más barata</td><td>Más cara</td></tr>
+        </table></div>
+        <div class="grp"><h4>Cómo ayuda a nuestro proyecto</h4><ul class="clean">
+          <li>Es la <strong>receta 3</strong> — el aglomerante hidráulico limpio. Corrige los dos puntos débiles de tu cal aérea barata: el fraguado lento y que un bloque grueso apenas carbonata en el núcleo. La NHL fragua hidráulicamente en todo el grosor → resistencia fiable, desmolde más rápido, resistencia al agua — sin moler puzolana.</li>
+          <li>La receta 2 (cal + puzolana) y la receta 3 (NHL) llegan al mismo objetivo por dos vías: <strong>DIY barato vs comodidad en saco</strong>. Si consigues NHL 3.5, es el bloque fiable más fácil.</li>
+          <li>Para la cúpula: <strong>NHL 3.5</strong> para los paneles aislantes (más flexible/transpirable — mejor para el movimiento sísmico), <strong>NHL 5</strong> donde importan la resistencia y el agua (cúpula de ladrillo, anillo de base, caras expuestas) — igual que los separa tu estudio de aircrete.</li>
+        </ul></div>
+        <div class="warn">⚠️ No añadas cemento a la NHL (pierde el sentido) ni mezcles NHL con yeso (etringita). Guárdala seca/cerrada — la NHL pierde reactividad al coger humedad — y cúrala húmeda como toda cal.</div>
+      </div>
+      <div data-lang="de">
+        <div class="tbl-scroll"><table>
+          <tr><th>Eigenschaft</th><th>Dein Luftkalk (CL, Calciumhydroxid)</th><th>NHL</th></tr>
+          <tr><td>Bindet durch</td><td>Nur Karbonatisierung (braucht Luft / CO₂)</td><td>Hydratation + Karbonatisierung</td></tr>
+          <tr><td>Abbindegeschw.</td><td>Wochen–Monate, von außen nach innen</td><td>Stunden zum Abbinden, Tage–Wochen zur Festigkeit</td></tr>
+          <tr><td>Im dicken Block</td><td>Kern karbonatisiert sehr langsam</td><td>Bindet durchgehend ab, zuverlässig</td></tr>
+          <tr><td>Festigkeit</td><td>Gering (&lt;~1 MPa)</td><td>2–5 MPa</td></tr>
+          <tr><td>Wasserfestigkeit</td><td>Schlecht bis karbonatisiert</td><td>Gut nach Abbinden</td></tr>
+          <tr><td>Atmungsaktivität</td><td>Am höchsten</td><td>Hoch (etwas weniger)</td></tr>
+          <tr><td>Kosten</td><td>Am günstigsten</td><td>Teurer</td></tr>
+        </table></div>
+        <div class="grp"><h4>Wie es unserem Projekt hilft</h4><ul class="clean">
+          <li>Es ist <strong>Rezept 3</strong> — das saubere hydraulische Bindemittel. Es behebt die zwei Schwächen deines günstigen Luftkalks: langsames Abbinden und dass ein dicker Block im Kern kaum karbonatisiert. NHL bindet hydraulisch durchgehend ab → zuverlässige Festigkeit, schnelleres Entformen, Wasserfestigkeit — ohne Puzzolan zu mahlen.</li>
+          <li>Rezept 2 (Kalk + Puzzolan) und Rezept 3 (NHL) erreichen dasselbe Ziel auf zwei Wegen: <strong>DIY-günstig vs sackfertig-bequem</strong>. Wenn du NHL 3.5 bekommst, ist es der einfachste zuverlässige Block.</li>
+          <li>Für die Kuppel: <strong>NHL 3.5</strong> für die dämmenden Paneele (flexibler/atmungsaktiver — besser für seismische Bewegung), <strong>NHL 5</strong> wo Festigkeit &amp; Wasser zählen (Ziegelkuppel, Basisring, exponierte Flächen) — genau wie deine Aircrete-Studie sie aufteilt.</li>
+        </ul></div>
+        <div class="warn">⚠️ Kein Zement zu NHL geben (sinnlos) und NHL nie mit Gips mischen (Ettringit). Trocken/verschlossen lagern — NHL verliert Reaktivität, sobald es Feuchte aufnimmt — und wie jeden Kalk feucht aushärten lassen.</div>
+      </div>
+    </div>
+  </details>
+</div></section>
+
+<div class="foot">
+  <div class="wrap">
+    <p class="disc" data-lang="en">Experimental field notes — not a structural specification. Hemp-lime is insulating infill, not load-bearing. Lime &amp; cement are caustic; handle with gloves, mask and eye protection.</p>
+    <p class="disc" data-lang="es">Notas de campo experimentales — no es una especificación estructural. El cáñamo-cal es relleno aislante, no portante. La cal y el cemento son cáusticos; usa guantes, mascarilla y gafas.</p>
+    <p class="disc" data-lang="de">Experimentelle Feldnotizen — keine statische Spezifikation. Hanfkalk ist dämmende Füllung, nicht tragend. Kalk &amp; Zement sind ätzend; mit Handschuhen, Maske und Augenschutz arbeiten.</p>
+    <p><a class="dav-link" onclick="document.getElementById('cd').classList.add('open')">digitalAIventures</a> · Las Alpujarras, Andalucía</p>
+  </div>
+</div>
+
+<div class="dialog-overlay" id="cd" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="dialog-box">
+    <h4><span data-lang="en">Get in touch</span><span data-lang="es">Contacto</span><span data-lang="de">Kontakt</span></h4>
+    <a class="dialog-option dialog-bot" href="https://t.me/Juanitto_assist_bot" target="_blank">🤖 AI Assist 24/7</a>
+    <a class="dialog-option dialog-tg" href="https://t.me/JuanittoCalvares" target="_blank">✈ Personal</a>
+    <a class="dialog-option dialog-mail" href="mailto:digitalAIventures.LLC@gmail.com">✉ Email</a>
+    <button class="dialog-close" onclick="document.getElementById('cd').classList.remove('open')"><span data-lang="en">Close</span><span data-lang="es">Cerrar</span><span data-lang="de">Schließen</span></button>
+  </div>
+</div>
+
+<script>
+function setLang(l){
+  document.querySelectorAll('[data-lang]').forEach(el=>{el.style.display=el.dataset.lang===l?'':'none';});
+  document.querySelectorAll('[data-l]').forEach(b=>{b.classList.toggle('on',b.dataset.l===l);});
+  document.documentElement.lang=l;
+  try{localStorage.setItem('lab_lang',l)}catch(e){}
+}
+function toggleTheme(){
+  const cur=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',cur);
+  document.getElementById('tbtn').textContent=cur==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('lab_theme',cur)}catch(e){}
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('cd').classList.remove('open');});
+document.addEventListener('DOMContentLoaded',()=>{
+  let l='es';
+  try{
+    const q=new URLSearchParams(location.search).get('lang');
+    l=q||localStorage.getItem('lab_lang')||navigator.language.slice(0,2)||'es';
+  }catch(e){}
+  if(!['en','es','de'].includes(l))l='es';
+  setLang(l);
+  let th;
+  try{th=localStorage.getItem('lab_theme');}catch(e){}
+  if(!th){const h=new Date().getHours();th=(h>=19||h<7)?'dark':'light';}
+  document.documentElement.setAttribute('data-theme',th);
+  document.getElementById('tbtn').textContent=th==='dark'?'☀️':'🌙';
+});
+</script>
+</body>
+</html>
