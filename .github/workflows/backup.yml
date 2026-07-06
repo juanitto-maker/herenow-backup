@@ -141,10 +141,9 @@ jobs:
 
       - name: Create/update zip (full backup)
         run: |
-          DATESTAMP=$(date -u '+%Y-%m-%d-%H%M')
-          ZIP="zips/herenow-backup-${DATESTAMP}.zip"
+          ZIP="zips/herenow-backup-latest.zip"
 
-          echo "ZIP_URL=https://github.com/juanitto-maker/herenow-backup/raw/main/zips/herenow-backup-${DATESTAMP}.zip" >> "$GITHUB_ENV"
+          echo "ZIP_URL=https://github.com/juanitto-maker/herenow-backup/raw/main/zips/herenow-backup-latest.zip" >> "$GITHUB_ENV"
 
           # Skip if this zip already exists and nothing changed
           if [ -f "$ZIP" ] && [ -z "$CHANGED_SLUGS" ]; then
@@ -158,8 +157,7 @@ jobs:
             python3 <<'PY'
           import zipfile, json, os, datetime, re
           now = datetime.datetime.utcnow()
-          datestamp = now.strftime('%Y-%m-%d-%H%M')
-          zip_path = f'zips/herenow-backup-{datestamp}.zip'
+          zip_path = 'zips/herenow-backup-latest.zip'
           backup_date = now.strftime('%Y-%m-%d %H:%M UTC')
           repo = 'juanitto-maker/herenow-backup'
           pages_base = f'https://{repo.split("/")[0]}.github.io/{repo.split("/")[1]}'
@@ -244,7 +242,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "No zip changes to commit"
           else
-            git commit -m "Zips $DATE"
+            git commit -m "Zip $(date -u +%Y-%m-%d)"
             git pull --rebase origin main
             git push
           fi
