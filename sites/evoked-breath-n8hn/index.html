@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Retama Smart-Shop — La tienda que se cuida sola</title>
+<meta name="description" content="Hoja de ruta por fases para convertir La Retama en una tienda inteligente gestionada por Claudia. Roadmap for a self-caring organic shop.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+img,svg,video{max-width:100%;height:auto}
+:root,[data-theme="light"]{
+  --bg:#faf7ee;--bg-card:#ffffff;
+  --bg-hero:linear-gradient(165deg,#f3eddc,#faf7ee);
+  --bg-alt:#f3efe3;
+  --text:#3a3220;--text-m:#7d7258;--text-h:#2a2310;
+  --border:#e7e0cd;
+  --accent:#a8821a;--ac2:#6b7a2e;
+  --accent-soft:#a8821a1a;--ac2-soft:#6b7a2e14;
+  --overlay-bg:rgba(30,25,10,.55);--dialog-bg:#fff;
+  --link:#8a6a12;--link-hover:#6b7a2e;
+  --shadow:0 2px 14px rgba(60,50,20,.07);
+}
+[data-theme="dark"]{
+  --bg:#1a1610;--bg-card:#252017;
+  --bg-hero:linear-gradient(165deg,#221c10,#1a1610);
+  --bg-alt:#201b12;
+  --text:#d9d2bf;--text-m:#96906e;--text-h:#f0e9d2;
+  --border:#37311f;
+  --accent:#d4ad3a;--ac2:#9db04f;
+  --accent-soft:#d4ad3a1c;--ac2-soft:#9db04f16;
+  --overlay-bg:rgba(0,0,0,.7);--dialog-bg:#2a2418;
+  --link:#d4ad3a;--link-hover:#9db04f;
+  --shadow:0 2px 14px rgba(0,0,0,.35);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Karla',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:1rem;transition:background .3s,color .3s}
+h1,h2,h3,h4{font-family:'Fraunces',serif;color:var(--text-h);line-height:1.2}
+.wrap{max-width:760px;margin:0 auto;padding:0 1.25rem}
+
+/* fixed lang bar */
+.langbar{position:fixed;top:.85rem;right:.9rem;z-index:120;display:flex;gap:.35rem;background:var(--bg-card);border:1px solid var(--border);border-radius:999px;padding:.25rem .35rem;box-shadow:var(--shadow)}
+.langbar button{border:none;background:none;color:var(--text-m);font-family:'Karla',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.05em;padding:.25rem .6rem;border-radius:999px;cursor:pointer}
+.langbar button.on{background:var(--accent);color:#fff}
+
+/* theme toggle — bottom corner per design system v13 */
+.theme-toggle{position:fixed;bottom:1rem;right:1rem;z-index:999;width:2.75rem;height:2.75rem;border-radius:50%;border:1px solid var(--border);background:var(--bg-card);color:var(--text-h);font-size:1.1rem;cursor:pointer;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center}
+
+/* hero */
+.hero{background:var(--bg-hero);padding:6.5rem 0 4rem;text-align:center;border-bottom:1px solid var(--border)}
+.hero .eyebrow{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ac2);background:var(--ac2-soft);border:1px solid var(--border);border-radius:999px;padding:.3rem .9rem;margin-bottom:1.4rem}
+.hero h1{font-size:clamp(2.1rem,7vw,3.2rem);margin-bottom:.9rem}
+.hero .sub{font-size:1.1rem;color:var(--text-m);max-width:34rem;margin:0 auto 1.6rem}
+.hero .note{font-size:.82rem;color:var(--text-m);font-style:italic}
+
+section{padding:3.4rem 0}
+section.alt{background:var(--bg-alt);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+h2{font-size:clamp(1.5rem,4.5vw,2rem);margin-bottom:1rem}
+.lead{color:var(--text-m);font-size:1.02rem;margin-bottom:1.4rem}
+p+p{margin-top:.9rem}
+
+/* phase cards */
+.phase{background:var(--bg-card);border:1px solid var(--border);border-radius:1rem;padding:1.6rem 1.4rem;margin:1.6rem 0;box-shadow:var(--shadow)}
+.phase-head{display:flex;align-items:center;gap:.85rem;margin-bottom:.9rem}
+.phase-ico{flex:0 0 auto;width:2.6rem;height:2.6rem;border-radius:.7rem;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center}
+.phase-ico svg{width:1.4rem;height:1.4rem}
+.phase-num{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ac2);display:block;margin-bottom:.15rem}
+.phase h3{font-size:1.25rem}
+.phase ul{list-style:none;margin:.9rem 0 0}
+.phase li{padding:.42rem 0 .42rem 1.5rem;position:relative;font-size:.95rem}
+.phase li::before{content:'';position:absolute;left:.15rem;top:.95rem;width:.45rem;height:.45rem;border-radius:50%;background:var(--ac2)}
+.cost{margin-top:1.1rem;padding:.7rem .9rem;background:var(--ac2-soft);border-radius:.6rem;font-size:.86rem;color:var(--text-m)}
+.cost b{color:var(--text-h)}
+
+/* principles */
+.principles{display:grid;grid-template-columns:1fr;gap:.9rem;margin-top:1.4rem}
+@media(min-width:560px){.principles{grid-template-columns:1fr 1fr}}
+.pcard{background:var(--bg-card);border:1px solid var(--border);border-radius:.8rem;padding:1.1rem 1.1rem}
+.pcard h4{font-size:1rem;margin-bottom:.35rem;color:var(--accent)}
+.pcard p{font-size:.88rem;color:var(--text-m)}
+
+/* dialogue example */
+.chat{background:var(--bg-card);border:1px solid var(--border);border-radius:1rem;padding:1.2rem;margin:1.4rem 0;box-shadow:var(--shadow)}
+.msg{max-width:85%;padding:.6rem .9rem;border-radius:.9rem;font-size:.9rem;margin-bottom:.6rem}
+.msg.user{background:var(--accent-soft);color:var(--text-h);margin-left:auto;border-bottom-right-radius:.25rem}
+.msg.bot{background:var(--bg-alt);border:1px solid var(--border);border-bottom-left-radius:.25rem}
+.msg .who{display:block;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-m);margin-bottom:.2rem}
+
+/* footer + contact */
+footer{padding:3rem 0 4.5rem;text-align:center;border-top:1px solid var(--border)}
+footer .brand{font-family:'Fraunces',serif;font-size:1.05rem;color:var(--text-h);margin-bottom:.4rem}
+footer .fine{font-size:.78rem;color:var(--text-m);margin-top:1rem}
+.footer-contact{background:var(--accent);color:#fff;border:none;padding:.55rem 1.4rem;border-radius:.5rem;font-size:.85rem;font-weight:600;cursor:pointer;margin-bottom:1rem;font-family:'Karla',sans-serif}
+.dialog-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--overlay-bg);z-index:200;align-items:center;justify-content:center}
+.dialog-overlay.open{display:flex}
+.dialog-box{background:var(--dialog-bg);border-radius:1rem;padding:1.75rem;max-width:300px;width:90%;text-align:center}
+.dialog-box h4{color:var(--text-h);margin-bottom:1rem;font-size:1rem}
+.dialog-option{display:block;width:100%;padding:.65rem;margin-bottom:.6rem;border-radius:.5rem;text-decoration:none;font-weight:600;font-size:.9rem;text-align:center}
+.dialog-bot{background:#0088cc;color:#fff}
+.dialog-tg{background:#229ED9;color:#fff}
+.dialog-mail{background:#4a6741;color:#fff}
+.dialog-close{background:none;border:1px solid var(--border);color:var(--text-m);cursor:pointer;font-size:.82rem;padding:.4rem 1.2rem;border-radius:.4rem;margin-top:.2rem;font-family:'Karla',sans-serif}
+
+/* scroll reveal — tier 1 */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<div class="langbar">
+  <button data-l="es" onclick="setLang('es')">ES</button>
+  <button data-l="en" onclick="setLang('en')">EN</button>
+</div>
+<button class="theme-toggle" id="tt" aria-label="theme">◐</button>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow" data-lang="es">Hoja de ruta · sin compromiso</span>
+    <span class="eyebrow" data-lang="en">Roadmap · no strings attached</span>
+    <h1 data-lang="es">La Retama Smart&#8209;Shop</h1>
+    <h1 data-lang="en">La Retama Smart&#8209;Shop</h1>
+    <p class="sub" data-lang="es">La tienda que se cuida sola — vigilada, avisada y manejada a través de Claudia, tu asistente de siempre.</p>
+    <p class="sub" data-lang="en">The shop that takes care of itself — watched over, alerted and operated through Claudia, the assistant you already know.</p>
+    <p class="note" data-lang="es">Una visión por fases. Cada una es independiente, con su coste orientativo. Nada de esto es una factura: es un mapa.</p>
+    <p class="note" data-lang="en">A phased vision. Each phase stands alone, with an orientative cost. None of this is an invoice — it's a map.</p>
+  </div>
+</header>
+
+<!-- CONTEXT -->
+<section>
+  <div class="wrap rv">
+    <h2 data-lang="es">Hoy: una tienda con cerebro</h2>
+    <h2 data-lang="en">Today: a shop with a brain</h2>
+    <p class="lead" data-lang="es">La Retama ya tiene algo que casi ninguna tienda de barrio tiene: Claudia, una asistente que gestiona stock, precios, pedidos y correos de proveedores por Telegram, conectada al TPV y a Odoo. Le escribes — o le mandas un audio — y las cosas pasan.</p>
+    <p class="lead" data-lang="en">La Retama already has something almost no neighbourhood shop has: Claudia, an assistant that manages stock, prices, orders and supplier emails over Telegram, connected to the till and Odoo. You text her — or send a voice note — and things happen.</p>
+    <p data-lang="es">El siguiente paso natural es darle sentidos y manos: que Claudia no solo lleve los datos de la tienda, sino que <b>vigile la tienda física</b> — neveras, luces, cierre, consumo — y actúe cuando haga falta. Eso es el Smart&#8209;Shop.</p>
+    <p data-lang="en">The natural next step is giving her senses and hands: Claudia not only handling the shop's data, but <b>watching over the physical shop</b> — fridges, lights, shutters, power — and acting when needed. That's the Smart&#8209;Shop.</p>
+  </div>
+</section>
+
+<!-- PHASE 1 -->
+<section class="alt">
+  <div class="wrap">
+    <div class="rv">
+    <h2 data-lang="es">Las cuatro fases</h2>
+    <h2 data-lang="en">The four phases</h2>
+    <p class="lead" data-lang="es">De la base sólida al piloto casi automático. Se puede parar en cualquiera; ninguna obliga a la siguiente.</p>
+    <p class="lead" data-lang="en">From solid foundations to near-autopilot. You can stop at any phase; none commits you to the next.</p>
+    </div>
+
+    <div class="phase rv">
+      <div class="phase-head">
+        <div class="phase-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg></div>
+        <div>
+          <span class="phase-num" data-lang="es">Fase 1</span>
+          <span class="phase-num" data-lang="en">Phase 1</span>
+          <h3 data-lang="es">Cimientos — la tienda que no se cae</h3>
+          <h3 data-lang="en">Foundations — the shop that stays up</h3>
+        </div>
+      </div>
+      <p data-lang="es">Antes de añadir inteligencia, el sistema debe aguantar la vida real de Lanjarón: cortes de luz, router colgado, Wi&#8209;Fi caprichoso. Esta fase hace que todo se recupere solo — y estrena el primer "sentido".</p>
+      <p data-lang="en">Before adding intelligence, the system must survive real village life: power cuts, hung routers, moody Wi&#8209;Fi. This phase makes everything self-recover — and debuts the first "sense".</p>
+      <ul>
+        <li data-lang="es">Mini-batería del router: 7–9 h de internet durante un corte, y adiós a los cuelgues por microcortes</li>
+        <li data-lang="en">Router mini-battery: 7–9 h of internet through an outage, and no more micro-cut freezes</li>
+        <li data-lang="es">SAI para el servidor: los cortes de menos de ~1 h ni se notan; los largos se recuperan solos al volver la luz</li>
+        <li data-lang="en">UPS for the server: cuts under ~1 h go unnoticed; longer ones self-recover when power returns</li>
+        <li data-lang="es">Internet de reserva 4G: si falla la línea de la tienda, el sistema sigue conectado y atendible en remoto</li>
+        <li data-lang="en">4G backup internet: if the shop line fails, the system stays online and remotely reachable</li>
+        <li data-lang="es">Primer enchufe inteligente en una nevera: Claudia ve el compresor y avisa antes de perder género</li>
+        <li data-lang="en">First smart plug on a fridge: Claudia watches the compressor and alerts before stock is lost</li>
+        <li data-lang="es">Wi&#8209;Fi decente en el semisótano con un repetidor</li>
+        <li data-lang="en">Proper Wi&#8209;Fi in the semi-basement via a repeater</li>
+      </ul>
+      <div class="cost" data-lang="es"><b>Orientativo:</b> ~210–250 € una vez + ~2–5 €/mes (SIM de datos). Parte del trabajo es solo software, sin coste de material.</div>
+      <div class="cost" data-lang="en"><b>Orientative:</b> ~€210–250 once + ~€2–5/month (data SIM). Part of the work is software only, no hardware cost.</div>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div class="phase rv">
+      <div class="phase-head">
+        <div class="phase-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <div>
+          <span class="phase-num" data-lang="es">Fase 2</span>
+          <span class="phase-num" data-lang="en">Phase 2</span>
+          <h3 data-lang="es">Ojos y oídos — la tienda que vigila</h3>
+          <h3 data-lang="en">Eyes and ears — the shop that watches</h3>
+        </div>
+      </div>
+      <p data-lang="es">Sensores pequeños y baratos que convierten a Claudia en una vigilante 24/7 — también con la tienda cerrada. Solo avisa cuando algo va mal; el resto del tiempo, silencio.</p>
+      <p data-lang="en">Small, inexpensive sensors that turn Claudia into a 24/7 guardian — even when the shop is closed. She only speaks up when something's wrong; the rest of the time, silence.</p>
+      <ul>
+        <li data-lang="es">Temperatura real en neveras y congelador: registro continuo de la cadena de frío, útil también de cara a sanidad</li>
+        <li data-lang="en">Real temperature in fridges and freezer: continuous cold-chain logging, useful for health inspections too</li>
+        <li data-lang="es">Sensores de puerta: nevera mal cerrada o puerta de la tienda abierta fuera de horario</li>
+        <li data-lang="en">Door sensors: fridge left ajar, or shop door opening out of hours</li>
+        <li data-lang="es">Detector de fuga de agua bajo las neveras — la avería silenciosa que arruina un almacén en una noche</li>
+        <li data-lang="en">Water-leak detector under the fridges — the silent fault that ruins a stockroom overnight</li>
+        <li data-lang="es">Detector de humo conectado: el aviso llega a tu móvil, estés donde estés</li>
+        <li data-lang="en">Connected smoke detector: the alert reaches your phone, wherever you are</li>
+      </ul>
+      <div class="cost" data-lang="es"><b>Orientativo:</b> ~100–180 € en sensores, según cuántos puntos se vigilen.</div>
+      <div class="cost" data-lang="en"><b>Orientative:</b> ~€100–180 in sensors, depending on how many points are covered.</div>
+    </div>
+
+    <!-- PHASE 3 -->
+    <div class="phase rv">
+      <div class="phase-head">
+        <div class="phase-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v5"/><path d="M14 10V4a2 2 0 0 0-4 0v6"/><path d="M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34L3.3 16.95c-.7-.86-.6-2.12.24-2.85a2 2 0 0 1 2.68.08L8 15.5"/></svg></div>
+        <div>
+          <span class="phase-num" data-lang="es">Fase 3</span>
+          <span class="phase-num" data-lang="en">Phase 3</span>
+          <h3 data-lang="es">Manos — la tienda que obedece</h3>
+          <h3 data-lang="en">Hands — the shop that obeys</h3>
+        </div>
+      </div>
+      <p data-lang="es">La parte más visible: la tienda responde a tu voz a través de Claudia. Un audio de Telegram desde el sofá, y las cosas se mueven.</p>
+      <p data-lang="en">The most visible part: the shop responds to your voice through Claudia. One Telegram voice note from the sofa, and things move.</p>
+      <div class="chat">
+        <div class="msg user" data-lang="es"><span class="who">Yacub · audio 21:47</span>"Claudia, cierra la tienda"</div>
+        <div class="msg user" data-lang="en"><span class="who">Yacub · voice 21:47</span>"Claudia, close the shop"</div>
+        <div class="msg bot" data-lang="es"><span class="who">Claudia</span>Cierre bajado, luces y letrero apagados, estufa desconectada. Las dos neveras enfriando bien. Buenas noches ✅</div>
+        <div class="msg bot" data-lang="en"><span class="who">Claudia</span>Shutter down, lights and sign off, heater unplugged. Both fridges cooling fine. Good night ✅</div>
+      </div>
+      <ul>
+        <li data-lang="es">Persiana / cierre motorizado controlable por voz o desde el móvil</li>
+        <li data-lang="en">Motorised shutter controlled by voice or from your phone</li>
+        <li data-lang="es">Luces y letrero: encendido al atardecer, apagado al cierre, festivos incluidos</li>
+        <li data-lang="en">Lights and sign: on at dusk, off at closing, holidays included</li>
+        <li data-lang="es">"Modo apertura" y "modo cierre": una orden, toda la rutina — con comprobación de neveras incluida</li>
+        <li data-lang="en">"Opening mode" and "closing mode": one command, the whole routine — fridge check included</li>
+        <li data-lang="es">Fin del "¿dejé algo encendido?": Claudia lo ve y te lo dice</li>
+        <li data-lang="en">The end of "did I leave something on?": Claudia sees it and tells you</li>
+      </ul>
+      <div class="cost" data-lang="es"><b>Orientativo:</b> depende sobre todo del motor del cierre (si no lo hay ya). Los enchufes y relés de luces son piezas de 15–25 € cada una.</div>
+      <div class="cost" data-lang="en"><b>Orientative:</b> mostly depends on the shutter motor (if there isn't one already). Light plugs and relays are €15–25 pieces.</div>
+    </div>
+
+    <!-- PHASE 4 -->
+    <div class="phase rv">
+      <div class="phase-head">
+        <div class="phase-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a4 4 0 0 0-4 4 4 4 0 0 0-3 6.5A4 4 0 0 0 7 20a4 4 0 0 0 5 .5A4 4 0 0 0 17 20a4 4 0 0 0 2-6.5A4 4 0 0 0 16 7a4 4 0 0 0-4-4z"/><path d="M12 3v18"/></svg></div>
+        <div>
+          <span class="phase-num" data-lang="es">Fase 4</span>
+          <span class="phase-num" data-lang="en">Phase 4</span>
+          <h3 data-lang="es">Cerebro — la tienda que entiende</h3>
+          <h3 data-lang="en">Brain — the shop that understands</h3>
+        </div>
+      </div>
+      <p data-lang="es">Todo lo anterior genera datos. Esta fase los convierte en decisiones: un panel de la tienda en tu móvil y una Claudia que detecta lo raro antes de que sea caro.</p>
+      <p data-lang="en">Everything above generates data. This phase turns it into decisions: a shop dashboard on your phone, and a Claudia that spots the odd before it gets expensive.</p>
+      <ul>
+        <li data-lang="es">Consumo eléctrico por aparato, con gráficas: "la nevera grande: 38 € este mes"</li>
+        <li data-lang="en">Per-appliance power use, with charts: "the big fridge: €38 this month"</li>
+        <li data-lang="es">Avisos de consumo raro: un compresor que gasta un 15% más se está estropeando — y se nota en la factura antes que a la vista</li>
+        <li data-lang="en">Odd-consumption alerts: a compressor drawing 15% more is failing — visible in the bill before the eye</li>
+        <li data-lang="es">Histórico de temperaturas de la cadena de frío, consultable cuando haga falta</li>
+        <li data-lang="en">Cold-chain temperature history, on hand whenever needed</li>
+        <li data-lang="es">Modo vigilancia nocturno: movimiento o puerta fuera de horario, aviso al momento</li>
+        <li data-lang="en">Night-watch mode: out-of-hours motion or door events, instant alert</li>
+        <li data-lang="es">La tienda solo te interrumpe cuando hace falta una decisión tuya; lo rutinario lo lleva Claudia</li>
+        <li data-lang="en">The shop only interrupts you when a decision is truly yours; routine stays with Claudia</li>
+      </ul>
+      <div class="cost" data-lang="es"><b>Orientativo:</b> principalmente horas de desarrollo sobre las piezas ya instaladas — poco material nuevo.</div>
+      <div class="cost" data-lang="en"><b>Orientative:</b> mostly development hours on top of the pieces already installed — little new hardware.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCIPLES -->
+<section>
+  <div class="wrap rv">
+    <h2 data-lang="es">Las reglas del camino</h2>
+    <h2 data-lang="en">The rules of the road</h2>
+    <div class="principles">
+      <div class="pcard">
+        <h4 data-lang="es">Sin compromiso</h4>
+        <h4 data-lang="en">No lock-in</h4>
+        <p data-lang="es">Cada fase es independiente. Se puede parar en cualquiera, saltarse piezas o cambiar el orden. Ninguna obliga a la siguiente.</p>
+        <p data-lang="en">Each phase stands alone. Stop anywhere, skip pieces, reorder. None commits you to the next.</p>
+      </div>
+      <div class="pcard">
+        <h4 data-lang="es">Todo en tu tienda</h4>
+        <h4 data-lang="en">Everything in your shop</h4>
+        <p data-lang="es">El sistema vive en tu propio servidor, no en la nube de nadie. Sin cuotas de plataformas de domótica, sin dependencia de terceros.</p>
+        <p data-lang="en">The system lives on your own server, not in anyone's cloud. No home-automation platform fees, no third-party dependence.</p>
+      </div>
+      <div class="pcard">
+        <h4 data-lang="es">Una sola interfaz</h4>
+        <h4 data-lang="en">One single interface</h4>
+        <p data-lang="es">Nada de diez apps nuevas: todo pasa por Claudia en Telegram, la misma conversación que ya usas cada día.</p>
+        <p data-lang="en">No ten new apps: everything flows through Claudia on Telegram, the same conversation you already use daily.</p>
+      </div>
+      <div class="pcard">
+        <h4 data-lang="es">A tu ritmo</h4>
+        <h4 data-lang="en">At your pace</h4>
+        <p data-lang="es">Mismo sistema de horas de siempre, pieza a pieza, sin prisas. Este documento es un mapa para pensar, no una oferta con fecha de caducidad.</p>
+        <p data-lang="en">Same hourly system as always, piece by piece, no rush. This document is a map to think with, not an offer with an expiry date.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="alt">
+  <div class="wrap rv" style="text-align:center">
+    <h2 data-lang="es">¿Y ahora qué?</h2>
+    <h2 data-lang="en">So what now?</h2>
+    <p class="lead" data-lang="es">Nada urgente. Léelo, dale vueltas, y cuando quieras hablamos de si la Fase 1 — o solo un trocito de ella — tiene sentido para La Retama. Las preguntas también valen.</p>
+    <p class="lead" data-lang="en">Nothing urgent. Read it, mull it over, and whenever you like we can talk about whether Phase 1 — or just a slice of it — makes sense for La Retama. Questions are welcome too.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <button class="footer-contact" onclick="document.getElementById('cd').classList.add('open')">
+      <span data-lang="es">Contactar con digitalAIventures</span><span data-lang="en">Contact digitalAIventures</span>
+    </button>
+    <div class="brand">digitalAIventures</div>
+    <p class="fine" data-lang="es">Preparado para La Retama · Lanjarón · Julio 2026 — documento orientativo, precios aproximados de mercado.</p>
+    <p class="fine" data-lang="en">Prepared for La Retama · Lanjarón · July 2026 — orientative document, approximate market prices.</p>
+  </div>
+</footer>
+
+<div class="dialog-overlay" id="cd" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="dialog-box">
+    <h4 data-lang="es">Hablamos</h4><h4 data-lang="en">Get in Touch</h4>
+    <a class="dialog-option dialog-bot" href="https://t.me/Juanitto_assist_bot" target="_blank">🤖 AI Assist 24/7</a>
+    <a class="dialog-option dialog-tg" href="https://t.me/JuanittoCalvares" target="_blank">✈ Personal</a>
+    <a class="dialog-option dialog-mail" href="mailto:digitalAIventures.LLC@gmail.com">✉ Email</a>
+    <button class="dialog-close" onclick="document.getElementById('cd').classList.remove('open')">
+      <span data-lang="es">Cerrar</span><span data-lang="en">Close</span>
+    </button>
+  </div>
+</div>
+
+<script>
+function setLang(l){
+  document.querySelectorAll('[data-lang]').forEach(el=>{el.style.display=el.dataset.lang===l?'':'none';});
+  document.querySelectorAll('[data-l]').forEach(b=>{b.classList.toggle('on',b.dataset.l===l);});
+  document.documentElement.lang=l;
+  try{localStorage.setItem('lang',l)}catch(e){}
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  let l='es';
+  try{
+    const q=new URLSearchParams(location.search).get('lang');
+    l=q||localStorage.getItem('lang')||navigator.language.slice(0,2)||'es';
+  }catch(e){}
+  if(!['es','en'].includes(l))l='es';
+  setLang(l);
+
+  // theme: saved > hour auto (dark 19:00-07:00)
+  const tt=document.getElementById('tt');
+  let th;
+  try{th=localStorage.getItem('theme')}catch(e){}
+  if(!th){const h=new Date().getHours();th=(h>=19||h<7)?'dark':'light';}
+  document.documentElement.setAttribute('data-theme',th);
+  tt.textContent=th==='dark'?'☀':'◐';
+  tt.addEventListener('click',()=>{
+    th=th==='dark'?'light':'dark';
+    document.documentElement.setAttribute('data-theme',th);
+    tt.textContent=th==='dark'?'☀':'◐';
+    try{localStorage.setItem('theme',th)}catch(e){}
+  });
+
+  // tier-1 scroll reveals
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window){
+    const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0,rootMargin:'0px 0px 12% 0px'});
+    document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+  }else{
+    document.querySelectorAll('.rv').forEach(el=>el.classList.add('in'));
+  }
+});
+</script>
+</body>
+</html>
