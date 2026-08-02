@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AL·aVela — Vertical Bi-Fold Facade System</title>
+<meta name="description" content="AL·aVela: the facade that flies up into the roof. Vertical bi-fold thermo-shutters in cork, wood and aluminium — automated by default, never dependent on it. R&D from the Alpujarra.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root,[data-theme="dark"]{
+  --bg:#12100d;--bg-card:#1c1915;--bg-alt:#171410;
+  --bg-hero:linear-gradient(165deg,#1d1812 0%,#12100d 70%);
+  --text:#e6ddcf;--text-m:#9c8f7c;--text-h:#f5eee0;
+  --border:#332d24;--accent:#c9a227;--ac2:#8aa03f;
+  --overlay-bg:rgba(0,0,0,.62);--dialog-bg:#1c1915;
+  --link:#c9a227;--link-hover:#e0bb45;
+  --svg-wood:#a9743f;--svg-woodd:#6b4423;--svg-pole:#e4d3ba;--svg-cork:#c9a227;
+}
+[data-theme="light"]{
+  --bg:#faf6ee;--bg-card:#ffffff;--bg-alt:#f2ecdf;
+  --bg-hero:linear-gradient(165deg,#f0e9da 0%,#faf6ee 70%);
+  --text:#3a2f1f;--text-m:#7a6a52;--text-h:#241a0c;
+  --border:#e6ddca;--accent:#9c7c14;--ac2:#5c7028;
+  --overlay-bg:rgba(30,24,12,.5);--dialog-bg:#ffffff;
+  --link:#9c7c14;--link-hover:#7a5f08;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-weight:300;-webkit-font-smoothing:antialiased}
+img,svg,video{max-width:100%;height:auto}
+h1,h2,h3{font-family:'Playfair Display',serif;color:var(--text-h);line-height:1.2}
+.wrap{max-width:760px;margin:0 auto;padding:0 1.25rem}
+section{padding:3.6rem 0}
+section.alt{background:var(--bg-alt)}
+.slbl{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ac2);font-weight:600;margin-bottom:.5rem}
+h2{font-size:1.75rem;margin-bottom:1.1rem}
+p{margin-bottom:.9rem}
+p.muted{color:var(--text-m);font-size:.92rem}
+strong{font-weight:600;color:var(--text-h)}
+em{color:var(--accent);font-style:italic}
+/* lang bar */
+.lbar{display:flex;justify-content:center;gap:.4rem;padding:.34rem;background:var(--bg);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:190}
+.lb{background:none;border:1px solid var(--border);color:var(--text-m);font-size:.78rem;padding:.14rem .62rem;border-radius:1rem;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.lb.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+/* theme toggle */
+.tt{position:fixed;bottom:1rem;right:1rem;z-index:999;background:var(--bg-card);border:1px solid var(--border);width:2.75rem;height:2.75rem;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,.28);cursor:pointer;font-size:1rem;transition:transform .2s}
+.tt:hover{transform:scale(1.1)}
+/* hero */
+.hero{background:var(--bg-hero);padding:4.5rem 0 3.6rem;text-align:center;border-bottom:1px solid var(--border)}
+.hero h1{font-size:3.1rem;font-weight:700;letter-spacing:.01em}
+.hero h1 .al{color:var(--accent)}
+.hero .tag{font-family:'Playfair Display',serif;font-style:italic;font-size:1.22rem;color:var(--text);margin:.9rem 0 .4rem}
+.hero .sub{color:var(--text-m);font-size:.92rem;max-width:520px;margin:0 auto}
+.badge{display:inline-block;font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:.22rem .8rem;margin-bottom:1.3rem;opacity:.85}
+.srow{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;margin-top:1.8rem}
+.scel{background:var(--bg-card);border:1px solid var(--border);border-radius:.7rem;padding:.75rem .5rem;text-align:center}
+.snum{font-family:'Playfair Display',serif;font-size:1.45rem;color:var(--accent);font-weight:700;line-height:1.1}
+.slb2{font-size:.68rem;color:var(--text-m);line-height:1.3;margin-top:.2rem}
+/* cards */
+.tri{display:grid;grid-template-columns:1fr;gap:.8rem;margin-top:1.3rem}
+@media(min-width:640px){.tri{grid-template-columns:repeat(3,1fr)}}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:.85rem;padding:1.1rem 1.15rem}
+.card h3{font-size:1.05rem;margin-bottom:.45rem}
+.card p{font-size:.86rem;color:var(--text-m);margin:0}
+.card .cnum{font-family:'Playfair Display',serif;color:var(--accent);font-size:1.5rem;font-weight:700;display:block;margin-bottom:.3rem}
+/* interactive demo */
+.demo{background:var(--bg-card);border:1px solid var(--border);border-radius:1rem;padding:1.1rem;margin-top:1.4rem}
+.demo svg{display:block;width:100%;height:auto;border-radius:.5rem}
+.demo .ctr{margin-top:.9rem}
+.demo input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
+.pbtns{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-top:.7rem}
+.pb{background:none;border:1px solid var(--border);color:var(--text-m);font-size:.8rem;padding:.42rem .3rem;border-radius:.5rem;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;font-weight:500}
+.pb.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.dcap{font-size:.8rem;color:var(--text-m);text-align:center;margin-top:.7rem;min-height:2.4em}
+/* materials grid */
+.mgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem;margin-top:1.3rem}
+@media(min-width:640px){.mgrid{grid-template-columns:repeat(3,1fr)}}
+.mcard{background:var(--bg-card);border:1px solid var(--border);border-radius:.8rem;padding:.95rem .9rem}
+.mdot{width:1.9rem;height:1.9rem;border-radius:.45rem;margin-bottom:.5rem;border:1px solid rgba(0,0,0,.25)}
+.mcard h3{font-size:.92rem;margin-bottom:.25rem;font-family:'DM Sans',sans-serif;font-weight:600}
+.mcard p{font-size:.78rem;color:var(--text-m);margin:0;line-height:1.5}
+/* tech table */
+.ttab{width:100%;border-collapse:collapse;margin-top:1rem;display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.ttab th,.ttab td{text-align:left;padding:.55rem .8rem;border-bottom:1px solid var(--border);font-size:.85rem;min-width:5.5rem}
+.ttab th{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-m);font-weight:600}
+.ttab td:first-child{color:var(--text-m)}
+.ttab td:last-child{color:var(--text-h);font-weight:500}
+/* disclosure */
+.disc{background:var(--bg-card);border:1px solid var(--border);border-radius:.7rem;margin:.6rem 0;overflow:hidden}
+.disc summary{padding:.85rem 1rem;font-weight:500;color:var(--text-h);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:.6rem;font-size:.92rem}
+.disc summary::-webkit-details-marker{display:none}
+.disc summary::after{content:'+';color:var(--accent);font-size:1.25rem;font-weight:400;line-height:1;transition:transform .2s}
+.disc[open] summary::after{transform:rotate(45deg)}
+.disc summary:hover{color:var(--accent)}
+.disc-body{padding:0 1rem 1rem;color:var(--text-m);font-size:.87rem;line-height:1.6}
+/* principle band */
+.principle{text-align:center;padding:2.6rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg-alt)}
+.principle .pq{font-family:'Playfair Display',serif;font-style:italic;font-size:1.35rem;color:var(--text-h);max-width:560px;margin:0 auto}
+/* footer */
+footer{padding:2.4rem 0 3.4rem;text-align:center;border-top:1px solid var(--border)}
+footer p{font-size:.8rem;color:var(--text-m);margin-bottom:.35rem}
+footer a.dav{color:var(--link);text-decoration:none;font-weight:600;cursor:pointer}
+footer a.dav:hover{color:var(--link-hover);text-decoration:underline}
+/* dialog */
+.dialog-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--overlay-bg);z-index:500;align-items:center;justify-content:center;padding:1rem}
+.dialog-overlay.open{display:flex}
+.dialog-box{background:var(--dialog-bg);border-radius:1rem;padding:1.75rem;max-width:300px;width:90%;text-align:center;border:1px solid var(--border)}
+.dialog-box h4{color:var(--text-h);margin-bottom:1rem;font-size:1rem;font-family:'DM Sans',sans-serif;font-weight:600}
+.dialog-option{display:block;width:100%;padding:.65rem;margin-bottom:.6rem;border-radius:.5rem;text-decoration:none;font-weight:600;font-size:.9rem;text-align:center}
+.dialog-bot{background:#0088cc;color:#fff}
+.dialog-tg{background:#229ED9;color:#fff}
+.dialog-mail{background:#4a6741;color:#fff}
+.dialog-close{background:none;border:1px solid var(--border);color:var(--text-m);cursor:pointer;font-size:.82rem;padding:.4rem 1.2rem;border-radius:.4rem;margin-top:.2rem;font-family:'DM Sans',sans-serif}
+/* reveal */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<div class="lbar">
+  <button class="lb on" data-l="en" onclick="setLang('en')">EN</button>
+  <button class="lb" data-l="es" onclick="setLang('es')">ES</button>
+  <button class="lb" data-l="de" onclick="setLang('de')">DE</button>
+  <button class="lb" data-l="fr" onclick="setLang('fr')">FR</button>
+</div>
+<button class="tt" onclick="toggleTheme()" aria-label="Toggle theme"><span id="ti">☀️</span></button>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap">
+    <div data-lang="en"><span class="badge">R&amp;D · Alpujarra, Andalusia</span></div>
+    <div data-lang="es"><span class="badge">I+D · Alpujarra, Andalucía</span></div>
+    <div data-lang="de"><span class="badge">F&amp;E · Alpujarra, Andalusien</span></div>
+    <div data-lang="fr"><span class="badge">R&amp;D · Alpujarra, Andalousie</span></div>
+    <h1><span class="al">AL</span>·aVela</h1>
+    <p class="tag" data-lang="en">The facade that flies up into the roof.</p>
+    <p class="tag" data-lang="es">La fachada que vuela hacia el tejado.</p>
+    <p class="tag" data-lang="de">Die Fassade, die ins Dach hinauffliegt.</p>
+    <p class="tag" data-lang="fr">La façade qui s’envole dans le toit.</p>
+    <p class="sub" data-lang="en">A vertical bi-fold thermo-shutter system in cork, wood and aluminium. In winter it closes into an insulated skin; in summer it folds up and becomes more roof — leaving nothing but view.</p>
+    <p class="sub" data-lang="es">Un sistema de contraventana plegable vertical en corcho, madera y aluminio. En invierno se cierra como piel aislante; en verano se pliega hacia arriba y se convierte en más tejado — dejando solo vistas.</p>
+    <p class="sub" data-lang="de">Ein vertikales Faltladen-System aus Kork, Holz und Aluminium. Im Winter schließt es sich zur gedämmten Haut; im Sommer faltet es sich nach oben und wird zu mehr Dach — übrig bleibt nur die Aussicht.</p>
+    <p class="sub" data-lang="fr">Un système de contrevent pliant vertical en liège, bois et aluminium. En hiver il se ferme en peau isolante ; en été il se replie vers le haut et devient un prolongement du toit — ne laissant que la vue.</p>
+    <div class="srow">
+      <div class="scel"><div class="snum">≤1.5 m</div>
+        <div class="slb2" data-lang="en">module width</div><div class="slb2" data-lang="es">ancho de módulo</div><div class="slb2" data-lang="de">Modulbreite</div><div class="slb2" data-lang="fr">largeur de module</div></div>
+      <div class="scel"><div class="snum">~14 kg</div>
+        <div class="slb2" data-lang="en">moving weight / bay</div><div class="slb2" data-lang="es">peso móvil / vano</div><div class="slb2" data-lang="de">bewegte Masse / Feld</div><div class="slb2" data-lang="fr">poids mobile / travée</div></div>
+      <div class="scel"><div class="snum">12 V</div>
+        <div class="slb2" data-lang="en">solar-ready drive</div><div class="slb2" data-lang="es">motor apto solar</div><div class="slb2" data-lang="de">solartauglicher Antrieb</div><div class="slb2" data-lang="fr">moteur compatible solaire</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- THE IDEA -->
+<section>
+  <div class="wrap rv">
+    <div class="slbl" data-lang="en">The idea</div>
+    <div class="slbl" data-lang="es">La idea</div>
+    <div class="slbl" data-lang="de">Die Idee</div>
+    <div class="slbl" data-lang="fr">L’idée</div>
+    <h2 data-lang="en">One facade, three states</h2>
+    <h2 data-lang="es">Una fachada, tres estados</h2>
+    <h2 data-lang="de">Eine Fassade, drei Zustände</h2>
+    <h2 data-lang="fr">Une façade, trois états</h2>
+    <p data-lang="en">Verandas, terraces and pavilions live a double life: open rooms in summer, cold liabilities in winter. AL·aVela resolves the contradiction with two insulated leaves per bay that fold upward like a wing — the same move a hangar door makes, shrunk to human scale and built from natural materials.</p>
+    <p data-lang="es">Porches, terrazas y pabellones viven una doble vida: salas abiertas en verano, pasivos fríos en invierno. AL·aVela resuelve la contradicción con dos hojas aisladas por vano que se pliegan hacia arriba como un ala — el mismo gesto de una puerta de hangar, reducido a escala humana y construido con materiales naturales.</p>
+    <p data-lang="de">Veranden, Terrassen und Pavillons führen ein Doppelleben: offene Räume im Sommer, kalte Lasten im Winter. AL·aVela löst den Widerspruch mit zwei gedämmten Flügeln pro Feld, die sich wie eine Tragfläche nach oben falten — dieselbe Bewegung wie ein Hangartor, auf menschliches Maß gebracht und aus Naturmaterialien gebaut.</p>
+    <p data-lang="fr">Vérandas, terrasses et pavillons vivent une double vie : pièces ouvertes en été, passoires froides en hiver. AL·aVela résout la contradiction avec deux vantaux isolés par travée qui se replient vers le haut comme une aile — le geste d’une porte de hangar, ramené à l’échelle humaine et construit en matériaux naturels.</p>
+    <div class="tri">
+      <div class="card"><span class="cnum">I</span>
+        <h3 data-lang="en">Winter skin</h3><h3 data-lang="es">Piel de invierno</h3><h3 data-lang="de">Winterhaut</h3><h3 data-lang="fr">Peau d’hiver</h3>
+        <p data-lang="en">Closed flush from sill to roof — a cork-cored insulated wall. No gap, no rattle, wind-locked.</p>
+        <p data-lang="es">Cerrada a ras desde el antepecho hasta el tejado — un muro aislado con alma de corcho. Sin huecos, sin vibración, bloqueada al viento.</p>
+        <p data-lang="de">Bündig geschlossen vom Brüstungsriegel bis zum Dach — eine gedämmte Wand mit Korkkern. Kein Spalt, kein Klappern, windverriegelt.</p>
+        <p data-lang="fr">Fermée à fleur, de l’allège au toit — un mur isolant à âme de liège. Pas de jour, pas de vibration, verrouillée au vent.</p></div>
+      <div class="card"><span class="cnum">II</span>
+        <h3 data-lang="en">Awning</h3><h3 data-lang="es">Toldo</h3><h3 data-lang="de">Markise</h3><h3 data-lang="fr">Auvent</h3>
+        <p data-lang="en">Half open, the V points outward: shade, rain cover and ventilation at once — holdable at any height.</p>
+        <p data-lang="es">Medio abierta, la V apunta hacia fuera: sombra, protección de lluvia y ventilación a la vez — fijable a cualquier altura.</p>
+        <p data-lang="de">Halb geöffnet zeigt das V nach außen: Schatten, Regenschutz und Lüftung zugleich — in jeder Höhe arretierbar.</p>
+        <p data-lang="fr">À demi ouverte, le V pointe vers l’extérieur : ombre, abri de pluie et ventilation à la fois — blocable à toute hauteur.</p></div>
+      <div class="card"><span class="cnum">III</span>
+        <h3 data-lang="en">Vanished</h3><h3 data-lang="es">Desaparecida</h3><h3 data-lang="de">Verschwunden</h3><h3 data-lang="fr">Disparue</h3>
+        <p data-lang="en">Fully open, the pack parks under the eave and extends the roofline. The opening is totally clear.</p>
+        <p data-lang="es">Totalmente abierta, el paquete se recoge bajo el alero y prolonga el tejado. El vano queda completamente libre.</p>
+        <p data-lang="de">Ganz geöffnet parkt das Paket unter der Traufe und verlängert die Dachlinie. Die Öffnung ist völlig frei.</p>
+        <p data-lang="fr">Grande ouverte, le paquet se range sous l’avant-toit et prolonge la ligne du toit. La baie est totalement libre.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERACTIVE -->
+<section class="alt">
+  <div class="wrap rv">
+    <div class="slbl" data-lang="en">Try it</div>
+    <div class="slbl" data-lang="es">Pruébalo</div>
+    <div class="slbl" data-lang="de">Ausprobieren</div>
+    <div class="slbl" data-lang="fr">Essayez</div>
+    <h2 data-lang="en">The section, alive</h2>
+    <h2 data-lang="es">La sección, en vivo</h2>
+    <h2 data-lang="de">Der Schnitt, lebendig</h2>
+    <h2 data-lang="fr">La coupe, vivante</h2>
+    <p class="muted" data-lang="en">Drag the slider. Real kinematics: two 85 cm leaves fold outward, the garrocha boom swings up carrying its shade net and misting line.</p>
+    <p class="muted" data-lang="es">Desliza el control. Cinemática real: dos hojas de 85 cm se pliegan hacia fuera, la garrocha bascula hacia arriba con su red de sombreo y su línea nebulizadora.</p>
+    <p class="muted" data-lang="de">Zieh den Regler. Echte Kinematik: zwei 85-cm-Flügel falten sich nach außen, die Garrocha schwenkt hinauf und trägt Schattennetz und Nebeldüse.</p>
+    <p class="muted" data-lang="fr">Faites glisser le curseur. Cinématique réelle : deux vantaux de 85 cm se replient vers l’extérieur, la garrocha bascule vers le haut avec son filet d’ombrage et sa ligne de brumisation.</p>
+    <div class="demo">
+      <svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg" aria-label="AL·aVela section animation">
+        <!-- sky/ground -->
+        <rect x="0" y="0" width="400" height="320" fill="none"/>
+        <line x1="10" y1="292" x2="390" y2="292" stroke="var(--text-m)" stroke-width="2"/>
+        <!-- pole -->
+        <rect x="114" y="80" width="22" height="212" fill="var(--svg-pole)" stroke="var(--svg-woodd)" stroke-width="1.5"/>
+        <!-- wall-plate beam on the pole, carrying the rafters -->
+        <rect x="104" y="56" width="46" height="26" fill="var(--svg-wood)" stroke="var(--svg-woodd)" stroke-width="1.5"/>
+        <!-- roof -->
+        <polygon points="18,30 18,44 252,76 252,62" fill="var(--svg-wood)" stroke="var(--svg-woodd)" stroke-width="1.5"/>
+        <!-- kit beam -->
+        <rect x="136" y="62" width="20" height="24" fill="var(--svg-woodd)" stroke="var(--svg-woodd)" stroke-width="1.5"/>
+        <circle cx="146" cy="74" r="4" fill="#555" stroke="#fff" stroke-width="1"/>
+        <!-- sill wall + jardiniere -->
+        <rect x="136" y="250" width="20" height="42" fill="var(--svg-pole)" stroke="var(--svg-woodd)" stroke-width="1.2"/>
+        <polygon points="158,292 158,248 216,248 216,262 206,292" fill="#b99c78" stroke="var(--svg-woodd)" stroke-width="1.2"/>
+        <rect x="163" y="254" width="47" height="9" fill="#8d6e4a"/>
+        <path d="M175 254 q-2 -14 3 -20 M190 254 q3 -16 -2 -24 M201 254 q-1 -10 4 -15" stroke="var(--ac2)" stroke-width="2" fill="none"/>
+        <!-- rope -->
+        <polyline id="rope" points="156,247 150,58 148,66" fill="none" stroke="#1971c2" stroke-width="1.6"/>
+        <!-- net fringe -->
+        <g id="net" stroke="var(--ac2)" stroke-width="1.4" stroke-dasharray="4 3" opacity="0">
+          <line id="n0" x1="0" y1="0" x2="0" y2="0"/><line id="n1" x1="0" y1="0" x2="0" y2="0"/>
+          <line id="n2" x1="0" y1="0" x2="0" y2="0"/><line id="n3" x1="0" y1="0" x2="0" y2="0"/>
+        </g>
+        <!-- garrocha -->
+        <line id="gar" x1="162" y1="78" x2="162" y2="248" stroke="var(--ac2)" stroke-width="6" stroke-linecap="round"/>
+        <!-- leaves -->
+        <line id="lt" x1="156" y1="80" x2="156" y2="165" stroke="var(--svg-wood)" stroke-width="9" stroke-linecap="round"/>
+        <line id="lb2" x1="156" y1="165" x2="156" y2="250" stroke="var(--svg-wood)" stroke-width="9" stroke-linecap="round"/>
+        <line id="ltc" x1="156" y1="80" x2="156" y2="165" stroke="var(--svg-cork)" stroke-width="3" stroke-linecap="round"/>
+        <line id="lbc" x1="156" y1="165" x2="156" y2="250" stroke="var(--svg-cork)" stroke-width="3" stroke-linecap="round"/>
+        <!-- hinges -->
+        <circle cx="156" cy="80" r="4.5" fill="#fff" stroke="#222" stroke-width="1.4"/>
+        <circle id="hm" cx="156" cy="165" r="4.5" fill="#fff" stroke="#222" stroke-width="1.4"/>
+        <circle id="hb" cx="156" cy="250" r="3.8" fill="#fff" stroke="#222" stroke-width="1.4"/>
+        <circle cx="162" cy="78" r="4" fill="#fff" stroke="#222" stroke-width="1.3"/>
+        <!-- mist -->
+        <g id="mist" fill="#1971c2" opacity="0">
+          <circle cx="0" cy="0" r="2.4"/><circle cx="0" cy="0" r="2"/><circle cx="0" cy="0" r="2.6"/>
+          <circle cx="0" cy="0" r="2"/><circle cx="0" cy="0" r="2.3"/><circle cx="0" cy="0" r="1.8"/>
+        </g>
+        <!-- labels INT/EXT -->
+        <text x="40" y="285" font-size="11" fill="var(--text-m)" font-family="DM Sans,sans-serif">INT</text>
+        <text x="350" y="285" font-size="11" fill="var(--text-m)" font-family="DM Sans,sans-serif">EXT</text>
+      </svg>
+      <div class="ctr">
+        <input type="range" id="tslider" min="0" max="100" value="0" oninput="killLoop();setT(this.value/100)" aria-label="Open/close">
+        <div class="pbtns">
+          <button class="pb on" id="pb0" onclick="preset(0)"><span data-lang="en">Closed</span><span data-lang="es">Cerrada</span><span data-lang="de">Geschlossen</span><span data-lang="fr">Fermée</span></button>
+          <button class="pb" id="pb1" onclick="preset(0.55)"><span data-lang="en">Awning</span><span data-lang="es">Toldo</span><span data-lang="de">Markise</span><span data-lang="fr">Auvent</span></button>
+          <button class="pb" id="pb2" onclick="preset(0.97)"><span data-lang="en">Open</span><span data-lang="es">Abierta</span><span data-lang="de">Offen</span><span data-lang="fr">Ouverte</span></button>
+        </div>
+        <div class="dcap" id="dcap"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section>
+  <div class="wrap rv">
+    <div class="slbl" data-lang="en">How it works</div>
+    <div class="slbl" data-lang="es">Cómo funciona</div>
+    <div class="slbl" data-lang="de">So funktioniert es</div>
+    <div class="slbl" data-lang="fr">Fonctionnement</div>
+    <h2 data-lang="en">A kit on its own beam</h2>
+    <h2 data-lang="es">Un kit sobre su propia viga</h2>
+    <h2 data-lang="de">Ein Bausatz auf eigenem Balken</h2>
+    <h2 data-lang="fr">Un kit sur sa propre poutre</h2>
+    <p data-lang="en">The whole system ships pre-assembled on its <strong>chassis beam</strong>: leaf hinges, winding shaft, motor and garrocha pivots. On site there is one job — fix the beam to the host structure, from the side or from below. Any porch, pergola or terrace with a sound edge beam can receive AL·aVela without structural surgery.</p>
+    <p data-lang="es">Todo el sistema llega premontado sobre su <strong>viga-chasis</strong>: bisagras, eje de enrollado, motor y pivotes de garrocha. En obra hay un solo trabajo — fijar la viga a la estructura, por el lateral o por abajo. Cualquier porche, pérgola o terraza con una viga de borde sana puede recibir AL·aVela sin cirugía estructural.</p>
+    <p data-lang="de">Das gesamte System kommt vormontiert auf seinem <strong>Chassis-Balken</strong>: Scharniere, Wickelwelle, Motor und Garrocha-Lager. Auf der Baustelle bleibt eine Aufgabe — den Balken seitlich oder von unten am Bestand zu befestigen. Jede Veranda, Pergola oder Terrasse mit gesundem Randbalken kann AL·aVela aufnehmen, ohne strukturelle Eingriffe.</p>
+    <p data-lang="fr">Le système complet arrive prémonté sur sa <strong>poutre-châssis</strong> : charnières, arbre d’enroulement, moteur et pivots de garrocha. Sur chantier, un seul travail — fixer la poutre à la structure, par le côté ou par-dessous. Tout porche, pergola ou terrasse avec une poutre de rive saine peut recevoir AL·aVela sans chirurgie structurelle.</p>
+    <p data-lang="en">Each leaf weighs about 7 kg — an aluminium perimeter frame around a 40 mm expanded-cork core. Two marine-grade ropes per bay wind onto one shaft in the beam, so both sides rise in perfect sync, mechanically, forever. Balanced this light, a palm-sized 12 V tubular motor is enough — or a bare hand on the rope.</p>
+    <p data-lang="es">Cada hoja pesa unos 7 kg — marco perimetral de aluminio con alma de corcho expandido de 40 mm. Dos cabos náuticos por vano se enrollan en un mismo eje dentro de la viga: ambos lados suben en sincronía perfecta, mecánicamente, para siempre. Con tan poco peso basta un motor tubular de 12 V del tamaño de una mano — o la mano misma sobre el cabo.</p>
+    <p data-lang="de">Jeder Flügel wiegt rund 7 kg — ein Aluminium-Rahmen um einen 40-mm-Kern aus expandiertem Kork. Zwei Seile in Segeltau-Qualität pro Feld wickeln auf eine gemeinsame Welle im Balken: beide Seiten steigen mechanisch perfekt synchron, für immer. So leicht ausbalanciert genügt ein handtellergroßer 12-V-Rohrmotor — oder schlicht die Hand am Seil.</p>
+    <p data-lang="fr">Chaque vantail pèse environ 7 kg — cadre périphérique en aluminium autour d’une âme de liège expansé de 40 mm. Deux cordages marins par travée s’enroulent sur un même arbre dans la poutre : les deux côtés montent en synchronisation parfaite, mécaniquement, pour toujours. Si léger et équilibré, un petit moteur tubulaire 12 V suffit — ou simplement la main sur le cordage.</p>
+  </div>
+</section>
+
+<!-- PRINCIPLE -->
+<div class="principle rv">
+  <div class="wrap">
+    <p class="pq" data-lang="en">“Automated by default — never dependent on it.”</p>
+    <p class="pq" data-lang="es">«Automatizada por defecto — nunca dependiente de ello.»</p>
+    <p class="pq" data-lang="de">„Automatisiert ab Werk — aber nie davon abhängig.“</p>
+    <p class="pq" data-lang="fr">« Automatisée par défaut — jamais dépendante. »</p>
+    <p class="muted" style="margin-top:.8rem" data-lang="en">Sensors can sail the facade with the sun and the wind. And when the power blinks, the worm gear self-locks, the rope tail stays reachable, and AL·aVela degrades gracefully into a sailboat.</p>
+    <p class="muted" style="margin-top:.8rem" data-lang="es">Los sensores pueden gobernar la fachada con el sol y el viento. Y cuando falla la corriente, el sinfín se autobloquea, el cabo queda a mano, y AL·aVela degrada con elegancia a velero.</p>
+    <p class="muted" style="margin-top:.8rem" data-lang="de">Sensoren können die Fassade mit Sonne und Wind segeln lassen. Und fällt der Strom aus, sperrt das Schneckengetriebe selbst, das Seilende bleibt greifbar — AL·aVela wird würdevoll wieder zum Segelboot.</p>
+    <p class="muted" style="margin-top:.8rem" data-lang="fr">Des capteurs peuvent faire naviguer la façade avec le soleil et le vent. Et quand le courant saute, la vis sans fin s’autobloque, le bout de cordage reste à portée de main — AL·aVela redevient élégamment un voilier.</p>
+  </div>
+</div>
+
+<!-- GARROCHA -->
+<section>
+  <div class="wrap rv">
+    <div class="slbl">La Garrocha</div>
+    <h2 data-lang="en">One stick, three jobs</h2>
+    <h2 data-lang="es">Un palo, tres oficios</h2>
+    <h2 data-lang="de">Ein Stab, drei Ämter</h2>
+    <h2 data-lang="fr">Un bâton, trois métiers</h2>
+    <p data-lang="en">Between modules stands the <em>garrocha</em> — a slim composite post, wood wrapped in an aluminium guide channel, hinged at the top. It is the detail that makes the system independent of walls and pillars.</p>
+    <p data-lang="es">Entre módulos se alza la <em>garrocha</em> — un montante esbelto compuesto, madera envuelta en canal-guía de aluminio, articulado arriba. Es el detalle que independiza el sistema de muros y pilares.</p>
+    <p data-lang="de">Zwischen den Modulen steht die <em>Garrocha</em> — ein schlanker Verbundpfosten, Holz in einem Aluminium-Führungskanal, oben angelenkt. Sie ist das Detail, das das System von Wänden und Stützen unabhängig macht.</p>
+    <p data-lang="fr">Entre les modules se dresse la <em>garrocha</em> — un montant élancé composite, bois gainé d’un profilé-guide en aluminium, articulé en tête. C’est le détail qui rend le système indépendant des murs et des piliers.</p>
+    <div class="tri">
+      <div class="card"><span class="cnum">1</span>
+        <h3 data-lang="en">Wind post</h3><h3 data-lang="es">Montante de viento</h3><h3 data-lang="de">Windpfosten</h3><h3 data-lang="fr">Poteau de vent</h3>
+        <p data-lang="en">Down and latched, it guides the leaf edges, seals on wool-felt gaskets and carries the wind load of the closed wall.</p>
+        <p data-lang="es">Bajada y enclavada, guía los cantos de las hojas, sella sobre juntas de fieltro de lana y recibe la carga de viento del muro cerrado.</p>
+        <p data-lang="de">Abgesenkt und verriegelt führt sie die Flügelkanten, dichtet auf Wollfilz und trägt die Windlast der geschlossenen Wand.</p>
+        <p data-lang="fr">Abaissée et verrouillée, elle guide les rives des vantaux, fait joint sur feutre de laine et reprend la charge de vent du mur fermé.</p></div>
+      <div class="card"><span class="cnum">2</span>
+        <h3 data-lang="en">Flying fringe</h3><h3 data-lang="es">Fleco volante</h3><h3 data-lang="de">Fliegender Saum</h3><h3 data-lang="fr">Frange volante</h3>
+        <p data-lang="en">Swung up, it projects past the eave. Shade nets span garrocha to garrocha — the hard roof edge dissolves into a breathing fringe.</p>
+        <p data-lang="es">Basculada hacia arriba, se proyecta más allá del alero. Redes de sombreo se tienden de garrocha a garrocha — el borde duro del tejado se disuelve en un fleco que respira.</p>
+        <p data-lang="de">Hochgeschwenkt ragt sie über die Traufe hinaus. Schattennetze spannen von Garrocha zu Garrocha — die harte Dachkante löst sich in einen atmenden Saum auf.</p>
+        <p data-lang="fr">Basculée vers le haut, elle se projette au-delà de l’avant-toit. Des filets d’ombrage se tendent de garrocha en garrocha — l’arête dure du toit se dissout en frange qui respire.</p></div>
+      <div class="card"><span class="cnum">3</span>
+        <h3 data-lang="en">Cooling boom</h3><h3 data-lang="es">Botalón nebulizador</h3><h3 data-lang="de">Kühlausleger</h3><h3 data-lang="fr">Bôme rafraîchissante</h3>
+        <p data-lang="en">A misting line rides to its tip. In dry summer air the fog flashes off and drops the veranda 5–8 °C — the building sweats.</p>
+        <p data-lang="es">Una línea nebulizadora llega hasta su punta. En el aire seco del verano la niebla se evapora al instante y baja la terraza 5–8 °C — el edificio suda.</p>
+        <p data-lang="de">Eine Nebelleitung läuft bis zur Spitze. In trockener Sommerluft verdunstet der Sprühnebel sofort und kühlt die Veranda um 5–8 °C — das Gebäude schwitzt.</p>
+        <p data-lang="fr">Une ligne de brumisation court jusqu’à sa pointe. Dans l’air sec de l’été, la brume s’évapore instantanément et rafraîchit la véranda de 5–8 °C — le bâtiment transpire.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- MATERIALS -->
+<section class="alt">
+  <div class="wrap rv">
+    <div class="slbl" data-lang="en">Materials</div>
+    <div class="slbl" data-lang="es">Materiales</div>
+    <div class="slbl" data-lang="de">Materialien</div>
+    <div class="slbl" data-lang="fr">Matériaux</div>
+    <h2 data-lang="en">Char outside, linen inside</h2>
+    <h2 data-lang="es">Carbón fuera, lino dentro</h2>
+    <h2 data-lang="de">Kohle außen, Leinen innen</h2>
+    <h2 data-lang="fr">Charbon dehors, lin dedans</h2>
+    <p data-lang="en">Every material earns its place twice — once for physics, once for honesty. Films peel; penetrants fade. So everything exterior is a penetrant, a mineral, or a metal.</p>
+    <p data-lang="es">Cada material se gana su sitio dos veces — una por la física, otra por la honestidad. Las películas se pelan; los penetrantes envejecen. Por eso todo lo exterior es penetrante, mineral o metal.</p>
+    <p data-lang="de">Jedes Material verdient seinen Platz doppelt — einmal durch Physik, einmal durch Ehrlichkeit. Filme blättern ab; Penetriermittel altern in Würde. Deshalb ist außen alles Penetriermittel, Mineral oder Metall.</p>
+    <p data-lang="fr">Chaque matériau gagne sa place deux fois — une fois par la physique, une fois par l’honnêteté. Les films s’écaillent ; les pénétrants vieillissent avec dignité. Alors tout l’extérieur est pénétrant, minéral ou métal.</p>
+    <div class="mgrid">
+      <div class="mcard"><div class="mdot" style="background:#c9a227"></div>
+        <h3 data-lang="en">Expanded cork core</h3><h3 data-lang="es">Alma de corcho expandido</h3><h3 data-lang="de">Kern aus Backkork</h3><h3 data-lang="fr">Âme de liège expansé</h3>
+        <p data-lang="en">40 mm ICB — baked in its own resin, glue-free, insulating, immortal.</p>
+        <p data-lang="es">ICB 40 mm — cocido en su propia resina, sin colas, aislante, inmortal.</p>
+        <p data-lang="de">40 mm ICB — im eigenen Harz gebacken, leimfrei, dämmend, unverwüstlich.</p>
+        <p data-lang="fr">ICB 40 mm — cuit dans sa propre résine, sans colle, isolant, immortel.</p></div>
+      <div class="mcard"><div class="mdot" style="background:#1c1a17"></div>
+        <h3>Shou sugi ban</h3>
+        <p data-lang="en">Charred larch weather face, linseed-fixed. UV-immune armor, zero paint, ever.</p>
+        <p data-lang="es">Cara exterior de alerce carbonizado, fijado con linaza. Blindaje inmune al UV, cero pintura, para siempre.</p>
+        <p data-lang="de">Wetterseite aus verkohlter Lärche, mit Leinöl fixiert. UV-immuner Panzer, nie wieder Farbe.</p>
+        <p data-lang="fr">Face météo en mélèze carbonisé, fixé à l’huile de lin. Armure immunisée aux UV, zéro peinture, à jamais.</p></div>
+      <div class="mcard"><div class="mdot" style="background:#b9b9bf"></div>
+        <h3 data-lang="en">Aluminium frame</h3><h3 data-lang="es">Marco de aluminio</h3><h3 data-lang="de">Aluminiumrahmen</h3><h3 data-lang="fr">Cadre aluminium</h3>
+        <p data-lang="en">L and U profiles: crisp edges, gasket landings, and the garrocha's built-in guide rail.</p>
+        <p data-lang="es">Perfiles en L y U: cantos precisos, asientos de junta, y el carril-guía integrado en la garrocha.</p>
+        <p data-lang="de">L- und U-Profile: präzise Kanten, Dichtungsauflagen und die integrierte Führungsschiene der Garrocha.</p>
+        <p data-lang="fr">Profilés en L et U : arêtes nettes, appuis de joint, et le rail-guide intégré de la garrocha.</p></div>
+      <div class="mcard"><div class="mdot" style="background:#e8ddc4"></div>
+        <h3 data-lang="en">Wool felt gaskets</h3><h3 data-lang="es">Juntas de fieltro de lana</h3><h3 data-lang="de">Wollfilz-Dichtungen</h3><h3 data-lang="fr">Joints en feutre de laine</h3>
+        <p data-lang="en">Self-recovering, insulating, stapled in — replaced in minutes, compostable at the end.</p>
+        <p data-lang="es">Autorrecuperables, aislantes, grapadas — se cambian en minutos, compostables al final.</p>
+        <p data-lang="de">Selbsterholend, dämmend, getackert — in Minuten ersetzt, am Ende kompostierbar.</p>
+        <p data-lang="fr">Auto-régénérants, isolants, agrafés — remplacés en minutes, compostables à la fin.</p></div>
+      <div class="mcard"><div class="mdot" style="background:#1971c2"></div>
+        <h3 data-lang="en">Sailing hardware</h3><h3 data-lang="es">Herrajes náuticos</h3><h3 data-lang="de">Segel-Beschläge</h3><h3 data-lang="fr">Accastillage marin</h3>
+        <p data-lang="en">Polyester braid, marine sheaves, cam cleats. Boats abandoned steel cable for good reasons; so do we.</p>
+        <p data-lang="es">Cabo de poliéster, roldanas marinas, mordazas. Los barcos abandonaron el cable de acero por buenas razones; nosotros también.</p>
+        <p data-lang="de">Polyester-Flechtseil, Marine-Rollen, Curryklemmen. Boote haben Stahlseile aus guten Gründen aufgegeben; wir auch.</p>
+        <p data-lang="fr">Cordage polyester, réas marins, taquets coinceurs. Les bateaux ont abandonné le câble d’acier pour de bonnes raisons ; nous aussi.</p></div>
+      <div class="mcard"><div class="mdot" style="background:#7a8f3a"></div>
+        <h3 data-lang="en">Agricultural nets</h3><h3 data-lang="es">Mallas agrícolas</h3><h3 data-lang="de">Agrarnetze</h3><h3 data-lang="fr">Filets agricoles</h3>
+        <p data-lang="en">Olive-harvest mesh or woven esparto as the shade fringe — the region's cheapest textile, re-cast as architecture.</p>
+        <p data-lang="es">Malla de aceituna o esparto tejido como fleco de sombra — el textil más barato de la comarca, reconvertido en arquitectura.</p>
+        <p data-lang="de">Olivenernte-Netz oder geflochtenes Espartogras als Schattensaum — das billigste Textil der Region, neu gedacht als Architektur.</p>
+        <p data-lang="fr">Filet à olives ou sparte tissé en frange d’ombre — le textile le moins cher de la région, refondu en architecture.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNICAL -->
+<section>
+  <div class="wrap rv">
+    <div class="slbl" data-lang="en">Technical</div>
+    <div class="slbl" data-lang="es">Técnica</div>
+    <div class="slbl" data-lang="de">Technik</div>
+    <div class="slbl" data-lang="fr">Technique</div>
+    <h2 data-lang="en">Reference module</h2>
+    <h2 data-lang="es">Módulo de referencia</h2>
+    <h2 data-lang="de">Referenzmodul</h2>
+    <h2 data-lang="fr">Module de référence</h2>
+    <table class="ttab">
+      <thead><tr>
+        <th data-lang="en">Parameter</th><th data-lang="es">Parámetro</th><th data-lang="de">Parameter</th><th data-lang="fr">Paramètre</th>
+        <th>min</th><th>max</th>
+      </tr></thead>
+      <tbody>
+        <tr><td data-lang="en">Module width</td><td data-lang="es">Ancho de módulo</td><td data-lang="de">Modulbreite</td><td data-lang="fr">Largeur de module</td><td>0.8 m</td><td>1.5 m *</td></tr>
+        <tr><td data-lang="en">Free opening height</td><td data-lang="es">Altura libre de vano</td><td data-lang="de">Lichte Öffnungshöhe</td><td data-lang="fr">Hauteur libre de baie</td><td>~1.2 m</td><td>~2.2 m</td></tr>
+        <tr><td data-lang="en">Leaf height (each)</td><td data-lang="es">Altura de hoja (c/u)</td><td data-lang="de">Flügelhöhe (je)</td><td data-lang="fr">Hauteur de vantail (ch.)</td><td>0.60 m</td><td>1.10 m</td></tr>
+        <tr><td data-lang="en">Insulated sill</td><td data-lang="es">Antepecho aislado</td><td data-lang="de">Gedämmte Brüstung</td><td data-lang="fr">Allège isolée</td><td>0 m</td><td>~1.2 m</td></tr>
+        <tr><td data-lang="en">Cork core (ICB)</td><td data-lang="es">Alma de corcho (ICB)</td><td data-lang="de">Korkkern (ICB)</td><td data-lang="fr">Âme de liège (ICB)</td><td>30 mm</td><td>60 mm</td></tr>
+        <tr><td data-lang="en">Moving weight / bay</td><td data-lang="es">Peso móvil / vano</td><td data-lang="de">Bewegte Masse / Feld</td><td data-lang="fr">Poids mobile / travée</td><td>~10 kg</td><td>~18 kg</td></tr>
+        <tr><td data-lang="en">Garrocha length</td><td data-lang="es">Longitud de garrocha</td><td data-lang="de">Garrocha-Länge</td><td data-lang="fr">Longueur de garrocha</td><td>~1.4 m</td><td>~2.0 m</td></tr>
+        <tr><td data-lang="en">Drive</td><td data-lang="es">Accionamiento</td><td data-lang="de">Antrieb</td><td data-lang="fr">Entraînement</td>
+          <td data-lang="en">manual rope</td><td data-lang="es">cabo manual</td><td data-lang="de">Handseil</td><td data-lang="fr">corde manuelle</td>
+          <td data-lang="en">12 V + sensors</td><td data-lang="es">12 V + sensores</td><td data-lang="de">12 V + Sensorik</td><td data-lang="fr">12 V + capteurs</td></tr>
+        <tr><td data-lang="en">Roof types</td><td data-lang="es">Tipos de cubierta</td><td data-lang="de">Dachtypen</td><td data-lang="fr">Types de toiture</td>
+          <td colspan="2" data-lang="en">pitched &amp; flat (5–8° park tilt)</td>
+          <td colspan="2" data-lang="es">inclinada y plana (parada a 5–8°)</td>
+          <td colspan="2" data-lang="de">geneigt &amp; flach (5–8° Parkneigung)</td>
+          <td colspan="2" data-lang="fr">inclinée et plate (parcage à 5–8°)</td></tr>
+      </tbody>
+    </table>
+    <p class="muted" style="margin-top:.8rem;font-size:.82rem" data-lang="en">Every installation picks its own split of the ~2.4 m facade band: sill at 0 gives a full-height wall that opens door-like to the floor; a ~1.2 m sill gives a window-format shutter over a solid parapet. The reference build shown in the demo above: 0.40 m sill + 2 × 0.85 m leaves = 2.10 m free. * Width engineered to ~2.0 m with torsion-box leaves.</p>
+    <p class="muted" style="margin-top:.8rem;font-size:.82rem" data-lang="es">Cada instalación elige su propio reparto de la banda de fachada de ~2,4 m: antepecho 0 da un muro de altura completa que abre hasta el suelo; un antepecho de ~1,2 m da una contraventana en formato ventana sobre peto macizo. La configuración de referencia del demo: antepecho 0,40 m + 2 hojas de 0,85 m = 2,10 m libres. * Ancho viable hasta ~2,0 m con hojas en caja de torsión.</p>
+    <p class="muted" style="margin-top:.8rem;font-size:.82rem" data-lang="de">Jede Installation wählt ihre eigene Teilung des ~2,4-m-Fassadenbands: Brüstung 0 ergibt eine raumhohe Wand, die türgleich bis zum Boden öffnet; ~1,2 m Brüstung ergibt einen Fensterformat-Laden über massiver Brüstung. Die Referenz aus dem Demo oben: 0,40 m Brüstung + 2 × 0,85 m Flügel = 2,10 m licht. * Breite bis ~2,0 m machbar mit Torsionskasten-Flügeln.</p>
+    <p class="muted" style="margin-top:.8rem;font-size:.82rem" data-lang="fr">Chaque installation choisit sa propre répartition de la bande de façade d’environ 2,4 m : allège à 0 donne un mur toute hauteur qui s’ouvre jusqu’au sol ; une allège d’environ 1,2 m donne un contrevent format fenêtre sur un garde-corps plein. La configuration de référence du démo ci-dessus : allège 0,40 m + 2 vantaux de 0,85 m = 2,10 m libres. * Largeur possible jusqu’à ~2,0 m avec vantaux en caisson de torsion.</p>
+    <h2 style="margin-top:2.2rem" data-lang="en">Honest questions</h2>
+    <h2 style="margin-top:2.2rem" data-lang="es">Preguntas honestas</h2>
+    <h2 style="margin-top:2.2rem" data-lang="de">Ehrliche Fragen</h2>
+    <h2 style="margin-top:2.2rem" data-lang="fr">Questions honnêtes</h2>
+    <div data-lang="en">
+      <details class="disc"><summary>What about rain at the horizontal mid-joint?</summary>
+        <div class="disc-body">The two leaves meet in a shiplap: the top leaf laps 30 mm outside-over the bottom one, with a drip kerf routed under its nose. Closed, gravity sheds every drop outward; folding, the lap peels open by itself. The mid-hinge sits on the outer face, sheltered under that same lap.</div></details>
+      <details class="disc"><summary>And wind?</summary>
+        <div class="disc-body">Three layers: the self-locking worm gear holds everyday gusts; positive mechanical latches secure the parked positions (closed / awning / open) — struts and motors hold weight, latches hold storms; and closed, the leaf edges bear on the latched garrochas, which dump the load into floor sockets and header. On flat roofs the pack parks at 5–8° so it never becomes a wing.</div></details>
+      <details class="disc"><summary>What happens when the power fails?</summary>
+        <div class="disc-body">Nothing dramatic. The gearbox self-locks where it stands; the rope tail remains reachable and the drive declutches, so the bay operates by hand exactly like the manual version. Automation is a layer, not a dependency.</div></details>
+      <details class="disc"><summary>How wide can an opening be?</summary>
+        <div class="disc-body">A single module is comfortable to ~1.5 m and engineered to ~2 m. Wider openings take N modules separated by garrochas — a 6 m facade is simply four bays and three garrochas, and fully open all of it swings up out of sight. No fixed mullion ever stands in the view.</div></details>
+      <details class="disc"><summary>Maintenance?</summary>
+        <div class="disc-body">A rag of linseed oil on the char every few seasons; a stapled felt strip when one wears; a rope swap in ten minutes if ever needed — every wear part is visible, standard and hand-replaceable. Nothing to repaint, nothing to sand.</div></details>
+    </div>
+    <div data-lang="es">
+      <details class="disc"><summary>¿Y la lluvia en la junta horizontal central?</summary>
+        <div class="disc-body">Las dos hojas se encuentran a media madera: la superior solapa 30 mm por fuera sobre la inferior, con goterón fresado bajo la nariz. Cerrada, la gravedad expulsa cada gota hacia fuera; al plegarse, el solape se abre solo. La bisagra central va en la cara exterior, protegida bajo ese mismo solape.</div></details>
+      <details class="disc"><summary>¿Y el viento?</summary>
+        <div class="disc-body">Tres capas: el sinfín autoblocante aguanta las rachas del día a día; enclavamientos mecánicos positivos aseguran las posiciones de parada (cerrada / toldo / abierta) — motores y resortes sostienen peso, los cerrojos sostienen tormentas; y cerrada, los cantos de las hojas apoyan en las garrochas enclavadas, que llevan la carga a los casquillos de suelo y a la viga. En cubierta plana el paquete se para a 5–8° para no convertirse en ala.</div></details>
+      <details class="disc"><summary>¿Qué pasa si se va la luz?</summary>
+        <div class="disc-body">Nada dramático. El reductor se autobloquea donde está; el cabo queda a mano y el motor desembraga, así que el vano se maneja a mano exactamente como la versión manual. La automatización es una capa, no una dependencia.</div></details>
+      <details class="disc"><summary>¿Cuánto puede medir un vano?</summary>
+        <div class="disc-body">Un módulo es cómodo hasta ~1,5 m y viable hasta ~2 m. Vanos mayores se resuelven con N módulos separados por garrochas — una fachada de 6 m son cuatro módulos y tres garrochas, y abierta del todo, todo bascula arriba y desaparece. Ningún montante fijo se queda jamás en la vista.</div></details>
+      <details class="disc"><summary>¿Mantenimiento?</summary>
+        <div class="disc-body">Un trapo de aceite de linaza sobre el carbonizado cada pocas temporadas; una tira de fieltro grapada cuando se gaste; un cabo cambiado en diez minutos si algún día hace falta — cada pieza de desgaste es visible, estándar y sustituible a mano. Nada que repintar, nada que lijar.</div></details>
+    </div>
+    <div data-lang="de">
+      <details class="disc"><summary>Und der Regen an der horizontalen Mittelfuge?</summary>
+        <div class="disc-body">Die Flügel treffen sich im Überfalz: der obere greift 30 mm außen über den unteren, mit gefräster Tropfnut unter der Nase. Geschlossen leitet die Schwerkraft jeden Tropfen nach außen; beim Falten öffnet sich der Falz von selbst. Das Mittelscharnier sitzt außen, geschützt unter demselben Falz.</div></details>
+      <details class="disc"><summary>Und der Wind?</summary>
+        <div class="disc-body">Drei Ebenen: das selbsthemmende Schneckengetriebe hält Alltagsböen; formschlüssige Riegel sichern die Parkpositionen (geschlossen / Markise / offen) — Motoren halten Gewicht, Riegel halten Stürme; und geschlossen lagern die Flügelkanten auf den verriegelten Garrochas, die die Last in Bodenhülsen und Balken ableiten. Auf Flachdächern parkt das Paket mit 5–8°, damit es nie zur Tragfläche wird.</div></details>
+      <details class="disc"><summary>Was passiert bei Stromausfall?</summary>
+        <div class="disc-body">Nichts Dramatisches. Das Getriebe sperrt sich dort, wo es steht; das Seilende bleibt greifbar und der Antrieb kuppelt aus — das Feld läuft von Hand, exakt wie die manuelle Version. Automatisierung ist eine Schicht, keine Abhängigkeit.</div></details>
+      <details class="disc"><summary>Wie breit darf eine Öffnung sein?</summary>
+        <div class="disc-body">Ein Modul ist bis ~1,5 m komfortabel, bis ~2 m machbar. Breitere Öffnungen bestehen aus N Modulen mit Garrochas dazwischen — eine 6-m-Fassade sind vier Felder und drei Garrochas, und voll geöffnet schwenkt alles nach oben aus dem Blick. Kein fester Pfosten steht je in der Aussicht.</div></details>
+      <details class="disc"><summary>Wartung?</summary>
+        <div class="disc-body">Alle paar Saisons ein Lappen Leinöl auf die Kohleschicht; ein getackerter Filzstreifen bei Verschleiß; ein Seiltausch in zehn Minuten, falls je nötig — jedes Verschleißteil ist sichtbar, Standard und von Hand ersetzbar. Nichts zum Nachstreichen, nichts zum Schleifen.</div></details>
+    </div>
+    <div data-lang="fr">
+      <details class="disc"><summary>Et la pluie sur le joint horizontal central ?</summary>
+        <div class="disc-body">Les deux vantaux se rejoignent à mi-bois : le vantail haut recouvre le bas de 30 mm par l’extérieur, avec goutte d’eau fraisée sous le nez. Fermé, la gravité rejette chaque goutte vers l’extérieur ; en se pliant, le recouvrement s’ouvre de lui-même. La charnière centrale est en face extérieure, abritée sous ce même recouvrement.</div></details>
+      <details class="disc"><summary>Et le vent ?</summary>
+        <div class="disc-body">Trois niveaux : la vis sans fin autobloquante tient les rafales du quotidien ; des verrous mécaniques positifs sécurisent les positions de parcage (fermée / auvent / ouverte) — les moteurs tiennent le poids, les verrous tiennent les tempêtes ; et fermée, les rives des vantaux s’appuient sur les garrochas verrouillées, qui renvoient la charge aux fourreaux de sol et à la poutre. Sur toit plat, le paquet se gare à 5–8° pour ne jamais devenir une aile.</div></details>
+      <details class="disc"><summary>Que se passe-t-il en cas de coupure de courant ?</summary>
+        <div class="disc-body">Rien de dramatique. Le réducteur s’autobloque là où il est ; le bout de cordage reste accessible et le moteur se débraye — la travée se manœuvre à la main, exactement comme la version manuelle. L’automatisation est une couche, pas une dépendance.</div></details>
+      <details class="disc"><summary>Quelle largeur pour une baie ?</summary>
+        <div class="disc-body">Un module est confortable jusqu’à ~1,5 m, faisable jusqu’à ~2 m. Les baies plus larges se composent de N modules séparés par des garrochas — une façade de 6 m, c’est quatre travées et trois garrochas, et grande ouverte, tout bascule vers le haut hors de la vue. Aucun meneau fixe ne reste jamais dans le paysage.</div></details>
+      <details class="disc"><summary>Entretien ?</summary>
+        <div class="disc-body">Un chiffon d’huile de lin sur le carbonisé toutes les quelques saisons ; une bande de feutre agrafée quand une s’use ; un cordage changé en dix minutes si jamais nécessaire — chaque pièce d’usure est visible, standard et remplaçable à la main. Rien à repeindre, rien à poncer.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- STATUS -->
+<section class="alt">
+  <div class="wrap rv" style="text-align:center">
+    <div class="slbl" data-lang="en">Status</div>
+    <div class="slbl" data-lang="es">Estado</div>
+    <div class="slbl" data-lang="de">Stand</div>
+    <div class="slbl" data-lang="fr">État</div>
+    <h2 data-lang="en">Honestly early</h2>
+    <h2 data-lang="es">Honestamente temprano</h2>
+    <h2 data-lang="de">Ehrlich früh</h2>
+    <h2 data-lang="fr">Honnêtement tôt</h2>
+    <p style="max-width:560px;margin:0 auto .9rem" data-lang="en">AL·aVela is in active R&amp;D in the Alpujarra, at ~1000 m of real winters and real summers. First full-scale prototype: <strong>autumn 2026</strong>, followed by a complete winter of torture testing before it goes on anyone's building. If the concept speaks to your project — a veranda, a pavilion, a facade that should breathe — we'd love to hear from you.</p>
+    <p style="max-width:560px;margin:0 auto .9rem" data-lang="es">AL·aVela está en I+D activo en la Alpujarra, a ~1000 m de inviernos y veranos de verdad. Primer prototipo a escala real: <strong>otoño 2026</strong>, seguido de un invierno completo de tortura antes de instalarse en edificio alguno. Si el concepto le habla a tu proyecto — un porche, un pabellón, una fachada que debería respirar — nos encantará saber de ti.</p>
+    <p style="max-width:560px;margin:0 auto .9rem" data-lang="de">AL·aVela ist in aktiver Entwicklung in der Alpujarra, auf ~1000 m mit echten Wintern und echten Sommern. Erster Prototyp in Originalgröße: <strong>Herbst 2026</strong>, danach ein kompletter Winter Härtetest, bevor es an irgendein Gebäude geht. Wenn das Konzept zu Ihrem Projekt spricht — eine Veranda, ein Pavillon, eine Fassade, die atmen soll — freuen wir uns auf Ihre Nachricht.</p>
+    <p style="max-width:560px;margin:0 auto .9rem" data-lang="fr">AL·aVela est en R&amp;D actif dans l’Alpujarra, à ~1000 m de vrais hivers et de vrais étés. Premier prototype à l’échelle 1 : <strong>automne 2026</strong>, suivi d’un hiver complet d’essais avant toute pose sur un bâtiment. Si le concept parle à votre projet — une véranda, un pavillon, une façade qui devrait respirer — écrivez-nous.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><strong style="font-family:'Playfair Display',serif">AL·aVela</strong></p>
+    <p data-lang="en">a facade organism · designed &amp; developed in the Alpujarra, Andalusia</p>
+    <p data-lang="es">un organismo de fachada · diseñado y desarrollado en la Alpujarra, Andalucía</p>
+    <p data-lang="de">ein Fassadenorganismus · entworfen &amp; entwickelt in der Alpujarra, Andalusien</p>
+    <p data-lang="fr">un organisme de façade · conçu et développé dans l’Alpujarra, Andalousie</p>
+    <p style="margin-top:.8rem">© 2026 · <a class="dav" onclick="document.getElementById('cd').classList.add('open')">digitalAIventures</a></p>
+  </div>
+</footer>
+
+<!-- Contact modal -->
+<div class="dialog-overlay" id="cd" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="dialog-box">
+    <h4 data-lang="en">Get in Touch</h4>
+    <h4 data-lang="es">Contacto</h4>
+    <h4 data-lang="de">Kontakt</h4><h4 data-lang="fr">Contact</h4>
+    <a class="dialog-option dialog-bot" href="https://t.me/Juanitto_assist_bot" target="_blank">🤖 AI Assist 24/7</a>
+    <a class="dialog-option dialog-tg" href="https://t.me/JuanittoCalvares" target="_blank">✈ Personal</a>
+    <a class="dialog-option dialog-mail" href="mailto:digitalAIventures.LLC@gmail.com">✉ Email</a>
+    <button class="dialog-close" onclick="document.getElementById('cd').classList.remove('open')">
+      <span data-lang="en">Close</span><span data-lang="es">Cerrar</span><span data-lang="de">Schließen</span><span data-lang="fr">Fermer</span>
+    </button>
+  </div>
+</div>
+
+<script>
+/* ---------- i18n ---------- */
+const CAPS={
+ en:['Winter skin — sealed flush from sill to roof.','Awning — the V shades and ventilates; lockable at any height.','Vanished — the pack extends the eave, garrocha up, net out, mist on.'],
+ es:['Piel de invierno — sellada a ras del antepecho al tejado.','Toldo — la V da sombra y ventila; bloqueable a cualquier altura.','Desaparecida — el paquete prolonga el alero, garrocha arriba, red fuera, niebla activa.'],
+ fr:['Peau d’hiver — scellée à fleur, de l’allège au toit.','Auvent — le V ombrage et ventile ; blocable à toute hauteur.','Disparue — le paquet prolonge l’avant-toit, garrocha levée, filet sorti, brume active.'],
+ de:['Winterhaut — bündig versiegelt von Brüstung bis Dach.','Markise — das V spendet Schatten und lüftet; in jeder Höhe arretierbar.','Verschwunden — das Paket verlängert die Traufe, Garrocha oben, Netz draußen, Nebel an.']
+};
+let LANG='en';
+function setLang(l){
+  LANG=l;
+  document.querySelectorAll('[data-lang]').forEach(el=>{el.style.display=el.dataset.lang===l?'':'none';});
+  document.querySelectorAll('[data-l]').forEach(b=>{b.classList.toggle('on',b.dataset.l===l);});
+  try{localStorage.setItem('lang',l)}catch(e){}
+  updCap();
+}
+/* ---------- theme ---------- */
+function applyTheme(t){document.documentElement.setAttribute('data-theme',t);
+  document.getElementById('ti').textContent=t==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',t)}catch(e){}}
+function toggleTheme(){applyTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')}
+/* ---------- demo kinematics ---------- */
+let curT=0;
+function setT(t){
+  curT=t;
+  const hx=156,hy=80,L=85,sill=250;
+  const yb=sill-t*(sill-hy);
+  const dyH=(yb-hy)/2;
+  const dx=Math.sqrt(Math.max(L*L-dyH*dyH,0));
+  const mx=hx+dx,my=hy+dyH;
+  const set=(id,a)=>{const e=document.getElementById(id);for(const k in a)e.setAttribute(k,a[k]);};
+  set('lt',{x1:hx,y1:hy,x2:mx,y2:my}); set('ltc',{x1:hx,y1:hy,x2:mx,y2:my});
+  set('lb2',{x1:mx,y1:my,x2:hx,y2:yb}); set('lbc',{x1:mx,y1:my,x2:hx,y2:yb});
+  set('hm',{cx:mx,cy:my}); set('hb',{cx:hx,cy:yb});
+  document.getElementById('rope').setAttribute('points',hx+','+(yb-4)+' 150,58 148,66');
+  /* garrocha: stays vertical (latched wind-post) until ~78% — then swings up to ~84°, parallel with the roof */
+  const px=162,py=78,GL=170,gT=Math.min(1,Math.max(0,(t-0.78)/0.19)),a=gT*84*Math.PI/180;
+  const gx=px+GL*Math.sin(a),gy=py+GL*Math.cos(a);
+  set('gar',{x1:px,y1:py,x2:gx,y2:gy});
+  /* net */
+  const nOp=Math.min(1,Math.max(0,(t-0.84)/0.11));
+  document.getElementById('net').setAttribute('opacity',nOp.toFixed(2));
+  [0.45,0.63,0.81,0.99].forEach((s,i)=>{
+    const nx=px+GL*s*Math.sin(a),ny=py+GL*s*Math.cos(a);
+    set('n'+i,{x1:nx,y1:ny+3,x2:nx,y2:ny+3+26*nOp});
+  });
+  /* mist */
+  const mOp=Math.min(1,Math.max(0,(t-0.91)/0.06))*0.65;
+  const mg=document.getElementById('mist');
+  mg.setAttribute('opacity',mOp.toFixed(2));
+  const cs=mg.children;
+  for(let i=0;i<cs.length;i++){
+    cs[i].setAttribute('cx',(gx-4+((i*17)%26)-8).toFixed(1));
+    cs[i].setAttribute('cy',(gy+8+((i*23)%30)).toFixed(1));
+  }
+  document.getElementById('tslider').value=Math.round(t*100);
+  /* preset button states */
+  const st=t<0.15?0:(t<0.85?1:2);
+  ['pb0','pb1','pb2'].forEach((id,i)=>document.getElementById(id).classList.toggle('on',i===st));
+  updCap(st);
+}
+function updCap(st){
+  if(st===undefined)st=curT<0.15?0:(curT<0.85?1:2);
+  document.getElementById('dcap').textContent=(CAPS[LANG]||CAPS.en)[st];
+}
+let animRAF=null,userTouched=false,loopTimer=null;
+function killLoop(){userTouched=true;if(loopTimer){clearTimeout(loopTimer);loopTimer=null;}}
+function tween(target,dur,cb){
+  if(animRAF)cancelAnimationFrame(animRAF);
+  const from=curT,d=target-from,t0=performance.now(),DUR=dur||900;
+  function step(now){
+    const p=Math.min(1,(now-t0)/DUR);
+    const e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+    setT(from+d*e);
+    if(p<1)animRAF=requestAnimationFrame(step);
+    else if(cb)cb();
+  }
+  animRAF=requestAnimationFrame(step);
+}
+function preset(target){
+  killLoop();
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){setT(target);return;}
+  tween(target,900);
+}
+function autoLoop(){
+  if(userTouched||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const seq=[[0.55,1400,1100],[0.97,1600,1900],[0.55,1400,900],[0,1400,2200]];
+  let i=0;
+  function next(){
+    if(userTouched)return;
+    const s=seq[i%seq.length];i++;
+    tween(s[0],s[1],()=>{if(!userTouched)loopTimer=setTimeout(next,s[2]);});
+  }
+  next();
+}
+/* ---------- reveal ---------- */
+(function(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.querySelectorAll('.rv').forEach(e=>e.classList.add('in'));return;}
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},
+    {threshold:0,rootMargin:'0px 0px 12% 0px'});
+  document.querySelectorAll('.rv').forEach(e=>io.observe(e));
+})();
+/* ---------- init ---------- */
+document.addEventListener('DOMContentLoaded',()=>{
+  let l='en';
+  try{
+    const q=new URLSearchParams(location.search).get('lang');
+    l=q||localStorage.getItem('lang')||navigator.language.slice(0,2)||'en';
+  }catch(e){}
+  if(!['en','es','de','fr'].includes(l))l='en';
+  setLang(l);
+  let th=null;
+  try{th=localStorage.getItem('theme')}catch(e){}
+  if(!th){const h=new Date().getHours();th=(h>=19||h<7)?'dark':'light';}
+  applyTheme(th||'dark');
+  setT(0);
+  /* idle auto-play: starts when the demo enters the viewport, dies on first touch */
+  const demoEl=document.querySelector('.demo');
+  if(demoEl&&'IntersectionObserver'in window){
+    const dio=new IntersectionObserver(es=>{
+      es.forEach(e=>{if(e.isIntersecting){dio.disconnect();setTimeout(autoLoop,700);}});
+    },{threshold:0.5});
+    dio.observe(demoEl);
+  }else{setTimeout(autoLoop,1500);}
+});
+</script>
+</body>
+</html>
