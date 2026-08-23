@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claudia Voice — Browser Probe</title>
+<style>
+:root{--bg:#0f0f1a;--card:#1a1a2e;--border:#2a2a4a;--pass:#22c55e;--fail:#ef4444;--warn:#f59e0b;--muted:#94a3b8;--text:#e2e8f0;--accent:#6366f1;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;padding:1.25rem 1rem 2.5rem;}
+h1{font-size:1.15rem;font-weight:700;margin-bottom:.25rem;color:#fff;}
+.sub{font-size:.78rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.5;}
+.label{font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:1.25rem 0 .55rem;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:.75rem;padding:.85rem 1rem;margin-bottom:.55rem;display:flex;align-items:flex-start;gap:.8rem;}
+.dot{width:2rem;height:2rem;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.9rem;background:#374151;transition:background .3s;}
+.dot.pass{background:var(--pass);}
+.dot.fail{background:var(--fail);}
+.dot.warn{background:var(--warn);}
+.cb{flex:1;min-width:0;}
+.ct{font-size:.88rem;font-weight:600;color:#fff;}
+.cd{font-size:.73rem;color:var(--muted);margin-top:.18rem;line-height:1.45;}
+.cv{font-size:.7rem;color:var(--accent);margin-top:.22rem;font-family:monospace;word-break:break-all;}
+.tg{background:#1b4d7a22;border:1px solid #1b4d7a55;border-radius:.75rem;padding:.8rem 1rem;font-size:.72rem;font-family:monospace;color:#7dd3fc;line-height:1.8;word-break:break-all;}
+.btn{display:block;width:100%;padding:.9rem;background:var(--accent);color:#fff;border:none;border-radius:.75rem;font-size:.95rem;font-weight:600;cursor:pointer;margin-top:1.25rem;transition:opacity .2s;}
+.btn:active{opacity:.75;}
+.btn:disabled{opacity:.38;cursor:not-allowed;}
+.summary{background:var(--card);border:1px solid var(--border);border-radius:.75rem;padding:1rem;margin-top:1.5rem;font-size:.8rem;line-height:1.65;color:var(--muted);}
+.verdict{font-size:.98rem;font-weight:700;margin-bottom:.4rem;}
+.verdict.pass{color:var(--pass);}
+.verdict.fail{color:var(--fail);}
+.verdict.warn{color:var(--warn);}
+.verdict.pend{color:var(--muted);}
+.footer{margin-top:2rem;font-size:.7rem;color:#374151;text-align:center;line-height:1.6;}
+</style>
+<meta property="og:title" content="Claudia Voice Browser Probe" />
+<meta property="og:description" content="A diagnostic tool to test browser support for realtime voice features including WebRTC and microphone access." />
+<meta property="og:url" content="https://faint-ripple-xw4j.here.now/" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://here.now/og/faint-ripple-xw4j.jpg" />
+<meta property="og:image:width" content="1280" />
+<meta property="og:image:height" content="720" />
+<meta name="twitter:image" content="https://here.now/og/faint-ripple-xw4j.jpg" />
+<meta name="twitter:card" content="summary_large_image" /></head>
+<body>
+<h1>🎙️ Claudia Voice — Probe</h1>
+<p class="sub">Tests what this webview supports for realtime voice.<br>Tap the mic button when ready, then screenshot and send to Juanitto.</p>
+
+<div class="label">📱 Environment</div>
+<div class="tg" id="tg-info">Detecting…</div>
+
+<div class="label">⚡ Auto-detected APIs</div>
+
+<div class="card">
+  <div class="dot" id="i-sec">⏳</div>
+  <div class="cb">
+    <div class="ct">Secure Context (HTTPS)</div>
+    <div class="cd">getUserMedia only works on HTTPS or localhost.</div>
+    <div class="cv" id="v-sec"></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="dot" id="i-rtc">⏳</div>
+  <div class="cb">
+    <div class="ct">RTCPeerConnection</div>
+    <div class="cd">WebRTC — OpenAI Realtime's low-latency transport.</div>
+    <div class="cv" id="v-rtc"></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="dot" id="i-aw">⏳</div>
+  <div class="cb">
+    <div class="ct">AudioWorklet</div>
+    <div class="cd">PCM pipeline — needed for Gemini Live fallback path.</div>
+    <div class="cv" id="v-aw"></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="dot" id="i-md">⏳</div>
+  <div class="cb">
+    <div class="ct">MediaDevices API</div>
+    <div class="cd">navigator.mediaDevices — entry point for mic access.</div>
+    <div class="cv" id="v-md"></div>
+  </div>
+</div>
+
+<div class="label">🎤 Microphone (requires tap)</div>
+
+<div class="card">
+  <div class="dot" id="i-mic">⏳</div>
+  <div class="cb">
+    <div class="ct">getUserMedia live test</div>
+    <div class="cd">Browser will ask for mic permission. Result appears here.</div>
+    <div class="cv" id="v-mic">Not tested — tap button below.</div>
+  </div>
+</div>
+
+<button class="btn" id="mic-btn" onclick="testMic()">🎤 Test microphone access</button>
+
+<div class="summary">
+  <div class="verdict pend" id="verdict">⏳ Tap the mic button to finish…</div>
+  <span id="sum-text">Auto-checks running. Tap mic to complete.</span>
+</div>
+
+<div class="footer">La Retama · digitalAIventures · S50 probe</div>
+
+<script>
+function set(id,cls,emoji,val){
+  var d=document.getElementById(id);
+  d.textContent=emoji;
+  d.className='dot '+cls;
+  var v=document.getElementById(id.replace('i-','v-'));
+  if(v&&val!==undefined)v.textContent=val;
+}
+
+// Telegram context
+(function(){
+  var el=document.getElementById('tg-info');
+  var tg=window.Telegram&&window.Telegram.WebApp;
+  if(tg){
+    if(tg.ready)tg.ready();
+    el.innerHTML='Platform: <b>'+(tg.platform||'?')+'</b><br>Version: <b>'+(tg.version||'?')+'</b><br>ColorScheme: '+(tg.colorScheme||'?')+'<br>UA: '+navigator.userAgent.slice(0,80);
+  } else {
+    el.innerHTML='⚠ Not inside Telegram WebApp — open via bot menu button for full data.<br>UA: '+navigator.userAgent.slice(0,100);
+  }
+})();
+
+// Secure context
+(function(){
+  var s=window.isSecureContext;
+  set('i-sec',s?'pass':'fail',s?'✓':'✗','isSecureContext='+s+' | '+location.protocol+'//'+location.hostname);
+})();
+
+// RTCPeerConnection
+(function(){
+  var R=window.RTCPeerConnection||window.webkitRTCPeerConnection||window.mozRTCPeerConnection;
+  set('i-rtc',R?'pass':'fail',R?'✓':'✗',R?'RTCPeerConnection available':'RTCPeerConnection NOT found');
+})();
+
+// AudioWorklet
+(function(){
+  var C=window.AudioContext||window.webkitAudioContext;
+  if(!C){set('i-aw','fail','✗','AudioContext not available');return;}
+  try{
+    var tmp=new C();
+    var has=!!tmp.audioWorklet;
+    tmp.close();
+    set('i-aw',has?'pass':'warn',has?'✓':'⚠',has?'AudioWorklet present':'AudioContext OK but audioWorklet missing');
+  }catch(e){set('i-aw','warn','⚠','AudioContext error: '+e.message);}
+})();
+
+// MediaDevices
+(function(){
+  var md=navigator.mediaDevices;
+  if(md&&typeof md.getUserMedia==='function'){
+    set('i-md','pass','✓','navigator.mediaDevices.getUserMedia available');
+  } else if(navigator.getUserMedia||navigator.webkitGetUserMedia){
+    set('i-md','warn','⚠','Legacy getUserMedia only (no mediaDevices)');
+  } else {
+    set('i-md','fail','✗','No getUserMedia API found');
+  }
+})();
+
+function updateSummary(){
+  var mi=document.getElementById('i-mic');
+  var ri=document.getElementById('i-rtc');
+  var mdi=document.getElementById('i-md');
+  var si=document.getElementById('i-sec');
+  var ve=document.getElementById('verdict');
+  var su=document.getElementById('sum-text');
+  var has=function(el,c){return el.classList.contains(c);};
+  var micDone=has(mi,'pass')||has(mi,'fail');
+  if(!micDone){
+    ve.className='verdict pend';ve.textContent='⏳ Tap mic button to finish…';
+    su.textContent='Auto-checks done. One step left: test the actual microphone.';return;
+  }
+  var mp=has(mi,'pass'),rp=has(ri,'pass'),dp=has(mdi,'pass'),sp=has(si,'pass');
+  if(mp&&rp&&dp&&sp){
+    ve.className='verdict pass';ve.textContent='✅ Mini App VIABLE — GO';
+    su.textContent='WebRTC + getUserMedia both work. OpenAI Realtime can run inside Telegram. No PWA fallback needed.';
+  } else if(mp&&!rp){
+    ve.className='verdict warn';ve.textContent='⚠️ Mic OK — WebRTC missing';
+    su.textContent='getUserMedia works but RTCPeerConnection unavailable. Turn-based voice OK; live streaming needs PWA or Gemini Live (WebSocket).';
+  } else if(!mp&&rp){
+    ve.className='verdict warn';ve.textContent='⚠️ WebRTC OK — mic blocked';
+    su.textContent='Mic denied. Could be system settings or Telegram policy. Try same URL in Chrome browser to isolate.';
+  } else {
+    ve.className='verdict fail';ve.textContent='❌ Mini App NOT viable for live voice';
+    su.textContent='Critical APIs missing in this webview. Standalone PWA (home-screen install) required instead.';
+  }
+}
+
+async function testMic(){
+  var btn=document.getElementById('mic-btn');
+  btn.disabled=true;btn.textContent='⏳ Requesting…';
+  set('i-mic','pend','⏳','Waiting for permission…');
+  try{
+    var s=await navigator.mediaDevices.getUserMedia({audio:true});
+    var t=s.getAudioTracks();
+    var lbl=t.length?t[0].label:'(no label)';
+    set('i-mic','pass','✓','GRANTED — track: '+lbl);
+    btn.textContent='✓ Mic working — tap to re-test';
+    t.forEach(function(tk){tk.stop();});
+  }catch(e){
+    var msg=e.name==='NotAllowedError'?'Permission denied':e.name==='NotFoundError'?'No mic device found':e.name+': '+e.message;
+    set('i-mic','fail','✗',msg);
+    btn.textContent='🎤 Retry microphone test';
+  }
+  btn.disabled=false;
+  updateSummary();
+}
+
+updateSummary();
+</script>
+</body>
+</html>
