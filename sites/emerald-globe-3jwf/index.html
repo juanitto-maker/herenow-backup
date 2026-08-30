@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>La Retama · Reunion 25 ago</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f1;color:#1a2b1f;min-height:100vh}
+header{background:#1b3a2b;color:#fff;padding:.9rem 1rem .7rem;position:sticky;top:0;z-index:10}
+.hdr-row{display:flex;align-items:center;gap:.6rem}
+header h1{font-size:1rem;font-weight:700;flex:1}
+header p{font-size:.74rem;opacity:.65}
+.my-dot{width:13px;height:13px;border-radius:50%;background:#888;border:2px solid rgba(255,255,255,.35);flex-shrink:0}
+.legend{font-size:.7rem;opacity:.8;display:flex;gap:.5rem;align-items:center;margin-top:.3rem;flex-wrap:wrap}
+.leg-dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0}
+.reset-bar{background:#fff6e0;border-bottom:1px solid #e8d8a0;padding:.45rem 1rem;display:flex;align-items:center;gap:.5rem;min-height:42px}
+.reset-lbl{font-size:.75rem;color:#8a5a00;flex:1}
+.reset-btn{background:#c04040;color:#fff;border:none;border-radius:.4rem;padding:.35rem .8rem;font-size:.75rem;font-weight:600;cursor:pointer}
+.conf-row{display:none;align-items:center;gap:.45rem}
+.conf-row.show{display:flex}
+.conf-lbl{font-size:.75rem;color:#c04040;font-weight:600}
+.conf-yes{background:#c04040;color:#fff;border:none;border-radius:.35rem;padding:.3rem .65rem;font-size:.75rem;font-weight:600;cursor:pointer}
+.conf-no{background:#ddd;color:#444;border:none;border-radius:.35rem;padding:.3rem .65rem;font-size:.75rem;cursor:pointer}
+#status{font-size:.72rem;text-align:center;color:#7a9a85;padding:.35rem;background:#e8f0ea;display:none}
+.items{padding:.8rem .8rem 2rem;display:flex;flex-direction:column;gap:.65rem}
+.item{background:#fff;border-radius:.7rem;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.item-header{display:flex;gap:.65rem;padding:.8rem .8rem .55rem;align-items:flex-start}
+.cb{width:30px;height:30px;min-width:30px;border-radius:7px;border:2.5px solid #2d6a4f;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:transparent;padding:0;margin-top:1px}
+.cb.on{background:#2d6a4f;color:#fff}
+.item-body{flex:1;min-width:0}
+.ititle{font-size:.93rem;font-weight:700;color:#1b3a2b;line-height:1.3;margin-bottom:.25rem}
+.idetail{font-size:.8rem;color:#4a6455;line-height:1.45}
+.iprice{display:inline-block;margin-top:.3rem;font-size:.76rem;font-weight:600;color:#8a5a00;background:#fff6e0;padding:.12rem .42rem;border-radius:.35rem}
+.div{height:1px;background:#eef3ef;margin:0 .8rem}
+.cmts{padding:.4rem .8rem;display:flex;flex-direction:column;gap:.35rem}
+.cmt{padding:.36rem .52rem;background:#f5f8f6;border-radius:.4rem;font-size:.81rem;line-height:1.4;border-left:3px solid #ccc}
+.cmt-meta{display:flex;align-items:center;gap:.28rem;margin-bottom:.15rem}
+.cdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.cme{font-size:.65rem;color:#999;font-style:italic;flex:1}
+.cacts{display:flex;gap:.28rem}
+.cact{background:none;border:1px solid #ccc;border-radius:.28rem;font-size:.68rem;padding:.08rem .32rem;cursor:pointer;color:#555;line-height:1.5}
+.cact:active{background:#eee}
+.ctxt{white-space:pre-wrap;word-break:break-word;color:#1a2b1f}
+.cedit-wrap{margin-top:.22rem}
+.cedit-ta{width:100%;min-height:46px;border:1.5px solid #2d6a4f;border-radius:.4rem;padding:.38rem .48rem;font-size:.83rem;font-family:inherit;resize:vertical;background:#fff;display:block}
+.cedit-ta:focus{outline:none}
+.cedit-btns{display:flex;gap:.38rem;margin-top:.28rem}
+.csave{background:#2d6a4f;color:#fff;border:none;border-radius:.32rem;padding:.3rem .7rem;font-size:.78rem;font-weight:600;cursor:pointer}
+.ccancel{background:#e0e0e0;color:#333;border:none;border-radius:.32rem;padding:.3rem .7rem;font-size:.78rem;cursor:pointer}
+.input-area{padding:.5rem .8rem .8rem;display:flex;gap:.42rem;align-items:flex-end}
+textarea{flex:1;min-height:52px;max-height:110px;border:1.5px solid #c0d8c8;border-radius:.5rem;padding:.46rem .58rem;font-size:.88rem;font-family:inherit;resize:vertical;background:#f8fbf9;color:#1a2b1f;line-height:1.4}
+textarea:focus{outline:none;border-color:#2d6a4f;background:#fff}
+.sbtn{background:#2d6a4f;color:#fff;border:none;border-radius:.5rem;padding:.5rem .8rem;font-size:.86rem;font-weight:600;cursor:pointer;white-space:nowrap;min-height:44px}
+.sbtn:active{opacity:.75}
+.notes-hdr{padding:.8rem .8rem .5rem}
+.ntitle{font-size:.95rem;font-weight:700;color:#1b3a2b}
+.nsub{font-size:.77rem;color:#6a8a75;margin-top:.14rem}
+.notes-item .cmt{background:#fffef5}
+</style>
+<meta property="og:title" content="La Retama Reunion" />
+<meta property="og:description" content="Una página de gestión de reuniones y comentarios para La Retama programada para el 25 de agosto de 2026." />
+<meta property="og:url" content="https://emerald-globe-3jwf.here.now/" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://here.now/og/emerald-globe-3jwf.jpg" />
+<meta property="og:image:width" content="1280" />
+<meta property="og:image:height" content="720" />
+<meta name="twitter:image" content="https://here.now/og/emerald-globe-3jwf.jpg" />
+<meta name="twitter:card" content="summary_large_image" /></head>
+<body>
+<header>
+  <div class="hdr-row">
+    <div style="flex:1"><h1>La Retama &mdash; Reunion</h1><p>25 agosto 2026</p></div>
+    <div class="my-dot" id="my-dot"></div>
+  </div>
+  <div class="legend" id="legend"></div>
+</header>
+<div class="reset-bar">
+  <span class="reset-lbl">Borrar todo lo mio (casillas + comentarios)</span>
+  <div class="conf-row" id="conf-row">
+    <span class="conf-lbl">Seguro?</span>
+    <button class="conf-yes" id="conf-yes">Si</button>
+    <button class="conf-no" id="conf-no">No</button>
+  </div>
+  <button class="reset-btn" id="reset-btn">Limpiar</button>
+</div>
+<div id="status">Sincronizando...</div>
+<div class="items" id="container"></div>
+
+<script>
+"use strict";
+
+var ITEMS = [
+  { key:"nivel1", title:"Proteccion electrica \u2014 Nivel 1 (Esencial)", detail:"Mini-UPS para el router: 7-9h de autonomia, elimina los microcortes. Ajuste BIOS: el servidor arranca solo al volver la luz. Software Wi-Fi automatico (gratis).", price:"~35 \u20ac" },
+  { key:"nivel2", title:"Proteccion electrica \u2014 Nivel 2 (Recomendado)", detail:"SAI/UPS en el rincon del servidor: 45-90 min de autonomia durante un corte. Claudia y las copias de seguridad siguen funcionando sin notar el corte.", price:"+~85-98 \u20ac (total: ~120-133 \u20ac)" },
+  { key:"smart1", title:"Tienda inteligente \u2014 Fase 1", detail:"Modem 4G de reserva si cae el internet. Enchufe Shelly en la nevera: Claudia avisa si deja de enfriar o queda la puerta abierta. Repetidor Wi-Fi para el semisotano.", price:"+~90-115 \u20ac + ~2-5 \u20ac/mes" },
+  { key:"plc", title:"Conectividad del servidor: PLC vs reubicar", detail:"Opcion A (PLC, Claudia recomienda): usa el cableado electrico existente, conexion estable al 100%, modelo WPA8631P, sin obra. Opcion B (Yacub propone): acercar el portatil y antena Wi-Fi mas potente.", price:"Opcion A: ~112 \u20ac" },
+  { key:"voz", title:"Boton para hablar con Claudia (sin manos)", detail:"Boton Bluetooth tipo Flic (colgante o llavero): alcance 10-30m, fiabilidad alta, pago unico. Pendiente: verificar que el movil escucha el microfono con la pantalla bloqueada.", price:"~30-35 \u20ac" },
+  { key:"pos", title:"Error de precios en tickets del TPV", detail:"Los datos en Odoo son correctos (verificado). El problema esta en la plantilla de impresion del ticket. Necesito: foto del ticket malo + nombre del producto y precio que deberia poner.", price:null },
+  { key:"carne", title:"Sistema de despiece de carne", detail:"El codigo esta listo (cortes, kg, elaborados) pero desactivado. Se activa solo cuando Yacub lo pida expresamente. Sin urgencia.", price:null },
+  { key:"resumen", title:"Resumen semanal de ventas (propuesta)", detail:"Claudia podria enviarte un resumen semanal de ventas sin pedirlo. Solo se activa si lo confirmas \u2014 pediste que el bot sea discreto y no llene el chat.", price:null },
+  { key:"notas", title:"\uD83D\uDCDD Notas generales", detail:null, price:null, isNotes:true }
+];
+
+var BASE = "/.herenow/data";
+var CA = "#2d6a4f";
+var CB = "#c07a2a";
+
+// State
+var myHash = "loading";   // set after ipify, but UI builds immediately
+var colorOrder = [];
+var checks = {};
+var resolved = {};        // { key: [ {comment_id, text, ip_hash} ] }
+var localOverrides = {};  // { comment_id: {issue_key, text, ip_hash, deleted} } — local truth, wins over server until server catches up
+var editingCid = null;    // comment_id currently being edited, or null
+
+function uid() { return Math.random().toString(36).slice(2,10) + Date.now().toString(36); }
+
+function simpleHash(s) {
+  var h = 0;
+  for (var i = 0; i < s.length; i++) h = (Math.imul(31,h) + s.charCodeAt(i))|0;
+  return Math.abs(h).toString(16).padStart(8,"0");
+}
+
+function colorFor(hash) {
+  if (hash && hash !== "loading" && !colorOrder.includes(hash)) {
+    if (colorOrder.length < 2) colorOrder.push(hash);
+  }
+  var i = colorOrder.indexOf(hash);
+  return i === 0 ? CA : i === 1 ? CB : "#999";
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+// ---- Data ----
+
+async function post(col, data) {
+  try {
+    var r = await fetch(BASE + "/" + col, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(data)
+    });
+    return r.ok;
+  } catch(e) { return false; }
+}
+
+async function fetchAll() {
+  var opts = { headers:{ Accept:"application/json" } };
+  var fb = { records:[] };
+  var rs = await Promise.all([
+    fetch(BASE+"/checks?limit=200",opts).then(function(r){return r.ok?r.json():fb;}).catch(function(){return fb;}),
+    fetch(BASE+"/comments?limit=200",opts).then(function(r){return r.ok?r.json():fb;}).catch(function(){return fb;})
+  ]);
+  return { checks: rs[0].records||[], comments: rs[1].records||[] };
+}
+
+function processData(data) {
+  var byTime = function(a,b){return a.createdAt<b.createdAt?-1:1;};
+
+  // Checks: latest wins
+  var cm = {};
+  data.checks.slice().sort(byTime).forEach(function(r){ cm[r.data.issue_key] = r.data.checked; });
+  checks = cm;
+
+  // Comments: apply add/edit/delete in time order (server truth)
+  var byId = {}, order = [];
+  data.comments.slice().sort(byTime).forEach(function(r) {
+    var d = r.data;
+    var cid = d.comment_id;
+    var act = d.action || "add";
+    colorFor(d.ip_hash);
+    if (act === "add") {
+      if (cid && !byId[cid]) {
+        byId[cid] = { comment_id:cid, issue_key:d.issue_key, text:d.text, ip_hash:d.ip_hash, del:false };
+        order.push(cid);
+      }
+    } else if (act === "edit" && byId[cid]) {
+      byId[cid].text = d.text;
+    } else if (act === "delete" && byId[cid]) {
+      byId[cid].del = true;
+    }
+  });
+
+  // Overlay local overrides (our own recent add/edit/delete actions) — local always wins
+  // until the server round-trips it. This is what prevents a poll landing mid-action
+  // from erasing something we just typed.
+  Object.keys(localOverrides).forEach(function(cid) {
+    var ov = localOverrides[cid];
+    colorFor(ov.ip_hash);
+    if (ov.deleted) {
+      if (byId[cid]) byId[cid].del = true;
+      return;
+    }
+    if (byId[cid]) {
+      byId[cid].text = ov.text;
+      byId[cid].del = false;
+    } else {
+      // Server doesn't have this yet at all — inject it so it doesn't disappear
+      byId[cid] = { comment_id:cid, issue_key:ov.issue_key, text:ov.text, ip_hash:ov.ip_hash, del:false };
+      order.push(cid);
+    }
+  });
+
+  resolved = {};
+  order.forEach(function(cid) {
+    var c = byId[cid];
+    if (!c || c.del) return;
+    if (!resolved[c.issue_key]) resolved[c.issue_key] = [];
+    resolved[c.issue_key].push(c);
+  });
+}
+
+// ---- Render ----
+
+function renderHeader() {
+  var dot = document.getElementById("my-dot");
+  if (dot) dot.style.background = colorFor(myHash);
+  var leg = document.getElementById("legend");
+  if (leg && colorOrder.length) {
+    leg.innerHTML = colorOrder.map(function(h,i){
+      return "<span class=\"leg-dot\" style=\"background:"+(i===0?CA:CB)+"\"></span><span>"+(h===myHash?"tu":"otro")+"</span>";
+    }).join(" &nbsp;");
+  }
+}
+
+function renderChecks() {
+  ITEMS.forEach(function(item) {
+    var btn = document.getElementById("cb-"+item.key);
+    if (btn) btn.className = "cb" + (checks[item.key]?" on":"");
+  });
+}
+
+function renderComments(key) {
+  var div = document.getElementById("cmts-"+key);
+  if (!div) return;
+  // Skip redraw only if THIS key currently has the open edit form
+  var list = resolved[key] || [];
+  if (editingCid && list.some(function(c){return c.comment_id===editingCid;})) return;
+  if (!list.length) { div.innerHTML = ""; return; }
+  div.innerHTML = list.map(function(c) {
+    var col = colorFor(c.ip_hash);
+    var isMe = c.ip_hash === myHash;
+    return "<div class=\"cmt\" style=\"border-left-color:"+col+"\">" +
+      "<div class=\"cmt-meta\">" +
+        "<span class=\"cdot\" style=\"background:"+col+"\"></span>" +
+        "<span class=\"cme\">"+(isMe?"tu":"")+"</span>" +
+        (isMe ? "<div class=\"cacts\">" +
+          "<button class=\"cact\" data-act=\"edit\" data-cid=\""+esc(c.comment_id)+"\" data-key=\""+esc(key)+"\">editar</button>" +
+          "<button class=\"cact\" data-act=\"del\" data-cid=\""+esc(c.comment_id)+"\" data-key=\""+esc(key)+"\">borrar</button>" +
+        "</div>" : "") +
+      "</div>" +
+      "<div class=\"ctxt\">"+esc(c.text)+"</div>" +
+    "</div>";
+  }).join("");
+  // Attach handlers via delegation on the cmts div
+  div.onclick = function(e) {
+    var btn = e.target.closest(".cact");
+    if (!btn) return;
+    var act = btn.dataset.act;
+    var cid = btn.dataset.cid;
+    var k = btn.dataset.key;
+    if (act === "edit") startEdit(k, cid);
+    if (act === "del")  doDelete(k, cid);
+  };
+}
+
+function renderAll() {
+  renderHeader();
+  renderChecks();
+  ITEMS.forEach(function(item){ renderComments(item.key); });
+}
+
+// ---- Poll ----
+
+var polling = false;
+async function poll() {
+  if (polling) return;
+  polling = true;
+  try {
+    var data = await fetchAll();
+    processData(data);
+    renderAll();
+  } catch(e) {}
+  polling = false;
+}
+
+// ---- Actions ----
+
+window.toggleCheck = async function(key) {
+  checks[key] = !checks[key];
+  renderChecks();
+  await post("checks", { issue_key:key, checked:checks[key] });
+};
+
+window.submitComment = async function(key) {
+  var ta = document.getElementById("ta-"+key);
+  if (!ta) return;
+  var text = ta.value.trim();
+  if (!text) return;
+  var cid = uid();
+  ta.value = "";
+  ta.disabled = true;
+  // Register as a local override FIRST — this is what survives any poll,
+  // even one already in flight that started before this comment existed.
+  localOverrides[cid] = { issue_key:key, text:text, ip_hash:myHash, deleted:false };
+  if (!resolved[key]) resolved[key] = [];
+  resolved[key].push({ comment_id:cid, issue_key:key, text:text, ip_hash:myHash, del:false });
+  renderComments(key);
+  await post("comments", { issue_key:key, text:text, ip_hash:myHash, comment_id:cid, action:"add" });
+  ta.disabled = false;
+  // localOverrides entry stays — harmless once server matches it, and
+  // guarantees the comment never vanishes even if that POST's response
+  // races a poll that started earlier.
+};
+
+function startEdit(key, cid) {
+  var list = resolved[key] || [];
+  var comment = null;
+  for (var i=0;i<list.length;i++) { if (list[i].comment_id===cid){comment=list[i];break;} }
+  if (!comment) return;
+  editingCid = cid;
+  var div = document.getElementById("cmts-"+key);
+  if (!div) return;
+  // Replace the specific comment div's ctxt with an edit form
+  var cmtDivs = div.querySelectorAll(".cmt");
+  var target = null;
+  for (var j=0;j<cmtDivs.length;j++) {
+    var editBtn = cmtDivs[j].querySelector("[data-cid=\""+cid+"\"]");
+    if (editBtn) { target = cmtDivs[j]; break; }
+  }
+  if (!target) return;
+  var ctxt = target.querySelector(".ctxt");
+  if (!ctxt) return;
+  var origText = comment.text;
+  ctxt.innerHTML = "<div class=\"cedit-wrap\">" +
+    "<textarea class=\"cedit-ta\" id=\"eta-"+cid+"\"></textarea>" +
+    "<div class=\"cedit-btns\">" +
+      "<button class=\"csave\" id=\"esave-"+cid+"\">Guardar</button>" +
+      "<button class=\"ccancel\" id=\"ecancel-"+cid+"\">Cancelar</button>" +
+    "</div></div>";
+  var ta = document.getElementById("eta-"+cid);
+  ta.value = origText;
+  ta.focus();
+  ta.setSelectionRange(ta.value.length, ta.value.length);
+  document.getElementById("esave-"+cid).addEventListener("click", async function() {
+    var newText = ta.value.trim();
+    if (!newText) return;
+    comment.text = newText;
+    localOverrides[cid] = { issue_key:key, text:newText, ip_hash:myHash, deleted:false };
+    editingCid = null;   // clear BEFORE render so the render actually redraws
+    renderComments(key);
+    await post("comments", { issue_key:key, text:newText, ip_hash:myHash, comment_id:cid, action:"edit" });
+    // localOverrides entry stays — see note in submitComment
+  });
+  document.getElementById("ecancel-"+cid).addEventListener("click", function() {
+    editingCid = null;   // clear BEFORE render so the edit box actually closes
+    renderComments(key);
+  });
+}
+
+async function doDelete(key, cid) {
+  localOverrides[cid] = { issue_key:key, text:"", ip_hash:myHash, deleted:true };
+  if (resolved[key]) resolved[key] = resolved[key].filter(function(c){return c.comment_id!==cid;});
+  renderComments(key);
+  await post("comments", { issue_key:key, text:"", ip_hash:myHash, comment_id:cid, action:"delete" });
+}
+
+// ---- Reset ----
+
+document.getElementById("reset-btn").addEventListener("click", function(){
+  document.getElementById("conf-row").classList.add("show");
+  document.getElementById("reset-btn").style.display="none";
+});
+document.getElementById("conf-no").addEventListener("click", function(){
+  document.getElementById("conf-row").classList.remove("show");
+  document.getElementById("reset-btn").style.display="";
+});
+document.getElementById("conf-yes").addEventListener("click", async function(){
+  document.getElementById("conf-row").classList.remove("show");
+  document.getElementById("reset-btn").style.display="";
+  var posts = [];
+  ITEMS.forEach(function(item){
+    var k = item.key;
+    if (checks[k]) {
+      posts.push(post("checks",{issue_key:k,checked:false}));
+      checks[k] = false;
+    }
+    var mine = (resolved[k]||[]).filter(function(c){return c.ip_hash===myHash;});
+    mine.forEach(function(c){
+      localOverrides[c.comment_id] = { issue_key:k, text:"", ip_hash:myHash, deleted:true };
+      posts.push(post("comments",{issue_key:k,text:"",ip_hash:myHash,comment_id:c.comment_id,action:"delete"}));
+    });
+    if (resolved[k]) resolved[k] = resolved[k].filter(function(c){return c.ip_hash!==myHash;});
+  });
+  renderAll();
+  await Promise.all(posts);
+});
+
+// ---- Build UI ----
+
+function buildUI() {
+  document.getElementById("container").innerHTML = ITEMS.map(function(item){
+    if (item.isNotes) {
+      return "<div class=\"item notes-item\" id=\"item-notas\">" +
+        "<div class=\"notes-hdr\"><div class=\"ntitle\">"+esc(item.title)+"</div>" +
+        "<div class=\"nsub\">Apuntes compartidos \u2014 edita y borra los tuyos</div></div>" +
+        "<div class=\"div\"></div>" +
+        "<div class=\"cmts\" id=\"cmts-notas\"></div>" +
+        "<div class=\"input-area\"><textarea id=\"ta-notas\" placeholder=\"Escribir nota...\"></textarea>" +
+        "<button class=\"sbtn\" onclick=\"submitComment('notas')\">Enviar</button></div></div>";
+    }
+    return "<div class=\"item\" id=\"item-"+item.key+"\">" +
+      "<div class=\"item-header\">" +
+        "<button class=\"cb\" id=\"cb-"+item.key+"\" onclick=\"toggleCheck('"+item.key+"')\">&#10003;</button>" +
+        "<div class=\"item-body\"><div class=\"ititle\">"+esc(item.title)+"</div>" +
+        "<div class=\"idetail\">"+esc(item.detail)+"</div>" +
+        (item.price?"<span class=\"iprice\">"+esc(item.price)+"</span>":"") +
+        "</div></div>" +
+      "<div class=\"div\"></div>" +
+      "<div class=\"cmts\" id=\"cmts-"+item.key+"\"></div>" +
+      "<div class=\"input-area\"><textarea id=\"ta-"+item.key+"\" placeholder=\"Comentar...\"></textarea>" +
+      "<button class=\"sbtn\" onclick=\"submitComment('"+item.key+"')\">Enviar</button></div></div>";
+  }).join("");
+}
+
+// ---- Init: build UI first, get hash in background ----
+
+buildUI();      // UI available immediately — no waiting
+myHash = simpleHash(navigator.userAgent + String(Date.now()));  // temp hash
+colorFor(myHash);
+poll();
+setInterval(poll, 3000);
+
+// Get real IP hash in background and swap in
+(async function(){
+  try {
+    var ctrl = new AbortController();
+    setTimeout(function(){ctrl.abort();},4000);
+    var r = await fetch("https://api.ipify.org?format=json",{signal:ctrl.signal});
+    var j = await r.json();
+    var realHash = simpleHash(j.ip);
+    if (realHash !== myHash) {
+      myHash = realHash;
+      colorFor(myHash);
+      renderAll();
+    }
+  } catch(e) {}
+})();
+</script>
+</body>
+</html>
