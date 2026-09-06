@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Casa Vela — A Private Architectural Film</title>
+<meta name="description" content="Scroll-driven cinematic walkthrough of Casa Vela, a cliffside villa. Concept demo by digitalAIventures.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#f3ede4;--mute:rgba(243,237,228,.62);--gold:#d9a95c;--bg:#06090f}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:auto}
+body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,.serif{font-family:"DM Serif Display",Georgia,serif;font-weight:400}
+#stage{position:fixed;inset:0;z-index:0;background:var(--bg)}
+#cv{width:100%;height:100%;display:block}
+#vig{position:fixed;inset:0;z-index:1;pointer-events:none;background:
+  linear-gradient(180deg,rgba(6,9,15,.55) 0%,rgba(6,9,15,0) 28%,rgba(6,9,15,0) 55%,rgba(6,9,15,.78) 100%),
+  radial-gradient(ellipse at center,rgba(0,0,0,0) 55%,rgba(0,0,0,.45) 100%)}
+#grain{position:fixed;inset:-50%;z-index:2;pointer-events:none;opacity:.07;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");animation:gr 1.2s steps(4) infinite}
+@keyframes gr{0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-1%,-1%)}100%{transform:translate(0,0)}}
+
+/* scroll track */
+#track{position:relative;z-index:3}
+.sec{height:230vh}
+#caps{position:fixed;inset:0;z-index:3;pointer-events:none;transition:opacity .4s}
+.cap{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:0 clamp(1.25rem,5vw,4rem) clamp(2.2rem,7vh,4.5rem)}
+.cap .in{max-width:34rem;opacity:0;transform:translateY(22px);transition:opacity .5s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.cap.on .in{opacity:1;transform:none}
+.cap.on .num{opacity:1}
+.eyebrow{font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;font-weight:500}
+.cap h2{font-size:clamp(2.1rem,6.5vw,4.6rem);line-height:.98;letter-spacing:-.01em;margin-bottom:.9rem}
+.cap p{font-size:clamp(.92rem,1.4vw,1.08rem);line-height:1.6;color:var(--mute);max-width:28rem}
+.num{opacity:0;transition:opacity .5s;position:absolute;right:clamp(1.25rem,5vw,4rem);bottom:clamp(2.2rem,7vh,4.5rem);font-size:.72rem;letter-spacing:.3em;color:var(--mute)}
+
+/* hero */
+#hero{height:100vh;height:100dvh;position:relative;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(1.2rem,4vw,2.5rem) clamp(1.25rem,5vw,4rem);z-index:3}
+.brand{display:flex;justify-content:space-between;align-items:center;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--mute)}
+.brand b{color:var(--ink);font-weight:500}
+.hero-t{text-align:center;transition:opacity .4s}
+.hero-t h1{font-size:clamp(3.4rem,13vw,9.5rem);line-height:.9;letter-spacing:-.02em}
+.hero-t h1 i{color:var(--gold)}
+.hero-t .sub{margin-top:1.2rem;font-size:clamp(.8rem,1.3vw,1rem);letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.hero-t .price{margin-top:.6rem;font-family:"DM Serif Display",serif;font-size:clamp(1.3rem,2.8vw,2rem);color:var(--ink)}
+.cue{text-align:center;font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:var(--mute)}
+.cue span{display:block;width:1px;height:42px;margin:.8rem auto 0;background:linear-gradient(var(--gold),transparent);animation:cue 1.8s ease-in-out infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* outro */
+#outro{position:relative;z-index:3;min-height:100vh;background:linear-gradient(180deg,rgba(6,9,15,0) 0,var(--bg) 22vh);padding:38vh clamp(1.25rem,5vw,4rem) 3rem;display:flex;flex-direction:column;justify-content:flex-end}
+#outro h2{font-size:clamp(2.2rem,6vw,4.4rem);line-height:1;margin-bottom:1rem;max-width:22ch}
+#outro p.lead{color:var(--mute);max-width:36rem;line-height:1.65;margin-bottom:2.2rem}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:1.4rem 2rem;border-top:1px solid rgba(243,237,228,.14);padding-top:1.6rem;margin-bottom:2.6rem;max-width:52rem}
+.specs div small{display:block;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--mute);margin-bottom:.35rem}
+.specs div strong{font-family:"DM Serif Display",serif;font-weight:400;font-size:1.45rem}
+.cta{display:inline-block;align-self:flex-start;border:1px solid var(--gold);color:var(--gold);padding:.9rem 1.7rem;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;text-decoration:none;transition:background .3s,color .3s;pointer-events:auto}
+.cta:hover{background:var(--gold);color:var(--bg)}
+footer{margin-top:4rem;font-size:.7rem;color:var(--mute);line-height:1.8;letter-spacing:.04em}
+footer a{color:var(--ink);text-decoration:none;border-bottom:1px dotted var(--mute)}
+
+/* nav dots */
+#dots{position:fixed;right:clamp(.7rem,2vw,1.4rem);top:50%;transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;gap:.7rem}
+#dots i{width:5px;height:5px;border-radius:50%;background:rgba(243,237,228,.3);display:block;transition:all .3s}
+#dots i.on{background:var(--gold);height:18px;border-radius:3px}
+
+/* loader */
+#ld{position:fixed;inset:0;z-index:9;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;transition:opacity .7s;font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:var(--mute)}
+#ld.off{opacity:0;pointer-events:none}
+#bar{width:min(52vw,220px);height:1px;background:rgba(243,237,228,.15);overflow:hidden}
+#bar i{display:block;height:100%;width:0;background:var(--gold);transition:width .25s}
+@media (max-width:480px){.brand .loc{display:none}}
+@media (prefers-reduced-motion:reduce){#grain{animation:none}.cue span{animation:none}}
+</style>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b0e105d3195f435e8604d69624ef01b1"}'></script><!-- End Cloudflare Web Analytics -->
+<meta property="og:title" content="Casa Vela A Private Architectural Film" />
+<meta property="og:description" content="A scroll driven cinematic walkthrough of a fictional cliffside villa featuring AI generated imagery." />
+<meta property="og:url" content="https://amber-grove-q2sz.here.now/" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://here.now/og/amber-grove-q2sz.jpg" />
+<meta property="og:image:width" content="1280" />
+<meta property="og:image:height" content="720" />
+<meta name="twitter:image" content="https://here.now/og/amber-grove-q2sz.jpg" />
+<meta name="twitter:card" content="summary_large_image" /></head>
+<body>
+<div id="stage"><canvas id="cv"></canvas></div>
+<div id="vig"></div><div id="grain"></div>
+<div id="ld"><div id="bar"><i></i></div><div>Entering Casa Vela</div></div>
+<div id="dots"><i class="on"></i><i></i><i></i><i></i></div>
+
+<section id="hero">
+  <div class="brand"><span><b>Casa Vela</b><span class="loc"> &nbsp;·&nbsp; Cap de Creus</span></span><span>Private Listing</span></div>
+  <div class="hero-t" id="ht">
+    <h1>Casa <i>Vela</i></h1>
+    <div class="sub">Cliffside villa · 412 m² · Sea on three sides</div>
+    <div class="price">€ 6,900,000</div>
+  </div>
+  <div class="cue">Scroll to enter<span></span></div>
+</section>
+
+<div id="track">
+  <section class="sec"></section>
+  <section class="sec"></section>
+  <section class="sec"></section>
+  <section class="sec"></section>
+</div>
+<div id="caps">
+  <div class="cap"><div class="in">
+    <div class="eyebrow">The Approach</div>
+    <h2>Carved into the headland.</h2>
+    <p>Two limestone volumes cantilever forty metres above the water. At dusk the house reads as a lantern on the cliff, visible from the whole bay.</p>
+  </div><div class="num">01 / 04</div></div>
+  <div class="cap"><div class="in">
+    <div class="eyebrow">The Living Room</div>
+    <h2>Six metres of glass, and the sea.</h2>
+    <p>A double-height room with a steel wood-burner at its centre. The glazing retracts fully; in summer the terrace and the room become one floor.</p>
+  </div><div class="num">02 / 04</div></div>
+  <div class="cap"><div class="in">
+    <div class="eyebrow">The Kitchen</div>
+    <h2>Four metres of travertine.</h2>
+    <p>Honed stone island, matte black joinery, brass pendants. The window is the only decoration the room needs.</p>
+  </div><div class="num">03 / 04</div></div>
+  <div class="cap"><div class="in">
+    <div class="eyebrow">The Pool</div>
+    <h2>The edge disappears.</h2>
+    <p>A twenty-metre infinity pool heated year-round, fire pit, teak deck. Nothing between you and the horizon.</p>
+  </div><div class="num">04 / 04</div></div>
+</div>
+
+<section id="outro">
+  <h2>Some houses are described. This one is walked.</h2>
+  <p class="lead">Casa Vela is offered privately. Viewings are arranged by appointment, by sea or by road.</p>
+  <div class="specs">
+    <div><small>Interior</small><strong>412 m²</strong></div>
+    <div><small>Plot</small><strong>3,150 m²</strong></div>
+    <div><small>Bedrooms</small><strong>4 suites</strong></div>
+    <div><small>Pool</small><strong>20 m infinity</strong></div>
+    <div><small>Frontage</small><strong>Sea, 3 sides</strong></div>
+    <div><small>Built</small><strong>2024</strong></div>
+  </div>
+  <a class="cta" href="#hero" id="again">Watch it again</a>
+  <footer>Concept demo · <a href="https://www.youtube.com/@digitalaiventures" target="_blank" rel="noopener">digitalAIventures</a> · Casa Vela is fictional. Imagery is AI-generated (seedream 4.5 + wan 2.2) and scroll-driven; no video is playing — you are moving a film by hand.</footer>
+</section>
+
+<script>
+(function(){
+var N=4,F=32,COLS=8,ROWS=4;
+var cv=document.getElementById('cv'),ctx=cv.getContext('2d',{alpha:false});
+var portrait=window.innerHeight>window.innerWidth;
+var pref=portrait?'p':'l';
+var FW=portrait?405:720,FH=portrait?720:405;
+var sheets=[],loaded=0,ready=false;
+var bar=document.querySelector('#bar i'),ld=document.getElementById('ld');
+var dots=document.querySelectorAll('#dots i');
+var caps=document.querySelectorAll('.cap');var capsBox=document.getElementById('caps');
+var ht=document.getElementById('ht');
+var secs=document.querySelectorAll('.sec');
+var dpr=Math.min(window.devicePixelRatio||1,2);
+var W,H;
+
+function size(){W=window.innerWidth;H=window.innerHeight;cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0);}
+size();
+
+function load(i,cb){var im=new Image();im.decoding='async';im.onload=function(){sheets[i]=im;loaded++;bar.style.width=(loaded/N*100)+'%';if(cb)cb();};im.onerror=function(){loaded++;if(cb)cb();};im.src=pref+(i+1)+'.webp';}
+
+function drawFrame(s,f,alpha){var im=sheets[s];if(!im)return;var sx=(f%COLS)*FW,sy=Math.floor(f/COLS)*FH;
+  var sc=Math.max(W/FW,H/FH),dw=FW*sc,dh=FH*sc,dx=(W-dw)/2,dy=(H-dh)/2;
+  ctx.globalAlpha=alpha;ctx.drawImage(im,sx,sy,FW,FH,dx,dy,dw,dh);ctx.globalAlpha=1;}
+
+/* scroll model: global position g in [0,N). integer part = section, frac = progress within clip */
+var target=0,cur=0,lastScroll=Date.now(),idle=0,idleDir=1;
+var trackTop=0,secH=0;
+function measure(){var t=document.getElementById('track');trackTop=t.offsetTop;secH=secs[0].offsetHeight;}
+measure();
+
+function onScroll(){var y=window.scrollY;lastScroll=Date.now();idle=0;
+  target=Math.max(-0.35,Math.min(N-0.001,(y-trackTop)/secH));
+  /* hero text fade */
+  var hf=1-Math.min(1,Math.max(0,y/(H*0.6)));ht.style.opacity=hf;
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+window.addEventListener('resize',function(){var p=window.innerHeight>window.innerWidth;if(p!==portrait){location.reload();return;}size();measure();onScroll();});
+
+function render(){
+  requestAnimationFrame(render);
+  if(!ready)return;
+  /* idle breathing: after 1.4s without scroll, drift slowly inside the current clip */
+  var now=Date.now();
+  var tg=target;
+  if(now-lastScroll>1400){idle+=idleDir*0.0022;if(idle>0.16||idle<-0.02)idleDir*=-1;tg=target+idle;}
+  cur+=(tg-cur)*0.11;
+  if(Math.abs(tg-cur)<0.0004)cur=tg;
+  var g=Math.max(0,Math.min(N-0.001,cur));
+  var s=Math.floor(g),p=g-s;
+  /* frame within clip: map 0..0.86 to frames, 0.86..1 crossfade to next clip's first frames */
+  var XF=0.14;
+  var fp=Math.min(1,p/(1-XF));
+  var f=Math.round(fp*(F-1));
+  ctx.fillStyle='#06090f';ctx.fillRect(0,0,W,H);
+  drawFrame(s,f,1);
+  if(p>1-XF&&s<N-1){var a=(p-(1-XF))/XF;a=a*a*(3-2*a);var f2=Math.round(a*3);drawFrame(s+1,f2,a);}
+  capsBox.style.opacity=(target>N-0.05)?0:1;
+  /* captions + dots */
+  var act=(cur<0)?-1:s;
+  for(var i=0;i<N;i++){var on=(i===s&&p>0.10&&p<0.80)&&cur>=0;caps[i].classList.toggle('on',on);dots[i].classList.toggle('on',i===Math.max(0,act));}
+}
+
+/* boot: first sheet then reveal, rest in background */
+load(0,function(){
+  ready=true;onScroll();
+  setTimeout(function(){ld.classList.add('off');},250);
+  load(1,function(){load(2,function(){load(3);});});
+});
+render();
+
+document.getElementById('again').addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>

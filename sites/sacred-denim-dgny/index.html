@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Casa Vela — Around It</title>
+<meta name="description" content="A cliffside villa you fly around by hand. Pinch to move, never stops. Concept demo by digitalAIventures.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#efe8dc;--mute:rgba(239,232,220,.58);--gold:#c9a15f;--bg:#070a0f;--line:rgba(239,232,220,.16)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-weight:300;-webkit-font-smoothing:antialiased;overscroll-behavior:none}
+#cv{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+#vig{position:fixed;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(7,10,15,.42) 0%,rgba(7,10,15,0) 24%,rgba(7,10,15,0) 60%,rgba(7,10,15,.78) 100%)}
+#grain{position:fixed;inset:-50%;pointer-events:none;opacity:.055;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");animation:gr 1.1s steps(4) infinite}
+@keyframes gr{0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-1%,-1%)}100%{transform:translate(0,0)}}
+.ui{position:fixed;pointer-events:none;transition:opacity .5s}
+#top{top:0;left:0;right:0;padding:max(1rem,env(safe-area-inset-top)) clamp(1.1rem,4vw,2.6rem) 0;display:flex;justify-content:space-between;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--mute);line-height:1.7}
+#top b{color:var(--ink);font-weight:500}
+#top .r{text-align:right}
+
+#cap{left:clamp(1.1rem,4vw,2.6rem);right:clamp(5rem,14vw,8rem);bottom:calc(4.6rem + env(safe-area-inset-bottom));max-width:36rem}
+#cap .k{font-size:.62rem;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;font-weight:500}
+#cap h2{font-family:"Cormorant Garamond",serif;font-weight:300;font-style:italic;font-size:clamp(2.1rem,6vw,4.6rem);line-height:.95;margin-bottom:.55rem}
+#cap p{font-size:clamp(.84rem,1.2vw,.98rem);line-height:1.6;color:var(--mute);max-width:27rem}
+#cap .in{opacity:0;transform:translateY(12px);transition:opacity .5s,transform .6s cubic-bezier(.2,.7,.2,1)}
+#cap.on .in{opacity:1;transform:none}
+
+/* orbit ring */
+#ring{right:clamp(1rem,3.5vw,2.2rem);top:50%;transform:translateY(-50%);width:64px;height:64px;pointer-events:auto}
+#ring svg{width:100%;height:100%;overflow:visible}
+#ring .o{fill:none;stroke:var(--line);stroke-width:1}
+#ring .h{fill:none;stroke:var(--mute);stroke-width:.9}
+#ring .d{fill:var(--gold)}
+#ring .p{fill:none;stroke:var(--gold);stroke-width:1.2;stroke-linecap:round}
+#ring text{font-family:Inter,sans-serif;font-size:5px;letter-spacing:.2em;fill:var(--mute)}
+
+/* hero */
+#hero{inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:1rem;background:radial-gradient(ellipse at center,rgba(7,10,15,.08),rgba(7,10,15,.7))}
+#hero h1{font-family:"Cormorant Garamond",serif;font-weight:300;font-size:clamp(4rem,15vw,11rem);line-height:.86}
+#hero h1 i{color:var(--gold)}
+#hero .s{margin-top:1.2rem;font-size:.64rem;letter-spacing:.34em;text-transform:uppercase;color:var(--mute);white-space:nowrap}
+#hero .p{margin-top:.5rem;font-family:"Cormorant Garamond",serif;font-size:clamp(1.3rem,3vw,2rem);font-style:italic}
+#hero .hint{position:absolute;bottom:calc(3rem + env(safe-area-inset-bottom));font-size:.62rem;letter-spacing:.34em;text-transform:uppercase;color:var(--ink)}
+#hero .hint svg{display:block;margin:0 auto .9rem;width:44px;height:44px;stroke:var(--gold);fill:none;stroke-width:1.2;stroke-linecap:round}
+#hero .hint .a{animation:pin 1.8s ease-in-out infinite;transform-origin:22px 22px}
+@keyframes pin{0%,100%{transform:scale(.55);opacity:.4}50%{transform:scale(1);opacity:1}}
+#hero.off{opacity:0}
+
+/* controls */
+#ctl{left:clamp(1.1rem,4vw,2.6rem);bottom:calc(1rem + env(safe-area-inset-bottom));display:flex;gap:.55rem;pointer-events:auto;opacity:0;flex-wrap:wrap}
+#ctl.on{opacity:1}
+#ctl button{background:rgba(7,10,15,.45);backdrop-filter:blur(6px);border:1px solid var(--line);color:var(--ink);font-family:Inter,sans-serif;font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;padding:.55rem .9rem;border-radius:999px;cursor:pointer;white-space:nowrap;transition:border-color .3s,background .3s}
+#ctl button.on{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+
+/* details sheet (never stops the film) */
+#det{left:0;right:0;bottom:0;padding:1.6rem clamp(1.1rem,4vw,2.6rem) calc(4.2rem + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(7,10,15,0),rgba(7,10,15,.86) 22%,rgba(7,10,15,.94));transform:translateY(105%);transition:transform .55s cubic-bezier(.2,.7,.2,1);pointer-events:auto}
+#det.on{transform:none}
+#dx{position:absolute;right:clamp(1.1rem,4vw,2.6rem);top:.9rem;background:none;border:1px solid var(--line);color:var(--ink);font-family:Inter,sans-serif;font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;padding:.5rem .85rem;border-radius:999px;cursor:pointer}
+#ctl{z-index:6}
+#det{z-index:5}
+#det h3{font-family:"Cormorant Garamond",serif;font-weight:300;font-style:italic;font-size:clamp(1.7rem,4.5vw,2.8rem);line-height:1;margin-bottom:.5rem;max-width:22ch}
+#det p{color:var(--mute);max-width:34rem;line-height:1.6;font-size:.86rem;margin-bottom:1.1rem}
+#det .sp{display:grid;grid-template-columns:repeat(auto-fit,minmax(7.5rem,1fr));gap:.9rem 1.4rem;border-top:1px solid var(--line);padding-top:1rem;max-width:44rem}
+#det .sp div small{display:block;font-size:.56rem;letter-spacing:.28em;text-transform:uppercase;color:var(--mute);margin-bottom:.2rem}
+#det .sp div strong{font-family:"Cormorant Garamond",serif;font-weight:400;font-size:1.3rem}
+#det a.cta{display:inline-block;margin-top:1.1rem;border:1px solid var(--gold);color:var(--gold);padding:.7rem 1.3rem;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;text-decoration:none}
+#det footer{margin-top:1rem;font-size:.56rem;color:var(--mute);letter-spacing:.05em;line-height:1.6;max-width:44rem}
+#det footer a{color:var(--ink);text-decoration:none;border-bottom:1px dotted var(--mute)}
+
+@media (max-width:560px){#cap{bottom:calc(6.6rem + env(safe-area-inset-bottom))}#ctl button{padding:.5rem .75rem;font-size:.54rem}}
+#ld{position:fixed;inset:0;z-index:9;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.1rem;transition:opacity .8s;font-size:.62rem;letter-spacing:.34em;text-transform:uppercase;color:var(--mute)}
+#ld.off{opacity:0;pointer-events:none}
+#bar{width:min(52vw,200px);height:1px;background:var(--line);overflow:hidden}
+#bar i{display:block;height:100%;width:0;background:var(--gold);transition:width .3s}
+</style>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b0e105d3195f435e8604d69624ef01b1"}'></script><!-- End Cloudflare Web Analytics -->
+<meta property="og:title" content="Casa Vela Around It" />
+<meta property="og:description" content="A concept demo featuring an interactive continuous camera path around a fictional cliffside villa." />
+<meta property="og:url" content="https://sacred-denim-dgny.here.now/" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://here.now/og/sacred-denim-dgny.jpg" />
+<meta property="og:image:width" content="1280" />
+<meta property="og:image:height" content="720" />
+<meta name="twitter:image" content="https://here.now/og/sacred-denim-dgny.jpg" />
+<meta name="twitter:card" content="summary_large_image" /></head>
+<body>
+<canvas id="cv"></canvas>
+<div id="vig"></div><div id="grain"></div>
+<div id="ld"><div id="bar"><i></i></div><div>Opening the house</div></div>
+
+<div class="ui" id="top"><div><b>Casa Vela</b><br>Cap de Creus</div><div class="r">Private listing<br>€ 6,900,000</div></div>
+
+<div class="ui" id="cap"><div class="in">
+  <div class="k" id="c-k"></div><h2 id="c-h"></h2><p id="c-p"></p>
+</div></div>
+
+<div class="ui" id="ring"><svg viewBox="0 0 64 64">
+  <circle class="o" cx="32" cy="32" r="26"/>
+  <rect class="h" x="22" y="26" width="20" height="12" rx="1"/><rect class="h" x="30" y="30" width="16" height="8" rx="1"/>
+  <path class="p" id="arc" d=""/>
+  <circle class="d" id="dot" cx="32" cy="6" r="2.4"/>
+  <text x="32" y="60" text-anchor="middle" id="alt">25 M</text>
+</svg></div>
+
+<div class="ui" id="ctl"><button id="go">Hold to move</button><button id="auto">Take me around</button><button id="dtb">Details</button></div>
+
+<div class="ui" id="hero">
+  <h1>Casa <i>Vela</i></h1>
+  <div class="s">412 m² · Sea on three sides</div>
+  <div class="p">Move the film with your fingers. It never stops.</div>
+  <div class="hint" id="hint"><svg viewBox="0 0 44 44"><circle class="a" cx="22" cy="22" r="14"/><path d="M22 4v6M22 34v6M4 22h6M34 22h6"/></svg><span id="hint-t">Pinch outward to begin</span></div>
+</div>
+
+<div class="ui" id="det"><button id="dx" aria-label="Close">Close ✕</button>
+  <h3>Some houses are described. This one is circled.</h3>
+  <p>Casa Vela is offered privately. Viewings by appointment, by sea or by road. The film keeps moving while you read.</p>
+  <div class="sp"><div><small>Interior</small><strong>412 m²</strong></div><div><small>Plot</small><strong>3,150 m²</strong></div><div><small>Bedrooms</small><strong>4 suites</strong></div><div><small>Pool</small><strong>20 m infinity</strong></div><div><small>Frontage</small><strong>Sea, 3 sides</strong></div><div><small>Built</small><strong>2024</strong></div></div>
+  <a class="cta" href="#" id="cta">Request a private viewing</a>
+  <footer>Concept demo · <a href="https://www.youtube.com/@digitalaiventures" target="_blank" rel="noopener">digitalAIventures</a> · Casa Vela is fictional. Imagery is AI-generated (seedream 4.5, wan 2.2). One continuous 35-second camera path, seven joins, no cuts. Nothing autoplays unless you ask it to.</footer>
+</div>
+
+<script>
+(function(){
+var NF=280,PER=16,COLS=4,FW=405,FH=720,SHEETS=18;
+var CH=[
+ {a:0,b:1/7,k:'The Approach',h:'Carved into the headland.',p:'Two limestone volumes cantilever forty metres above the water. From the air the house reads as a lantern on the cliff.',alt:'25 → 12 M'},
+ {a:1/7,b:2/7,k:'Coming Down',h:'Then the ground rises to meet you.',p:'Down to the driveway and the scale changes: six metres of glass, one olive tree, the sea behind everything.',alt:'12 → 2 M'},
+ {a:2/7,b:3/7,k:'Past the Terrace',h:'Along the glass.',p:'The terrace runs out over the cliff to a railing and nothing else. The living room glows through the glass beside you.',alt:'2 M'},
+ {a:3/7,b:4/7,k:'Over the Water',h:'Look back from the sea.',p:'Out past the end of the terrace, the house sits on its rock with the hillside behind and the swell moving underneath you.',alt:'2 → 6 M'},
+ {a:4/7,b:5/7,k:'Rising',h:'The house lets you go.',p:'Climb, and the roofs flatten into one plane; the cliff edge, the terrace and the bay open up below.',alt:'6 → 15 M'},
+ {a:5/7,b:6/7,k:'Around the Headland',h:'The far side.',p:'Higher still, circling. The coast unrolls behind the house and the sea fills the top of the frame.',alt:'15 → 25 M'},
+ {a:6/7,b:1.0,k:'Return',h:'And around again.',p:'Back to the front, back to the start. The film never parks; keep moving or let it drift.',alt:'25 M'}
+];
+var cv=document.getElementById('cv'),ctx=cv.getContext('2d',{alpha:false});
+var $=function(id){return document.getElementById(id)};
+var sheets=[],poster=null,loaded=0,bar=document.querySelector('#bar i'),ld=$('ld');
+var hero=$('hero'),cap=$('cap'),ctl=$('ctl'),goB=$('go'),autoB=$('auto'),dtb=$('dtb'),det=$('det'),dot=$('dot'),arc=$('arc'),alt=$('alt');
+var dpr=Math.min(window.devicePixelRatio||1,2),W,H;
+var t=0,tt=0,vel=0,auto=false,hold=false,entered=false,lastCh=-1,capOn=null,lastInput=0;
+function size(){W=window.innerWidth;H=window.innerHeight;cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0);}
+size();window.addEventListener('resize',size);
+function load(i,cb){var im=new Image();im.decoding='async';im.src='f'+(i<10?'0'+i:i)+'.webp';
+  var done=function(){sheets[i]=im;loaded++;bar.style.width=Math.min(100,loaded/SHEETS*100)+'%';if(cb)cb();};
+  var fail=function(){setTimeout(function(){load(i,cb);},1500);};
+  if(im.decode){im.decode().then(function(){ /* force GPU upload once so the first draw is not a stall */ try{scratch.drawImage(im,0,0,8,8);}catch(e){} done();}).catch(fail);}
+  else{im.onload=done;im.onerror=fail;}}
+var scratchC=document.createElement('canvas');scratchC.width=8;scratchC.height=8;var scratch=scratchC.getContext('2d');
+var lastGood=document.createElement('canvas'),lgctx=lastGood.getContext('2d'),haveLast=false;
+function geo(){var land=W>H*1.05;var sc=land?Math.min(W/FW,H/FH):Math.max(W/FW,H/FH);var dw=FW*sc,dh=FH*sc;return {dx:(W-dw)/2,dy:(H-dh)/2,dw:dw,dh:dh,land:land};}
+var amb=document.createElement('canvas');amb.width=18;amb.height=32;var actx=amb.getContext('2d');var ambN=0;
+function wrap(v){v=v%NF;if(v<0)v+=NF;return v;}
+function draw(fi,alpha){var s=Math.floor(fi/PER),j=fi%PER,im=sheets[s],g=geo();
+  if(g.land&&alpha===1){ /* ambient glow behind the portrait frame on wide screens */
+    if((ambN++%6)===0){if(im)actx.drawImage(im,(j%COLS)*FW,Math.floor(j/COLS)*FH,FW,FH,0,0,18,32);else if(poster)actx.drawImage(poster,0,0,18,32);}
+    ctx.globalAlpha=0.55;ctx.drawImage(amb,0,0,18,32,-W*0.25,-H*0.25,W*1.5,H*1.5);ctx.globalAlpha=1;ctx.fillStyle='rgba(7,10,15,.45)';ctx.fillRect(0,0,W,H);}
+  ctx.globalAlpha=alpha;
+  if(im){try{ctx.drawImage(im,(j%COLS)*FW,Math.floor(j/COLS)*FH,FW,FH,g.dx,g.dy,g.dw,g.dh);if(alpha===1&&(fi&3)===0){if(lastGood.width!==cv.width){lastGood.width=cv.width;lastGood.height=cv.height;}lgctx.setTransform(1,0,0,1,0,0);lgctx.drawImage(cv,0,0);haveLast=true;}}catch(e){if(haveLast){ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.drawImage(lastGood,0,0);ctx.restore();}}}
+  else if(haveLast){ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.drawImage(lastGood,0,0);ctx.restore();}
+  else if(poster)ctx.drawImage(poster,0,0,poster.width,poster.height,g.dx,g.dy,g.dw,g.dh);
+  ctx.globalAlpha=1;}
+var SPEED={auto:0.34,hold:0.42,drift:0.10}; /* frames per tick */
+function render(){requestAnimationFrame(render);
+  if(!poster&&!sheets[0])return;
+  var now=performance.now();
+  if(auto)tt+=SPEED.auto;
+  else if(hold)tt+=SPEED.hold;
+  else if(!drag&&!pinch){tt+=vel;vel*=0.94;if(Math.abs(vel)<0.004)vel=0;if(entered&&now-lastInput>1600&&vel===0)tt+=SPEED.drift;}
+  /* shortest-path lerp on a loop */
+  var d=wrap(tt)-wrap(t);if(d>NF/2)d-=NF;if(d<-NF/2)d+=NF;t=wrap(t+d*0.12);tt=wrap(tt);
+  var fi=Math.floor(t),fj=wrap(fi+1),fr=t-fi;
+  ctx.fillStyle='#070a0f';ctx.fillRect(0,0,W,H);
+  draw(fi,1);if(fr>0.02)draw(fj,fr);   /* sub-frame blend = smoother scrub */
+  /* ui */
+  var u=t/NF,ci=0;for(var i=0;i<CH.length;i++)if(u>=CH[i].a&&u<CH[i].b)ci=i;
+  var c=CH[ci],inner=(u-c.a)/(c.b-c.a);
+  var on=(entered&&inner>0.08&&inner<0.8&&!det.classList.contains('on'));
+  if(ci!==lastCh){lastCh=ci;$('c-k').textContent=c.k;$('c-h').textContent=c.h;$('c-p').textContent=c.p;alt.textContent=c.alt;}
+  if(on!==capOn){capOn=on;cap.classList.toggle('on',on);}
+  var ang=u*Math.PI*2-Math.PI/2;dot.setAttribute('cx',32+26*Math.cos(ang));dot.setAttribute('cy',32+26*Math.sin(ang));
+  var a0=-Math.PI/2,x0=32+26*Math.cos(a0),y0=32+26*Math.sin(a0),x1=32+26*Math.cos(ang),y1=32+26*Math.sin(ang);
+  arc.setAttribute('d',u<0.002?'':'M'+x0+' '+y0+' A26 26 0 '+(u>0.5?1:0)+' 1 '+x1+' '+y1);
+}
+/* input */
+function enter(){if(!entered){entered=true;lastInput=performance.now();hero.classList.add('off');ctl.classList.add('on');}}
+var ptrs={},drag=null,pinch=null,downT=0,moved=false;
+var PINCH=110,SWIPE=140; /* frames per full pinch / full-height swipe */
+cv.addEventListener('pointerdown',function(e){cv.setPointerCapture(e.pointerId);ptrs[e.pointerId]={x:e.clientX,y:e.clientY};var ks=Object.keys(ptrs);setAuto(false);lastInput=performance.now();
+  if(ks.length===1){downT=performance.now();moved=false;drag={x:e.clientX,y:e.clientY,t:tt,lx:e.clientX,ly:e.clientY,lt:performance.now()};}
+  if(ks.length===2){var a=ptrs[ks[0]],b=ptrs[ks[1]];pinch={d:Math.hypot(a.x-b.x,a.y-b.y),t:tt,last:tt,lt:performance.now()};drag=null;hold=false;}
+});
+cv.addEventListener('pointermove',function(e){if(!ptrs[e.pointerId])return;ptrs[e.pointerId]={x:e.clientX,y:e.clientY};var ks=Object.keys(ptrs);lastInput=performance.now();
+  if(pinch&&ks.length===2){var a=ptrs[ks[0]],b=ptrs[ks[1]];var d=Math.hypot(a.x-b.x,a.y-b.y);var nt=pinch.t+Math.log(d/pinch.d)*PINCH;var now=performance.now(),dt=now-pinch.lt;if(dt>0)vel=0.7*vel+0.3*((nt-pinch.last)/dt*16);pinch.last=nt;pinch.lt=now;tt=nt;enter();return;}
+  if(drag&&ks.length===1){var dy=drag.y-e.clientY,dx=e.clientX-drag.x;var m=Math.abs(dy)>Math.abs(dx)?dy:dx;if(Math.abs(m)>6)moved=true;
+    if(moved){hold=false;var nt2=drag.t+m/H*SWIPE;var now2=performance.now(),dt2=now2-drag.lt;var cur=(Math.abs(dy)>Math.abs(dx)?(drag.ly-e.clientY):(e.clientX-drag.lx));if(dt2>0)vel=0.7*vel+0.3*(cur/H*SWIPE/dt2*16);drag.lx=e.clientX;drag.ly=e.clientY;drag.lt=now2;tt=nt2;enter();}}
+});
+function up(e){delete ptrs[e.pointerId];var ks=Object.keys(ptrs);if(ks.length<2)pinch=null;if(ks.length===0){hold=false;drag=null;}}
+cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+setInterval(function(){if(drag&&!moved&&!pinch&&performance.now()-downT>260){hold=true;enter();}},60);
+cv.addEventListener('wheel',function(e){e.preventDefault();enter();setAuto(false);lastInput=performance.now();vel+=(-e.deltaY)*0.012;},{passive:false});
+window.addEventListener('keydown',function(e){if(e.key==='ArrowUp'||e.key==='ArrowRight'){e.preventDefault();enter();vel+=0.9;}if(e.key==='ArrowDown'||e.key==='ArrowLeft'){e.preventDefault();vel-=0.9;}if(e.key===' '){e.preventDefault();autoB.click();}});
+goB.addEventListener('pointerdown',function(e){e.preventDefault();hold=true;setAuto(false);enter();});
+['pointerup','pointercancel','pointerleave'].forEach(function(ev){goB.addEventListener(ev,function(){hold=false;});});
+function setAuto(v){auto=v;autoB.classList.toggle('on',v);autoB.textContent=v?'Stop':'Take me around';}
+autoB.addEventListener('click',function(){enter();setAuto(!auto);});
+function setDet(v){det.classList.toggle('on',v);dtb.classList.toggle('on',v);dtb.textContent=v?'Close details':'Details';}
+dtb.addEventListener('click',function(){setDet(!det.classList.contains('on'));});
+$('dx').addEventListener('click',function(){setDet(false);});
+cv.addEventListener('pointerdown',function(){if(det.classList.contains('on'))setDet(false);});
+$('cta').addEventListener('click',function(e){e.preventDefault();setDet(false);});
+$('ring').addEventListener('click',function(e){var r=e.currentTarget.getBoundingClientRect();var x=e.clientX-(r.left+r.width/2),y=e.clientY-(r.top+r.height/2);var a=Math.atan2(y,x)+Math.PI/2;if(a<0)a+=Math.PI*2;tt=a/(Math.PI*2)*NF;vel=0;enter();setAuto(false);});
+if(!(('ontouchstart' in window)||navigator.maxTouchPoints>0)){$('hint-t').textContent='Scroll or drag to begin';}else{$('hint-t').textContent='Pinch outward · or press and hold';}
+/* boot: poster, first sheet, reveal, rest stream */
+var pim=new Image();pim.onload=function(){poster=pim;var got=0;for(var i=0;i<SHEETS;i++)load(i,function(){if(++got===SHEETS){ld.classList.add('off');}});};pim.src='poster.webp';
+setTimeout(function(){if(!ld.classList.contains('off')&&loaded>=3){ld.classList.add('off');}},25000); /* slow network: lift anyway, lastGood covers gaps */
+render();window.__go=function(v){tt=v;enter();};
+})();
+</script>
+</body>
+</html>
