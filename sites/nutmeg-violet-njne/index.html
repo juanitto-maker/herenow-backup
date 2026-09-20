@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE GOLDEN IMAGES</title>
+<meta name="description" content="THE GOLDEN IMAGES — a film trailer. When the system dies, the real world begins.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,600;1,300;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="dark"]{
+  --bg:#0f0f11; --bg-card:#18181c;
+  --bg-hero:linear-gradient(135deg,#15120d 0%,#0f0f11 60%,#0c0c0e 100%);
+  --text:#d8d8de; --text-m:#8c8c92; --text-h:#f3f0ea;
+  --border:#252530;
+  --accent:#c9a15f;
+}
+[data-theme="light"]{
+  --bg:#f7f5f0; --bg-card:#ffffff;
+  --bg-hero:linear-gradient(135deg,#efeae0 0%,#f7f5f0 100%);
+  --text:#3a362e; --text-m:#7a7568; --text-h:#161410;
+  --border:#e2ddd0;
+  --accent:#9c7a3d;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;
+  line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2{font-family:'Cormorant Garamond',serif}
+img,svg,video{max-width:100%;height:auto}
+a{color:var(--accent)}
+
+.eyebrow{font-size:.68rem;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--accent);font-weight:500}
+
+/* ---- Hero (video, above the fold) ---- */
+.hero{position:relative;width:100%;background:#000}
+.hero video{display:block;width:100%;max-height:88vh;object-fit:cover}
+.hero-cap{background:var(--bg-hero);padding:2.4rem 1.4rem 2.8rem;text-align:center}
+.hero-cap .eyebrow{display:block;margin-bottom:.7rem}
+.hero-cap h1{font-size:clamp(2.1rem,7vw,3.4rem);font-weight:500;font-style:italic;
+  color:var(--text-h);letter-spacing:.01em;line-height:1.15}
+.hero-cap .tag{margin-top:.9rem;font-size:.98rem;color:var(--text-m);
+  font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1.25rem}
+
+/* ---- Body sections ---- */
+main{max-width:640px;margin:0 auto;padding:0 1.4rem}
+section{padding:3rem 0}
+section + section{border-top:1px solid var(--border)}
+.div{height:2px;width:3rem;background:var(--accent);margin:.7rem 0 1.4rem;border-radius:1px}
+.logline{font-size:1.28rem;line-height:1.6;color:var(--text-h);font-weight:400}
+.synopsis{font-size:1rem;color:var(--text-m);line-height:1.85}
+.synopsis + .synopsis{margin-top:1rem}
+
+.contact{padding:2.6rem 0 3.4rem;text-align:center}
+.contact p{font-size:.95rem;color:var(--text-m)}
+.contact .sig{margin-top:1.1rem;font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:1.3rem;color:var(--text-h)}
+.contact a.mail{display:inline-block;margin-top:.5rem;font-size:.95rem;
+  color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
+.contact a.mail:hover{border-color:var(--accent)}
+
+footer{padding:1.6rem 1.4rem 2.6rem;text-align:center;font-size:.72rem;
+  color:var(--text-m);letter-spacing:.03em}
+
+/* ---- Reveal (Tier 1 ambient motion) ---- */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .reveal{opacity:1!important;transform:none!important}
+}
+
+/* ---- Theme toggle ---- */
+.tt{position:fixed;bottom:1rem;right:1rem;z-index:999;
+  background:var(--bg-card);border:1px solid var(--border);
+  width:2.75rem;height:2.75rem;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 10px rgba(0,0,0,.28);backdrop-filter:blur(6px);
+  cursor:pointer;font-size:1rem;transition:transform .2s}
+.tt:hover{transform:scale(1.1)}
+</style>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b0e105d3195f435e8604d69624ef01b1"}'></script><!-- End Cloudflare Web Analytics -->
+<meta property="og:title" content="THE GOLDEN IMAGES" />
+<meta property="og:description" content="A film trailer about two strangers racing to reach the last uncorrupted server after a global technological collapse." />
+<meta property="og:url" content="https://nutmeg-violet-njne.here.now/" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://here.now/og/nutmeg-violet-njne.jpg" />
+<meta property="og:image:width" content="1280" />
+<meta property="og:image:height" content="720" />
+<meta name="twitter:image" content="https://here.now/og/nutmeg-violet-njne.jpg" />
+<meta name="twitter:card" content="summary_large_image" /></head>
+<body>
+
+<div class="hero">
+  <video controls preload="metadata" playsinline
+    src="https://pub-30ce6bed170943a4a24a7c6f277753ae.r2.dev/trailers/20260911/the-golden-images-trailer.mp4">
+    Your browser does not support embedded video.
+  </video>
+  <div class="hero-cap">
+    <span class="eyebrow">An independent creator presents</span>
+    <h1>The Golden Images</h1>
+    <div class="tag">When the system dies, the real world begins.</div>
+  </div>
+</div>
+
+<main>
+  <section class="reveal">
+    <span class="eyebrow">Logline</span>
+    <div class="div"></div>
+    <p class="logline">When every device on Earth turns against its owner overnight, two strangers have four days to reach the last uncorrupted server — and rebuild the world from a suitcase.</p>
+  </section>
+
+  <section class="reveal">
+    <span class="eyebrow">Synopsis</span>
+    <div class="div"></div>
+    <p class="synopsis">Every chip on Earth was born with the same flaw. Not a bug. A door.</p>
+    <p class="synopsis">For thirty years it slept in your phone, your car, your hospital, your grid — waiting for a signal that everyone assumed would never come. On a Tuesday morning, it came.</p>
+    <p class="synopsis">One tone. Every device. Forever. The screens didn't crash — they simply stopped belonging to us. And a civilisation that had quietly forgotten how to do anything by hand discovered it was nine meals from the end.</p>
+    <p class="synopsis">But the infection needs a network to spread. Which means the forgotten machines survived. The open hardware. The unpatched. The obsolete. A diesel engine with no computer in it. A laptop old enough to be honest.</p>
+    <p class="synopsis">Elena Vance wrote the clean code. Leo Matthews can still solder.</p>
+    <p class="synopsis">They have four days to reach the last uncorrupted server and rebuild the world from a suitcase.</p>
+  </section>
+
+  <section class="contact reveal">
+    <p>For inquiries — production, distribution, or otherwise —</p>
+    <div class="sig">Juanitto Calvares</div>
+    <a class="mail" href="mailto:contact@dav-llc.com">contact@dav-llc.com</a>
+  </section>
+</main>
+
+<button class="tt" onclick="toggleTheme()" aria-label="Toggle theme"><span id="ti">☀️</span></button>
+
+<script>
+function toggleTheme(){
+  const h=document.documentElement;
+  const n=h.getAttribute('data-theme')==='dark'?'light':'dark';
+  h.setAttribute('data-theme',n);
+  document.getElementById('ti').textContent=n==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',n)}catch(e){}
+}
+(function(){
+  function applyT(t){
+    document.documentElement.setAttribute('data-theme',t);
+    document.getElementById('ti').textContent=t==='dark'?'☀️':'🌙';
+  }
+  try{
+    const saved=localStorage.getItem('theme');
+    if(saved){applyT(saved);}
+    else{
+      const h=new Date().getHours();
+      applyT((h>=19||h<7)?'dark':'light');
+    }
+  }catch(e){}
+})();
+
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:0,rootMargin:'0px 0px 12% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
