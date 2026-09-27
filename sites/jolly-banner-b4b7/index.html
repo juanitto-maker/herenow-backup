@@ -483,6 +483,28 @@ th,td{min-width:5.5rem}
     </div>
   </div>
 
+  <!-- Private AI upgrade (local models) -->
+  <div id="private-ai" style="margin-top:20px;padding:14px 16px;background:rgba(45,212,191,0.06);border:1px solid rgba(45,212,191,0.25);border-radius:10px;font-size:13px;color:var(--text-m);line-height:1.6;">
+    <div style="font-weight:700;color:#2dd4bf;font-size:11px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;"><span data-lang="en">🔐 Private AI upgrade — the brain stays in your building</span><span data-lang="es">🔐 Mejora IA Privada — el cerebro se queda en tu local</span></div>
+    <span data-lang="en">Add a dedicated AI box next to a T1-A server and the agent thinks on your own hardware. Open models (gpt-oss, Qwen, Gemma and similar) run locally: customer data, invoices and supplier emails never leave the building, and there is no per-message AI bill.</span>
+    <span data-lang="es">Añade un equipo de IA dedicado junto al servidor T1-A y el agente piensa en tu propio hardware. Modelos abiertos (gpt-oss, Qwen, Gemma y similares) corren en local: datos de clientes, facturas y emails de proveedores nunca salen del local, y no hay factura de IA por mensaje.</span>
+    <div style="margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;">
+      <div style="padding:10px 12px;background:rgba(45,212,191,0.07);border:1px solid rgba(45,212,191,0.22);border-radius:7px;">
+        <div style="color:#2dd4bf;font-weight:700;font-size:10px;letter-spacing:.5px;margin-bottom:6px;"><span data-lang="en">Hardware</span><span data-lang="es">Hardware</span></div>
+        <div style="font-size:12px;line-height:1.5;"><span data-lang="en">AI mini-PC with 128 GB unified memory (Ryzen AI Max+ class) · Ubuntu, same hardening as T1-A · ≈ €2,000 one-time (memory prices vary)</span><span data-lang="es">Mini-PC de IA con 128 GB de memoria unificada (clase Ryzen AI Max+) · Ubuntu, mismo hardening que T1-A · ≈ 2.000 € una vez (el precio de la memoria varía)</span></div>
+      </div>
+      <div style="padding:10px 12px;background:rgba(74,222,128,0.07);border:1px solid rgba(74,222,128,0.2);border-radius:7px;">
+        <div style="color:#4ade80;font-weight:700;font-size:10px;letter-spacing:.5px;margin-bottom:6px;"><span data-lang="en">Running cost</span><span data-lang="es">Coste de uso</span></div>
+        <div style="font-size:12px;line-height:1.5;"><span data-lang="en">No per-message AI fees — just electricity. Local tasks keep working if the internet drops.</span><span data-lang="es">Sin cuotas de IA por mensaje — solo electricidad. Las tareas locales siguen funcionando si cae internet.</span></div>
+      </div>
+      <div style="padding:10px 12px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);border-radius:7px;">
+        <div style="color:#f59e0b;font-weight:700;font-size:10px;letter-spacing:.5px;margin-bottom:6px;"><span data-lang="en">Honest trade-off</span><span data-lang="es">Lo honesto</span></div>
+        <div style="font-size:12px;line-height:1.5;"><span data-lang="en">Smarter than no AI, less capable than top cloud models. Hybrid option: hard tasks go to a cloud model only with your OK.</span><span data-lang="es">Más listo que no tener IA, menos capaz que los mejores modelos en la nube. Opción híbrida: las tareas difíciles van a la nube solo con tu permiso.</span></div>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-size:12px;"><strong><span data-lang="en">Best for:</span><span data-lang="es">Ideal para:</span></strong> <span data-lang="en">clinics, legal &amp; financial services, shops handling customer data — anyone who wants to own their AI.</span><span data-lang="es">clínicas, servicios legales y financieros, tiendas con datos de clientes — quien quiera ser dueño de su IA.</span></div>
+  </div>
+
 </div>
 </div><!-- /alt-bg -->
 
@@ -552,6 +574,11 @@ th,td{min-width:5.5rem}
           <td>2–3h</td>
         </tr>
         <tr>
+          <td><span data-lang="en">Private AI box (optional, not in total)</span><span data-lang="es">Equipo IA Privada (opcional, no incluido)</span></td>
+          <td>+3–4h</td>
+          <td>—</td>
+        </tr>
+        <tr>
           <td><strong><span data-lang="en">Total estimated</span><span data-lang="es">Total estimado</span></strong></td>
           <td><strong>15–20h</strong></td>
           <td><strong>9–12h</strong></td>
@@ -582,7 +609,7 @@ th,td{min-width:5.5rem}
         <div class="stack-layer sl-a1"><strong>OS</strong><span>Ubuntu 24.04 Server · Lynis hardened · UFW · fail2ban</span></div>
         <div class="stack-layer sl-a2"><strong>Agent</strong><span>DAV AI Agent · Python 3.11 venv · systemd user service</span></div>
         <div class="stack-layer sl-a3"><strong>Docker</strong><span>Sandbox terminal · Portainer management · no docker.sock</span></div>
-        <div class="stack-layer sl-shared"><strong>AI Models</strong><span>Gemini 2.5 Flash (primary) · Claude Sonnet (delegate, hard tasks)</span></div>
+        <div class="stack-layer sl-shared"><strong>AI Models</strong><span>Gemini 2.5 Flash (primary) · Claude Sonnet (delegate, hard tasks) · optional Private AI box: open models, fully local</span></div>
         <div class="stack-layer sl-shared"><strong>Gateway</strong><span>Telegram bot · voice in/out · zero-knowledge key intake</span></div>
         <div class="stack-layer sl-shared"><strong>Remote</strong><span>Tailscale · SSH key-only · dead-man heartbeat</span></div>
       </div>

@@ -12,30 +12,30 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root, [data-theme="dark"] {
-  --bg:#0f0f11; --bg-card:#18181c;
-  --bg-hero:linear-gradient(135deg,#1a1510 0%,#0f0f11 60%,#14140e 100%);
-  --bg-section:#131318;
-  --text:#d8d8de; --text-muted:#888; --text-soft:#a8a8b0; --text-heading:#fff;
-  --border:#28282f; --border-soft:#1f1f25;
-  --accent:#d4af56; --accent-2:#8aa97b;
-  --accent-bg:rgba(212,175,86,0.10); --accent-soft:rgba(212,175,86,0.06);
-  --link:#d4af56; --link-hover:#e9c878;
-  --tag-bg:rgba(138,169,123,0.12); --tag-text:#a8c898;
-  --shadow:0 4px 20px rgba(0,0,0,0.4);
-  --overlay-bg:rgba(0,0,0,.7); --dialog-bg:#18181c;
+--bg:#0f0f11; --bg-card:#18181c;
+--bg-hero:linear-gradient(135deg,#1a1510 0%,#0f0f11 60%,#14140e 100%);
+--bg-section:#131318;
+--text:#d8d8de; --text-muted:#888; --text-soft:#a8a8b0; --text-heading:#fff;
+--border:#28282f; --border-soft:#1f1f25;
+--accent:#d4af56; --accent-2:#8aa97b;
+--accent-bg:rgba(212,175,86,0.10); --accent-soft:rgba(212,175,86,0.06);
+--link:#d4af56; --link-hover:#e9c878;
+--tag-bg:rgba(138,169,123,0.12); --tag-text:#a8c898;
+--shadow:0 4px 20px rgba(0,0,0,0.4);
+--overlay-bg:rgba(0,0,0,.7); --dialog-bg:#18181c;
 }
 [data-theme="light"] {
-  --bg:#faf6ef; --bg-card:#ffffff;
-  --bg-hero:linear-gradient(135deg,#f5ecd9 0%,#faf6ef 60%,#f0ead9 100%);
-  --bg-section:#f4ede0;
-  --text:#3a3a32; --text-muted:#7a7a72; --text-soft:#5a5a52; --text-heading:#1a1a18;
-  --border:#e4ddc9; --border-soft:#ede6d3;
-  --accent:#b8923a; --accent-2:#4a6741;
-  --accent-bg:rgba(184,146,58,0.10); --accent-soft:rgba(184,146,58,0.05);
-  --link:#b8923a; --link-hover:#8a6a25;
-  --tag-bg:rgba(74,103,65,0.10); --tag-text:#4a6741;
-  --shadow:0 2px 12px rgba(0,0,0,0.06);
-  --overlay-bg:rgba(0,0,0,.45); --dialog-bg:#ffffff;
+--bg:#faf6ef; --bg-card:#ffffff;
+--bg-hero:linear-gradient(135deg,#f5ecd9 0%,#faf6ef 60%,#f0ead9 100%);
+--bg-section:#f4ede0;
+--text:#3a3a32; --text-muted:#7a7a72; --text-soft:#5a5a52; --text-heading:#1a1a18;
+--border:#e4ddc9; --border-soft:#ede6d3;
+--accent:#b8923a; --accent-2:#4a6741;
+--accent-bg:rgba(184,146,58,0.10); --accent-soft:rgba(184,146,58,0.05);
+--link:#b8923a; --link-hover:#8a6a25;
+--tag-bg:rgba(74,103,65,0.10); --tag-text:#4a6741;
+--shadow:0 2px 12px rgba(0,0,0,0.06);
+--overlay-bg:rgba(0,0,0,.45); --dialog-bg:#ffffff;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -70,7 +70,6 @@ h3{font-size:1.05rem;font-weight:600;color:var(--text-heading);margin-bottom:.4r
 .signature{margin-top:2rem;padding-top:1.25rem;border-top:1px dashed var(--border);font-size:.95rem;color:var(--text-soft)}
 .signature-name{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--accent);font-style:italic;display:block;margin-bottom:.2rem}
 .signature-title{font-size:.82rem;color:var(--text-muted)}
-
 .pillar-grid{display:flex;flex-direction:column;gap:.9rem;margin-top:1.75rem}
 .pillar{background:var(--bg-card);border:1px solid var(--border);border-radius:.8rem;padding:1.35rem 1.25rem;position:relative;transition:border-color .2s}
 .pillar.open{border-color:var(--accent)}
@@ -90,7 +89,6 @@ h3{font-size:1.05rem;font-weight:600;color:var(--text-heading);margin-bottom:.4r
 .pillar-icon{font-size:1.25rem}
 .pillar-title{font-size:.8rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text-heading)}
 .pillar-count{font-size:.72rem;color:var(--text-muted);margin-left:auto;font-variant-numeric:tabular-nums}
-
 .work-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:.9rem}
 .more-grid{display:none;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:.9rem;margin-top:.9rem}
 .more-grid.open{display:grid}
@@ -108,12 +106,10 @@ h3{font-size:1.05rem;font-weight:600;color:var(--text-heading);margin-bottom:.4r
 .morebtn .lbl-less{display:none}
 .morebtn.open .lbl-more{display:none}
 .morebtn.open .lbl-less{display:inline}
-
 .stats-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;margin-top:2.5rem}
 .stat-box{background:var(--bg-card);border:1px solid var(--border);border-radius:.7rem;padding:1.05rem 1rem;text-align:center}
 .stat-num{font-family:'DM Serif Display',serif;font-size:1.9rem;color:var(--accent);line-height:1.1}
 .stat-lbl{font-size:.72rem;color:var(--text-muted);letter-spacing:.04em;margin-top:.3rem;line-height:1.4}
-
 .partner{background:var(--bg-section);border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft)}
 .partner p{max-width:640px;font-weight:300;line-height:1.7}
 .partner-cta{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.5rem}
@@ -137,337 +133,421 @@ footer{padding:3rem 1.25rem 2.5rem;text-align:center;border-top:1px solid var(--
 .dialog-close{background:none;border:1px solid var(--border);color:var(--text-muted);cursor:pointer;font-size:.82rem;padding:.4rem 1.2rem;border-radius:.4rem;margin-top:.2rem;font-family:'Inter',sans-serif}
 .rv{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
 .rv.vis{opacity:1;transform:none}
+.wcard{cursor:default}
+.wcard:hover{transform:none}
+.wlinks{display:flex;flex-wrap:wrap;gap:.35rem .9rem;margin-top:.75rem}
+.wlink{font-size:.72rem;font-weight:600;letter-spacing:.06em;color:var(--link);text-decoration:none;text-transform:uppercase}
+.wlink:hover{color:var(--link-hover)}
+.wbar{display:flex;align-items:center;gap:.5rem;margin-top:.7rem}
+.wbar-track{flex:1;height:4px;background:var(--border);border-radius:999px;overflow:hidden}
+.wbar-fill{height:100%;background:linear-gradient(90deg,var(--accent-2),var(--accent));border-radius:999px}
+.wbar-pct{font-size:.66rem;color:var(--text-muted);font-variant-numeric:tabular-nums;min-width:2.2em;text-align:right}
+.oss-head{margin-top:1.6rem;padding-top:1.1rem;border-top:1px dashed var(--border);text-align:center;font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.oss-head+.morebtn{margin-top:.6rem}
 </style>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b0e105d3195f435e8604d69624ef01b1"}'></script><!-- End Cloudflare Web Analytics --></head>
 <body>
-
 <div class="lang-switch">
-  <button class="lang-btn on" id="lb-en" onclick="setLang('en')">EN</button>
-  <button class="lang-btn" id="lb-es" onclick="setLang('es')">ES</button>
+<button class="lang-btn on" id="lb-en" onclick="setLang('en')">EN</button>
+<button class="lang-btn" id="lb-es" onclick="setLang('es')">ES</button>
 </div>
 <button class="theme-toggle" onclick="tglTheme()" aria-label="Theme"><span class="theme-icon" id="ti">☀️</span></button>
-
 <div class="hero">
-  <div class="hero-inner">
-    <div class="badge l-en">Independent Think-Tank Lab</div>
-    <div class="badge l-es">Laboratorio independiente de ideas</div>
-    <h1 class="brand">digital<span class="brand-accent">AI</span>ventures</h1>
-    <p class="hero-tag l-en">Architecture, AI systems and inventions — from tiny local fixes to <em>challenges our species has not solved yet</em>. Built in the open, from an off-grid place in the Alpujarras.</p>
-    <p class="hero-tag l-es">Arquitectura, sistemas de IA e invenciones — desde pequeñas soluciones locales hasta <em>retos que nuestra especie aún no ha resuelto</em>. Construido en abierto, desde un lugar off-grid en la Alpujarra.</p>
-    <div class="hero-meta"><span>Alpujarras · Andalucía</span>·<span>Wyoming LLC</span>·<span class="l-en">One architect + an AI stack</span><span class="l-es">Un arquitecto + un stack de IA</span></div>
-  </div>
+<div class="hero-inner">
+<div class="badge l-en">Independent Think-Tank Lab</div>
+<div class="badge l-es">Laboratorio independiente de ideas</div>
+<h1 class="brand">digital<span class="brand-accent">AI</span>ventures</h1>
+<p class="hero-tag l-en">Architecture, AI systems and inventions — from tiny local fixes to <em>challenges our species has not solved yet</em>. Built in the open, from an off-grid place in the Alpujarras.</p>
+<p class="hero-tag l-es">Arquitectura, sistemas de IA e invenciones — desde pequeñas soluciones locales hasta <em>retos que nuestra especie aún no ha resuelto</em>. Construido en abierto, desde un lugar off-grid en la Alpujarra.</p>
+<div class="hero-meta"><span>Alpujarras · Andalucía</span>·<span>Wyoming LLC</span>·<span class="l-en">One architect + an AI stack</span><span class="l-es">Un arquitecto + un stack de IA</span></div>
 </div>
-
+</div>
 <section class="letter">
-  <div class="container">
-    <div class="eyebrow l-en">Manifesto</div>
-    <div class="eyebrow l-es">Manifiesto</div>
-    <h2 class="l-en">Why this lab exists</h2>
-    <h2 class="l-es">Por qué existe este laboratorio</h2>
-    <div class="letter-body l-en">
-      <p><strong>digitalAIventures</strong> is an independent think-tank lab run by one person and a stack of AI systems, from an off-grid place in the Alpujarras mountains of southern Spain.</p>
-      <p>I am an architect by training; a designer and inventor by nature. I look for better solutions — for myself, for the people around me, and for problems much larger than any of us. Living simply, close to nature, is not a lifestyle statement here: it is <em>the method</em>. Distance from the noise is where different approaches come from.</p>
-      <p>The output is deliberately wide: software and AI agents running real businesses today; architectural systems for extreme climates; open protocols; inventions published as prior art for anyone to build on. Some projects are tiny and local. Some are strategic — meant for challenges that matter to humanity as a whole. All of them are real, published, and linked below. I build in the open.</p>
-      <p>The name I sign with, <em>Calvares</em>, comes from calvario — an uphill road, carried and prevailed over. That is, roughly, the business plan.</p>
-      <div class="signature"><span class="signature-name">Juanitto Calvares</span><span class="signature-title">Founder · digitalAIventures LLC</span></div>
-    </div>
-    <div class="letter-body l-es">
-      <p><strong>digitalAIventures</strong> es un laboratorio independiente de ideas llevado por una sola persona y un stack de sistemas de IA, desde un lugar off-grid en la Alpujarra granadina.</p>
-      <p>Soy arquitecto de formación; diseñador e inventor por naturaleza. Busco mejores soluciones — para mí, para la gente que me rodea, y para problemas mucho más grandes que cualquiera de nosotros. Vivir con sencillez, cerca de la naturaleza, no es aquí una pose: es <em>el método</em>. La distancia del ruido es de donde nacen los enfoques distintos.</p>
-      <p>La producción es deliberadamente amplia: software y agentes de IA operando negocios reales hoy; sistemas arquitectónicos para climas extremos; protocolos abiertos; invenciones publicadas como arte previo. Algunos proyectos son pequeños y locales. Otros son estratégicos — pensados para retos que importan a la humanidad entera. Todos son reales, están publicados y enlazados abajo. Construyo en abierto.</p>
-      <p>El nombre con el que firmo, <em>Calvares</em>, viene de calvario — un camino cuesta arriba, cargado y superado. Ese es, más o menos, el plan de negocio.</p>
-      <div class="signature"><span class="signature-name">Juanitto Calvares</span><span class="signature-title">Fundador · digitalAIventures LLC</span></div>
-    </div>
-  </div>
+<div class="container">
+<div class="eyebrow l-en">Manifesto</div>
+<div class="eyebrow l-es">Manifiesto</div>
+<h2 class="l-en">Why this lab exists</h2>
+<h2 class="l-es">Por qué existe este laboratorio</h2>
+<div class="letter-body l-en">
+<p><strong>digitalAIventures</strong> is an independent think-tank lab run by one person and a stack of AI systems, from an off-grid place in the Alpujarras mountains of southern Spain.</p>
+<p>I am an architect by training; a designer and inventor by nature. I look for better solutions — for myself, for the people around me, and for problems much larger than any of us. Living simply, close to nature, is not a lifestyle statement here: it is <em>the method</em>. Distance from the noise is where different approaches come from.</p>
+<p>The output is deliberately wide: software and AI agents running real businesses today; architectural systems for extreme climates; open protocols; inventions published as prior art for anyone to build on. Some projects are tiny and local. Some are strategic — meant for challenges that matter to humanity as a whole. All of them are real, published, and linked below. I build in the open.</p>
+<p>The name I sign with, <em>Calvares</em>, comes from calvario — an uphill road, carried and prevailed over. That is, roughly, the business plan.</p>
+<div class="signature"><span class="signature-name">Juanitto Calvares</span><span class="signature-title">Founder · digitalAIventures LLC</span></div>
+</div>
+<div class="letter-body l-es">
+<p><strong>digitalAIventures</strong> es un laboratorio independiente de ideas llevado por una sola persona y un stack de sistemas de IA, desde un lugar off-grid en la Alpujarra granadina.</p>
+<p>Soy arquitecto de formación; diseñador e inventor por naturaleza. Busco mejores soluciones — para mí, para la gente que me rodea, y para problemas mucho más grandes que cualquiera de nosotros. Vivir con sencillez, cerca de la naturaleza, no es aquí una pose: es <em>el método</em>. La distancia del ruido es de donde nacen los enfoques distintos.</p>
+<p>La producción es deliberadamente amplia: software y agentes de IA operando negocios reales hoy; sistemas arquitectónicos para climas extremos; protocolos abiertos; invenciones publicadas como arte previo. Algunos proyectos son pequeños y locales. Otros son estratégicos — pensados para retos que importan a la humanidad entera. Todos son reales, están publicados y enlazados abajo. Construyo en abierto.</p>
+<p>El nombre con el que firmo, <em>Calvares</em>, viene de calvario — un camino cuesta arriba, cargado y superado. Ese es, más o menos, el plan de negocio.</p>
+<div class="signature"><span class="signature-name">Juanitto Calvares</span><span class="signature-title">Fundador · digitalAIventures LLC</span></div>
+</div>
+</div>
 </section>
-
 <section>
-  <div class="container">
-    <div class="eyebrow l-en">The lab</div>
-    <div class="eyebrow l-es">El laboratorio</div>
-    <h2 class="l-en">Three pillars</h2>
-    <h2 class="l-es">Tres pilares</h2>
-    <p style="color:var(--text-soft);font-size:.92rem;max-width:620px" class="l-en">Tap a pillar to open it — working systems first; the earlier-stage concepts behind each "see more".</p>
-    <p style="color:var(--text-soft);font-size:.92rem;max-width:620px" class="l-es">Toca un pilar para abrirlo — primero los sistemas que funcionan; los conceptos en fase temprana tras cada «ver más».</p>
-    <div class="pillar-grid">
-      <div class="pillar rv" id="p1">
-        <div class="pillar-hit" onclick="tgPillar('p1')">
-          <span class="pillar-num">6</span>
-          <div class="pillar-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="14" height="14" rx="1"/><rect x="9" y="9" width="6" height="6" rx="0.5"/><path d="M3 10h2"/><path d="M3 14h2"/><path d="M19 10h2"/><path d="M19 14h2"/><path d="M10 3v2"/><path d="M14 3v2"/><path d="M10 19v2"/><path d="M14 19v2"/></svg></div>
-          <h3 class="l-en">Software &amp; AI Systems</h3><h3 class="l-es">Software y sistemas de IA</h3>
-          <p class="l-en">AI agents running real shops, client PWAs, and the lab's own connector infrastructure. The revenue-real pillar.</p>
-          <p class="l-es">Agentes de IA operando tiendas reales, PWAs de clientes y la infraestructura de conectores propia. El pilar con ingresos reales.</p>
-          <span class="pchev">▾</span>
-        </div>
-        <div class="stage1">
-          <div class="work-grid">
-        <a class="wcard" href="https://evoked-breath-n8hn.here.now/" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage l-en">In production</span><span class="wcard-stage l-es">En producción</span></div>
-          <div class="wcard-name">La Retama Smart-Shop</div>
-          <div class="wcard-desc l-en">"Claudia Calvares" — an AI agent running an organic shop's daily operations in Lanjarón.</div>
-          <div class="wcard-desc l-es">«Claudia Calvares» — agente de IA llevando la operativa diaria de una tienda ecológica en Lanjarón.</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
-        <a class="wcard" href="https://orchid-crest-nra3.here.now/" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage l-en">Delivered</span><span class="wcard-stage l-es">Entregado</span></div>
-          <div class="wcard-name">La Parada</div>
-          <div class="wcard-desc l-en">PWA for an organic cooperative shop in Órgiva (Las Torcas).</div>
-          <div class="wcard-desc l-es">PWA para una tienda cooperativa ecológica en Órgiva (Las Torcas).</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
-        <a class="wcard" href="https://bronze-aurora-p9tq.here.now/" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage l-en">Live</span><span class="wcard-stage l-es">En vivo</span></div>
-          <div class="wcard-name">WorkClock</div>
-          <div class="wcard-desc l-en">Time-tracking PWA on Cloudflare Workers + D1, agent-driven from chat.</div>
-          <div class="wcard-desc l-es">PWA de control horario sobre Cloudflare Workers + D1, dirigida por agentes desde el chat.</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
-        <a class="wcard" href="https://jolly-banner-b4b7.here.now/" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage l-en">Operational</span><span class="wcard-stage l-es">Operativo</span></div>
-          <div class="wcard-name l-en">Connector infrastructure</div><div class="wcard-name l-es">Infraestructura de conectores</div>
-          <div class="wcard-desc l-en">Custom MCP connectors — image, video, data, cloud ops. Self-built, self-hosted.</div>
-          <div class="wcard-desc l-es">Conectores MCP propios — imagen, vídeo, datos, operaciones cloud. Construidos y alojados en casa.</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
-      </div>
-          <button class="morebtn" id="m1-btn" onclick="tgMore('m1')"><span class="l-en lbl-more">▾ See 2 more in progress</span><span class="l-es lbl-more">▾ Ver 2 más en curso</span><span class="l-en lbl-less">▴ Show less</span><span class="l-es lbl-less">▴ Ver menos</span></button>
-          <div class="more-grid" id="m1">
-        <a class="wcard" href="https://vowful-cosmos-d7z3.here.now/" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage early l-en">Testing</span><span class="wcard-stage early l-es">En pruebas</span></div>
-          <div class="wcard-name l-en">Consumer apps</div><div class="wcard-name l-es">Apps de consumo</div>
-          <div class="wcard-desc l-en">FooLab, ValorApp, Love Me Again — AI-powered PWAs in tester phase.</div>
-          <div class="wcard-desc l-es">FooLab, ValorApp, Love Me Again — PWAs con IA en fase de testers.</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
-        <a class="wcard" href="https://ember-brook-9wrf.here.now/" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage early l-en">Proposal</span><span class="wcard-stage early l-es">Propuesta</span></div>
-          <div class="wcard-name">Viki Properties</div>
-          <div class="wcard-desc l-en">Real-estate platform reimagined for a boutique agency in Órgiva.</div>
-          <div class="wcard-desc l-es">Plataforma inmobiliaria reinventada para una agencia boutique de Órgiva.</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
+<div class="container">
+<div class="eyebrow l-en">The lab</div>
+<div class="eyebrow l-es">El laboratorio</div>
+<h2 class="l-en">Three pillars</h2>
+<h2 class="l-es">Tres pilares</h2>
+<p style="color:var(--text-soft);font-size:.92rem;max-width:620px" class="l-en">Tap a pillar to open it — working systems first; the earlier-stage concepts behind each "see more".</p>
+<p style="color:var(--text-soft);font-size:.92rem;max-width:620px" class="l-es">Toca un pilar para abrirlo — primero los sistemas que funcionan; los conceptos en fase temprana tras cada «ver más».</p>
+<div class="pillar-grid">
+<div class="pillar rv" id="p1">
+<div class="pillar-hit" onclick="tgPillar('p1')">
+<span class="pillar-num">17</span>
+<div class="pillar-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="14" height="14" rx="1"/><rect x="9" y="9" width="6" height="6" rx="0.5"/><path d="M3 10h2"/><path d="M3 14h2"/><path d="M19 10h2"/><path d="M19 14h2"/><path d="M10 3v2"/><path d="M14 3v2"/><path d="M10 19v2"/><path d="M14 19v2"/></svg></div>
+<h3 class="l-en">Software &amp; AI Systems</h3><h3 class="l-es">Software y sistemas de IA</h3>
+<p class="l-en">AI agents running real businesses, apps in production and testing, open-source tools, and the lab's own AI stack. The revenue-real pillar.</p>
+<p class="l-es">Agentes de IA operando negocios reales, apps en producción y en pruebas, herramientas de código abierto y el stack de IA propio. El pilar con ingresos reales.</p>
+<span class="pchev">▾</span>
 </div>
-        </div>
-      </div>
-      <div class="pillar rv" id="p2">
-        <div class="pillar-hit" onclick="tgPillar('p2')">
-          <span class="pillar-num">10</span>
-          <div class="pillar-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3"/><path d="M9.7 17h4.6"/></svg></div>
-          <h3 class="l-en">Inventions &amp; Deep Concepts</h3><h3 class="l-es">Invenciones y conceptos</h3>
-          <p class="l-en">Arctic housing, underwater datacenters and power, open protocols — published as prior art, engaged per-project.</p>
-          <p class="l-es">Vivienda ártica, centros de datos y energía submarinos, protocolos abiertos — publicados como arte previo, abordables por proyecto.</p>
-          <span class="pchev">▾</span>
-        </div>
-        <div class="stage1">
-          <div class="work-grid">
-        <a class="wcard" href="https://silver-summit-nzq3.here.now/" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage">Zenodo</span></div>
-          <div class="wcard-name">DeepData</div>
-          <div class="wcard-desc l-en">Submersible datacenter with passive lake-water cooling. Defensive publication.</div>
-          <div class="wcard-desc l-es">Centro de datos sumergible con refrigeración pasiva. Publicación defensiva.</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
-        <a class="wcard" href="https://awake-drift-nnxe.here.now/" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage">Zenodo</span></div>
-          <div class="wcard-name">DeepCore Power</div>
-          <div class="wcard-desc l-en">Modular underwater nuclear power plant. Defensive publication.</div>
-          <div class="wcard-desc l-es">Central nuclear modular submarina. Publicación defensiva.</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
-        <a class="wcard" href="https://poppy-ferry-98zk.here.now/" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage l-en">Active concept</span><span class="wcard-stage l-es">Concepto activo</span></div>
-          <div class="wcard-name">Arctic Shield</div>
-          <div class="wcard-desc l-en">Double-dome Arctic housing that insulates itself with seasonal snow.</div>
-          <div class="wcard-desc l-es">Vivienda ártica de doble cúpula que se aísla con nieve estacional.</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
-      </div>
-          <button class="morebtn" id="m2-btn" onclick="tgMore('m2')"><span class="l-en lbl-more">▾ See 7 more concepts</span><span class="l-es lbl-more">▾ Ver 7 conceptos más</span><span class="l-en lbl-less">▴ Show less</span><span class="l-es lbl-less">▴ Ver menos</span></button>
-          <div class="more-grid" id="m2">
-        <a class="wcard" href="https://fancy-atlas-w49b.here.now/" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage early l-en">Pilot path</span><span class="wcard-stage early l-es">Vía piloto</span></div>
-          <div class="wcard-name">PearlShell</div>
-          <div class="wcard-desc l-en">Rapid insulated shelter: tunnel frame + perlite-filled jute bags.</div>
-          <div class="wcard-desc l-es">Refugio aislado rápido: estructura de túnel + sacos de yute con perlita.</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
-        <a class="wcard" href="https://vivid-parcel-87dn.here.now/" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage early l-en">Prototype planned</span><span class="wcard-stage early l-es">Prototipo previsto</span></div>
-          <div class="wcard-name">MULA</div>
-          <div class="wcard-desc l-en">Twin-bike electric mountain ATV, buildable without welding.</div>
-          <div class="wcard-desc l-es">Quad eléctrico de montaña de doble bicicleta, construible sin soldadura.</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
-        <a class="wcard" href="https://silken-jungle-kpeq.here.now/" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage early l-en">Concept</span><span class="wcard-stage early l-es">Concepto</span></div>
-          <div class="wcard-name">VacOil</div>
-          <div class="wcard-desc l-en">Ultra-high-quality vacuum olive-oil plant system; mill pilot programme drafted.</div>
-          <div class="wcard-desc l-es">Sistema de aceite de oliva al vacío de calidad ultra-alta; programa piloto para almazaras.</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
-        <a class="wcard" href="https://silent-island-f42b.here.now/" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage early l-en">Open protocol</span><span class="wcard-stage early l-es">Protocolo abierto</span></div>
-          <div class="wcard-name">Tessera Open Protocol</div>
-          <div class="wcard-desc l-en">Federated privacy-preserving resource routing — identity, broker, governance.</div>
-          <div class="wcard-desc l-es">Enrutado federado de recursos con privacidad — identidad, intermediación, gobernanza.</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
-        <a class="wcard" href="https://lapis-nutmeg-fzyd.here.now/" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage early l-en">Concept</span><span class="wcard-stage early l-es">Concepto</span></div>
-          <div class="wcard-name">Aegis Forest Sentinel</div>
-          <div class="wcard-desc l-en">Distributed sentinel network for early wildfire detection.</div>
-          <div class="wcard-desc l-es">Red distribuida de centinelas para detección temprana de incendios forestales.</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
-        <a class="wcard" href="https://mellow-opera-ef6z.here.now/" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage early l-en">Concept</span><span class="wcard-stage early l-es">Concepto</span></div>
-          <div class="wcard-name">ALLVOLT</div>
-          <div class="wcard-desc l-en">Universal battery backpack system — one pack, many machines.</div>
-          <div class="wcard-desc l-es">Sistema universal de batería en mochila — una batería, muchas máquinas.</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
-        <a class="wcard" href="https://lusty-igloo-mf5b.here.now/" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage early l-en">Concept</span><span class="wcard-stage early l-es">Concepto</span></div>
-          <div class="wcard-name">Spiral Electric Rail Farm</div>
-          <div class="wcard-desc l-en">Vertical spiral farming on an electric rail — land-light food production.</div>
-          <div class="wcard-desc l-es">Cultivo en espiral vertical sobre raíl eléctrico — producción de alimentos con poco suelo.</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
+<div class="stage1">
+<div class="work-grid">
+<div class="wcard">
+<div class="wcard-top"><span class="wcard-stage l-en">In production</span><span class="wcard-stage l-es">En producción</span></div>
+<div class="wcard-name l-en">AI Agent for Business</div><div class="wcard-name l-es">Agente IA para negocios</div>
+<div class="wcard-desc l-en">A 24/7 on-premise AI manager on Telegram — voice notes, stock &amp; ERP queries, supplier emails, morning briefings. Proposes, you confirm. Already running a real organic shop.</div>
+<div class="wcard-desc l-es">Un gestor IA 24/7 en tu propio local, por Telegram — notas de voz, stock y ERP, emails a proveedores, briefings matinales. Propone, tú confirmas. Ya opera una tienda ecológica real.</div>
+<div class="wlinks"><a class="wlink" href="https://jolly-banner-b4b7.here.now/" target="_blank" rel="noopener"><span class="l-en">→ How it works</span><span class="l-es">→ Cómo funciona</span></a><a class="wlink" href="https://evoked-breath-n8hn.here.now/" target="_blank" rel="noopener"><span class="l-en">→ Real case</span><span class="l-es">→ Caso real</span></a></div>
 </div>
-        </div>
-      </div>
-      <div class="pillar rv" id="p3">
-        <div class="pillar-hit" onclick="tgPillar('p3')">
-          <span class="pillar-num">6</span>
-          <div class="pillar-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M3 10h18"/><path d="M5 6l7 -3l7 3"/><path d="M4 10v11"/><path d="M20 10v11"/><path d="M8 14v3"/><path d="M12 14v3"/><path d="M16 14v3"/></svg></div>
-          <h3 class="l-en">Architecture &amp; Habitat</h3><h3 class="l-es">Arquitectura y hábitat</h3>
-          <p class="l-en">Lime-aircrete domes, adaptive facades, seismic retrofit — material systems tested on real ground in the Alpujarra.</p>
-          <p class="l-es">Cúpulas de aircrete de cal, fachadas adaptativas, refuerzo sísmico — sistemas de materiales probados sobre terreno real en la Alpujarra.</p>
-          <span class="pchev">▾</span>
-        </div>
-        <div class="stage1">
-          <div class="work-grid">
-        <a class="wcard" href="https://amoraleza.com" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage l-en">Active</span><span class="wcard-stage l-es">Activo</span></div>
-          <div class="wcard-name">Amoralezza Ecobuild</div>
-          <div class="wcard-desc l-en">Healing-retreat place in the Alpujarra — lime, aircrete, local material systems.</div>
-          <div class="wcard-desc l-es">Lugar de retiros en la Alpujarra — cal, aircrete, sistemas de materiales locales.</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
-        <a class="wcard" href="https://steady-basin-qrq7.here.now/" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage l-en">Feasibility</span><span class="wcard-stage l-es">Viabilidad</span></div>
-          <div class="wcard-name">Aircrete NHL Dome</div>
-          <div class="wcard-desc l-en">Lime-aircrete dome system — gang-moulded bricks, structural studies.</div>
-          <div class="wcard-desc l-es">Sistema de cúpulas en aircrete de cal — ladrillos en molde múltiple, estudios estructurales.</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
-      </div>
-          <button class="morebtn" id="m3-btn" onclick="tgMore('m3')"><span class="l-en lbl-more">▾ See 4 more concepts</span><span class="l-es lbl-more">▾ Ver 4 conceptos más</span><span class="l-en lbl-less">▴ Show less</span><span class="l-es lbl-less">▴ Ver menos</span></button>
-          <div class="more-grid" id="m3">
-        <a class="wcard" href="https://quartz-rapids-jgdt.here.now/" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage early l-en">Concept</span><span class="wcard-stage early l-es">Concepto</span></div>
-          <div class="wcard-name">AL·aVela</div>
-          <div class="wcard-desc l-en">Vertical bi-fold facade — adaptive shading for Mediterranean climates.</div>
-          <div class="wcard-desc l-es">Fachada plegable vertical — sombreado adaptativo para climas mediterráneos.</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
-        <a class="wcard" href="https://calm-sage-49wp.here.now/" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage early l-en">Concept</span><span class="wcard-stage early l-es">Concepto</span></div>
-          <div class="wcard-name">Survival Spine</div>
-          <div class="wcard-desc l-en">Life-safety seismic retrofit spine for vulnerable housing.</div>
-          <div class="wcard-desc l-es">Espina de refuerzo sísmico para vivienda vulnerable.</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
-        <a class="wcard" href="https://orchid-bonnet-kgvh.here.now/" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage early l-en">Lab samples</span><span class="wcard-stage early l-es">Muestras de laboratorio</span></div>
-          <div class="wcard-name">Hempcrete Block Lab</div>
-          <div class="wcard-desc l-en">Hemp · lime · gypsum block system — sample and testing plan.</div>
-          <div class="wcard-desc l-es">Sistema de bloques cáñamo · cal · yeso — plan de muestras y ensayos.</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
-        <a class="wcard" href="https://tawny-oasis-rm9y.here.now/" target="_blank">
-          <div class="wcard-top"><span class="wcard-stage early l-en">Concept</span><span class="wcard-stage early l-es">Concepto</span></div>
-          <div class="wcard-name">ECO PCM Panels</div>
-          <div class="wcard-desc l-en">Modular DIY phase-change insulation panels.</div>
-          <div class="wcard-desc l-es">Paneles aislantes modulares DIY con materiales de cambio de fase.</div>
-          <div class="wcard-go">→ VISIT</div>
-        </a>
+<div class="wcard">
+<div class="wcard-top"><span class="wcard-stage l-en">Live</span><span class="wcard-stage l-es">En vivo</span></div>
+<div class="wcard-name l-en">One-Minute Websites</div><div class="wcard-name l-es">Webs en un minuto</div>
+<div class="wcard-desc l-en">A Telegram bot that builds and publishes a website from a short chat — card, page or full site, in about a minute.</div>
+<div class="wcard-desc l-es">Un bot de Telegram que crea y publica una web a partir de un chat breve — tarjeta, página o sitio completo, en un minuto.</div>
+<div class="wbar"><div class="wbar-track"><div class="wbar-fill" style="width:85%"></div></div><span class="wbar-pct">85%</span></div><div class="wlinks"><a class="wlink" href="https://t.me/Juanitto_assist_bot" target="_blank" rel="noopener"><span class="l-en">→ Open the bot</span><span class="l-es">→ Abrir el bot</span></a><a class="wlink" href="https://graceful-rocket-4bwv.here.now/" target="_blank" rel="noopener"><span class="l-en">→ Tester guide</span><span class="l-es">→ Guía para testers</span></a></div>
 </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<div class="wcard">
+<div class="wcard-top"><span class="wcard-stage l-en">Deployed</span><span class="wcard-stage l-es">Desplegado</span></div>
+<div class="wcard-name l-en">AI Real-Estate Agency</div><div class="wcard-name l-es">Inmobiliaria con IA</div>
+<div class="wcard-desc l-en">An online estate agency run by one person and a team of AI agents — multilingual listings, 24/7 AI chat, agent portal, admin dashboard.</div>
+<div class="wcard-desc l-es">Una inmobiliaria online llevada por una persona y un equipo de agentes IA — anuncios multilingües, chat IA 24/7, portal de agentes, panel de administración.</div>
+<div class="wbar"><div class="wbar-track"><div class="wbar-fill" style="width:75%"></div></div><span class="wbar-pct">75%</span></div><div class="wlinks"><a class="wlink" href="https://viki-properties.vercel.app" target="_blank" rel="noopener"><span class="l-en">→ Try it live</span><span class="l-es">→ Probar en vivo</span></a><a class="wlink" href="https://ember-brook-9wrf.here.now/" target="_blank" rel="noopener"><span class="l-en">→ Proposal</span><span class="l-es">→ Propuesta</span></a></div>
+</div>
+<div class="wcard">
+<div class="wcard-top"><span class="wcard-stage early l-en">Beta</span><span class="wcard-stage early l-es">Beta</span></div>
+<div class="wcard-name">FooLab</div>
+<div class="wcard-desc l-en">Point your phone at a food label — get a NutriScore and red flags for palm oil, additives and allergens. Privacy-first PWA.</div>
+<div class="wcard-desc l-es">Apunta el móvil a una etiqueta — NutriScore y alertas de aceite de palma, aditivos y alérgenos. PWA con privacidad primero.</div>
+<div class="wbar"><div class="wbar-track"><div class="wbar-fill" style="width:70%"></div></div><span class="wbar-pct">70%</span></div><div class="wlinks"><a class="wlink" href="https://foo-lab.netlify.app" target="_blank" rel="noopener"><span class="l-en">→ Try it live</span><span class="l-es">→ Probar en vivo</span></a><a class="wlink" href="https://unfold-lagoon-rrt8.here.now/" target="_blank" rel="noopener"><span class="l-en">→ Tester guide</span><span class="l-es">→ Guía para testers</span></a></div>
+</div>
+<div class="wcard">
+<div class="wcard-top"><span class="wcard-stage early l-en">Beta</span><span class="wcard-stage early l-es">Beta</span></div>
+<div class="wcard-name">ValorApp</div>
+<div class="wcard-desc l-en">Photograph a second-hand item, get a fair resale price in seconds. Prepaid credits, 7 languages.</div>
+<div class="wcard-desc l-es">Fotografía un artículo de segunda mano y obtén un precio justo en segundos. Créditos prepago, 7 idiomas.</div>
+<div class="wbar"><div class="wbar-track"><div class="wbar-fill" style="width:70%"></div></div><span class="wbar-pct">70%</span></div><div class="wlinks"><a class="wlink" href="https://valor-app.netlify.app" target="_blank" rel="noopener"><span class="l-en">→ Try it live</span><span class="l-es">→ Probar en vivo</span></a><a class="wlink" href="https://deep-aurora-6tzt.here.now/" target="_blank" rel="noopener"><span class="l-en">→ Tester guide</span><span class="l-es">→ Guía para testers</span></a></div>
+</div>
+<div class="wcard">
+<div class="wcard-top"><span class="wcard-stage l-en">Operational</span><span class="wcard-stage l-es">Operativo</span></div>
+<div class="wcard-name l-en">The lab's own AI stack</div><div class="wcard-name l-es">El stack de IA del laboratorio</div>
+<div class="wcard-desc l-en">12 self-built AI connectors, always-on automation Workers, Telegram bots, on-premise agent servers and 40+ skills — image, video, 3D, publishing, remote shell, databases. The whole studio runs from one phone.</div>
+<div class="wcard-desc l-es">12 conectores de IA propios, Workers de automatización siempre activos, bots de Telegram, servidores de agentes en casa del cliente y 40+ skills — imagen, vídeo, 3D, publicación, shell remota, bases de datos. Todo el estudio funciona desde un móvil.</div>
+<div class="wlinks"><a class="wlink" href="https://stack.dav-llc.com/" target="_blank" rel="noopener"><span class="l-en">→ Explore the full stack</span><span class="l-es">→ Ver el stack completo</span></a></div>
+</div>
+</div>
+<button class="morebtn" id="m1-btn" onclick="tgMore('m1')"><span class="l-en lbl-more">▾ See 6 more apps</span><span class="l-es lbl-more">▾ Ver 6 apps más</span><span class="l-en lbl-less">▴ Show less</span><span class="l-es lbl-less">▴ Ver menos</span></button>
+<div class="more-grid" id="m1">
+<div class="wcard">
+<div class="wcard-top"><span class="wcard-stage early l-en">Building</span><span class="wcard-stage early l-es">En desarrollo</span></div>
+<div class="wcard-name l-en">Solidarity Shop App</div><div class="wcard-name l-es">App para tienda solidaria</div>
+<div class="wcard-desc l-en">AI photo pricing, volunteer PIN login and a multilingual catalogue for a charity second-hand shop.</div>
+<div class="wcard-desc l-es">Precios por foto con IA, acceso de voluntarios con PIN y catálogo multilingüe para una tienda solidaria de segunda mano.</div>
+<div class="wbar"><div class="wbar-track"><div class="wbar-fill" style="width:55%"></div></div><span class="wbar-pct">55%</span></div><div class="wlinks"><a class="wlink" href="https://love-me-again.vercel.app" target="_blank" rel="noopener"><span class="l-en">→ Try it live</span><span class="l-es">→ Probar en vivo</span></a><a class="wlink" href="https://vowful-cosmos-d7z3.here.now/" target="_blank" rel="noopener"><span class="l-en">→ Tester guide</span><span class="l-es">→ Guía para testers</span></a></div>
+</div>
+<div class="wcard">
+<div class="wcard-top"><span class="wcard-stage early l-en">v1 released</span><span class="wcard-stage early l-es">v1 publicada</span></div>
+<div class="wcard-name">ButterViz</div>
+<div class="wcard-desc l-en">Music-reactive visual art — 300+ presets, live bass &amp; BPM analysis. Web and Android.</div>
+<div class="wcard-desc l-es">Arte visual reactivo a la música — 300+ presets, análisis de graves y BPM. Web y Android.</div>
+<div class="wbar"><div class="wbar-track"><div class="wbar-fill" style="width:80%"></div></div><span class="wbar-pct">80%</span></div><div class="wlinks"><a class="wlink" href="https://butter-viz3.vercel.app/" target="_blank" rel="noopener"><span class="l-en">→ Try it live</span><span class="l-es">→ Probar en vivo</span></a></div>
+</div>
+<div class="wcard">
+<div class="wcard-top"><span class="wcard-stage early l-en">Deployed</span><span class="wcard-stage early l-es">Desplegado</span></div>
+<div class="wcard-name">Sacred Verse</div>
+<div class="wcard-desc l-en">Multi-faith scripture reader with AI-assisted commentary in several languages.</div>
+<div class="wcard-desc l-es">Lector de textos sagrados de varias tradiciones con comentario asistido por IA en varios idiomas.</div>
+<div class="wbar"><div class="wbar-track"><div class="wbar-fill" style="width:85%"></div></div><span class="wbar-pct">85%</span></div><div class="wlinks"><a class="wlink" href="https://sacred-verse.vercel.app" target="_blank" rel="noopener"><span class="l-en">→ Try it live</span><span class="l-es">→ Probar en vivo</span></a></div>
+</div>
+<div class="wcard">
+<div class="wcard-top"><span class="wcard-stage early l-en">Deployed</span><span class="wcard-stage early l-es">Desplegado</span></div>
+<div class="wcard-name">FlashMemo</div>
+<div class="wcard-desc l-en">Quick notes, tasks and reminders — PWA plus Android app.</div>
+<div class="wcard-desc l-es">Notas rápidas, tareas y recordatorios — PWA y app Android.</div>
+<div class="wbar"><div class="wbar-track"><div class="wbar-fill" style="width:80%"></div></div><span class="wbar-pct">80%</span></div><div class="wlinks"><a class="wlink" href="https://flash-note.netlify.app" target="_blank" rel="noopener"><span class="l-en">→ Try it live</span><span class="l-es">→ Probar en vivo</span></a></div>
+</div>
+<div class="wcard">
+<div class="wcard-top"><span class="wcard-stage early l-en">Prototype</span><span class="wcard-stage early l-es">Prototipo</span></div>
+<div class="wcard-name">Audio2Score</div>
+<div class="wcard-desc l-en">Turn a recording into sheet music — stem separation plus AI transcription.</div>
+<div class="wcard-desc l-es">Convierte una grabación en partitura — separación de pistas y transcripción con IA.</div>
+<div class="wbar"><div class="wbar-track"><div class="wbar-fill" style="width:50%"></div></div><span class="wbar-pct">50%</span></div><div class="wlinks"><a class="wlink" href="https://audio2score.netlify.app" target="_blank" rel="noopener"><span class="l-en">→ Try it live</span><span class="l-es">→ Probar en vivo</span></a></div>
+</div>
+<div class="wcard">
+<div class="wcard-top"><span class="wcard-stage early l-en">Building</span><span class="wcard-stage early l-es">En desarrollo</span></div>
+<div class="wcard-name">SketchpadAI</div>
+<div class="wcard-desc l-en">Infinite whiteboard where you describe a change in words and the AI draws it into your diagram.</div>
+<div class="wcard-desc l-es">Pizarra infinita: describes un cambio con palabras y la IA lo dibuja en tu diagrama.</div>
+<div class="wbar"><div class="wbar-track"><div class="wbar-fill" style="width:40%"></div></div><span class="wbar-pct">40%</span></div><div class="wlinks"><a class="wlink" href="https://sketchpad-ai.netlify.app" target="_blank" rel="noopener"><span class="l-en">→ Try it live</span><span class="l-es">→ Probar en vivo</span></a></div>
+</div>
+</div>
+<div class="oss-head"><span class="l-en">Open source</span><span class="l-es">Código abierto</span></div>
+<button class="morebtn" id="m4-btn" onclick="tgMore('m4')"><span class="l-en lbl-more">▾ See 5 open-source projects</span><span class="l-es lbl-more">▾ Ver 5 proyectos de código abierto</span><span class="l-en lbl-less">▴ Show less</span><span class="l-es lbl-less">▴ Ver menos</span></button>
+<div class="more-grid" id="m4">
+<div class="wcard">
+<div class="wcard-top"><span class="wcard-stage l-en">Working · v0.3.1</span><span class="wcard-stage l-es">Funciona · v0.3.1</span></div>
+<div class="wcard-name">Clide</div>
+<div class="wcard-desc l-en">Autonomous terminal agent in Rust — send plain-language commands from Telegram or Matrix, it runs them locally or over SSH and replies. Single static binary. MIT.</div>
+<div class="wcard-desc l-es">Agente de terminal autónomo en Rust — envías órdenes en lenguaje natural por Telegram o Matrix, las ejecuta en local o por SSH y responde. Un solo binario. MIT.</div>
+<div class="wbar"><div class="wbar-track"><div class="wbar-fill" style="width:75%"></div></div><span class="wbar-pct">75%</span></div><div class="wlinks"><a class="wlink" href="https://zippy-huckle-zwq5.here.now/" target="_blank" rel="noopener"><span class="l-en">→ Visit</span><span class="l-es">→ Visitar</span></a><a class="wlink" href="https://github.com/juanitto-maker/Clide" target="_blank" rel="noopener"><span class="l-en">→ Code</span><span class="l-es">→ Código</span></a></div>
+</div>
+<div class="wcard">
+<div class="wcard-top"><span class="wcard-stage l-en">Live</span><span class="wcard-stage l-es">En vivo</span></div>
+<div class="wcard-name">nano-banana-mcp</div>
+<div class="wcard-desc l-en">MCP connector exposing Gemini image generation and editing to Claude, running on a Cloudflare Worker — one of the lab's own connectors, published.</div>
+<div class="wcard-desc l-es">Conector MCP que da a Claude generación y edición de imágenes con Gemini, sobre un Cloudflare Worker — uno de los conectores propios del laboratorio, publicado.</div>
+<div class="wbar"><div class="wbar-track"><div class="wbar-fill" style="width:90%"></div></div><span class="wbar-pct">90%</span></div><div class="wlinks"><a class="wlink" href="https://github.com/juanitto-maker/nano-banana-mcp" target="_blank" rel="noopener"><span class="l-en">→ Code</span><span class="l-es">→ Código</span></a></div>
+</div>
+<div class="wcard">
+<div class="wcard-top"><span class="wcard-stage l-en">Active OSS</span><span class="wcard-stage l-es">OSS activo</span></div>
+<div class="wcard-name">AI Workbench</div>
+<div class="wcard-desc l-en">CLI toolkit orchestrating several AI providers with a generator–verifier loop and cost tracking; a headless backend fork drives bots and CI. GPL-3, runs in Termux.</div>
+<div class="wcard-desc l-es">Herramienta CLI que orquesta varios proveedores de IA con bucle generador–verificador y control de costes; un fork headless sirve de backend para bots y CI. GPL-3, funciona en Termux.</div>
+<div class="wbar"><div class="wbar-track"><div class="wbar-fill" style="width:65%"></div></div><span class="wbar-pct">65%</span></div><div class="wlinks"><a class="wlink" href="https://github.com/juanitto-maker/AIworkbench" target="_blank" rel="noopener"><span class="l-en">→ Code</span><span class="l-es">→ Código</span></a><a class="wlink" href="https://github.com/juanitto-maker/AIWB_Backend" target="_blank" rel="noopener"><span class="l-en">→ Backend</span><span class="l-es">→ Backend</span></a></div>
+</div>
+<div class="wcard">
+<div class="wcard-top"><span class="wcard-stage early l-en">Building</span><span class="wcard-stage early l-es">En desarrollo</span></div>
+<div class="wcard-name">AIsmartStorage</div>
+<div class="wcard-desc l-en">Privacy-first file organiser with two-tier on-device AI — Android APK, no cloud.</div>
+<div class="wcard-desc l-es">Organizador de archivos con IA en el dispositivo en dos niveles — APK Android, sin nube.</div>
+<div class="wbar"><div class="wbar-track"><div class="wbar-fill" style="width:45%"></div></div><span class="wbar-pct">45%</span></div><div class="wlinks"><a class="wlink" href="https://aismartstorage.netlify.app" target="_blank" rel="noopener"><span class="l-en">→ Try it live</span><span class="l-es">→ Probar en vivo</span></a><a class="wlink" href="https://github.com/juanitto-maker/AIsmartStorage" target="_blank" rel="noopener"><span class="l-en">→ Code</span><span class="l-es">→ Código</span></a></div>
+</div>
+<div class="wcard">
+<div class="wcard-top"><span class="wcard-stage early l-en">Design docs</span><span class="wcard-stage early l-es">Documentación</span></div>
+<div class="wcard-name">GuardOS</div>
+<div class="wcard-desc l-en">AI-armoured personal OS — architecture, threat model and roadmap published; implementation not started yet.</div>
+<div class="wcard-desc l-es">SO personal blindado con IA — arquitectura, modelo de amenazas y hoja de ruta publicados; implementación aún sin empezar.</div>
+<div class="wbar"><div class="wbar-track"><div class="wbar-fill" style="width:10%"></div></div><span class="wbar-pct">10%</span></div><div class="wlinks"><a class="wlink" href="https://flint-denim-q8ae.here.now/" target="_blank" rel="noopener"><span class="l-en">→ Visit</span><span class="l-es">→ Visitar</span></a><a class="wlink" href="https://github.com/juanitto-maker/GuardOS" target="_blank" rel="noopener"><span class="l-en">→ Code</span><span class="l-es">→ Código</span></a></div>
+</div>
+</div>
+</div>
+</div>
 
+<div class="pillar rv" id="p2">
+<div class="pillar-hit" onclick="tgPillar('p2')">
+<span class="pillar-num">10</span>
+<div class="pillar-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3"/><path d="M9.7 17h4.6"/></svg></div>
+<h3 class="l-en">Inventions &amp; Deep Concepts</h3><h3 class="l-es">Invenciones y conceptos</h3>
+<p class="l-en">Arctic housing, underwater datacenters and power, open protocols — published as prior art, engaged per-project.</p>
+<p class="l-es">Vivienda ártica, centros de datos y energía submarinos, protocolos abiertos — publicados como arte previo, abordables por proyecto.</p>
+<span class="pchev">▾</span>
+</div>
+<div class="stage1">
+<div class="work-grid">
+<a class="wcard" href="https://silver-summit-nzq3.here.now/" target="_blank">
+<div class="wcard-top"><span class="wcard-stage">Zenodo</span></div>
+<div class="wcard-name">DeepData</div>
+<div class="wcard-desc l-en">Submersible datacenter with passive lake-water cooling. Defensive publication.</div>
+<div class="wcard-desc l-es">Centro de datos sumergible con refrigeración pasiva. Publicación defensiva.</div>
+<div class="wcard-go">→ VISIT</div>
+</a>
+<a class="wcard" href="https://awake-drift-nnxe.here.now/" target="_blank">
+<div class="wcard-top"><span class="wcard-stage">Zenodo</span></div>
+<div class="wcard-name">DeepCore Power</div>
+<div class="wcard-desc l-en">Modular underwater nuclear power plant. Defensive publication.</div>
+<div class="wcard-desc l-es">Central nuclear modular submarina. Publicación defensiva.</div>
+<div class="wcard-go">→ VISIT</div>
+</a>
+<a class="wcard" href="https://poppy-ferry-98zk.here.now/" target="_blank">
+<div class="wcard-top"><span class="wcard-stage l-en">Active concept</span><span class="wcard-stage l-es">Concepto activo</span></div>
+<div class="wcard-name">Arctic Shield</div>
+<div class="wcard-desc l-en">Double-dome Arctic housing that insulates itself with seasonal snow.</div>
+<div class="wcard-desc l-es">Vivienda ártica de doble cúpula que se aísla con nieve estacional.</div>
+<div class="wcard-go">→ VISIT</div>
+</a>
+</div>
+<button class="morebtn" id="m2-btn" onclick="tgMore('m2')"><span class="l-en lbl-more">▾ See 7 more concepts</span><span class="l-es lbl-more">▾ Ver 7 conceptos más</span><span class="l-en lbl-less">▴ Show less</span><span class="l-es lbl-less">▴ Ver menos</span></button>
+<div class="more-grid" id="m2">
+<a class="wcard" href="https://fancy-atlas-w49b.here.now/" target="_blank">
+<div class="wcard-top"><span class="wcard-stage early l-en">Pilot path</span><span class="wcard-stage early l-es">Vía piloto</span></div>
+<div class="wcard-name">PearlShell</div>
+<div class="wcard-desc l-en">Rapid insulated shelter: tunnel frame + perlite-filled jute bags.</div>
+<div class="wcard-desc l-es">Refugio aislado rápido: estructura de túnel + sacos de yute con perlita.</div>
+<div class="wcard-go">→ VISIT</div>
+</a>
+<a class="wcard" href="https://vivid-parcel-87dn.here.now/" target="_blank">
+<div class="wcard-top"><span class="wcard-stage early l-en">Prototype planned</span><span class="wcard-stage early l-es">Prototipo previsto</span></div>
+<div class="wcard-name">MULA</div>
+<div class="wcard-desc l-en">Twin-bike electric mountain ATV, buildable without welding.</div>
+<div class="wcard-desc l-es">Quad eléctrico de montaña de doble bicicleta, construible sin soldadura.</div>
+<div class="wcard-go">→ VISIT</div>
+</a>
+<a class="wcard" href="https://silken-jungle-kpeq.here.now/" target="_blank">
+<div class="wcard-top"><span class="wcard-stage early l-en">Concept</span><span class="wcard-stage early l-es">Concepto</span></div>
+<div class="wcard-name">VacOil</div>
+<div class="wcard-desc l-en">Ultra-high-quality vacuum olive-oil plant system; mill pilot programme drafted.</div>
+<div class="wcard-desc l-es">Sistema de aceite de oliva al vacío de calidad ultra-alta; programa piloto para almazaras.</div>
+<div class="wcard-go">→ VISIT</div>
+</a>
+<a class="wcard" href="https://silent-island-f42b.here.now/" target="_blank">
+<div class="wcard-top"><span class="wcard-stage early l-en">Open protocol</span><span class="wcard-stage early l-es">Protocolo abierto</span></div>
+<div class="wcard-name">Tessera Open Protocol</div>
+<div class="wcard-desc l-en">Federated privacy-preserving resource routing — identity, broker, governance.</div>
+<div class="wcard-desc l-es">Enrutado federado de recursos con privacidad — identidad, intermediación, gobernanza.</div>
+<div class="wcard-go">→ VISIT</div>
+</a>
+<a class="wcard" href="https://lapis-nutmeg-fzyd.here.now/" target="_blank">
+<div class="wcard-top"><span class="wcard-stage early l-en">Concept</span><span class="wcard-stage early l-es">Concepto</span></div>
+<div class="wcard-name">Aegis Forest Sentinel</div>
+<div class="wcard-desc l-en">Distributed sentinel network for early wildfire detection.</div>
+<div class="wcard-desc l-es">Red distribuida de centinelas para detección temprana de incendios forestales.</div>
+<div class="wcard-go">→ VISIT</div>
+</a>
+<a class="wcard" href="https://mellow-opera-ef6z.here.now/" target="_blank">
+<div class="wcard-top"><span class="wcard-stage early l-en">Concept</span><span class="wcard-stage early l-es">Concepto</span></div>
+<div class="wcard-name">ALLVOLT</div>
+<div class="wcard-desc l-en">Universal battery backpack system — one pack, many machines.</div>
+<div class="wcard-desc l-es">Sistema universal de batería en mochila — una batería, muchas máquinas.</div>
+<div class="wcard-go">→ VISIT</div>
+</a>
+<a class="wcard" href="https://lusty-igloo-mf5b.here.now/" target="_blank">
+<div class="wcard-top"><span class="wcard-stage early l-en">Concept</span><span class="wcard-stage early l-es">Concepto</span></div>
+<div class="wcard-name">Spiral Electric Rail Farm</div>
+<div class="wcard-desc l-en">Vertical spiral farming on an electric rail — land-light food production.</div>
+<div class="wcard-desc l-es">Cultivo en espiral vertical sobre raíl eléctrico — producción de alimentos con poco suelo.</div>
+<div class="wcard-go">→ VISIT</div>
+</a>
+</div>
+</div>
+</div>
+<div class="pillar rv" id="p3">
+<div class="pillar-hit" onclick="tgPillar('p3')">
+<span class="pillar-num">6</span>
+<div class="pillar-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M3 10h18"/><path d="M5 6l7 -3l7 3"/><path d="M4 10v11"/><path d="M20 10v11"/><path d="M8 14v3"/><path d="M12 14v3"/><path d="M16 14v3"/></svg></div>
+<h3 class="l-en">Architecture &amp; Habitat</h3><h3 class="l-es">Arquitectura y hábitat</h3>
+<p class="l-en">Lime-aircrete domes, adaptive facades, seismic retrofit — material systems tested on real ground in the Alpujarra.</p>
+<p class="l-es">Cúpulas de aircrete de cal, fachadas adaptativas, refuerzo sísmico — sistemas de materiales probados sobre terreno real en la Alpujarra.</p>
+<span class="pchev">▾</span>
+</div>
+<div class="stage1">
+<div class="work-grid">
+<a class="wcard" href="https://amoraleza.com" target="_blank">
+<div class="wcard-top"><span class="wcard-stage l-en">Active</span><span class="wcard-stage l-es">Activo</span></div>
+<div class="wcard-name l-en">Healing-Retreat Ecobuild</div><div class="wcard-name l-es">Ecoconstrucción para retiros</div>
+<div class="wcard-desc l-en">A healing-retreat place in the mountains — lime, aircrete and local material systems, built for real.</div>
+<div class="wcard-desc l-es">Un lugar de retiros en la montaña — cal, aircrete y materiales locales, construido de verdad.</div>
+<div class="wcard-go">→ VISIT</div>
+</a>
+<a class="wcard" href="https://steady-basin-qrq7.here.now/" target="_blank">
+<div class="wcard-top"><span class="wcard-stage l-en">Feasibility</span><span class="wcard-stage l-es">Viabilidad</span></div>
+<div class="wcard-name">Aircrete NHL Dome</div>
+<div class="wcard-desc l-en">Lime-aircrete dome system — gang-moulded bricks, structural studies.</div>
+<div class="wcard-desc l-es">Sistema de cúpulas en aircrete de cal — ladrillos en molde múltiple, estudios estructurales.</div>
+<div class="wcard-go">→ VISIT</div>
+</a>
+</div>
+<button class="morebtn" id="m3-btn" onclick="tgMore('m3')"><span class="l-en lbl-more">▾ See 4 more concepts</span><span class="l-es lbl-more">▾ Ver 4 conceptos más</span><span class="l-en lbl-less">▴ Show less</span><span class="l-es lbl-less">▴ Ver menos</span></button>
+<div class="more-grid" id="m3">
+<a class="wcard" href="https://quartz-rapids-jgdt.here.now/" target="_blank">
+<div class="wcard-top"><span class="wcard-stage early l-en">Concept</span><span class="wcard-stage early l-es">Concepto</span></div>
+<div class="wcard-name">AL·aVela</div>
+<div class="wcard-desc l-en">Vertical bi-fold facade — adaptive shading for hot, sunny climates.</div>
+<div class="wcard-desc l-es">Fachada plegable vertical — sombreado adaptativo para climas cálidos y soleados.</div>
+<div class="wcard-go">→ VISIT</div>
+</a>
+<a class="wcard" href="https://calm-sage-49wp.here.now/" target="_blank">
+<div class="wcard-top"><span class="wcard-stage early l-en">Concept</span><span class="wcard-stage early l-es">Concepto</span></div>
+<div class="wcard-name">Survival Spine</div>
+<div class="wcard-desc l-en">Life-safety seismic retrofit spine for vulnerable housing.</div>
+<div class="wcard-desc l-es">Espina de refuerzo sísmico para vivienda vulnerable.</div>
+<div class="wcard-go">→ VISIT</div>
+</a>
+<a class="wcard" href="https://orchid-bonnet-kgvh.here.now/" target="_blank">
+<div class="wcard-top"><span class="wcard-stage early l-en">Lab samples</span><span class="wcard-stage early l-es">Muestras de laboratorio</span></div>
+<div class="wcard-name">Hempcrete Block Lab</div>
+<div class="wcard-desc l-en">Hemp · lime · gypsum block system — sample and testing plan.</div>
+<div class="wcard-desc l-es">Sistema de bloques cáñamo · cal · yeso — plan de muestras y ensayos.</div>
+<div class="wcard-go">→ VISIT</div>
+</a>
+<a class="wcard" href="https://tawny-oasis-rm9y.here.now/" target="_blank">
+<div class="wcard-top"><span class="wcard-stage early l-en">Concept</span><span class="wcard-stage early l-es">Concepto</span></div>
+<div class="wcard-name">ECO PCM Panels</div>
+<div class="wcard-desc l-en">Modular DIY phase-change insulation panels.</div>
+<div class="wcard-desc l-es">Paneles aislantes modulares DIY con materiales de cambio de fase.</div>
+<div class="wcard-go">→ VISIT</div>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
 <section style="padding-top:0">
-  <div class="container">
-    <div class="stats-strip">
-      <div class="stat-box rv"><div class="stat-num">64+</div><div class="stat-lbl l-en">published projects &amp; concepts</div><div class="stat-lbl l-es">proyectos y conceptos publicados</div></div>
-      <div class="stat-box rv"><div class="stat-num">2</div><div class="stat-lbl l-en">defensive publications on Zenodo</div><div class="stat-lbl l-es">publicaciones defensivas en Zenodo</div></div>
-      <div class="stat-box rv"><div class="stat-num">3</div><div class="stat-lbl l-en">client systems delivered or in production</div><div class="stat-lbl l-es">sistemas de cliente entregados o en producción</div></div>
-      <div class="stat-box rv"><div class="stat-num">30+</div><div class="stat-lbl l-en">self-built AI skills &amp; connectors</div><div class="stat-lbl l-es">skills y conectores de IA propios</div></div>
-    </div>
-  </div>
-</section>
-
-<section class="partner">
-  <div class="container">
-    <div class="eyebrow l-en">Partners &amp; investors</div>
-    <div class="eyebrow l-es">Socios e inversores</div>
-    <h2 class="l-en">Every project can be engaged on its own</h2>
-    <h2 class="l-es">Cada proyecto puede abordarse por separado</h2>
-    <p class="l-en">Pilots, licensing, joint ventures, ground and building partnerships, or investment — each project has its own path, and the lab structure keeps every deal simple: one LLC, one person to talk to, everything already published and verifiable. If something on this page made you stop scrolling, that is the project to write about.</p>
-    <p class="l-es">Pilotos, licencias, joint ventures, alianzas de terreno y construcción, o inversión — cada proyecto tiene su propio camino, y la estructura del laboratorio mantiene cada acuerdo simple: una LLC, una persona con quien hablar, todo publicado y verificable. Si algo en esta página te ha hecho parar de hacer scroll, ese es el proyecto sobre el que escribir.</p>
-    <div class="partner-cta">
-      <a class="btn btn-solid l-en" href="https://glacial-jubilee-wqn8.here.now/" target="_blank">Partner Program</a>
-      <a class="btn btn-solid l-es" href="https://glacial-jubilee-wqn8.here.now/" target="_blank">Programa de socios</a>
-      <button class="btn btn-ghost l-en" onclick="document.getElementById('cd').classList.add('open')">Write directly</button>
-      <button class="btn btn-ghost l-es" onclick="document.getElementById('cd').classList.add('open')">Escribir directamente</button>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="imprint">
-    <a class="clink cflink">digitalAIventures LLC</a> · Alexandru-Ioan Nistoroiu · Sheridan, Wyoming, USA<br>
-    <span class="l-en">Signed in the Alpujarras as <em>Juanitto Calvares</em> · <a href="https://amber-kitten-4khe.here.now/" target="_blank">full lab index</a> · © 2026</span>
-    <span class="l-es">Firmado en la Alpujarra como <em>Juanitto Calvares</em> · <a href="https://amber-kitten-4khe.here.now/" target="_blank">índice completo del laboratorio</a> · © 2026</span>
-  </div>
-</footer>
-
-<div class="dialog-overlay" id="cd" onclick="if(event.target===this)this.classList.remove('open')">
-  <div class="dialog-box">
-    <h4 class="l-en">Get in Touch</h4>
-    <h4 class="l-es">Contacto</h4>
-    <a class="dialog-option dialog-bot"  href="https://t.me/Juanitto_assist_bot" target="_blank">🤖 AI Assist 24/7</a>
-    <a class="dialog-option dialog-tg"   href="https://t.me/JuanittoCalvares" target="_blank">✈ Personal</a>
-    <a class="dialog-option dialog-mail" href="mailto:contact@dav-llc.com">✉ contact@dav-llc.com</a>
-    <button class="dialog-close" onclick="document.getElementById('cd').classList.remove('open')">Close</button>
-  </div>
+<div class="container">
+<div class="stats-strip">
+<div class="stat-box rv"><div class="stat-num">70+</div><div class="stat-lbl l-en">published projects &amp; concepts</div><div class="stat-lbl l-es">proyectos y conceptos publicados</div></div>
+<div class="stat-box rv"><div class="stat-num">2</div><div class="stat-lbl l-en">defensive publications on Zenodo</div><div class="stat-lbl l-es">publicaciones defensivas en Zenodo</div></div>
+<div class="stat-box rv"><div class="stat-num">3</div><div class="stat-lbl l-en">client systems delivered or in production</div><div class="stat-lbl l-es">sistemas de cliente entregados o en producción</div></div>
+<div class="stat-box rv"><div class="stat-num">50+</div><div class="stat-lbl l-en">self-built AI skills &amp; connectors</div><div class="stat-lbl l-es">skills y conectores de IA propios</div></div>
 </div>
-
+</div>
+</section>
+<section class="partner">
+<div class="container">
+<div class="eyebrow l-en">Partners &amp; investors</div>
+<div class="eyebrow l-es">Socios e inversores</div>
+<h2 class="l-en">Every project can be engaged on its own</h2>
+<h2 class="l-es">Cada proyecto puede abordarse por separado</h2>
+<p class="l-en">Pilots, licensing, joint ventures, ground and building partnerships, or investment — each project has its own path, and the lab structure keeps every deal simple: one LLC, one person to talk to, everything already published and verifiable. If something on this page made you stop scrolling, that is the project to write about.</p>
+<p class="l-es">Pilotos, licencias, joint ventures, alianzas de terreno y construcción, o inversión — cada proyecto tiene su propio camino, y la estructura del laboratorio mantiene cada acuerdo simple: una LLC, una persona con quien hablar, todo publicado y verificable. Si algo en esta página te ha hecho parar de hacer scroll, ese es el proyecto sobre el que escribir.</p>
+<div class="partner-cta">
+<a class="btn btn-solid l-en" href="https://glacial-jubilee-wqn8.here.now/" target="_blank">Partner Program</a>
+<a class="btn btn-solid l-es" href="https://glacial-jubilee-wqn8.here.now/" target="_blank">Programa de socios</a>
+<button class="btn btn-ghost l-en" onclick="document.getElementById('cd').classList.add('open')">Write directly</button>
+<button class="btn btn-ghost l-es" onclick="document.getElementById('cd').classList.add('open')">Escribir directamente</button>
+</div>
+</div>
+</section>
+<footer>
+<div class="imprint">
+<a class="clink cflink">digitalAIventures LLC</a> · Alexandru-Ioan Nistoroiu · Sheridan, Wyoming, USA<br>
+<span class="l-en">Signed in the Alpujarras as <em>Juanitto Calvares</em> · © 2026</span>
+<span class="l-es">Firmado en la Alpujarra como <em>Juanitto Calvares</em> · © 2026</span>
+</div>
+</footer>
+<div class="dialog-overlay" id="cd" onclick="if(event.target===this)this.classList.remove('open')">
+<div class="dialog-box">
+<h4 class="l-en">Get in Touch</h4>
+<h4 class="l-es">Contacto</h4>
+<a class="dialog-option dialog-bot"  href="https://t.me/Juanitto_assist_bot" target="_blank">🤖 AI Assist 24/7</a>
+<a class="dialog-option dialog-tg"   href="https://t.me/JuanittoCalvares" target="_blank">✈ Personal</a>
+<a class="dialog-option dialog-mail" href="mailto:contact@dav-llc.com">✉ contact@dav-llc.com</a>
+<button class="dialog-close" onclick="document.getElementById('cd').classList.remove('open')">Close</button>
+</div>
+</div>
 <script>
 function setLang(l){
-  document.documentElement.setAttribute("data-lang", l);
-  document.getElementById("lb-en").classList.toggle("on", l === "en");
-  document.getElementById("lb-es").classList.toggle("on", l === "es");
-  document.documentElement.lang = l;
+document.documentElement.setAttribute("data-lang", l);
+document.getElementById("lb-en").classList.toggle("on", l === "en");
+document.getElementById("lb-es").classList.toggle("on", l === "es");
+document.documentElement.lang = l;
 }
 function tglTheme(){
-  var h = document.documentElement;
-  var next = h.getAttribute("data-theme") === "dark" ? "light" : "dark";
-  h.setAttribute("data-theme", next);
-  document.getElementById("ti").textContent = next === "dark" ? "\u2600\uFE0F" : "\uD83C\uDF19";
+var h = document.documentElement;
+var next = h.getAttribute("data-theme") === "dark" ? "light" : "dark";
+h.setAttribute("data-theme", next);
+document.getElementById("ti").textContent = next === "dark" ? "\u2600\uFE0F" : "\uD83C\uDF19";
 }
 function tgPillar(id){
-  document.getElementById(id).classList.toggle("open");
+document.getElementById(id).classList.toggle("open");
 }
 function tgMore(id){
-  document.getElementById(id).classList.toggle("open");
-  document.getElementById(id + "-btn").classList.toggle("open");
+document.getElementById(id).classList.toggle("open");
+document.getElementById(id + "-btn").classList.toggle("open");
 }
 var io = new IntersectionObserver(function(entries){
-  entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("vis"); io.unobserve(e.target); } });
+entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("vis"); io.unobserve(e.target); } });
 }, {rootMargin: "-10% 0px"});
 document.querySelectorAll(".rv").forEach(function(el){ io.observe(el); });
 document.querySelectorAll(".cflink").forEach(function(a){ a.onclick = function(){ document.getElementById("cd").classList.add("open"); }; });
