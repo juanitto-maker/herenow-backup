@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Episode Timeline Checker v2</title>
+<style>
+  :root { --bg:#0b0b0d; --fg:rgba(255,255,255,0.92); --accent:#e8543a; --panel:#16161a; }
+  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --bg:#f4f4f5; --fg:#1a1a1a; --panel:#ffffff; } }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; min-height:100%; }
+  .wrap { max-width:480px; margin:0 auto; padding:16px; }
+  h1 { font-size:1.1rem; font-weight:600; margin:8px 0 4px; }
+  p.sub { color:rgba(128,128,128,0.9); font-size:0.85rem; margin:0 0 16px; }
+  .videowrap { position:relative; width:100%; min-height:200px; border-radius:10px; overflow:hidden; background:#000; }
+  video { width:100%; max-width:100%; border-radius:10px; background:#000; display:block; }
+  .loading { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; background:#000; color:rgba(255,255,255,0.92); transition:opacity 0.25s ease; z-index:2; }
+  .loading.hidden { opacity:0; pointer-events:none; }
+  .spinner-pct { font-family:"SF Mono",Menlo,Consolas,monospace; font-size:1.8rem; font-weight:700; }
+  .loading-label { font-size:0.85rem; color:rgba(255,255,255,0.6); }
+  .barTrack { width:70%; height:6px; border-radius:4px; background:rgba(255,255,255,0.15); overflow:hidden; }
+  .barFill { height:100%; width:0%; background:var(--accent); transition:width 0.15s linear; }
+  .timecode-bar { display:flex; align-items:center; justify-content:space-between; background:var(--panel); border-radius:10px; padding:12px 16px; margin-top:10px; gap:10px; }
+  .tc { font-family:"SF Mono",Menlo,Consolas,monospace; font-size:1.6rem; font-weight:700; letter-spacing:0.5px; }
+  .tc .frac { font-size:1rem; opacity:0.7; }
+  button { background:var(--accent); color:white; border:none; border-radius:8px; padding:10px 16px; font-size:0.95rem; font-weight:600; -webkit-tap-highlight-color:transparent; }
+  button:disabled { opacity:0.4; }
+  button:active { opacity:0.8; }
+  .copied { font-size:0.8rem; color:var(--accent); text-align:right; height:1em; margin-top:4px; }
+  .controls { display:flex; gap:6px; margin-top:8px; }
+  .controls button.secondary { background:var(--panel); color:var(--fg); border:1px solid rgba(128,128,128,0.3); flex:1 1 0; padding:10px 2px; font-size:0.78rem; border-radius:8px; }
+  .frame-row { margin-top:8px; }
+  .frame-row .frame-btn { width:100%; background:var(--panel); color:var(--fg); border:1px solid rgba(232,84,58,0.5); padding:10px 2px; font-size:0.85rem; border-radius:8px; }
+  .hint { font-size:0.8rem; color:rgba(128,128,128,0.9); margin-top:14px; line-height:1.4; }
+  .filelabel { font-size:0.8rem; color:rgba(128,128,128,0.8); margin-top:4px; word-break:break-all; }
+</style>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b0e105d3195f435e8604d69624ef01b1"}'></script><!-- End Cloudflare Web Analytics --><meta property="og:title" content="Episode Timeline Checker" />
+<meta property="og:description" content="A tool for precise video frame navigation and timestamp extraction for episode analysis." />
+<meta property="og:url" content="https://thorny-laurel-r54k.here.now/" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://here.now/og/thorny-laurel-r54k.jpg" />
+<meta property="og:image:width" content="1280" />
+<meta property="og:image:height" content="720" />
+<meta name="twitter:image" content="https://here.now/og/thorny-laurel-r54k.jpg" />
+<meta name="twitter:card" content="summary_large_image" /></head>
+<body>
+<div class="wrap">
+  <h1>Episode Timeline Checker</h1>
+  <p class="sub">Loads fully first, then scrubs smoothly — no mid-scrub buffering.</p>
+  <div class="videowrap">
+    <video id="v" controls playsinline webkit-playsinline preload="auto"></video>
+    <div class="loading" id="loadingOverlay">
+      <div class="spinner-pct" id="pct">0%</div>
+      <div class="barTrack"><div class="barFill" id="barFill"></div></div>
+      <div class="loading-label" id="loadingLabel">Loading video…</div>
+    </div>
+  </div>
+  <div class="filelabel" id="fileLabel"></div>
+  <div class="timecode-bar">
+    <div class="tc" id="tc">0:00<span class="frac">.00</span></div>
+    <button onclick="copyTC()" id="copyBtn" disabled>Copy timestamp</button>
+  </div>
+  <div class="copied" id="copiedMsg"></div>
+  <div class="frame-row"><button class="secondary frame-btn" onclick="step(-1)" disabled data-gated>« step back 1 frame</button></div>
+  <div class="controls">
+    <button class="secondary" onclick="nudge(-10)" disabled data-gated>-10s</button>
+    <button class="secondary" onclick="nudge(-5)" disabled data-gated>-5s</button>
+    <button class="secondary" onclick="nudge(-2)" disabled data-gated>-2s</button>
+    <button class="secondary" onclick="nudge(-1.5)" disabled data-gated>-1.5s</button>
+    <button class="secondary" onclick="nudge(-1)" disabled data-gated>-1s</button>
+    <button class="secondary" onclick="nudge(-0.5)" disabled data-gated>-0.5s</button>
+  </div>
+  <div class="controls">
+    <button class="secondary" onclick="nudge(10)" disabled data-gated>+10s</button>
+    <button class="secondary" onclick="nudge(5)" disabled data-gated>+5s</button>
+    <button class="secondary" onclick="nudge(2)" disabled data-gated>+2s</button>
+    <button class="secondary" onclick="nudge(1.5)" disabled data-gated>+1.5s</button>
+    <button class="secondary" onclick="nudge(1)" disabled data-gated>+1s</button>
+    <button class="secondary" onclick="nudge(0.5)" disabled data-gated>+0.5s</button>
+  </div>
+  <div class="frame-row"><button class="secondary frame-btn" onclick="step(1)" disabled data-gated>step forward 1 frame »</button></div>
+  <p class="hint">Tap play, scrub the bar, or use the frame/±0.5s buttons to land exactly on the problem frame. The big number updates live. Tap "Copy timestamp" then paste it in chat, e.g. <em>"at 1:14.29 the hat is wrong."</em></p>
+</div>
+<script>
+  // v2 (rr-s23): full preload into a blob before playback. Video comes from ?src=<url>.
+  const VIDEO_URL = new URLSearchParams(location.search).get('src') || "__VIDEO_URL__";
+  const tcEl = document.getElementById('tc');
+  const video = document.getElementById('v');
+  const overlay = document.getElementById('loadingOverlay');
+  const pctEl = document.getElementById('pct');
+  const barFill = document.getElementById('barFill');
+  const loadingLabel = document.getElementById('loadingLabel');
+  const FPS = 24;
+  document.getElementById('fileLabel').textContent = decodeURIComponent(VIDEO_URL.split('/').pop().split('?')[0]) + '  ·  tool v2 (preload)';
+  function fmt(t){const m=Math.floor(t/60);const s=t-m*60;const w=Math.floor(s);const f=Math.round((s-w)*100);return m+':'+String(w).padStart(2,'0')+'.'+String(f).padStart(2,'0');}
+  function update(){const t=video.currentTime;const m=Math.floor(t/60);const s=t-m*60;const w=Math.floor(s);const f=Math.round((s-w)*100);tcEl.innerHTML=m+':'+String(w).padStart(2,'0')+'<span class="frac">.'+String(f).padStart(2,'0')+'</span>';}
+  video.addEventListener('timeupdate', update);
+  video.addEventListener('seeked', update);
+  video.addEventListener('loadedmetadata', update);
+  function step(dir){video.currentTime=Math.max(0,video.currentTime+dir/FPS);}
+  function nudge(sec){video.currentTime=Math.max(0,video.currentTime+sec);}
+  function copyTC(){const text=fmt(video.currentTime);const msg=document.getElementById('copiedMsg');const finish=(ok)=>{msg.textContent=ok?('Copied: '+text):('Timestamp: '+text+' (copy failed, select manually)');setTimeout(()=>{msg.textContent='';},3000);};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(()=>finish(true)).catch(()=>finish(false));}else{finish(false);}}
+  function enableControls(){document.querySelectorAll('[data-gated]').forEach(b=>b.disabled=false);document.getElementById('copyBtn').disabled=false;}
+  function revealPlayer(){overlay.classList.add('hidden');enableControls();}
+  async function preloadFull(){
+    if (VIDEO_URL.indexOf('__VIDEO_URL__') !== -1) { loadingLabel.textContent = 'No video: open with ?src=<video url>'; pctEl.textContent = '—'; return; }
+    try {
+      const res = await fetch(VIDEO_URL);
+      if (!res.ok || !res.body) throw new Error('fetch failed: ' + res.status);
+      const total = parseInt(res.headers.get('Content-Length') || '0', 10);
+      const reader = res.body.getReader();
+      const chunks = []; let received = 0;
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        chunks.push(value); received += value.length;
+        if (total) { const pct = Math.min(100, Math.round((received/total)*100)); pctEl.textContent = pct + '%'; barFill.style.width = pct + '%'; }
+        else { pctEl.textContent = (received/1e6).toFixed(1) + ' MB'; }
+      }
+      loadingLabel.textContent = 'Preparing…';
+      const blob = new Blob(chunks, { type: 'video/mp4' });
+      video.src = URL.createObjectURL(blob);
+      video.addEventListener('loadedmetadata', revealPlayer, { once: true });
+      video.load();
+    } catch (err) {
+      loadingLabel.textContent = 'Streaming (preload unavailable)…';
+      video.src = VIDEO_URL;
+      video.addEventListener('loadedmetadata', revealPlayer, { once: true });
+      video.load();
+    }
+  }
+  preloadFull();
+</script>
+</body>
+</html>

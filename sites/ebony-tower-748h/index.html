@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La Retama — Catálogo online (prueba)</title>
+<style>
+:root, [data-theme="light"] {
+  --bg:#faf6ef; --bg-card:#fff;
+  --bg-hero:linear-gradient(160deg,#f0ebe0,#faf6ef);
+  --text:#3a2f1f; --text-m:#7a6a52; --text-h:#2a1f10;
+  --border:#e8e2d6;
+  --accent:#6b7a2e; --accent-d:#54611f;
+  --ac2:#a67048;
+  --warn-bg:#fff4e0; --warn-text:#8a5a00;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#1a1510; --bg-card:#252015;
+    --bg-hero:linear-gradient(160deg,#201a10,#1a1510);
+    --text:#e2d8c8; --text-m:#9a8a72; --text-h:#f0e8d8;
+    --border:#3a3025;
+    --accent:#9db349; --accent-d:#7c8f3a;
+    --ac2:#c98f5e;
+    --warn-bg:#3a2a10; --warn-text:#e0b060;
+  }
+}
+[data-theme="dark"] {
+  --bg:#1a1510; --bg-card:#252015;
+  --bg-hero:linear-gradient(160deg,#201a10,#1a1510);
+  --text:#e2d8c8; --text-m:#9a8a72; --text-h:#f0e8d8;
+  --border:#3a3025;
+  --accent:#9db349; --accent-d:#7c8f3a;
+  --ac2:#c98f5e;
+  --warn-bg:#3a2a10; --warn-text:#e0b060;
+}
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: 'Georgia', 'Iowan Old Style', serif;
+  min-height: 100%;
+}
+header {
+  background: var(--bg-hero); padding: 28px 20px 20px;
+  border-bottom: 1px solid var(--border);
+  padding-top: calc(28px + env(safe-area-inset-top, 0px));
+}
+header .tag {
+  display: inline-block; font-size: 0.72rem; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--warn-text); background: var(--warn-bg);
+  padding: 3px 10px; border-radius: 999px; margin-bottom: 10px;
+}
+h1 { margin: 0 0 4px; color: var(--text-h); font-size: 1.5rem; }
+header p { margin: 0; color: var(--text-m); font-size: 0.95rem; }
+main { max-width: 480px; margin: 0 auto; padding: 16px; padding-bottom: 140px; }
+.card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+  padding: 14px 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px;
+}
+.card .info { flex: 1; min-width: 0; }
+.card .name { font-weight: 600; color: var(--text-h); font-size: 0.98rem; }
+.card .meta { color: var(--text-m); font-size: 0.85rem; margin-top: 2px; }
+.stepper { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.stepper button {
+  width: 34px; height: 34px; border-radius: 999px; border: 1px solid var(--border);
+  background: var(--bg); color: var(--accent-d); font-size: 1.1rem; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.stepper button:active { background: var(--accent); color: #fff; }
+.stepper .qty { min-width: 20px; text-align: center; font-weight: 600; }
+footer {
+  position: fixed; left: 0; right: 0; bottom: 0; background: var(--bg-card);
+  border-top: 1px solid var(--border); padding: 14px 20px;
+  padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+}
+.footer-row { max-width: 480px; margin: 0 auto; display: flex; align-items: center; gap: 14px; }
+.total { flex: 1; }
+.total .lbl { color: var(--text-m); font-size: 0.78rem; }
+.total .amt { color: var(--text-h); font-size: 1.15rem; font-weight: 700; }
+.send {
+  background: var(--accent); color: #fff; border: none; padding: 12px 22px;
+  border-radius: 10px; font-size: 0.95rem; font-weight: 600; cursor: pointer;
+}
+.send:disabled, .send[aria-disabled="true"] { background: var(--border); color: var(--text-m); cursor: not-allowed; pointer-events: none; }
+a.send { text-decoration: none; display: inline-block; }
+.send.alt { background: transparent; color: var(--accent-d); border: 1px solid var(--border); }
+.fallback { max-width: 480px; margin: 10px auto 0; font-size: 0.8rem; color: var(--text-m); display: none; }
+.fallback code { user-select: all; color: var(--text-h); }
+.note { max-width: 480px; margin: 0 auto 14px; font-size: 0.82rem; color: var(--text-m); }
+</style>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b0e105d3195f435e8604d69624ef01b1"}'></script><!-- End Cloudflare Web Analytics --><meta property="og:title" content="La Retama Catalogo online" />
+<meta property="og:description" content="Catálogo online para realizar reservas de productos con recogida en tienda y pago mediante transferencia o Bizum" />
+<meta property="og:url" content="https://ebony-tower-748h.here.now/" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://here.now/og/ebony-tower-748h.jpg" />
+<meta property="og:image:width" content="1280" />
+<meta property="og:image:height" content="720" />
+<meta name="twitter:image" content="https://here.now/og/ebony-tower-748h.jpg" />
+<meta name="twitter:card" content="summary_large_image" /></head>
+<body>
+<header>
+  <span class="tag">Versión de prueba</span>
+  <h1>🌿 La Retama</h1>
+  <p>Selecciona lo que quieras reservar. Te responderemos con disponibilidad, precio y forma de pago.</p>
+</header>
+<main>
+  <p class="note">Precios orientativos — se confirman por email antes de pagar. Recogida en tienda, pago por Bizum o transferencia.</p>
+  <div id="catalog"></div>
+</main>
+<footer>
+  <div class="footer-row">
+    <div class="total">
+      <div class="lbl">Total estimado</div>
+      <div class="amt" id="total">0,00 €</div>
+    </div>
+    <a class="send" id="sendBtn" href="#" aria-disabled="true">Enviar pedido</a>
+    <button class="send alt" id="copyBtn" disabled>Copiar</button>
+  </div>
+  <div class="fallback" id="fallback">Si no se abre tu correo: pulsa <b>Copiar</b> y pega el pedido en un email a <code>laretamatienda@gmail.com</code> con asunto <code>Pedido La Retama</code>.</div>
+</footer>
+<script>
+var PRODUCTS = [
+  {code:"1", name:"Aceite de Aguacate BIO", unit:"botella", price:10.70},
+  {code:"2", name:"Aceite de Coco 200ml", unit:"botella", price:5.50},
+  {code:"3", name:"Aceite de Coco 400g BIO", unit:"tarro", price:10.00},
+  {code:"4", name:"Aceite de Coco 500ml BIO", unit:"botella", price:10.60},
+  {code:"5", name:"Aceite de Coco BIO 1000ml", unit:"botella", price:21.36},
+  {code:"6", name:"Aceite de Coco Desodorizado", unit:"tarro", price:10.00}
+];
+var qty = {};
+PRODUCTS.forEach(function (p) { qty[p.code] = 0; });
+
+function fmt(n) {
+  return n.toLocaleString('es-ES', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+}
+
+function render() {
+  var el = document.getElementById('catalog');
+  el.innerHTML = '';
+  PRODUCTS.forEach(function (p) {
+    var card = document.createElement('div');
+    card.className = 'card';
+    var info = document.createElement('div');
+    info.className = 'info';
+    info.innerHTML = '<div class="name">' + p.name + '</div>' +
+      '<div class="meta">#' + p.code + ' · ' + fmt(p.price) + ' / ' + p.unit + '</div>';
+    var stepper = document.createElement('div');
+    stepper.className = 'stepper';
+    var minus = document.createElement('button');
+    minus.textContent = '−';
+    minus.onclick = function () { setQty(p.code, qty[p.code] - 1); };
+    var qtyEl = document.createElement('span');
+    qtyEl.className = 'qty';
+    qtyEl.id = 'qty-' + p.code;
+    qtyEl.textContent = qty[p.code];
+    var plus = document.createElement('button');
+    plus.textContent = '+';
+    plus.onclick = function () { setQty(p.code, qty[p.code] + 1); };
+    stepper.appendChild(minus);
+    stepper.appendChild(qtyEl);
+    stepper.appendChild(plus);
+    card.appendChild(info);
+    card.appendChild(stepper);
+    el.appendChild(card);
+  });
+  updateTotal();
+}
+
+function setQty(code, val) {
+  if (val < 0) val = 0;
+  if (val > 99) val = 99;
+  qty[code] = val;
+  document.getElementById('qty-' + code).textContent = val;
+  updateTotal();
+}
+
+function updateTotal() {
+  var total = 0, anyItems = false;
+  PRODUCTS.forEach(function (p) {
+    if (qty[p.code] > 0) { total += qty[p.code] * p.price; anyItems = true; }
+  });
+  document.getElementById('total').textContent = fmt(total);
+  var a = document.getElementById('sendBtn');
+  var c = document.getElementById('copyBtn');
+  if (anyItems) {
+    a.href = buildMailto();
+    a.removeAttribute('aria-disabled');
+    c.disabled = false;
+    document.getElementById('fallback').style.display = 'block';
+  } else {
+    a.href = '#';
+    a.setAttribute('aria-disabled', 'true');
+    c.disabled = true;
+    document.getElementById('fallback').style.display = 'none';
+  }
+}
+
+function buildBody() {
+  var lines = [];
+  PRODUCTS.forEach(function (p) {
+    if (qty[p.code] > 0) {
+      lines.push('#' + p.code + ' x' + qty[p.code] + '  (' + p.name + ')');
+    }
+  });
+  return 'Hola,\n\nQuiero reservar:\n\n' + lines.join('\n') + '\n\nGracias.';
+}
+
+function buildMailto() {
+  return 'mailto:laretamatienda@gmail.com' +
+    '?subject=' + encodeURIComponent('Pedido La Retama - Web') +
+    '&body=' + encodeURIComponent(buildBody());
+}
+
+document.getElementById('copyBtn').onclick = function () {
+  var text = 'Para: laretamatienda@gmail.com\nAsunto: Pedido La Retama - Web\n\n' + buildBody();
+  var btn = this;
+  function done() { btn.textContent = 'Copiado ✓'; setTimeout(function () { btn.textContent = 'Copiar'; }, 2000); }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done, function () { window.prompt('Copia este texto:', text); });
+  } else {
+    window.prompt('Copia este texto:', text);
+  }
+};
+
+render();
+</script>
+</body>
+</html>
