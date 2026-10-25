@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Amoraleza cockpit — working model</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="light"]{--bg:#F2F4F3;--card:#FFFFFF;--hero:linear-gradient(170deg,#E2F3EA 0%,#F2F4F3 55%);--ink:#1B2830;--ink2:#4C5A63;--ink3:#73828B;--line:#D9E0E2;--panel:#1E2B34;--panel-ink:#E3ECEF;--go:#1E9F5F;--go-soft:#E2F3EA;--go-edge:#BFE3CF;--you:#E39A12;--you-soft:#FDF3DF;--you-edge:#EFC777;--btn-ink:#fff;--shadow:0 6px 22px rgba(27,40,48,.08)}
+[data-theme="dark"]{--bg:#141C22;--card:#1C262D;--hero:linear-gradient(170deg,#173A2A 0%,#141C22 55%);--ink:#E6EDF0;--ink2:#B3C0C7;--ink3:#8494A0;--line:#2C3A43;--panel:#0C1216;--panel-ink:#E3ECEF;--go:#2BB871;--go-soft:#173A2A;--go-edge:#245C40;--you:#F0A826;--you-soft:#3A2E12;--you-edge:#8A6A1E;--btn-ink:#0C1216;--shadow:0 6px 22px rgba(0,0,0,.35)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Alegreya Sans",system-ui,sans-serif;font-size:1.05rem;line-height:1.55;-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%;height:auto}
+a{color:var(--go)}
+h1,h2,h3{font-family:"Newsreader",Georgia,serif;font-weight:500;letter-spacing:-.01em;margin:0;color:var(--ink)}
+.wrap{max-width:680px;margin:0 auto;padding:0 1.1rem}
+.hero{background:var(--hero);padding:2.4rem 0 2rem;border-bottom:1px solid var(--line)}
+.hero .wrap{display:flex;flex-direction:column;align-items:flex-start;gap:1rem}
+.brand{display:flex;align-items:center;gap:.8rem}
+.brand img{width:64px;height:64px;border-radius:18px;box-shadow:var(--shadow)}
+.brand b{font-family:"Newsreader",Georgia,serif;font-weight:500;font-size:1.35rem}
+.badge{display:inline-flex;align-items:center;gap:.45rem;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--card);border:1px solid var(--line);border-radius:2rem;padding:.3rem .8rem}
+.badge i{width:.6rem;height:.6rem;border-radius:50%;background:var(--go);box-shadow:0 0 0 3px var(--go-soft)}
+h1{font-size:2.5rem;line-height:1.08}
+.pitch{font-size:1.12rem;color:var(--ink2);margin:0;max-width:34rem}
+.cta{display:inline-flex;align-items:center;gap:.5rem;background:var(--go);color:var(--btn-ink);text-decoration:none;font-weight:700;font-size:1.05rem;padding:.9rem 1.5rem;border-radius:.8rem;box-shadow:0 6px 20px rgba(30,159,95,.28)}
+.cta:active{transform:translateY(1px)}
+.sub{font-size:.92rem;color:var(--ink3);margin:0;overflow-wrap:anywhere}
+main{padding:1.6rem 0 2.5rem}
+.lead{color:var(--ink2);margin:0 0 1.1rem}
+details.disc{background:var(--card);border:1px solid var(--line);border-radius:.9rem;margin:.65rem 0;overflow:hidden;box-shadow:var(--shadow)}
+.disc summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:.8rem;padding:1rem 1.1rem;font-family:"Newsreader",Georgia,serif;font-size:1.25rem;font-weight:500;color:var(--ink)}
+.disc summary::-webkit-details-marker{display:none}
+.disc summary .n{display:inline-flex;width:1.7rem;height:1.7rem;border-radius:50%;background:var(--go-soft);color:var(--go);border:1px solid var(--go-edge);font-family:"Alegreya Sans",sans-serif;font-size:.85rem;font-weight:700;align-items:center;justify-content:center;margin-right:.6rem;flex-shrink:0}
+.disc summary .t{flex:1;display:flex;align-items:center}
+.disc summary::after{content:'+';color:var(--go);font-size:1.5rem;font-weight:300;line-height:1;transition:transform .2s}
+.disc[open] summary::after{transform:rotate(45deg)}
+.body{padding:0 1.1rem 1.1rem;color:var(--ink2)}
+.body p{margin:.3rem 0 .7rem}
+.body ul,.body ol{margin:.3rem 0 .7rem;padding-left:1.25rem}
+.body li{margin:.3rem 0}
+.body b{color:var(--ink)}
+kbd{font-family:"Alegreya Sans",sans-serif;font-size:.9em;background:var(--bg);border:1px solid var(--line);border-bottom-width:2px;border-radius:.4rem;padding:.05rem .45rem;color:var(--ink);white-space:nowrap}
+.pw{font-family:ui-monospace,Menlo,monospace;background:var(--you-soft);border:1px solid var(--you-edge);color:var(--ink);border-radius:.4rem;padding:.05rem .4rem}
+.looks{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;margin:.6rem 0 .3rem}
+.look{border:1px solid var(--line);border-radius:.7rem;padding:.6rem;text-align:center;font-size:.9rem;color:var(--ink2)}
+.look i{display:block;height:1.6rem;border-radius:.4rem;margin-bottom:.4rem;border:1px solid var(--line)}
+.stops{counter-reset:s;margin:.3rem 0 .7rem;padding:0;list-style:none}
+.stops li{counter-increment:s;display:flex;gap:.7rem;align-items:baseline;padding:.3rem 0;border-bottom:1px dashed var(--line)}
+.stops li::before{content:counter(s);color:var(--go);font-weight:700;min-width:1.2rem}
+.stops li:last-child{border:0}
+.notes{background:var(--panel);color:var(--panel-ink);border-radius:1rem;padding:1.3rem 1.2rem;margin:1.6rem 0 0}
+.notes h2{color:var(--panel-ink);font-size:1.5rem;margin-bottom:.4rem}
+.notes p{margin:.3rem 0;color:#B9C8D0}
+.notes a.mail{display:inline-flex;align-items:center;gap:.5rem;margin-top:.8rem;color:var(--panel-ink);border:1px solid #3E4F59;border-radius:.7rem;padding:.6rem 1rem;text-decoration:none;font-weight:600}
+footer{text-align:center;padding:1.5rem 1rem 4.5rem;font-size:.85rem;color:var(--ink3);border-top:1px solid var(--line)}
+.tt{position:fixed;bottom:1rem;right:1rem;z-index:999;background:var(--card);border:1px solid var(--line);width:2.75rem;height:2.75rem;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,.22);cursor:pointer;font-size:1rem}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+@media(min-width:640px){h1{font-size:3rem}.hero{padding:3.2rem 0 2.6rem}}
+</style>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b0e105d3195f435e8604d69624ef01b1"}'></script><!-- End Cloudflare Web Analytics --><meta property="og:title" content="Amoraleza cockpit working model" />
+<meta property="og:description" content="A functional prototype of a retreat management dashboard designed for testing workflows and gathering user feedback." />
+<meta property="og:url" content="https://opaque-lasso-bm5x.here.now/" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://here.now/og/opaque-lasso-bm5x.jpg" />
+<meta property="og:image:width" content="1280" />
+<meta property="og:image:height" content="720" />
+<meta name="twitter:image" content="https://here.now/og/opaque-lasso-bm5x.jpg" />
+<meta name="twitter:card" content="summary_large_image" /></head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="brand"><img src="https://amora-cockpit.vercel.app/icon-192.png" alt="" width="64" height="64"><b>Amoraleza cockpit</b></div>
+    <span class="badge"><i></i>Working model · nothing is sent</span>
+    <h1>Your retreat,<br>on one screen.</h1>
+    <p class="pitch">A working model of the cockpit, filled with invented guests. It opens on a Monday, four days before a Friday-to-Tuesday retreat, and nothing you do in it reaches a real person. Eight minutes to see it; your notes make it better.</p>
+    <a class="cta" href="https://amora-cockpit.vercel.app/" target="_blank" rel="noopener">Open the cockpit →</a>
+    <p class="sub">https://amora-cockpit.vercel.app · phone or computer · the access word is in my email</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <p class="lead rv">Open the sections you need. Everything here matches what the cockpit does today.</p>
+
+    <details class="disc rv"><summary><span class="t"><span class="n">1</span>What it is</span></summary><div class="body">
+      <p>One screen for the owner, with four parts at the bottom: <b>Cockpit</b>, <b>Guests</b>, <b>Money</b> and <b>Ask</b>, plus <b>More</b> for the rest (stay &amp; meals, transport, rentals, checklist, kitchen, shop, routines, team).</p>
+      <p>The cockpit shows the <b>autopilot</b>: eight small routines, each with a lamp. Green means it runs on its own, amber means it drafts and waits for you, red means it needs you now. Under it, <b>Needs you</b> lists what is waiting for a decision.</p>
+      <p>Each person on the team sees only their part: Rio the shop, Lorenzo transport and arrivals, a manager everything except money and accounts. You can try each view yourself (section 5).</p>
+      <p>The guests, amounts, forms and bank lines are all invented. Twenty-three guests, one retreat, four people with access.</p>
+    </div></details>
+
+    <details class="disc rv" open><summary><span class="t"><span class="n">2</span>Open it</span></summary><div class="body">
+      <p>Tap <b>Open the cockpit</b> above and type the <b>access word</b> from my email (once per device). A welcome sheet appears: pick a look, then <b>Take the 8-minute tour</b> or <b>Explore freely</b>.</p>
+      <p>To keep it on your phone like an app: on Android, open <b>More</b> and tap <b>Add to home screen</b>; on iPhone, Safari’s <b>Share</b> button → <b>Add to Home Screen</b>. After the first visit it also opens without internet.</p>
+      <p>The strip at the top is always there: it reminds you that this is a working model, and holds <b>Reset</b>.</p>
+    </div></details>
+
+    <details class="disc rv"><summary><span class="t"><span class="n">3</span>The tour</span></summary><div class="body">
+      <p>Ten stops, one real action each. A card at the bottom tells you what to tap and lights the spot; <b>Skip</b> moves on, <b>End</b> stops it. You can pick it up later under <b>More → Missions</b>.</p>
+      <ol class="stops">
+        <li><span>A lamp on the autopilot — tap the amber “Deposit nudge”.</span></li>
+        <li><span>Send, then undo — the ring counts down; Undo before it closes.</span></li>
+        <li><span>Guest’s turn — the list filters to who the autopilot is waiting on.</span></li>
+        <li><span>A sealed form — unlock it with the word <span class="pw">demo</span>, then watch it seal again.</span></li>
+        <li><span>A bank statement — drop the sample, match a short payment.</span></li>
+        <li><span>Rooms — move Sweety to Room 1.</span></li>
+        <li><span>A rental clash — move Tent 2; the lamp goes green.</span></li>
+        <li><span>Fast-forward — jump 7 days, read the recorder, undo one line.</span></li>
+        <li><span>View as manager — amounts hide, sections narrow; then back to owner.</span></li>
+        <li><span>Your own column — add “Pick-up”, see it on Guests.</span></li>
+      </ol>
+    </div></details>
+
+    <details class="disc rv"><summary><span class="t"><span class="n">4</span>Start over and tour again</span></summary><div class="body">
+      <p><b>Reset</b>, in the strip at the top, puts everything back to the first day: the invented guests, the lamps, the welcome sheet. <b>Your notes and your chosen look stay.</b> Use it as often as you like.</p>
+      <p><b>More → Missions</b> shows the ten stops with ticks. <b>Resume the tour</b> continues where you left it; <b>Start the tour again</b> clears the ticks. The <b>V</b> button top right has <b>Welcome screen</b>, which brings the first sheet back.</p>
+    </div></details>
+
+    <details class="disc rv"><summary><span class="t"><span class="n">5</span>Explore freely</span></summary><div class="body">
+      <p>Things worth trying outside the tour:</p>
+      <ul>
+        <li><b>Ask</b> — type a question in your own words (“who hasn’t paid?”, “who arrives by bus?”). It answers from the invented data.</li>
+        <li><b>Team &amp; roles</b> (More) — <b>View as</b> Rio, Lorenzo or the manager. The strip at the top brings you back.</li>
+        <li><b>Routines</b> — <b>+7 days</b> plays the week ahead; the flight recorder lists every step, each with Undo.</li>
+        <li><b>Hold all</b> on the cockpit — every routine pauses; nothing moves until you release it.</li>
+        <li><b>Columns</b> and <b>Import a sheet</b> on Guests — your own column, or a sample spreadsheet.</li>
+        <li>Open any guest: journey, forms, notes, payments, all on one card.</li>
+      </ul>
+    </div></details>
+
+    <details class="disc rv"><summary><span class="t"><span class="n">6</span>Leave notes</span></summary><div class="body">
+      <p>Every screen has a <b>Note</b> button at the top. Write what is missing, wrong or confusing, in a few words. The note stays on your phone, attached to that screen.</p>
+      <p>When you are done, tap <b>Send my notes</b> (end of the tour, or under More). A short sheet asks <b>eleven quick questions</b> — yes, no, or let’s talk — then your mail program opens with the notes and the answers, addressed to Juanitto. Nothing leaves until you press send there. <b>Copy instead</b> is for a phone without a mail app.</p>
+    </div></details>
+
+    <details class="disc rv"><summary><span class="t"><span class="n">7</span>What’s not real yet</span></summary><div class="body">
+      <ul>
+        <li><b>Guests, amounts, forms, bank lines</b> are invented. Nothing is sent to anyone, in the tour or outside it: every “send” is a draft with an undo.</li>
+        <li><b>Dates</b> always start on a Monday, with the retreat Friday to Tuesday, whatever the real day is.</li>
+        <li><b>Ask</b> knows the invented data only.</li>
+        <li><b>The real version</b> will live on your own computer at Amoraleza, with your own guests, your inbox and your form links. The website is not touched.</li>
+        <li><b>Payments and invoices</b> are recorded, not collected: the cockpit notes what came in, it does not move money.</li>
+        <li>What you see is a model to react to, not the final look. Your notes decide what gets built next.</li>
+      </ul>
+    </div></details>
+
+    <details class="disc rv"><summary><span class="t"><span class="n">8</span>Pick your look</span></summary><div class="body">
+      <p>Two looks: <b>Paper</b>, the default, and <b>Night</b>. Switch any time with the sun / moon button in the header (next to EN), on the welcome sheet, or under <b>V → Appearance</b>. The choice stays, through Reset too.</p>
+      <div class="looks">
+        <div class="look"><i style="background:linear-gradient(90deg,#6B7A2E 45%,#F3EEE4 45%)"></i>Paper</div>
+        <div class="look"><i style="background:linear-gradient(90deg,#0C1216 45%,#1C262D 45%)"></i>Night</div>
+      </div>
+    </div></details>
+
+    <section class="notes rv">
+      <h2>Your notes are gold at this stage.</h2>
+      <p>Use the Note button and Send my notes inside the cockpit; that is the best way. For anything else, a plain email works too.</p>
+      <a class="mail" href="mailto:contact@dav-llc.com?subject=Amoraleza%20cockpit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>contact@dav-llc.com</a>
+    </section>
+  </div>
+</main>
+
+<footer>Amoraleza cockpit · working model · digitalAIventures LLC · Alpujarras, Spain · Juanitto</footer>
+<button class="tt" onclick="toggleTheme()" aria-label="Toggle light or dark"><span id="ti">🌙</span></button>
+
+<script>
+function toggleTheme(){
+  var h=document.documentElement;
+  var n=h.getAttribute('data-theme')==='dark'?'light':'dark';
+  h.setAttribute('data-theme',n);
+  document.getElementById('ti').textContent=n==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',n)}catch(e){}
+}
+(function(){
+  function applyT(t){
+    document.documentElement.setAttribute('data-theme',t);
+    document.addEventListener('DOMContentLoaded',function(){
+      var i=document.getElementById('ti');if(i)i.textContent=t==='dark'?'☀️':'🌙';
+    });
+  }
+  try{
+    var s=localStorage.getItem('theme');
+    if(s)applyT(s);
+    else{var h=new Date().getHours();applyT(h>=7&&h<19?'light':'dark');}
+  }catch(e){applyT('light')}
+})();
+document.addEventListener('DOMContentLoaded',function(){
+  var els=document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)||window.matchMedia('(prefers-reduced-motion: reduce)').matches){els.forEach(function(e){e.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:0,rootMargin:'0px 0px 12% 0px'});
+  els.forEach(function(e){io.observe(e)});
+});
+</script>
+</body>
+</html>
