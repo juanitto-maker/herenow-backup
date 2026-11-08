@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Master Omotenashi Dojo · おもてなし道場</title>
+<meta name="description" content="A private ceremony at the iron: a theatre of percussion where cooking is the music. Concept board and full score by digitalAIventures.">
+<meta property="og:title" content="The Master Omotenashi Dojo · おもてなし道場">
+<meta property="og:description" content="A private ceremony at the iron: a theatre of percussion where cooking is the music.">
+<meta property="og:image" content="https://models.dav-llc.com/omodojo/2026-11-04/20261106/og2.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect x='4' y='4' width='56' height='56' rx='6' fill='%23b5402d'/><text x='32' y='45' font-size='36' text-anchor='middle' fill='%23f3eee4' font-family='serif'>道</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
+<script>
+(function(){var d=document.documentElement,t=null,l=null;
+try{t=localStorage.getItem('omo-theme');l=localStorage.getItem('omo-lang')}catch(e){}
+if(!t){t=(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark'}
+var q=null;try{q=new URLSearchParams(location.search).get('lang')}catch(e){}
+l=q||l||(((navigator.language||'').toLowerCase().indexOf('ja')===0)?'ja':'en');
+if(l!=='ja'){l='en'}
+d.setAttribute('data-theme',t);d.setAttribute('data-lang',l);d.setAttribute('lang',l);})();
+</script>
+<style>
+:root{
+  --bg:#0c0b09;--surface:#15130f;--text:#e9e3d6;--muted:#8f877a;--line:rgba(233,227,214,.13);
+  --accent:#b5402d;--overlay-bg:rgba(0,0,0,.72);--dialog-bg:#17150f;--border:rgba(233,227,214,.2);
+  --text-heading:#f3eee4;--text-muted:#8f877a;
+  --serif:'Shippori Mincho','Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',Georgia,serif;
+  --sans:'Zen Kaku Gothic New','Hiragino Sans','Yu Gothic','Noto Sans JP',system-ui,-apple-system,sans-serif;
+}
+[data-theme="light"]{
+  --bg:#f3eee4;--surface:#ebe4d6;--text:#1d1a16;--muted:#6e665b;--line:rgba(29,26,22,.14);
+  --accent:#a8352a;--overlay-bg:rgba(29,26,22,.55);--dialog-bg:#f8f4ec;--border:rgba(29,26,22,.2);
+  --text-heading:#141210;--text-muted:#6e665b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;
+  font-size:1.02rem;line-height:1.95;letter-spacing:.02em;transition:background .6s,color .6s}
+[data-lang="ja"] body{letter-spacing:.06em;line-height:2.1}
+[data-lang="en"] .ja{display:none!important}
+[data-lang="ja"] .en{display:none!important}
+img{display:block;max-width:100%;height:auto}
+video{display:block;width:100%;height:auto;background:#000}
+
+/* language switch */
+.lang{position:fixed;top:1rem;right:1rem;z-index:50;display:flex;gap:.15rem;
+  background:rgba(12,11,9,.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border:1px solid rgba(243,238,228,.18);border-radius:2rem;padding:.2rem}
+.lang button{background:none;border:0;color:#e9e3d6;font-family:var(--sans);font-size:.78rem;
+  letter-spacing:.1em;padding:.35rem .8rem;border-radius:2rem;cursor:pointer;opacity:.65}
+.lang button[aria-pressed="true"]{background:rgba(243,238,228,.16);opacity:1}
+
+/* theme toggle */
+.theme{position:fixed;right:1rem;bottom:1rem;z-index:50;width:2.6rem;height:2.6rem;border-radius:50%;
+  border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:1.05rem;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:.85}
+
+/* sound toggle */
+.snd{position:fixed;left:1rem;bottom:1rem;z-index:50;height:2.6rem;padding:0 1.05rem;border-radius:2rem;
+  border:1px solid var(--border);background:var(--surface);color:var(--text);font-family:var(--sans);
+  font-size:.76rem;letter-spacing:.12em;cursor:pointer;opacity:.85}
+.snd[aria-pressed="true"]{border-color:var(--accent);color:var(--text-heading);opacity:1}
+
+/* hero */
+.hero{position:relative;height:100vh;height:100svh;min-height:560px;overflow:hidden;background:#000}
+.hero img,.hero video{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.hero::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,.15) 55%,rgba(0,0,0,.82) 100%)}
+.hero-text{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:0 1.5rem 3.2rem;max-width:880px;color:#f3eee4}
+.seal{display:inline-flex;align-items:center;justify-content:center;width:2.4rem;height:2.4rem;
+  border:1.5px solid var(--accent);color:var(--accent);font-family:var(--serif);font-size:1.35rem;
+  border-radius:3px;margin-bottom:1.4rem;background:rgba(0,0,0,.25)}
+.kicker{font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;opacity:.7;margin-bottom:.9rem}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(2rem,6.2vw,3.6rem);line-height:1.25;letter-spacing:.02em}
+.hero .sub{margin-top:1.1rem;max-width:34rem;font-size:.98rem;opacity:.86}
+.vert{position:absolute;right:1.6rem;top:5.5rem;z-index:2;writing-mode:vertical-rl;
+  font-family:var(--serif);font-size:1.05rem;letter-spacing:.55em;color:#f3eee4;opacity:.8}
+.scroll-cue{position:absolute;left:50%;bottom:1rem;z-index:2;width:1px;height:2.2rem;background:rgba(243,238,228,.45);
+  transform-origin:top;animation:cue 2.8s ease-in-out infinite}
+@keyframes cue{0%{transform:scaleY(0);opacity:0}40%{opacity:1}100%{transform:scaleY(1);opacity:0}}
+
+/* scenes */
+main{padding-bottom:4rem}
+.scene{padding:7.5rem 0 0}
+.head{max-width:620px;margin:0 auto;padding:0 1.5rem}
+.num{display:flex;align-items:center;gap:.9rem;color:var(--accent);font-family:var(--serif);font-size:1.05rem;margin-bottom:1.3rem}
+.num::after{content:"";height:1px;width:2.6rem;background:var(--line)}
+.num small{font-family:var(--sans);font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.scene h2{font-family:var(--serif);font-weight:500;font-size:clamp(1.55rem,4.4vw,2.25rem);line-height:1.45;color:var(--text-heading);margin-bottom:1.3rem}
+.scene p{color:var(--text);opacity:.9;max-width:36rem}
+.tempo{list-style:none;margin-top:1.8rem;border-top:1px solid var(--line)}
+.tempo li{display:grid;grid-template-columns:4.2rem 1fr;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line)}
+.tempo b{font-family:var(--serif);font-weight:500;color:var(--accent);font-size:1.05rem}
+figure{margin:3.2rem auto 0}
+figure.full{max-width:1240px}
+figure.full img{width:100%}
+figure.tall{max-width:620px;padding:0 1.5rem}
+figure.tall img,figure.tall video{width:100%;max-height:88vh;object-fit:cover}
+.pair{display:grid;grid-template-columns:1fr;gap:1.2rem;max-width:1040px;margin:3.2rem auto 0;padding:0 1.5rem}
+.pair img,.pair video{width:100%}
+@media(min-width:760px){
+  .pair{grid-template-columns:1fr 1fr;gap:2rem}
+  figure.full{padding:0 2rem}
+  .scene{padding-top:10rem}
+}
+
+.closing{max-width:620px;margin:10rem auto 0;padding:0 1.5rem;text-align:center}
+.closing .seal{margin:0 auto 2rem;background:none}
+.closing p{font-family:var(--serif);font-size:clamp(1.2rem,3.6vw,1.6rem);line-height:1.8;color:var(--text-heading)}
+.more{display:inline-block;margin-top:2.6rem;font-size:.82rem;letter-spacing:.2em;color:var(--text);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:.35rem}
+.flink{color:var(--text);text-decoration:none;border-bottom:1px solid var(--line)}
+
+/* the score */
+.sc{max-width:680px;margin:9rem auto 0;padding:0 1.5rem;scroll-margin-top:1rem}
+.sc-head{margin-bottom:2.2rem}
+.sc-head .kicker{color:var(--muted);opacity:1}
+.sc-head h2{font-family:var(--serif);font-weight:500;font-size:clamp(1.8rem,5.5vw,2.6rem);line-height:1.3;color:var(--text-heading);margin:.4rem 0 .9rem}
+.sc-head p{opacity:.9;max-width:34rem}
+.stamp{display:inline-block;margin-top:1rem;font-size:.72rem;letter-spacing:.18em;color:var(--muted);border:1px solid var(--line);border-radius:2rem;padding:.2rem .8rem}
+.ch{border-top:1px solid var(--line);scroll-margin-top:1rem}
+.ch:last-of-type{border-bottom:1px solid var(--line)}
+.ch>summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:1rem;padding:1.2rem 0;font-family:var(--serif);font-weight:500;font-size:1.12rem;color:var(--text-heading)}
+.ch>summary::-webkit-details-marker{display:none}
+.ch>summary b{color:var(--accent);font-weight:500;min-width:2.4rem}
+.ch>summary::after{content:'+';margin-left:auto;color:var(--accent);font-size:1.3rem;line-height:1}
+.ch[open]>summary::after{content:'−'}
+.chb{padding:0 0 2.2rem;font-size:1rem}
+.chb p{margin:.8rem 0;opacity:.92}
+.chb ul,.chb ol{margin:.8rem 0 .8rem 1.25rem}
+.chb li{margin:.45rem 0;padding-left:.2rem}
+.chb li ul{margin:.4rem 0 .4rem 1.1rem}
+.chb b{font-weight:500;color:var(--text-heading)}
+.chb h3{font-family:var(--serif);font-weight:500;font-size:1.05rem;color:var(--text-heading);margin:1.6rem 0 .3rem}
+.cards{display:grid;gap:.8rem;margin:1rem 0}
+@media(min-width:700px){.cards.two{grid-template-columns:1fr 1fr}}
+.card{border:1px solid var(--line);border-radius:.5rem;padding:.9rem 1.1rem;background:var(--surface)}
+.card h4{font-family:var(--serif);font-weight:500;font-size:1.02rem;color:var(--text-heading);margin-bottom:.2rem}
+.card small{display:block;margin-top:.55rem;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.card p{margin:.15rem 0;font-size:.93rem}
+.spec{display:grid;grid-template-columns:minmax(7rem,34%) 1fr;gap:.55rem 1rem;margin:1rem 0;padding:1rem 1.1rem;border:1px solid var(--line);border-radius:.5rem;background:var(--surface);font-size:.93rem}
+.spec dt{color:var(--muted);font-size:.8rem;letter-spacing:.06em}
+.spec dd{margin:0}
+details.ref{margin:1.2rem 0;border:1px solid var(--line);border-radius:.5rem;padding:0 1rem}
+details.ref summary{cursor:pointer;list-style:none;padding:.85rem 0;font-family:var(--serif);font-weight:500;color:var(--text-heading);display:flex;justify-content:space-between;align-items:center;gap:1rem}
+details.ref summary::-webkit-details-marker{display:none}
+details.ref summary::after{content:'+';color:var(--accent);font-size:1.2rem;line-height:1}
+details.ref[open] summary::after{content:'−'}
+.formula{font-family:var(--serif);font-size:1.4rem;text-align:center;margin:1.2rem 0;color:var(--text-heading);letter-spacing:.08em}
+
+footer{max-width:620px;margin:8rem auto 0;padding:2rem 1.5rem 5.5rem;border-top:1px solid var(--line);
+  text-align:center;font-size:.76rem;letter-spacing:.12em;color:var(--muted)}
+footer .note{margin-top:.6rem;opacity:.75}
+.brand{background:none;border:0;color:var(--text);font:inherit;letter-spacing:inherit;cursor:pointer;
+  text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:.3em}
+
+/* contact dialog */
+.dialog-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--overlay-bg);z-index:200;align-items:center;justify-content:center}
+.dialog-overlay.open{display:flex}
+.dialog-box{background:var(--dialog-bg);border:1px solid var(--border);border-radius:.6rem;padding:1.75rem;max-width:300px;width:90%;text-align:center}
+.dialog-box h4{font-family:var(--serif);font-weight:500;color:var(--text-heading);margin-bottom:1rem;font-size:1.05rem}
+.dialog-option{display:block;width:100%;padding:.65rem;margin-bottom:.6rem;border-radius:.4rem;text-decoration:none;font-weight:500;font-size:.88rem;text-align:center;color:#fff}
+.dialog-bot{background:#0088cc}.dialog-tg{background:#229ED9}.dialog-mail{background:#4a6741}
+.dialog-close{background:none;border:1px solid var(--border);color:var(--text-muted);cursor:pointer;font-size:.8rem;padding:.4rem 1.2rem;border-radius:.4rem;margin-top:.2rem}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(18px);transition:opacity 1.4s ease,transform 1.4s ease}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  .scroll-cue{animation:none;opacity:.5}
+  html{scroll-behavior:auto}
+}
+</style>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b0e105d3195f435e8604d69624ef01b1"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+<nav class="lang" aria-label="Language">
+  <button type="button" data-l="en" aria-pressed="true">EN</button>
+  <button type="button" data-l="ja" aria-pressed="false">日本語</button>
+</nav>
+
+<header class="hero">
+  <video class="lp" muted playsinline preload="metadata" poster="https://models.dav-llc.com/omodojo/2026-11-04/20261106/stage2.webp" data-src="https://models.dav-llc.com/omodojo/2026-11-04/20261106/stage-bow2.mp4" width="1536" height="1024" aria-label="A master chef stands still behind a teppan griddle lit by three spotlights"></video>
+  <div class="vert" aria-hidden="true">おもてなし道場</div>
+  <div class="hero-text">
+    <div class="seal" aria-hidden="true">道</div>
+    <div class="kicker"><span class="en">Concept board</span><span class="ja">コンセプトボード</span></div>
+    <h1><span class="en">The Master Omotenashi Dojo</span><span class="ja">おもてなし道場</span></h1>
+    <p class="sub en">A private ceremony at the iron. A theatre of percussion where cooking is the music, for one guest and one or two companions.</p>
+    <p class="sub ja">鉄板の前の、ひそやかな儀式。料理が音楽となる打楽器の劇場。ひとりの客と、その連れ一、二名のために。</p>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"></div>
+</header>
+
+<main>
+
+<section class="scene">
+  <div class="head rv">
+    <div class="num">一 <small class="en">Vision</small><small class="ja">構想</small></div>
+    <h2><span class="en">Not a show. A ceremony.</span><span class="ja">見世物ではなく、儀式。</span></h2>
+    <p class="en">No juggling, no flames for applause. Every movement is slow, firm and predictable; every sound is composed: the knife, the sizzle, the water, even a footstep. From the threshold to the last sip, the guest never leaves the moment.</p>
+    <p class="ja">ジャグリングも、拍手のための炎もない。所作はゆるやかで、確かで、迷いがない。包丁の音、焼ける音、水の音、足音さえも作曲されている。入口から最後の一口まで、客はその瞬間から離れない。</p>
+  </div>
+</section>
+
+<section class="scene">
+  <div class="head rv">
+    <div class="num">二 <small class="en">The threshold</small><small class="ja">入口</small></div>
+    <h2><span class="en">Leave the world at the door</span><span class="ja">外の世界は、扉の向こうに。</span></h2>
+    <p class="en">A stone basin and a bamboo spout, its water sound tuned on purpose. Hands are washed, phones rest in a box, and the outside world stays behind a low door.</p>
+    <p class="ja">石の手水鉢と竹の筧。その水音は意図して選ばれている。手を清め、携帯電話は箱に預け、外の世界は低い扉の向こうに残る。</p>
+  </div>
+  <figure class="tall rv"><video class="lp" muted loop playsinline preload="none" poster="https://models.dav-llc.com/omodojo/2026-11-04/20261104/threshold.webp" data-src="https://models.dav-llc.com/omodojo/2026-11-04/20261105/threshold.mp4" width="1024" height="1536" aria-label="A stone water basin with a bamboo spout and a paper lantern at night"></video></figure>
+</section>
+
+<section class="scene">
+  <div class="head rv">
+    <div class="num">三 <small class="en">Rhythm</small><small class="ja">拍子</small></div>
+    <h2><span class="en">Jo · Ha · Kyū</span><span class="ja">序・破・急</span></h2>
+    <p class="en">The meal follows the tempo of Noh theatre: a slow opening, a development, a swift climax, then a return to stillness.</p>
+    <p class="ja">食事は能の拍子に従う。ゆるやかな始まり、展開、速やかな頂点、そして静けさへの回帰。</p>
+    <ul class="tempo">
+      <li><b>序</b><span><span class="en">The iron heats in silence; only the knife speaks.</span><span class="ja">鉄板は静かに熱を帯び、包丁だけが語る。</span></span></li>
+      <li><b>破</b><span><span class="en">Seafood and vegetables; the sizzle rises.</span><span class="ja">魚介と野菜。焼ける音が高まる。</span></span></li>
+      <li><b>急</b><span><span class="en">The wagyu; the loudest moment of the night.</span><span class="ja">和牛。その夜もっとも大きな音。</span></span></li>
+      <li><b>余韻</b><span><span class="en">Rice, soup, a sweet pour; silence returns.</span><span class="ja">ご飯、汁、甘い一献。静けさが戻る。</span></span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="scene">
+  <div class="head rv">
+    <div class="num">四 <small class="en">Ma</small><small class="ja">間</small></div>
+    <h2><span class="en">The felt pause</span><span class="ja">感じる静止</span></h2>
+    <p class="en">Before each climax: the iron cleaned, everything still, a last curl of steam in a single beam. Silence is part of the score.</p>
+    <p class="ja">クライマックスの前に。鉄板は清められ、すべてが止まり、一筋の光のなかで最後の湯気が立ちのぼる。沈黙もまた楽譜の一部。</p>
+  </div>
+  <figure class="full rv"><video class="lp" muted loop playsinline preload="none" poster="https://models.dav-llc.com/omodojo/2026-11-04/20261104/ma.webp" data-src="https://models.dav-llc.com/omodojo/2026-11-04/20261105/ma.mp4" width="1536" height="1024" aria-label="An empty teppan griddle under a single spotlight with a curl of steam"></video></figure>
+</section>
+
+<section class="scene">
+  <div class="head rv">
+    <div class="num">五 <small class="en">The jewel</small><small class="ja">宝石</small></div>
+    <h2><span class="en">Revealed like a gem</span><span class="ja">宝石のように</span></h2>
+    <p class="en">From behind a black curtain, the wagyu appears on black lacquer under one pin light, its marbling glowing like a gem in a vitrine. Its origin is named in a single word.</p>
+    <p class="ja">黒い幕の奥から、黒漆の盆にのせた和牛が一筋の光の下に現れる。サシはショーケースの宝石のように輝く。産地はひと言だけで告げられる。</p>
+  </div>
+  <figure class="full rv"><img src="https://models.dav-llc.com/omodojo/2026-11-04/20261104/jewel.webp" width="1536" height="1024" loading="lazy" alt="A block of marbled wagyu on a black lacquer tray between black curtains"></figure>
+</section>
+
+<section class="scene">
+  <div class="head rv">
+    <div class="num">六 <small class="en">The light score</small><small class="ja">光の楽譜</small></div>
+    <h2><span class="en">Three pools of light</span><span class="ja">三つの光の輪</span></h2>
+    <p class="en">The iron is mapped into three zones (strike, cook, hold), each drawn by its own pool of light. Every ingredient is cut to the millimetre and timed to its zone, so each phrase of the score has a known length before service begins.</p>
+    <p class="ja">鉄板は三つの領域に分けられる。焼く、火を通す、休ませる。それぞれに一つの光の輪。食材はミリ単位で切られ、領域ごとに時間が決められている。だから楽譜の一節一節の長さは、開演前から分かっている。</p>
+  </div>
+  <figure class="full rv"><img src="https://models.dav-llc.com/omodojo/2026-11-04/20261104/lightscore.webp" width="1536" height="1024" loading="lazy" alt="Overhead view of a teppan griddle with three circles of light and ingredients"></figure>
+</section>
+
+<section class="scene">
+  <div class="head rv">
+    <div class="num">七 <small class="en">The strike</small><small class="ja">一撃</small></div>
+    <h2><span class="en">The iron speaks alone</span><span class="ja">鉄板だけが語る</span></h2>
+    <p class="en">The meat meets the iron: the loudest sound of the night. The light peaks, the ensemble stands still, and the iron speaks alone.</p>
+    <p class="ja">肉が鉄板に触れる。その夜もっとも大きな音。光は頂点に達し、演者たちは静止し、鉄板だけが語る。</p>
+  </div>
+  <figure class="full rv"><video class="lp" muted loop playsinline preload="none" poster="https://models.dav-llc.com/omodojo/2026-11-04/20261104/strike.webp" data-src="https://models.dav-llc.com/omodojo/2026-11-04/20261105/strike.mp4" width="1536" height="1024" aria-label="Wagyu searing on the griddle with smoke rising through a spotlight"></video></figure>
+</section>
+
+<section class="scene">
+  <div class="head rv">
+    <div class="num">八 <small class="en">The instruments</small><small class="ja">道具</small></div>
+    <h2><span class="en">Chosen for their sound</span><span class="ja">音で選ばれた道具</span></h2>
+    <p class="en">Knife, spatulas, cloche, crystal: each chosen for its sound as much as its function, each resting in its fixed place. No food or glass is ever touched by a bare hand.</p>
+    <p class="ja">包丁、ヘラ、クロッシュ、クリスタル。機能と同じだけ、その音で選ばれ、決まった場所に置かれる。食材にもグラスにも、素手で触れることはない。</p>
+  </div>
+  <figure class="full rv"><img src="https://models.dav-llc.com/omodojo/2026-11-04/20261104/instruments.webp" width="1536" height="1024" loading="lazy" alt="A knife and two spatulas on stone rests beside a copper cloche"></figure>
+</section>
+
+<section class="scene">
+  <div class="head rv">
+    <div class="num">九 <small class="en">The ensemble</small><small class="ja">三人の演者</small></div>
+    <h2><span class="en">Follow, adapt, transcend</span><span class="ja">守・破・離</span></h2>
+    <p class="en">A master, an apprentice and a sommelier, trained together as one ensemble in shuhari until mastery looks spontaneous.</p>
+    <p class="ja">師匠、弟子、そしてソムリエ。守破離のもとで一つの座として鍛えられる。熟達が自然に見えるその日まで。</p>
+  </div>
+  <figure class="full rv"><img src="https://models.dav-llc.com/omodojo/2026-11-04/20261104/ensemble.webp" width="1536" height="1024" loading="lazy" alt="The master in the centre with the apprentice and the sommelier, each under a spotlight"></figure>
+</section>
+
+<section class="scene">
+  <div class="head rv">
+    <div class="num">十 <small class="en">The pour</small><small class="ja">一献</small></div>
+    <h2><span class="en">The eyes of the room</span><span class="ja">部屋の目</span></h2>
+    <p class="en">The sommelier reads each guest (ready to eat, thirsty, absorbed, drifting) and cues the master in silence. Every pour is a composed phrase, offered with white gloves into thin crystal.</p>
+    <p class="ja">ソムリエは客の様子を読み取る。食べたいのか、喉が渇いたのか、見入っているのか、心が離れかけているのか。そして無言で師匠に合図を送る。一献ごとに作曲された一節。白い手袋で、薄いクリスタルへ。</p>
+  </div>
+  <div class="pair rv">
+    <img src="https://models.dav-llc.com/omodojo/2026-11-04/20261104/sommelier.webp" width="1024" height="1536" loading="lazy" alt="The sommelier presents a bottle of sake with white gloves">
+    <video class="lp" muted loop playsinline preload="none" poster="https://models.dav-llc.com/omodojo/2026-11-04/20261104/pour.webp" data-src="https://models.dav-llc.com/omodojo/2026-11-04/20261105/pour.mp4" width="1024" height="1536" aria-label="A white-gloved hand pours sake into a crystal glass"></video>
+  </div>
+</section>
+
+<section class="scene">
+  <div class="head rv">
+    <div class="num">十一 <small class="en">The descent</small><small class="ja">余韻</small></div>
+    <h2><span class="en">A return to stillness</span><span class="ja">静けさへ</span></h2>
+    <p class="en">Away from the iron, a single dessert and a sweet pour in soft light. The ceremony returns to stillness, and the guest carries it home.</p>
+    <p class="ja">鉄板を離れ、やわらかな光のなかに一皿の甘味と甘い一献。儀式は静けさへと還り、客はその余韻を持ち帰る。</p>
+  </div>
+  <figure class="full rv"><img src="https://models.dav-llc.com/omodojo/2026-11-04/20261104/descent.webp" width="1536" height="1024" loading="lazy" alt="A matcha dessert and a glass of dessert wine on a hinoki counter"></figure>
+</section>
+
+<section class="scene">
+  <div class="head rv">
+    <div class="num">十二 <small class="en">The ground</small><small class="ja">下地の音</small></div>
+    <h2><span class="en">A koto behind the screen</span><span class="ja">御簾の奥の箏</span></h2>
+    <p class="en">Behind a bamboo blind, diagonally behind the guests, a koto player is the living ground. She plays only in jo and the descent, falls silent while the iron speaks, and is revealed once, at the very end.</p>
+    <p class="ja">御簾の奥、客の斜め後ろに、箏の奏者が生きた下地となる。序と余韻だけを奏で、鉄板が語る間は沈黙し、最後にただ一度、その姿が現れる。</p>
+  </div>
+  <figure class="full rv"><img src="https://models.dav-llc.com/omodojo/2026-11-04/20261106/koto.webp" width="1536" height="1024" loading="lazy" alt="A koto player in silhouette behind a bamboo blind, seen past the guests’ seats"></figure>
+</section>
+
+<div class="closing rv">
+  <div class="seal" aria-hidden="true">道</div>
+  <p class="en">Omotenashi: anticipating the need before it is spoken.</p>
+  <p class="ja">おもてなし ― 言葉になる前に、その想いを汲みとること。</p>
+  <a class="more" href="#score"><span class="en">Read the score ↓</span><span class="ja">楽譜を読む ↓</span></a>
+</div>
+
+<div class='sc' id='score'>
+  <div class='sc-head'>
+    <div class='kicker'><span class='en'>The method behind the ceremony</span><span class='ja'>儀式を支える方法</span></div>
+    <h2><span class='en'>The Score</span><span class='ja'>楽譜</span></h2>
+    <p class='en'>How the meal is composed, performed and trained, from the rhythm of the iron to the reading of the guest. Open any chapter.</p>
+    <p class='ja'>食事がどのように作曲され、演じられ、稽古されるのか。鉄板の拍子から、客を読むことまで。どの章からでも開いてください。</p>
+    <div class='stamp'>v0.7 · 2026</div>
+  </div>
+
+<details class='ch' id='vision'><summary><b>一</b><span class='en'>Vision</span><span class='ja'>構想</span></summary><div class='chb'>
+  <p class='en'>The Master Omotenashi Dojo is a private ceremony at the iron: a theatre of percussion where cooking is the music and the guest never leaves the moment. A director steers the experience together with a master chef.</p>
+  <p class='ja'>おもてなし道場は、鉄板の前で行われるひそやかな儀式。料理が音楽となる打楽器の劇場であり、客はその瞬間から一度も離れない。演出家が師匠とともに、その体験を導く。</p>
+  <ul class='en'>
+    <li><b>A ceremony, not a show.</b> No juggling or flames for applause. Movement is precise and unhurried, sound is composed, and both captivate even in silence.</li>
+    <li><b>An escape.</b> From threshold to farewell, every sense is designed so the guest’s mind stays in the room.</li>
+    <li><b>A total work of art.</b> Space, light, water, costume, sound, movement, food and pour are composed as one piece, a <i>Gesamtkunstwerk</i>.</li>
+    <li><b>A dojo.</b> The ensemble trains in <i>shuhari</i> until execution looks effortless and spontaneous.</li>
+    <li><b>Intimate.</b> One counter: the director or a private guest, plus one or two companions.</li>
+    <li><b>The standard.</b> €500+ per person, justified only by mastery and bespoke attention.</li>
+  </ul>
+  <ul class='ja'>
+    <li><b>見世物ではなく、儀式。</b>ジャグリングも、拍手のための炎もない。所作は正確でゆるやか、音は作曲され、沈黙の中でさえ人を惹きつける。</li>
+    <li><b>日常からの解放。</b>入口から見送りまで、すべての感覚が設計され、客の心はこの部屋にとどまる。</li>
+    <li><b>総合芸術。</b>空間、光、水、装い、音、所作、料理、そして一献。そのすべてが一つの作品として作曲される。</li>
+    <li><b>道場。</b>一座は守破離のもとで稽古を重ね、技が自然で淀みなく見えるまで磨かれる。</li>
+    <li><b>親密さ。</b>カウンターは一つ。演出家または一人の客と、その連れ一、二名のために。</li>
+    <li><b>基準。</b>お一人様500ユーロ以上。その価値を支えるのは、熟達と一人のための心配りだけ。</li>
+  </ul>
+</div></details>
+
+<details class='ch' id='cast'><summary><b>二</b><span class='en'>The cast</span><span class='ja'>三人の演者</span></summary><div class='chb'>
+  <p class='en'>Three performers, trained together as one ensemble: the master and the apprentice at the iron, and a Japanese sake sommelier who completes the score. The director sets the experience standard but is never on stage.</p>
+  <p class='ja'>一つの座として共に鍛えられる三人の演者。鉄板に立つ師匠と弟子、そして楽譜を完成させる日本人の利酒師。演出家は体験の基準を定めるが、舞台に立つことはない。</p>
+  <div class='cards en'>
+    <div class='card'><h4>Master</h4><small>On stage</small><p>Leads the iron, faces the guests</p><small>In the score</small><p>The main voice: carries the climaxes and sets the tempo</p><small>Instrument</small><p>Spatula on iron, the knife, the strike of the meat</p></div>
+    <div class='card'><h4>Apprentice</h4><small>On stage</small><p>Supports and mirrors the master, cooks under evaluation</p><small>In the score</small><p>Counterpoint: prep, handoffs, the next phrase starting while the guest eats</p><small>Instrument</small><p>Knife on board, lids, water on the iron</p></div>
+    <div class='card'><h4>Sommelier (<i>kikisake-shi</i>)</h4><small>On stage</small><p>Presents and pours, reads the guests</p><small>In the score</small><p>The bridge between phrases and the eyes of the room</p><small>Instrument</small><p>Bottle, glass, ice, the pour itself</p></div>
+  </div>
+  <div class='cards ja'>
+    <div class='card'><h4>師匠</h4><small>舞台では</small><p>鉄板を率い、常に客に向かう</p><small>楽譜では</small><p>主旋律。頂点を担い、テンポを定める</p><small>楽器</small><p>鉄板に当たるヘラ、包丁、肉が鉄板に触れる一撃</p></div>
+    <div class='card'><h4>弟子</h4><small>舞台では</small><p>師匠を支え、映し、評価のもとで調理する</p><small>楽譜では</small><p>対旋律。仕込み、受け渡し、客が食べている間に次の一節を始める</p><small>楽器</small><p>まな板の包丁、蓋、鉄板に落ちる水</p></div>
+    <div class='card'><h4>利酒師(ソムリエ)</h4><small>舞台では</small><p>酒を差し出して注ぎ、客を読む</p><small>楽譜では</small><p>一節と一節をつなぐ橋であり、部屋の目</p><small>楽器</small><p>瓶、グラス、氷、そして注ぐ音そのもの</p></div>
+  </div>
+  <p class='en'><b>Her role in the score.</b> The master’s eyes belong on the iron, so she watches the room. She tracks each guest’s attention and signals the master with silent cues: a glance, a bottle turned, a step forward. Each pour is a composed phrase: the bottle presented, the sound of the pour, the glass set down without a click. She often covers transitions, so a pour fills the moment the iron is being reset.</p>
+  <p class='ja'><b>楽譜の中の彼女。</b>師匠の目は鉄板にあるため、部屋を見守るのは彼女の役目。客一人ひとりの注意を追い、無言の合図で師匠に伝える。視線、瓶の向き、一歩前へ。一献ごとが作曲された一節である。瓶を差し出し、注ぐ音を聴かせ、グラスを音もなく置く。鉄板を整える間は、しばしば彼女の一献がその時間を満たす。</p>
+  <p class='en'><b>Trained together.</b> She rehearses in the same dojo as the chefs, so handoffs between iron and glass are as precise as any cut. A <i>kikisake-shi</i> is a certified sake sommelier; she also needs wine and dessert pours for rare bottles such as vintage Juyondai or aged dessert wines.</p>
+  <p class='ja'><b>共に稽古する。</b>彼女も料理人と同じ道場で稽古を重ねる。だから鉄板とグラスの間の受け渡しは、包丁の一太刀と同じほど正確になる。利酒師は日本酒の資格を持つソムリエだが、ヴィンテージの十四代や熟成したデザートワインなど、ワインや食後酒の希少な一本にも通じている必要がある。</p>
+  <p class='en'><b>Casting note.</b> Recruitment is written around craft and presence: warm, poised, fluent in <i>omotenashi</i>. In Spain and the EU, a job ad that specifies gender, nationality or appearance can breach anti-discrimination law, so the aesthetic vision lives in this concept, not in the posting.</p>
+  <p class='ja'><b>配役について。</b>募集は技と佇まいを軸に書く。温かく、落ち着き、おもてなしを体得していること。スペインおよびEUでは、性別、国籍、容姿を条件にした求人は差別禁止法に触れる可能性がある。美的な構想はこのコンセプトの中にとどめ、求人には書かない。</p>
+</div></details>
+
+<details class='ch' id='rhythm'><summary><b>三</b><span class='en'>Rhythm</span><span class='ja'>拍子</span></summary><div class='chb'>
+  <p class='en'>The meal follows <i>jo-ha-kyū</i>, the tempo arc of Noh theatre: a slow opening, a development, a swift climax, then a return to stillness.</p>
+  <p class='ja'>食事は能の序破急に従う。ゆるやかな始まり、展開、速やかな頂点、そして静けさへの回帰。</p>
+  <ol class='en'>
+    <li><b><i>Jo</i>, the opening.</b> The iron heats in silence. A cold first bite and a delicate first pour. Only the knife sounds.</li>
+    <li><b><i>Ha</i>, the development.</b> Seafood and vegetables. The sizzle rises and water hisses under the cloche.</li>
+    <li><b><i>Kyū</i>, the climax.</b> The wagyu: rendering fat, garlic chips, the loudest and most aromatic moment.</li>
+    <li><b>The descent.</b> Garlic rice in the beef fat, soup, then dessert and a sweet pour away from the iron.</li>
+  </ol>
+  <ol class='ja'>
+    <li><b>序。</b>鉄板は静かに熱を帯びる。冷たい最初の一口と、繊細な最初の一献。鳴るのは包丁だけ。</li>
+    <li><b>破。</b>魚介と野菜。焼ける音が高まり、クロッシュの下で水が鳴る。</li>
+    <li><b>急。</b>和牛。溶ける脂、ガーリックチップ。もっとも大きく、もっとも香る瞬間。</li>
+    <li><b>余韻。</b>牛脂で炒めたガーリックライス、汁物、そして鉄板を離れて甘味と甘い一献。</li>
+  </ol>
+  <p class='en'>Two rules govern every phrase:</p>
+  <p class='ja'>すべての一節を、二つの決まりが貫く。</p>
+  <ul class='en'>
+    <li><b>One voice at a time.</b> Two sounds never compete, like a solo instrument.</li>
+    <li><b><i>Ma</i>.</b> A deliberate, felt pause before each climax: the iron cleaned, everything still, then the next phrase strikes.</li>
+  </ul>
+  <ul class='ja'>
+    <li><b>一度に一つの声。</b>二つの音が競い合うことはない。独奏の楽器のように。</li>
+    <li><b>間。</b>頂点の前に置かれる、意図された、感じられる静止。鉄板は清められ、すべてが止まり、そして次の一節が打たれる。</li>
+  </ul>
+</div></details>
+
+<details class='ch' id='movement'><summary><b>四</b><span class='en'>Movement</span><span class='ja'>所作</span></summary><div class='chb'>
+  <p class='en'>The performers move like figures in a dream: slow, smooth, predictable and firm, never sudden. The guest should feel that nothing could go wrong.</p>
+  <p class='ja'>演者は夢の中の人物のように動く。ゆるやかで、滑らかで、迷いがなく、確か。決して急がない。客は、何ひとつ乱れることはないと感じる。</p>
+  <ul class='en'>
+    <li><b>Slow, but never late.</b> Movement reads like slow motion, yet heat-critical actions keep the food’s timing. Speed comes from economy of motion, never from rushing.</li>
+    <li><b>Predictable.</b> Every gesture shows where it is going, so the eye arrives just before the hand.</li>
+    <li><b>Firm.</b> Each gesture starts and ends in stillness, like the <i>kamae</i> posture of Noh.</li>
+    <li><b>Never sudden.</b> No jerks, no reaching, no correcting mid-gesture. A mistake is absorbed into the flow, never shown.</li>
+  </ul>
+  <ul class='ja'>
+    <li><b>ゆるやかに、しかし遅れずに。</b>所作はスローモーションのように見えても、火加減が決め手となる動作は料理の時間を守る。速さは無駄のなさから生まれ、決して焦りからは生まれない。</li>
+    <li><b>先が見える。</b>どの所作も行き先を示すので、目は手よりわずかに先に着く。</li>
+    <li><b>確か。</b>能の構えのように、すべての所作は静止に始まり、静止に終わる。</li>
+    <li><b>急がない。</b>ぎこちなさも、手を伸ばすことも、途中の修正もない。失敗は流れに吸収され、決して見せない。</li>
+  </ul>
+  <h3><span class='en'>No bare hands</span><span class='ja'>素手で触れない</span></h3>
+  <p class='en'>Performers never touch food or glass with bare skin.</p>
+  <p class='ja'>演者は食材にもグラスにも、素肌で触れない。</p>
+  <ul class='en'>
+    <li>Food is handled only with tools: spatula, fork, chopsticks, knife</li>
+    <li>Glasses and bottles are handled with immaculate white gloves</li>
+    <li>Gloves are changed between phases, and the change itself is a written gesture</li>
+    <li>At the iron, tools replace gloves: fabric gloves stain with fat, scorch near the hot surface, and aren’t food-safe for raw meat</li>
+  </ul>
+  <ul class='ja'>
+    <li>食材に触れるのは道具だけ。ヘラ、フォーク、箸、包丁</li>
+    <li>グラスと瓶は、汚れひとつない白手袋で扱う</li>
+    <li>手袋は場面ごとに替え、その交換も楽譜に書かれた所作となる</li>
+    <li>鉄板では手袋ではなく道具を使う。布の手袋は脂で汚れ、熱で焦げ、生肉には衛生上適さないため</li>
+  </ul>
+</div></details>
+
+<details class='ch' id='attention'><summary><b>五</b><span class='en'>Attention design</span><span class='ja'>注意の設計</span></summary><div class='chb'>
+  <p class='en'>A dead moment is not silence. It is the moment the guest’s attention leaves the counter: conversation drifts away from the iron, or the mind slips back to everyday worries. The whole concept exists to prevent that.</p>
+  <p class='ja'>死んだ時間とは、沈黙のことではない。客の注意がカウンターを離れる瞬間のことだ。会話が鉄板から逸れ、心が日々の悩みへと戻っていく。このコンセプトのすべては、それを防ぐためにある。</p>
+  <ul class='en'>
+    <li><b>Something is always becoming.</b> Steam, smoke, a blade mid-cut, a pour. When nothing is alive in front of the guest, the mind wanders.</li>
+    <li><b>Silence can captivate.</b> A slow knife wipe or a pair of still hands holds the eye as strongly as any sound.</li>
+    <li><b>Phrases overlap.</b> While the guest finishes one course, the next is already beginning in view.</li>
+    <li><b>The usual gaps become phrases:</b>
+      <ul>
+        <li>Iron recovering heat → the <i>ma</i> before the next strike</li>
+        <li>Cleaning the iron → a percussion fill: scrape, water hiss, silence</li>
+        <li>Fetching → never; mise en place is staged within arm’s reach</li>
+        <li>Plate and glass swaps → choreographed handoffs between apprentice and sommelier</li>
+        <li>Turning away → never; the master always faces the guests</li>
+      </ul>
+    </li>
+    <li><b>Full is not busy.</b> Composed breathing room lets companions share the experience. The goal is immersion, not constant stimulation.</li>
+  </ul>
+  <ul class='ja'>
+    <li><b>常に何かが生まれている。</b>湯気、煙、切りかけの刃、注がれる酒。客の前で何も生きていなければ、心はさまよう。</li>
+    <li><b>沈黙も人を惹きつける。</b>包丁をゆっくり拭う動き、静止した両手は、どんな音にも劣らず目を捉える。</li>
+    <li><b>一節は重なり合う。</b>客が一皿を終えるころ、次の一皿はすでに目の前で始まっている。</li>
+    <li><b>よくある隙間を、一節に変える。</b>
+      <ul>
+        <li>鉄板の温度が戻るのを待つ → 次の一撃の前の間</li>
+        <li>鉄板の掃除 → 打楽器のつなぎ。こする音、水の音、そして沈黙</li>
+        <li>物を取りに行く → しない。仕込みはすべて手の届く範囲に</li>
+        <li>皿やグラスの交換 → 弟子と利酒師の、振り付けられた受け渡し</li>
+        <li>背を向ける → しない。師匠は常に客に向かう</li>
+      </ul>
+    </li>
+    <li><b>満ちていても、忙しくはない。</b>作曲された余白があるからこそ、連れと体験を分かち合える。目指すのは没入であり、絶え間ない刺激ではない。</li>
+  </ul>
+</div></details>
+
+<details class='ch' id='reading'><summary><b>六</b><span class='en'>Reading the guest</span><span class='ja'>客を読む</span></summary><div class='chb'>
+  <p class='en'>The whole ensemble trains to read each guest the way <i>omotenashi</i> intends: anticipate the need before it is spoken, then improvise from a rehearsed repertoire.</p>
+  <p class='ja'>一座の全員が、おもてなしの本来の姿で客を読む稽古をする。言葉になる前に望みを察し、稽古した型の中から即興する。</p>
+  <p class='en'><b>The disciplines it draws on.</b> Japanese hospitality has three words for it: <i>kikubari</i> (attentive care for others’ needs), <i>sasshi</i> (perceiving what is unspoken) and <i>kūki o yomu</i> (reading the air). In the West, body language is studied as kinesics, and top fine-dining teams train anticipatory service the same way.</p>
+  <p class='ja'><b>拠りどころとなる心得。</b>日本のもてなしには、これを表す三つの言葉がある。気配り、察し、そして空気を読むこと。西洋では身体言語がキネシクスとして研究され、一流の料理店も同じように先回りのサービスを鍛えている。</p>
+  <h3><span class='en'>Three rules</span><span class='ja'>三つの決まり</span></h3>
+  <ol class='en'>
+    <li><b>Baseline first.</b> During <i>jo</i>, learn how each guest normally sits, talks, eats and drinks. A signal only means something as a change from that baseline.</li>
+    <li><b>Clusters, not single signs.</b> Act on two or three signals together; one glance means little.</li>
+    <li><b>Test, don’t ask.</b> Confirm with a small, reversible offer, such as a half pour or a single bite. Never ask “are you bored?”</li>
+  </ol>
+  <ol class='ja'>
+    <li><b>まず、普段の姿を知る。</b>序のあいだに、客一人ひとりの座り方、話し方、食べ方、飲み方を覚える。兆しに意味があるのは、その普段の姿からの変化として現れたときだけ。</li>
+    <li><b>一つの兆しではなく、重なりで読む。</b>二つ三つの兆しが重なってから動く。一度の視線には大した意味はない。</li>
+    <li><b>尋ねず、試す。</b>半分だけ注ぐ、一口だけ出すなど、小さく取り消せる申し出で確かめる。「退屈ですか」とは決して尋ねない。</li>
+  </ol>
+  <details class='ref'>
+    <summary><span class='en'>The signal map · nine guest states</span><span class='ja'>兆しの地図 · 九つの客の状態</span></summary>
+    <div class='cards two en'>
+      <div class='card'><h4>Ready to eat</h4><small>Signals</small><p>Leans in, chopsticks lifted, gaze on the plate or iron, talk pauses</p><small>Response</small><p>Serve now; the next bite lands within seconds</p></div>
+      <div class='card'><h4>Wants a drink</h4><small>Signals</small><p>Glances at the glass, touches the stem, quick swallow after a rich bite</p><small>Response</small><p>The sommelier pours, no words needed</p></div>
+      <div class='card'><h4>Absorbed</h4><small>Signals</small><p>Body still, gaze locked on a process, forward lean, eating pauses</p><small>Response</small><p>Give more: slow the gesture, extend the phrase, hold the <i>ma</i></p></div>
+      <div class='card'><h4>Drifting</h4><small>Signals</small><p>Gaze wanders the room, leans back, fidgets with napkin or glass, side talk grows</p><small>Response</small><p>Bring the next moment forward: a reveal, a light shift, a sound accent</p></div>
+      <div class='card'><h4>Delighted</h4><small>Signals</small><p>Eyes close on the bite, slow chewing, a pause before the next, looks back at the iron</p><small>Response</small><p>Note the ingredient or technique and return to it later as a variation</p></div>
+      <div class='card'><h4>Displeased</h4><small>Signals</small><p>Hesitates, takes small bites, pushes food aside, drinks right after a bite</p><small>Response</small><p>Adjust the next course quietly, never drawing attention to it</p></div>
+      <div class='card'><h4>Getting full</h4><small>Signals</small><p>Pace slows, leans back, leaves rice</p><small>Response</small><p>Smaller portions ahead and a shorter descent</p></div>
+      <div class='card'><h4>Wants privacy</h4><small>Signals</small><p>Companions deep in conversation, eye contact only with each other</p><small>Response</small><p>Step back into stillness; the iron waits and the light softens</p></div>
+      <div class='card'><h4>Wants contact</h4><small>Signals</small><p>Eye contact with the chef, questions</p><small>Response</small><p>One short, warm answer, then back to the score</p></div>
+    </div>
+    <div class='cards two ja'>
+      <div class='card'><h4>食べたい</h4><small>兆し</small><p>身を乗り出す、箸を持ち上げる、視線が皿や鉄板に向く、会話が止む</p><small>一座の応え</small><p>すぐに出す。次の一口は数秒のうちに</p></div>
+      <div class='card'><h4>飲みたい</h4><small>兆し</small><p>グラスに目をやる、脚に触れる、濃い一口の後に素早く飲み込む</p><small>一座の応え</small><p>利酒師が注ぐ。言葉はいらない</p></div>
+      <div class='card'><h4>見入っている</h4><small>兆し</small><p>体が止まる、手元から目が離れない、前のめり、箸が止まる</p><small>一座の応え</small><p>もっと見せる。所作をゆるめ、一節を延ばし、間を保つ</p></div>
+      <div class='card'><h4>心が離れかけている</h4><small>兆し</small><p>視線が部屋をさまよう、背にもたれる、ナプキンやグラスをいじる、私語が増える</p><small>一座の応え</small><p>次の見せ場を前倒しする。披露、光の変化、音のアクセント</p></div>
+      <div class='card'><h4>喜んでいる</h4><small>兆し</small><p>一口で目を閉じる、ゆっくり噛む、次の一口までの間、鉄板を振り返る</p><small>一座の応え</small><p>その食材や技を覚えておき、後で変奏として戻る</p></div>
+      <div class='card'><h4>好まない</h4><small>兆し</small><p>ためらう、小さくかじる、脇へ寄せる、一口ごとにすぐ飲む</p><small>一座の応え</small><p>次の皿を静かに調整する。決してそれと気づかせない</p></div>
+      <div class='card'><h4>満ちてきた</h4><small>兆し</small><p>ペースが落ちる、背にもたれる、ご飯を残す</p><small>一座の応え</small><p>この先は量を控え、余韻を短く</p></div>
+      <div class='card'><h4>二人の時間を望む</h4><small>兆し</small><p>連れとの会話に深く入り、互いにしか目を合わせない</p><small>一座の応え</small><p>静止へと一歩退く。鉄板は待ち、光はやわらぐ</p></div>
+      <div class='card'><h4>話したい</h4><small>兆し</small><p>料理人と目を合わせる、質問する</p><small>一座の応え</small><p>短く温かな一言で応え、楽譜へ戻る</p></div>
+    </div>
+  </details>
+  <p class='en'><b>Improvising from a repertoire.</b> Improvisation means choosing, not inventing. Each score page carries rehearsed variations (extend, shorten, hold, swap, add a bite), and the ensemble picks the one the guest’s state calls for. Even a change then looks composed.</p>
+  <p class='ja'><b>型からの即興。</b>即興とは、生み出すことではなく選ぶこと。楽譜の各頁には稽古済みの変奏(延ばす、縮める、保つ、入れ替える、一口加える)が備わり、一座は客の状態が求めるものを選ぶ。だから変化さえも、作曲されたものに見える。</p>
+  <p class='en'><b>Silent cues.</b> The sommelier reads the room and signals the master with a small rehearsed set of cues, one per guest state: a glance, a bottle turned, a step forward.</p>
+  <p class='ja'><b>無言の合図。</b>利酒師は部屋を読み、客の状態ごとに一つずつ決めた、稽古済みの小さな合図で師匠に伝える。視線、瓶の向き、一歩前へ。</p>
+  <p class='en'><b>Guest book.</b> After each meal, record what delighted each guest and what was set aside, so the next visit starts already knowing them. Under EU data rules (GDPR), keep these notes with the guest’s consent.</p>
+  <p class='ja'><b>客帳。</b>食事のたびに、何が喜ばれ、何が残されたかを書き留める。次の来訪は、すでに客を知るところから始まる。EUのデータ保護規則(GDPR)に従い、記録は客の同意のもとで残す。</p>
+  <h3><span class='en'>Training</span><span class='ja'>稽古</span></h3>
+  <ul class='en'>
+    <li><i>Randori</i> for guest-reading: the director secretly plays a written guest state (drifting at the third course, thirsty after the seafood), and the ensemble must catch it</li>
+    <li>Read-back in the debrief: performers say what they read at each moment, and the director says what he actually wanted</li>
+    <li>Call-the-state drills on recorded rehearsal dinners, with everyone’s consent, pausing at each moment to name the guest state</li>
+    <li>Cue calls caught, missed and misread join the director’s experience score</li>
+  </ul>
+  <ul class='ja'>
+    <li>客を読む乱取り。演出家がひそかに決められた客の状態を演じ(三皿目で心が離れる、魚介の後に喉が渇く)、一座はそれを見抜かねばならない</li>
+    <li>振り返りでの読み合わせ。演者は各瞬間に何を読んだかを語り、演出家は実際に何を望んでいたかを語る</li>
+    <li>録画した稽古の食事を全員の同意のもとで再生し、各瞬間で止めて客の状態を言い当てる稽古</li>
+    <li>読めた合図、見逃した合図、読み違えた合図は、演出家の体験評価に加えられる</li>
+  </ul>
+</div></details>
+
+<details class='ch' id='world'><summary><b>七</b><span class='en'>The world</span><span class='ja'>空間</span></summary><div class='chb'>
+  <p class='en'>Every surface, light and sound in the space is part of the instrument. Nothing is left to chance.</p>
+  <p class='ja'>空間のあらゆる面、光、音が楽器の一部となる。偶然に任せるものは何もない。</p>
+  <p class='en'><b>Threshold.</b> The escape begins before the first bite. The tea ceremony does this with the <i>roji</i>, a garden path that sheds the outside world, and the <i>nijiriguchi</i>, a low entrance everyone bows through.</p>
+  <p class='ja'><b>入口。</b>解放は最初の一口より前に始まる。茶の湯では、外の世界を脱ぎ捨てる露地と、誰もが頭を下げてくぐる躙り口がその役を担う。</p>
+  <ul class='en'>
+    <li>A short passage between the street and the counter</li>
+    <li>Hands washed at a stone basin with a bamboo spout, its water sound chosen on purpose</li>
+    <li>Phones left in a beautiful box, so the outside world stays behind a door</li>
+  </ul>
+  <ul class='ja'>
+    <li>通りとカウンターの間に、短い通路を設ける</li>
+    <li>竹の筧を備えた石の手水鉢で手を清める。その水音は意図して選ぶ</li>
+    <li>携帯電話は美しい箱に預け、外の世界は扉の向こうに残す</li>
+  </ul>
+  <p class='en'><b>Room.</b> Guests sit side by side facing the iron, like an audience rather than a table. The room is dark and warm, and the iron is the brightest thing in it.</p>
+  <p class='ja'><b>部屋。</b>客は鉄板に向かって横に並ぶ。食卓ではなく、観客のように。部屋は暗く温かく、もっとも明るいのは鉄板である。</p>
+  <p class='en'><b>Light.</b> Light tells the eye where to look and follows the tempo: low in <i>jo</i>, sharpest on the iron at <i>kyū</i>, softening for the descent. Every lighting change is written into the score.</p>
+  <p class='ja'><b>光。</b>光は目の行き先を示し、拍子に従う。序では低く、急では鉄板の上でもっとも鋭く、余韻に向けてやわらぐ。光の変化はすべて楽譜に書かれる。</p>
+  <p class='en'><b>Water.</b> Every water sound is composed: the basin at the threshold, the faucet behind the counter, the hiss on the iron. The faucet is chosen for its sound as much as its flow.</p>
+  <p class='ja'><b>水。</b>水の音はすべて作曲される。入口の手水鉢、カウンター奥の蛇口、鉄板の上の水の音。蛇口は水の出方と同じだけ、その音で選ばれる。</p>
+  <p class='en'><b>Floor and steps.</b> Floor material and soles decide whether a step is heard. The default is <i>suriashi</i>, the gliding silent step of Noh; a step sounds only where the score calls for it.</p>
+  <p class='ja'><b>床と足音。</b>足音が聞こえるかどうかは、床材と靴底が決める。基本は能のすり足。足音を鳴らすのは、楽譜がそれを求める場面だけ。</p>
+  <p class='en'><b>Costume.</b> Fabric that doesn’t rustle, soles that don’t squeak, sleeves tied back with a <i>tasuki</i> cord. A subtle colour difference marks master, apprentice and sommelier.</p>
+  <p class='ja'><b>装い。</b>衣擦れしない布、きしまない靴底、襷で結んだ袖。わずかな色の違いが、師匠、弟子、利酒師を見分けさせる。</p>
+</div></details>
+
+<details class='ch' id='instruments'><summary><b>八</b><span class='en'>The instruments</span><span class='ja'>道具</span></summary><div class='chb'>
+  <p class='en'>Every object that touches another is chosen for its sound as well as its function, and every food-contact piece is certified food-safe.</p>
+  <p class='ja'>何かに触れる道具はすべて、機能と同じだけその音で選ばれる。食材に触れるものはすべて、食品用の認証を受けたものを使う。</p>
+  <details class='ref'>
+    <summary><span class='en'>Five instruments · material and sound</span><span class='ja'>五つの道具 · 素材と音</span></summary>
+    <div class='cards two en'>
+      <div class='card'><h4>Basin and sink</h4><small>Material</small><p>Carved stone or a hinoki wood tub, with a preset flow and drop height</p><small>Sound</small><p>One clear stream, heard only when the score calls for water</p></div>
+      <div class='card'><h4>Knife and spatulas</h4><small>Material</small><p>Japanese steel, wooden handles (ebony or hinoki)</p><small>Sound</small><p>A bright tink on the iron, a soft knock when handles meet</p></div>
+      <div class='card'><h4>Tool rests</h4><small>Material</small><p>Stone or ceramic, one fixed place per tool</p><small>Sound</small><p>A small, defined note as each tool comes to rest</p></div>
+      <div class='card'><h4>Glassware</h4><small>Material</small><p>Thin, hand-blown, lead-free crystal</p><small>Sound</small><p>A long, pure ring when glasses meet</p></div>
+      <div class='card'><h4>Cloche and lids</h4><small>Material</small><p>Steel or copper, fitted to the iron</p><small>Sound</small><p>A soft seal on the iron, a breath of steam on lifting</p></div>
+    </div>
+    <div class='cards two ja'>
+      <div class='card'><h4>手水鉢と流し</h4><small>素材</small><p>彫った石、または檜の桶。水量と落差はあらかじめ定める</p><small>音</small><p>澄んだ一筋の水。楽譜が水を求めるときだけ聞こえる</p></div>
+      <div class='card'><h4>包丁とヘラ</h4><small>素材</small><p>和鋼、木の柄(黒檀または檜)</p><small>音</small><p>鉄板の上で澄んだ金属音、柄が触れ合うと柔らかな音</p></div>
+      <div class='card'><h4>道具置き</h4><small>素材</small><p>石または陶器。道具ごとに定位置を一つ</p><small>音</small><p>道具を置くたびに、小さく明確な一音</p></div>
+      <div class='card'><h4>グラス</h4><small>素材</small><p>薄い手吹きの無鉛クリスタル</p><small>音</small><p>触れ合うと、長く澄んだ響き</p></div>
+      <div class='card'><h4>クロッシュと蓋</h4><small>素材</small><p>鋼または銅。鉄板に合わせて作る</p><small>音</small><p>鉄板に閉じる柔らかな音、持ち上げると立つ湯気の息</p></div>
+    </div>
+  </details>
+  <p class='en'><b>Auditions.</b> Each piece is sound-tested on the actual iron before it enters the score, like choosing instruments for an ensemble.</p>
+  <p class='ja'><b>音の試し。</b>どの道具も楽譜に加える前に、実際の鉄板で音を確かめる。一座のために楽器を選ぶように。</p>
+  <p class='en'><b>The toast.</b> The crystal ring is the one sound the guests play themselves. A composed <i>kanpai</i> moment makes them part of the score.</p>
+  <p class='ja'><b>乾杯。</b>クリスタルの響きは、客自身が奏でる唯一の音。作曲された乾杯の一瞬が、客を楽譜の一部にする。</p>
+</div></details>
+
+<details class='ch' id='light'><summary><b>九</b><span class='en'>Light and sound control</span><span class='ja'>光と音</span></summary><div class='chb'>
+  <p class='en'>Light and the ground sound are played like instruments: the ensemble cues them and the system smooths them. The machine never decides on its own.</p>
+  <p class='ja'>光と下地の音は、楽器のように奏でられる。合図を出すのは一座、それをなめらかに整えるのが仕組み。機械が自ら決めることはない。</p>
+  <h3><span class='en'>Smart lighting</span><span class='ja'>スマート照明</span></h3>
+  <ul class='en'>
+    <li>Theatre-style fixtures: a pin spot on the iron and dimmable warm-white light (around 2700 K) for the room, with very high colour rendering (CRI 95+) so the marbling reads true</li>
+    <li>One programmed scene per phase (threshold, <i>jo</i>, <i>ha</i>, <i>kyū</i>, descent), with every fade slow and smooth, never sudden, the same rule as movement</li>
+    <li>Cues fired by the ensemble, through a hidden button for the sommelier or sensors in the tool rests, so lifting the knife brings up the next light</li>
+    <li>The system’s intelligence is in the smoothing: fade curves, colour-temperature drift, and holding the light steady while a guest is absorbed</li>
+    <li>No camera-based emotion reading. It would replace the craft the ensemble is training, and in the EU, filming and analysing guests’ faces brings strict obligations under GDPR and the AI Act.</li>
+  </ul>
+  <ul class='ja'>
+    <li>舞台用の照明。鉄板にはピンスポット、部屋には調光できる温白色(約2700K)。サシが正しく見えるよう、演色性はきわめて高く(CRI 95以上)</li>
+    <li>場面(入口、序、破、急、余韻)ごとに一つの照明シーン。切り替えはすべてゆるやかで滑らか、決して急ではない。所作と同じ決まり</li>
+    <li>合図は一座が出す。利酒師の隠しボタン、または道具置きのセンサーにより、包丁を持ち上げると次の光が立ち上がる</li>
+    <li>仕組みの知性は、なめらかさにある。フェードの曲線、色温度の移ろい、客が見入っている間は光を保つこと</li>
+    <li>カメラで感情を読み取ることはしない。それは一座が磨く技を置き換えてしまう。またEUでは、客の顔を撮影し分析することに、GDPRとAI規則による厳しい義務が伴う</li>
+  </ul>
+  <h3><span class='en'>The ground</span><span class='ja'>下地の音</span></h3>
+  <p class='en'>The ground is not a recording but a live koto player, in the geiko tradition, who supports the soloists at the iron the way a drone supports a raga. Recorded music is retired; the room has one human ground or silence.</p>
+  <p class='ja'>下地の音は録音ではなく、芸妓の伝統に連なる生の箏の奏者。ラーガを支える持続音のように、鉄板の独奏者たちを支える。録音の音楽は使わない。部屋にあるのは、一人の生きた下地か、静寂か。</p>
+  <ul class='en'>
+    <li><b>Koto, not shamisen.</b> Plucked, sparse, with long decay; a shamisen is percussive and would fight the iron.</li>
+    <li><b>Placement.</b> Diagonally behind the guests on the threshold side, behind a <i>sudare</i> blind or shoji, backlit so she is a silhouette: never in the sight line to the iron, and never a second stage. Her sound reaches the guest from behind the shoulder, so the ear turns inward while the eye stays on the master.</li>
+    <li><b>Timing.</b> She plays only in <i>jo</i> and the descent, just above the room’s noise floor. Through <i>ha</i> and <i>kyū</i> she is silent; her silence is the <i>ma</i>, and the iron plays solo.</li>
+    <li><b>One reveal.</b> At the descent the screen is lit fully and she is seen for the first time: the last image of the night.</li>
+    <li><b>Repertoire.</b> <i>Danmono</i> pieces such as <i>Rokudan no Shirabe</i> are themselves <i>jo-ha-kyū</i>: six sections that start slow and accelerate. She plays the first <i>dan</i> in <i>jo</i> and the last in the descent, and the meal is the missing middle.</li>
+    <li><b>Still optional.</b> The default is silence; guests choose at booking, and the guest book remembers.</li>
+    <li><b>Casting.</b> The same note as for the sommelier: recruit by craft and presence, and keep the aesthetic vision in the concept, not the posting.</li>
+  </ul>
+  <ul class='ja'>
+    <li><b>三味線ではなく、箏。</b>爪弾かれ、まばらで、余韻が長い。三味線は打楽器的で、鉄板と競ってしまう。</li>
+    <li><b>配置。</b>客の斜め後ろ、入口側。御簾や障子の奥に、背後から光を当てて影として。鉄板への視線を遮らず、第二の舞台にもならない。音は客の肩越しに届き、耳は内へ向き、目は師匠にとどまる。</li>
+    <li><b>時機。</b>奏でるのは序と余韻のみ、部屋の静けさをわずかに上回る音量で。破と急のあいだは沈黙する。その沈黙が間となり、鉄板が独奏する。</li>
+    <li><b>ただ一度の披露。</b>余韻の場面で御簾の奥が明るく照らされ、初めてその姿が見える。その夜、最後の一景。</li>
+    <li><b>曲目。</b>六段の調などの段物は、それ自体が序破急である。ゆるやかに始まり、六つの段を経て速まる。序で初段を、余韻で最終段を奏で、食事がその間を満たす。</li>
+    <li><b>なお任意。</b>基本は静寂。客は予約の際に選び、客帳がそれを覚えておく。</li>
+    <li><b>配役。</b>ソムリエと同じ心得で。技と佇まいで募り、美的な構想はコンセプトの中にとどめる。</li>
+  </ul>
+</div></details>
+
+<details class='ch' id='tracks'><summary><b>十</b><span class='en'>The score</span><span class='ja'>楽譜</span></summary><div class='chb'>
+  <p class='en'>Each course is written as one page of a percussion score with parallel tracks, so every sound and movement can be rehearsed.</p>
+  <p class='ja'>一皿ごとに、並行する複数の段を持つ打楽器の楽譜一頁として書かれる。だから、すべての音と所作を稽古できる。</p>
+  <details class='ref'>
+    <summary><span class='en'>Eight tracks</span><span class='ja'>八つの段</span></summary>
+    <dl class='spec en'>
+      <dt>Master</dt><dd>Movements, gestures, the few spoken words</dd>
+      <dt>Apprentice</dt><dd>Prep, handoffs, counterpoint</dd>
+      <dt>Sommelier</dt><dd>Presentations, pours, crossings, silent cues</dd>
+      <dt>Iron</dt><dd>Sizzle level, strikes, water hiss</dd>
+      <dt>Knife and tools</dt><dd>Cuts, taps, the tink of the spatula</dd>
+      <dt>Light</dt><dd>Dims, brightenings, shifts of focus</dd>
+      <dt>Guest</dt><dd>Watching, eating, or in <i>ma</i></dd>
+      <dt>Ground</dt><dd>The koto: when she enters, her level, when she falls silent</dd>
+    </dl>
+    <dl class='spec ja'>
+      <dt>師匠</dt><dd>所作、身振り、わずかな言葉</dd>
+      <dt>弟子</dt><dd>仕込み、受け渡し、対旋律</dd>
+      <dt>利酒師</dt><dd>披露、一献、移動、無言の合図</dd>
+      <dt>鉄板</dt><dd>焼ける音の大きさ、一撃、水の音</dd>
+      <dt>包丁と道具</dt><dd>切る音、打つ音、ヘラの金属音</dd>
+      <dt>光</dt><dd>暗転、明転、焦点の移動</dd>
+      <dt>客</dt><dd>見ている、食べている、または間の中に</dd>
+      <dt>下地</dt><dd>箏。入る時、音量、沈黙する時</dd>
+    </dl>
+  </details>
+  <p class='en'><b>The guest is the conductor.</b> The score runs on cues, not a clock, so it follows the guest’s energy live. The downbeats are guest signals: chopsticks laid down, a glass emptied, a pause in conversation. The sommelier reads them and signals the master.</p>
+  <p class='ja'><b>指揮者は客。</b>楽譜は時計ではなく合図で進み、客の気配にその場で寄り添う。拍の頭となるのは客の兆し。箸を置く、グラスが空になる、会話が途切れる。利酒師がそれを読み、師匠に伝える。</p>
+</div></details>
+
+<details class='ch' id='thermal'><summary><b>十一</b><span class='en'>The thermal score</span><span class='ja'>熱の楽譜</span></summary><div class='chb'>
+  <p class='en'>Every ingredient is chosen, cut and timed so its cooking fits its phrase in the score. Nothing on the iron is improvised; only the moment it starts is.</p>
+  <p class='ja'>食材はすべて、その火入れが楽譜の一節に収まるように選ばれ、切られ、時間を決められる。鉄板の上で即興するものは何もない。即興するのは、始める瞬間だけ。</p>
+  <p class='en'><b>Iron zones.</b> The teppan is mapped into fixed temperature zones, checked before every service. Starting points, calibrated in rehearsal:</p>
+  <p class='ja'><b>鉄板の領域。</b>鉄板は温度の決まった領域に分けられ、営業のたびに確かめる。目安は稽古で調整する。</p>
+  <div class='cards en'>
+    <div class='card'><h4>Strike · about 230–250 °C</h4><p>Searing the wagyu crust, the loudest phrase</p></div>
+    <div class='card'><h4>Cook · about 180–200 °C</h4><p>Seafood, vegetables, garlic chips</p></div>
+    <div class='card'><h4>Hold · about 120–150 °C</h4><p>Resting and waiting without cooking further</p></div>
+  </div>
+  <div class='cards ja'>
+    <div class='card'><h4>焼く · 約230〜250 °C</h4><p>和牛の表面を焼き付ける。もっとも大きな音の一節</p></div>
+    <div class='card'><h4>火を通す · 約180〜200 °C</h4><p>魚介、野菜、ガーリックチップ</p></div>
+    <div class='card'><h4>休ませる · 約120〜150 °C</h4><p>それ以上火を入れずに休ませ、待たせる</p></div>
+  </div>
+  <p class='en'>Polished steel fools infrared thermometers, which read low on shiny metal. Each zone is checked with a contact surface probe, or with an infrared reader set to the iron’s emissivity.</p>
+  <p class='ja'>磨かれた鋼は赤外線温度計を欺き、実際より低く表示させる。各領域は接触式の表面温度計か、鉄板の放射率に合わせた赤外線計で測る。</p>
+  <p class='en'><b>Why millimetres matter.</b> The time for heat to reach the centre grows roughly with the square of the thickness:</p>
+  <p class='ja'><b>なぜミリ単位なのか。</b>熱が中心に届く時間は、厚みのおよそ二乗に比例して長くなる。</p>
+  <div class='formula'><i>t</i> ∝ <i>L</i>²</div>
+  <p class='en'>A cut 2 mm too thick on a 20 mm piece takes about 20% longer, enough to break the phrase. Cuts are made against a gauge to a tolerance of about ±0.5 mm and checked by weight.</p>
+  <p class='ja'>20mmの一切れが2mm厚ければ約2割長くかかり、それだけで一節が崩れる。切り分けは定規に当てて約±0.5mmの精度で行い、重さで確かめる。</p>
+  <p class='en'><b>Fixed cook times, flexible hold windows.</b> The score runs on the guest’s cues, so cooking can’t depend on a clock alone. Each ingredient has two numbers:</p>
+  <p class='ja'><b>火入れの時間は固定、待ちの幅は柔軟に。</b>楽譜は客の合図で進むため、火入れを時計だけに頼ることはできない。食材にはそれぞれ二つの数字がある。</p>
+  <ul class='en'>
+    <li><b>Cook time:</b> fixed, at a fixed zone, from a fixed starting temperature</li>
+    <li><b>Hold window:</b> how long the piece can wait on the hold zone before its quality drops; this is the ensemble’s room to follow the guest</li>
+  </ul>
+  <ul class='ja'>
+    <li><b>火入れ時間:</b>決まった領域で、決まった出発温度から、決まった時間</li>
+    <li><b>待ちの幅:</b>休ませる領域で、品質を落とさずに待てる時間。これが、一座が客に寄り添うための余白となる</li>
+  </ul>
+  <p class='en'><b>Constant starting temperature.</b> Meat and seafood are tempered for a set time before service, so every piece starts the same and its cook time stays true.</p>
+  <p class='ja'><b>出発温度を一定に。</b>肉と魚介は営業前に決まった時間だけ常温に戻す。どの一切れも同じ状態から始まり、火入れ時間が狂わない。</p>
+  <details class='ref'>
+    <summary><span class='en'>The ingredient card · example: wagyu cube</span><span class='ja'>食材カード · 例:和牛のキューブ</span></summary>
+    <p class='en'>Every ingredient gets one card, filled in and re-checked for each new batch (a new wagyu batch can differ in fat and size).</p>
+    <p class='ja'>食材ごとに一枚のカードを作り、新しい仕入れのたびに記入し直す(和牛は仕入れごとに脂も大きさも異なりうる)。</p>
+    <dl class='spec en'>
+      <dt>Cut</dt><dd>25 × 25 × 25 mm, ±0.5 mm</dd>
+      <dt>Weight</dt><dd>Checked per piece on a gram scale</dd>
+      <dt>Start temperature</dt><dd>Tempered from the fridge for a set time, to be calibrated</dd>
+      <dt>Zone and time</dt><dd>Strike zone, each face seared in turn, total time set in rehearsal</dd>
+      <dt>Target core</dt><dd>To be set with the master</dd>
+      <dt>Hold window</dt><dd>Measured in rehearsal</dd>
+      <dt>Phrase</dt><dd><i>Kyū</i>, steps 4–8 of the wagyu page</dd>
+      <dt>Sound signature</dt><dd>The strike, the loudest sound of the night</dd>
+    </dl>
+    <dl class='spec ja'>
+      <dt>切り方</dt><dd>25 × 25 × 25 mm、±0.5 mm</dd>
+      <dt>重さ</dt><dd>一切れずつグラム秤で確認</dd>
+      <dt>出発温度</dt><dd>冷蔵庫から出して決まった時間戻す。時間は調整する</dd>
+      <dt>領域と時間</dt><dd>焼く領域で各面を順に焼く。合計時間は稽古で決める</dd>
+      <dt>中心温度</dt><dd>師匠と決める</dd>
+      <dt>待ちの幅</dt><dd>稽古で測る</dd>
+      <dt>一節</dt><dd>急。和牛の頁の4〜8</dd>
+      <dt>音の特徴</dt><dd>一撃。その夜もっとも大きな音</dd>
+    </dl>
+  </details>
+  <p class='en'><b>Timing without beeps.</b> The master works from an internal clock built in rehearsal. Where a backup is needed, a silent vibrating timer on the apprentice’s wrist replaces any audible alarm.</p>
+  <p class='ja'><b>音の鳴らない計時。</b>師匠は稽古で身につけた体内時計で動く。補助が必要な場面では、弟子の手首で静かに振動するタイマーが、音の鳴るアラームの代わりとなる。</p>
+  <p class='en'><b>Lead time.</b> Each course has a lead time: the minutes from firing the first piece to serving. The sommelier’s cue has to come that early, so reading the guest means predicting their pace, not reacting to it.</p>
+  <p class='ja'><b>先行時間。</b>一皿ごとに先行時間がある。最初の一切れを焼き始めてから出すまでの時間だ。利酒師の合図はそれだけ早く出さねばならない。客を読むとは、反応することではなく、その歩みを先読みすることである。</p>
+  <p class='en'><b>Hearing doneness.</b> The sizzle changes as surface moisture cooks off, so the master can hear each stage of the cook. The sound score and the cook become the same thing.</p>
+  <p class='ja'><b>焼き加減を聴く。</b>表面の水分が飛ぶにつれて、焼ける音は変わっていく。師匠は火入れの各段階を耳で聴き分ける。音の楽譜と火入れは、一つのものになる。</p>
+  <h3><span class='en'>Drills</span><span class='ja'>稽古</span></h3>
+  <ul class='en'>
+    <li>Cut drill: pieces cut to the gauge, then measured with calipers and weighed; out-of-tolerance pieces count as faults</li>
+    <li>Calibration kata: each new batch is cooked on the cold run of the score before it meets a guest</li>
+    <li>Hold drill: pieces held to the end of their window and tasted, so everyone knows where quality breaks</li>
+  </ul>
+  <ul class='ja'>
+    <li>切りの稽古。定規に合わせて切り、ノギスで測り、重さを量る。許容差を外れた一切れは失点となる</li>
+    <li>調整の型。新しい仕入れはすべて、客に出す前に楽譜の通し稽古で焼いてみる</li>
+    <li>待ちの稽古。待ちの幅の終わりまで置いてから味見をし、どこで品質が崩れるかを全員が知る</li>
+  </ul>
+</div></details>
+
+<details class='ch' id='wagyu'><summary><b>十二</b><span class='en'>Score page: the wagyu</span><span class='ja'>楽譜の一頁:和牛</span></summary><div class='chb'>
+  <p class='en'>The climax of the meal, <i>kyū</i>, cued when the guest lays down chopsticks after the seafood. Its length will be timed in rehearsal.</p>
+  <p class='ja'>食事の頂点、急。客が魚介の後に箸を置いたとき、それが合図となる。長さは稽古で計る。</p>
+  <ol class='en'>
+    <li><b><i>Ma</i>.</b> The sommelier clears the seafood glass in silence. The room dims one step and only the iron glows. The master cleans the iron: scrape, water hiss, then hands at rest. Five seconds of silence.</li>
+    <li><b>Reveal.</b> From behind a black curtain, the apprentice brings the raw wagyu forward like a jewel, on black lacquer under a single pin light that makes the marbling glow. The master names its origin in one word, and its certificate is shown like a gem’s.</li>
+    <li><b>Presentation.</b> The sommelier, in white gloves, steps forward and presents the climax bottle with the label turned to the guest. The pour into crystal is the only sound in the room.</li>
+    <li><b>Fat.</b> The apprentice lays a cube of beef fat on the iron. The first soft sizzle and the first aroma reach the guest.</li>
+    <li><b>Garlic.</b> Thin slices crackle in the fat, then are lifted out golden and laid to rest in view.</li>
+    <li><b>Strike.</b> The master lays the meat on the iron: the loudest sound of the night. The light peaks, and the whole ensemble stands still to let the iron speak.</li>
+    <li><b>Rest.</b> The sizzle fades. The master wipes the knife in one slow movement, silent and impossible to look away from.</li>
+    <li><b>Cut and serve.</b> The slices are fanned, topped with garlic chips and set before the guest. Nobody moves until the first bite.</li>
+    <li><b>Hand-off.</b> The fat stays on the iron and the apprentice begins the garlic rice in view, so the next phrase starts before this one ends.</li>
+  </ol>
+  <ol class='ja'>
+    <li><b>間。</b>利酒師が魚介のグラスを音もなく下げる。部屋は一段暗くなり、鉄板だけが光る。師匠が鉄板を清める。こする音、水の音、そして手を止める。五秒の静寂。</li>
+    <li><b>披露。</b>黒い幕の奥から、弟子が生の和牛を宝石のように運ぶ。黒漆の盆の上、一筋のピンライトがサシを輝かせる。師匠は産地をひと言で告げ、証明書を宝石の鑑定書のように示す。</li>
+    <li><b>献酒。</b>白手袋の利酒師が一歩進み、頂点の一本をラベルを客に向けて差し出す。クリスタルに注ぐ音だけが、部屋に響く。</li>
+    <li><b>脂。</b>弟子が牛脂の一片を鉄板に置く。最初の柔らかな音と、最初の香りが客に届く。</li>
+    <li><b>にんにく。</b>薄切りが脂の中で弾け、黄金色になって取り出され、見えるところで休ませる。</li>
+    <li><b>一撃。</b>師匠が肉を鉄板に置く。その夜もっとも大きな音。光は頂点に達し、一座は静止して鉄板に語らせる。</li>
+    <li><b>休み。</b>音が静まる。師匠は包丁をゆっくりと一度で拭う。音はないのに、目が離せない。</li>
+    <li><b>切って出す。</b>切り身を扇に並べ、ガーリックチップをのせて客の前に置く。最初の一口まで、誰も動かない。</li>
+    <li><b>受け渡し。</b>脂は鉄板に残り、弟子が目の前でガーリックライスを始める。この一節が終わる前に、次の一節が始まる。</li>
+  </ol>
+  <p class='en'><i>Open question: which pour carries the climax, a red wine or an aged sake? To be decided with the sommelier.</i></p>
+  <p class='ja'><i>未決の問い:頂点を担う一献は、赤ワインか、熟成酒か。利酒師と決める。</i></p>
+</div></details>
+
+<details class='ch' id='dojo'><summary><b>十三</b><span class='en'>The dojo</span><span class='ja'>道場</span></summary><div class='chb'>
+  <p class='en'>Training follows <i>shuhari</i>, and every rehearsal is graded. The sommelier trains in the same dojo as the chefs.</p>
+  <p class='ja'>稽古は守破離に従い、すべての稽古は評価される。利酒師も料理人と同じ道場で鍛えられる。</p>
+  <h3><span class='en'>Stages</span><span class='ja'>段階</span></h3>
+  <ol class='en'>
+    <li><b><i>Shu</i>, follow.</b> Copy the master’s form exactly: cuts, griddle zones, timing, sound.</li>
+    <li><b><i>Ha</i>, adapt.</b> Vary within the form and learn to read the guest.</li>
+    <li><b><i>Ri</i>, transcend.</b> Compose original phrases and courses, rehearsed so deeply they look spontaneous.</li>
+  </ol>
+  <ol class='ja'>
+    <li><b>守。</b>師匠の型をそのまま写す。切り方、鉄板の領域、間合い、音。</li>
+    <li><b>破。</b>型の中で変化をつけ、客を読むことを学ぶ。</li>
+    <li><b>離。</b>独自の一節や一皿を作曲する。自然に見えるほど深く稽古して。</li>
+  </ol>
+  <p class='en'><b>Rotation.</b> Apprentices rotate through three roles per session: on the iron, on prep, and watching. Watching is <i>mitori-geiko</i>, learning by observation, and it counts as training.</p>
+  <p class='ja'><b>持ち回り。</b>弟子は一回の稽古で三つの役を回る。鉄板、仕込み、そして見ること。見ることは見取り稽古であり、それも稽古に数えられる。</p>
+  <p class='en'><b>Evaluation.</b> Each rehearsal gets two scores.</p>
+  <p class='ja'><b>評価。</b>一回の稽古に、二つの評価がつく。</p>
+  <div class='cards two en'>
+    <div class='card'><h4>Master · technique</h4><p>Cut precision, doneness, timing, a clean iron, sound control (an unwritten clatter is a fault)</p></div>
+    <div class='card'><h4>Director · experience</h4><p>Pacing, guest-reading, attention held, comfort of the silences</p></div>
+  </div>
+  <div class='cards two ja'>
+    <div class='card'><h4>師匠 · 技</h4><p>切りの精度、焼き加減、間合い、清い鉄板、音の制御(楽譜にない物音は失点)</p></div>
+    <div class='card'><h4>演出家 · 体験</h4><p>運び、客の読み、保たれた注意、静けさの心地よさ</p></div>
+  </div>
+  <h3><span class='en'>Drills</span><span class='ja'>稽古</span></h3>
+  <ul class='en'>
+    <li>Kata without food: run a course’s movements and sounds on a cold iron</li>
+    <li>Record the audio and replay it against the score until every sound lands where written</li>
+    <li>Ensemble runs with the sommelier, so iron-to-glass handoffs are rehearsed like any cut</li>
+  </ul>
+  <ul class='ja'>
+    <li>食材なしの型。冷えた鉄板の上で、一皿分の所作と音を通す</li>
+    <li>音を録り、楽譜と照らし合わせて再生する。すべての音が書かれた場所に収まるまで</li>
+    <li>利酒師を交えた通し稽古。鉄板からグラスへの受け渡しも、包丁の一太刀と同じように稽古する</li>
+  </ul>
+  <p class='en'><b>One sensei.</b> The master owns technique and the director owns the experience standard. The director’s feedback goes through the master, never at a performer mid-service.</p>
+  <p class='ja'><b>師は一人。</b>技は師匠が、体験の基準は演出家が司る。演出家の指摘は師匠を通して伝え、営業中に演者へ直接向けることはない。</p>
+  <p class='en'><b>Progression.</b> Rehearsal dinners for the director and friends come first. Private clients come only after a performer passes a graded level.</p>
+  <p class='ja'><b>上達の道筋。</b>まずは演出家と友人のための稽古の食事から。個人の客を迎えるのは、演者が評価の段階に合格してからである。</p>
+</div></details>
+
+</div>
+
+</main>
+
+<footer>
+  <div><span class="en">Concept board</span><span class="ja">コンセプトボード</span> · <a class="flink" href="#score"><span class="en">The Score</span><span class="ja">楽譜</span></a> · <button type="button" class="brand" id="brand">digitalAIventures</button> · 2026</div>
+  <div class="note"><span class="en">Concept visuals and sounds generated with AI</span><span class="ja">コンセプト画像と音はAIで生成しています</span></div>
+</footer>
+
+<button type="button" class="theme" id="theme" aria-label="Toggle light and dark">◐</button>
+
+<div class="dialog-overlay" id="cd">
+  <div class="dialog-box">
+    <h4><span class="en">Get in Touch</span><span class="ja">お問い合わせ</span></h4>
+    <a class="dialog-option dialog-bot" href="https://t.me/Juanitto_assist_bot" target="_blank" rel="noopener">🤖 AI Assist 24/7</a>
+    <a class="dialog-option dialog-tg" href="https://t.me/JuanittoCalvares" target="_blank" rel="noopener">✈ Personal</a>
+    <a class="dialog-option dialog-mail" href="mailto:digitalAIventures.LLC@gmail.com">✉ Email</a>
+    <button type="button" class="dialog-close" id="cdclose"><span class="en">Close</span><span class="ja">閉じる</span></button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var d=document.documentElement;
+  function save(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  function setLang(l){
+    d.setAttribute('data-lang',l);d.setAttribute('lang',l);save('omo-lang',l);
+    var b=document.querySelectorAll('.lang button[data-l]');
+    for(var i=0;i<b.length;i++){b[i].setAttribute('aria-pressed',b[i].getAttribute('data-l')===l?'true':'false')}
+  }
+  var lb=document.querySelectorAll('.lang button[data-l]');
+  for(var i=0;i<lb.length;i++){lb[i].addEventListener('click',function(){setLang(this.getAttribute('data-l'))})}
+  setLang(d.getAttribute('data-lang')==='ja'?'ja':'en');
+
+  document.getElementById('theme').addEventListener('click',function(){
+    var t=d.getAttribute('data-theme')==='light'?'dark':'light';d.setAttribute('data-theme',t);save('omo-theme',t);
+  });
+
+  var cd=document.getElementById('cd');
+  document.getElementById('brand').addEventListener('click',function(){cd.classList.add('open')});
+  document.getElementById('cdclose').addEventListener('click',function(){cd.classList.remove('open')});
+  cd.addEventListener('click',function(e){if(e.target===cd){cd.classList.remove('open')}});
+
+  function openHash(){
+    var h=(location.hash||'').slice(1);if(!h){return}
+    var el=document.getElementById(h);
+    if(el&&el.tagName==='DETAILS'){el.open=true}
+  }
+  window.addEventListener('hashchange',openHash);openHash();
+
+  var els=document.querySelectorAll('.rv');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(en){
+      for(var j=0;j<en.length;j++){if(en[j].isIntersecting){en[j].target.classList.add('in');io.unobserve(en[j].target)}}
+    },{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+    for(var k=0;k<els.length;k++){io.observe(els[k])}
+  }else{
+    for(var m=0;m<els.length;m++){els[m].classList.add('in')}
+  }
+
+  var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var vids=document.querySelectorAll('video.lp');
+  if(!rm&&'IntersectionObserver' in window){
+    var vo=new IntersectionObserver(function(en){
+      for(var a=0;a<en.length;a++){
+        var v=en[a].target;
+        if(en[a].isIntersecting){
+          if(v.ended){continue}
+          if(!v.getAttribute('src')){v.setAttribute('src',v.getAttribute('data-src'))}
+          var p=v.play();if(p&&p.catch){p.catch(function(){})}
+        }else{v.pause()}
+      }
+    },{threshold:0.25});
+    for(var c=0;c<vids.length;c++){vids[c].muted=true;vo.observe(vids[c])}
+  }
+})();
+</script>
+<script src="sound.js" defer></script>
+</body>
+</html>
